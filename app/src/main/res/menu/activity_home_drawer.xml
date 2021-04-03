@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:showIn="navigation_view">
+
+    <item
+        android:id="@+id/nav_add_room"
+        android:icon="@drawable/ic_rooms"
+        android:title="@string/add_room" />
+    <item
+        android:id="@+id/nav_add_meter"
+        android:icon="@drawable/ic_electric_meter"
+        android:title="@string/add_meter" />
+    <item
+        android:id="@+id/nav_new_rent"
+        android:icon="@drawable/ic_user"
+        android:title="@string/new_rent_details" />
+    <item
+        android:id="@+id/nav_new_electricity_bill"
+        android:icon="@drawable/ic_user"
+        android:title="@string/electricity_bill" />
+
+    <item
+        android:id="@+id/nav_room_list"
+        android:icon="@drawable/ic_rooms"
+        android:title="@string/room_list" />
+    <item
+        android:id="@+id/nav_meter_list"
+        android:icon="@drawable/ic_electric_meter"
+        android:title="@string/meter_list" />
+    <item
+        android:id="@+id/nav_tenant_list"
+        android:icon="@drawable/ic_user"
+        android:title="@string/tenant_list" />
+</menu>

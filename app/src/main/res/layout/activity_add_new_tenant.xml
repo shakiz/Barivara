@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:id="@+id/parent_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/md_grey_200"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        tools:context=".activities.activities.room.RoomActivity">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:id="@+id/app_bar">
+
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tool_bar"
+                app:navigationIcon="?attr/homeAsUpIndicator"
+                style="@style/TextAppearance.Widget.Event.Toolbar.Title"
+                app:title="@string/add_tenant"
+                app:titleTextColor="@color/md_grey_800">
+
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/app_bar"
+            android:id="@+id/mainLayout"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:cardCornerRadius="12dp"
+                android:elevation="4dp"
+                android:layout_margin="8dp"
+                android:translationZ="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_margin="4dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:layout_marginTop="8dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="@string/tenant_name"
+                            android:textColor="@color/md_grey_900"
+                            android:textSize="16sp" />
+
+                        <EditText
+                            android:id="@+id/TenantName"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/edittext_back"
+                            android:inputType="text"
+                            android:ellipsize="end"
+                            android:scrollHorizontally="true"
+                            android:maxLines="1"
+                            android:textColorHint="@color/md_grey_700"
+                            android:hint="@string/tenant_hint"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:textSize="14sp"
+                            android:textColor="@color/md_grey_800"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:layout_marginTop="8dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="@string/select_month"
+                            android:textColor="@color/md_grey_900"
+                            android:textSize="16sp" />
+
+                        <Spinner
+                            style="@style/Base.TextAppearance.AppCompat.Medium"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/edittext_back"
+                            android:id="@+id/StartingMonthId"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:layout_marginTop="8dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="@string/select_room"
+                            android:textColor="@color/md_grey_900"
+                            android:textSize="16sp" />
+
+                        <Spinner
+                            style="@style/Base.TextAppearance.AppCompat.Medium"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/edittext_back"
+                            android:id="@+id/AssociateRoomId"/>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/mSaveTenantMaster"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_action_done"
+            app:backgroundTint="@color/md_blue_grey_400"
+            app:fabSize="normal" />
+
+    </RelativeLayout>
+
+</layout>

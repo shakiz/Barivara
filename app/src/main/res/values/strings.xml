@@ -1,3 +1,129 @@
 <resources>
-    <string name="app_name">Bari vara</string>
+    <string name="app_name">Vara Adai</string>
+
+    <!--Room start-->
+    <string name="no_of_rooms">Number of Rooms</string>
+    <string name="total_earnings">Total Earnings</string>
+    <string name="no_of_meters">Number Of Meters</string>
+    <string name="total_unit">Total Unit</string>
+    <string name="add_room">Add New Room</string>
+    <string name="add_meter">Add New Meter</string>
+    <string name="room_hint">Enter Room Name</string>
+    <string name="room_name">Room Name</string>
+    <string name="select_month">Select Starting Month</string>
+    <string name="tenant_name">Tenant Name</string>
+    <string name="tenant_hint">Enter tenant name</string>
+    <string name="advance_hint">Advance?</string>
+    <string name="amount">Advance Amount</string>
+    <string name="advance_hint2">Enter advance amount</string>
+    <string name="select_meter">Select Meter</string>
+    <string name="validation">Please check your value</string>
+    <!--Room end-->
+
+    <!--Meter start-->
+    <string name="meter_name">Meter Name</string>
+    <string name="meter_hint">Enter Meter Name</string>
+    <string name="select_room">Select Room</string>
+    <string name="select_meter_type">Select Meter Type</string>
+    <!--Meter end-->
+
+    <!--Adapter start-->
+    <string name="no_data_message">No Data</string>
+    <string name="meter_owner">Meter Owner</string>
+    <string name="present_unit">Present Unit</string>
+    <string name="past_unit">Past Unit</string>
+    <string name="room_owner">Room Owner</string>
+    <string name="start_rent_month">Start Month</string>
+    <string name="last_paid">Last Paid</string>
+    <!--Adapter end-->
+
+
+    <string name="new_rent_details">New rent Details</string>
+    <string name="new_meter_details">New Meter Details</string>
+    <string name="room_list">Room List</string>
+    <string name="meter_list">Meter List</string>
+    <string name="present_month_unit">Present Month Unit</string>
+    <string name="unit_price">Unit Price</string>
+    <string name="previous_month_unit">Previous Month Unit</string>
+    <string name="total_unit_1">Total Unit 0</string>
+    <string name="total_amount">Total Electricity Bill 0Tk.</string>
+    <string name="rent_amount">Rent Amount</string>
+    <string name="rent_hint">Enter rent amount</string>
+    <string name="select_month_2">Select Month</string>
+    <string name="warning_message">Please Check All Data</string>
+    <string name="select_data">Select Data</string>
+    <string name="success">Successful</string>
+    <string name="no_of_tenants">Number of Tenants</string>
+    <string name="this_month">This Month</string>
+    <string name="new_tenent_this_month">Tenant This Month?</string>
+    <string name="tenant_list">Tenant List</string>
+    <string name="meter_type">Meter Type</string>
+    <string name="add_tenant">Add New Tenant</string>
+
+    <!--NewMeterDetailsActivity starts-->
+    <string name="present_month_unit_hint">Enter Present Month Unit</string>
+    <string name="previous_month_unit_hint">Enter Previous Month Unit</string>
+    <string name="unit_price_hint">Unit Price Hint</string>
+    <string name="warning_message_unit">Present month unit value exceed</string>
+    <string name="invalid_input">Invalid Input</string>
+    <string name="check_your_data">Check Your Data</string>
+    <string name="select_valid_date">Select Valid Date</string>
+    <string name="expiry_date">Expiry Date</string>
+    <string name="date_hint">21-Mar-2020</string>
+    <string name="select_correct_data">Select Correct Data</string>
+    <string name="total_rooms">Total Rooms</string>
+    <string name="total_meters">Total Meters</string>
+    <string name="total_tenants">Total Tenants</string>
+    <string name="demo_room_name">Demo Room Name</string>
+    <string name="demo_room_owner_name">Rahim Hasan</string>
+    <string name="demo_month">DD-MM-YYYY</string>
+    <string name="demo_last_paid_date">12-Jan-2020</string>
+    <string name="demo_meter_name">Demo Meter 1</string>
+    <string name="demo_meter_type">Sub Meter</string>
+    <!--NewMeterDetailsActivity ends-->
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="meter_cost_list">Meter Cost List</string>
+    <string name="rent_list">Rent List</string>
+    <string name="electricity_bills">Electricity Bill List</string>
+    <string name="total_bill">Total bill</string>
+    <string name="zero">0</string>
+    <string name="total_electricity_bill">Total Electricity Bill</string>
+    <string name="month_name">Month Name</string>
+    <string name="electricity_bill">Electricity Bill</string>
+    <string name="good_morning">Good Morning</string>
+    <string name="demo_month_and_day">16th May,1996 || Mon</string>
+    <string name="good_noon">Good Noon</string>
+    <string name="good_afternoon">Good Afternoon</string>
+    <string name="good_evening">Good Evening</string>
+    <string name="good_night">Good Night</string>
+    <string name="new_room">New Room</string>
+    <string name="add_a_room">Add a new room</string>
+    <string name="all_rooms">All rooms</string>
+    <string name="new_meter">New Meter</string>
+    <string name="add_a_meter">Add a new meter</string>
+    <string name="all_meters">All meters</string>
+    <string name="new_tenant">New Tenant</string>
+    <string name="add_a_tenant">Add a new tenant</string>
+    <string name="all_tenants">All tenants</string>
+    <string name="all_rents">All rents</string>
+    <string name="all_bills">All Bills</string>
+    <string name="settings">Settings</string>
+    <string name="details_here">Details Here</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="taka">Taka</string>
+    <string name="total_app_visit">Total app visit</string>
+    <string name="app_visit">App Visit</string>
+    <string name="start_bracket">(</string>
+    <string name="end_bracket">)</string>
+    <string name="times">Times</string>
+    <string name="language">Language</string>
+    <string name="change_language">Change Language</string>
+    <string name="google_login">Google Login</string>
+    <string name="save_your_data_using_google_account">Save your data using your google account</string>
+    <string name="units">Units</string>
+    <string name="app_visited">App Visited</string>
+    <string name="zero_taka">0 Taka</string>
+    <string name="zero_unit">0 Unit</string>
 </resources>
