@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "216403585373",
+    "project_id": "bari-vara-92016",
+    "storage_bucket": "bari-vara-92016.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:216403585373:android:ab10a5c5910df817d4e0b4",
+        "android_client_info": {
+          "package_name": "com.shakil.barivara"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "216403585373-le7an9m43s1u1433hb3f5ivnjt4r258e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOB1fBYk3xFsRwJX6PHR0XAjlXesgFT6E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "216403585373-le7an9m43s1u1433hb3f5ivnjt4r258e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
