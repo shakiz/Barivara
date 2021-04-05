@@ -31,11 +31,60 @@ android {
 }
 
 dependencies {
+    def lifecycle_version = "1.1.1"
+    def room_version = "1.1.1"
+    def hTextView_version = "0.1.6"
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.3.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'com.android.support:cardview-v7:28.+'
+    implementation 'com.android.support:recyclerview-v7:28.+'
     implementation 'com.google.firebase:firebase-database:19.7.0'
+
+
+    // circle image view
+    implementation 'de.hdodenhof:circleimageview:2.1.0'
+    // toast
+    implementation 'com.github.hatamiarash7:RTL-Toast:1.3'
+
+    // ViewModel and LiveData
+    implementation "android.arch.lifecycle:extensions:$lifecycle_version"
+    // alternatively - just ViewModel
+    implementation "android.arch.lifecycle:viewmodel:$lifecycle_version" // For Kotlin use viewmodel-ktx
+    // alternatively - just LiveData
+    implementation "android.arch.lifecycle:livedata:$lifecycle_version"
+    // alternatively - Lifecycles only (no ViewModel or LiveData).
+    //     Support library depends on this lightweight import
+    implementation "android.arch.lifecycle:runtime:$lifecycle_version"
+    annotationProcessor "android.arch.lifecycle:compiler:$lifecycle_version" // For Kotlin use kapt instead of annotationProcessor
+    // alternately - if using Java8, use the following instead of compiler
+    implementation "android.arch.lifecycle:common-java8:$lifecycle_version"
+    // optional - ReactiveStreams support for LiveData
+    implementation "android.arch.lifecycle:reactivestreams:$lifecycle_version"
+    // optional - Test helpers for LiveData
+    testImplementation "android.arch.core:core-testing:$lifecycle_version"
+
+    //Room starts
+    implementation "android.arch.persistence.room:runtime:$room_version"
+    annotationProcessor "android.arch.persistence.room:compiler:$room_version"
+    // optional - RxJava support for Room
+    implementation "android.arch.persistence.room:rxjava2:$room_version"
+    // optional - Guava support for Room, including Optional and ListenableFuture
+    implementation "android.arch.persistence.room:guava:$room_version"
+    // Test helpers
+    testImplementation "android.arch.persistence.room:testing:$room_version"
+    // Test helpers
+    testImplementation "androidx.room:room-testing:$room_version"
+    //Room ends
+
+    //Animated textView
+    implementation "com.hanks:htextview-base:$hTextView_version"
+    implementation "com.hanks:htextview-evaporate:$hTextView_version"
+
+    //Android gif loader
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.0'
+
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'

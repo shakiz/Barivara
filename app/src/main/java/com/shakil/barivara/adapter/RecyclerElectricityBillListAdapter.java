@@ -10,8 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.shakil.homeapp.R;
-import com.shakil.homeapp.activities.model.meter.ElectricityBill;
+import com.shakil.barivara.R;
+import com.shakil.barivara.model.meter.ElectricityBill;
 
 import java.util.ArrayList;
 

@@ -26,6 +26,7 @@
                 app:cardCornerRadius="24dp"
                 android:translationZ="4dp"
                 android:layout_marginTop="-16dp"
+                app:cardBackgroundColor="@color/md_white_1000"
                 android:clickable="false"
                 app:elevation="4dp">
 
@@ -45,7 +46,7 @@
 
                         <androidx.appcompat.widget.Toolbar
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="48dp"
                             android:id="@+id/tool_bar"
                             app:navigationIcon="?attr/homeAsUpIndicator"
                             style="@style/TextAppearance.Widget.Event.Toolbar.Title"

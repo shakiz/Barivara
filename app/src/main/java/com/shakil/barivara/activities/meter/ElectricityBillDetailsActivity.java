@@ -12,15 +12,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
-import com.shakil.homeapp.R;
-import com.shakil.homeapp.activities.dbhelper.DbHelperParent;
-import com.shakil.homeapp.activities.model.meter.ElectricityBill;
-import com.shakil.homeapp.activities.utils.InputValidation;
-import com.shakil.homeapp.activities.utils.SpinnerAdapter;
-import com.shakil.homeapp.activities.utils.SpinnerData;
-import com.shakil.homeapp.activities.utils.UtilsForAll;
-import com.shakil.homeapp.databinding.ActivityElectricityBillDetailsBinding;
-
 public class ElectricityBillDetailsActivity extends AppCompatActivity {
     private ActivityElectricityBillDetailsBinding activityMeterCostDetailsBinding;
     private String meterNameStr, roomNameStr;

@@ -13,8 +13,21 @@ import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
 
 import com.google.android.material.navigation.NavigationView;
+import com.shakil.barivara.R;
+import com.shakil.barivara.activities.dashboard.DashboardActivity;
+import com.shakil.barivara.activities.meter.ElectricityBillDetailsActivity;
+import com.shakil.barivara.activities.meter.ElectricityBillListActivity;
+import com.shakil.barivara.activities.meter.MeterListActivity;
+import com.shakil.barivara.activities.meter.NewMeterActivity;
+import com.shakil.barivara.activities.room.RentDetailsActivity;
+import com.shakil.barivara.activities.room.RentListActivity;
+import com.shakil.barivara.activities.room.RoomActivity;
+import com.shakil.barivara.activities.room.RoomListActivity;
+import com.shakil.barivara.activities.settings.SettingsActivity;
+import com.shakil.barivara.activities.tenant.TenantListActivity;
+import com.shakil.barivara.databinding.ActivityMainBinding;
 import com.shakil.barivara.dbhelper.DbHelperParent;
-import com.shakil.barivara.utils.UtilsForAll;\
+import com.shakil.barivara.utils.UtilsForAll;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private ActivityMainBinding activityMainBinding;

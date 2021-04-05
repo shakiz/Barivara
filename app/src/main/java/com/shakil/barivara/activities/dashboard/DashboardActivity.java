@@ -7,10 +7,10 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
-import com.shakil.homeapp.R;
-import com.shakil.homeapp.activities.activities.onboard.MainActivity;
-import com.shakil.homeapp.activities.dbhelper.DbHelperParent;
-import com.shakil.homeapp.databinding.ActivityDashboardBinding;
+import com.shakil.barivara.R;
+import com.shakil.barivara.activities.onboard.MainActivity;
+import com.shakil.barivara.databinding.ActivityDashboardBinding;
+import com.shakil.barivara.dbhelper.DbHelperParent;
 
 public class DashboardActivity extends AppCompatActivity {
     private ActivityDashboardBinding activityDashboardBinding;
