@@ -14,7 +14,9 @@ import com.shakil.barivara.activities.onboard.MainActivity;
 import com.shakil.barivara.adapter.RecyclerMeterListAdapter;
 import com.shakil.barivara.databinding.ActivityMeterListBinding;
 import com.shakil.barivara.dbhelper.DbHelperParent;
+import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.meter.Meter;
+import com.shakil.barivara.utils.UX;
 
 import java.util.ArrayList;
 
@@ -24,6 +26,8 @@ public class MeterListActivity extends AppCompatActivity {
     private ArrayList<Meter> meterList;
     private TextView noDataTXT;
     private DbHelperParent dbHelperParent;
+    private FirebaseCrudHelper firebaseCrudHelper;
+    private UX ux;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +50,16 @@ public class MeterListActivity extends AppCompatActivity {
     private void binUiWIthComponents() {
         setData();
 
+        activityMeterListBinding.mAddMeterMaster.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MeterListActivity.this, NewMeterActivity.class));
+            }
+        });
+    }
+
+    //region recycler adapter
+    private void setRecyclerAdapter(){
         recyclerMeterListAdapter = new RecyclerMeterListAdapter(meterList, this);
         activityMeterListBinding.mRecylerView.setLayoutManager(new LinearLayoutManager(this));
         activityMeterListBinding.mRecylerView.setAdapter(recyclerMeterListAdapter);
@@ -56,26 +70,33 @@ public class MeterListActivity extends AppCompatActivity {
                 startActivity(new Intent(MeterListActivity.this, NewMeterActivity.class).putExtra("meter", meter));
             }
         });
+    }
+    //endregion
 
-        activityMeterListBinding.mAddMeterMaster.setOnClickListener(new View.OnClickListener() {
+    //region set recycler data
+    private void setData() {
+        ux.getLoadingView();
+        firebaseCrudHelper.fetchAllMeter("meter", new FirebaseCrudHelper.onDataFetch() {
             @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MeterListActivity.this, NewMeterActivity.class));
+            public void onFetch(ArrayList<Meter> objects) {
+                meterList = objects;
+                setRecyclerAdapter();
+                ux.removeLoadingView();
+
+                if (meterList.size() <= 0){
+                    noDataTXT.setVisibility(View.VISIBLE);
+                    noDataTXT.setText(R.string.no_data_message);
+                }
             }
         });
     }
-
-    private void setData() {
-        meterList = dbHelperParent.getAllMeterDetails();
-        if (meterList.size() <= 0){
-            noDataTXT.setVisibility(View.VISIBLE);
-            noDataTXT.setText(R.string.no_data_message);
-        }
-    }
+    //endregion
 
     private void init() {
         meterList = new ArrayList<>();
+        ux = new UX(this);
         dbHelperParent = new DbHelperParent(this);
+        firebaseCrudHelper = new FirebaseCrudHelper(this);
         noDataTXT = findViewById(R.id.mNoDataMessage);
     }
 

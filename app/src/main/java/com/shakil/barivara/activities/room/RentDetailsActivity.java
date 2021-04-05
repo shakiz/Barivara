@@ -13,6 +13,7 @@ import com.shakil.barivara.R;
 import com.shakil.barivara.activities.onboard.MainActivity;
 import com.shakil.barivara.databinding.ActivityNewRentDetailsBinding;
 import com.shakil.barivara.dbhelper.DbHelperParent;
+import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.room.Rent;
 import com.shakil.barivara.utils.InputValidation;
 import com.shakil.barivara.utils.SpinnerAdapter;
@@ -28,6 +29,7 @@ public class RentDetailsActivity extends AppCompatActivity {
     DbHelperParent dbHelperParent;
     private int MonthId = 0, AssociateRoomId = 0;
     private String MonthStr = "", AssociateRoomStr = "";
+    private FirebaseCrudHelper firebaseCrudHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,12 +118,7 @@ public class RentDetailsActivity extends AppCompatActivity {
                 rent.setAssociateRoomId(AssociateRoomId);
                 rent.setAssociateRoomName(AssociateRoomStr);
                 rent.setRentAmount(Integer.parseInt(activityNewRentDetailsBinding.RentAmount.getText().toString()));
-                if (command.equals("add")){
-                    dbHelperParent.addRent(rent);
-                }
-                else if (command.equals("update")){
-                    dbHelperParent.updateRent(rent, rent.getRentId());
-                }
+                firebaseCrudHelper.add(rent, "rent");
                 Toast.makeText(getApplicationContext(),R.string.success, Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(RentDetailsActivity.this, RentListActivity.class));
             }
@@ -131,6 +128,7 @@ public class RentDetailsActivity extends AppCompatActivity {
     private void init() {
         spinnerData = new SpinnerData(this);
         dbHelperParent = new DbHelperParent(this);
+        firebaseCrudHelper = new FirebaseCrudHelper(this);
         spinnerAdapter = new SpinnerAdapter();
         inputValidation = new InputValidation(this, activityNewRentDetailsBinding.mainLayout);
     }

@@ -17,6 +17,7 @@ import com.shakil.barivara.R;
 import com.shakil.barivara.activities.onboard.MainActivity;
 import com.shakil.barivara.databinding.ActivityAddNewTenantBinding;
 import com.shakil.barivara.dbhelper.DbHelperParent;
+import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.tenant.Tenant;
 import com.shakil.barivara.utils.InputValidation;
 import com.shakil.barivara.utils.SpinnerAdapter;
@@ -33,6 +34,7 @@ public class NewTenantActivity extends AppCompatActivity {
     private InputValidation inputValidation;
     private Tenant tenant = new Tenant();
     private String command = "add";
+    private FirebaseCrudHelper firebaseCrudHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +88,7 @@ public class NewTenantActivity extends AppCompatActivity {
         inputValidation = new InputValidation(this,activityAddNewTenantBinding.mainLayout);
         toolbar = findViewById(R.id.tool_bar);
         dbHelperParent = new DbHelperParent(this);
+        firebaseCrudHelper = new FirebaseCrudHelper(this);
         spinnerData = new SpinnerData(this);
         spinnerAdapter = new SpinnerAdapter();
     }
@@ -137,11 +140,7 @@ public class NewTenantActivity extends AppCompatActivity {
                     tenant.setAssociateRoomId(AssociateRoomId);
                     tenant.setStartingMonthId(StartingMonthId);
                     tenant.setStartingMonth(StartingMonthStr);
-                    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-                    DatabaseReference databaseReference = firebaseDatabase.getReference("tenants");
-                    Log.i("shakil-dev",""+databaseReference.getParent());
-                    String tenantId = databaseReference.push().getKey();
-                    databaseReference.child(tenantId).setValue(tenant);
+                    firebaseCrudHelper.add(tenant, "tenant");
                     Toast.makeText(getApplicationContext(),R.string.success, Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(NewTenantActivity.this,TenantListActivity.class));
                 }

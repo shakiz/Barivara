@@ -191,7 +191,7 @@ public class DbHelperParent extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Meter meter = new Meter();
-                meter.setMeterId(cursor.getInt(cursor.getColumnIndex(COLUMN_METER_ID)));
+                meter.setMeterId(cursor.getString(cursor.getColumnIndex(COLUMN_METER_ID)));
                 meter.setMeterName(cursor.getString(cursor.getColumnIndex(COLUMN_METER_NAME)));
                 meter.setAssociateRoom(cursor.getString(cursor.getColumnIndex(COLUMN_ASSOCIATE_ROOM_NAME)));
                 meter.setAssociateRoomId(cursor.getInt(cursor.getColumnIndex(COLUMN_ASSOCIATE_ROOM_ID)));

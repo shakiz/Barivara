@@ -15,6 +15,7 @@ import androidx.databinding.DataBindingUtil;
 import com.shakil.barivara.R;
 import com.shakil.barivara.databinding.ActivityElectricityBillDetailsBinding;
 import com.shakil.barivara.dbhelper.DbHelperParent;
+import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.meter.ElectricityBill;
 import com.shakil.barivara.utils.InputValidation;
 import com.shakil.barivara.utils.SpinnerAdapter;
@@ -33,6 +34,7 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
     private ElectricityBill electricityBill = new ElectricityBill();
     private String command = "add";
     private int AssociateMeterId, AssociateRoomId;
+    private FirebaseCrudHelper firebaseCrudHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,12 +132,7 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
                     electricityBill.setTotalUnit(Integer.parseInt(activityMeterCostDetailsBinding.TotalUnit.getText().toString()));
                     electricityBill.setTotalBill(Integer.parseInt(activityMeterCostDetailsBinding.TotalUnit.getText().toString()));
 
-                    if (command.equals("add")){
-                        dbHelperParent.addElectricityBill(electricityBill);
-                    }
-                    else if (command.equals("update")){
-                        dbHelperParent.updateElectricityBill(electricityBill, electricityBill.getBillId());
-                    }
+                    firebaseCrudHelper.add(electricityBill,"electricityBill");
                     Toast.makeText(getApplicationContext(),R.string.success, Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(ElectricityBillDetailsActivity.this, ElectricityBillListActivity.class));
                 }
@@ -239,6 +236,7 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
         spinnerData = new SpinnerData(this);
         spinnerAdapter = new SpinnerAdapter();
         dbHelperParent = new DbHelperParent(this);
+        firebaseCrudHelper = new FirebaseCrudHelper(this);
         inputValidation = new InputValidation(this,activityMeterCostDetailsBinding.mainLayout);
         utilsForAll = new UtilsForAll(this,activityMeterCostDetailsBinding.mainLayout);
     }

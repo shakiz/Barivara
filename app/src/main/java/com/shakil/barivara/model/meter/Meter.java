@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Meter implements Parcelable {
-    private int MeterId;
+    private String MeterId;
     private String MeterName;
     private String AssociateRoom;
     private int AssociateRoomId;
@@ -38,7 +38,7 @@ public class Meter implements Parcelable {
     }
 
     protected Meter(Parcel in) {
-        MeterId = in.readInt();
+        MeterId = in.readString();
         MeterName = in.readString();
         AssociateRoom = in.readString();
         AssociateRoomId = in.readInt();
@@ -51,7 +51,7 @@ public class Meter implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(MeterId);
+        dest.writeString(MeterId);
         dest.writeString(MeterName);
         dest.writeString(AssociateRoom);
         dest.writeInt(AssociateRoomId);
@@ -79,11 +79,11 @@ public class Meter implements Parcelable {
         }
     };
 
-    public int getMeterId() {
+    public String getMeterId() {
         return MeterId;
     }
 
-    public void setMeterId(int meterId) {
+    public void setMeterId(String meterId) {
         MeterId = meterId;
     }
 

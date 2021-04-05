@@ -13,6 +13,7 @@ import androidx.databinding.DataBindingUtil;
 import com.shakil.barivara.R;
 import com.shakil.barivara.databinding.ActivityAddNewRoomBinding;
 import com.shakil.barivara.dbhelper.DbHelperParent;
+import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.room.Room;
 import com.shakil.barivara.utils.InputValidation;
 import com.shakil.barivara.utils.SpinnerAdapter;
@@ -29,6 +30,7 @@ public class RoomActivity extends AppCompatActivity {
     private int advancedAmountInt;
     private Room room = new Room();
     private String command = "add";
+    private FirebaseCrudHelper firebaseCrudHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,11 +146,7 @@ public class RoomActivity extends AppCompatActivity {
                     room.setAssociateMeterId(AssociateMeterId);
                     room.setTenantName(tenantNameStr);
                     room.setAdvancedAmount(advancedAmountInt);
-                    if (command.equals("add")) {
-                        dbHelperParent.addRoom(room);
-                    } else if (command.equals("update")){
-                        dbHelperParent.updateRoom(room, room.getRoomId());
-                    }
+                    firebaseCrudHelper.add(room, "room");
                     Toast.makeText(getApplicationContext(),R.string.success, Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(RoomActivity.this,RoomListActivity.class));
                 }

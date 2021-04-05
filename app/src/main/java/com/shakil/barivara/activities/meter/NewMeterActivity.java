@@ -12,10 +12,13 @@ import androidx.databinding.DataBindingUtil;
 import com.shakil.barivara.R;
 import com.shakil.barivara.databinding.ActivityNewMeterBinding;
 import com.shakil.barivara.dbhelper.DbHelperParent;
+import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.meter.Meter;
 import com.shakil.barivara.utils.InputValidation;
 import com.shakil.barivara.utils.SpinnerAdapter;
 import com.shakil.barivara.utils.SpinnerData;
+
+import java.util.UUID;
 
 public class NewMeterActivity extends AppCompatActivity {
     private ActivityNewMeterBinding activityNewMeterBinding;
@@ -27,6 +30,7 @@ public class NewMeterActivity extends AppCompatActivity {
     private int AssociateRoomId, MeterTypeId;
     private Meter meter = new Meter();
     private String command = "add";
+    private FirebaseCrudHelper firebaseCrudHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +71,7 @@ public class NewMeterActivity extends AppCompatActivity {
 
     //region load intent data to UI
     private void loadData(){
-        if (meter.getMeterId() != 0) {
+        if (meter.getMeterId() != null) {
             command = "update";
             activityNewMeterBinding.MeterName.setText(meter.getMeterName());
             activityNewMeterBinding.RoomSpinner.setSelection(meter.getAssociateRoomId(),true);
@@ -117,17 +121,15 @@ public class NewMeterActivity extends AppCompatActivity {
                 //region validation and save data
                 if (!roomNameStr.equals("Select Data") && !meterTypeStr.equals("Select Data")){
                     meterNameStr = activityNewMeterBinding.MeterName.getText().toString();
+                    meter.setMeterId(UUID.randomUUID().toString());
                     meter.setMeterName(meterNameStr);
                     meter.setAssociateRoom(roomNameStr);
                     meter.setAssociateRoomId(AssociateRoomId);
                     meter.setMeterTypeName(meterTypeStr);
                     meter.setMeterTypeId(MeterTypeId);
-                    if (command.equals("add")){
-                        dbHelperParent.addMeter(meter);
-                    }
-                    else if (command.equals("update")){
-                        dbHelperParent.updateMeter(meter, meter.getMeterId());
-                    }
+                    //region add meter to firebase
+                    firebaseCrudHelper.add(meter, "meter");
+                    //endregion
                     Toast.makeText(getApplicationContext(),R.string.success, Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(NewMeterActivity.this,MeterListActivity.class));
                 }
@@ -144,6 +146,7 @@ public class NewMeterActivity extends AppCompatActivity {
         spinnerAdapter = new SpinnerAdapter();
         spinnerData = new SpinnerData(this);
         dbHelperParent = new DbHelperParent(this);
+        firebaseCrudHelper = new FirebaseCrudHelper(this);
     }
 
     @Override
