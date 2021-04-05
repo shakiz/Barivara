@@ -7,7 +7,7 @@
     <data>
         <variable
             name="meter"
-            type="com.shakil.homeapp.activities.model.meter.Meter" />
+            type="com.shakil.barivara.model.meter.Meter" />
     </data>
 
     <RelativeLayout

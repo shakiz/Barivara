@@ -11,9 +11,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.shakil.homeapp.R;
-import com.shakil.homeapp.activities.activities.meter.NewMeterActivity;
-import com.shakil.homeapp.activities.model.dashboard.Dashboard;
+import com.shakil.barivara.R;
+import com.shakil.barivara.activities.meter.NewMeterActivity;
+import com.shakil.barivara.model.dashboard.Dashboard;
 
 import java.util.ArrayList;
 

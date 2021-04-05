@@ -23,8 +23,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.shakil.homeapp.R;
-import com.yarolegovich.lovelydialog.LovelyStandardDialog;
+import com.shakil.barivara.R;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -211,20 +210,4 @@ public class UX {
         return valid;
     }
     //Validation End
-
-    //region custom dialog
-    public static void showInfoDialog(final AppCompatActivity activity, String title,
-                                      int icon, String message) {
-        new LovelyStandardDialog(activity, LovelyStandardDialog.ButtonLayout.HORIZONTAL)
-                .setTopColorRes(R.color.md_green_400)
-                .setButtonsColorRes(R.color.md_green_800)
-                .setIcon(icon)
-                .setTitle(title)
-                .setMessage(message)
-                .setPositiveButton("Relax", v -> {})
-                .setNeutralButton("Go Home", v -> {})
-                .setNegativeButton("Go Back", v -> {})
-                .show();
-    }
-    ///endregion
 }

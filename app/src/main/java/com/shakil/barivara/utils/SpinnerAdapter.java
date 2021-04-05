@@ -4,7 +4,7 @@ import android.content.Context;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
-import com.shakil.homeapp.R;
+import com.shakil.barivara.R;
 
 public class SpinnerAdapter {
     private ArrayAdapter<String> spinnerAdapter;

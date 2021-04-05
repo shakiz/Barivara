@@ -9,7 +9,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
-import com.shakil.homeapp.R;
+import com.shakil.barivara.R;
 
 import java.util.Date;
 
@@ -20,11 +20,6 @@ public class Tools {
     public Tools(Context context, View view) {
         this.context = context;
         this.view = view;
-    }
-
-    public void setAnimation(View view){
-        Animation a = AnimationUtils.loadAnimation(context, R.anim.fadein);
-        view.startAnimation(a);
     }
 
     public static Long persistDate(Date date) {

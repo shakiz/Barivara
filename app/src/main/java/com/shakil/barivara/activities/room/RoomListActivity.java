@@ -12,14 +12,14 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.shakil.homeapp.R;
-import com.shakil.homeapp.activities.activities.onboard.MainActivity;
-import com.shakil.homeapp.activities.adapter.RecyclerRoomListAdapter;
-import com.shakil.homeapp.activities.dbhelper.DbHelperParent;
-import com.shakil.homeapp.activities.model.room.Room;
-import com.shakil.homeapp.activities.mvvm.RoomModelMVVM;
-import com.shakil.homeapp.activities.mvvm.RoomViewModel;
-import com.shakil.homeapp.databinding.ActivityRoomListBinding;
+import com.shakil.barivara.R;
+import com.shakil.barivara.activities.onboard.MainActivity;
+import com.shakil.barivara.adapter.RecyclerRoomListAdapter;
+import com.shakil.barivara.databinding.ActivityRoomListBinding;
+import com.shakil.barivara.dbhelper.DbHelperParent;
+import com.shakil.barivara.model.room.Room;
+import com.shakil.barivara.mvvm.RoomModelMVVM;
+import com.shakil.barivara.mvvm.RoomViewModel;
 
 import java.util.ArrayList;
 import java.util.List;

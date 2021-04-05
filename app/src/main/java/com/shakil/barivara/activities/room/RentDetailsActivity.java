@@ -9,14 +9,14 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
-import com.shakil.homeapp.R;
-import com.shakil.homeapp.activities.activities.onboard.MainActivity;
-import com.shakil.homeapp.activities.dbhelper.DbHelperParent;
-import com.shakil.homeapp.activities.model.room.Rent;
-import com.shakil.homeapp.activities.utils.InputValidation;
-import com.shakil.homeapp.activities.utils.SpinnerAdapter;
-import com.shakil.homeapp.activities.utils.SpinnerData;
-import com.shakil.homeapp.databinding.ActivityNewRentDetailsBinding;
+import com.shakil.barivara.R;
+import com.shakil.barivara.activities.onboard.MainActivity;
+import com.shakil.barivara.databinding.ActivityNewRentDetailsBinding;
+import com.shakil.barivara.dbhelper.DbHelperParent;
+import com.shakil.barivara.model.room.Rent;
+import com.shakil.barivara.utils.InputValidation;
+import com.shakil.barivara.utils.SpinnerAdapter;
+import com.shakil.barivara.utils.SpinnerData;
 
 public class RentDetailsActivity extends AppCompatActivity {
     private ActivityNewRentDetailsBinding activityNewRentDetailsBinding;

@@ -6,7 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.shakil.homeapp.R;
+import com.shakil.barivara.R;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

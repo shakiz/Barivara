@@ -9,12 +9,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.shakil.homeapp.R;
-import com.shakil.homeapp.activities.activities.onboard.MainActivity;
-import com.shakil.homeapp.activities.adapter.RecyclerRentListAdapter;
-import com.shakil.homeapp.activities.dbhelper.DbHelperParent;
-import com.shakil.homeapp.activities.model.room.Rent;
-import com.shakil.homeapp.databinding.ActivityRentListBinding;
+import com.shakil.barivara.R;
+import com.shakil.barivara.activities.onboard.MainActivity;
+import com.shakil.barivara.adapter.RecyclerRentListAdapter;
+import com.shakil.barivara.databinding.ActivityRentListBinding;
+import com.shakil.barivara.dbhelper.DbHelperParent;
+import com.shakil.barivara.model.room.Rent;
 
 import java.util.ArrayList;
 

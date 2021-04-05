@@ -9,12 +9,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.shakil.homeapp.R;
-import com.shakil.homeapp.activities.activities.onboard.MainActivity;
-import com.shakil.homeapp.activities.adapter.RecyclerMeterListAdapter;
-import com.shakil.homeapp.activities.dbhelper.DbHelperParent;
-import com.shakil.homeapp.activities.model.meter.Meter;
-import com.shakil.homeapp.databinding.ActivityMeterListBinding;
+import com.shakil.barivara.R;
+import com.shakil.barivara.activities.onboard.MainActivity;
+import com.shakil.barivara.adapter.RecyclerMeterListAdapter;
+import com.shakil.barivara.databinding.ActivityMeterListBinding;
+import com.shakil.barivara.dbhelper.DbHelperParent;
+import com.shakil.barivara.model.meter.Meter;
 
 import java.util.ArrayList;
 
@@ -36,7 +36,7 @@ public class MeterListActivity extends AppCompatActivity {
         activityMeterListBinding.toolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MeterListActivity.this,MainActivity.class));
+                startActivity(new Intent(MeterListActivity.this, MainActivity.class));
             }
         });
 

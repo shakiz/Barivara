@@ -8,7 +8,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
-import com.shakil.homeapp.R;
+import com.shakil.barivara.R;
 
 public class InputValidation {
     private Context context;
@@ -79,7 +79,7 @@ public class InputValidation {
         }
         else{
             value[0] = "Select Data";
-            Toast.makeText(context,R.string.warning_message, Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, R.string.warning_message, Toast.LENGTH_SHORT).show();
         }
         Log.v("shakil",""+value[0]);
         return value[0];

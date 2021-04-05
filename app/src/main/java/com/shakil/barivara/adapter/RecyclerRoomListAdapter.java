@@ -10,8 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.shakil.homeapp.R;
-import com.shakil.homeapp.activities.model.room.Room;
+import com.shakil.barivara.R;
+import com.shakil.barivara.model.room.Room;
 
 import java.util.ArrayList;
 

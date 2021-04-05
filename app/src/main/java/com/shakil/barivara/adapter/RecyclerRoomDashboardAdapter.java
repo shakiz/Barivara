@@ -11,12 +11,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.shakil.homeapp.R;
-import com.shakil.homeapp.activities.activities.room.RoomActivity;
-import com.shakil.homeapp.activities.model.dashboard.Dashboard;
+import com.shakil.barivara.R;
+import com.shakil.barivara.activities.room.RoomActivity;
+import com.shakil.barivara.model.dashboard.Dashboard;
 
 import java.util.ArrayList;
-
 
 public class RecyclerRoomDashboardAdapter extends RecyclerView.Adapter<RecyclerRoomDashboardAdapter.ViewHolder> {
 

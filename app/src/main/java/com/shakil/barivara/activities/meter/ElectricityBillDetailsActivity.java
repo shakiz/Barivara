@@ -12,6 +12,15 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import com.shakil.barivara.R;
+import com.shakil.barivara.databinding.ActivityElectricityBillDetailsBinding;
+import com.shakil.barivara.dbhelper.DbHelperParent;
+import com.shakil.barivara.model.meter.ElectricityBill;
+import com.shakil.barivara.utils.InputValidation;
+import com.shakil.barivara.utils.SpinnerAdapter;
+import com.shakil.barivara.utils.SpinnerData;
+import com.shakil.barivara.utils.UtilsForAll;
+
 public class ElectricityBillDetailsActivity extends AppCompatActivity {
     private ActivityElectricityBillDetailsBinding activityMeterCostDetailsBinding;
     private String meterNameStr, roomNameStr;

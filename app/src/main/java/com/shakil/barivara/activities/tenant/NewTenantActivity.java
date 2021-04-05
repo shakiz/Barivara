@@ -13,14 +13,14 @@ import androidx.databinding.DataBindingUtil;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.shakil.homeapp.R;
-import com.shakil.homeapp.activities.activities.onboard.MainActivity;
-import com.shakil.homeapp.activities.dbhelper.DbHelperParent;
-import com.shakil.homeapp.activities.model.tenant.Tenant;
-import com.shakil.homeapp.activities.utils.InputValidation;
-import com.shakil.homeapp.activities.utils.SpinnerAdapter;
-import com.shakil.homeapp.activities.utils.SpinnerData;
-import com.shakil.homeapp.databinding.ActivityAddNewTenantBinding;
+import com.shakil.barivara.R;
+import com.shakil.barivara.activities.onboard.MainActivity;
+import com.shakil.barivara.databinding.ActivityAddNewTenantBinding;
+import com.shakil.barivara.dbhelper.DbHelperParent;
+import com.shakil.barivara.model.tenant.Tenant;
+import com.shakil.barivara.utils.InputValidation;
+import com.shakil.barivara.utils.SpinnerAdapter;
+import com.shakil.barivara.utils.SpinnerData;
 
 public class NewTenantActivity extends AppCompatActivity {
     private ActivityAddNewTenantBinding activityAddNewTenantBinding;

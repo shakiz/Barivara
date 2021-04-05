@@ -7,9 +7,9 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
-import com.shakil.homeapp.R;
-import com.shakil.homeapp.activities.activities.onboard.MainActivity;
-import com.shakil.homeapp.databinding.ActivitySettingsBinding;
+import com.shakil.barivara.R;
+import com.shakil.barivara.activities.onboard.MainActivity;
+import com.shakil.barivara.databinding.ActivitySettingsBinding;
 
 public class SettingsActivity extends AppCompatActivity {
     private ActivitySettingsBinding activitySettingsBinding;

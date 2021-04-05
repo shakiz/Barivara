@@ -5,8 +5,8 @@ import android.content.Context;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.shakil.homeapp.activities.adapter.RecyclerMeterListAdapter;
-import com.shakil.homeapp.activities.adapter.RecyclerRoomListAdapter;
+import com.shakil.barivara.adapter.RecyclerMeterListAdapter;
+import com.shakil.barivara.adapter.RecyclerRoomListAdapter;
 
 public class RecyclerAdapter {
     private RecyclerView.LayoutManager layoutManager;

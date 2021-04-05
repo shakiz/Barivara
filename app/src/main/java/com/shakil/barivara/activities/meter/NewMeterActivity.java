@@ -9,13 +9,13 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
-import com.shakil.homeapp.R;
-import com.shakil.homeapp.activities.dbhelper.DbHelperParent;
-import com.shakil.homeapp.activities.model.meter.Meter;
-import com.shakil.homeapp.activities.utils.InputValidation;
-import com.shakil.homeapp.activities.utils.SpinnerAdapter;
-import com.shakil.homeapp.activities.utils.SpinnerData;
-import com.shakil.homeapp.databinding.ActivityNewMeterBinding;
+import com.shakil.barivara.R;
+import com.shakil.barivara.databinding.ActivityNewMeterBinding;
+import com.shakil.barivara.dbhelper.DbHelperParent;
+import com.shakil.barivara.model.meter.Meter;
+import com.shakil.barivara.utils.InputValidation;
+import com.shakil.barivara.utils.SpinnerAdapter;
+import com.shakil.barivara.utils.SpinnerData;
 
 public class NewMeterActivity extends AppCompatActivity {
     private ActivityNewMeterBinding activityNewMeterBinding;
