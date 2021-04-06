@@ -14,7 +14,9 @@ import com.shakil.barivara.activities.onboard.MainActivity;
 import com.shakil.barivara.adapter.RecyclerTenantListAdapter;
 import com.shakil.barivara.databinding.ActivityTenantListBinding;
 import com.shakil.barivara.dbhelper.DbHelperParent;
+import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.tenant.Tenant;
+import com.shakil.barivara.utils.UX;
 
 import java.util.ArrayList;
 
@@ -24,6 +26,8 @@ public class TenantListActivity extends AppCompatActivity {
     private ArrayList<Tenant> tenantList;
     private TextView noDataTXT;
     private DbHelperParent dbHelperParent;
+    private FirebaseCrudHelper firebaseCrudHelper;
+    private UX ux;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +51,42 @@ public class TenantListActivity extends AppCompatActivity {
     private void init() {
         tenantList = new ArrayList<>();
         dbHelperParent = new DbHelperParent(this);
+        firebaseCrudHelper = new FirebaseCrudHelper(this);
+        ux = new UX(this);
         noDataTXT = findViewById(R.id.mNoDataMessage);
     }
 
     private void binUiWithComponents(){
         setData();
 
+        activityTenantListBinding.mAddTenantMaster.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(TenantListActivity.this, NewTenantActivity.class));
+            }
+        });
+    }
+
+    //region set recycler data
+    private void setData() {
+        ux.getLoadingView();
+        firebaseCrudHelper.fetchAllTenant("tenant", new FirebaseCrudHelper.onTenantDataFetch() {
+            @Override
+            public void onFetch(ArrayList<Tenant> objects) {
+                tenantList = objects;
+                if (tenantList.size() <= 0){
+                    noDataTXT.setVisibility(View.VISIBLE);
+                    noDataTXT.setText(R.string.no_data_message);
+                }
+                setRecyclerAdapter();
+                ux.removeLoadingView();
+            }
+        });
+    }
+    //endregion
+
+    //region set recycler adapter
+    private void setRecyclerAdapter(){
         recyclerTenantListAdapter = new RecyclerTenantListAdapter(tenantList, this);
         activityTenantListBinding.mRecylerView.setLayoutManager(new LinearLayoutManager(this));
         activityTenantListBinding.mRecylerView.setAdapter(recyclerTenantListAdapter);
@@ -63,22 +97,8 @@ public class TenantListActivity extends AppCompatActivity {
                 startActivity(new Intent(TenantListActivity.this, NewTenantActivity.class).putExtra("tenant", tenant));
             }
         });
-
-        activityTenantListBinding.mAddTenantMaster.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(TenantListActivity.this, NewTenantActivity.class));
-            }
-        });
     }
-
-    private void setData() {
-        tenantList = dbHelperParent.getAllTenantDetails();
-        if (tenantList.size() <= 0){
-            noDataTXT.setVisibility(View.VISIBLE);
-            noDataTXT.setText(R.string.no_data_message);
-        }
-    }
+    //endregion
 
     //region activity components
 

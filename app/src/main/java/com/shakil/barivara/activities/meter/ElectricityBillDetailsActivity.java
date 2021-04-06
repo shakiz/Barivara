@@ -22,6 +22,8 @@ import com.shakil.barivara.utils.SpinnerAdapter;
 import com.shakil.barivara.utils.SpinnerData;
 import com.shakil.barivara.utils.UtilsForAll;
 
+import java.util.UUID;
+
 public class ElectricityBillDetailsActivity extends AppCompatActivity {
     private ActivityElectricityBillDetailsBinding activityMeterCostDetailsBinding;
     private String meterNameStr, roomNameStr;
@@ -73,7 +75,7 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
 
     //region load intent data to UI
     private void loadData(){
-        if (electricityBill.getBillId() != 0) {
+        if (electricityBill.getBillId() != null) {
             command = "update";
             activityMeterCostDetailsBinding.UnitPrice.setText(String.valueOf(electricityBill.getUnitPrice()));
             activityMeterCostDetailsBinding.PresentUnit.setText(String.valueOf(electricityBill.getPresentUnit()));
@@ -121,24 +123,20 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 inputValidation.checkEditTextInput(new int[]{R.id.PresentUnit,R.id.PastUnit,R.id.UnitPrice},"Please check your value");
-                if (!meterNameStr.equals("Select Data") && !roomNameStr.equals("Select Data")){
-                    electricityBill.setMeterId(AssociateMeterId);
-                    electricityBill.setRoomId(AssociateRoomId);
-                    electricityBill.setMeterName(meterNameStr);
-                    electricityBill.setRoomName(roomNameStr);
-                    electricityBill.setUnitPrice(Integer.parseInt(activityMeterCostDetailsBinding.UnitPrice.getText().toString()));
-                    electricityBill.setPresentUnit(Integer.parseInt(activityMeterCostDetailsBinding.PresentUnit.getText().toString()));
-                    electricityBill.setPastUnit(Integer.parseInt(activityMeterCostDetailsBinding.PastUnit.getText().toString()));
-                    electricityBill.setTotalUnit(Integer.parseInt(activityMeterCostDetailsBinding.TotalUnit.getText().toString()));
-                    electricityBill.setTotalBill(Integer.parseInt(activityMeterCostDetailsBinding.TotalUnit.getText().toString()));
+                electricityBill.setBillId(UUID.randomUUID().toString());
+                electricityBill.setMeterId(AssociateMeterId);
+                electricityBill.setRoomId(AssociateRoomId);
+                electricityBill.setMeterName(meterNameStr);
+                electricityBill.setRoomName(roomNameStr);
+                electricityBill.setUnitPrice(Integer.parseInt(activityMeterCostDetailsBinding.UnitPrice.getText().toString()));
+                electricityBill.setPresentUnit(Integer.parseInt(activityMeterCostDetailsBinding.PresentUnit.getText().toString()));
+                electricityBill.setPastUnit(Integer.parseInt(activityMeterCostDetailsBinding.PastUnit.getText().toString()));
+                electricityBill.setTotalUnit(Integer.parseInt(activityMeterCostDetailsBinding.TotalUnit.getText().toString()));
+                electricityBill.setTotalBill(Integer.parseInt(activityMeterCostDetailsBinding.TotalUnit.getText().toString()));
 
-                    firebaseCrudHelper.add(electricityBill,"electricityBill");
-                    Toast.makeText(getApplicationContext(),R.string.success, Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(ElectricityBillDetailsActivity.this, ElectricityBillListActivity.class));
-                }
-                else{
-                    Toast.makeText(getApplicationContext(),R.string.warning_message, Toast.LENGTH_SHORT).show();
-                }
+                firebaseCrudHelper.add(electricityBill,"electricityBill");
+                Toast.makeText(getApplicationContext(),R.string.success, Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(ElectricityBillDetailsActivity.this, ElectricityBillListActivity.class));
             }
         });
         //region end

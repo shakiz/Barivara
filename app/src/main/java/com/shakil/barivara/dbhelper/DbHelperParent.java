@@ -346,7 +346,7 @@ public class DbHelperParent extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Room room = new Room();
-                room.setRoomId(cursor.getInt(cursor.getColumnIndex(COLUMN_ROOM_ID)));
+                room.setRoomId(cursor.getString(cursor.getColumnIndex(COLUMN_ROOM_ID)));
                 room.setRoomName(cursor.getString(cursor.getColumnIndex(COLUMN_ROOM_NAME)));
                 room.setTenantName(cursor.getString(cursor.getColumnIndex(COLUMN_TENANT_NAME)));
                 room.setStartMonthName(cursor.getString(cursor.getColumnIndex(COLUMN_START_MONTH_NAME)));
@@ -590,7 +590,7 @@ public class DbHelperParent extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Rent rent = new Rent();
-                rent.setRentId(cursor.getInt(cursor.getColumnIndex(COLUMN_RENT_ID)));
+                rent.setRentId(cursor.getString(cursor.getColumnIndex(COLUMN_RENT_ID)));
                 rent.setMonthName(cursor.getString(cursor.getColumnIndex(COLUMN_RENT_MONTH_NAME)));
                 rent.setMonthId(cursor.getInt(cursor.getColumnIndex(COLUMN_RENT_MONTH_ID)));
                 rent.setAssociateRoomName(cursor.getString(cursor.getColumnIndex(COLUMN_RENT_ROOM_NAME)));
@@ -711,7 +711,7 @@ public class DbHelperParent extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 ElectricityBill electricityBill = new ElectricityBill();
-                electricityBill.setBillId(cursor.getInt(cursor.getColumnIndex(COLUMN_ELECTRICITY_BILL_ID)));
+                electricityBill.setBillId(cursor.getString(cursor.getColumnIndex(COLUMN_ELECTRICITY_BILL_ID)));
                 electricityBill.setMeterId(cursor.getInt(cursor.getColumnIndex(COLUMN_METER_ID)));
                 electricityBill.setRoomId(cursor.getInt(cursor.getColumnIndex(COLUMN_ROOM_ID)));
                 electricityBill.setMeterName(cursor.getString(cursor.getColumnIndex(COLUMN_METER_NAME)));

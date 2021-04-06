@@ -19,6 +19,8 @@ import com.shakil.barivara.utils.InputValidation;
 import com.shakil.barivara.utils.SpinnerAdapter;
 import com.shakil.barivara.utils.SpinnerData;
 
+import java.util.UUID;
+
 public class RentDetailsActivity extends AppCompatActivity {
     private ActivityNewRentDetailsBinding activityNewRentDetailsBinding;
     private SpinnerData spinnerData;
@@ -68,7 +70,7 @@ public class RentDetailsActivity extends AppCompatActivity {
 
     //region load intent data to UI
     private void loadData(){
-        if (rent.getRentId() != 0) {
+        if (rent.getRentId() != null) {
             command = "update";
             activityNewRentDetailsBinding.RentAmount.setText(String.valueOf(rent.getRentAmount()));
             activityNewRentDetailsBinding.MonthId.setSelection(rent.getMonthId(), true);
@@ -113,6 +115,7 @@ public class RentDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 inputValidation.checkEditTextInput(R.id.RentAmount,"Please check your value");
+                rent.setRentId(UUID.randomUUID().toString());
                 rent.setMonthId(MonthId);
                 rent.setMonthName(MonthStr);
                 rent.setAssociateRoomId(AssociateRoomId);

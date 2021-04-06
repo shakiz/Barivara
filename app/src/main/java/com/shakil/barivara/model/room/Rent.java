@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Rent implements Parcelable {
-    private int RentId;
+    private String RentId;
     private String MonthName;
     private int MonthId;
     private String AssociateRoomName;
@@ -22,7 +22,7 @@ public class Rent implements Parcelable {
     }
 
     protected Rent(Parcel in) {
-        RentId = in.readInt();
+        RentId = in.readString();
         MonthName = in.readString();
         MonthId = in.readInt();
         AssociateRoomName = in.readString();
@@ -32,7 +32,7 @@ public class Rent implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(RentId);
+        dest.writeString(RentId);
         dest.writeString(MonthName);
         dest.writeInt(MonthId);
         dest.writeString(AssociateRoomName);
@@ -57,11 +57,11 @@ public class Rent implements Parcelable {
         }
     };
 
-    public int getRentId() {
+    public String getRentId() {
         return RentId;
     }
 
-    public void setRentId(int rentId) {
+    public void setRentId(String rentId) {
         RentId = rentId;
     }
 

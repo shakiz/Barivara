@@ -23,6 +23,8 @@ import com.shakil.barivara.utils.InputValidation;
 import com.shakil.barivara.utils.SpinnerAdapter;
 import com.shakil.barivara.utils.SpinnerData;
 
+import java.util.UUID;
+
 public class NewTenantActivity extends AppCompatActivity {
     private ActivityAddNewTenantBinding activityAddNewTenantBinding;
     private Toolbar toolbar;
@@ -74,12 +76,12 @@ public class NewTenantActivity extends AppCompatActivity {
 
     //region load intent data to UI
     private void loadData(){
-//        if (tenant.getTenantId() != null) {
-//            command = "update";
-//            activityAddNewTenantBinding.TenantName.setText(tenant.getTenantName());
-//            activityAddNewTenantBinding.StartingMonthId.setSelection(tenant.getStartingMonthId(),true);
-//            activityAddNewTenantBinding.AssociateRoomId.setSelection(tenant.getAssociateRoomId(),true);
-//        }
+        if (tenant.getTenantId() != null) {
+            command = "update";
+            activityAddNewTenantBinding.TenantName.setText(tenant.getTenantName());
+            activityAddNewTenantBinding.StartingMonthId.setSelection(tenant.getStartingMonthId(),true);
+            activityAddNewTenantBinding.AssociateRoomId.setSelection(tenant.getAssociateRoomId(),true);
+        }
     }
     //endregion
 
@@ -133,20 +135,16 @@ public class NewTenantActivity extends AppCompatActivity {
                 inputValidation.checkEditTextInput(R.id.TenantName,"Please check your data");
 
                 //region validation and save data
-                if (!AssociateRoomStr.equals("Select Data") && !StartingMonthStr.equals("Select Data")){
-                    tenantNameStr = activityAddNewTenantBinding.TenantName.getText().toString();
-                    tenant.setTenantName(tenantNameStr);
-                    tenant.setAssociateRoom(AssociateRoomStr);
-                    tenant.setAssociateRoomId(AssociateRoomId);
-                    tenant.setStartingMonthId(StartingMonthId);
-                    tenant.setStartingMonth(StartingMonthStr);
-                    firebaseCrudHelper.add(tenant, "tenant");
-                    Toast.makeText(getApplicationContext(),R.string.success, Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(NewTenantActivity.this,TenantListActivity.class));
-                }
-                else{
-                    Toast.makeText(getApplicationContext(),R.string.warning_message, Toast.LENGTH_SHORT).show();
-                }
+                tenantNameStr = activityAddNewTenantBinding.TenantName.getText().toString();
+                tenant.setTenantId(UUID.randomUUID().toString());
+                tenant.setTenantName(tenantNameStr);
+                tenant.setAssociateRoom(AssociateRoomStr);
+                tenant.setAssociateRoomId(AssociateRoomId);
+                tenant.setStartingMonthId(StartingMonthId);
+                tenant.setStartingMonth(StartingMonthStr);
+                firebaseCrudHelper.add(tenant, "tenant");
+                Toast.makeText(getApplicationContext(),R.string.success, Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(NewTenantActivity.this,TenantListActivity.class));
                 //endregion
             }
         });
@@ -156,7 +154,7 @@ public class NewTenantActivity extends AppCompatActivity {
     //region activity components
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(NewTenantActivity.this, MainActivity.class));
+        startActivity(new Intent(NewTenantActivity.this, TenantListActivity.class));
     }
 
     @Override

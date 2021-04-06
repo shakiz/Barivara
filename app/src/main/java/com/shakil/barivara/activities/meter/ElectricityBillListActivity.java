@@ -14,7 +14,9 @@ import com.shakil.barivara.activities.onboard.MainActivity;
 import com.shakil.barivara.adapter.RecyclerElectricityBillListAdapter;
 import com.shakil.barivara.databinding.ActivityElectricityBillListBinding;
 import com.shakil.barivara.dbhelper.DbHelperParent;
+import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.meter.ElectricityBill;
+import com.shakil.barivara.utils.UX;
 
 import java.util.ArrayList;
 
@@ -24,6 +26,8 @@ public class ElectricityBillListActivity extends AppCompatActivity {
     private ArrayList<ElectricityBill> electricityBills;
     private TextView noDataTXT;
     private DbHelperParent dbHelperParent;
+    private FirebaseCrudHelper firebaseCrudHelper;
+    private UX ux;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,19 +47,13 @@ public class ElectricityBillListActivity extends AppCompatActivity {
         //endregion
     }
 
-    private void setData() {
-        electricityBills = dbHelperParent.getAllElectricityBills();
-        if (electricityBills.size() <= 0){
-            noDataTXT.setVisibility(View.VISIBLE);
-            noDataTXT.setText(R.string.no_data_message);
-        }
-    }
-
     //region init components
     private void init(){
         electricityBills = new ArrayList<>();
         dbHelperParent = new DbHelperParent(this);
+        ux = new UX(this);
         noDataTXT = findViewById(R.id.mNoDataMessage);
+        firebaseCrudHelper = new FirebaseCrudHelper(this);
     }
     //endregion
 
@@ -63,6 +61,35 @@ public class ElectricityBillListActivity extends AppCompatActivity {
     private void bindUIWithComponents(){
         setData();
 
+        activityMeterCostListBinding.mAddMeterMaster.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ElectricityBillListActivity.this, ElectricityBillDetailsActivity.class));
+            }
+        });
+    }
+    //endregion
+
+    //region set data for recycler
+    private void setData() {
+        ux.getLoadingView();
+        firebaseCrudHelper.fetchAllElectricityBills("electricityBill", new FirebaseCrudHelper.onElectricityBillDataFetch() {
+            @Override
+            public void onFetch(ArrayList<ElectricityBill> objects) {
+                electricityBills = objects;
+                if (electricityBills.size() <= 0){
+                    noDataTXT.setVisibility(View.VISIBLE);
+                    noDataTXT.setText(R.string.no_data_message);
+                }
+                setRecyclerAdapter();
+                ux.removeLoadingView();
+            }
+        });
+    }
+    //endregion
+
+    //region set recycler adapter
+    private void setRecyclerAdapter(){
         recyclerBillListAdapter = new RecyclerElectricityBillListAdapter(electricityBills, this);
         activityMeterCostListBinding.mRecylerView.setLayoutManager(new LinearLayoutManager(this));
         activityMeterCostListBinding.mRecylerView.setAdapter(recyclerBillListAdapter);
@@ -71,13 +98,6 @@ public class ElectricityBillListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(ElectricityBill electricityBill) {
                 startActivity(new Intent(ElectricityBillListActivity.this, ElectricityBillDetailsActivity.class).putExtra("electricityBill", electricityBill));
-            }
-        });
-
-        activityMeterCostListBinding.mAddMeterMaster.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(ElectricityBillListActivity.this, ElectricityBillDetailsActivity.class));
             }
         });
     }

@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Tenant implements Parcelable {
-    public String TenantId;
+    private String TenantId;
     private String TenantName;
     private String StartingMonth;
     private int StartingMonthId;
@@ -49,6 +49,14 @@ public class Tenant implements Parcelable {
             return new Tenant[size];
         }
     };
+
+    public String getTenantId() {
+        return TenantId;
+    }
+
+    public void setTenantId(String tenantId) {
+        TenantId = tenantId;
+    }
 
     public String getTenantName() {
         return TenantName;

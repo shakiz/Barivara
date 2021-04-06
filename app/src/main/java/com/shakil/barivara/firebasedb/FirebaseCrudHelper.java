@@ -36,8 +36,7 @@ public class FirebaseCrudHelper {
     }
     //endregion
 
-    //region fetch table data from firebase db
-    private onDataFetch onDataFetch;
+    //region fetch  meter table data from firebase db
     public interface onDataFetch{
         void onFetch(ArrayList<Meter> objects);
     }
@@ -64,8 +63,11 @@ public class FirebaseCrudHelper {
             }
         });
     }
-    //region fetch table data from firebase db
-    public ArrayList<Room> fetchAllRoom(String path){
+    //region fetch room table data from firebase db
+    public interface onRoomDataFetch{
+        void onFetch(ArrayList<Room> objects);
+    }
+    public void fetchAllRoom(String path, onRoomDataFetch onRoomDataFetch){
         ArrayList<Room> objects = new ArrayList<>();
         databaseReference = FirebaseDatabase.getInstance().getReference(path);
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -77,6 +79,7 @@ public class FirebaseCrudHelper {
                         Log.i(Constants.TAG+":fetchRoom",""+object.getRoomName());
                         objects.add(object);
                     }
+                    onRoomDataFetch.onFetch(objects);
                 }
             }
 
@@ -85,10 +88,12 @@ public class FirebaseCrudHelper {
                 Log.i(Constants.TAG,""+error.getMessage());
             }
         });
-        return objects;
     }
-    //region fetch table data from firebase db
-    public ArrayList<Rent> fetchAllRent(String path){
+    //region fetch rent table data from firebase db
+    public interface onRentDataFetch{
+        void onFetch(ArrayList<Rent> objects);
+    }
+    public void fetchAllRent(String path, onRentDataFetch onRentDataFetch){
         ArrayList<Rent> objects = new ArrayList<>();
         databaseReference = FirebaseDatabase.getInstance().getReference(path);
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -100,6 +105,7 @@ public class FirebaseCrudHelper {
                         Log.i(Constants.TAG+":fetchRent",""+object.getMonthName());
                         objects.add(object);
                     }
+                    onRentDataFetch.onFetch(objects);
                 }
             }
 
@@ -108,10 +114,12 @@ public class FirebaseCrudHelper {
                 Log.i(Constants.TAG,""+error.getMessage());
             }
         });
-        return objects;
     }
-    //region fetch table data from firebase db
-    public ArrayList<ElectricityBill> fetchAllElectricityBills(String path){
+    //region fetch electricity bill table data from firebase db
+    public interface onElectricityBillDataFetch{
+        void onFetch(ArrayList<ElectricityBill> objects);
+    }
+    public void fetchAllElectricityBills(String path, onElectricityBillDataFetch onElectricityBillDataFetch){
         ArrayList<ElectricityBill> objects = new ArrayList<>();
         databaseReference = FirebaseDatabase.getInstance().getReference(path);
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -123,6 +131,7 @@ public class FirebaseCrudHelper {
                         Log.i(Constants.TAG+":fetchBill",""+object.getMeterName());
                         objects.add(object);
                     }
+                    onElectricityBillDataFetch.onFetch(objects);
                 }
             }
 
@@ -131,10 +140,12 @@ public class FirebaseCrudHelper {
                 Log.i(Constants.TAG,""+error.getMessage());
             }
         });
-        return objects;
     }
-    //region fetch table data from firebase db
-    public ArrayList<Tenant> fetchAllTenant(String path){
+    //region fetch tenant table data from firebase db
+    public interface onTenantDataFetch{
+        void onFetch(ArrayList<Tenant> objects);
+    }
+    public void fetchAllTenant(String path, onTenantDataFetch onTenantDataFetch){
         ArrayList<Tenant> objects = new ArrayList<>();
         databaseReference = FirebaseDatabase.getInstance().getReference(path);
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -146,6 +157,7 @@ public class FirebaseCrudHelper {
                         Log.i(Constants.TAG+":fetchTenant",""+object.getTenantName());
                         objects.add(object);
                     }
+                    onTenantDataFetch.onFetch(objects);
                 }
             }
 
@@ -154,7 +166,6 @@ public class FirebaseCrudHelper {
                 Log.i(Constants.TAG,""+error.getMessage());
             }
         });
-        return objects;
     }
     //endregion
 }

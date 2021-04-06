@@ -17,9 +17,11 @@ import com.shakil.barivara.activities.onboard.MainActivity;
 import com.shakil.barivara.adapter.RecyclerRoomListAdapter;
 import com.shakil.barivara.databinding.ActivityRoomListBinding;
 import com.shakil.barivara.dbhelper.DbHelperParent;
+import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.room.Room;
 import com.shakil.barivara.mvvm.RoomModelMVVM;
 import com.shakil.barivara.mvvm.RoomViewModel;
+import com.shakil.barivara.utils.UX;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +32,8 @@ public class RoomListActivity extends AppCompatActivity {
     private TextView noDataTXT;
     private ArrayList<Room> roomList;
     private DbHelperParent dbHelperParent;
-    //For MVVM
-    private RoomViewModel roomViewModel;
+    private FirebaseCrudHelper firebaseCrudHelper;
+    private UX ux;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,34 @@ public class RoomListActivity extends AppCompatActivity {
 
         setData();
 
+        activityRoomListBinding.mAddRoomMaster.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(RoomListActivity.this, RoomActivity.class));
+            }
+        });
+    }
+
+    //region set recycler data
+    private void setData() {
+        ux.getLoadingView();
+        firebaseCrudHelper.fetchAllRoom("room", new FirebaseCrudHelper.onRoomDataFetch() {
+            @Override
+            public void onFetch(ArrayList<Room> objects) {
+                roomList = objects;
+                if (roomList.size()<=0){
+                    noDataTXT.setVisibility(View.VISIBLE);
+                    noDataTXT.setText(R.string.no_data_message);
+                }
+                setRecyclerAdapter();
+                ux.removeLoadingView();
+            }
+        });
+    }
+    //endregion
+
+    //region set recycler adapter
+    private void setRecyclerAdapter(){
         recyclerRoomListAdapter = new RecyclerRoomListAdapter(roomList, this);
         activityRoomListBinding.mRecylerView.setLayoutManager(new LinearLayoutManager(this));
         activityRoomListBinding.mRecylerView.setAdapter(recyclerRoomListAdapter);
@@ -65,37 +95,14 @@ public class RoomListActivity extends AppCompatActivity {
                 startActivity(new Intent(RoomListActivity.this, RoomActivity.class).putExtra("room", room));
             }
         });
-
-        activityRoomListBinding.mAddRoomMaster.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(RoomListActivity.this, RoomActivity.class));
-            }
-        });
-
-        //MVVM region
-
-        roomViewModel = ViewModelProviders.of(this).get(RoomViewModel.class);
-        roomViewModel.getAllRoomData().observe(this, new Observer<List<RoomModelMVVM>>() {
-            @Override
-            public void onChanged(List<RoomModelMVVM> roomModelMVVMS) {
-                Toast.makeText(getApplicationContext(),"called", Toast.LENGTH_LONG).show();
-            }
-        });
-        //region end
     }
-
-    private void setData() {
-        roomList = dbHelperParent.getAllRoomDetails();
-        if (roomList.size()<=0){
-            noDataTXT.setVisibility(View.VISIBLE);
-            noDataTXT.setText(R.string.no_data_message);
-        }
-    }
+    //endregion
 
     private void init() {
         roomList = new ArrayList<>();
         dbHelperParent = new DbHelperParent(this);
+        ux = new UX(this);
+        firebaseCrudHelper = new FirebaseCrudHelper(this);
         noDataTXT = findViewById(R.id.mNoDataMessage);
     }
 

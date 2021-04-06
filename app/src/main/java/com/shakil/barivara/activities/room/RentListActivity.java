@@ -14,7 +14,9 @@ import com.shakil.barivara.activities.onboard.MainActivity;
 import com.shakil.barivara.adapter.RecyclerRentListAdapter;
 import com.shakil.barivara.databinding.ActivityRentListBinding;
 import com.shakil.barivara.dbhelper.DbHelperParent;
+import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.room.Rent;
+import com.shakil.barivara.utils.UX;
 
 import java.util.ArrayList;
 
@@ -24,6 +26,8 @@ public class RentListActivity extends AppCompatActivity {
     private ArrayList<Rent> rentList;
     private TextView noDataTXT;
     private DbHelperParent dbHelperParent;
+    private FirebaseCrudHelper firebaseCrudHelper;
+    private UX ux;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,18 +47,12 @@ public class RentListActivity extends AppCompatActivity {
         //endregion
     }
 
-    private void setData() {
-        rentList = dbHelperParent.getAllRentDetails();
-        if (rentList.size() <= 0){
-            noDataTXT.setVisibility(View.VISIBLE);
-            noDataTXT.setText(R.string.no_data_message);
-        }
-    }
-
     //region init components
     private void init(){
         rentList = new ArrayList<>();
         dbHelperParent = new DbHelperParent(this);
+        firebaseCrudHelper = new FirebaseCrudHelper(this);
+        ux = new UX(this);
         noDataTXT = findViewById(R.id.mNoDataMessage);
     }
     //endregion
@@ -63,6 +61,35 @@ public class RentListActivity extends AppCompatActivity {
     private void bindUIWithComponents(){
         setData();
 
+        activityRentListBinding.mAddMaster.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(RentListActivity.this, RentDetailsActivity.class));
+            }
+        });
+    }
+    //endregion
+
+    //region set recycler data
+    private void setData() {
+        ux.getLoadingView();
+        firebaseCrudHelper.fetchAllRent("rent", new FirebaseCrudHelper.onRentDataFetch() {
+            @Override
+            public void onFetch(ArrayList<Rent> objects) {
+                rentList = objects;
+                if (rentList.size() <= 0){
+                    noDataTXT.setVisibility(View.VISIBLE);
+                    noDataTXT.setText(R.string.no_data_message);
+                }
+                setRecyclerAdapter();
+                ux.removeLoadingView();
+            }
+        });
+    }
+    //endregion
+
+    //region set recycler adapter
+    private void setRecyclerAdapter(){
         recyclerMeterListAdapter = new RecyclerRentListAdapter(rentList, this);
         activityRentListBinding.mRecylerView.setLayoutManager(new LinearLayoutManager(this));
         activityRentListBinding.mRecylerView.setAdapter(recyclerMeterListAdapter);
@@ -71,13 +98,6 @@ public class RentListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(Rent rent) {
                 startActivity(new Intent(RentListActivity.this, RentDetailsActivity.class).putExtra("rent", rent));
-            }
-        });
-
-        activityRentListBinding.mAddMaster.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(RentListActivity.this, RentDetailsActivity.class));
             }
         });
     }
