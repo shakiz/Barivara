@@ -11,10 +11,17 @@ import com.shakil.barivara.R;
 import com.shakil.barivara.activities.onboard.MainActivity;
 import com.shakil.barivara.databinding.ActivityDashboardBinding;
 import com.shakil.barivara.dbhelper.DbHelperParent;
+import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
+import com.shakil.barivara.model.meter.Meter;
+import com.shakil.barivara.model.room.Room;
+import com.shakil.barivara.model.tenant.Tenant;
+
+import java.util.ArrayList;
 
 public class DashboardActivity extends AppCompatActivity {
     private ActivityDashboardBinding activityDashboardBinding;
     private DbHelperParent dbHelperParent;
+    private FirebaseCrudHelper firebaseCrudHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,14 +43,32 @@ public class DashboardActivity extends AppCompatActivity {
     //region init objects
     private void init(){
         dbHelperParent = new DbHelperParent(this);
+        firebaseCrudHelper = new FirebaseCrudHelper(this);
     }
     //endregion
 
     //region init objects
     private void bindUiWithComponents(){
-        activityDashboardBinding.TotalMeters.animateText(String.valueOf(dbHelperParent.getTotalMeterRows()));
-        activityDashboardBinding.TotalRooms.animateText(String.valueOf(dbHelperParent.getTotalRoomRows()));
-        activityDashboardBinding.TotalTenants.animateText(String.valueOf(dbHelperParent.getTotalTenantRows()));
+        firebaseCrudHelper.fetchAllTenant("tenant", new FirebaseCrudHelper.onTenantDataFetch() {
+            @Override
+            public void onFetch(ArrayList<Tenant> objects) {
+                activityDashboardBinding.TotalTenants.setText(""+objects.size());
+            }
+        });
+
+        firebaseCrudHelper.fetchAllMeter("meter", new FirebaseCrudHelper.onDataFetch() {
+            @Override
+            public void onFetch(ArrayList<Meter> objects) {
+                activityDashboardBinding.TotalMeters.setText(""+objects.size());
+            }
+        });
+
+        firebaseCrudHelper.fetchAllRoom("room", new FirebaseCrudHelper.onRoomDataFetch() {
+            @Override
+            public void onFetch(ArrayList<Room> objects) {
+                activityDashboardBinding.TotalRooms.setText(""+objects.size());
+            }
+        });
         activityDashboardBinding.TotalRentAmount.animateText(String.valueOf(dbHelperParent.getTotalRentAmount())+" "+getString(R.string.taka));
         activityDashboardBinding.TotalElectricityBill.animateText(String.valueOf(dbHelperParent.getTotalElectricityBillCollection())+" "+getString(R.string.taka));
         activityDashboardBinding.TotalUnit.animateText(String.valueOf(dbHelperParent.getTotalUnit())+" "+getString(R.string.units));

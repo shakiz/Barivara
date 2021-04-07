@@ -27,13 +27,20 @@ import com.shakil.barivara.activities.settings.SettingsActivity;
 import com.shakil.barivara.activities.tenant.TenantListActivity;
 import com.shakil.barivara.databinding.ActivityMainBinding;
 import com.shakil.barivara.dbhelper.DbHelperParent;
+import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
+import com.shakil.barivara.model.meter.Meter;
+import com.shakil.barivara.model.room.Room;
+import com.shakil.barivara.model.tenant.Tenant;
 import com.shakil.barivara.utils.UtilsForAll;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private ActivityMainBinding activityMainBinding;
     private ActionBarDrawerToggle toggle;
     private DbHelperParent dbHelperParent;
     private UtilsForAll utilsForAll;
+    private FirebaseCrudHelper firebaseCrudHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,9 +77,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //region set text for greetings, dateTime, totalRooms, totalMeter, totalTenants
         activityMainBinding.GreetingsText.setText(utilsForAll.setGreetings());
         activityMainBinding.DateTimeText.setText(utilsForAll.getDateTimeText());
-        activityMainBinding.totalRooms.setText(""+dbHelperParent.getTotalRoomRows());
-        activityMainBinding.totalMeters.setText(""+dbHelperParent.getTotalMeterRows());
-        activityMainBinding.totalTenants.setText(""+dbHelperParent.getTotalTenantRows());
+
+        firebaseCrudHelper.fetchAllTenant("tenant", new FirebaseCrudHelper.onTenantDataFetch() {
+            @Override
+            public void onFetch(ArrayList<Tenant> objects) {
+                activityMainBinding.totalTenants.setText(""+objects.size());
+            }
+        });
+
+        firebaseCrudHelper.fetchAllMeter("meter", new FirebaseCrudHelper.onDataFetch() {
+            @Override
+            public void onFetch(ArrayList<Meter> objects) {
+                activityMainBinding.totalMeters.setText(""+objects.size());
+            }
+        });
+
+        firebaseCrudHelper.fetchAllRoom("room", new FirebaseCrudHelper.onRoomDataFetch() {
+            @Override
+            public void onFetch(ArrayList<Room> objects) {
+                activityMainBinding.totalRooms.setText(""+objects.size());
+            }
+        });
         //endregion
 
         activityMainBinding.moreDetails.setOnClickListener(new View.OnClickListener() {
@@ -122,6 +147,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //region init components
     private void init() {
         dbHelperParent = new DbHelperParent(this);
+        firebaseCrudHelper = new FirebaseCrudHelper(this);
         utilsForAll = new UtilsForAll(this,activityMainBinding.mainLayout);
     }
     //endregion

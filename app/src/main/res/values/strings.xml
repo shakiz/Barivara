@@ -126,4 +126,5 @@
     <string name="app_visited">App Visited</string>
     <string name="zero_taka">0 Taka</string>
     <string name="zero_unit">0 Unit</string>
+    <string name="missing_data">Missing Data</string>
 </resources>

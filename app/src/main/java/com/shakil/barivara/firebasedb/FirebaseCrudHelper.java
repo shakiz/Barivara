@@ -18,6 +18,8 @@ import com.shakil.barivara.model.tenant.Tenant;
 import com.shakil.barivara.utils.Constants;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class FirebaseCrudHelper {
     private Context context;
@@ -33,6 +35,19 @@ public class FirebaseCrudHelper {
         Log.i(Constants.TAG,""+databaseReference.getParent());
         String id = databaseReference.push().getKey();
         databaseReference.child(id).setValue(object);
+    }
+    //endregion
+
+    //region update object in firebase
+    public void update(Object object, String path){
+        databaseReference = FirebaseDatabase.getInstance().getReference(path);
+        String key = databaseReference.child(path).push().getKey();
+        Post post = new Post(userId, username, title, body);
+        Map<String, Object> postValues = post.toMap();
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put("/posts/" + key, postValues);
+        childUpdates.put("/user-posts/" + userId + "/" + key, postValues);
+        databaseReference.updateChildren(childUpdates);
     }
     //endregion
 
