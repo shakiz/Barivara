@@ -39,15 +39,30 @@ public class FirebaseCrudHelper {
     //endregion
 
     //region update object in firebase
-    public void update(Object object, String path){
+    public void update(Object object, String firebaseId, String path){
         databaseReference = FirebaseDatabase.getInstance().getReference(path);
-        String key = databaseReference.child(path).push().getKey();
-        Post post = new Post(userId, username, title, body);
-        Map<String, Object> postValues = post.toMap();
-        Map<String, Object> childUpdates = new HashMap<>();
-        childUpdates.put("/posts/" + key, postValues);
-        childUpdates.put("/user-posts/" + userId + "/" + key, postValues);
-        databaseReference.updateChildren(childUpdates);
+        Map<String, Object> postValues = new HashMap<>();
+        if (path.equals("tenant")){
+            Tenant tenant = (Tenant) object;
+            postValues = tenant.toMap();
+        }
+        else if (path.equals("meter")){
+            Meter meter = (Meter) object;
+            postValues = meter.toMap();
+        }
+        else if (path.equals("rent")){
+            Rent rent = (Rent) object;
+            postValues = rent.toMap();
+        }
+        else if (path.equals("room")){
+            Room room = (Room) object;
+            postValues = room.toMap();
+        }
+        else if (path.equals("electricityBill")){
+            ElectricityBill electricityBill = (ElectricityBill) object;
+            postValues = electricityBill.toMap();
+        }
+        databaseReference.child(firebaseId).updateChildren(postValues);
     }
     //endregion
 
@@ -65,6 +80,7 @@ public class FirebaseCrudHelper {
                 if (snapshot.getChildren() != null) {
                     for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
                         Meter meter = dataSnapshot.getValue(Meter.class);
+                        meter.setFireBaseKey(dataSnapshot.getKey());
                         objects.add(meter);
                         Log.i(Constants.TAG+":fetchMeter",""+meter.getMeterName());
                     }
@@ -91,6 +107,7 @@ public class FirebaseCrudHelper {
                 if (snapshot.getChildren() != null) {
                     for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
                         Room object = dataSnapshot.getValue(Room.class);
+                        object.setFireBaseKey(dataSnapshot.getKey());
                         Log.i(Constants.TAG+":fetchRoom",""+object.getRoomName());
                         objects.add(object);
                     }
@@ -117,6 +134,7 @@ public class FirebaseCrudHelper {
                 if (snapshot.getChildren() != null) {
                     for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
                         Rent object = dataSnapshot.getValue(Rent.class);
+                        object.setFireBaseKey(dataSnapshot.getKey());
                         Log.i(Constants.TAG+":fetchRent",""+object.getMonthName());
                         objects.add(object);
                     }
@@ -144,6 +162,7 @@ public class FirebaseCrudHelper {
                     for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
                         ElectricityBill object = dataSnapshot.getValue(ElectricityBill.class);
                         Log.i(Constants.TAG+":fetchBill",""+object.getMeterName());
+                        object.setFireBaseKey(dataSnapshot.getKey());
                         objects.add(object);
                     }
                     onElectricityBillDataFetch.onFetch(objects);
@@ -169,6 +188,7 @@ public class FirebaseCrudHelper {
                 if (snapshot.getChildren() != null) {
                     for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
                         Tenant object = dataSnapshot.getValue(Tenant.class);
+                        object.setFireBaseKey(dataSnapshot.getKey());
                         Log.i(Constants.TAG+":fetchTenant",""+object.getTenantName());
                         objects.add(object);
                     }

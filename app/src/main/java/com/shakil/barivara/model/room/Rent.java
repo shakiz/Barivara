@@ -3,6 +3,11 @@ package com.shakil.barivara.model.room;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.firebase.database.Exclude;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class Rent implements Parcelable {
     private String RentId;
     private String MonthName;
@@ -10,6 +15,7 @@ public class Rent implements Parcelable {
     private String AssociateRoomName;
     private int AssociateRoomId;
     private int RentAmount;
+    private String FireBaseKey;
 
     public Rent(String rentForMonth, String rentRoom, int rentAmount) {
         this.MonthName = rentForMonth;
@@ -28,6 +34,7 @@ public class Rent implements Parcelable {
         AssociateRoomName = in.readString();
         AssociateRoomId = in.readInt();
         RentAmount = in.readInt();
+        FireBaseKey = in.readString();
     }
 
     @Override
@@ -38,6 +45,7 @@ public class Rent implements Parcelable {
         dest.writeString(AssociateRoomName);
         dest.writeInt(AssociateRoomId);
         dest.writeInt(RentAmount);
+        dest.writeString(FireBaseKey);
     }
 
     @Override
@@ -103,5 +111,26 @@ public class Rent implements Parcelable {
 
     public void setRentAmount(int rentAmount) {
         RentAmount = rentAmount;
+    }
+
+    public String getFireBaseKey() {
+        return FireBaseKey;
+    }
+
+    public void setFireBaseKey(String fireBaseKey) {
+        FireBaseKey = fireBaseKey;
+    }
+
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("rentId", RentId);
+        result.put("monthName", MonthName);
+        result.put("monthId", MonthId);
+        result.put("associateRoomName", AssociateRoomName);
+        result.put("associateRoomId", AssociateRoomId);
+        result.put("rentAmount", RentAmount);
+
+        return result;
     }
 }

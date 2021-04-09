@@ -3,6 +3,11 @@ package com.shakil.barivara.model.meter;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.firebase.database.Exclude;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class ElectricityBill implements Parcelable {
     private String BillId;
     private int MeterId;
@@ -14,6 +19,7 @@ public class ElectricityBill implements Parcelable {
     private int PastUnit;
     private int TotalUnit;
     private int TotalBill;
+    private String FireBaseKey;
 
     public ElectricityBill() {
     }
@@ -29,6 +35,7 @@ public class ElectricityBill implements Parcelable {
         PastUnit = in.readInt();
         TotalUnit = in.readInt();
         TotalBill = in.readInt();
+        FireBaseKey = in.readString();
     }
 
     @Override
@@ -43,6 +50,7 @@ public class ElectricityBill implements Parcelable {
         dest.writeInt(PastUnit);
         dest.writeInt(TotalUnit);
         dest.writeInt(TotalBill);
+        dest.writeString(FireBaseKey);
     }
 
     @Override
@@ -140,5 +148,29 @@ public class ElectricityBill implements Parcelable {
 
     public void setTotalBill(int totalBill) {
         TotalBill = totalBill;
+    }
+
+    public String getFireBaseKey() {
+        return FireBaseKey;
+    }
+
+    public void setFireBaseKey(String fireBaseKey) {
+        FireBaseKey = fireBaseKey;
+    }
+
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("bllId", BillId);
+        result.put("meterId", MeterId);
+        result.put("meterName", MeterName);
+        result.put("roomId", RoomId);
+        result.put("roomName", RoomName);
+        result.put("presentUnit", PresentUnit);
+        result.put("pastUnit", PastUnit);
+        result.put("totalUnit", TotalUnit);
+        result.put("totalBill", TotalBill);
+
+        return result;
     }
 }

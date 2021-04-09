@@ -115,13 +115,18 @@ public class RentDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 inputValidation.checkEditTextInput(R.id.RentAmount,"Please check your value");
-                rent.setRentId(UUID.randomUUID().toString());
+
                 rent.setMonthId(MonthId);
                 rent.setMonthName(MonthStr);
                 rent.setAssociateRoomId(AssociateRoomId);
                 rent.setAssociateRoomName(AssociateRoomStr);
                 rent.setRentAmount(Integer.parseInt(activityNewRentDetailsBinding.RentAmount.getText().toString()));
-                firebaseCrudHelper.add(rent, "rent");
+                if (command.equals("add")) {
+                    rent.setRentId(UUID.randomUUID().toString());
+                    firebaseCrudHelper.add(rent, "rent");
+                } else {
+                    firebaseCrudHelper.update(rent, rent.getFireBaseKey(), "rent");
+                }
                 Toast.makeText(getApplicationContext(),R.string.success, Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(RentDetailsActivity.this, RentListActivity.class));
             }

@@ -3,6 +3,12 @@ package com.shakil.barivara.model.meter;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.firebase.database.Exclude;
+
+import java.security.Key;
+import java.util.HashMap;
+import java.util.Map;
+
 public class Meter implements Parcelable {
     private String MeterId;
     private String MeterName;
@@ -12,6 +18,7 @@ public class Meter implements Parcelable {
     private int MeterTypeId;
     private int PresentUnit;
     private int PastUnit;
+    private String FireBaseKey;
 
     public Meter(String meterName, String associateRoom, String meterType, int presentUnit, int pastUnit) {
         this.MeterName = meterName;
@@ -47,6 +54,7 @@ public class Meter implements Parcelable {
         MeterTypeId = in.readInt();
         PresentUnit = in.readInt();
         PastUnit = in.readInt();
+        FireBaseKey = in.readString();
     }
 
     @Override
@@ -60,6 +68,7 @@ public class Meter implements Parcelable {
         dest.writeInt(MeterTypeId);
         dest.writeInt(PresentUnit);
         dest.writeInt(PastUnit);
+        dest.writeString(FireBaseKey);
     }
 
     @Override
@@ -141,5 +150,29 @@ public class Meter implements Parcelable {
 
     public void setPastUnit(int pastUnit) {
         PastUnit = pastUnit;
+    }
+
+
+    public String getFireBaseKey() {
+        return FireBaseKey;
+    }
+
+    public void setFireBaseKey(String fireBaseKey) {
+        FireBaseKey = fireBaseKey;
+    }
+
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("meterId", MeterId);
+        result.put("meterName", MeterName);
+        result.put("associateRoom", AssociateRoom);
+        result.put("associateRoomId", AssociateRoomId);
+        result.put("meterTypeName", MeterTypeName);
+        result.put("meterTypeId", MeterTypeId);
+        result.put("presentUnit", PresentUnit);
+        result.put("pastUnit", PastUnit);
+
+        return result;
     }
 }

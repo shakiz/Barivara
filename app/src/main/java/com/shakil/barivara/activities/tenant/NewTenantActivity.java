@@ -136,13 +136,17 @@ public class NewTenantActivity extends AppCompatActivity {
 
                 //region validation and save data
                 tenantNameStr = activityAddNewTenantBinding.TenantName.getText().toString();
-                tenant.setTenantId(UUID.randomUUID().toString());
                 tenant.setTenantName(tenantNameStr);
                 tenant.setAssociateRoom(AssociateRoomStr);
                 tenant.setAssociateRoomId(AssociateRoomId);
                 tenant.setStartingMonthId(StartingMonthId);
                 tenant.setStartingMonth(StartingMonthStr);
-                firebaseCrudHelper.add(tenant, "tenant");
+                if (command.equals("add")) {
+                    tenant.setTenantId(UUID.randomUUID().toString());
+                    firebaseCrudHelper.add(tenant, "tenant");
+                } else {
+                    firebaseCrudHelper.update(tenant, tenant.getFireBaseKey(), "tenant");
+                }
                 Toast.makeText(getApplicationContext(),R.string.success, Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(NewTenantActivity.this,TenantListActivity.class));
                 //endregion

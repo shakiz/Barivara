@@ -123,7 +123,7 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 inputValidation.checkEditTextInput(new int[]{R.id.PresentUnit,R.id.PastUnit,R.id.UnitPrice},"Please check your value");
-                electricityBill.setBillId(UUID.randomUUID().toString());
+
                 electricityBill.setMeterId(AssociateMeterId);
                 electricityBill.setRoomId(AssociateRoomId);
                 electricityBill.setMeterName(meterNameStr);
@@ -134,7 +134,12 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
                 electricityBill.setTotalUnit(Integer.parseInt(activityMeterCostDetailsBinding.TotalUnit.getText().toString()));
                 electricityBill.setTotalBill(Integer.parseInt(activityMeterCostDetailsBinding.TotalUnit.getText().toString()));
 
-                firebaseCrudHelper.add(electricityBill,"electricityBill");
+                if (command.equals("add")) {
+                    electricityBill.setBillId(UUID.randomUUID().toString());
+                    firebaseCrudHelper.add(electricityBill,"electricityBill");
+                } else {
+                    firebaseCrudHelper.update(electricityBill, electricityBill.getFireBaseKey(), "electricityBill");
+                }
                 Toast.makeText(getApplicationContext(),R.string.success, Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(ElectricityBillDetailsActivity.this, ElectricityBillListActivity.class));
             }

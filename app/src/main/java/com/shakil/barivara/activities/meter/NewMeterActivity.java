@@ -121,14 +121,19 @@ public class NewMeterActivity extends AppCompatActivity {
                 //region validation and save data
                 if (!roomNameStr.equals("Select Data") && !meterTypeStr.equals("Select Data")){
                     meterNameStr = activityNewMeterBinding.MeterName.getText().toString();
-                    meter.setMeterId(UUID.randomUUID().toString());
+
                     meter.setMeterName(meterNameStr);
                     meter.setAssociateRoom(roomNameStr);
                     meter.setAssociateRoomId(AssociateRoomId);
                     meter.setMeterTypeName(meterTypeStr);
                     meter.setMeterTypeId(MeterTypeId);
                     //region add meter to firebase
-                    firebaseCrudHelper.add(meter, "meter");
+                    if (command.equals("add")) {
+                        meter.setMeterId(UUID.randomUUID().toString());
+                        firebaseCrudHelper.add(meter, "meter");
+                    } else {
+                        firebaseCrudHelper.update(meter, meter.getFireBaseKey(), "meter");
+                    }
                     //endregion
                     Toast.makeText(getApplicationContext(),R.string.success, Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(NewMeterActivity.this,MeterListActivity.class));

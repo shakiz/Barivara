@@ -140,7 +140,7 @@ public class RoomActivity extends AppCompatActivity {
                 //region validation and save
                 roomNameStr = activityAddNewRoomBinding.RoomName.getText().toString();
                 tenantNameStr = activityAddNewRoomBinding.TenantName.getText().toString();
-                room.setRoomId(UUID.randomUUID().toString());
+
                 room.setRoomName(roomNameStr);
                 room.setStartMonthName(startMonthStr);
                 room.setStartMonthId(StartMonthId);
@@ -148,7 +148,12 @@ public class RoomActivity extends AppCompatActivity {
                 room.setAssociateMeterId(AssociateMeterId);
                 room.setTenantName(tenantNameStr);
                 room.setAdvancedAmount(advancedAmountInt);
-                firebaseCrudHelper.add(room, "room");
+                if (command.equals("add")) {
+                    room.setRoomId(UUID.randomUUID().toString());
+                    firebaseCrudHelper.add(room, "room");
+                } else {
+                    firebaseCrudHelper.update(room, room.getFireBaseKey(), "room");
+                }
                 Toast.makeText(getApplicationContext(),R.string.success, Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(RoomActivity.this,RoomListActivity.class));
                 //endregion
