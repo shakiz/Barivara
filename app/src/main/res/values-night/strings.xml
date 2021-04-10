@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="missing_data">Missing Data</string>
+    <string name="enter_data_validation">Please Enter Data</string>
+    <string name="filterd">Filtered</string>
 </resources>

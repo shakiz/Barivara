@@ -2,7 +2,10 @@ package com.shakil.barivara.activities.room;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,9 +34,10 @@ public class RoomListActivity extends AppCompatActivity {
     private RecyclerRoomListAdapter recyclerRoomListAdapter;
     private TextView noDataTXT;
     private ArrayList<Room> roomList;
-    private DbHelperParent dbHelperParent;
     private FirebaseCrudHelper firebaseCrudHelper;
     private UX ux;
+    private ImageButton searchButton, refreshButton;
+    private EditText searchName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +67,26 @@ public class RoomListActivity extends AppCompatActivity {
                 startActivity(new Intent(RoomListActivity.this, RoomActivity.class));
             }
         });
+
+        //region filter
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!TextUtils.isEmpty(searchName.getText().toString())){
+                    for (int start = 0; start < roomList.size(); start++) {
+                        if (roomList.get(start).getRoomName().contains(searchName.getText().toString())){
+                            recyclerRoomListAdapter.notifyDataSetChanged();
+                            Toast.makeText(RoomListActivity.this, getString(R.string.filterd), Toast.LENGTH_SHORT).show();
+                            break;
+                        }
+                    }
+                }
+                else{
+                    Toast.makeText(RoomListActivity.this, getString(R.string.enter_data_validation), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        //endregion
     }
 
     //region set recycler data
@@ -99,8 +123,10 @@ public class RoomListActivity extends AppCompatActivity {
     //endregion
 
     private void init() {
+        searchButton = findViewById(R.id.searchButton);
+        refreshButton = findViewById(R.id.refreshButton);
+        searchName = findViewById(R.id.SearchName);
         roomList = new ArrayList<>();
-        dbHelperParent = new DbHelperParent(this);
         ux = new UX(this);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
         noDataTXT = findViewById(R.id.mNoDataMessage);
@@ -114,7 +140,6 @@ public class RoomListActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        dbHelperParent.close();
     }
 }
 

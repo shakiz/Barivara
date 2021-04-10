@@ -8,7 +8,7 @@
         android:id="@+id/parent_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/md_grey_200"
+        android:background="@color/md_white_1000"
         android:focusable="true"
         android:focusableInTouchMode="true"
         tools:context=".activities.activities.meter.MeterListActivity">
@@ -31,11 +31,20 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
+        <include
+            android:layout_below="@+id/app_bar"
+            android:id="@+id/search_layout"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="8dp"
+            layout="@layout/custom_search_panel_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/app_bar"
+            android:layout_below="@id/search_layout"
             android:id="@+id/mainLayout"
             android:orientation="vertical">
 
