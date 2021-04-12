@@ -24,6 +24,7 @@ import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.room.Room;
 import com.shakil.barivara.mvvm.RoomModelMVVM;
 import com.shakil.barivara.mvvm.RoomViewModel;
+import com.shakil.barivara.utils.FilterManager;
 import com.shakil.barivara.utils.UX;
 
 import java.util.ArrayList;
@@ -38,6 +39,7 @@ public class RoomListActivity extends AppCompatActivity {
     private UX ux;
     private ImageButton searchButton, refreshButton;
     private EditText searchName;
+    private FilterManager filterManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,13 +75,13 @@ public class RoomListActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!TextUtils.isEmpty(searchName.getText().toString())){
-                    for (int start = 0; start < roomList.size(); start++) {
-                        if (roomList.get(start).getRoomName().contains(searchName.getText().toString())){
-                            recyclerRoomListAdapter.notifyDataSetChanged();
-                            Toast.makeText(RoomListActivity.this, getString(R.string.filterd), Toast.LENGTH_SHORT).show();
-                            break;
+                    filterManager.onFilterClick(searchName.getText().toString(), roomList, new FilterManager.onFilterClick() {
+                        @Override
+                        public void onClick(ArrayList<Room> objects) {
+                            roomList = objects;
+                            setRecyclerAdapter();
                         }
-                    }
+                    });
                 }
                 else{
                     Toast.makeText(RoomListActivity.this, getString(R.string.enter_data_validation), Toast.LENGTH_SHORT).show();
@@ -128,6 +130,7 @@ public class RoomListActivity extends AppCompatActivity {
         searchName = findViewById(R.id.SearchName);
         roomList = new ArrayList<>();
         ux = new UX(this);
+        filterManager = new FilterManager(this);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
         noDataTXT = findViewById(R.id.mNoDataMessage);
     }
