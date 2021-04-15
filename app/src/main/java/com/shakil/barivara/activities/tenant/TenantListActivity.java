@@ -2,20 +2,29 @@ package com.shakil.barivara.activities.tenant;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.shakil.barivara.R;
+import com.shakil.barivara.activities.meter.ElectricityBillListActivity;
+import com.shakil.barivara.activities.meter.MeterListActivity;
 import com.shakil.barivara.activities.onboard.MainActivity;
 import com.shakil.barivara.adapter.RecyclerTenantListAdapter;
 import com.shakil.barivara.databinding.ActivityTenantListBinding;
 import com.shakil.barivara.dbhelper.DbHelperParent;
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
+import com.shakil.barivara.model.meter.ElectricityBill;
 import com.shakil.barivara.model.tenant.Tenant;
+import com.shakil.barivara.utils.FilterManager;
+import com.shakil.barivara.utils.Tools;
 import com.shakil.barivara.utils.UX;
 
 import java.util.ArrayList;
@@ -28,6 +37,9 @@ public class TenantListActivity extends AppCompatActivity {
     private DbHelperParent dbHelperParent;
     private FirebaseCrudHelper firebaseCrudHelper;
     private UX ux;
+    private FilterManager filterManager;
+    private ImageButton searchButton, refreshButton;
+    private EditText searchName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +61,10 @@ public class TenantListActivity extends AppCompatActivity {
     }
 
     private void init() {
+        searchButton = findViewById(R.id.searchButton);
+        refreshButton = findViewById(R.id.refreshButton);
+        searchName = findViewById(R.id.SearchName);
+        filterManager = new FilterManager(this);
         tenantList = new ArrayList<>();
         dbHelperParent = new DbHelperParent(this);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
@@ -57,6 +73,7 @@ public class TenantListActivity extends AppCompatActivity {
     }
 
     private void binUiWithComponents(){
+        searchName.setHint(getString(R.string.search_tenant_name));
         setData();
 
         activityTenantListBinding.mAddTenantMaster.setOnClickListener(new View.OnClickListener() {
@@ -65,6 +82,48 @@ public class TenantListActivity extends AppCompatActivity {
                 startActivity(new Intent(TenantListActivity.this, NewTenantActivity.class));
             }
         });
+
+        //region filter
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!TextUtils.isEmpty(searchName.getText().toString())){
+                    filterManager.onFilterClick(searchName.getText().toString(), tenantList, new FilterManager.onTenantFilterClick() {
+                        @Override
+                        public void onClick(ArrayList<Tenant> objects) {
+                            if (objects.size() > 0) {
+                                tenantList = objects;
+                                setRecyclerAdapter();
+                                Tools.hideKeyboard(TenantListActivity.this);
+                                Toast.makeText(TenantListActivity.this, getString(R.string.filterd), Toast.LENGTH_SHORT).show();
+                            } else {
+                                Tools.hideKeyboard(TenantListActivity.this);
+                                noDataTXT.setVisibility(View.VISIBLE);
+                                noDataTXT.setText(R.string.no_data_message);
+                                activityTenantListBinding.mRecylerView.setVisibility(View.GONE);
+                                Toast.makeText(TenantListActivity.this, getString(R.string.no_data_message), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }
+                else{
+                    Toast.makeText(TenantListActivity.this, getString(R.string.enter_data_validation), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        refreshButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activityTenantListBinding.mRecylerView.setVisibility(View.VISIBLE);
+                searchName.setText("");
+                noDataTXT.setVisibility(View.GONE);
+                Tools.hideKeyboard(TenantListActivity.this);
+                setData();
+                Toast.makeText(TenantListActivity.this, getString(R.string.list_refreshed), Toast.LENGTH_SHORT).show();
+            }
+        });
+        //endregion
     }
 
     //region set recycler data

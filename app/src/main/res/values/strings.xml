@@ -130,4 +130,9 @@
     <string name="name_search">Enter Name</string>
     <string name="enter_data_validation">Please Enter Data</string>
     <string name="filterd">Filtered</string>
+    <string name="search_room_name">Search Room Name</string>
+    <string name="list_refreshed">List Refreshed</string>
+    <string name="search_month_name">Search Month Name</string>
+    <string name="search_tenant_name">Search Tenant Name</string>
+    <string name="search_meter_name">Search Meter Name</string>
 </resources>

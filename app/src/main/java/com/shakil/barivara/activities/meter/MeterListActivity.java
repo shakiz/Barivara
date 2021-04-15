@@ -2,8 +2,12 @@ package com.shakil.barivara.activities.meter;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -11,11 +15,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.shakil.barivara.R;
 import com.shakil.barivara.activities.onboard.MainActivity;
+import com.shakil.barivara.activities.room.RentListActivity;
 import com.shakil.barivara.adapter.RecyclerMeterListAdapter;
 import com.shakil.barivara.databinding.ActivityMeterListBinding;
 import com.shakil.barivara.dbhelper.DbHelperParent;
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.meter.Meter;
+import com.shakil.barivara.model.room.Rent;
+import com.shakil.barivara.utils.FilterManager;
+import com.shakil.barivara.utils.Tools;
 import com.shakil.barivara.utils.UX;
 
 import java.util.ArrayList;
@@ -28,6 +36,9 @@ public class MeterListActivity extends AppCompatActivity {
     private DbHelperParent dbHelperParent;
     private FirebaseCrudHelper firebaseCrudHelper;
     private UX ux;
+    private FilterManager filterManager;
+    private ImageButton searchButton, refreshButton;
+    private EditText searchName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +59,7 @@ public class MeterListActivity extends AppCompatActivity {
     }
 
     private void binUiWIthComponents() {
+        searchName.setHint(getString(R.string.search_meter_name));
         setData();
 
         activityMeterListBinding.mAddMeterMaster.setOnClickListener(new View.OnClickListener() {
@@ -56,6 +68,48 @@ public class MeterListActivity extends AppCompatActivity {
                 startActivity(new Intent(MeterListActivity.this, NewMeterActivity.class));
             }
         });
+
+        //region filter
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!TextUtils.isEmpty(searchName.getText().toString())){
+                    filterManager.onFilterClick(searchName.getText().toString(), meterList, new FilterManager.onMeterFilterClick() {
+                        @Override
+                        public void onClick(ArrayList<Meter> objects) {
+                            if (objects.size() > 0) {
+                                meterList = objects;
+                                setRecyclerAdapter();
+                                Tools.hideKeyboard(MeterListActivity.this);
+                                Toast.makeText(MeterListActivity.this, getString(R.string.filterd), Toast.LENGTH_SHORT).show();
+                            } else {
+                                Tools.hideKeyboard(MeterListActivity.this);
+                                noDataTXT.setVisibility(View.VISIBLE);
+                                noDataTXT.setText(R.string.no_data_message);
+                                activityMeterListBinding.mRecylerView.setVisibility(View.GONE);
+                                Toast.makeText(MeterListActivity.this, getString(R.string.no_data_message), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }
+                else{
+                    Toast.makeText(MeterListActivity.this, getString(R.string.enter_data_validation), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        refreshButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activityMeterListBinding.mRecylerView.setVisibility(View.VISIBLE);
+                searchName.setText("");
+                noDataTXT.setVisibility(View.GONE);
+                Tools.hideKeyboard(MeterListActivity.this);
+                setData();
+                Toast.makeText(MeterListActivity.this, getString(R.string.list_refreshed), Toast.LENGTH_SHORT).show();
+            }
+        });
+        //endregion
     }
 
     //region recycler adapter
@@ -93,8 +147,12 @@ public class MeterListActivity extends AppCompatActivity {
     //endregion
 
     private void init() {
+        searchButton = findViewById(R.id.searchButton);
+        refreshButton = findViewById(R.id.refreshButton);
+        searchName = findViewById(R.id.SearchName);
         meterList = new ArrayList<>();
         ux = new UX(this);
+        filterManager = new FilterManager(this);
         dbHelperParent = new DbHelperParent(this);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
         noDataTXT = findViewById(R.id.mNoDataMessage);

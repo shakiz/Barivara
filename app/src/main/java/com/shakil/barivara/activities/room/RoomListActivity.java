@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.shakil.barivara.R;
+import com.shakil.barivara.activities.meter.MeterListActivity;
 import com.shakil.barivara.activities.onboard.MainActivity;
 import com.shakil.barivara.adapter.RecyclerRoomListAdapter;
 import com.shakil.barivara.databinding.ActivityRoomListBinding;
@@ -25,6 +26,7 @@ import com.shakil.barivara.model.room.Room;
 import com.shakil.barivara.mvvm.RoomModelMVVM;
 import com.shakil.barivara.mvvm.RoomViewModel;
 import com.shakil.barivara.utils.FilterManager;
+import com.shakil.barivara.utils.Tools;
 import com.shakil.barivara.utils.UX;
 
 import java.util.ArrayList;
@@ -60,7 +62,7 @@ public class RoomListActivity extends AppCompatActivity {
     }
 
     private void binUiWIthComponents() {
-
+        searchName.setHint(getString(R.string.search_room_name));
         setData();
 
         activityRoomListBinding.mAddRoomMaster.setOnClickListener(new View.OnClickListener() {
@@ -78,14 +80,36 @@ public class RoomListActivity extends AppCompatActivity {
                     filterManager.onFilterClick(searchName.getText().toString(), roomList, new FilterManager.onFilterClick() {
                         @Override
                         public void onClick(ArrayList<Room> objects) {
-                            roomList = objects;
-                            setRecyclerAdapter();
+                            if (objects.size() > 0) {
+                                roomList = objects;
+                                setRecyclerAdapter();
+                                Tools.hideKeyboard(RoomListActivity.this);
+                                Toast.makeText(RoomListActivity.this, getString(R.string.filterd), Toast.LENGTH_SHORT).show();
+                            } else {
+                                Tools.hideKeyboard(RoomListActivity.this);
+                                noDataTXT.setVisibility(View.VISIBLE);
+                                noDataTXT.setText(R.string.no_data_message);
+                                activityRoomListBinding.mRecylerView.setVisibility(View.GONE);
+                                Toast.makeText(RoomListActivity.this, getString(R.string.no_data_message), Toast.LENGTH_SHORT).show();
+                            }
                         }
                     });
                 }
                 else{
                     Toast.makeText(RoomListActivity.this, getString(R.string.enter_data_validation), Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        refreshButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activityRoomListBinding.mRecylerView.setVisibility(View.VISIBLE);
+                searchName.setText("");
+                noDataTXT.setVisibility(View.GONE);
+                Tools.hideKeyboard(RoomListActivity.this);
+                setData();
+                Toast.makeText(RoomListActivity.this, getString(R.string.list_refreshed), Toast.LENGTH_SHORT).show();
             }
         });
         //endregion

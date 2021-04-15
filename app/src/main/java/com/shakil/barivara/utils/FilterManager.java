@@ -26,10 +26,10 @@ public class FilterManager{
         for (int start = 0; start < sourceList.size(); start++) {
             if (sourceList.get(start).getRoomName().contains(searchText)){
                 roomList.add(sourceList.get(start));
-                if (onFilterClick != null){
-                    onFilterClick.onClick(roomList);
-                }
             }
+        }
+        if (onFilterClick != null){
+            onFilterClick.onClick(roomList);
         }
     }
     //endregion
@@ -43,10 +43,10 @@ public class FilterManager{
         for (int start = 0; start < sourceList.size(); start++) {
             if (sourceList.get(start).getMonthName().contains(searchText)){
                 rentList.add(sourceList.get(start));
-                if (onRentFilterClick != null){
-                    onRentFilterClick.onClick(rentList);
-                }
             }
+        }
+        if (onRentFilterClick != null){
+            onRentFilterClick.onClick(rentList);
         }
     }
     //endregion
@@ -60,10 +60,10 @@ public class FilterManager{
         for (int start = 0; start < sourceList.size(); start++) {
             if (sourceList.get(start).getMeterName().contains(searchText)){
                 meterList.add(sourceList.get(start));
-                if (onMeterFilterClick != null){
-                    onMeterFilterClick.onClick(meterList);
-                }
             }
+        }
+        if (onMeterFilterClick != null){
+            onMeterFilterClick.onClick(meterList);
         }
     }
     //endregion
@@ -77,10 +77,10 @@ public class FilterManager{
         for (int start = 0; start < sourceList.size(); start++) {
             if (sourceList.get(start).getRoomName().contains(searchText)){
                 billList.add(sourceList.get(start));
-                if (onBillFilterClick != null){
-                    onBillFilterClick.onClick(billList);
-                }
             }
+        }
+        if (onBillFilterClick != null){
+            onBillFilterClick.onClick(billList);
         }
     }
     //endregion
@@ -94,10 +94,10 @@ public class FilterManager{
         for (int start = 0; start < sourceList.size(); start++) {
             if (sourceList.get(start).getTenantName().contains(searchText)){
                 billList.add(sourceList.get(start));
-                if (onTenantFilterClick != null){
-                    onTenantFilterClick.onClick(billList);
-                }
             }
+        }
+        if (onTenantFilterClick != null){
+            onTenantFilterClick.onClick(billList);
         }
     }
     //endregion

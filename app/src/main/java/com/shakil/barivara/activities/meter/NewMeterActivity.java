@@ -164,7 +164,7 @@ public class NewMeterActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        startActivity(new Intent(NewMeterActivity.this, MeterListActivity.class));
     }
 
     //endregion

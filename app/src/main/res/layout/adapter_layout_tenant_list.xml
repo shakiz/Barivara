@@ -101,6 +101,8 @@
                             android:layout_height="wrap_content"
                             android:text="@string/demo_meter_name"
                             android:layout_gravity="center"
+                            android:maxLines="1"
+                            android:ellipsize="end"
                             android:gravity="center|left"
                             android:textColor="@color/md_grey_800"
                             android:textStyle="bold"

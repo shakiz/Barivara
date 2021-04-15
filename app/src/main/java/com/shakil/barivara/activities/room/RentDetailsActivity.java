@@ -145,7 +145,7 @@ public class RentDetailsActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        startActivity(new Intent(RentDetailsActivity.this, RentListActivity.class));
     }
 
     //endregion
