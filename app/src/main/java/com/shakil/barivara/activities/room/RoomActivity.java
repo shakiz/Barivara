@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.shakil.barivara.R;
+import com.shakil.barivara.activities.meter.ElectricityBillDetailsActivity;
 import com.shakil.barivara.databinding.ActivityAddNewRoomBinding;
 import com.shakil.barivara.dbhelper.DbHelperParent;
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
@@ -19,6 +21,7 @@ import com.shakil.barivara.utils.InputValidation;
 import com.shakil.barivara.utils.SpinnerAdapter;
 import com.shakil.barivara.utils.SpinnerData;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class RoomActivity extends AppCompatActivity {
@@ -33,6 +36,8 @@ public class RoomActivity extends AppCompatActivity {
     private Room room = new Room();
     private String command = "add";
     private FirebaseCrudHelper firebaseCrudHelper;
+    private ArrayList<String> meterNames;
+    private ArrayAdapter<String> meterNameSpinnerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,8 +89,19 @@ public class RoomActivity extends AppCompatActivity {
     //endregion
 
     private void bindUIWithComponents() {
-        spinnerAdapter.setSpinnerAdapter(activityAddNewRoomBinding.StartMonthId,spinnerData.setMonthData(),this);
-        spinnerAdapter.setSpinnerAdapter(activityAddNewRoomBinding.AssociateMeterId,spinnerData.setMeterData(),this);
+        spinnerAdapter.setSpinnerAdapter(activityAddNewRoomBinding.StartMonthId,this,spinnerData.setMonthData());
+
+        //region set meter spinner
+        firebaseCrudHelper.getAllName("meter", "meterName", new FirebaseCrudHelper.onNameFetch() {
+            @Override
+            public void onFetched(ArrayList<String> nameList) {
+                meterNames = nameList;
+                meterNameSpinnerAdapter = new ArrayAdapter<>(RoomActivity.this, R.layout.spinner_drop, meterNames);
+                meterNameSpinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
+                activityAddNewRoomBinding.AssociateMeterId.setAdapter(meterNameSpinnerAdapter);
+            }
+        });
+        //endregion
 
         //region month and meter selection spinner
         activityAddNewRoomBinding.StartMonthId.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

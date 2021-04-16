@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +19,7 @@ import com.shakil.barivara.utils.InputValidation;
 import com.shakil.barivara.utils.SpinnerAdapter;
 import com.shakil.barivara.utils.SpinnerData;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class NewMeterActivity extends AppCompatActivity {
@@ -31,6 +33,8 @@ public class NewMeterActivity extends AppCompatActivity {
     private Meter meter = new Meter();
     private String command = "add";
     private FirebaseCrudHelper firebaseCrudHelper;
+    private ArrayList<String> roomNames;
+    private ArrayAdapter<String> roomNameSpinnerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,8 +85,18 @@ public class NewMeterActivity extends AppCompatActivity {
     //endregion
 
     private void bindUIWithComponents() {
-        spinnerAdapter.setSpinnerAdapter(activityNewMeterBinding.RoomSpinner,spinnerData.setRoomData(),this);
-        spinnerAdapter.setSpinnerAdapter(activityNewMeterBinding.MeterTypeName,spinnerData.setMeterTypeData(),this);
+        //region set room spinner
+        firebaseCrudHelper.getAllName("room", "roomName", new FirebaseCrudHelper.onNameFetch() {
+            @Override
+            public void onFetched(ArrayList<String> nameList) {
+                roomNames = nameList;
+                roomNameSpinnerAdapter = new ArrayAdapter<>(NewMeterActivity.this, R.layout.spinner_drop, roomNames);
+                roomNameSpinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
+                activityNewMeterBinding.RoomSpinner.setAdapter(roomNameSpinnerAdapter);
+            }
+        });
+        //endregion
+        spinnerAdapter.setSpinnerAdapter(activityNewMeterBinding.MeterTypeName,this, spinnerData.setMeterTypeData());
 
         //region select spinner
         activityNewMeterBinding.RoomSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -147,6 +161,7 @@ public class NewMeterActivity extends AppCompatActivity {
     }
 
     private void init() {
+        roomNames = new ArrayList<>();
         inputValidation = new InputValidation(this,activityNewMeterBinding.mainLayout);
         spinnerAdapter = new SpinnerAdapter();
         spinnerData = new SpinnerData(this);

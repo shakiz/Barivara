@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +24,7 @@ import com.shakil.barivara.utils.InputValidation;
 import com.shakil.barivara.utils.SpinnerAdapter;
 import com.shakil.barivara.utils.SpinnerData;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class NewTenantActivity extends AppCompatActivity {
@@ -37,6 +39,8 @@ public class NewTenantActivity extends AppCompatActivity {
     private Tenant tenant = new Tenant();
     private String command = "add";
     private FirebaseCrudHelper firebaseCrudHelper;
+    private ArrayList<String> roomNames;
+    private ArrayAdapter<String> roomNameSpinnerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,13 +97,25 @@ public class NewTenantActivity extends AppCompatActivity {
         firebaseCrudHelper = new FirebaseCrudHelper(this);
         spinnerData = new SpinnerData(this);
         spinnerAdapter = new SpinnerAdapter();
+        roomNames = new ArrayList<>();
     }
     //endregion
 
     //region bind UI with components
     private void bindUiWithComponents(){
-        spinnerAdapter.setSpinnerAdapter(activityAddNewTenantBinding.StartingMonthId,spinnerData.setMonthData(),this);
-        spinnerAdapter.setSpinnerAdapter(activityAddNewTenantBinding.AssociateRoomId,spinnerData.setRoomData(),this);
+        spinnerAdapter.setSpinnerAdapter(activityAddNewTenantBinding.StartingMonthId,this,spinnerData.setMonthData());
+
+        //region set month spinner
+        firebaseCrudHelper.getAllName("room", "roomName", new FirebaseCrudHelper.onNameFetch() {
+            @Override
+            public void onFetched(ArrayList<String> nameList) {
+                roomNames = nameList;
+                roomNameSpinnerAdapter = new ArrayAdapter<>(NewTenantActivity.this, R.layout.spinner_drop, roomNames);
+                roomNameSpinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
+                activityAddNewTenantBinding.AssociateRoomId.setAdapter(roomNameSpinnerAdapter);
+            }
+        });
+        //endregion
 
         //region spinner on change
         activityAddNewTenantBinding.StartingMonthId.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

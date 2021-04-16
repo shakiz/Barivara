@@ -7,6 +7,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +23,7 @@ import com.shakil.barivara.utils.SpinnerAdapter;
 import com.shakil.barivara.utils.SpinnerData;
 import com.shakil.barivara.utils.UtilsForAll;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class ElectricityBillDetailsActivity extends AppCompatActivity {
@@ -37,6 +39,8 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
     private String command = "add";
     private int AssociateMeterId, AssociateRoomId;
     private FirebaseCrudHelper firebaseCrudHelper;
+    private ArrayList<String> roomNames, meterNames;
+    private ArrayAdapter<String> roomNameSpinnerAdapter, meterNameSpinnerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,8 +119,29 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
         });
         //endregion
 
-        spinnerAdapter.setSpinnerAdapter(activityMeterCostDetailsBinding.AssociateMeterId,spinnerData.setMeterData(),this);
-        spinnerAdapter.setSpinnerAdapter(activityMeterCostDetailsBinding.AssociateRoomId,spinnerData.setRoomData(),this);
+        //region set meter spinner
+        firebaseCrudHelper.getAllName("meter", "meterName", new FirebaseCrudHelper.onNameFetch() {
+            @Override
+            public void onFetched(ArrayList<String> nameList) {
+                meterNames = nameList;
+                meterNameSpinnerAdapter = new ArrayAdapter<>(ElectricityBillDetailsActivity.this, R.layout.spinner_drop, meterNames);
+                meterNameSpinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
+                activityMeterCostDetailsBinding.AssociateMeterId.setAdapter(meterNameSpinnerAdapter);
+            }
+        });
+        //endregion
+
+        //region set room spinner
+        firebaseCrudHelper.getAllName("room", "roomName", new FirebaseCrudHelper.onNameFetch() {
+            @Override
+            public void onFetched(ArrayList<String> nameList) {
+                roomNames = nameList;
+                roomNameSpinnerAdapter = new ArrayAdapter<>(ElectricityBillDetailsActivity.this, R.layout.spinner_drop, roomNames);
+                roomNameSpinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
+                activityMeterCostDetailsBinding.AssociateRoomId.setAdapter(roomNameSpinnerAdapter);
+            }
+        });
+        //endregion
 
         //region Adding new details
         activityMeterCostDetailsBinding.mAddMeterDetailsMaster.setOnClickListener(new View.OnClickListener() {
@@ -238,6 +263,7 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
     private void init() {
         spinnerData = new SpinnerData(this);
         spinnerAdapter = new SpinnerAdapter();
+        roomNames = new ArrayList<>();
         dbHelperParent = new DbHelperParent(this);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
         inputValidation = new InputValidation(this,activityMeterCostDetailsBinding.mainLayout);

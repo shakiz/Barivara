@@ -4,12 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.shakil.barivara.R;
+import com.shakil.barivara.activities.meter.NewMeterActivity;
 import com.shakil.barivara.activities.onboard.MainActivity;
 import com.shakil.barivara.databinding.ActivityNewRentDetailsBinding;
 import com.shakil.barivara.dbhelper.DbHelperParent;
@@ -19,6 +21,7 @@ import com.shakil.barivara.utils.InputValidation;
 import com.shakil.barivara.utils.SpinnerAdapter;
 import com.shakil.barivara.utils.SpinnerData;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class RentDetailsActivity extends AppCompatActivity {
@@ -32,6 +35,8 @@ public class RentDetailsActivity extends AppCompatActivity {
     private int MonthId = 0, AssociateRoomId = 0;
     private String MonthStr = "", AssociateRoomStr = "";
     private FirebaseCrudHelper firebaseCrudHelper;
+    private ArrayList<String> roomNames;
+    private ArrayAdapter<String> roomNameSpinnerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,8 +85,18 @@ public class RentDetailsActivity extends AppCompatActivity {
     //endregion
 
     private void bindUiWithComponents() {
-        spinnerAdapter.setSpinnerAdapter(activityNewRentDetailsBinding.MonthId,spinnerData.setMonthData(),this);
-        spinnerAdapter.setSpinnerAdapter(activityNewRentDetailsBinding.AssociateRoomId,spinnerData.setRoomData(),this);
+        spinnerAdapter.setSpinnerAdapter(activityNewRentDetailsBinding.MonthId,this, spinnerData.setMonthData());
+        //region set room spinner
+        firebaseCrudHelper.getAllName("room", "roomName", new FirebaseCrudHelper.onNameFetch() {
+            @Override
+            public void onFetched(ArrayList<String> nameList) {
+                roomNames = nameList;
+                roomNameSpinnerAdapter = new ArrayAdapter<>(RentDetailsActivity.this, R.layout.spinner_drop, roomNames);
+                roomNameSpinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
+                activityNewRentDetailsBinding.AssociateRoomId.setAdapter(roomNameSpinnerAdapter);
+            }
+        });
+        //endregion
 
         //region spinner on change
         activityNewRentDetailsBinding.MonthId.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -134,6 +149,7 @@ public class RentDetailsActivity extends AppCompatActivity {
     }
 
     private void init() {
+        roomNames = new ArrayList<>();
         spinnerData = new SpinnerData(this);
         dbHelperParent = new DbHelperParent(this);
         firebaseCrudHelper = new FirebaseCrudHelper(this);

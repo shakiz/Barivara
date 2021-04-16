@@ -10,6 +10,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.shakil.barivara.R;
 import com.shakil.barivara.model.meter.ElectricityBill;
 import com.shakil.barivara.model.meter.Meter;
 import com.shakil.barivara.model.room.Rent;
@@ -196,6 +197,35 @@ public class FirebaseCrudHelper {
                 }
             }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.i(Constants.TAG,""+error.getMessage());
+            }
+        });
+    }
+    //endregion
+
+    //region get all name
+    public interface onNameFetch{
+        void onFetched(ArrayList<String> nameList);
+    }
+    public void getAllName(String path, String fieldName, onNameFetch onNameFetch){
+        ArrayList<String> roomNameList = new ArrayList<>();
+        databaseReference = FirebaseDatabase.getInstance().getReference(path);
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getChildren() != null){
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        Log.i(Constants.TAG,fieldName+ ":" +dataSnapshot.child(fieldName).getValue(String.class));
+                        roomNameList.add(dataSnapshot.child(fieldName).getValue(String.class));
+                    }
+                }
+                roomNameList.add(context.getString(R.string.no_data_message));
+                if (onNameFetch != null){
+                    onNameFetch.onFetched(roomNameList);
+                }
+            }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.i(Constants.TAG,""+error.getMessage());
