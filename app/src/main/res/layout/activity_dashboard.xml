@@ -67,7 +67,7 @@
                             android:layout_margin="10dp"
                             android:orientation="vertical">
 
-                            <com.hanks.htextview.evaporate.EvaporateTextView
+                            <TextView
                                 android:id="@+id/TotalRooms"
                                 android:layout_width="72dp"
                                 android:layout_height="72dp"
@@ -114,7 +114,7 @@
                             android:layout_margin="10dp"
                             android:orientation="vertical">
 
-                            <com.hanks.htextview.evaporate.EvaporateTextView
+                            <TextView
                                 android:id="@+id/TotalMeters"
                                 android:layout_width="72dp"
                                 android:layout_height="72dp"
@@ -161,7 +161,7 @@
                             android:layout_margin="10dp"
                             android:orientation="vertical">
 
-                            <com.hanks.htextview.evaporate.EvaporateTextView
+                            <TextView
                                 android:id="@+id/TotalTenants"
                                 android:layout_width="72dp"
                                 android:layout_height="72dp"
@@ -310,76 +310,6 @@
                                             android:textStyle="bold"
                                             android:textColor="@color/md_grey_800"
                                             android:text="@string/zero_taka"/>
-
-                                    </LinearLayout>
-
-                                </LinearLayout>
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginLeft="24dp"
-                            android:layout_marginRight="24dp"
-                            android:background="@color/md_red_300"/>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginBottom="8dp"
-                            android:layout_gravity="center"
-                            android:weightSum="2"
-                            android:orientation="horizontal">
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_weight="2"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:gravity="center|left"
-                                android:orientation="horizontal">
-
-                                <ImageView
-                                    android:layout_width="42dp"
-                                    android:layout_height="42dp"
-                                    android:scaleType="centerInside"
-                                    android:padding="8dp"
-                                    android:background="@drawable/ic_electric_meter"/>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="8dp"
-                                    android:orientation="vertical">
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:textSize="18sp"
-                                        android:textColor="@color/md_pink_800"
-                                        android:text="@string/total_unit"/>
-
-                                    <LinearLayout
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:orientation="horizontal">
-
-                                        <com.hanks.htextview.evaporate.EvaporateTextView
-                                            android:id="@+id/TotalUnit"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:gravity="center"
-                                            android:textSize="18sp"
-                                            android:layout_marginRight="2dp"
-                                            android:textStyle="bold"
-                                            android:textColor="@color/md_grey_800"
-                                            android:text="@string/zero_unit"/>
 
                                     </LinearLayout>
 

@@ -28,12 +28,17 @@ import com.shakil.barivara.activities.tenant.TenantListActivity;
 import com.shakil.barivara.databinding.ActivityMainBinding;
 import com.shakil.barivara.dbhelper.DbHelperParent;
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
+import com.shakil.barivara.model.AddOns;
 import com.shakil.barivara.model.meter.Meter;
 import com.shakil.barivara.model.room.Room;
 import com.shakil.barivara.model.tenant.Tenant;
+import com.shakil.barivara.utils.PrefManager;
 import com.shakil.barivara.utils.UtilsForAll;
 
 import java.util.ArrayList;
+import java.util.UUID;
+
+import static com.shakil.barivara.utils.Constants.mAppViewCount;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private ActivityMainBinding activityMainBinding;
@@ -41,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DbHelperParent dbHelperParent;
     private UtilsForAll utilsForAll;
     private FirebaseCrudHelper firebaseCrudHelper;
+    private PrefManager prefManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +80,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     //region UI interactions
     private void bindUIWithComponents() {
+        //region
+        //region Update App ViewCount
+        if(prefManager.getInt(mAppViewCount)>0)
+        {
+            prefManager.set(mAppViewCount,prefManager.getInt(mAppViewCount)+1);
+        }
+        else prefManager.set(mAppViewCount,1);
+        //endregion
+        //endregion
+
         //region set text for greetings, dateTime, totalRooms, totalMeter, totalTenants
         activityMainBinding.GreetingsText.setText(utilsForAll.setGreetings());
         activityMainBinding.DateTimeText.setText(utilsForAll.getDateTimeText());
@@ -100,6 +116,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
         //endregion
 
+        //region on clickt listener for all list home item
         activityMainBinding.moreDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -141,11 +158,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(new Intent(MainActivity.this, TenantListActivity.class));
             }
         });
+        //endregion
+
+        //region push app visit data into firebase
+//        AddOns addOns = new AddOns();
+//        addOns.setRecordId(UUID.randomUUID().toString());
+//        addOns.setAppVisit(prefManager.getInt(mAppViewCount));
+//        firebaseCrudHelper.add(addOns, "addOns");
+        //endregion
     }
     //endregion
 
     //region init components
     private void init() {
+        prefManager = new PrefManager(this);
         dbHelperParent = new DbHelperParent(this);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
         utilsForAll = new UtilsForAll(this,activityMainBinding.mainLayout);

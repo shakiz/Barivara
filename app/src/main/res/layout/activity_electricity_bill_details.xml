@@ -31,296 +31,302 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/app_bar"
-            android:id="@+id/mainLayout"
-            android:orientation="vertical">
+            android:fillViewport="true">
 
-            <androidx.cardview.widget.CardView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:cardCornerRadius="12dp"
-                android:elevation="4dp"
-                android:layout_margin="8dp"
-                android:translationZ="4dp">
+                android:id="@+id/mainLayout"
+                android:orientation="vertical">
 
-                <LinearLayout
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:layout_margin="2dp">
-
+                    app:cardCornerRadius="12dp"
+                    android:elevation="4dp"
+                    android:layout_margin="8dp"
+                    android:translationZ="4dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginRight="12dp"
-                        android:layout_marginTop="8dp"
-                        android:orientation="vertical">
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_margin="2dp">
 
-                        <TextView
+
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="@string/select_meter"
-                            android:textColor="@color/md_grey_900"
-                            android:textSize="16sp" />
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginRight="12dp"
+                            android:layout_marginTop="8dp"
+                            android:orientation="vertical">
 
-                        <Spinner
-                            style="@style/Base.TextAppearance.AppCompat.Medium"
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:layout_marginTop="5dp"
-                            android:background="@drawable/edittext_back"
-                            android:id="@+id/AssociateMeterId"/>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="@string/select_meter"
+                                android:textColor="@color/md_grey_900"
+                                android:textSize="16sp" />
 
-                    </LinearLayout>
+                            <Spinner
+                                style="@style/Base.TextAppearance.AppCompat.Medium"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:layout_marginTop="5dp"
+                                android:background="@drawable/edittext_back"
+                                android:id="@+id/AssociateMeterId"/>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginRight="12dp"
-                        android:layout_marginTop="8dp"
-                        android:orientation="vertical">
+                        </LinearLayout>
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="@string/select_room"
-                            android:textColor="@color/md_grey_900"
-                            android:textSize="16sp" />
-
-                        <Spinner
-                            style="@style/Base.TextAppearance.AppCompat.Medium"
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:layout_marginTop="5dp"
-                            android:background="@drawable/edittext_back"
-                            android:id="@+id/AssociateRoomId"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginRight="12dp"
-                        android:layout_marginTop="8dp"
-                        android:orientation="vertical">
-
-                        <TextView
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="@string/previous_month_unit"
-                            android:textColor="@color/md_grey_900"
-                            android:textSize="16sp" />
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginRight="12dp"
+                            android:layout_marginTop="8dp"
+                            android:orientation="vertical">
 
-                        <EditText
-                            android:id="@+id/PastUnit"
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:layout_marginTop="5dp"
-                            android:background="@drawable/edittext_back"
-                            android:inputType="number"
-                            android:ellipsize="end"
-                            android:scrollHorizontally="true"
-                            android:maxLines="1"
-                            android:textColorHint="@color/md_grey_700"
-                            android:hint="@string/previous_month_unit_hint"
-                            android:paddingLeft="10dp"
-                            android:paddingRight="10dp"
-                            android:textSize="14sp"
-                            android:textColor="@color/md_grey_800"/>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="@string/select_room"
+                                android:textColor="@color/md_grey_900"
+                                android:textSize="16sp" />
 
-                    </LinearLayout>
+                            <Spinner
+                                style="@style/Base.TextAppearance.AppCompat.Medium"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:layout_marginTop="5dp"
+                                android:background="@drawable/edittext_back"
+                                android:id="@+id/AssociateRoomId"/>
 
+                        </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginRight="12dp"
-                        android:layout_marginTop="8dp"
-                        android:orientation="vertical">
-
-                        <TextView
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="@string/present_month_unit"
-                            android:textColor="@color/md_grey_900"
-                            android:textSize="16sp" />
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginRight="12dp"
+                            android:layout_marginTop="8dp"
+                            android:orientation="vertical">
 
-                        <EditText
-                            android:id="@+id/PresentUnit"
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:layout_marginTop="5dp"
-                            android:background="@drawable/edittext_back"
-                            android:inputType="number"
-                            android:ellipsize="end"
-                            android:scrollHorizontally="true"
-                            android:maxLines="1"
-                            android:textColorHint="@color/md_grey_700"
-                            android:hint="@string/present_month_unit_hint"
-                            android:paddingLeft="10dp"
-                            android:paddingRight="10dp"
-                            android:textSize="14sp"
-                            android:textColor="@color/md_grey_800"/>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="@string/previous_month_unit"
+                                android:textColor="@color/md_grey_900"
+                                android:textSize="16sp" />
 
-                    </LinearLayout>
+                            <EditText
+                                android:id="@+id/PastUnit"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:layout_marginTop="5dp"
+                                android:background="@drawable/edittext_back"
+                                android:inputType="number"
+                                android:ellipsize="end"
+                                android:scrollHorizontally="true"
+                                android:maxLines="1"
+                                android:textColorHint="@color/md_grey_700"
+                                android:hint="@string/previous_month_unit_hint"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"
+                                android:textSize="14sp"
+                                android:textColor="@color/md_grey_800"/>
+
+                        </LinearLayout>
 
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginRight="12dp"
-                        android:layout_marginTop="8dp"
-                        android:background="@drawable/edittext_back"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="40dp"
-                            android:textColorHint="@color/md_grey_700"
-                            android:text="@string/total_unit"
-                            android:paddingLeft="10dp"
-                            android:paddingRight="10dp"
-                            android:textSize="16sp"
-                            android:layout_gravity="center"
-                            android:gravity="center|left"
-                            android:textStyle="bold"
-                            android:textColor="@color/md_grey_800"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="40dp"
-                            android:textColorHint="@color/md_grey_700"
-                            android:text=":"
-                            android:paddingLeft="2dp"
-                            android:paddingRight="2dp"
-                            android:textSize="16sp"
-                            android:layout_gravity="center"
-                            android:gravity="center|left"
-                            android:textStyle="bold"
-                            android:textColor="@color/md_grey_800"/>
-
-                        <TextView
-                            android:id="@+id/TotalUnit"
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:textColorHint="@color/md_grey_700"
-                            android:text="@string/zero"
-                            android:paddingLeft="10dp"
-                            android:paddingRight="10dp"
-                            android:textSize="16sp"
-                            android:layout_gravity="center"
-                            android:gravity="center|left"
-                            android:textStyle="bold"
-                            android:textColor="@color/md_grey_800"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginRight="12dp"
-                        android:layout_marginTop="8dp"
-                        android:orientation="vertical">
-
-                        <TextView
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="@string/unit_price"
-                            android:textColor="@color/md_grey_900"
-                            android:textSize="16sp" />
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginRight="12dp"
+                            android:layout_marginTop="8dp"
+                            android:orientation="vertical">
 
-                        <EditText
-                            android:id="@+id/UnitPrice"
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="@string/present_month_unit"
+                                android:textColor="@color/md_grey_900"
+                                android:textSize="16sp" />
+
+                            <EditText
+                                android:id="@+id/PresentUnit"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:layout_marginTop="5dp"
+                                android:background="@drawable/edittext_back"
+                                android:inputType="number"
+                                android:ellipsize="end"
+                                android:scrollHorizontally="true"
+                                android:maxLines="1"
+                                android:textColorHint="@color/md_grey_700"
+                                android:hint="@string/present_month_unit_hint"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"
+                                android:textSize="14sp"
+                                android:textColor="@color/md_grey_800"/>
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:layout_marginTop="5dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginRight="12dp"
+                            android:layout_marginTop="8dp"
                             android:background="@drawable/edittext_back"
-                            android:inputType="number"
-                            android:ellipsize="end"
-                            android:scrollHorizontally="true"
-                            android:maxLines="1"
-                            android:textColorHint="@color/md_grey_700"
-                            android:hint="@string/unit_price_hint"
-                            android:paddingLeft="10dp"
-                            android:paddingRight="10dp"
-                            android:textSize="14sp"
-                            android:textColor="@color/md_grey_800"/>
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="40dp"
+                                android:textColorHint="@color/md_grey_700"
+                                android:text="@string/total_unit"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"
+                                android:textSize="16sp"
+                                android:layout_gravity="center"
+                                android:gravity="center|left"
+                                android:textStyle="bold"
+                                android:textColor="@color/md_grey_800"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="40dp"
+                                android:textColorHint="@color/md_grey_700"
+                                android:text=":"
+                                android:paddingLeft="2dp"
+                                android:paddingRight="2dp"
+                                android:textSize="16sp"
+                                android:layout_gravity="center"
+                                android:gravity="center|left"
+                                android:textStyle="bold"
+                                android:textColor="@color/md_grey_800"/>
+
+                            <TextView
+                                android:id="@+id/TotalUnit"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:textColorHint="@color/md_grey_700"
+                                android:text="@string/zero"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"
+                                android:textSize="16sp"
+                                android:layout_gravity="center"
+                                android:gravity="center|left"
+                                android:textStyle="bold"
+                                android:textColor="@color/md_grey_800"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginRight="12dp"
+                            android:layout_marginTop="8dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="@string/unit_price"
+                                android:textColor="@color/md_grey_900"
+                                android:textSize="16sp" />
+
+                            <EditText
+                                android:id="@+id/UnitPrice"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:layout_marginTop="5dp"
+                                android:background="@drawable/edittext_back"
+                                android:inputType="number"
+                                android:ellipsize="end"
+                                android:scrollHorizontally="true"
+                                android:maxLines="1"
+                                android:textColorHint="@color/md_grey_700"
+                                android:hint="@string/unit_price_hint"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"
+                                android:textSize="14sp"
+                                android:textColor="@color/md_grey_800"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/edittext_back"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginRight="12dp"
+                            android:layout_marginTop="8dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="40dp"
+                                android:textColorHint="@color/md_grey_700"
+                                android:text="@string/total_electricity_bill"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"
+                                android:textSize="16sp"
+                                android:layout_gravity="center"
+                                android:gravity="center|left"
+                                android:textStyle="bold"
+                                android:textColor="@color/md_grey_800"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="40dp"
+                                android:textColorHint="@color/md_grey_700"
+                                android:text=":"
+                                android:paddingLeft="2dp"
+                                android:paddingRight="2dp"
+                                android:textSize="16sp"
+                                android:layout_gravity="center"
+                                android:gravity="center|left"
+                                android:textStyle="bold"
+                                android:textColor="@color/md_grey_800"/>
+
+                            <TextView
+                                android:id="@+id/TotalAmount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="40dp"
+                                android:textColorHint="@color/md_grey_700"
+                                android:text="@string/zero"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"
+                                android:textSize="16sp"
+                                android:layout_gravity="center"
+                                android:gravity="center|left"
+                                android:textStyle="bold"
+                                android:textColor="@color/md_grey_800"/>
+
+                        </LinearLayout>
+
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/edittext_back"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginRight="12dp"
-                        android:layout_marginTop="8dp"
-                        android:orientation="horizontal">
+                </androidx.cardview.widget.CardView>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="40dp"
-                            android:textColorHint="@color/md_grey_700"
-                            android:text="@string/total_electricity_bill"
-                            android:paddingLeft="10dp"
-                            android:paddingRight="10dp"
-                            android:textSize="16sp"
-                            android:layout_gravity="center"
-                            android:gravity="center|left"
-                            android:textStyle="bold"
-                            android:textColor="@color/md_grey_800"/>
+            </LinearLayout>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="40dp"
-                            android:textColorHint="@color/md_grey_700"
-                            android:text=":"
-                            android:paddingLeft="2dp"
-                            android:paddingRight="2dp"
-                            android:textSize="16sp"
-                            android:layout_gravity="center"
-                            android:gravity="center|left"
-                            android:textStyle="bold"
-                            android:textColor="@color/md_grey_800"/>
-
-                        <TextView
-                            android:id="@+id/TotalAmount"
-                            android:layout_width="wrap_content"
-                            android:layout_height="40dp"
-                            android:textColorHint="@color/md_grey_700"
-                            android:text="@string/zero"
-                            android:paddingLeft="10dp"
-                            android:paddingRight="10dp"
-                            android:textSize="16sp"
-                            android:layout_gravity="center"
-                            android:gravity="center|left"
-                            android:textStyle="bold"
-                            android:textColor="@color/md_grey_800"/>
-
-                    </LinearLayout>
-
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-        </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/mAddMeterDetailsMaster"

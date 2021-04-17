@@ -15,13 +15,17 @@ import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.meter.Meter;
 import com.shakil.barivara.model.room.Room;
 import com.shakil.barivara.model.tenant.Tenant;
+import com.shakil.barivara.utils.PrefManager;
 
 import java.util.ArrayList;
+
+import static com.shakil.barivara.utils.Constants.mAppViewCount;
 
 public class DashboardActivity extends AppCompatActivity {
     private ActivityDashboardBinding activityDashboardBinding;
     private DbHelperParent dbHelperParent;
     private FirebaseCrudHelper firebaseCrudHelper;
+    private PrefManager prefManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +46,7 @@ public class DashboardActivity extends AppCompatActivity {
 
     //region init objects
     private void init(){
+        prefManager = new PrefManager(this);
         dbHelperParent = new DbHelperParent(this);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
     }
@@ -49,6 +54,7 @@ public class DashboardActivity extends AppCompatActivity {
 
     //region init objects
     private void bindUiWithComponents(){
+        //region set all counts
         firebaseCrudHelper.fetchAllTenant("tenant", new FirebaseCrudHelper.onTenantDataFetch() {
             @Override
             public void onFetch(ArrayList<Tenant> objects) {
@@ -69,9 +75,23 @@ public class DashboardActivity extends AppCompatActivity {
                 activityDashboardBinding.TotalRooms.setText(""+objects.size());
             }
         });
-        activityDashboardBinding.TotalRentAmount.animateText(String.valueOf(dbHelperParent.getTotalRentAmount())+" "+getString(R.string.taka));
-        activityDashboardBinding.TotalElectricityBill.animateText(String.valueOf(dbHelperParent.getTotalElectricityBillCollection())+" "+getString(R.string.taka));
-        activityDashboardBinding.TotalUnit.animateText(String.valueOf(dbHelperParent.getTotalUnit())+" "+getString(R.string.units));
+
+        firebaseCrudHelper.getAdditionalInfo("rent", "rentAmount", new FirebaseCrudHelper.onAdditionalInfoFetch() {
+            @Override
+            public void onFetched(double data) {
+                activityDashboardBinding.TotalRentAmount.animateText(String.valueOf(data)+" "+getString(R.string.taka));
+            }
+        });
+
+        firebaseCrudHelper.getAdditionalInfo("electricityBill", "totalBill", new FirebaseCrudHelper.onAdditionalInfoFetch() {
+            @Override
+            public void onFetched(double data) {
+                activityDashboardBinding.TotalElectricityBill.animateText(String.valueOf(data)+" "+getString(R.string.taka));
+            }
+        });
+
+        activityDashboardBinding.AppVisitCount.setText(String.valueOf(prefManager.getInt(mAppViewCount)));
+        //endregion
     }
     //endregion
 

@@ -216,18 +216,81 @@ public class FirebaseCrudHelper {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getChildren() != null){
+                    roomNameList.add(context.getString(R.string.select_data));
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         Log.i(Constants.TAG,fieldName+ ":" +dataSnapshot.child(fieldName).getValue(String.class));
                         roomNameList.add(dataSnapshot.child(fieldName).getValue(String.class));
                     }
                 }
-                roomNameList.add(context.getString(R.string.no_data_message));
                 if (onNameFetch != null){
                     onNameFetch.onFetched(roomNameList);
                 }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                roomNameList.add(context.getString(R.string.no_data_message));
+                if (onNameFetch != null){
+                    onNameFetch.onFetched(roomNameList);
+                }
+                Log.i(Constants.TAG,""+error.getMessage());
+            }
+        });
+    }
+    //endregion
+
+    //region get all bill, rent amount and total units used
+    public interface onAdditionalInfoFetch{
+        void onFetched(double data);
+    }
+    public void getAdditionalInfo(String path, String fieldName, onAdditionalInfoFetch onAdditionalInfoFetch){
+        final double[] data = {0};
+        databaseReference = FirebaseDatabase.getInstance().getReference(path);
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getChildren() != null){
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        Log.i(Constants.TAG,fieldName+ ":" +dataSnapshot.child(fieldName).getValue(double.class));
+                        data[0] = data[0] + (dataSnapshot.child(fieldName).getValue(double.class));
+                    }
+                }
+                if (onAdditionalInfoFetch != null){
+                    onAdditionalInfoFetch.onFetched(data[0]);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                if (onAdditionalInfoFetch != null){
+                    onAdditionalInfoFetch.onFetched(data[0]);
+                }
+                Log.i(Constants.TAG,""+error.getMessage());
+            }
+        });
+    }
+    //endregion
+
+    //region get single column data
+    public interface onSingleDataFetch{
+        void onFetched(Object data);
+    }
+    public void getSingleColumnValue(String path, String fieldName, onSingleDataFetch onSingleDataFetch){
+        final Object[] object = {0};
+        databaseReference = FirebaseDatabase.getInstance().getReference(path);
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getChildren() != null){
+                    object[0] = (snapshot.child(fieldName).getValue(Integer.class));
+                }
+                if (onSingleDataFetch != null){
+                    onSingleDataFetch.onFetched(object[0]);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                if (onSingleDataFetch != null){
+                    onSingleDataFetch.onFetched(object[0]);
+                }
                 Log.i(Constants.TAG,""+error.getMessage());
             }
         });

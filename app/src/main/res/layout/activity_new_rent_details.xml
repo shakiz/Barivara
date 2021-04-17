@@ -31,127 +31,133 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/app_bar"
-            android:id="@+id/mainLayout"
-            android:orientation="vertical">
+            android:fillViewport="true">
 
-            <androidx.cardview.widget.CardView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:cardCornerRadius="12dp"
-                android:elevation="4dp"
-                android:layout_margin="8dp"
-                android:translationZ="4dp">
+                android:id="@+id/mainLayout"
+                android:orientation="vertical">
 
-
-                <LinearLayout
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginTop="8dp"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent"
+                    app:cardCornerRadius="12dp"
+                    android:elevation="4dp"
+                    android:layout_margin="8dp"
+                    android:translationZ="4dp">
 
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginRight="12dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
                         android:layout_marginTop="8dp"
                         android:orientation="vertical">
 
-                        <TextView
+
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="@string/select_month_2"
-                            android:textColor="@color/md_grey_900"
-                            android:textSize="16sp" />
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginRight="12dp"
+                            android:layout_marginTop="8dp"
+                            android:orientation="vertical">
 
-                        <Spinner
-                            style="@style/Base.TextAppearance.AppCompat.Medium"
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="@string/select_month_2"
+                                android:textColor="@color/md_grey_900"
+                                android:textSize="16sp" />
+
+                            <Spinner
+                                style="@style/Base.TextAppearance.AppCompat.Medium"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:layout_marginTop="5dp"
+                                android:background="@drawable/edittext_back"
+                                android:id="@+id/MonthId"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:layout_marginTop="5dp"
-                            android:background="@drawable/edittext_back"
-                            android:id="@+id/MonthId"/>
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginRight="12dp"
+                            android:layout_marginTop="8dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="@string/select_room"
+                                android:textColor="@color/md_grey_900"
+                                android:textSize="16sp" />
+
+                            <Spinner
+                                style="@style/Base.TextAppearance.AppCompat.Medium"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:layout_marginTop="5dp"
+                                android:background="@drawable/edittext_back"
+                                android:id="@+id/AssociateRoomId"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginRight="12dp"
+                            android:layout_marginTop="8dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="@string/rent_amount"
+                                android:textColor="@color/md_grey_900"
+                                android:textSize="16sp" />
+
+                            <EditText
+                                android:id="@+id/RentAmount"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:layout_marginTop="5dp"
+                                android:background="@drawable/edittext_back"
+                                android:inputType="text"
+                                android:ellipsize="end"
+                                android:scrollHorizontally="true"
+                                android:maxLines="1"
+                                android:textColorHint="@color/md_grey_700"
+                                android:hint="@string/rent_hint"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"
+                                android:textSize="14sp"
+                                android:textColor="@color/md_grey_800"/>
+
+                        </LinearLayout>
+
+
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginRight="12dp"
-                        android:layout_marginTop="8dp"
-                        android:orientation="vertical">
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="@string/select_room"
-                            android:textColor="@color/md_grey_900"
-                            android:textSize="16sp" />
+                </androidx.cardview.widget.CardView>
 
-                        <Spinner
-                            style="@style/Base.TextAppearance.AppCompat.Medium"
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:layout_marginTop="5dp"
-                            android:background="@drawable/edittext_back"
-                            android:id="@+id/AssociateRoomId"/>
+            </LinearLayout>
 
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginRight="12dp"
-                        android:layout_marginTop="8dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="@string/rent_amount"
-                            android:textColor="@color/md_grey_900"
-                            android:textSize="16sp" />
-
-                        <EditText
-                            android:id="@+id/RentAmount"
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:layout_marginTop="5dp"
-                            android:background="@drawable/edittext_back"
-                            android:inputType="text"
-                            android:ellipsize="end"
-                            android:scrollHorizontally="true"
-                            android:maxLines="1"
-                            android:textColorHint="@color/md_grey_700"
-                            android:hint="@string/rent_hint"
-                            android:paddingLeft="10dp"
-                            android:paddingRight="10dp"
-                            android:textSize="14sp"
-                            android:textColor="@color/md_grey_800"/>
-
-                    </LinearLayout>
-
-
-
-                </LinearLayout>
-
-
-            </androidx.cardview.widget.CardView>
-
-        </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/mAddRentMaster"
