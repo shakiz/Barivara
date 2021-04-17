@@ -14,14 +14,10 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.shakil.barivara.R;
-import com.shakil.barivara.activities.meter.ElectricityBillListActivity;
-import com.shakil.barivara.activities.meter.MeterListActivity;
 import com.shakil.barivara.activities.onboard.MainActivity;
 import com.shakil.barivara.adapter.RecyclerTenantListAdapter;
 import com.shakil.barivara.databinding.ActivityTenantListBinding;
-import com.shakil.barivara.dbhelper.DbHelperParent;
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
-import com.shakil.barivara.model.meter.ElectricityBill;
 import com.shakil.barivara.model.tenant.Tenant;
 import com.shakil.barivara.utils.FilterManager;
 import com.shakil.barivara.utils.Tools;
@@ -34,7 +30,6 @@ public class TenantListActivity extends AppCompatActivity {
     private RecyclerTenantListAdapter recyclerTenantListAdapter;
     private ArrayList<Tenant> tenantList;
     private TextView noDataTXT;
-    private DbHelperParent dbHelperParent;
     private FirebaseCrudHelper firebaseCrudHelper;
     private UX ux;
     private FilterManager filterManager;
@@ -66,7 +61,6 @@ public class TenantListActivity extends AppCompatActivity {
         searchName = findViewById(R.id.SearchName);
         filterManager = new FilterManager(this);
         tenantList = new ArrayList<>();
-        dbHelperParent = new DbHelperParent(this);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
         ux = new UX(this);
         noDataTXT = findViewById(R.id.mNoDataMessage);
@@ -169,7 +163,6 @@ public class TenantListActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        dbHelperParent.close();
     }
 
     //endregion

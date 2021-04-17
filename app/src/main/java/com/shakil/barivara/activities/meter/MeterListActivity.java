@@ -15,13 +15,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.shakil.barivara.R;
 import com.shakil.barivara.activities.onboard.MainActivity;
-import com.shakil.barivara.activities.room.RentListActivity;
 import com.shakil.barivara.adapter.RecyclerMeterListAdapter;
 import com.shakil.barivara.databinding.ActivityMeterListBinding;
-import com.shakil.barivara.dbhelper.DbHelperParent;
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.meter.Meter;
-import com.shakil.barivara.model.room.Rent;
 import com.shakil.barivara.utils.FilterManager;
 import com.shakil.barivara.utils.Tools;
 import com.shakil.barivara.utils.UX;
@@ -33,7 +30,6 @@ public class MeterListActivity extends AppCompatActivity {
     private RecyclerMeterListAdapter recyclerMeterListAdapter;
     private ArrayList<Meter> meterList;
     private TextView noDataTXT;
-    private DbHelperParent dbHelperParent;
     private FirebaseCrudHelper firebaseCrudHelper;
     private UX ux;
     private FilterManager filterManager;
@@ -153,7 +149,6 @@ public class MeterListActivity extends AppCompatActivity {
         meterList = new ArrayList<>();
         ux = new UX(this);
         filterManager = new FilterManager(this);
-        dbHelperParent = new DbHelperParent(this);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
         noDataTXT = findViewById(R.id.mNoDataMessage);
     }
@@ -166,6 +161,5 @@ public class MeterListActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        dbHelperParent.close();
     }
 }

@@ -14,14 +14,11 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.shakil.barivara.R;
-import com.shakil.barivara.activities.meter.MeterListActivity;
 import com.shakil.barivara.activities.onboard.MainActivity;
 import com.shakil.barivara.adapter.RecyclerRentListAdapter;
 import com.shakil.barivara.databinding.ActivityRentListBinding;
-import com.shakil.barivara.dbhelper.DbHelperParent;
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.room.Rent;
-import com.shakil.barivara.model.room.Room;
 import com.shakil.barivara.utils.FilterManager;
 import com.shakil.barivara.utils.Tools;
 import com.shakil.barivara.utils.UX;
@@ -33,7 +30,6 @@ public class RentListActivity extends AppCompatActivity {
     private RecyclerRentListAdapter recyclerMeterListAdapter;
     private ArrayList<Rent> rentList;
     private TextView noDataTXT;
-    private DbHelperParent dbHelperParent;
     private FirebaseCrudHelper firebaseCrudHelper;
     private UX ux;
     private FilterManager filterManager;
@@ -64,7 +60,6 @@ public class RentListActivity extends AppCompatActivity {
         refreshButton = findViewById(R.id.refreshButton);
         searchName = findViewById(R.id.SearchName);
         rentList = new ArrayList<>();
-        dbHelperParent = new DbHelperParent(this);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
         ux = new UX(this);
         filterManager = new FilterManager(this);
@@ -170,7 +165,6 @@ public class RentListActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        dbHelperParent.close();
     }
     //endregion
 }

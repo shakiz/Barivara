@@ -10,7 +10,6 @@ import androidx.databinding.DataBindingUtil;
 import com.shakil.barivara.R;
 import com.shakil.barivara.activities.onboard.MainActivity;
 import com.shakil.barivara.databinding.ActivityDashboardBinding;
-import com.shakil.barivara.dbhelper.DbHelperParent;
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.meter.Meter;
 import com.shakil.barivara.model.room.Room;
@@ -23,7 +22,6 @@ import static com.shakil.barivara.utils.Constants.mAppViewCount;
 
 public class DashboardActivity extends AppCompatActivity {
     private ActivityDashboardBinding activityDashboardBinding;
-    private DbHelperParent dbHelperParent;
     private FirebaseCrudHelper firebaseCrudHelper;
     private PrefManager prefManager;
 
@@ -47,7 +45,6 @@ public class DashboardActivity extends AppCompatActivity {
     //region init objects
     private void init(){
         prefManager = new PrefManager(this);
-        dbHelperParent = new DbHelperParent(this);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
     }
     //endregion
@@ -105,7 +102,6 @@ public class DashboardActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        dbHelperParent.close();
     }
 
     //endregion

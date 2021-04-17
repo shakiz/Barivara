@@ -11,10 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.shakil.barivara.R;
-import com.shakil.barivara.activities.meter.NewMeterActivity;
 import com.shakil.barivara.activities.onboard.MainActivity;
 import com.shakil.barivara.databinding.ActivityNewRentDetailsBinding;
-import com.shakil.barivara.dbhelper.DbHelperParent;
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.room.Rent;
 import com.shakil.barivara.utils.InputValidation;
@@ -31,7 +29,6 @@ public class RentDetailsActivity extends AppCompatActivity {
     private SpinnerAdapter spinnerAdapter;
     Rent rent = new Rent();
     private String command = "add";
-    DbHelperParent dbHelperParent;
     private int MonthId = 0, AssociateRoomId = 0;
     private String MonthStr = "", AssociateRoomStr = "";
     private FirebaseCrudHelper firebaseCrudHelper;
@@ -151,7 +148,6 @@ public class RentDetailsActivity extends AppCompatActivity {
     private void init() {
         roomNames = new ArrayList<>();
         spinnerData = new SpinnerData(this);
-        dbHelperParent = new DbHelperParent(this);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
         spinnerAdapter = new SpinnerAdapter();
         inputValidation = new InputValidation(this, activityNewRentDetailsBinding.mainLayout);

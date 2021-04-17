@@ -2,7 +2,6 @@ package com.shakil.barivara.activities.tenant;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,12 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.shakil.barivara.R;
-import com.shakil.barivara.activities.onboard.MainActivity;
 import com.shakil.barivara.databinding.ActivityAddNewTenantBinding;
-import com.shakil.barivara.dbhelper.DbHelperParent;
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.tenant.Tenant;
 import com.shakil.barivara.utils.InputValidation;
@@ -30,7 +25,6 @@ import java.util.UUID;
 public class NewTenantActivity extends AppCompatActivity {
     private ActivityAddNewTenantBinding activityAddNewTenantBinding;
     private Toolbar toolbar;
-    private DbHelperParent dbHelperParent;
     private SpinnerAdapter spinnerAdapter;
     private SpinnerData spinnerData;
     private int AssociateRoomId, StartingMonthId;
@@ -93,7 +87,6 @@ public class NewTenantActivity extends AppCompatActivity {
     private void init() {
         inputValidation = new InputValidation(this,activityAddNewTenantBinding.mainLayout);
         toolbar = findViewById(R.id.tool_bar);
-        dbHelperParent = new DbHelperParent(this);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
         spinnerData = new SpinnerData(this);
         spinnerAdapter = new SpinnerAdapter();
@@ -180,7 +173,6 @@ public class NewTenantActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        dbHelperParent.close();
     }
     //endregion
 }

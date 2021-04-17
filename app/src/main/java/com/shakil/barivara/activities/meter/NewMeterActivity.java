@@ -12,7 +12,6 @@ import androidx.databinding.DataBindingUtil;
 
 import com.shakil.barivara.R;
 import com.shakil.barivara.databinding.ActivityNewMeterBinding;
-import com.shakil.barivara.dbhelper.DbHelperParent;
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.meter.Meter;
 import com.shakil.barivara.utils.InputValidation;
@@ -27,7 +26,6 @@ public class NewMeterActivity extends AppCompatActivity {
     private InputValidation inputValidation;
     private SpinnerAdapter spinnerAdapter;
     private SpinnerData spinnerData;
-    private DbHelperParent dbHelperParent;
     private String meterNameStr, roomNameStr, meterTypeStr;
     private int AssociateRoomId, MeterTypeId;
     private Meter meter = new Meter();
@@ -165,14 +163,12 @@ public class NewMeterActivity extends AppCompatActivity {
         inputValidation = new InputValidation(this,activityNewMeterBinding.mainLayout);
         spinnerAdapter = new SpinnerAdapter();
         spinnerData = new SpinnerData(this);
-        dbHelperParent = new DbHelperParent(this);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        dbHelperParent.close();
     }
 
     //region activity components

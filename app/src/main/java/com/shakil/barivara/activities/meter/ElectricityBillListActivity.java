@@ -17,10 +17,8 @@ import com.shakil.barivara.R;
 import com.shakil.barivara.activities.onboard.MainActivity;
 import com.shakil.barivara.adapter.RecyclerElectricityBillListAdapter;
 import com.shakil.barivara.databinding.ActivityElectricityBillListBinding;
-import com.shakil.barivara.dbhelper.DbHelperParent;
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.meter.ElectricityBill;
-import com.shakil.barivara.model.meter.Meter;
 import com.shakil.barivara.utils.FilterManager;
 import com.shakil.barivara.utils.Tools;
 import com.shakil.barivara.utils.UX;
@@ -32,7 +30,6 @@ public class ElectricityBillListActivity extends AppCompatActivity {
     private RecyclerElectricityBillListAdapter recyclerBillListAdapter;
     private ArrayList<ElectricityBill> electricityBills;
     private TextView noDataTXT;
-    private DbHelperParent dbHelperParent;
     private FirebaseCrudHelper firebaseCrudHelper;
     private UX ux;
     private FilterManager filterManager;
@@ -63,7 +60,6 @@ public class ElectricityBillListActivity extends AppCompatActivity {
         refreshButton = findViewById(R.id.refreshButton);
         searchName = findViewById(R.id.SearchName);
         electricityBills = new ArrayList<>();
-        dbHelperParent = new DbHelperParent(this);
         ux = new UX(this);
         noDataTXT = findViewById(R.id.mNoDataMessage);
         filterManager = new FilterManager(this);

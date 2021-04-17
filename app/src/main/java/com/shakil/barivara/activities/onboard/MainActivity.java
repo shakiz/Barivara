@@ -26,9 +26,7 @@ import com.shakil.barivara.activities.room.RoomListActivity;
 import com.shakil.barivara.activities.settings.SettingsActivity;
 import com.shakil.barivara.activities.tenant.TenantListActivity;
 import com.shakil.barivara.databinding.ActivityMainBinding;
-import com.shakil.barivara.dbhelper.DbHelperParent;
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
-import com.shakil.barivara.model.AddOns;
 import com.shakil.barivara.model.meter.Meter;
 import com.shakil.barivara.model.room.Room;
 import com.shakil.barivara.model.tenant.Tenant;
@@ -36,14 +34,12 @@ import com.shakil.barivara.utils.PrefManager;
 import com.shakil.barivara.utils.UtilsForAll;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
 import static com.shakil.barivara.utils.Constants.mAppViewCount;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private ActivityMainBinding activityMainBinding;
     private ActionBarDrawerToggle toggle;
-    private DbHelperParent dbHelperParent;
     private UtilsForAll utilsForAll;
     private FirebaseCrudHelper firebaseCrudHelper;
     private PrefManager prefManager;
@@ -172,7 +168,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //region init components
     private void init() {
         prefManager = new PrefManager(this);
-        dbHelperParent = new DbHelperParent(this);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
         utilsForAll = new UtilsForAll(this,activityMainBinding.mainLayout);
     }

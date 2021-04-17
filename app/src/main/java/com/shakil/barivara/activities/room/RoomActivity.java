@@ -12,9 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.shakil.barivara.R;
-import com.shakil.barivara.activities.meter.ElectricityBillDetailsActivity;
 import com.shakil.barivara.databinding.ActivityAddNewRoomBinding;
-import com.shakil.barivara.dbhelper.DbHelperParent;
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.room.Room;
 import com.shakil.barivara.utils.InputValidation;
@@ -29,7 +27,6 @@ public class RoomActivity extends AppCompatActivity {
     private SpinnerData spinnerData;
     private SpinnerAdapter spinnerAdapter;
     private InputValidation inputValidation;
-    private DbHelperParent dbHelperParent;
     private String roomNameStr, startMonthStr,associateMeterStr,tenantNameStr;
     private int StartMonthId, AssociateMeterId;
     private int advancedAmountInt;
@@ -181,8 +178,6 @@ public class RoomActivity extends AppCompatActivity {
         spinnerData = new SpinnerData(this);
         spinnerAdapter = new SpinnerAdapter();
         inputValidation = new InputValidation(this,activityAddNewRoomBinding.mainLayout);
-        //roomDbHelper = new RoomDbHelper(this);
-        dbHelperParent = new DbHelperParent(this);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
     }
 
@@ -198,6 +193,5 @@ public class RoomActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        dbHelperParent.close();
     }
 }
