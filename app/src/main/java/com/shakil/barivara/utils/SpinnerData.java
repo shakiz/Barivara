@@ -1,8 +1,6 @@
 package com.shakil.barivara.utils;
 
 import android.content.Context;
-
-import com.shakil.barivara.dbhelper.DbHelperParent;
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 
 import java.util.ArrayList;
@@ -11,12 +9,10 @@ import java.util.ArrayList;
 public class SpinnerData {
 
     private Context context;
-    private DbHelperParent dbHelperParent;
     private FirebaseCrudHelper firebaseCrudHelper;
 
     public SpinnerData(Context context) {
         this.context = context;
-        dbHelperParent = new DbHelperParent(context);
         firebaseCrudHelper = new FirebaseCrudHelper(context);
     }
 

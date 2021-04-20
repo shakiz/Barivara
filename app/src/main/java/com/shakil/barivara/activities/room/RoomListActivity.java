@@ -11,26 +11,19 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.shakil.barivara.R;
-import com.shakil.barivara.activities.meter.MeterListActivity;
 import com.shakil.barivara.activities.onboard.MainActivity;
 import com.shakil.barivara.adapter.RecyclerRoomListAdapter;
 import com.shakil.barivara.databinding.ActivityRoomListBinding;
-import com.shakil.barivara.dbhelper.DbHelperParent;
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.room.Room;
-import com.shakil.barivara.mvvm.RoomModelMVVM;
-import com.shakil.barivara.mvvm.RoomViewModel;
 import com.shakil.barivara.utils.FilterManager;
 import com.shakil.barivara.utils.Tools;
 import com.shakil.barivara.utils.UX;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class RoomListActivity extends AppCompatActivity {
     private ActivityRoomListBinding activityRoomListBinding;
