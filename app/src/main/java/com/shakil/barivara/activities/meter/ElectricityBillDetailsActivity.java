@@ -79,11 +79,11 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
     private void loadData(){
         if (electricityBill.getBillId() != null) {
             command = "update";
-            activityMeterCostDetailsBinding.UnitPrice.setText(String.valueOf(electricityBill.getUnitPrice()));
-            activityMeterCostDetailsBinding.PresentUnit.setText(String.valueOf(electricityBill.getPresentUnit()));
-            activityMeterCostDetailsBinding.PastUnit.setText(String.valueOf(electricityBill.getPastUnit()));
-            activityMeterCostDetailsBinding.TotalUnit.setText(String.valueOf(electricityBill.getTotalUnit()));
-            activityMeterCostDetailsBinding.TotalAmount.setText(String.valueOf(electricityBill.getTotalUnit() * electricityBill.getUnitPrice()));
+            activityMeterCostDetailsBinding.UnitPrice.setText(""+electricityBill.getUnitPrice());
+            activityMeterCostDetailsBinding.PresentUnit.setText(""+electricityBill.getPresentUnit());
+            activityMeterCostDetailsBinding.PastUnit.setText(""+electricityBill.getPastUnit());
+            activityMeterCostDetailsBinding.TotalUnit.setText(""+electricityBill.getTotalUnit());
+            activityMeterCostDetailsBinding.TotalAmount.setText(""+(electricityBill.getTotalUnit() * electricityBill.getUnitPrice()));
         }
     }
     //endregion
@@ -151,11 +151,11 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
                 electricityBill.setRoomId(AssociateRoomId);
                 electricityBill.setMeterName(meterNameStr);
                 electricityBill.setRoomName(roomNameStr);
-                electricityBill.setUnitPrice(Integer.parseInt(activityMeterCostDetailsBinding.UnitPrice.getText().toString()));
-                electricityBill.setPresentUnit(Integer.parseInt(activityMeterCostDetailsBinding.PresentUnit.getText().toString()));
-                electricityBill.setPastUnit(Integer.parseInt(activityMeterCostDetailsBinding.PastUnit.getText().toString()));
-                electricityBill.setTotalUnit(Integer.parseInt(activityMeterCostDetailsBinding.TotalUnit.getText().toString()));
-                electricityBill.setTotalBill(Integer.parseInt(activityMeterCostDetailsBinding.TotalUnit.getText().toString()));
+                electricityBill.setUnitPrice(Double.parseDouble(activityMeterCostDetailsBinding.UnitPrice.getText().toString().trim()));
+                electricityBill.setPresentUnit(Integer.parseInt(activityMeterCostDetailsBinding.PresentUnit.getText().toString().trim()));
+                electricityBill.setPastUnit(Integer.parseInt(activityMeterCostDetailsBinding.PastUnit.getText().toString().trim()));
+                electricityBill.setTotalUnit(Double.parseDouble(activityMeterCostDetailsBinding.TotalUnit.getText().toString().trim()));
+                electricityBill.setTotalBill(Double.parseDouble(activityMeterCostDetailsBinding.TotalAmount.getText().toString().trim()));
 
                 if (command.equals("add")) {
                     electricityBill.setBillId(UUID.randomUUID().toString());

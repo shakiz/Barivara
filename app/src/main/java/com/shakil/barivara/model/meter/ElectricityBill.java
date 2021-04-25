@@ -17,8 +17,8 @@ public class ElectricityBill implements Parcelable {
     private double UnitPrice;
     private int PresentUnit;
     private int PastUnit;
-    private int TotalUnit;
-    private int TotalBill;
+    private double TotalUnit;
+    private double TotalBill;
     private String FireBaseKey;
 
     public ElectricityBill() {
@@ -33,8 +33,8 @@ public class ElectricityBill implements Parcelable {
         UnitPrice = in.readDouble();
         PresentUnit = in.readInt();
         PastUnit = in.readInt();
-        TotalUnit = in.readInt();
-        TotalBill = in.readInt();
+        TotalUnit = in.readDouble();
+        TotalBill = in.readDouble();
         FireBaseKey = in.readString();
     }
 
@@ -48,8 +48,8 @@ public class ElectricityBill implements Parcelable {
         dest.writeDouble(UnitPrice);
         dest.writeInt(PresentUnit);
         dest.writeInt(PastUnit);
-        dest.writeInt(TotalUnit);
-        dest.writeInt(TotalBill);
+        dest.writeDouble(TotalUnit);
+        dest.writeDouble(TotalBill);
         dest.writeString(FireBaseKey);
     }
 
@@ -134,19 +134,19 @@ public class ElectricityBill implements Parcelable {
         PastUnit = pastUnit;
     }
 
-    public int getTotalUnit() {
+    public double getTotalUnit() {
         return TotalUnit;
     }
 
-    public void setTotalUnit(int totalUnit) {
+    public void setTotalUnit(double totalUnit) {
         TotalUnit = totalUnit;
     }
 
-    public int getTotalBill() {
+    public double getTotalBill() {
         return TotalBill;
     }
 
-    public void setTotalBill(int totalBill) {
+    public void setTotalBill(double totalBill) {
         TotalBill = totalBill;
     }
 

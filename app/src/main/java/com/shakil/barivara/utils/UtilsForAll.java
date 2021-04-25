@@ -13,6 +13,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import static com.shakil.barivara.utils.Constants.TAG;
+
 public class UtilsForAll {
 
     private Context context;
@@ -46,11 +48,11 @@ public class UtilsForAll {
 
     public int toIntValue(String value){
         try{
-            Log.v("shakil",""+ Integer.parseInt(value));
+            Log.v(TAG,""+ Integer.parseInt(value));
             return Integer.parseInt(value);
         }
         catch (Exception e){
-            Log.v("shakil",e.getMessage());
+            Log.v(TAG,e.getMessage());
             return 0;
         }
     }
