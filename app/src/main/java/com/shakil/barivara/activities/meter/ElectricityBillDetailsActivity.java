@@ -18,8 +18,6 @@ import com.shakil.barivara.databinding.ActivityElectricityBillDetailsBinding;
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.meter.ElectricityBill;
 import com.shakil.barivara.utils.InputValidation;
-import com.shakil.barivara.utils.SpinnerAdapter;
-import com.shakil.barivara.utils.SpinnerData;
 import com.shakil.barivara.utils.UtilsForAll;
 
 import java.util.ArrayList;
@@ -29,13 +27,11 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
     private ActivityElectricityBillDetailsBinding activityMeterCostDetailsBinding;
     private String meterNameStr, roomNameStr;
     private int totalUnitInt, previousMonthUnitInt, presentMonthUnitInt, unitPriceInt, totalElectricityBillInt;
-    private SpinnerData spinnerData;
-    private SpinnerAdapter spinnerAdapter;
     private InputValidation inputValidation;
     private UtilsForAll utilsForAll;
     private ElectricityBill electricityBill = new ElectricityBill();
     private String command = "add";
-    private int AssociateMeterId, AssociateRoomId;
+    private int AssociateMeterId = 0 , AssociateRoomId = 0;
     private FirebaseCrudHelper firebaseCrudHelper;
     private ArrayList<String> roomNames, meterNames;
     private ArrayAdapter<String> roomNameSpinnerAdapter, meterNameSpinnerAdapter;
@@ -259,8 +255,6 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
 
 
     private void init() {
-        spinnerData = new SpinnerData(this);
-        spinnerAdapter = new SpinnerAdapter();
         roomNames = new ArrayList<>();
         firebaseCrudHelper = new FirebaseCrudHelper(this);
         inputValidation = new InputValidation(this,activityMeterCostDetailsBinding.mainLayout);

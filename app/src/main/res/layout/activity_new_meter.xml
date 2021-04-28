@@ -14,7 +14,7 @@
         android:id="@+id/parent_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/md_grey_200"
+        android:background="@color/md_white_1000"
         android:focusable="true"
         android:focusableInTouchMode="true"
         tools:context=".activities.activities.room.RoomActivity">
