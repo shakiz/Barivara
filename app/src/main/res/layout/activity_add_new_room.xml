@@ -11,7 +11,7 @@
         android:background="@color/md_white_1000"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        tools:context=".activities.activities.room.RoomActivity">
+        tools:context=".activities.room.RoomActivity">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
@@ -160,22 +160,13 @@
                                 android:textColor="@color/md_grey_900"
                                 android:textSize="16sp" />
 
-                            <EditText
-                                android:id="@+id/TenantName"
+                            <Spinner
+                                style="@style/Base.TextAppearance.AppCompat.Medium"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:layout_marginTop="5dp"
                                 android:background="@drawable/edittext_back"
-                                android:inputType="text"
-                                android:ellipsize="end"
-                                android:scrollHorizontally="true"
-                                android:maxLines="1"
-                                android:textColorHint="@color/md_grey_700"
-                                android:hint="@string/tenant_hint"
-                                android:paddingLeft="10dp"
-                                android:paddingRight="10dp"
-                                android:textSize="14sp"
-                                android:textColor="@color/md_grey_800"/>
+                                android:id="@+id/TenantId"></Spinner>
 
                         </LinearLayout>
 

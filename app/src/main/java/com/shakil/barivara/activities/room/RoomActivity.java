@@ -28,13 +28,13 @@ public class RoomActivity extends AppCompatActivity {
     private SpinnerAdapter spinnerAdapter;
     private InputValidation inputValidation;
     private String roomNameStr, startMonthStr,associateMeterStr,tenantNameStr;
-    private int StartMonthId, AssociateMeterId;
+    private int StartMonthId, AssociateMeterId, TenantId;
     private int advancedAmountInt;
     private Room room = new Room();
     private String command = "add";
     private FirebaseCrudHelper firebaseCrudHelper;
-    private ArrayList<String> meterNames;
-    private ArrayAdapter<String> meterNameSpinnerAdapter;
+    private ArrayList<String> meterNames, tenantNames;
+    private ArrayAdapter<String> meterNameSpinnerAdapter, tenantNameSpinnerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,8 +76,8 @@ public class RoomActivity extends AppCompatActivity {
     private void loadData(){
         if (room.getRoomId() != null) {
             command = "update";
-            activityAddNewRoomBinding.TenantName.setText(room.getTenantName());
             activityAddNewRoomBinding.RoomName.setText(room.getRoomName());
+            activityAddNewRoomBinding.TenantId.setSelection(room.getTenantNameId());
             activityAddNewRoomBinding.StartMonthId.setSelection(room.getStartMonthId(), true);
             activityAddNewRoomBinding.AssociateMeterId.setSelection(room.getAssociateMeterId(), true);
             activityAddNewRoomBinding.AdvanceAmount.setText(""+room.getAdvancedAmount());
@@ -100,6 +100,18 @@ public class RoomActivity extends AppCompatActivity {
         });
         //endregion
 
+        //region set tenant spinner
+        firebaseCrudHelper.getAllName("tenant", "tenantName", new FirebaseCrudHelper.onNameFetch() {
+            @Override
+            public void onFetched(ArrayList<String> nameList) {
+                tenantNames = nameList;
+                tenantNameSpinnerAdapter = new ArrayAdapter<>(RoomActivity.this, R.layout.spinner_drop, tenantNames);
+                tenantNameSpinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
+                activityAddNewRoomBinding.TenantId.setAdapter(tenantNameSpinnerAdapter);
+            }
+        });
+        //endregion
+
         //region month and meter selection spinner
         activityAddNewRoomBinding.StartMonthId.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -118,6 +130,19 @@ public class RoomActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 associateMeterStr = parent.getItemAtPosition(position).toString();
                 AssociateMeterId = position;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        activityAddNewRoomBinding.TenantId.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                tenantNameStr = parent.getItemAtPosition(position).toString();
+                TenantId = position;
             }
 
             @Override
@@ -148,11 +173,10 @@ public class RoomActivity extends AppCompatActivity {
         activityAddNewRoomBinding.mSaveRoomMaster.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                inputValidation.checkEditTextInput(new int[]{R.id.RoomName,R.id.TenantName},"Please check your data");
+                inputValidation.checkEditTextInput(new int[]{R.id.RoomName},"Please check your data");
 
                 //region validation and save
                 roomNameStr = activityAddNewRoomBinding.RoomName.getText().toString();
-                tenantNameStr = activityAddNewRoomBinding.TenantName.getText().toString();
 
                 room.setRoomName(roomNameStr);
                 room.setStartMonthName(startMonthStr);
@@ -160,6 +184,7 @@ public class RoomActivity extends AppCompatActivity {
                 room.setAssociateMeterName(associateMeterStr);
                 room.setAssociateMeterId(AssociateMeterId);
                 room.setTenantName(tenantNameStr);
+                room.setTenantNameId(TenantId);
                 room.setAdvancedAmount(advancedAmountInt);
                 if (command.equals("add")) {
                     room.setRoomId(UUID.randomUUID().toString());

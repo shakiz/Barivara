@@ -12,6 +12,7 @@ public class Room implements Parcelable {
     private String RoomId;
     private String RoomName;
     private String TenantName;
+    private int TenantNameId;
     private String StartMonthName;
     private int StartMonthId;
     private String AssociateMeterName;
@@ -40,6 +41,7 @@ public class Room implements Parcelable {
         RoomId = in.readString();
         RoomName = in.readString();
         TenantName = in.readString();
+        TenantNameId = in.readInt();
         StartMonthName = in.readString();
         StartMonthId = in.readInt();
         AssociateMeterName = in.readString();
@@ -53,6 +55,7 @@ public class Room implements Parcelable {
         dest.writeString(RoomId);
         dest.writeString(RoomName);
         dest.writeString(TenantName);
+        dest.writeInt(TenantNameId);
         dest.writeString(StartMonthName);
         dest.writeInt(StartMonthId);
         dest.writeString(AssociateMeterName);
@@ -100,6 +103,14 @@ public class Room implements Parcelable {
 
     public void setTenantName(String tenantName) {
         TenantName = tenantName;
+    }
+
+    public int getTenantNameId() {
+        return TenantNameId;
+    }
+
+    public void setTenantNameId(int tenantNameId) {
+        TenantNameId = tenantNameId;
     }
 
     public String getStartMonthName() {
@@ -156,6 +167,7 @@ public class Room implements Parcelable {
         result.put("roomId", RoomId);
         result.put("roomName", RoomName);
         result.put("tenantName", TenantName);
+        result.put("tenantNameId", TenantNameId);
         result.put("startMonthName", StartMonthName);
         result.put("startMonthId", StartMonthId);
         result.put("associateMeterName", AssociateMeterName);
