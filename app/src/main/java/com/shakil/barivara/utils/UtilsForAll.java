@@ -84,4 +84,20 @@ public class UtilsForAll {
         return dateTimeText;
     }
     //endregion
+
+    //region get date
+    public String getDateTime() {
+        DateFormat df = new SimpleDateFormat("MMM d, yyyy");
+        String dateTimeText = df.format(new Date());
+        return dateTimeText;
+    }
+    //endregion
+
+    //region get day of the month
+    public String getDayOfTheMonth(){
+        DateFormat dateFormat = new SimpleDateFormat("EEE");
+        String day = dateFormat.format(new Date());
+        return day;
+    }
+    //endregion
 }

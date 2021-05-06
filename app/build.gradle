@@ -81,6 +81,8 @@ dependencies {
 
     //Android gif loader
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.0'
+    //lottie animation loader
+    implementation 'com.airbnb.android:lottie:3.4.2'
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

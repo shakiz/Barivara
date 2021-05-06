@@ -22,7 +22,7 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/bannerLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="288dp"
                 app:cardCornerRadius="24dp"
                 android:translationZ="4dp"
                 android:layout_marginTop="-16dp"
@@ -30,19 +30,26 @@
                 android:clickable="false"
                 app:elevation="4dp">
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:scaleType="fitCenter">
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        android:scaleType="fitEnd"
+                        android:src="@drawable/home_bg"/>
 
                     <com.google.android.material.appbar.AppBarLayout
+                        android:id="@+id/app_bar"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:layout_marginTop="16dp"
                         android:background="@android:color/transparent"
-                        app:elevation="0dp"
-                        android:id="@+id/app_bar">
+                        app:elevation="0dp">
 
                         <androidx.appcompat.widget.Toolbar
                             android:layout_width="match_parent"
@@ -58,6 +65,7 @@
                     </com.google.android.material.appbar.AppBarLayout>
 
                     <TextView
+                        android:layout_below="@id/app_bar"
                         android:id="@+id/GreetingsText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -65,6 +73,7 @@
                         android:layout_centerInParent="true"
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="16dp"
+                        android:layout_marginTop="16dp"
                         android:textColor="@color/md_green_800"
                         android:textSize="24sp"
                         android:text="@string/good_morning"/>
@@ -77,12 +86,27 @@
                         android:layout_marginRight="16dp"
                         android:layout_below="@+id/GreetingsText"
                         android:layout_alignParentLeft="true"
-                        android:textColor="@color/md_green_800"
+                        android:textColor="@color/md_green_900"
                         android:textStyle="bold"
                         android:textSize="24sp"
-                        android:text="@string/demo_month_and_day"/>
+                        android:text="@string/demo_month"/>
+
+                    <TextView
+                        android:id="@+id/DayText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_below="@+id/DateTimeText"
+                        android:layout_alignParentLeft="true"
+                        android:textColor="@color/md_green_900"
+                        android:textStyle="bold"
+                        android:textSize="24sp"
+                        android:text="@string/demo_day"/>
 
                     <LinearLayout
+                        android:id="@+id/topLayout"
+                        android:layout_below="@id/DayText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="16dp"
@@ -106,7 +130,7 @@
                                 android:text="@string/total_rooms"
                                 android:layout_gravity="center"
                                 android:gravity="center"
-                                android:textColor="@color/md_black_1000"
+                                android:textColor="@color/md_white_1000"
                                 android:textSize="16sp" />
 
                             <TextView
@@ -143,7 +167,7 @@
                                 android:text="@string/total_meters"
                                 android:layout_gravity="center"
                                 android:gravity="center"
-                                android:textColor="@color/md_black_1000"
+                                android:textColor="@color/md_white_1000"
                                 android:textSize="16sp" />
 
                             <TextView
@@ -179,7 +203,7 @@
                                 android:text="@string/total_tenants"
                                 android:layout_gravity="center"
                                 android:gravity="center"
-                                android:textColor="@color/md_black_1000"
+                                android:textColor="@color/md_white_1000"
                                 android:textSize="16sp" />
 
                             <TextView
@@ -201,6 +225,8 @@
 
                     <TextView
                         android:id="@+id/moreDetails"
+                        android:layout_below="@id/topLayout"
+                        android:layout_alignParentRight="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
@@ -218,7 +244,7 @@
                         android:textColor="@color/md_black_1000"
                         android:textSize="16sp" />
 
-                </LinearLayout>
+                </RelativeLayout>
 
 
             </androidx.cardview.widget.CardView>

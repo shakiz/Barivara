@@ -135,4 +135,7 @@
     <string name="search_month_name">Search Month Name</string>
     <string name="search_tenant_name">Search Tenant Name</string>
     <string name="search_meter_name">Search Meter Name</string>
+    <string name="developed_by">Developed By</string>
+    <string name="sakhawat_hossain">Sakhawat Hossain</string>
+    <string name="demo_day">Saturday</string>
 </resources>

@@ -76,19 +76,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     //region UI interactions
     private void bindUIWithComponents() {
-        //region
         //region Update App ViewCount
-        if(prefManager.getInt(mAppViewCount)>0)
-        {
+        if(prefManager.getInt(mAppViewCount)>0) {
             prefManager.set(mAppViewCount,prefManager.getInt(mAppViewCount)+1);
         }
         else prefManager.set(mAppViewCount,1);
         //endregion
-        //endregion
 
         //region set text for greetings, dateTime, totalRooms, totalMeter, totalTenants
         activityMainBinding.GreetingsText.setText(utilsForAll.setGreetings());
-        activityMainBinding.DateTimeText.setText(utilsForAll.getDateTimeText());
+        activityMainBinding.DateTimeText.setText(utilsForAll.getDateTime());
+        activityMainBinding.DayText.setText(utilsForAll.getDayOfTheMonth());
 
         firebaseCrudHelper.fetchAllTenant("tenant", new FirebaseCrudHelper.onTenantDataFetch() {
             @Override
@@ -112,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
         //endregion
 
-        //region on clickt listener for all list home item
+        //region on click listener for all list home item
         activityMainBinding.moreDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
