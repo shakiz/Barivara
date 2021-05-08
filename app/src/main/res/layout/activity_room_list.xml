@@ -31,20 +31,10 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <include
-            android:layout_below="@+id/app_bar"
-            android:id="@+id/search_layout"
-            android:layout_marginTop="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginLeft="8dp"
-            layout="@layout/custom_search_panel_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/search_layout"
+            android:layout_below="@id/app_bar"
             android:id="@+id/mainLayout"
             android:orientation="vertical">
 
@@ -61,11 +51,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:layout_margin="2dp">
+                    android:background="@drawable/list_back">
+
+                    <include
+                        android:id="@+id/search_layout"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginLeft="8dp"
+                        layout="@layout/custom_search_panel_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_marginLeft="8dp"
                         android:layout_marginRight="8dp"
                         android:layout_marginTop="8dp"
