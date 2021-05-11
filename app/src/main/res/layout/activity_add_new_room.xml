@@ -55,7 +55,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
-                        android:layout_margin="4dp">
+                        android:background="@drawable/back">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -140,7 +140,7 @@
                                 android:layout_height="40dp"
                                 android:layout_marginTop="5dp"
                                 android:background="@drawable/edittext_back"
-                                android:id="@+id/AssociateMeterId"></Spinner>
+                                android:id="@+id/AssociateMeterId"/>
 
                         </LinearLayout>
 
@@ -166,35 +166,20 @@
                                 android:layout_height="40dp"
                                 android:layout_marginTop="5dp"
                                 android:background="@drawable/edittext_back"
-                                android:id="@+id/TenantId"></Spinner>
+                                android:id="@+id/TenantId"/>
 
                         </LinearLayout>
 
-                        <LinearLayout
+                        <CheckBox
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:layout_marginLeft="12dp"
                             android:layout_marginRight="12dp"
-                            android:layout_marginTop="8dp"
-                            android:weightSum="2"
                             android:background="@drawable/edittext_back"
-                            android:orientation="horizontal">
-                            <CheckBox
-                                android:layout_width="0dp"
-                                android:layout_weight=".20"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:backgroundTint="@color/md_blue_grey_400"
-                                android:id="@+id/AdvanceCehckBox"/>
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1.80"
-                                android:layout_gravity="center"
-                                android:textColor="@color/md_grey_900"
-                                android:textSize="16sp"
-                                android:text="@string/advance_hint"/>
-                        </LinearLayout>
+                            android:layout_marginTop="12dp"
+                            android:layout_gravity="center"
+                            android:text="@string/advance_hint"
+                            android:id="@+id/AdvanceCheckBox"/>
 
                         <LinearLayout
                             android:layout_width="match_parent"

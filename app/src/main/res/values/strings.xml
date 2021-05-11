@@ -13,7 +13,7 @@
     <string name="select_month">Select Starting Month</string>
     <string name="tenant_name">Tenant Name</string>
     <string name="tenant_hint">Enter tenant name</string>
-    <string name="advance_hint">Advance?</string>
+    <string name="advance_hint">Advance ?</string>
     <string name="amount">Advance Amount</string>
     <string name="advance_hint2">Enter advance amount</string>
     <string name="select_meter">Select Meter</string>
@@ -138,4 +138,6 @@
     <string name="developed_by">Developed By</string>
     <string name="sakhawat_hossain">Sakhawat Hossain</string>
     <string name="demo_day">Saturday</string>
+    <string name="all_spend_earnings">All spents and earnings</string>
+    <string name="filter_monthly_data">Filter data monthly</string>
 </resources>

@@ -50,7 +50,7 @@ public class RentDetailsActivity extends AppCompatActivity {
         activityNewRentDetailsBinding.toolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(RentDetailsActivity.this, MainActivity.class));
+                onBackPressed();
             }
         });
         bindUiWithComponents();
@@ -76,7 +76,6 @@ public class RentDetailsActivity extends AppCompatActivity {
             command = "update";
             activityNewRentDetailsBinding.RentAmount.setText(String.valueOf(rent.getRentAmount()));
             activityNewRentDetailsBinding.MonthId.setSelection(rent.getMonthId(), true);
-            activityNewRentDetailsBinding.AssociateRoomId.setSelection(rent.getAssociateRoomId(), true);
         }
     }
     //endregion
@@ -91,6 +90,10 @@ public class RentDetailsActivity extends AppCompatActivity {
                 roomNameSpinnerAdapter = new ArrayAdapter<>(RentDetailsActivity.this, R.layout.spinner_drop, roomNames);
                 roomNameSpinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
                 activityNewRentDetailsBinding.AssociateRoomId.setAdapter(roomNameSpinnerAdapter);
+
+                if (rent.getRentId() != null){
+                    activityNewRentDetailsBinding.AssociateRoomId.setSelection(rent.getAssociateRoomId(), true);
+                }
             }
         });
         //endregion

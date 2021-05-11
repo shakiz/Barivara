@@ -76,7 +76,6 @@ public class NewMeterActivity extends AppCompatActivity {
         if (meter.getMeterId() != null) {
             command = "update";
             activityNewMeterBinding.MeterName.setText(meter.getMeterName());
-            activityNewMeterBinding.RoomSpinner.setSelection(meter.getAssociateRoomId(),true);
             activityNewMeterBinding.MeterTypeName.setSelection(meter.getMeterTypeId(),true);
         }
     }
@@ -91,6 +90,10 @@ public class NewMeterActivity extends AppCompatActivity {
                 roomNameSpinnerAdapter = new ArrayAdapter<>(NewMeterActivity.this, R.layout.spinner_drop, roomNames);
                 roomNameSpinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
                 activityNewMeterBinding.RoomSpinner.setAdapter(roomNameSpinnerAdapter);
+
+                if (meter.getMeterId() != null){
+                    activityNewMeterBinding.RoomSpinner.setSelection(meter.getAssociateRoomId(),true);
+                }
             }
         });
         //endregion

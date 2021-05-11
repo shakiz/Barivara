@@ -77,10 +77,13 @@ public class RoomActivity extends AppCompatActivity {
         if (room.getRoomId() != null) {
             command = "update";
             activityAddNewRoomBinding.RoomName.setText(room.getRoomName());
-            activityAddNewRoomBinding.TenantId.setSelection(room.getTenantNameId());
             activityAddNewRoomBinding.StartMonthId.setSelection(room.getStartMonthId(), true);
-            activityAddNewRoomBinding.AssociateMeterId.setSelection(room.getAssociateMeterId(), true);
             activityAddNewRoomBinding.AdvanceAmount.setText(""+room.getAdvancedAmount());
+
+            if (room.getAdvancedAmount() > 0){
+                activityAddNewRoomBinding.advanceAmountLayout.setVisibility(View.VISIBLE);
+                activityAddNewRoomBinding.AdvanceCheckBox.setChecked(true);
+            }
         }
     }
     //endregion
@@ -96,6 +99,10 @@ public class RoomActivity extends AppCompatActivity {
                 meterNameSpinnerAdapter = new ArrayAdapter<>(RoomActivity.this, R.layout.spinner_drop, meterNames);
                 meterNameSpinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
                 activityAddNewRoomBinding.AssociateMeterId.setAdapter(meterNameSpinnerAdapter);
+
+                if (room.getRoomId() != null) {
+                    activityAddNewRoomBinding.AssociateMeterId.setSelection(room.getAssociateMeterId(), true);
+                }
             }
         });
         //endregion
@@ -108,6 +115,10 @@ public class RoomActivity extends AppCompatActivity {
                 tenantNameSpinnerAdapter = new ArrayAdapter<>(RoomActivity.this, R.layout.spinner_drop, tenantNames);
                 tenantNameSpinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
                 activityAddNewRoomBinding.TenantId.setAdapter(tenantNameSpinnerAdapter);
+
+                if (room.getRoomId() != null) {
+                    activityAddNewRoomBinding.TenantId.setSelection(room.getTenantNameId(), true);
+                }
             }
         });
         //endregion
@@ -125,6 +136,7 @@ public class RoomActivity extends AppCompatActivity {
 
             }
         });
+
         activityAddNewRoomBinding.AssociateMeterId.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -152,7 +164,7 @@ public class RoomActivity extends AppCompatActivity {
         });
         //endregion
 
-        activityAddNewRoomBinding.AdvanceCehckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        activityAddNewRoomBinding.AdvanceCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean visibilityValue) {
                 if (visibilityValue){
@@ -177,6 +189,7 @@ public class RoomActivity extends AppCompatActivity {
 
                 //region validation and save
                 roomNameStr = activityAddNewRoomBinding.RoomName.getText().toString();
+                advancedAmountInt = Integer.parseInt(activityAddNewRoomBinding.AdvanceAmount.getText().toString());
 
                 room.setRoomName(roomNameStr);
                 room.setStartMonthName(startMonthStr);
@@ -202,7 +215,7 @@ public class RoomActivity extends AppCompatActivity {
     private void init() {
         spinnerData = new SpinnerData(this);
         spinnerAdapter = new SpinnerAdapter();
-        inputValidation = new InputValidation(this,activityAddNewRoomBinding.mainLayout);
+        inputValidation = new InputValidation(this, activityAddNewRoomBinding.mainLayout);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
     }
 

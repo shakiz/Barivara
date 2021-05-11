@@ -15,6 +15,8 @@ import com.shakil.barivara.model.meter.Meter;
 import com.shakil.barivara.model.room.Room;
 import com.shakil.barivara.model.tenant.Tenant;
 import com.shakil.barivara.utils.PrefManager;
+import com.shakil.barivara.utils.SpinnerAdapter;
+import com.shakil.barivara.utils.SpinnerData;
 
 import java.util.ArrayList;
 
@@ -24,6 +26,8 @@ public class DashboardActivity extends AppCompatActivity {
     private ActivityDashboardBinding activityDashboardBinding;
     private FirebaseCrudHelper firebaseCrudHelper;
     private PrefManager prefManager;
+    private SpinnerAdapter spinnerAdapter;
+    private SpinnerData spinnerData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +50,15 @@ public class DashboardActivity extends AppCompatActivity {
     private void init(){
         prefManager = new PrefManager(this);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
+        spinnerData = new SpinnerData(this);
+        spinnerAdapter = new SpinnerAdapter();
     }
     //endregion
 
     //region init objects
     private void bindUiWithComponents(){
+        spinnerAdapter.setSpinnerAdapter(activityDashboardBinding.FilterMonth,this,spinnerData.setMonthData());
+
         //region set all counts
         firebaseCrudHelper.fetchAllTenant("tenant", new FirebaseCrudHelper.onTenantDataFetch() {
             @Override

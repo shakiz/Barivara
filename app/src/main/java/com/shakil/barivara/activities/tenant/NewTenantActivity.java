@@ -78,7 +78,6 @@ public class NewTenantActivity extends AppCompatActivity {
             command = "update";
             activityAddNewTenantBinding.TenantName.setText(tenant.getTenantName());
             activityAddNewTenantBinding.StartingMonthId.setSelection(tenant.getStartingMonthId(),true);
-            activityAddNewTenantBinding.AssociateRoomId.setSelection(tenant.getAssociateRoomId(),true);
         }
     }
     //endregion
@@ -106,6 +105,10 @@ public class NewTenantActivity extends AppCompatActivity {
                 roomNameSpinnerAdapter = new ArrayAdapter<>(NewTenantActivity.this, R.layout.spinner_drop, roomNames);
                 roomNameSpinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
                 activityAddNewTenantBinding.AssociateRoomId.setAdapter(roomNameSpinnerAdapter);
+
+                if (tenant.getTenantId() != null) {
+                    activityAddNewTenantBinding.AssociateRoomId.setSelection(tenant.getAssociateRoomId(),true);
+                }
             }
         });
         //endregion
