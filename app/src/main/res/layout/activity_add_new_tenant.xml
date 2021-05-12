@@ -78,7 +78,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:layout_marginTop="5dp"
-                                android:background="@drawable/edittext_back"
+                                android:background="@drawable/edit_text_back"
                                 android:inputType="text"
                                 android:ellipsize="end"
                                 android:scrollHorizontally="true"
@@ -113,7 +113,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:layout_marginTop="5dp"
-                                android:background="@drawable/edittext_back"
+                                android:background="@drawable/edit_text_back"
                                 android:id="@+id/StartingMonthId"/>
 
                         </LinearLayout>
@@ -139,7 +139,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:layout_marginTop="5dp"
-                                android:background="@drawable/edittext_back"
+                                android:background="@drawable/edit_text_back"
                                 android:id="@+id/AssociateRoomId"/>
 
                         </LinearLayout>
