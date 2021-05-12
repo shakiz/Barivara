@@ -37,9 +37,8 @@ import java.util.ArrayList;
 
 import static com.shakil.barivara.utils.Constants.mAppViewCount;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity{
     private ActivityMainBinding activityMainBinding;
-    private ActionBarDrawerToggle toggle;
     private UtilsForAll utilsForAll;
     private FirebaseCrudHelper firebaseCrudHelper;
     private PrefManager prefManager;
@@ -55,21 +54,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         activityMainBinding.toolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (activityMainBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
-                    activityMainBinding.drawerLayout.closeDrawer(GravityCompat.START);
-                } else {
-                    activityMainBinding.drawerLayout.openDrawer(GravityCompat.START);
-                }
+                onBackPressed();
             }
         });
-
-        toggle = new ActionBarDrawerToggle(
-                this, activityMainBinding.drawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        activityMainBinding.drawerLayout.addDrawerListener(toggle);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toggle.setDrawerIndicatorEnabled(true);
-        toggle.syncState();
-        activityMainBinding.navView.setNavigationItemSelectedListener(this);
 
         bindUIWithComponents();
     }
@@ -187,46 +174,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(new Intent(MainActivity.this, SettingsActivity.class));
                 return true;
         }
-        return toggle != null && toggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handling navigation view item clicks based on their respective ids.
-        int id = item.getItemId();
-        if (id == R.id.nav_meter_list){
-            startActivity(new Intent(MainActivity.this, MeterListActivity.class));
-        }
-        else if (id == R.id.nav_room_list){
-            startActivity(new Intent(MainActivity.this, RoomListActivity.class));
-        }
-        else if (id == R.id.nav_tenant_list){
-            startActivity(new Intent(MainActivity.this, TenantListActivity.class));
-        }
-        else if (id == R.id.nav_add_room){
-            startActivity(new Intent(MainActivity.this, RoomActivity.class));
-        }
-        else if (id == R.id.nav_add_meter){
-            startActivity(new Intent(MainActivity.this, NewMeterActivity.class));
-        }
-        else if (id == R.id.nav_new_rent){
-            startActivity(new Intent(MainActivity.this, RentDetailsActivity.class));
-        }
-        else if (id == R.id.nav_new_electricity_bill){
-            startActivity(new Intent(MainActivity.this, ElectricityBillDetailsActivity.class));
-        }
-        activityMainBinding.drawerLayout.closeDrawer(GravityCompat.START);
-        return true;
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onBackPressed() {
-        if (activityMainBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            activityMainBinding.drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            utilsForAll.exitApp();
-        }
+        utilsForAll.exitApp();
     }
     //endregion
 }

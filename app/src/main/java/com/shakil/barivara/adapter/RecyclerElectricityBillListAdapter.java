@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -36,6 +37,17 @@ public class RecyclerElectricityBillListAdapter extends RecyclerView.Adapter<Rec
     }
     //endregion
 
+    //region click listener
+    private onRemoveClick onRemoveClick;
+    public interface onRemoveClick {
+        void itemClick(ElectricityBill electricityBill);
+    }
+
+    public void setOnRemoveClick(onRemoveClick onRemoveClick) {
+        this.onRemoveClick = onRemoveClick;
+    }
+    //endregion
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -48,7 +60,6 @@ public class RecyclerElectricityBillListAdapter extends RecyclerView.Adapter<Rec
         ElectricityBill electricityBill = arrayList.get(position);
         holder.MeterId.setText(electricityBill.getMeterName());
         holder.RoomId.setText(electricityBill.getRoomName());
-        holder.TotalUnit.setText(String.valueOf(electricityBill.getTotalUnit()));
         holder.TotalBill.setText(String.valueOf(electricityBill.getTotalUnit() * electricityBill.getUnitPrice()));
         holder.item_card_view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +69,17 @@ public class RecyclerElectricityBillListAdapter extends RecyclerView.Adapter<Rec
                 }
             }
         });
+
+        //remove product from cart
+        if (onRemoveClick != null){
+            holder.DeleteFromCart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onRemoveClick.itemClick(electricityBill);
+                }
+            });
+        }
+        //endregion
     }
 
     @Override
@@ -66,15 +88,16 @@ public class RecyclerElectricityBillListAdapter extends RecyclerView.Adapter<Rec
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView MeterId, RoomId, TotalUnit, TotalBill;
+        TextView MeterId, RoomId, TotalBill;
         CardView item_card_view;
+        ImageView DeleteFromCart;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             MeterId = itemView.findViewById(R.id.MeterId);
             RoomId = itemView.findViewById(R.id.RoomId);
-            TotalUnit = itemView.findViewById(R.id.TotalUnit);
             TotalBill = itemView.findViewById(R.id.TotalBill);
             item_card_view = itemView.findViewById(R.id.item_card_view);
+            DeleteFromCart = itemView.findViewById(R.id.DeleteFromCart);
         }
     }
 }

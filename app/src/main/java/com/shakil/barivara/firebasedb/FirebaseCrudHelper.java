@@ -67,6 +67,13 @@ public class FirebaseCrudHelper {
     }
     //endregion
 
+    //region delete record from database
+    public void deleteRecord(String path, String firebaseId){
+        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(firebaseId);
+        databaseReference.removeValue();
+    }
+    //endregion
+
     //region fetch  meter table data from firebase db
     public interface onDataFetch{
         void onFetch(ArrayList<Meter> objects);
@@ -176,6 +183,8 @@ public class FirebaseCrudHelper {
             }
         });
     }
+    //endregion
+
     //region fetch tenant table data from firebase db
     public interface onTenantDataFetch{
         void onFetch(ArrayList<Tenant> objects);

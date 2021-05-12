@@ -153,6 +153,14 @@ public class ElectricityBillListActivity extends AppCompatActivity {
                 startActivity(new Intent(ElectricityBillListActivity.this, ElectricityBillDetailsActivity.class).putExtra("electricityBill", electricityBill));
             }
         });
+
+        recyclerBillListAdapter.setOnRemoveClick(new RecyclerElectricityBillListAdapter.onRemoveClick() {
+            @Override
+            public void itemClick(ElectricityBill electricityBill) {
+                firebaseCrudHelper.deleteRecord("electricityBill",electricityBill.getFireBaseKey());
+                setData();
+            }
+        });
     }
     //endregion
 
