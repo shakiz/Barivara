@@ -138,7 +138,9 @@
     <string name="developed_by">Developed By</string>
     <string name="sakhawat_hossain">Sakhawat Hossain</string>
     <string name="demo_day">Saturday</string>
-    <string name="all_spend_earnings">All spents and earnings</string>
+    <string name="all_spend_earnings">All spends and earnings</string>
     <string name="filter_monthly_data">Filter data monthly</string>
     <string name="language_settings">Language Settings</string>
+    <string name="english">English</string>
+    <string name="bengali">Bengali</string>
 </resources>

@@ -30,6 +30,7 @@ import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.meter.Meter;
 import com.shakil.barivara.model.room.Room;
 import com.shakil.barivara.model.tenant.Tenant;
+import com.shakil.barivara.utils.LanguageManager;
 import com.shakil.barivara.utils.PrefManager;
 import com.shakil.barivara.utils.UtilsForAll;
 
@@ -45,6 +46,10 @@ public class MainActivity extends AppCompatActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //region set language
+        new LanguageManager(this).configLanguage();
+        //endregion
+
         super.onCreate(savedInstanceState);
         activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 

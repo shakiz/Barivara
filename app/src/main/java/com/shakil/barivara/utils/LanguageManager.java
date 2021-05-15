@@ -21,6 +21,7 @@ public class LanguageManager {
 
     public LanguageManager(Context context) {
         this.context = context;
+        prefManager = new PrefManager(context);
     }
 
     public interface onSetLanguageListener {
@@ -31,8 +32,9 @@ public class LanguageManager {
 
         final onSetLanguageListener customListener = listener;
 
-        final String shortLanguage[] = new String[]{ "en", "en"};
-        String fullLanguage[] = new String[]{ "English", "Default"};
+        final String shortLanguage[] = new String[]{ "en", "bn", "en"};
+        String fullLanguage[] = new String[]{ context.getString(R.string.english),
+                context.getString(R.string.bengali), "Default"};
 
         buttonLessSingleChoiceModal(context.getString(R.string.language_settings), fullLanguage, new onModalListItemClickListener() {
             @Override
