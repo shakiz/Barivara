@@ -9,4 +9,5 @@ public class Constants {
     public static final String mShouldRemember = "isRemembered";
     public static final String mIsLoggedIn = "isLoggedIn";
     public static final String mAlreadyVisited = "alreadyVisited";
+    public static final String mLanguage = "Language";
 }

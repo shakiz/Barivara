@@ -1,40 +1,40 @@
 <resources>
-    <string name="app_name">Vara Adai</string>
+    <string name="app_name">ভাড়া আদায়</string>
 
     <!--Room start-->
-    <string name="no_of_rooms">Number of Rooms</string>
-    <string name="total_earnings">Total Earnings</string>
-    <string name="no_of_meters">Number Of Meters</string>
-    <string name="total_unit">Total Unit</string>
-    <string name="add_room">Add New Room</string>
-    <string name="add_meter">Add New Meter</string>
-    <string name="room_hint">Enter Room Name</string>
-    <string name="room_name">Room Name</string>
-    <string name="select_month">Select Starting Month</string>
-    <string name="tenant_name">Tenant Name</string>
-    <string name="tenant_hint">Enter tenant name</string>
-    <string name="advance_hint">Advance ?</string>
-    <string name="amount">Advance Amount</string>
-    <string name="advance_hint2">Enter advance amount</string>
-    <string name="select_meter">Select Meter</string>
-    <string name="validation">Please check your value</string>
+    <string name="no_of_rooms">কক্ষ সংখ্যা</string>
+    <string name="total_earnings">মোট আয়</string>
+    <string name="no_of_meters">মিটার সংখ্যা</string>
+    <string name="total_unit">মোট ইউনিট</string>
+    <string name="add_room">নতুন ঘর যুক্ত করুন</string>
+    <string name="add_meter">নতুন মিটার যুক্ত করুন</string>
+    <string name="room_hint">ঘরের নাম লিখুন</string>
+    <string name="room_name">ঘরের নাম</string>
+    <string name="select_month">শুরুর মাস নির্বাচন করুন</string>
+    <string name="tenant_name">ভাড়াটিয়ার নাম</string>
+    <string name="tenant_hint">ভাড়াটিয়ার নাম লিখুন</string>
+    <string name="advance_hint">অগ্রিম?</string>
+    <string name="amount">অগ্রিম পরিমাণ</string>
+    <string name="advance_hint2">অগ্রিম পরিমাণ প্রবেশ করান</string>
+    <string name="select_meter">মিটার নির্বাচন করুন</string>
+    <string name="validation">সঠিক তথ্য দিন</string>
     <!--Room end-->
 
     <!--Meter start-->
-    <string name="meter_name">Meter Name</string>
-    <string name="meter_hint">Enter Meter Name</string>
-    <string name="select_room">Select Room</string>
-    <string name="select_meter_type">Select Meter Type</string>
+    <string name="meter_name">মিটার নাম</string>
+    <string name="meter_hint">মিটারের নাম প্রবেশ করান</string>
+    <string name="select_room">ঘর নির্বাচন করুন</string>
+    <string name="select_meter_type">মিটারের প্রকার নির্বাচন করুন</string>
     <!--Meter end-->
 
     <!--Adapter start-->
-    <string name="no_data_message">No Data</string>
-    <string name="meter_owner">Meter Owner</string>
-    <string name="present_unit">Present Unit</string>
-    <string name="past_unit">Past Unit</string>
-    <string name="room_owner">Room Owner</string>
-    <string name="start_rent_month">Start Month</string>
-    <string name="last_paid">Last Paid</string>
+    <string name="no_data_message">কোনও ডেটা নেই</string>
+    <string name="meter_owner">মিটারের মালিক</string>
+    <string name="present_unit">বর্তমান ইউনিট</string>
+    <string name="past_unit">অতীত ইউনিট</string>
+    <string name="room_owner">ঘরের মালিক</string>
+    <string name="start_rent_month">শুরু মাস</string>
+    <string name="last_paid">শেষ অর্থ প্রদান</string>
     <!--Adapter end-->
 
 

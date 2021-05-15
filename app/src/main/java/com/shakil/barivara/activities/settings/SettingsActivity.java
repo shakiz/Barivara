@@ -10,9 +10,12 @@ import androidx.databinding.DataBindingUtil;
 import com.shakil.barivara.R;
 import com.shakil.barivara.activities.onboard.MainActivity;
 import com.shakil.barivara.databinding.ActivitySettingsBinding;
+import com.shakil.barivara.utils.LanguageManager;
 
 public class SettingsActivity extends AppCompatActivity {
     private ActivitySettingsBinding activitySettingsBinding;
+    private LanguageManager languageManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +23,8 @@ public class SettingsActivity extends AppCompatActivity {
         activitySettingsBinding = DataBindingUtil.setContentView(this, R.layout.activity_settings);
 
         setSupportActionBar(activitySettingsBinding.toolBar);
+
+        languageManager = new LanguageManager(this);
 
         activitySettingsBinding.toolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,7 +45,17 @@ public class SettingsActivity extends AppCompatActivity {
 
     //region perform all UI operations
     private void bindUiWithComponents() {
-
+        activitySettingsBinding.language.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                languageManager.setLanguage(new LanguageManager.onSetLanguageListener() {
+                    @Override
+                    public void onSet() {
+                        startActivity(new Intent(SettingsActivity.this, MainActivity.class));
+                    }
+                });
+            }
+        });
     }
     //endregion
 
