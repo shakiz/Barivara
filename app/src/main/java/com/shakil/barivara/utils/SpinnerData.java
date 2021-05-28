@@ -1,6 +1,8 @@
 package com.shakil.barivara.utils;
 
 import android.content.Context;
+
+import com.shakil.barivara.R;
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 
 import java.util.ArrayList;
@@ -9,17 +11,18 @@ import java.util.ArrayList;
 public class SpinnerData {
 
     private Context context;
-    private FirebaseCrudHelper firebaseCrudHelper;
 
     public SpinnerData(Context context) {
         this.context = context;
-        firebaseCrudHelper = new FirebaseCrudHelper(context);
     }
 
     public ArrayList<String>  setMonthData(){
         ArrayList<String> spinnerValues = new ArrayList<>();
-        String[] monthArray = {"Select Data","January","February","March","April","May",
-                "June","July","August","September","October","November","December"};
+        String[] monthArray = {context.getString(R.string.select_data_1),context.getString(R.string.january),
+                context.getString(R.string.february), context.getString(R.string.march), context.getString(R.string.april),
+                context.getString(R.string.may), context.getString(R.string.june), context.getString(R.string.july),
+                context.getString(R.string.august), context.getString(R.string.september), context.getString(R.string.october),
+                context.getString(R.string.november), context.getString(R.string.december)};
         for (int start = 0; start < monthArray.length; start++) {
             spinnerValues.add(monthArray[start]);
         }

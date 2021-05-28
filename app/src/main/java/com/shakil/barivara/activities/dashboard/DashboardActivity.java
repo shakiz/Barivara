@@ -2,7 +2,10 @@ package com.shakil.barivara.activities.dashboard;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -14,6 +17,7 @@ import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.meter.Meter;
 import com.shakil.barivara.model.room.Room;
 import com.shakil.barivara.model.tenant.Tenant;
+import com.shakil.barivara.utils.Constants;
 import com.shakil.barivara.utils.PrefManager;
 import com.shakil.barivara.utils.SpinnerAdapter;
 import com.shakil.barivara.utils.SpinnerData;
@@ -93,10 +97,30 @@ public class DashboardActivity extends AppCompatActivity {
             public void onFetched(double data) {
                 activityDashboardBinding.TotalElectricityBill.animateText(String.valueOf(data)+" "+getString(R.string.taka));
             }
+
         });
 
         activityDashboardBinding.AppVisitCount.setText(String.valueOf(prefManager.getInt(mAppViewCount)));
         //endregion
+
+        //region daily data filter by month
+        activityDashboardBinding.FilterMonth.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                firebaseCrudHelper.getRentDataByMonth("rent", String.valueOf(parent.getItemAtPosition(position))
+                        , "RentAmount", new FirebaseCrudHelper.onDataQuery() {
+                            @Override
+                            public void onQueryFinished(int data) {
+                                activityDashboardBinding.TotalRentAmountMonthly.setText(data+" "+getString(R.string.taka));
+                            }
+                        });
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                Log.i(Constants.TAG,"FilterMonth Spinner : onNothingSelected");
+            }
+        });
     }
     //endregion
 

@@ -143,4 +143,18 @@
     <string name="language_settings">Language Settings</string>
     <string name="english">English</string>
     <string name="bengali">Bengali</string>
+    <string name="monthly_rent_amount">Monthly Rent Amount</string>
+    <string name="select_data_1">Select Data</string>
+    <string name="january">January</string>
+    <string name="february">February</string>
+    <string name="march">March</string>
+    <string name="april">April</string>
+    <string name="may">May</string>
+    <string name="june">June</string>
+    <string name="july">July</string>
+    <string name="august">August</string>
+    <string name="september">September</string>
+    <string name="october">October</string>
+    <string name="november">November</string>
+    <string name="december">December</string>
 </resources>

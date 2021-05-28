@@ -9,6 +9,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.shakil.barivara.R;
 import com.shakil.barivara.model.meter.ElectricityBill;
@@ -21,6 +22,7 @@ import com.shakil.barivara.utils.Constants;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Stream;
 
 public class FirebaseCrudHelper {
     private Context context;
@@ -102,6 +104,8 @@ public class FirebaseCrudHelper {
             }
         });
     }
+    //endregion
+
     //region fetch room table data from firebase db
     public interface onRoomDataFetch{
         void onFetch(ArrayList<Room> objects);
@@ -129,6 +133,8 @@ public class FirebaseCrudHelper {
             }
         });
     }
+    //endregion
+
     //region fetch rent table data from firebase db
     public interface onRentDataFetch{
         void onFetch(ArrayList<Rent> objects);
@@ -156,6 +162,8 @@ public class FirebaseCrudHelper {
             }
         });
     }
+    //endregion
+
     //region fetch electricity bill table data from firebase db
     public interface onElectricityBillDataFetch{
         void onFetch(ArrayList<ElectricityBill> objects);
@@ -301,6 +309,44 @@ public class FirebaseCrudHelper {
                     onSingleDataFetch.onFetched(object[0]);
                 }
                 Log.i(Constants.TAG,""+error.getMessage());
+            }
+        });
+    }
+    //endregion
+
+    //region query on db based on value
+    public interface onDataQuery{
+        void onQueryFinished(int data);
+    }
+    public void getRentDataByMonth(String path, String queryValue, String fieldName, onDataQuery onDataQuery){
+        final int[] object = {0};
+
+        databaseReference = FirebaseDatabase.getInstance().getReference(path);
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getChildren() != null){
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        Rent rent = dataSnapshot.getValue(Rent.class);
+                        if (rent.getMonthName().equals(queryValue) || rent.getMonthName().contains(queryValue) ){
+                            Log.i(Constants.TAG,fieldName+ ":" +rent.getRentAmount());
+                            object[0] = object[0] + rent.getRentAmount();
+                        }
+                    }
+                    Log.i(Constants.TAG,"getDataByQuery:"+object[0]);
+                }
+                if (onDataQuery != null){
+                    onDataQuery.onQueryFinished(object[0]);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                if (onDataQuery != null){
+                    onDataQuery.onQueryFinished(object[0]);
+                }
+                Log.i(Constants.TAG,"getDataByQuery:"+error.getMessage());
             }
         });
     }
