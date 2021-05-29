@@ -1,14 +1,25 @@
 package com.shakil.barivara.utils;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.text.TextUtils;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.cardview.widget.CardView;
 
+import com.airbnb.lottie.L;
 import com.shakil.barivara.R;
 
 import java.util.Locale;
@@ -24,25 +35,8 @@ public class LanguageManager {
         prefManager = new PrefManager(context);
     }
 
-    public interface onSetLanguageListener {
-        void onSet();
-    }
-
-    public void setLanguage(onSetLanguageListener listener){
-
-        final onSetLanguageListener customListener = listener;
-
-        final String shortLanguage[] = new String[]{ "en", "bn", "en"};
-        String fullLanguage[] = new String[]{ context.getString(R.string.english),
-                context.getString(R.string.bengali), "Default"};
-
-        buttonLessSingleChoiceModal(context.getString(R.string.language_settings), fullLanguage, new onModalListItemClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-                prefManager.set(mLanguage, shortLanguage[id]);
-                if(customListener != null) customListener.onSet();
-            }
-        });
+    public void setLanguage(Class to){
+        doPopUpForLanguage(to);
     }
 
     public void configLanguage(){
@@ -60,26 +54,85 @@ public class LanguageManager {
         }
     }
 
+    //region open language selector
+    public void doPopUpForLanguage(Class to){
+        LinearLayout defaultLan, bengaliLan, englishLan;
+        TextView DefaultTXT, BengaliTXT, EnglishTXT;
+        Button ok;
+        Dialog dialog = new Dialog(context, android.R.style.Theme_Dialog);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.language_selector_layout);
+        dialog.setCanceledOnTouchOutside(true);
 
-    //region modal
-    public interface onModalListItemClickListener {
-        void onClick(DialogInterface dialog, int id);
-    }
-    public void buttonLessSingleChoiceModal(String title, String[] listItems, onModalListItemClickListener listener) {
+        defaultLan = dialog.findViewById(R.id.byDefault);
+        bengaliLan = dialog.findViewById(R.id.bengali);
+        englishLan = dialog.findViewById(R.id.english);
+        DefaultTXT = dialog.findViewById(R.id.DefaultLanguageTXT);
+        BengaliTXT = dialog.findViewById(R.id.BengaliTXT);
+        EnglishTXT = dialog.findViewById(R.id.EnglishTXT);
+        ok = dialog.findViewById(R.id.okButton);
 
-        final onModalListItemClickListener customListener = listener;
-
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(context);
-        mBuilder.setTitle(title);
-        mBuilder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
+        defaultLan.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.dismiss();
-                customListener.onClick(dialog, id);
+            public void onClick(View v) {
+                defaultLan.setBackgroundResource(R.drawable.rectangle_green_selected);
+                DefaultTXT.setTextColor(context.getResources().getColor(R.color.md_white_1000));
+
+                bengaliLan.setBackgroundResource(R.drawable.rectangle_white);
+                BengaliTXT.setTextColor(context.getResources().getColor(R.color.md_grey_800));
+
+                englishLan.setBackgroundResource(R.drawable.rectangle_white);
+                EnglishTXT.setTextColor(context.getResources().getColor(R.color.md_grey_800));
+
+                prefManager.set(mLanguage, "en");
             }
         });
-        AlertDialog mDialog = mBuilder.create();
-        mDialog.show();
+
+
+        bengaliLan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                defaultLan.setBackgroundResource(R.drawable.rectangle_white);
+                DefaultTXT.setTextColor(context.getResources().getColor(R.color.md_grey_800));
+
+                bengaliLan.setBackgroundResource(R.drawable.rectangle_green_selected);
+                BengaliTXT.setTextColor(context.getResources().getColor(R.color.md_white_1000));
+
+                englishLan.setBackgroundResource(R.drawable.rectangle_white);
+                EnglishTXT.setTextColor(context.getResources().getColor(R.color.md_grey_800));
+
+                prefManager.set(mLanguage, "bn");
+            }
+        });
+
+        englishLan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                defaultLan.setBackgroundResource(R.drawable.rectangle_white);
+                DefaultTXT.setTextColor(context.getResources().getColor(R.color.md_grey_800));
+
+                bengaliLan.setBackgroundResource(R.drawable.rectangle_white);
+                BengaliTXT.setTextColor(context.getResources().getColor(R.color.md_grey_800));
+
+                englishLan.setBackgroundResource(R.drawable.rectangle_green_selected);
+                EnglishTXT.setTextColor(context.getResources().getColor(R.color.md_white_1000));
+
+                prefManager.set(mLanguage, "en");
+            }
+        });
+
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                context.startActivity(new Intent(context, to));
+            }
+        });
+
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        dialog.getWindow().setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        dialog.show();
     }
     //endregion
 }

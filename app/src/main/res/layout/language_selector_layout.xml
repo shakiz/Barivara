@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/md_white_1000"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_margin="16dp"
+        android:text="@string/change_language"/>
+
+    <RelativeLayout
+        android:layout_below="@id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/defaultCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            app:cardElevation="4dp"
+            android:translationZ="2dp"
+            android:layout_margin="8dp"
+            app:cardUseCompatPadding="true"
+            app:cardCornerRadius="8dp">
+
+            <LinearLayout
+                android:id="@+id/byDefault"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rectangle_green_selected"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:src="@drawable/ic_translate"
+                    android:layout_margin="8dp"
+                    android:padding="6dp"/>
+
+                <TextView
+                    android:id="@+id/DefaultLanguageTXT"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/md_white_1000"
+                    android:text="Default"
+                    android:gravity="center|left"
+                    android:layout_gravity="center"/>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/bengaliCard"
+            android:layout_below="@id/defaultCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            app:cardElevation="4dp"
+            android:translationZ="2dp"
+            android:layout_margin="8dp"
+            app:cardUseCompatPadding="true"
+            app:cardCornerRadius="8dp">
+
+            <LinearLayout
+                android:id="@+id/bengali"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rectangle_white"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:src="@drawable/ic_bangladesh"
+                    android:padding="8dp"
+                    android:layout_margin="8dp"/>
+
+                <TextView
+                    android:id="@+id/BengaliTXT"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/md_grey_800"
+                    android:text="@string/bengali"
+                    android:gravity="center|left"
+                    android:layout_gravity="center"/>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/englishCard"
+            android:layout_below="@id/bengaliCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            app:cardElevation="4dp"
+            android:translationZ="2dp"
+            android:layout_margin="8dp"
+            app:cardUseCompatPadding="true"
+            app:cardCornerRadius="8dp">
+
+            <LinearLayout
+                android:id="@+id/english"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rectangle_white"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/DefaultIMG"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:src="@drawable/ic_united_kingdom"
+                    android:padding="8dp"
+                    android:layout_margin="8dp"/>
+
+                <TextView
+                    android:id="@+id/EnglishTXT"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/md_grey_800"
+                    android:text="@string/english"
+                    android:gravity="center|left"
+                    android:layout_gravity="center"/>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <Button
+            android:id="@+id/okButton"
+            android:layout_width="96dp"
+            android:layout_height="48dp"
+            android:text="@string/ok"
+            android:layout_below="@id/englishCard"
+            android:layout_marginBottom="32dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="24dp"
+            android:textAllCaps="true"
+            android:clickable="true"
+            android:textColor="@color/md_white_1000"
+            android:background="@drawable/rectangle_green_selected"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

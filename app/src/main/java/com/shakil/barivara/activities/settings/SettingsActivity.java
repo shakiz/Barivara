@@ -74,12 +74,7 @@ public class SettingsActivity extends AppCompatActivity {
         activitySettingsBinding.language.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                languageManager.setLanguage(new LanguageManager.onSetLanguageListener() {
-                    @Override
-                    public void onSet() {
-                        startActivity(new Intent(SettingsActivity.this, MainActivity.class));
-                    }
-                });
+                languageManager.setLanguage(MainActivity.class);
             }
         });
     }
