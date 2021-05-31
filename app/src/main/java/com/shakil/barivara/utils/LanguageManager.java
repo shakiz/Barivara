@@ -3,7 +3,6 @@ package com.shakil.barivara.utils;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
@@ -16,10 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.cardview.widget.CardView;
-
-import com.airbnb.lottie.L;
 import com.shakil.barivara.R;
 
 import java.util.Locale;
