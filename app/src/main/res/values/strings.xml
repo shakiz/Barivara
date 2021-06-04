@@ -158,4 +158,10 @@
     <string name="november">November</string>
     <string name="december">December</string>
     <string name="ok">Ok</string>
+    <string name="welcome_back">Welcome Back</string>
+    <string name="login_without_underline">Login</string>
+    <string name="email_hint">Enter Email</string>
+    <string name="email">Email</string>
+    <string name="password_hint">Enter Password</string>
+    <string name="password">Password</string>
 </resources>
