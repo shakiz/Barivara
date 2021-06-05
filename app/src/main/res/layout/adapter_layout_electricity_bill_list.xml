@@ -17,7 +17,8 @@
         android:foreground="?android:attr/selectableItemBackground"
         app:ignore="NamespaceTypo"
         card_view:cardCornerRadius="4dp"
-        card_view:cardUseCompatPadding="true">
+        card_view:cardUseCompatPadding="true"
+        android:focusable="true">
 
         <!--   Recycler View Item Row   -->
         <RelativeLayout
@@ -207,7 +208,7 @@
                         android:src="@drawable/ic_icon_delete"
                         android:clickable="true"
                         android:foreground="?attr/selectableItemBackgroundBorderless"
-                        />
+                        android:focusable="true" />
 
                 </LinearLayout>
 

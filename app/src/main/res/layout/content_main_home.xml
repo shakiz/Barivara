@@ -22,7 +22,8 @@
             android:layout_marginTop="-16dp"
             android:clickable="true"
             android:foreground="?android:attr/selectableItemBackground"
-            app:elevation="4dp">
+            app:elevation="4dp"
+            android:focusable="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -81,7 +82,8 @@
                     android:foreground="?android:attr/selectableItemBackground"
                     android:layout_marginTop="12dp"
                     app:cardUseCompatPadding="true"
-                    app:elevation="4dp">
+                    app:elevation="4dp"
+                    android:focusable="true">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -184,7 +186,8 @@
                     android:foreground="?android:attr/selectableItemBackground"
                     android:layout_marginTop="8dp"
                     app:cardUseCompatPadding="true"
-                    app:elevation="4dp">
+                    app:elevation="4dp"
+                    android:focusable="true">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -287,7 +290,8 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
                     app:cardUseCompatPadding="true"
-                    app:elevation="4dp">
+                    app:elevation="4dp"
+                    android:focusable="true">
 
                     <LinearLayout
                         android:layout_width="match_parent"

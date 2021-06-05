@@ -51,7 +51,8 @@
                     android:background="@color/md_white_1000"
                     app:cardCornerRadius="8dp"
                     app:cardUseCompatPadding="true"
-                    app:elevation="16dp">
+                    app:elevation="16dp"
+                    android:focusable="true">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -169,7 +170,8 @@
                     android:background="@color/md_white_1000"
                     app:cardCornerRadius="8dp"
                     app:cardUseCompatPadding="true"
-                    app:elevation="16dp">
+                    app:elevation="16dp"
+                    android:focusable="true">
 
                     <LinearLayout
                         android:layout_width="match_parent"

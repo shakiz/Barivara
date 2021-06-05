@@ -31,7 +31,8 @@
             android:translationZ="2dp"
             android:layout_margin="8dp"
             app:cardUseCompatPadding="true"
-            app:cardCornerRadius="8dp">
+            app:cardCornerRadius="8dp"
+            android:focusable="true">
 
             <LinearLayout
                 android:id="@+id/byDefault"
@@ -76,7 +77,8 @@
             android:translationZ="2dp"
             android:layout_margin="8dp"
             app:cardUseCompatPadding="true"
-            app:cardCornerRadius="8dp">
+            app:cardCornerRadius="8dp"
+            android:focusable="true">
 
             <LinearLayout
                 android:id="@+id/bengali"
@@ -121,7 +123,8 @@
             android:translationZ="2dp"
             android:layout_margin="8dp"
             app:cardUseCompatPadding="true"
-            app:cardCornerRadius="8dp">
+            app:cardCornerRadius="8dp"
+            android:focusable="true">
 
             <LinearLayout
                 android:id="@+id/english"
@@ -169,7 +172,8 @@
             android:textAllCaps="true"
             android:clickable="true"
             android:textColor="@color/md_white_1000"
-            android:background="@drawable/rectangle_green_selected"/>
+            android:background="@drawable/rectangle_green_selected"
+            android:focusable="true" />
 
     </RelativeLayout>
 

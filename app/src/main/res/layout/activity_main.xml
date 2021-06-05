@@ -251,7 +251,6 @@
                             android:clickable="true"
                             android:foreground="?attr/selectableItemBackgroundBorderless"
                             android:ellipsize="end"
-                            android:drawableRight="@drawable/ic_arrow_right"
                             android:drawablePadding="4dp"
                             android:maxLines="1"
                             android:padding="2dp"
@@ -259,7 +258,9 @@
                             android:layout_gravity="center|right"
                             android:gravity="center|right"
                             android:textColor="@color/md_black_1000"
-                            android:textSize="16sp" />
+                            android:textSize="16sp"
+                            android:focusable="true"
+                            app:drawableRightCompat="@drawable/ic_arrow_right" />
 
                     </RelativeLayout>
 
@@ -289,7 +290,8 @@
                         android:translationZ="2dp"
                         app:cardBackgroundColor="@color/md_white_1000"
                         app:cardCornerRadius="10dp"
-                        app:cardUseCompatPadding="true">
+                        app:cardUseCompatPadding="true"
+                        android:focusable="true">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -370,7 +372,8 @@
                         android:translationZ="2dp"
                         app:cardBackgroundColor="@color/md_white_1000"
                         app:cardCornerRadius="10dp"
-                        app:cardUseCompatPadding="true">
+                        app:cardUseCompatPadding="true"
+                        android:focusable="true">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -460,7 +463,8 @@
                         android:translationZ="2dp"
                         app:cardBackgroundColor="@color/md_white_1000"
                         app:cardCornerRadius="10dp"
-                        app:cardUseCompatPadding="true">
+                        app:cardUseCompatPadding="true"
+                        android:focusable="true">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -551,7 +555,8 @@
                         android:translationZ="2dp"
                         app:cardBackgroundColor="@color/md_white_1000"
                         app:cardCornerRadius="10dp"
-                        app:cardUseCompatPadding="true">
+                        app:cardUseCompatPadding="true"
+                        android:focusable="true">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -632,7 +637,8 @@
                         android:translationZ="2dp"
                         app:cardBackgroundColor="@color/md_white_1000"
                         app:cardCornerRadius="10dp"
-                        app:cardUseCompatPadding="true">
+                        app:cardUseCompatPadding="true"
+                        android:focusable="true">
 
                         <LinearLayout
                             android:layout_width="match_parent"
