@@ -1,213 +1,243 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/md_white_1000"
-    tools:context=".activities.auth.LoginActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/scrollView"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:paddingBottom="4dp">
+        android:background="@color/md_white_1000"
+        tools:context=".activities.auth.LoginActivity">
 
-        <LinearLayout
-            android:id="@+id/mainLayout"
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:weightSum="2"
-            android:orientation="vertical">
+            android:fillViewport="true"
+            android:paddingBottom="4dp">
 
             <LinearLayout
-                android:id="@+id/arcViewContainer"
+                android:id="@+id/mainLayout"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight=".6"
+                android:layout_height="match_parent"
+                android:weightSum="2"
                 android:orientation="vertical">
 
-                <!--arcView for customized view-->
-                <com.github.florent37.shapeofview.shapes.ArcView
+                <LinearLayout
+                    android:id="@+id/arcViewContainer"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:elevation="4dp"
-                    app:shape_arc_cropDirection="outside"
-                    app:shape_arc_height="32dp"
-                    app:shape_arc_position="bottom">
+                    android:layout_height="0dp"
+                    android:layout_weight=".6"
+                    android:orientation="vertical">
 
-                    <LinearLayout
+                    <!--arcView for customized view-->
+                    <com.github.florent37.shapeofview.shapes.ArcView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:background="@color/md_cyan_600"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:elevation="4dp"
+                        app:shape_arc_cropDirection="outside"
+                        app:shape_arc_height="32dp"
+                        app:shape_arc_position="bottom">
 
-                        <TextView
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/welcome_back"
-                            android:textSize="28sp"
+                            android:layout_height="match_parent"
                             android:layout_gravity="center"
-                            android:textColor="@color/md_white_1000"
+                            android:background="@drawable/gradient_color_new"
                             android:gravity="center"
-                            android:textStyle="bold"/>
+                            android:orientation="vertical">
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/login_without_underline"
-                            android:textSize="28sp"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:textColor="@color/md_white_1000"
-                            android:textStyle="bold"/>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/welcome_back"
+                                android:textSize="28sp"
+                                android:layout_gravity="center"
+                                android:textColor="@color/md_white_1000"
+                                android:gravity="center"
+                                android:textStyle="bold"/>
 
-                    </LinearLayout>
-                </com.github.florent37.shapeofview.shapes.ArcView>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/login_without_underline"
+                                android:textSize="28sp"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:textColor="@color/md_white_1000"
+                                android:textStyle="bold"/>
 
-            </LinearLayout>
+                        </LinearLayout>
+                    </com.github.florent37.shapeofview.shapes.ArcView>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1.4"
-                android:layout_margin="16dp"
-                android:orientation="vertical">
+                </LinearLayout>
 
-                <RelativeLayout
-                    android:id="@+id/emailAddressLayout"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="false"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp">
-
-                    <LinearLayout
-                        android:layout_below="@+id/emailAddressText"
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:padding="4dp"
-                        android:background="@drawable/profile_text_bg"
-                        android:orientation="horizontal">
-
-                        <EditText
-                            android:id="@+id/email"
-                            android:layout_width="match_parent"
-                            android:layout_height="42dp"
-                            android:layout_gravity="center_vertical"
-                            android:gravity="center_vertical"
-                            android:background="@null"
-                            android:layout_marginLeft="16dp"
-                            android:inputType="textEmailAddress"
-                            android:hint="@string/email_hint"
-                            android:padding="4dp"
-                            android:textColor="@color/md_grey_700"
-                            android:textColorHighlight="@color/md_grey_700"
-                            android:textColorHint="@color/md_grey_700"
-                            android:textSize="14sp" />
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/emailAddressText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="32dp"
-                        android:layout_marginBottom="-10dp"
-                        android:layout_alignParentTop="true"
-                        android:paddingLeft="8dp"
-                        android:paddingRight="8dp"
-                        android:text="@string/email"
-                        android:background="@color/md_white_1000"
-                        android:textColor="@color/md_grey_800"
-                        android:textSize="14sp" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_below="@id/emailAddressLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="false"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp">
-
-                    <LinearLayout
-                        android:layout_below="@+id/passwordText"
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:padding="4dp"
-                        android:background="@drawable/profile_text_bg"
-                        android:orientation="horizontal">
-
-                        <EditText
-                            android:id="@+id/password"
-                            android:layout_width="match_parent"
-                            android:layout_height="42dp"
-                            android:layout_gravity="center_vertical"
-                            android:gravity="center_vertical"
-                            android:layout_marginLeft="16dp"
-                            android:padding="4dp"
-                            android:background="@null"
-                            android:inputType="numberPassword"
-                            android:hint="@string/password_hint"
-                            android:textColor="@color/md_grey_700"
-                            android:textColorHighlight="@color/md_grey_700"
-                            android:textColorHint="@color/md_grey_700"
-                            android:textSize="14sp" />
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/passwordText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="32dp"
-                        android:layout_marginBottom="-10dp"
-                        android:layout_alignParentTop="true"
-                        android:paddingLeft="8dp"
-                        android:paddingRight="8dp"
-                        android:text="@string/password"
-                        android:background="@color/md_white_1000"
-                        android:textColor="@color/md_grey_800"
-                        android:textSize="14sp" />
-
-                </RelativeLayout>
-
-                <Button
-                    android:id="@+id/login"
-                    android:layout_width="200dp"
-                    android:layout_height="42dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1.4"
                     android:layout_margin="16dp"
-                    android:text="@string/login_without_underline"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    app:backgroundTint="@null"
-                    android:clickable="true"
-                    android:textColor="@color/md_white_1000"
-                    android:textAllCaps="false"
-                    android:textSize="18sp"
-                    android:foreground="?attr/selectableItemBackgroundBorderless"
-                    android:background="@drawable/button_shape_round_corner"/>
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:id="@+id/emailAddressLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp">
+
+                        <LinearLayout
+                            android:layout_below="@+id/emailAddressText"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:padding="4dp"
+                            android:background="@drawable/profile_text_bg"
+                            android:orientation="horizontal">
+
+                            <EditText
+                                android:id="@+id/email"
+                                android:layout_width="match_parent"
+                                android:layout_height="42dp"
+                                android:layout_gravity="center_vertical"
+                                android:gravity="center_vertical"
+                                android:background="@null"
+                                android:layout_marginLeft="16dp"
+                                android:inputType="textEmailAddress"
+                                android:hint="@string/email_hint"
+                                android:padding="4dp"
+                                android:textColor="@color/md_grey_700"
+                                android:textColorHighlight="@color/md_grey_700"
+                                android:textColorHint="@color/md_grey_700"
+                                android:textSize="14sp" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/emailAddressText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="32dp"
+                            android:layout_marginBottom="-10dp"
+                            android:layout_alignParentTop="true"
+                            android:paddingLeft="8dp"
+                            android:paddingRight="8dp"
+                            android:text="@string/email"
+                            android:background="@color/md_white_1000"
+                            android:textColor="@color/md_grey_800"
+                            android:textSize="14sp" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_below="@id/emailAddressLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp">
+
+                        <LinearLayout
+                            android:layout_below="@+id/passwordText"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:padding="4dp"
+                            android:background="@drawable/profile_text_bg"
+                            android:orientation="horizontal">
+
+                            <EditText
+                                android:id="@+id/password"
+                                android:layout_width="match_parent"
+                                android:layout_height="42dp"
+                                android:layout_gravity="center_vertical"
+                                android:gravity="center_vertical"
+                                android:layout_marginLeft="16dp"
+                                android:padding="4dp"
+                                android:background="@null"
+                                android:inputType="numberPassword"
+                                android:hint="@string/password_hint"
+                                android:textColor="@color/md_grey_700"
+                                android:textColorHighlight="@color/md_grey_700"
+                                android:textColorHint="@color/md_grey_700"
+                                android:textSize="14sp" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/passwordText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="32dp"
+                            android:layout_marginBottom="-10dp"
+                            android:layout_alignParentTop="true"
+                            android:paddingLeft="8dp"
+                            android:paddingRight="8dp"
+                            android:text="@string/password"
+                            android:background="@color/md_white_1000"
+                            android:textColor="@color/md_grey_800"
+                            android:textSize="14sp" />
+
+                    </RelativeLayout>
+
+                    <Button
+                        android:id="@+id/login"
+                        android:layout_width="200dp"
+                        android:layout_height="42dp"
+                        android:layout_margin="16dp"
+                        android:text="@string/login_without_underline"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        app:backgroundTint="@null"
+                        android:clickable="true"
+                        android:textColor="@color/md_white_1000"
+                        android:textAllCaps="false"
+                        android:textSize="18sp"
+                        android:foreground="?attr/selectableItemBackgroundBorderless"
+                        android:background="@drawable/button_shape_round_corner"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:layout_marginTop="16dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/not_registered"
+                            android:textSize="16sp"/>
+                        <TextView
+                            android:id="@+id/register"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/register"
+                            android:layout_marginLeft="5dp"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:clickable="true"
+                            android:foreground="?attr/selectableItemBackgroundBorderless"
+                            android:textColor="@color/md_green_800"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
 
-    </androidx.core.widget.NestedScrollView>
+    </RelativeLayout>
 
-</RelativeLayout>
+</layout>

@@ -164,4 +164,11 @@
     <string name="email">Email</string>
     <string name="password_hint">Enter Password</string>
     <string name="password">Password</string>
+    <string name="hello">Hello</string>
+    <string name="sign_up_here">Sign Up Here</string>
+    <string name="sign_up">Registration</string>
+    <string name="registration_here">You can register yourself here</string>
+    <string name="not_registered">Not Regidtered ?</string>
+    <string name="register">Register</string>
+    <string name="already_have_an_account">Already have an account ?</string>
 </resources>
