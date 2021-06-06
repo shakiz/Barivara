@@ -168,7 +168,11 @@
     <string name="sign_up_here">Sign Up Here</string>
     <string name="sign_up">Registration</string>
     <string name="registration_here">You can register yourself here</string>
-    <string name="not_registered">Not Regidtered ?</string>
+    <string name="not_registered">Not Registered ?</string>
     <string name="register">Register</string>
     <string name="already_have_an_account">Already have an account ?</string>
+    <string name="login_succcessful">Login was successful</string>
+    <string name="login_unsucccessful">Login was unsuccessful</string>
+    <string name="registration_succcessful">Registration was successful</string>
+    <string name="registration_unsucccessful">Registration was unsuccessful</string>
 </resources>

@@ -171,4 +171,8 @@
     <string name="not_registered">Not Regidtered ?</string>
     <string name="register">Register</string>
     <string name="already_have_an_account">Already have an account ?</string>
+    <string name="login_succcessful">Login was successful</string>
+    <string name="login_unsucccessful">Login was unsuccessful</string>
+    <string name="registration_succcessful">Registration was successful</string>
+    <string name="registration_unsucccessful">Registration was unsuccessful</string>
 </resources>
