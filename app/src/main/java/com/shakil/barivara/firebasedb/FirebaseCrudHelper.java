@@ -18,23 +18,28 @@ import com.shakil.barivara.model.room.Rent;
 import com.shakil.barivara.model.room.Room;
 import com.shakil.barivara.model.tenant.Tenant;
 import com.shakil.barivara.utils.Constants;
+import com.shakil.barivara.utils.PrefManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import static com.shakil.barivara.utils.Constants.mUserId;
+
 public class FirebaseCrudHelper {
     private Context context;
     private DatabaseReference databaseReference;
+    private PrefManager prefManager;
 
     public FirebaseCrudHelper(Context context) {
         this.context = context;
+        prefManager = new PrefManager(context);
     }
 
     //region add object in firebase
     public void add(Object object, String path){
-        databaseReference = FirebaseDatabase.getInstance().getReference(path);
+        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(prefManager.getString(mUserId));
         Log.i(Constants.TAG,""+databaseReference.getParent());
         String id = databaseReference.push().getKey();
         databaseReference.child(id).setValue(object);
@@ -43,7 +48,7 @@ public class FirebaseCrudHelper {
 
     //region update object in firebase
     public void update(Object object, String firebaseId, String path){
-        databaseReference = FirebaseDatabase.getInstance().getReference(path);
+        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(prefManager.getString(mUserId));
         Map<String, Object> postValues = new HashMap<>();
         if (path.equals("tenant")){
             Tenant tenant = (Tenant) object;
@@ -71,7 +76,7 @@ public class FirebaseCrudHelper {
 
     //region delete record from database
     public void deleteRecord(String path, String firebaseId){
-        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(firebaseId);
+        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(prefManager.getString(mUserId)).child(firebaseId);
         databaseReference.removeValue();
     }
     //endregion
@@ -82,7 +87,7 @@ public class FirebaseCrudHelper {
     }
     public void fetchAllMeter(String path, onDataFetch onDataFetch){
         ArrayList<Meter> objects = new ArrayList<>();
-        databaseReference = FirebaseDatabase.getInstance().getReference(path);
+        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(prefManager.getString(mUserId));
         Log.i(Constants.TAG,""+databaseReference.getParent());
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -112,7 +117,7 @@ public class FirebaseCrudHelper {
     }
     public void fetchAllRoom(String path, onRoomDataFetch onRoomDataFetch){
         ArrayList<Room> objects = new ArrayList<>();
-        databaseReference = FirebaseDatabase.getInstance().getReference(path);
+        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(prefManager.getString(mUserId));
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -141,7 +146,7 @@ public class FirebaseCrudHelper {
     }
     public void fetchAllRent(String path, onRentDataFetch onRentDataFetch){
         ArrayList<Rent> objects = new ArrayList<>();
-        databaseReference = FirebaseDatabase.getInstance().getReference(path);
+        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(prefManager.getString(mUserId));
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -170,7 +175,7 @@ public class FirebaseCrudHelper {
     }
     public void fetchAllElectricityBills(String path, onElectricityBillDataFetch onElectricityBillDataFetch){
         ArrayList<ElectricityBill> objects = new ArrayList<>();
-        databaseReference = FirebaseDatabase.getInstance().getReference(path);
+        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(prefManager.getString(mUserId));
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -199,7 +204,7 @@ public class FirebaseCrudHelper {
     }
     public void fetchAllTenant(String path, onTenantDataFetch onTenantDataFetch){
         ArrayList<Tenant> objects = new ArrayList<>();
-        databaseReference = FirebaseDatabase.getInstance().getReference(path);
+        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(prefManager.getString(mUserId));
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -228,7 +233,7 @@ public class FirebaseCrudHelper {
     }
     public void getAllName(String path, String fieldName, onNameFetch onNameFetch){
         ArrayList<String> roomNameList = new ArrayList<>();
-        databaseReference = FirebaseDatabase.getInstance().getReference(path);
+        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(prefManager.getString(mUserId));
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -261,7 +266,7 @@ public class FirebaseCrudHelper {
     }
     public void getAdditionalInfo(String path, String fieldName, onAdditionalInfoFetch onAdditionalInfoFetch){
         final double[] data = {0};
-        databaseReference = FirebaseDatabase.getInstance().getReference(path);
+        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(prefManager.getString(mUserId));
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -292,7 +297,7 @@ public class FirebaseCrudHelper {
     }
     public void getSingleColumnValue(String path, String fieldName, onSingleDataFetch onSingleDataFetch){
         final Object[] object = {0};
-        databaseReference = FirebaseDatabase.getInstance().getReference(path);
+        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(prefManager.getString(mUserId));
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -321,7 +326,7 @@ public class FirebaseCrudHelper {
     public void getRentDataByMonth(String path, String queryValue, String fieldName, onDataQuery onDataQuery){
         final int[] object = {0};
 
-        databaseReference = FirebaseDatabase.getInstance().getReference(path);
+        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(prefManager.getString(mUserId));
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
