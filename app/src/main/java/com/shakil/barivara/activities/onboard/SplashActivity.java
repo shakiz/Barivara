@@ -11,7 +11,10 @@ import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.shakil.barivara.R;
+import com.shakil.barivara.activities.auth.LoginActivity;
 import com.shakil.barivara.utils.PrefManager;
+
+import static com.shakil.barivara.utils.Constants.mIsLoggedIn;
 
 public class SplashActivity extends AppCompatActivity {
     private Animation topAnim, middleAnim, bottomAnim;
@@ -55,11 +58,17 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                Intent intent = null;
+                if (prefManager.getBoolean(mIsLoggedIn)){
+                    intent = new Intent(SplashActivity.this, MainActivity.class);
+                }
+                else{
+                    intent = new Intent(SplashActivity.this, LoginActivity.class);
+                }
                 startActivity(intent);
                 finish();
             }
-        }, 2500);
+        }, 1500);
     }
     //endregion
 

@@ -152,7 +152,7 @@
                                     android:gravity="center"
                                     android:textStyle="bold"
                                     android:background="@drawable/white_circle_border"
-                                    android:textColor="@color/md_grey_800"
+                                    android:textColor="@color/md_white_1000"
                                     android:textSize="18sp" />
 
                             </LinearLayout>
@@ -193,7 +193,7 @@
                                     android:background="@drawable/white_circle_border"
                                     android:layout_gravity="center"
                                     android:gravity="center"
-                                    android:textColor="@color/md_grey_800"
+                                    android:textColor="@color/md_white_1000"
                                     android:textSize="18sp" />
 
                             </LinearLayout>
@@ -233,7 +233,7 @@
                                     android:textStyle="bold"
                                     android:layout_gravity="center"
                                     android:gravity="center"
-                                    android:textColor="@color/md_grey_800"
+                                    android:textColor="@color/md_white_1000"
                                     android:textSize="18sp" />
 
                             </LinearLayout>

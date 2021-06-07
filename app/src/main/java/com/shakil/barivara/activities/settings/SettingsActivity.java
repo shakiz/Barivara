@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.shakil.barivara.R;
+import com.shakil.barivara.activities.auth.LoginActivity;
 import com.shakil.barivara.activities.onboard.MainActivity;
 import com.shakil.barivara.databinding.ActivitySettingsBinding;
 import com.shakil.barivara.utils.LanguageManager;
@@ -71,12 +72,21 @@ public class SettingsActivity extends AppCompatActivity {
         }
         //endregion
 
+        //region language and login click listeners
         activitySettingsBinding.language.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 languageManager.setLanguage(MainActivity.class);
             }
         });
+
+        activitySettingsBinding.googleLoginLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SettingsActivity.this, LoginActivity.class));
+            }
+        });
+        //endregion
     }
     //endregion
 

@@ -22,6 +22,7 @@ import com.shakil.barivara.utils.PrefManager;
 import com.shakil.barivara.utils.UX;
 
 import static com.shakil.barivara.utils.Constants.mIsLoggedIn;
+import static com.shakil.barivara.utils.Constants.mUserId;
 
 public class LoginActivity extends AppCompatActivity {
     private ActivityLoginBinding activityLoginBinding;
@@ -72,6 +73,9 @@ public class LoginActivity extends AppCompatActivity {
                             Log.i(Constants.TAG+":onComplete",getString(R.string.login_succcessful));
                             Toast.makeText(LoginActivity.this, getString(R.string.login_succcessful), Toast.LENGTH_SHORT).show();
                             prefManager.set(mIsLoggedIn, true);
+                            if (task.getResult() != null){
+                                prefManager.set(mUserId, task.getResult().getUser().getUid());
+                            }
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         }
                         else{
