@@ -1,27 +1,27 @@
 package com.shakil.barivara.activities.onboard;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
 
-import com.google.android.material.navigation.NavigationView;
 import com.shakil.barivara.R;
+import com.shakil.barivara.activities.auth.LoginActivity;
 import com.shakil.barivara.activities.dashboard.DashboardActivity;
-import com.shakil.barivara.activities.meter.ElectricityBillDetailsActivity;
 import com.shakil.barivara.activities.meter.ElectricityBillListActivity;
 import com.shakil.barivara.activities.meter.MeterListActivity;
-import com.shakil.barivara.activities.meter.NewMeterActivity;
-import com.shakil.barivara.activities.room.RentDetailsActivity;
 import com.shakil.barivara.activities.room.RentListActivity;
-import com.shakil.barivara.activities.room.RoomActivity;
 import com.shakil.barivara.activities.room.RoomListActivity;
 import com.shakil.barivara.activities.settings.SettingsActivity;
 import com.shakil.barivara.activities.tenant.TenantListActivity;
@@ -37,6 +37,9 @@ import com.shakil.barivara.utils.UtilsForAll;
 import java.util.ArrayList;
 
 import static com.shakil.barivara.utils.Constants.mAppViewCount;
+import static com.shakil.barivara.utils.Constants.mIsLoggedIn;
+import static com.shakil.barivara.utils.Constants.mLanguage;
+import static com.shakil.barivara.utils.Constants.mUserId;
 
 public class MainActivity extends AppCompatActivity{
     private ActivityMainBinding activityMainBinding;
@@ -145,13 +148,6 @@ public class MainActivity extends AppCompatActivity{
             }
         });
         //endregion
-
-        //region push app visit data into firebase
-//        AddOns addOns = new AddOns();
-//        addOns.setRecordId(UUID.randomUUID().toString());
-//        addOns.setAppVisit(prefManager.getInt(mAppViewCount));
-//        firebaseCrudHelper.add(addOns, "addOns");
-        //endregion
     }
     //endregion
 
@@ -160,6 +156,43 @@ public class MainActivity extends AppCompatActivity{
         prefManager = new PrefManager(this);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
         utilsForAll = new UtilsForAll(this,activityMainBinding.mainLayout);
+    }
+    //endregion
+
+    //region logout click action
+    public void doPopUpForLogout(){
+        Button cancel, logout;
+        Dialog dialog = new Dialog(this, android.R.style.Theme_Dialog);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.logout_confirmation_layout);
+        dialog.setCanceledOnTouchOutside(true);
+
+        cancel = dialog.findViewById(R.id.cancelButton);
+        logout = dialog.findViewById(R.id.logoutButton);
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                prefManager.set(mAppViewCount, 0);
+                prefManager.set(mIsLoggedIn, false);
+                prefManager.set(mUserId, "");
+                prefManager.set(mLanguage, "en");
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                Toast.makeText(MainActivity.this, getString(R.string.logged_out_successfully), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        dialog.getWindow().setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        dialog.show();
     }
     //endregion
 
@@ -177,6 +210,9 @@ public class MainActivity extends AppCompatActivity{
         switch (item.getItemId()){
             case R.id.menu_settings:
                 startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+                return true;
+            case R.id.menu_logout:
+                doPopUpForLogout();
                 return true;
         }
         return super.onOptionsItemSelected(item);

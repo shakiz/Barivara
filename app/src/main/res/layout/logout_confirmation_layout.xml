@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/md_white_1000"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/logoutConfirmationText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:text="@string/logout_confirmation"
+        android:gravity="center"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:textColor="@color/md_grey_800"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/logoutSadText"
+        android:layout_below="@id/logoutConfirmationText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:text="@string/logout_sad_text"
+        android:gravity="center"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:textColor="@color/md_green_800"
+        android:textSize="20sp"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/logoutSadText"
+        android:orientation="horizontal"
+        android:layout_marginBottom="32dp"
+        android:layout_marginTop="24dp"
+        android:weightSum="2">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_weight=".4"
+            android:layout_height="1dp"/>
+
+        <Button
+            android:id="@+id/cancelButton"
+            android:layout_width="0dp"
+            android:layout_weight=".8"
+            android:layout_height="48dp"
+            android:text="@string/cancel"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:textAllCaps="true"
+            android:clickable="true"
+            android:textColor="@color/md_green_800"
+            android:background="@drawable/rectangle_white"
+            android:focusable="true" />
+
+        <Button
+            android:id="@+id/logoutButton"
+            android:layout_width="0dp"
+            android:layout_weight=".8"
+            android:layout_height="48dp"
+            android:text="@string/logout"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:textAllCaps="true"
+            android:clickable="true"
+            android:textColor="@color/md_white_1000"
+            android:background="@drawable/rectangle_light_red"
+            android:focusable="true" />
+
+    </LinearLayout>
+
+</RelativeLayout>
