@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -58,23 +59,33 @@ public class RegistrationActivity extends AppCompatActivity {
         activityRegistrationBinding.signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ux.getLoadingView();
-                firebaseAuth.createUserWithEmailAndPassword(activityRegistrationBinding.email.getText().toString(),
-                        activityRegistrationBinding.password.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()){
-                            Log.i(Constants.TAG+":onComplete",getString(R.string.registration_succcessful));
-                            Toast.makeText(RegistrationActivity.this, getString(R.string.registration_succcessful), Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
-                        }
-                        else{
-                            Log.i(Constants.TAG+":onComplete",getString(R.string.registration_unsucccessful));
-                            Toast.makeText(RegistrationActivity.this, getString(R.string.registration_unsucccessful), Toast.LENGTH_SHORT).show();
-                        }
-                        ux.removeLoadingView();
+                if (!TextUtils.isEmpty(activityRegistrationBinding.password.getText())){
+                    if (activityRegistrationBinding.password.getText().toString().length() > 6){
+                        ux.getLoadingView();
+                        firebaseAuth.createUserWithEmailAndPassword(activityRegistrationBinding.email.getText().toString(),
+                                activityRegistrationBinding.password.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()){
+                                    Log.i(Constants.TAG+":onComplete",getString(R.string.registration_succcessful));
+                                    Toast.makeText(RegistrationActivity.this, getString(R.string.registration_succcessful), Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
+                                }
+                                else{
+                                    Log.i(Constants.TAG+":onComplete",getString(R.string.registration_unsucccessful));
+                                    Toast.makeText(RegistrationActivity.this, getString(R.string.registration_unsucccessful), Toast.LENGTH_SHORT).show();
+                                }
+                                ux.removeLoadingView();
+                            }
+                        });
                     }
-                });
+                    else{
+                        Toast.makeText(RegistrationActivity.this, getString(R.string.password_must_be_six_character), Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else{
+                    Toast.makeText(RegistrationActivity.this, getString(R.string.password_validation), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

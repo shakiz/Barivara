@@ -176,4 +176,5 @@
     <string name="registration_succcessful">Registration was successful</string>
     <string name="registration_unsucccessful">Registration was unsuccessful</string>
     <string name="password_must_be_six_character">Password must be six(6) character long</string>
+    <string name="password_validation">Password field is missing data</string>
 </resources>
