@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -17,6 +18,7 @@ import com.shakil.barivara.utils.PrefManager;
 
 import java.util.HashMap;
 
+import static com.shakil.barivara.utils.Constants.mIsLoggedIn;
 import static com.shakil.barivara.utils.Constants.mLanguage;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -83,7 +85,13 @@ public class SettingsActivity extends AppCompatActivity {
         activitySettingsBinding.googleLoginLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SettingsActivity.this, LoginActivity.class));
+                if (prefManager.getBoolean(mIsLoggedIn)) {
+                    Toast.makeText(SettingsActivity.this, getString(R.string.already_logged_in), Toast.LENGTH_SHORT).show();
+                    activitySettingsBinding.googleLoginLayout.setClickable(false);
+                    activitySettingsBinding.googleLoginLayout.setActivated(false);
+                } else {
+                    startActivity(new Intent(SettingsActivity.this, LoginActivity.class));
+                }
             }
         });
         //endregion

@@ -165,7 +165,7 @@
     <string name="password_hint">Enter Password</string>
     <string name="password">Password</string>
     <string name="hello">Hello</string>
-    <string name="sign_up_here">Sign Up Here</string>
+    <string name="sign_up_here">Register From Here</string>
     <string name="sign_up">Registration</string>
     <string name="registration_here">You can register yourself here</string>
     <string name="not_registered">Not Registered ?</string>
@@ -182,4 +182,5 @@
     <string name="logout_confirmation">Are you sure you want to log out?</string>
     <string name="logout_sad_text">You will be missed.Please come back again if you like our service.</string>
     <string name="logged_out_successfully">Successfully logged out</string>
+    <string name="already_logged_in">Already Logged In</string>
 </resources>
