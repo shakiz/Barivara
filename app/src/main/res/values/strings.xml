@@ -183,4 +183,10 @@
     <string name="logout_sad_text">You will be missed.Please come back again if you like our service.</string>
     <string name="logged_out_successfully">Successfully logged out</string>
     <string name="already_logged_in">Already Logged In</string>
+    <string name="new_electricity_bill">New Electricity bill</string>
+    <string name="update">Update</string>
+    <string name="no_update_available">No Update Available</string>
+    <string name="you_are_using">You are using</string>
+    <string name="update_available">New update available!</string>
+    <string name="version">Version</string>
 </resources>

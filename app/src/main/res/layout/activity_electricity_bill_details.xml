@@ -24,7 +24,7 @@
                 android:id="@+id/tool_bar"
                 app:navigationIcon="?attr/homeAsUpIndicator"
                 style="@style/TextAppearance.Widget.Event.Toolbar.Title"
-                app:title="@string/new_meter_details"
+                app:title="@string/new_electricity_bill"
                 app:titleTextColor="@color/md_grey_800">
 
             </androidx.appcompat.widget.Toolbar>
