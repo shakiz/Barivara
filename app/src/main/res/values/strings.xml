@@ -199,4 +199,6 @@
     <string name="unable_to_open_play_store">Unable to open play store</string>
     <string name="username">Username</string>
     <string name="mobile">Mobile</string>
+    <string name="not_a_valid_email_address">Not a valid email address</string>
+    <string name="email_validation">Email field is missing data</string>
 </resources>

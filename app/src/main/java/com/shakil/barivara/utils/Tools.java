@@ -20,7 +20,9 @@ import android.widget.Toast;
 import com.shakil.barivara.R;
 
 import java.util.Date;
+import java.util.regex.Matcher;
 
+import static com.shakil.barivara.utils.Constants.VALID_EMAIL_ADDRESS_REGEX;
 import static com.shakil.barivara.utils.Constants.mAppViewCount;
 import static com.shakil.barivara.utils.Constants.mIsLoggedIn;
 import static com.shakil.barivara.utils.Constants.mLanguage;
@@ -143,6 +145,15 @@ public class Tools {
         prefManager.set(mUserMobile, "");
         context.startActivity(new Intent(context, to));
         Toast.makeText(context, context.getString(R.string.logged_out_successfully), Toast.LENGTH_SHORT).show();
+    }
+    //endregion
+
+    //region validate email address
+    public boolean validateEmailAddress(String emailAddress){
+        boolean isValidEmail = false;
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailAddress);
+        isValidEmail = matcher.find();
+        return isValidEmail;
     }
     //endregion
 }

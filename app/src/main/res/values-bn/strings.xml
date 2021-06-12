@@ -199,4 +199,6 @@
     <string name="unable_to_open_play_store">প্লে স্টোর চালু করা যায় নি</string>
     <string name="username">নাম</string>
     <string name="mobile">মোবাইল</string>
+    <string name="not_a_valid_email_address">ইমেইল এড্রেস টা সঠিক না</string>
+    <string name="email_validation">ইমেল ডেটা অনুপস্থিত</string>
 </resources>
