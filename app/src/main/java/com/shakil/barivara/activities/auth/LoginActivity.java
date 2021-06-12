@@ -22,7 +22,10 @@ import com.shakil.barivara.utils.PrefManager;
 import com.shakil.barivara.utils.UX;
 
 import static com.shakil.barivara.utils.Constants.mIsLoggedIn;
+import static com.shakil.barivara.utils.Constants.mUserEmail;
+import static com.shakil.barivara.utils.Constants.mUserFullName;
 import static com.shakil.barivara.utils.Constants.mUserId;
+import static com.shakil.barivara.utils.Constants.mUserMobile;
 
 public class LoginActivity extends AppCompatActivity {
     private ActivityLoginBinding activityLoginBinding;
@@ -75,6 +78,9 @@ public class LoginActivity extends AppCompatActivity {
                             prefManager.set(mIsLoggedIn, true);
                             if (task.getResult() != null){
                                 prefManager.set(mUserId, task.getResult().getUser().getUid());
+                                prefManager.set(mUserFullName, task.getResult().getUser().getDisplayName());
+                                prefManager.set(mUserEmail, task.getResult().getUser().getEmail());
+                                prefManager.set(mUserMobile, task.getResult().getUser().getPhoneNumber());
                             }
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         }

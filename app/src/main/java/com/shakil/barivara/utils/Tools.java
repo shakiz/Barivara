@@ -1,27 +1,43 @@
 package com.shakil.barivara.utils;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.shakil.barivara.R;
 
 import java.util.Date;
 
+import static com.shakil.barivara.utils.Constants.mAppViewCount;
+import static com.shakil.barivara.utils.Constants.mIsLoggedIn;
+import static com.shakil.barivara.utils.Constants.mLanguage;
+import static com.shakil.barivara.utils.Constants.mUserEmail;
+import static com.shakil.barivara.utils.Constants.mUserFullName;
+import static com.shakil.barivara.utils.Constants.mUserId;
+import static com.shakil.barivara.utils.Constants.mUserMobile;
+
 public class Tools {
     private Context context;
     private View view;
+    private PrefManager prefManager;
 
     public Tools(Context context, View view) {
         this.context = context;
         this.view = view;
+        prefManager = new PrefManager(context);
     }
 
     public static Long persistDate(Date date) {
@@ -69,6 +85,64 @@ public class Tools {
             view = new View(activity);
         }
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+    //endregion
+
+    //region rate app in google play store
+    public void rateApp(){
+        Uri uri = Uri.parse("market://details?id=" + context.getPackageName());
+        Intent myAppLinkToMarket = new Intent(Intent.ACTION_VIEW, uri);
+        try {
+            context.startActivity(myAppLinkToMarket);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(context, context.getString(R.string.unable_to_open_play_store), Toast.LENGTH_LONG).show();
+        }
+    }
+    //endregion
+
+    //region logout action
+    public void doPopUpForLogout(Class to){
+        Button cancel, logout;
+        Dialog dialog = new Dialog(context, android.R.style.Theme_Dialog);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.logout_confirmation_layout);
+        dialog.setCanceledOnTouchOutside(true);
+
+        cancel = dialog.findViewById(R.id.cancelButton);
+        logout = dialog.findViewById(R.id.logoutButton);
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clearPrefForLogout(to);
+            }
+        });
+
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        dialog.getWindow().setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        dialog.show();
+    }
+    //endregion
+
+    //region clear login pref
+    private void clearPrefForLogout(Class to){
+        prefManager.set(mAppViewCount, 0);
+        prefManager.set(mIsLoggedIn, false);
+        prefManager.set(mUserId, "");
+        prefManager.set(mLanguage, "en");
+        prefManager.set(mUserFullName, "");
+        prefManager.set(mUserEmail, "");
+        prefManager.set(mUserMobile, "");
+        context.startActivity(new Intent(context, to));
+        Toast.makeText(context, context.getString(R.string.logged_out_successfully), Toast.LENGTH_SHORT).show();
     }
     //endregion
 }

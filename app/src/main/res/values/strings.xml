@@ -189,4 +189,14 @@
     <string name="you_are_using">You are using</string>
     <string name="update_available">New update available!</string>
     <string name="version">Version</string>
+    <string name="preferences">Preferences</string>
+    <string name="not_found">Not Found</string>
+    <string name="username_not_found">Username Not Found</string>
+    <string name="email_not_found">Email Not Found</string>
+    <string name="mobile_not_found">Mobile Number Not Found</string>
+    <string name="account_section">Account Section</string>
+    <string name="rate_us">Rate Us</string>
+    <string name="unable_to_open_play_store">Unable to open play store</string>
+    <string name="username">Username</string>
+    <string name="mobile">Mobile</string>
 </resources>

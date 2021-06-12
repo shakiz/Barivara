@@ -11,4 +11,7 @@ public class Constants {
     public static final String mAlreadyVisited = "alreadyVisited";
     public static final String mLanguage = "Language";
     public static final String mUserId = "UserId";
+    public static final String mUserFullName = "UserFullName";
+    public static final String mUserEmail = "UserEmail";
+    public static final String mUserMobile = "UserMobile";
 }

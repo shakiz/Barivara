@@ -185,8 +185,18 @@
     <string name="already_logged_in">ইতিমধ্যে আপনার সিস্টেমে লগ ইন করা হয়েছে</string>
     <string name="new_electricity_bill">নতুন বিদ্যুৎ বিল</string>
     <string name="update">আপডেট করুন</string>
-    <string name="no_update_available">No Update Available</string>
-    <string name="you_are_using">You are using</string>
-    <string name="update_available">New update available!</string>
+    <string name="no_update_available">কোনও আপডেট পাওয়া যায় নি</string>
+    <string name="you_are_using">আপনি ব্যবহার করছেন</string>
+    <string name="update_available">নতুন আপডেট পাওয়া গেল!</string>
     <string name="version">Version</string>
+    <string name="preferences">পছন্দসমূহ</string>
+    <string name="not_found">খুঁজে পাওয়া যায়নি</string>
+    <string name="username_not_found">ব্যবহারকারীর নাম পাওয়া যায় নি</string>
+    <string name="email_not_found">ইমেল পাওয়া যায় নি</string>
+    <string name="mobile_not_found">মোবাইল নম্বর পাওয়া যায় নি</string>
+    <string name="account_section">অ্যাকাউন্ট বিভাগ</string>
+    <string name="rate_us">আপনার মতামত দিন</string>
+    <string name="unable_to_open_play_store">প্লে স্টোর চালু করা যায় নি</string>
+    <string name="username">নাম</string>
+    <string name="mobile">মোবাইল</string>
 </resources>

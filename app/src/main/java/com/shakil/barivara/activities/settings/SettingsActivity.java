@@ -15,17 +15,22 @@ import com.shakil.barivara.activities.onboard.MainActivity;
 import com.shakil.barivara.databinding.ActivitySettingsBinding;
 import com.shakil.barivara.utils.LanguageManager;
 import com.shakil.barivara.utils.PrefManager;
+import com.shakil.barivara.utils.Tools;
 
 import java.util.HashMap;
 
 import static com.shakil.barivara.utils.Constants.mIsLoggedIn;
 import static com.shakil.barivara.utils.Constants.mLanguage;
+import static com.shakil.barivara.utils.Constants.mUserEmail;
+import static com.shakil.barivara.utils.Constants.mUserFullName;
+import static com.shakil.barivara.utils.Constants.mUserMobile;
 
 public class SettingsActivity extends AppCompatActivity {
     private ActivitySettingsBinding activitySettingsBinding;
     public HashMap<String, String> languageMap = new HashMap<String, String>();
     private LanguageManager languageManager;
     private PrefManager prefManager;
+    private Tools tools;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +54,7 @@ public class SettingsActivity extends AppCompatActivity {
     private void init() {
         languageManager = new LanguageManager(this);
         prefManager = new PrefManager(this);
+        tools = new Tools(this, activitySettingsBinding.mainLayout);
         setupLanguage();
     }
     //endregion
@@ -61,6 +67,27 @@ public class SettingsActivity extends AppCompatActivity {
 
     //region perform all UI operations
     private void bindUiWithComponents() {
+        //region account section
+        if (!TextUtils.isEmpty(prefManager.getString(mUserFullName))){
+            activitySettingsBinding.UserFullName.setText(getString(R.string.username)+":"+prefManager.getString(mUserFullName));
+        }
+        else{
+            activitySettingsBinding.UserFullName.setText(getString(R.string.username_not_found));
+        }
+        if (!TextUtils.isEmpty(prefManager.getString(mUserEmail))){
+            activitySettingsBinding.Email.setText(getString(R.string.email)+":"+prefManager.getString(mUserEmail));
+        }
+        else{
+            activitySettingsBinding.Email.setText(getString(R.string.email_not_found));
+        }
+        if (!TextUtils.isEmpty(prefManager.getString(mUserMobile))){
+            activitySettingsBinding.Mobile.setText(getString(R.string.mobile)+":"+prefManager.getString(mUserMobile));
+        }
+        else{
+            activitySettingsBinding.Mobile.setText(getString(R.string.mobile_not_found));
+        }
+        //endregion
+
         //region language part
         String language = prefManager.getString(mLanguage);
         if(language != null){
@@ -72,6 +99,15 @@ public class SettingsActivity extends AppCompatActivity {
         } else {
             activitySettingsBinding.currentAppLanguage.setText(getString(R.string.english));
         }
+        //endregion
+
+        //region logout click listener
+        activitySettingsBinding.logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tools.doPopUpForLogout(LoginActivity.class);
+            }
+        });
         //endregion
 
         //region language and login click listeners
