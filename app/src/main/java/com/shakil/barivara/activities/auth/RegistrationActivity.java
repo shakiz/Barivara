@@ -20,12 +20,18 @@ import com.shakil.barivara.databinding.ActivityRegistrationBinding;
 import com.shakil.barivara.utils.Constants;
 import com.shakil.barivara.utils.Tools;
 import com.shakil.barivara.utils.UX;
+import com.shakil.barivara.utils.Validation;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegistrationActivity extends AppCompatActivity {
     private ActivityRegistrationBinding activityRegistrationBinding;
     private FirebaseAuth firebaseAuth;
     private UX ux;
     private Tools tools;
+    private Validation validation;
+    private Map<String, String[]> hashMap = new HashMap();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,23 +51,32 @@ public class RegistrationActivity extends AppCompatActivity {
     private void initUI(){
         firebaseAuth = FirebaseAuth.getInstance();
         ux = new UX(this);
+        validation = new Validation(this, hashMap);
         tools = new Tools(this, activityRegistrationBinding.mainLayout);
     }
     //endregion
 
     //region bind UI with components
     private void bindUiWithComponents(){
+        //region validation
+        validation.setEditTextIsNotEmpty(new String[]{"email", "password"},
+                new String[]{getString(R.string.email_validation), getString(R.string.password_validation)});
+        //endregion
+
+        //region login click listener
         activityRegistrationBinding.login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
             }
         });
+        //endregion
 
+        //region register click listener
         activityRegistrationBinding.signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!TextUtils.isEmpty(activityRegistrationBinding.password.getText())){
+                if (validation.isValid()){
                     if (activityRegistrationBinding.password.getText().toString().length() >= 6){
                         //region check email address validation
                         if (!TextUtils.isEmpty(activityRegistrationBinding.email.getText().toString())){
@@ -98,11 +113,9 @@ public class RegistrationActivity extends AppCompatActivity {
                         Toast.makeText(RegistrationActivity.this, getString(R.string.password_must_be_six_character), Toast.LENGTH_SHORT).show();
                     }
                 }
-                else{
-                    Toast.makeText(RegistrationActivity.this, getString(R.string.password_validation), Toast.LENGTH_SHORT).show();
-                }
             }
         });
+        //endregion
     }
     //endregion
 
