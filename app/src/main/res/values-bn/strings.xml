@@ -201,4 +201,13 @@
     <string name="mobile">মোবাইল</string>
     <string name="not_a_valid_email_address">ইমেইল এড্রেস টা সঠিক না</string>
     <string name="email_validation">ইমেল ডেটা অনুপস্থিত</string>
+    <string name="room_name_validation">কক্ষের নাম লিখুন</string>
+    <string name="advance_amount_validation">দয়া করে অগ্রিমের পরিমাণ লিখুন</string>
+    <string name="rent_amount_validation">দয়া করে ভাড়ার পরিমাণ লিখুন</string>
+    <string name="tenant_amount_validation">ভাড়াটিয়ার নাম লিখুন</string>
+    <string name="meter_name_validation">মিটারের নাম লিখুন</string>
+    <string name="past_unit_validation">দয়া করে গত মাসের ইউনিট লিখুন</string>
+    <string name="present_unit_validation">অনুগ্রহ করে বর্তমান মাসের ইউনিট লিখুন</string>
+    <string name="unit_price_validation">দয়া করে ইউনিটের দাম লিখুন</string>
+    <string name="please_check_unit_values">ইউনিটের মান চেক করুন</string>
 </resources>

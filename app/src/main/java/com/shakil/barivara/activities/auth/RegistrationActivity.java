@@ -119,7 +119,6 @@ public class RegistrationActivity extends AppCompatActivity {
     }
     //endregion
 
-
     //region activity components
     @Override
     public void onBackPressed() {

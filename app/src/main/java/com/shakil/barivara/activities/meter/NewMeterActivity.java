@@ -14,16 +14,17 @@ import com.shakil.barivara.R;
 import com.shakil.barivara.databinding.ActivityNewMeterBinding;
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.meter.Meter;
-import com.shakil.barivara.utils.InputValidation;
 import com.shakil.barivara.utils.SpinnerAdapter;
 import com.shakil.barivara.utils.SpinnerData;
+import com.shakil.barivara.utils.Validation;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class NewMeterActivity extends AppCompatActivity {
     private ActivityNewMeterBinding activityNewMeterBinding;
-    private InputValidation inputValidation;
     private SpinnerAdapter spinnerAdapter;
     private SpinnerData spinnerData;
     private String meterNameStr, roomNameStr, meterTypeStr;
@@ -33,6 +34,8 @@ public class NewMeterActivity extends AppCompatActivity {
     private FirebaseCrudHelper firebaseCrudHelper;
     private ArrayList<String> roomNames;
     private ArrayAdapter<String> roomNameSpinnerAdapter;
+    private Validation validation;
+    private Map<String, String[]> hashMap = new HashMap();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +85,12 @@ public class NewMeterActivity extends AppCompatActivity {
     //endregion
 
     private void bindUIWithComponents() {
+        //region validation
+        validation.setEditTextIsNotEmpty(new String[]{"MeterName"},
+                new String[]{getString(R.string.meter_name_validation)});
+        validation.setSpinnerIsNotEmpty(new String[]{"RoomSpinner", "MeterTypeName"});
+        //endregion
+
         //region set room spinner
         firebaseCrudHelper.getAllName("room", "roomName", new FirebaseCrudHelper.onNameFetch() {
             @Override
@@ -130,13 +139,9 @@ public class NewMeterActivity extends AppCompatActivity {
         activityNewMeterBinding.mSaveMeterMaster.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                inputValidation.checkEditTextInput(R.id.MeterName,"Please check your data");
-
                 //region validation and save data
-                if (!roomNameStr.equals("Select Data") && !meterTypeStr.equals("Select Data")){
+                if (validation.isValid()) {
                     meterNameStr = activityNewMeterBinding.MeterName.getText().toString();
-
                     meter.setMeterName(meterNameStr);
                     meter.setAssociateRoom(roomNameStr);
                     meter.setAssociateRoomId(AssociateRoomId);
@@ -153,21 +158,21 @@ public class NewMeterActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),R.string.success, Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(NewMeterActivity.this,MeterListActivity.class));
                 }
-                else{
-                    Toast.makeText(getApplicationContext(),R.string.warning_message, Toast.LENGTH_SHORT).show();
-                }
                 //endregion
             }
         });
     }
 
+
+    //region init all objects
     private void init() {
         roomNames = new ArrayList<>();
-        inputValidation = new InputValidation(this,activityNewMeterBinding.mainLayout);
         spinnerAdapter = new SpinnerAdapter();
         spinnerData = new SpinnerData(this);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
+        validation = new Validation(this, hashMap);
     }
+    //endregion
 
     @Override
     protected void onDestroy() {

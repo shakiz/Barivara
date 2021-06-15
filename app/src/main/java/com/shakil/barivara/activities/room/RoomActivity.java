@@ -2,6 +2,7 @@ package com.shakil.barivara.activities.room;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,8 +19,11 @@ import com.shakil.barivara.model.room.Room;
 import com.shakil.barivara.utils.InputValidation;
 import com.shakil.barivara.utils.SpinnerAdapter;
 import com.shakil.barivara.utils.SpinnerData;
+import com.shakil.barivara.utils.Validation;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class RoomActivity extends AppCompatActivity {
@@ -35,6 +39,8 @@ public class RoomActivity extends AppCompatActivity {
     private FirebaseCrudHelper firebaseCrudHelper;
     private ArrayList<String> meterNames, tenantNames;
     private ArrayAdapter<String> meterNameSpinnerAdapter, tenantNameSpinnerAdapter;
+    private Validation validation;
+    private Map<String, String[]> hashMap = new HashMap();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +89,7 @@ public class RoomActivity extends AppCompatActivity {
             if (room.getAdvancedAmount() > 0){
                 activityAddNewRoomBinding.advanceAmountLayout.setVisibility(View.VISIBLE);
                 activityAddNewRoomBinding.AdvanceCheckBox.setChecked(true);
+                activityAddNewRoomBinding.AdvanceAmount.setText(""+room.getAdvancedAmount());
             }
         }
     }
@@ -90,6 +97,12 @@ public class RoomActivity extends AppCompatActivity {
 
     private void bindUIWithComponents() {
         spinnerAdapter.setSpinnerAdapter(activityAddNewRoomBinding.StartMonthId,this,spinnerData.setMonthData());
+
+        //region validation
+        validation.setEditTextIsNotEmpty(new String[]{"RoomName"},
+                new String[]{getString(R.string.room_name_validation)});
+        validation.setSpinnerIsNotEmpty(new String[]{"StartMonthId"});
+        //endregion
 
         //region set meter spinner
         firebaseCrudHelper.getAllName("meter", "meterName", new FirebaseCrudHelper.onNameFetch() {
@@ -169,12 +182,7 @@ public class RoomActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton compoundButton, boolean visibilityValue) {
                 if (visibilityValue){
                     activityAddNewRoomBinding.advanceAmountLayout.setVisibility(View.VISIBLE);
-                    if (inputValidation.checkEditTextInput(R.id.AdvanceAmount,"Please give amount")){
-                        advancedAmountInt = Integer.parseInt(activityAddNewRoomBinding.AdvanceAmount.getText().toString());
-                    }
-                    else{
-                        Toast.makeText(getApplicationContext(),R.string.warning_message, Toast.LENGTH_SHORT).show();
-                    }
+                    activityAddNewRoomBinding.AdvanceAmount.setText("");
                 }
                 else{
                     activityAddNewRoomBinding.advanceAmountLayout.setVisibility(View.GONE);
@@ -185,39 +193,56 @@ public class RoomActivity extends AppCompatActivity {
         activityAddNewRoomBinding.mSaveRoomMaster.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                inputValidation.checkEditTextInput(new int[]{R.id.RoomName},"Please check your data");
-
-                //region validation and save
-                roomNameStr = activityAddNewRoomBinding.RoomName.getText().toString();
-                advancedAmountInt = Integer.parseInt(activityAddNewRoomBinding.AdvanceAmount.getText().toString());
-
-                room.setRoomName(roomNameStr);
-                room.setStartMonthName(startMonthStr);
-                room.setStartMonthId(StartMonthId);
-                room.setAssociateMeterName(associateMeterStr);
-                room.setAssociateMeterId(AssociateMeterId);
-                room.setTenantName(tenantNameStr);
-                room.setTenantNameId(TenantId);
-                room.setAdvancedAmount(advancedAmountInt);
-                if (command.equals("add")) {
-                    room.setRoomId(UUID.randomUUID().toString());
-                    firebaseCrudHelper.add(room, "room");
-                } else {
-                    firebaseCrudHelper.update(room, room.getFireBaseKey(), "room");
+                if (validation.isValid()){
+                    if (activityAddNewRoomBinding.advanceAmountLayout.getVisibility() == View.VISIBLE){
+                        if (!TextUtils.isEmpty(activityAddNewRoomBinding.AdvanceAmount.getText().toString())) {
+                            advancedAmountInt = Integer.parseInt(activityAddNewRoomBinding.AdvanceAmount.getText().toString());
+                            room.setAdvancedAmount(advancedAmountInt);
+                            saveOrUpdateData();
+                        }
+                        else{
+                            Toast.makeText(RoomActivity.this, getString(R.string.advance_amount_validation), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    else{
+                         saveOrUpdateData();
+                    }
                 }
-                Toast.makeText(getApplicationContext(),R.string.success, Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(RoomActivity.this,RoomListActivity.class));
-                //endregion
             }
         });
     }
 
+
+    //region init all objects
     private void init() {
         spinnerData = new SpinnerData(this);
         spinnerAdapter = new SpinnerAdapter();
         inputValidation = new InputValidation(this, activityAddNewRoomBinding.mainLayout);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
+        validation = new Validation(this, hashMap);
     }
+    //endregion
+
+    //region save all data
+    private void saveOrUpdateData(){
+        roomNameStr = activityAddNewRoomBinding.RoomName.getText().toString();
+        room.setRoomName(roomNameStr);
+        room.setStartMonthName(startMonthStr);
+        room.setStartMonthId(StartMonthId);
+        room.setAssociateMeterName(associateMeterStr);
+        room.setAssociateMeterId(AssociateMeterId);
+        room.setTenantName(tenantNameStr);
+        room.setTenantNameId(TenantId);
+        if (command.equals("add")) {
+            room.setRoomId(UUID.randomUUID().toString());
+            firebaseCrudHelper.add(room, "room");
+        } else {
+            firebaseCrudHelper.update(room, room.getFireBaseKey(), "room");
+        }
+        Toast.makeText(getApplicationContext(),R.string.success, Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(RoomActivity.this,RoomListActivity.class));
+    }
+    //endregion
 
     //region activity components
 

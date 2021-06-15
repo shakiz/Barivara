@@ -18,8 +18,11 @@ import com.shakil.barivara.model.tenant.Tenant;
 import com.shakil.barivara.utils.InputValidation;
 import com.shakil.barivara.utils.SpinnerAdapter;
 import com.shakil.barivara.utils.SpinnerData;
+import com.shakil.barivara.utils.Validation;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class NewTenantActivity extends AppCompatActivity {
@@ -35,6 +38,8 @@ public class NewTenantActivity extends AppCompatActivity {
     private FirebaseCrudHelper firebaseCrudHelper;
     private ArrayList<String> roomNames;
     private ArrayAdapter<String> roomNameSpinnerAdapter;
+    private Validation validation;
+    private Map<String, String[]> hashMap = new HashMap();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +92,7 @@ public class NewTenantActivity extends AppCompatActivity {
         inputValidation = new InputValidation(this,activityAddNewTenantBinding.mainLayout);
         toolbar = findViewById(R.id.tool_bar);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
+        validation = new Validation(this, hashMap);
         spinnerData = new SpinnerData(this);
         spinnerAdapter = new SpinnerAdapter();
         roomNames = new ArrayList<>();
@@ -95,6 +101,12 @@ public class NewTenantActivity extends AppCompatActivity {
 
     //region bind UI with components
     private void bindUiWithComponents(){
+        //region validation
+        validation.setEditTextIsNotEmpty(new String[]{"TenantName"},
+                new String[]{getString(R.string.tenant_amount_validation)});
+        validation.setSpinnerIsNotEmpty(new String[]{"StartingMonthId"});
+        //endregion
+
         spinnerAdapter.setSpinnerAdapter(activityAddNewTenantBinding.StartingMonthId,this,spinnerData.setMonthData());
 
         //region set month spinner
@@ -144,23 +156,23 @@ public class NewTenantActivity extends AppCompatActivity {
         activityAddNewTenantBinding.mSaveTenantMaster.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                inputValidation.checkEditTextInput(R.id.TenantName,"Please check your data");
-
                 //region validation and save data
-                tenantNameStr = activityAddNewTenantBinding.TenantName.getText().toString();
-                tenant.setTenantName(tenantNameStr);
-                tenant.setAssociateRoom(AssociateRoomStr);
-                tenant.setAssociateRoomId(AssociateRoomId);
-                tenant.setStartingMonthId(StartingMonthId);
-                tenant.setStartingMonth(StartingMonthStr);
-                if (command.equals("add")) {
-                    tenant.setTenantId(UUID.randomUUID().toString());
-                    firebaseCrudHelper.add(tenant, "tenant");
-                } else {
-                    firebaseCrudHelper.update(tenant, tenant.getFireBaseKey(), "tenant");
+                if (validation.isValid()) {
+                    tenantNameStr = activityAddNewTenantBinding.TenantName.getText().toString();
+                    tenant.setTenantName(tenantNameStr);
+                    tenant.setAssociateRoom(AssociateRoomStr);
+                    tenant.setAssociateRoomId(AssociateRoomId);
+                    tenant.setStartingMonthId(StartingMonthId);
+                    tenant.setStartingMonth(StartingMonthStr);
+                    if (command.equals("add")) {
+                        tenant.setTenantId(UUID.randomUUID().toString());
+                        firebaseCrudHelper.add(tenant, "tenant");
+                    } else {
+                        firebaseCrudHelper.update(tenant, tenant.getFireBaseKey(), "tenant");
+                    }
+                    Toast.makeText(getApplicationContext(),R.string.success, Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(NewTenantActivity.this,TenantListActivity.class));
                 }
-                Toast.makeText(getApplicationContext(),R.string.success, Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(NewTenantActivity.this,TenantListActivity.class));
                 //endregion
             }
         });

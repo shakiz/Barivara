@@ -11,29 +11,31 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.shakil.barivara.R;
-import com.shakil.barivara.activities.onboard.MainActivity;
 import com.shakil.barivara.databinding.ActivityNewRentDetailsBinding;
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.room.Rent;
-import com.shakil.barivara.utils.InputValidation;
 import com.shakil.barivara.utils.SpinnerAdapter;
 import com.shakil.barivara.utils.SpinnerData;
+import com.shakil.barivara.utils.Validation;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class RentDetailsActivity extends AppCompatActivity {
     private ActivityNewRentDetailsBinding activityNewRentDetailsBinding;
     private SpinnerData spinnerData;
-    private InputValidation inputValidation;
     private SpinnerAdapter spinnerAdapter;
-    Rent rent = new Rent();
+    private Rent rent = new Rent();
     private String command = "add";
     private int MonthId = 0, AssociateRoomId = 0;
     private String MonthStr = "", AssociateRoomStr = "";
     private FirebaseCrudHelper firebaseCrudHelper;
     private ArrayList<String> roomNames;
     private ArrayAdapter<String> roomNameSpinnerAdapter;
+    private Validation validation;
+    private Map<String, String[]> hashMap = new HashMap();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,8 +82,16 @@ public class RentDetailsActivity extends AppCompatActivity {
     }
     //endregion
 
+    //region bind ui and perform all UI interactions
     private void bindUiWithComponents() {
+        //region validation
+        validation.setEditTextIsNotEmpty(new String[]{"RentAmount"},
+                new String[]{getString(R.string.rent_amount_validation)});
+        validation.setSpinnerIsNotEmpty(new String[]{"MonthId", "AssociateRoomId"});
+        //endregion
+
         spinnerAdapter.setSpinnerAdapter(activityNewRentDetailsBinding.MonthId,this, spinnerData.setMonthData());
+
         //region set room spinner
         firebaseCrudHelper.getAllName("room", "roomName", new FirebaseCrudHelper.onNameFetch() {
             @Override
@@ -129,39 +139,40 @@ public class RentDetailsActivity extends AppCompatActivity {
         activityNewRentDetailsBinding.mAddRentMaster.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                inputValidation.checkEditTextInput(R.id.RentAmount,"Please check your value");
-
-                rent.setMonthId(MonthId);
-                rent.setMonthName(MonthStr);
-                rent.setAssociateRoomId(AssociateRoomId);
-                rent.setAssociateRoomName(AssociateRoomStr);
-                rent.setRentAmount(Integer.parseInt(activityNewRentDetailsBinding.RentAmount.getText().toString()));
-                if (command.equals("add")) {
-                    rent.setRentId(UUID.randomUUID().toString());
-                    firebaseCrudHelper.add(rent, "rent");
-                } else {
-                    firebaseCrudHelper.update(rent, rent.getFireBaseKey(), "rent");
+                if (validation.isValid()) {
+                    rent.setMonthId(MonthId);
+                    rent.setMonthName(MonthStr);
+                    rent.setAssociateRoomId(AssociateRoomId);
+                    rent.setAssociateRoomName(AssociateRoomStr);
+                    rent.setRentAmount(Integer.parseInt(activityNewRentDetailsBinding.RentAmount.getText().toString()));
+                    if (command.equals("add")) {
+                        rent.setRentId(UUID.randomUUID().toString());
+                        firebaseCrudHelper.add(rent, "rent");
+                    } else {
+                        firebaseCrudHelper.update(rent, rent.getFireBaseKey(), "rent");
+                    }
+                    Toast.makeText(getApplicationContext(),R.string.success, Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(RentDetailsActivity.this, RentListActivity.class));
                 }
-                Toast.makeText(getApplicationContext(),R.string.success, Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(RentDetailsActivity.this, RentListActivity.class));
             }
         });
     }
+    //endregion
 
+    //region init objects
     private void init() {
         roomNames = new ArrayList<>();
         spinnerData = new SpinnerData(this);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
         spinnerAdapter = new SpinnerAdapter();
-        inputValidation = new InputValidation(this, activityNewRentDetailsBinding.mainLayout);
+        validation = new Validation(this, hashMap);
     }
+    //endregion
 
     //region activity components
-
     @Override
     public void onBackPressed() {
         startActivity(new Intent(RentDetailsActivity.this, RentListActivity.class));
     }
-
     //endregion
 }
