@@ -209,16 +209,15 @@ public class RoomActivity extends AppCompatActivity {
     //endregion
 
     //region activity components
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
     }
 
-    //endregion
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
     }
+    //endregion
+
 }
