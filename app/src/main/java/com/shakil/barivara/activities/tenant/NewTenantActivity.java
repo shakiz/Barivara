@@ -2,9 +2,11 @@ package com.shakil.barivara.activities.tenant;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,9 +17,9 @@ import com.shakil.barivara.R;
 import com.shakil.barivara.databinding.ActivityAddNewTenantBinding;
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.tenant.Tenant;
-import com.shakil.barivara.utils.InputValidation;
 import com.shakil.barivara.utils.SpinnerAdapter;
 import com.shakil.barivara.utils.SpinnerData;
+import com.shakil.barivara.utils.UtilsForAll;
 import com.shakil.barivara.utils.Validation;
 
 import java.util.ArrayList;
@@ -32,14 +34,15 @@ public class NewTenantActivity extends AppCompatActivity {
     private SpinnerData spinnerData;
     private int AssociateRoomId, StartingMonthId;
     private String tenantNameStr, AssociateRoomStr, StartingMonthStr;
-    private InputValidation inputValidation;
     private Tenant tenant = new Tenant();
     private String command = "add";
     private FirebaseCrudHelper firebaseCrudHelper;
     private ArrayList<String> roomNames;
     private ArrayAdapter<String> roomNameSpinnerAdapter;
     private Validation validation;
+    private int advancedAmountInt;
     private Map<String, String[]> hashMap = new HashMap();
+    private UtilsForAll utilsForAll;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,15 +86,23 @@ public class NewTenantActivity extends AppCompatActivity {
             command = "update";
             activityAddNewTenantBinding.TenantName.setText(tenant.getTenantName());
             activityAddNewTenantBinding.StartingMonthId.setSelection(tenant.getStartingMonthId(),true);
+            activityAddNewTenantBinding.NID.setText(tenant.getNID());
+            activityAddNewTenantBinding.MobileNo.setText(tenant.getMobileNo());
+            activityAddNewTenantBinding.NumberOfPerson.setText(""+tenant.getNumberOfPerson());
+            if (tenant.getAdvancedAmount() > 0){
+                activityAddNewTenantBinding.advanceAmountLayout.setVisibility(View.VISIBLE);
+                activityAddNewTenantBinding.AdvanceCheckBox.setChecked(true);
+                activityAddNewTenantBinding.AdvanceAmount.setText(""+tenant.getAdvancedAmount());
+            }
         }
     }
     //endregion
 
     ///region init all objects
     private void init() {
-        inputValidation = new InputValidation(this,activityAddNewTenantBinding.mainLayout);
         toolbar = findViewById(R.id.tool_bar);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
+        utilsForAll = new UtilsForAll(this);
         validation = new Validation(this, hashMap);
         spinnerData = new SpinnerData(this);
         spinnerAdapter = new SpinnerAdapter();
@@ -102,12 +113,28 @@ public class NewTenantActivity extends AppCompatActivity {
     //region bind UI with components
     private void bindUiWithComponents(){
         //region validation
-        validation.setEditTextIsNotEmpty(new String[]{"TenantName"},
-                new String[]{getString(R.string.tenant_amount_validation)});
+        validation.setEditTextIsNotEmpty(new String[]{"TenantName", "NID", "MobileNo"},
+                new String[]{getString(R.string.tenant_amount_validation), getString(R.string.nid_number_hint)
+                ,getString(R.string.mobile_number_hint)});
         validation.setSpinnerIsNotEmpty(new String[]{"StartingMonthId"});
         //endregion
 
         spinnerAdapter.setSpinnerAdapter(activityAddNewTenantBinding.StartingMonthId,this,spinnerData.setMonthData());
+
+        //region is advance amount or not
+        activityAddNewTenantBinding.AdvanceCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean visibilityValue) {
+                if (visibilityValue){
+                    activityAddNewTenantBinding.advanceAmountLayout.setVisibility(View.VISIBLE);
+                    activityAddNewTenantBinding.AdvanceAmount.setText("");
+                }
+                else{
+                    activityAddNewTenantBinding.advanceAmountLayout.setVisibility(View.GONE);
+                }
+            }
+        });
+        //endregion
 
         //region set month spinner
         firebaseCrudHelper.getAllName("room", "roomName", new FirebaseCrudHelper.onNameFetch() {
@@ -157,25 +184,47 @@ public class NewTenantActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //region validation and save data
-                if (validation.isValid()) {
-                    tenantNameStr = activityAddNewTenantBinding.TenantName.getText().toString();
-                    tenant.setTenantName(tenantNameStr);
-                    tenant.setAssociateRoom(AssociateRoomStr);
-                    tenant.setAssociateRoomId(AssociateRoomId);
-                    tenant.setStartingMonthId(StartingMonthId);
-                    tenant.setStartingMonth(StartingMonthStr);
-                    if (command.equals("add")) {
-                        tenant.setTenantId(UUID.randomUUID().toString());
-                        firebaseCrudHelper.add(tenant, "tenant");
-                    } else {
-                        firebaseCrudHelper.update(tenant, tenant.getFireBaseKey(), "tenant");
+                if (validation.isValid()){
+                    if (activityAddNewTenantBinding.advanceAmountLayout.getVisibility() == View.VISIBLE){
+                        if (!TextUtils.isEmpty(activityAddNewTenantBinding.AdvanceAmount.getText().toString())) {
+                            advancedAmountInt = Integer.parseInt(activityAddNewTenantBinding.AdvanceAmount.getText().toString());
+                            tenant.setAdvancedAmount(advancedAmountInt);
+                            saveOrUpdateData();
+                        }
+                        else{
+                            Toast.makeText(NewTenantActivity.this, getString(R.string.advance_amount_validation), Toast.LENGTH_SHORT).show();
+                        }
                     }
-                    Toast.makeText(getApplicationContext(),R.string.success, Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(NewTenantActivity.this,TenantListActivity.class));
+                    else{
+                        saveOrUpdateData();
+                    }
                 }
                 //endregion
             }
         });
+    }
+    //endregion
+
+    //region save all data
+    private void saveOrUpdateData(){
+        tenantNameStr = activityAddNewTenantBinding.TenantName.getText().toString();
+        tenant.setTenantName(tenantNameStr);
+        tenant.setNID(activityAddNewTenantBinding.NID.getText().toString());
+        tenant.setMobileNo(activityAddNewTenantBinding.MobileNo.getText().toString());
+        tenant.setNumberOfPerson(utilsForAll.toIntValue(activityAddNewTenantBinding.NumberOfPerson.getText().toString()));
+        tenant.setTenantName(tenantNameStr);
+        tenant.setAssociateRoom(AssociateRoomStr);
+        tenant.setAssociateRoomId(AssociateRoomId);
+        tenant.setStartingMonthId(StartingMonthId);
+        tenant.setStartingMonth(StartingMonthStr);
+        if (command.equals("add")) {
+            tenant.setTenantId(UUID.randomUUID().toString());
+            firebaseCrudHelper.add(tenant, "tenant");
+        } else {
+            firebaseCrudHelper.update(tenant, tenant.getFireBaseKey(), "tenant");
+        }
+        Toast.makeText(getApplicationContext(),R.string.success, Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(NewTenantActivity.this,TenantListActivity.class));
     }
     //endregion
 

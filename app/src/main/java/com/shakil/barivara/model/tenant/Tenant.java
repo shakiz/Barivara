@@ -12,6 +12,10 @@ public class Tenant implements Parcelable {
     private String TenantId;
     private String TenantName;
     private String StartingMonth;
+    private String NID;
+    private String MobileNo;
+    private int NumberOfPerson;
+    private int AdvancedAmount;
     private int StartingMonthId;
     private String AssociateRoom;
     private int AssociateRoomId;
@@ -24,6 +28,10 @@ public class Tenant implements Parcelable {
         TenantId = in.readString();
         TenantName = in.readString();
         StartingMonth = in.readString();
+        NID = in.readString();
+        MobileNo = in.readString();
+        NumberOfPerson = in.readInt();
+        AdvancedAmount = in.readInt();
         StartingMonthId = in.readInt();
         AssociateRoom = in.readString();
         AssociateRoomId = in.readInt();
@@ -35,6 +43,10 @@ public class Tenant implements Parcelable {
         dest.writeString(TenantId);
         dest.writeString(TenantName);
         dest.writeString(StartingMonth);
+        dest.writeString(NID);
+        dest.writeString(MobileNo);
+        dest.writeInt(NumberOfPerson);
+        dest.writeInt(AdvancedAmount);
         dest.writeInt(StartingMonthId);
         dest.writeString(AssociateRoom);
         dest.writeInt(AssociateRoomId);
@@ -58,6 +70,23 @@ public class Tenant implements Parcelable {
         }
     };
 
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("tenantId", TenantId);
+        result.put("tenantName", TenantName);
+        result.put("startingMonth", StartingMonth);
+        result.put("startingMonthId", StartingMonthId);
+        result.put("nID", NID);
+        result.put("mobileNo", MobileNo);
+        result.put("numberOfPerson", NumberOfPerson);
+        result.put("advancedAmount", AdvancedAmount);
+        result.put("associateRoom", AssociateRoom);
+        result.put("associateRoomId", AssociateRoomId);
+
+        return result;
+    }
+
     public String getTenantId() {
         return TenantId;
     }
@@ -80,6 +109,38 @@ public class Tenant implements Parcelable {
 
     public void setStartingMonth(String startingMonth) {
         StartingMonth = startingMonth;
+    }
+
+    public String getNID() {
+        return NID;
+    }
+
+    public void setNID(String NID) {
+        this.NID = NID;
+    }
+
+    public String getMobileNo() {
+        return MobileNo;
+    }
+
+    public void setMobileNo(String mobileNo) {
+        MobileNo = mobileNo;
+    }
+
+    public int getNumberOfPerson() {
+        return NumberOfPerson;
+    }
+
+    public void setNumberOfPerson(int numberOfPerson) {
+        NumberOfPerson = numberOfPerson;
+    }
+
+    public int getAdvancedAmount() {
+        return AdvancedAmount;
+    }
+
+    public void setAdvancedAmount(int advancedAmount) {
+        AdvancedAmount = advancedAmount;
     }
 
     public int getStartingMonthId() {
@@ -112,18 +173,5 @@ public class Tenant implements Parcelable {
 
     public void setFireBaseKey(String fireBaseKey) {
         FireBaseKey = fireBaseKey;
-    }
-
-    @Exclude
-    public Map<String, Object> toMap() {
-        HashMap<String, Object> result = new HashMap<>();
-        result.put("tenantId", TenantId);
-        result.put("tenantName", TenantName);
-        result.put("startingMonth", StartingMonth);
-        result.put("startingMonthId", StartingMonthId);
-        result.put("associateRoom", AssociateRoom);
-        result.put("associateRoomId", AssociateRoomId);
-
-        return result;
     }
 }

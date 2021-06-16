@@ -210,4 +210,10 @@
     <string name="present_unit_validation">অনুগ্রহ করে বর্তমান মাসের ইউনিট লিখুন</string>
     <string name="unit_price_validation">দয়া করে ইউনিটের দাম লিখুন</string>
     <string name="please_check_unit_values">ইউনিটের মান চেক করুন</string>
+    <string name="nid_number">এনআইডি নম্বর</string>
+    <string name="mobile_number">মোবাইল নম্বর</string>
+    <string name="number_of_family_member">পরিবারের সদস্য সংখ্যা</string>
+    <string name="nid_number_hint">এনআইডি নম্বর লিখুন</string>
+    <string name="mobile_number_hint">মোবাইল নম্বর লিখুন</string>
+    <string name="number_of_family_member_hint">পরিবারের মোট সদস্য লিখুন</string>
 </resources>

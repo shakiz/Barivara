@@ -104,6 +104,111 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
+                                android:text="@string/nid_number"
+                                android:textColor="@color/md_grey_900"
+                                android:textSize="16sp" />
+
+                            <EditText
+                                android:id="@+id/NID"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:layout_marginTop="5dp"
+                                android:background="@drawable/edit_text_back"
+                                android:inputType="text"
+                                android:ellipsize="end"
+                                android:scrollHorizontally="true"
+                                android:maxLines="1"
+                                android:textColorHint="@color/md_grey_700"
+                                android:hint="@string/nid_number_hint"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"
+                                android:textSize="14sp"
+                                android:textColor="@color/md_grey_800"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginRight="12dp"
+                            android:layout_marginTop="8dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="@string/mobile_number"
+                                android:textColor="@color/md_grey_900"
+                                android:textSize="16sp" />
+
+                            <EditText
+                                android:id="@+id/MobileNo"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:layout_marginTop="5dp"
+                                android:background="@drawable/edit_text_back"
+                                android:inputType="text"
+                                android:ellipsize="end"
+                                android:scrollHorizontally="true"
+                                android:maxLines="1"
+                                android:textColorHint="@color/md_grey_700"
+                                android:hint="@string/mobile_number_hint"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"
+                                android:textSize="14sp"
+                                android:textColor="@color/md_grey_800"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginRight="12dp"
+                            android:layout_marginTop="8dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="@string/number_of_family_member"
+                                android:textColor="@color/md_grey_900"
+                                android:textSize="16sp" />
+
+                            <EditText
+                                android:id="@+id/NumberOfPerson"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:layout_marginTop="5dp"
+                                android:background="@drawable/edit_text_back"
+                                android:inputType="text"
+                                android:ellipsize="end"
+                                android:scrollHorizontally="true"
+                                android:maxLines="1"
+                                android:textColorHint="@color/md_grey_700"
+                                android:hint="@string/number_of_family_member_hint"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"
+                                android:textSize="14sp"
+                                android:textColor="@color/md_grey_800"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginRight="12dp"
+                            android:layout_marginTop="8dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
                                 android:text="@string/select_month"
                                 android:textColor="@color/md_grey_900"
                                 android:textSize="16sp" />
@@ -144,6 +249,54 @@
 
                         </LinearLayout>
 
+                        <CheckBox
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginRight="12dp"
+                            android:background="@drawable/edit_text_back"
+                            android:layout_marginTop="12dp"
+                            android:layout_gravity="center"
+                            android:text="@string/advance_hint"
+                            android:id="@+id/AdvanceCheckBox"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginRight="12dp"
+                            android:layout_marginBottom="16dp"
+                            android:visibility="gone"
+                            android:id="@+id/advanceAmountLayout"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="@string/amount"
+                                android:textColor="@color/md_grey_900"
+                                android:textSize="16sp" />
+
+                            <EditText
+                                android:id="@+id/AdvanceAmount"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:layout_marginTop="5dp"
+                                android:background="@drawable/edit_text_back"
+                                android:inputType="number"
+                                android:ellipsize="end"
+                                android:scrollHorizontally="true"
+                                android:maxLines="1"
+                                android:textColorHint="@color/md_grey_700"
+                                android:hint="@string/advance_hint2"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"
+                                android:textSize="14sp"
+                                android:textColor="@color/md_grey_800"/>
+
+                        </LinearLayout>
 
                     </LinearLayout>
 

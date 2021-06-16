@@ -2,11 +2,9 @@ package com.shakil.barivara.activities.room;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,7 +14,6 @@ import com.shakil.barivara.R;
 import com.shakil.barivara.databinding.ActivityAddNewRoomBinding;
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.room.Room;
-import com.shakil.barivara.utils.InputValidation;
 import com.shakil.barivara.utils.SpinnerAdapter;
 import com.shakil.barivara.utils.SpinnerData;
 import com.shakil.barivara.utils.Validation;
@@ -30,10 +27,8 @@ public class RoomActivity extends AppCompatActivity {
     private ActivityAddNewRoomBinding activityAddNewRoomBinding;
     private SpinnerData spinnerData;
     private SpinnerAdapter spinnerAdapter;
-    private InputValidation inputValidation;
     private String roomNameStr, startMonthStr,associateMeterStr,tenantNameStr;
     private int StartMonthId, AssociateMeterId, TenantId;
-    private int advancedAmountInt;
     private Room room = new Room();
     private String command = "add";
     private FirebaseCrudHelper firebaseCrudHelper;
@@ -84,13 +79,6 @@ public class RoomActivity extends AppCompatActivity {
             command = "update";
             activityAddNewRoomBinding.RoomName.setText(room.getRoomName());
             activityAddNewRoomBinding.StartMonthId.setSelection(room.getStartMonthId(), true);
-            activityAddNewRoomBinding.AdvanceAmount.setText(""+room.getAdvancedAmount());
-
-            if (room.getAdvancedAmount() > 0){
-                activityAddNewRoomBinding.advanceAmountLayout.setVisibility(View.VISIBLE);
-                activityAddNewRoomBinding.AdvanceCheckBox.setChecked(true);
-                activityAddNewRoomBinding.AdvanceAmount.setText(""+room.getAdvancedAmount());
-            }
         }
     }
     //endregion
@@ -177,39 +165,16 @@ public class RoomActivity extends AppCompatActivity {
         });
         //endregion
 
-        activityAddNewRoomBinding.AdvanceCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean visibilityValue) {
-                if (visibilityValue){
-                    activityAddNewRoomBinding.advanceAmountLayout.setVisibility(View.VISIBLE);
-                    activityAddNewRoomBinding.AdvanceAmount.setText("");
-                }
-                else{
-                    activityAddNewRoomBinding.advanceAmountLayout.setVisibility(View.GONE);
-                }
-            }
-        });
-
+        //region save or update click listener
         activityAddNewRoomBinding.mSaveRoomMaster.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (validation.isValid()){
-                    if (activityAddNewRoomBinding.advanceAmountLayout.getVisibility() == View.VISIBLE){
-                        if (!TextUtils.isEmpty(activityAddNewRoomBinding.AdvanceAmount.getText().toString())) {
-                            advancedAmountInt = Integer.parseInt(activityAddNewRoomBinding.AdvanceAmount.getText().toString());
-                            room.setAdvancedAmount(advancedAmountInt);
-                            saveOrUpdateData();
-                        }
-                        else{
-                            Toast.makeText(RoomActivity.this, getString(R.string.advance_amount_validation), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                    else{
-                         saveOrUpdateData();
-                    }
+                    saveOrUpdateData();
                 }
             }
         });
+        //endregion
     }
 
 
@@ -217,7 +182,6 @@ public class RoomActivity extends AppCompatActivity {
     private void init() {
         spinnerData = new SpinnerData(this);
         spinnerAdapter = new SpinnerAdapter();
-        inputValidation = new InputValidation(this, activityAddNewRoomBinding.mainLayout);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
         validation = new Validation(this, hashMap);
     }

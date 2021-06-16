@@ -210,4 +210,10 @@
     <string name="present_unit_validation">Please enter present month unit</string>
     <string name="unit_price_validation">Please enter unit price</string>
     <string name="please_check_unit_values">Please check unit values</string>
+    <string name="nid_number">NID Number</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="number_of_family_member">Number Of Family Member</string>
+    <string name="nid_number_hint">Enter NID Number</string>
+    <string name="mobile_number_hint">Enter Mobile Number</string>
+    <string name="number_of_family_member_hint">Enter total family member</string>
 </resources>
