@@ -1,6 +1,5 @@
 package com.shakil.barivara.utils;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -38,14 +37,14 @@ public class LanguageManager {
         String language = prefManager.getString(mLanguage);
         if(!TextUtils.isEmpty(language)){
             Locale locale = new Locale(language);
-            Configuration config = ((Activity)context).getBaseContext().getResources().getConfiguration();
+            Locale.setDefault(locale);
+            Configuration config = (context.getResources().getConfiguration());
             if (Build.VERSION.SDK_INT >= 17) {
                 config.setLocale(locale);
             } else {
                 config.locale = locale;
             }
-            ((Activity)context).getBaseContext().getResources().updateConfiguration(config, ((Activity)context).getBaseContext().getResources().getDisplayMetrics());
-
+            context.getResources().updateConfiguration(config, ((context.getResources().getDisplayMetrics())));
         }
     }
 
