@@ -5,7 +5,11 @@ import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.util.Log;
 import android.view.View;
@@ -40,6 +44,10 @@ public class Tools {
         this.context = context;
         this.view = view;
         prefManager = new PrefManager(context);
+    }
+
+    public Tools(Context context) {
+        this.context = context;
     }
 
     public static Long persistDate(Date date) {
@@ -154,6 +162,38 @@ public class Tools {
         Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailAddress);
         isValidEmail = matcher.find();
         return isValidEmail;
+    }
+    //endregion
+
+    //region get app version name
+    public String getAppVersionName() {
+        PackageManager manager = context.getPackageManager();
+        PackageInfo info = null;
+        try {
+            info = manager.getPackageInfo(context.getPackageName(), 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return String.valueOf(info.versionName);
+    }
+    //endregion
+
+    //region internet connection check
+    public boolean hasConnection() {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo wifiNetwork = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        if (wifiNetwork != null && wifiNetwork.isConnected()) {
+            return true;
+        }
+        NetworkInfo mobileNetwork = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        if (mobileNetwork != null && mobileNetwork.isConnected()) {
+            return true;
+        }
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        if (activeNetwork != null && activeNetwork.isConnected()) {
+            return true;
+        }
+        return false;
     }
     //endregion
 }

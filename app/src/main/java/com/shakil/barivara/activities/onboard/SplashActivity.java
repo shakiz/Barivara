@@ -1,32 +1,34 @@
 package com.shakil.barivara.activities.onboard;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.TextView;
 
-import com.airbnb.lottie.LottieAnimationView;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+
 import com.shakil.barivara.R;
 import com.shakil.barivara.activities.auth.LoginActivity;
+import com.shakil.barivara.databinding.ActivitySplashBinding;
+import com.shakil.barivara.utils.AppUpdate;
 import com.shakil.barivara.utils.PrefManager;
+import com.shakil.barivara.utils.Tools;
 
 import static com.shakil.barivara.utils.Constants.mIsLoggedIn;
 
 public class SplashActivity extends AppCompatActivity {
+    private ActivitySplashBinding activitySplashBinding;
     private Animation topAnim, middleAnim, bottomAnim;
-    private View first,second,third,fourth,fifth;
-    private TextView AppName, DevelopedBy, Developer;
-    private LottieAnimationView helloAnimationView;
     private PrefManager prefManager;
+    private Tools tools;
+    private AppUpdate appUpdate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
+        activitySplashBinding = DataBindingUtil.setContentView(this,R.layout.activity_splash);
 
         //region init components and their interactions
         initUI();
@@ -36,16 +38,9 @@ public class SplashActivity extends AppCompatActivity {
 
     //region init XML components with backend
     private void initUI() {
-        first = findViewById(R.id.FirstLine);
-        second = findViewById(R.id.SecondLine);
-        third = findViewById(R.id.ThirdLine);
-        fourth = findViewById(R.id.FourthLine);
-        fifth = findViewById(R.id.FifthLine);
-        AppName = findViewById(R.id.AppName);
-        DevelopedBy = findViewById(R.id.DevelopedBy);
-        Developer = findViewById(R.id.DeveloperName);
-        helloAnimationView = findViewById(R.id.helloAnimation);
         prefManager = new PrefManager(this);
+        appUpdate = new AppUpdate(this);
+        tools = new Tools(this);
     }
     //endregion
 
@@ -55,9 +50,33 @@ public class SplashActivity extends AppCompatActivity {
         loadAnimationForUI();
 
         //region splash screen code to call new activity after some time
+        if (tools.hasConnection()){
+            appUpdate.getUpdate(new AppUpdate.onGetUpdate() {
+                @Override
+                public void onResult(boolean updated) {
+                    if(!updated){
+
+                        appUpdate.checkUpdate(false, false);
+                    }
+                    else{
+                        checkLogin();
+                    }
+                }
+            });
+        }
+        else{
+            checkLogin();
+        }
+        //endregion
+    }
+    //endregion
+
+    //region check for user login
+    private void checkLogin(){
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                //region check for new update
                 Intent intent = null;
                 if (prefManager.getBoolean(mIsLoggedIn)){
                     intent = new Intent(SplashActivity.this, MainActivity.class);
@@ -67,6 +86,7 @@ public class SplashActivity extends AppCompatActivity {
                 }
                 startActivity(intent);
                 finish();
+                //endregion
             }
         }, 1500);
     }
@@ -82,16 +102,16 @@ public class SplashActivity extends AppCompatActivity {
 
     //region load animation into UI components
     private void loadAnimationForUI() {
-        first.setAnimation(topAnim);
-        second.setAnimation(topAnim);
-        third.setAnimation(topAnim);
-        fourth.setAnimation(topAnim);
-        fifth.setAnimation(topAnim);
+        activitySplashBinding.FirstLine.setAnimation(topAnim);
+        activitySplashBinding.SecondLine.setAnimation(topAnim);
+        activitySplashBinding.ThirdLine.setAnimation(topAnim);
+        activitySplashBinding.FourthLine.setAnimation(topAnim);
+        activitySplashBinding.FifthLine.setAnimation(topAnim);
 
-        AppName.setAnimation(middleAnim);
-        DevelopedBy.setAnimation(bottomAnim);
-        Developer.setAnimation(bottomAnim);
-        helloAnimationView.animate().translationY(1400).setDuration(1000).setStartDelay(4000);
+        activitySplashBinding.AppName.setAnimation(middleAnim);
+        activitySplashBinding.DevelopedBy.setAnimation(bottomAnim);
+        activitySplashBinding.DeveloperName.setAnimation(bottomAnim);
+        activitySplashBinding.helloAnimation.animate().translationY(1400).setDuration(1000).setStartDelay(4000);
     }
     //endregion
 }

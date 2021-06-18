@@ -216,4 +216,8 @@
     <string name="nid_number_hint">এনআইডি নম্বর লিখুন</string>
     <string name="mobile_number_hint">মোবাইল নম্বর লিখুন</string>
     <string name="number_of_family_member_hint">পরিবারের মোট সদস্য লিখুন</string>
+    <string name="please_enable_internet_connection">Please enable internet connection</string>
+    <string name="no_update_version">You are using version</string>
+    <string name="has_been_released_small">has been released</string>
+    <string name="please_update_detail_text">Please update and get the latest features, improvements and bug fixes.</string>
 </resources>
