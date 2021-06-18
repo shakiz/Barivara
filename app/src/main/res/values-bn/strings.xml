@@ -6,10 +6,10 @@
     <string name="total_earnings">মোট আয়</string>
     <string name="no_of_meters">মিটার সংখ্যা</string>
     <string name="total_unit">মোট ইউনিট</string>
-    <string name="add_room">নতুন ঘর যুক্ত করুন</string>
+    <string name="add_room">নতুন ঘর/ফ্লাট যুক্ত করুন</string>
     <string name="add_meter">নতুন মিটার যুক্ত করুন</string>
-    <string name="room_hint">ঘরের নাম লিখুন</string>
-    <string name="room_name">ঘরের নাম</string>
+    <string name="room_hint">ঘরের/ফ্ল্যাটের নাম লিখুন</string>
+    <string name="room_name">ঘরের/ফ্ল্যাটের নাম</string>
     <string name="select_month">শুরুর মাস নির্বাচন করুন</string>
     <string name="tenant_name">ভাড়াটিয়ার নাম</string>
     <string name="tenant_hint">ভাড়াটিয়ার নাম লিখুন</string>
@@ -23,7 +23,7 @@
     <!--Meter start-->
     <string name="meter_name">মিটার নাম</string>
     <string name="meter_hint">মিটারের নাম প্রবেশ করান</string>
-    <string name="select_room">ঘর নির্বাচন করুন</string>
+    <string name="select_room">ঘর/ফ্লাট নির্বাচন করুন</string>
     <string name="select_meter_type">মিটারের প্রকার নির্বাচন করুন</string>
     <!--Meter end-->
 
@@ -32,7 +32,7 @@
     <string name="meter_owner">মিটারের মালিক</string>
     <string name="present_unit">বর্তমান ইউনিট</string>
     <string name="past_unit">অতীত ইউনিট</string>
-    <string name="room_owner">ঘরের মালিক</string>
+    <string name="room_owner">ঘরের/ফ্ল্যাটের মালিক</string>
     <string name="start_rent_month">শুরু মাস</string>
     <string name="last_paid">শেষ অর্থ প্রদান</string>
     <!--Adapter end-->
@@ -40,7 +40,7 @@
 
     <string name="new_rent_details">নতুন ভাড়ার বিবরণ</string>
     <string name="new_meter_details">নতুন মিটারের বিবরণ</string>
-    <string name="room_list">ঘরের তালিকা</string>
+    <string name="room_list">ঘরের/ফ্ল্যাটের তালিকা</string>
     <string name="meter_list">মিটার তালিকা</string>
     <string name="present_month_unit">বর্তমান মাসের ইউনিট</string>
     <string name="unit_price">ইউনিটের দাম</string>
@@ -71,10 +71,10 @@
     <string name="expiry_date">শেষের তারিখ</string>
     <string name="date_hint">21-মার্চ -2020</string>
     <string name="select_correct_data">সঠিক তথ্য দিন</string>
-    <string name="total_rooms">মোট ঘর</string>
+    <string name="total_rooms">মোট ঘর/ফ্লাট</string>
     <string name="total_meters">মোট মিটার</string>
     <string name="total_tenants">মোট ভাড়াটিয়া</string>
-    <string name="demo_room_name">ডেমো ঘরের নাম</string>
+    <string name="demo_room_name">ডেমো ঘরের/ফ্ল্যাটের নাম</string>
     <string name="demo_room_owner_name">রহিম হাসান</string>
     <string name="demo_month">DD-MM-YYYY</string>
     <string name="demo_last_paid_date">12-জানু -2020</string>
@@ -99,8 +99,8 @@
     <string name="good_evening">শুভ সন্ধ্যা</string>
     <string name="good_night">শুভ রাত্রি</string>
     <string name="new_room">নতুন ঘর</string>
-    <string name="add_a_room">একটি নতুন ঘর যুক্ত করুন</string>
-    <string name="all_rooms">সব ঘর</string>
+    <string name="add_a_room">একটি নতুন ঘর/ফ্লাট যুক্ত করুন</string>
+    <string name="all_rooms">সব ঘর/ফ্লাট</string>
     <string name="new_meter">নতুন মিটার</string>
     <string name="add_a_meter">একটি নতুন মিটার যুক্ত করুন</string>
     <string name="all_meters">সমস্ত মিটার</string>
@@ -130,7 +130,7 @@
     <string name="name_search">নাম লিখুন</string>
     <string name="enter_data_validation">দয়া করে ডেটা প্রবেশ করুন</string>
     <string name="filterd">অনুসন্ধান শেষ হয়েছে</string>
-    <string name="search_room_name">ঘরের নাম অনুসন্ধান করুন</string>
+    <string name="search_room_name">ঘরের/ফ্ল্যাটের নাম অনুসন্ধান করুন</string>
     <string name="list_refreshed">তালিকাটি রিফ্রেশ হয়েছে</string>
     <string name="search_month_name">মাসের নাম সন্ধান করুন</string>
     <string name="search_tenant_name">ভাড়াটিয়ার নাম অনুসন্ধান করুন</string>
@@ -201,7 +201,7 @@
     <string name="mobile">মোবাইল</string>
     <string name="not_a_valid_email_address">ইমেইল এড্রেস টা সঠিক না</string>
     <string name="email_validation">ইমেল ডেটা অনুপস্থিত</string>
-    <string name="room_name_validation">কক্ষের নাম লিখুন</string>
+    <string name="room_name_validation">ঘরের/ফ্ল্যাটের নাম লিখুন</string>
     <string name="advance_amount_validation">দয়া করে অগ্রিমের পরিমাণ লিখুন</string>
     <string name="rent_amount_validation">দয়া করে ভাড়ার পরিমাণ লিখুন</string>
     <string name="tenant_amount_validation">ভাড়াটিয়ার নাম লিখুন</string>
@@ -216,8 +216,8 @@
     <string name="nid_number_hint">এনআইডি নম্বর লিখুন</string>
     <string name="mobile_number_hint">মোবাইল নম্বর লিখুন</string>
     <string name="number_of_family_member_hint">পরিবারের মোট সদস্য লিখুন</string>
-    <string name="please_enable_internet_connection">Please enable internet connection</string>
-    <string name="no_update_version">You are using version</string>
-    <string name="has_been_released_small">has been released</string>
-    <string name="please_update_detail_text">Please update and get the latest features, improvements and bug fixes.</string>
+    <string name="please_enable_internet_connection">দয়া করে ইন্টারনেট সংযোগ সক্রিয় করুন</string>
+    <string name="no_update_version">আপনি ভার্সন ব্যবহার করছেন</string>
+    <string name="has_been_released_small">বের হয়েছে</string>
+    <string name="please_update_detail_text">দয়া করে আপডেট করুন এবং বাগ সংশোধন করুন।</string>
 </resources>

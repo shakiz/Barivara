@@ -6,10 +6,10 @@
     <string name="total_earnings">Total Earnings</string>
     <string name="no_of_meters">Number Of Meters</string>
     <string name="total_unit">Total Unit</string>
-    <string name="add_room">Add New Room</string>
+    <string name="add_room">Add New Room/Flat</string>
     <string name="add_meter">Add New Meter</string>
-    <string name="room_hint">Enter Room Name</string>
-    <string name="room_name">Room Name</string>
+    <string name="room_hint">Enter Room/Flat Name</string>
+    <string name="room_name">Room/Flat Name</string>
     <string name="select_month">Select Starting Month</string>
     <string name="tenant_name">Tenant Name</string>
     <string name="tenant_hint">Enter tenant name</string>
@@ -23,7 +23,7 @@
     <!--Meter start-->
     <string name="meter_name">Meter Name</string>
     <string name="meter_hint">Enter Meter Name</string>
-    <string name="select_room">Select Room</string>
+    <string name="select_room">Select Room/Flat</string>
     <string name="select_meter_type">Select Meter Type</string>
     <!--Meter end-->
 
@@ -32,7 +32,7 @@
     <string name="meter_owner">Meter Owner</string>
     <string name="present_unit">Present Unit</string>
     <string name="past_unit">Past Unit</string>
-    <string name="room_owner">Room Owner</string>
+    <string name="room_owner">Room/Flat Owner</string>
     <string name="start_rent_month">Start Month</string>
     <string name="last_paid">Last Paid</string>
     <!--Adapter end-->
@@ -40,7 +40,7 @@
 
     <string name="new_rent_details">New rent Details</string>
     <string name="new_meter_details">New Meter Details</string>
-    <string name="room_list">Room List</string>
+    <string name="room_list">Room/Flat List</string>
     <string name="meter_list">Meter List</string>
     <string name="present_month_unit">Present Month Unit</string>
     <string name="unit_price">Unit Price</string>
@@ -74,7 +74,7 @@
     <string name="total_rooms">Total Rooms</string>
     <string name="total_meters">Total Meters</string>
     <string name="total_tenants">Total Tenants</string>
-    <string name="demo_room_name">Demo Room Name</string>
+    <string name="demo_room_name">Demo Room/Flat Name</string>
     <string name="demo_room_owner_name">Rahim Hasan</string>
     <string name="demo_month">DD-MM-YYYY</string>
     <string name="demo_last_paid_date">12-Jan-2020</string>
@@ -98,8 +98,8 @@
     <string name="good_afternoon">Good Afternoon</string>
     <string name="good_evening">Good Evening</string>
     <string name="good_night">Good Night</string>
-    <string name="new_room">New Room</string>
-    <string name="add_a_room">Add a new room</string>
+    <string name="new_room">New Room/Flat</string>
+    <string name="add_a_room">Add a new room/flat</string>
     <string name="all_rooms">All rooms</string>
     <string name="new_meter">New Meter</string>
     <string name="add_a_meter">Add a new meter</string>
@@ -130,7 +130,7 @@
     <string name="name_search">Enter Name</string>
     <string name="enter_data_validation">Please Enter Data</string>
     <string name="filterd">Filtered</string>
-    <string name="search_room_name">Search Room Name</string>
+    <string name="search_room_name">Search Room/Flat Name</string>
     <string name="list_refreshed">List Refreshed</string>
     <string name="search_month_name">Search Month Name</string>
     <string name="search_tenant_name">Search Tenant Name</string>
@@ -201,7 +201,7 @@
     <string name="mobile">Mobile</string>
     <string name="not_a_valid_email_address">Not a valid email address</string>
     <string name="email_validation">Email field is missing data</string>
-    <string name="room_name_validation">Please enter room name</string>
+    <string name="room_name_validation">Please enter room/flat name</string>
     <string name="advance_amount_validation">Please enter advance amount</string>
     <string name="rent_amount_validation">Please enter rent amount</string>
     <string name="tenant_amount_validation">Please enter tenant name</string>
