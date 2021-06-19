@@ -79,7 +79,7 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
     private void loadData(){
         if (electricityBill.getBillId() != null) {
             command = "update";
-            activityMeterCostDetailsBinding.AssociateRoomId.setSelection(electricityBill.getRoomId(),true);
+            activityMeterCostDetailsBinding.RoomId.setSelection(electricityBill.getRoomId(),true);
             activityMeterCostDetailsBinding.UnitPrice.setText(""+electricityBill.getUnitPrice());
             activityMeterCostDetailsBinding.PresentUnit.setText(""+electricityBill.getPresentUnit());
             activityMeterCostDetailsBinding.PastUnit.setText(""+electricityBill.getPastUnit());
@@ -94,11 +94,11 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
         validation.setEditTextIsNotEmpty(new String[]{"PastUnit", "PresentUnit", "UnitPrice"},
                 new String[]{getString(R.string.past_unit_validation), getString(R.string.present_unit_validation)
                         , getString(R.string.unit_price_validation)});
-        validation.setSpinnerIsNotEmpty(new String[]{"AssociateMeterId", "MeterTypeName"});
+        validation.setSpinnerIsNotEmpty(new String[]{"MeterId", "RoomId"});
         //endregion
 
         //region room name select spinner
-        activityMeterCostDetailsBinding.AssociateMeterId.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        activityMeterCostDetailsBinding.MeterId.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 meterNameStr = parent.getItemAtPosition(position).toString();
@@ -111,7 +111,7 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
             }
         });
 
-        activityMeterCostDetailsBinding.AssociateRoomId.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        activityMeterCostDetailsBinding.RoomId.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 roomNameStr = parent.getItemAtPosition(position).toString();
@@ -132,9 +132,9 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
                 meterNames = nameList;
                 meterNameSpinnerAdapter = new ArrayAdapter<>(ElectricityBillDetailsActivity.this, R.layout.spinner_drop, meterNames);
                 meterNameSpinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
-                activityMeterCostDetailsBinding.AssociateMeterId.setAdapter(meterNameSpinnerAdapter);
+                activityMeterCostDetailsBinding.MeterId.setAdapter(meterNameSpinnerAdapter);
                 if (electricityBill.getBillId() != null) {
-                    activityMeterCostDetailsBinding.AssociateMeterId.setSelection(electricityBill.getMeterId(),true);
+                    activityMeterCostDetailsBinding.MeterId.setSelection(electricityBill.getMeterId(),true);
                 }
             }
         });
@@ -147,9 +147,9 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
                 roomNames = nameList;
                 roomNameSpinnerAdapter = new ArrayAdapter<>(ElectricityBillDetailsActivity.this, R.layout.spinner_drop, roomNames);
                 roomNameSpinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
-                activityMeterCostDetailsBinding.AssociateRoomId.setAdapter(roomNameSpinnerAdapter);
+                activityMeterCostDetailsBinding.RoomId.setAdapter(roomNameSpinnerAdapter);
                 if (electricityBill.getBillId() != null) {
-                    activityMeterCostDetailsBinding.AssociateRoomId.setSelection(electricityBill.getRoomId(),true);
+                    activityMeterCostDetailsBinding.RoomId.setSelection(electricityBill.getRoomId(),true);
                 }
             }
         });

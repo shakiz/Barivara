@@ -116,7 +116,7 @@ public class NewTenantActivity extends AppCompatActivity {
         validation.setEditTextIsNotEmpty(new String[]{"TenantName", "NID", "MobileNo"},
                 new String[]{getString(R.string.tenant_amount_validation), getString(R.string.nid_number_hint)
                 ,getString(R.string.mobile_number_hint)});
-        validation.setSpinnerIsNotEmpty(new String[]{"StartingMonthId"});
+        validation.setSpinnerIsNotEmpty(new String[]{"StartingMonthId","AssociateRoomId"});
         //endregion
 
         spinnerAdapter.setSpinnerAdapter(activityAddNewTenantBinding.StartingMonthId,this,spinnerData.setMonthData());

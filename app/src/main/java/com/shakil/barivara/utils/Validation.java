@@ -1,6 +1,7 @@
 package com.shakil.barivara.utils;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.text.InputFilter;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -9,6 +10,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shakil.barivara.R;
@@ -111,6 +114,37 @@ public class Validation {
                     }
                 }
                 isValid = isChecked;
+            }
+            //endregion
+
+            //region spinner validation
+            if (entry.getKey() == "Spinner") {
+                for (String controlName : entry.getValue()) {
+                    String viewName = controlName;
+                    if (controlName.contains("-")) {
+                        String[] splitString = controlName.split("-");
+                        viewName = splitString[0];
+                    }
+                    int resID = context.getResources().getIdentifier(viewName, "id", context.getPackageName());
+
+                    Spinner sp = (Spinner) ((android.app.Activity) context).findViewById(resID);
+                    if(sp!=null){
+                        String spinnerValue = (String) sp.getSelectedItem();
+                        if (spinnerValue.equals(context.getString(R.string.select_data))) {
+                            sp.requestFocus();
+                            TextView errorText = (TextView) sp.getSelectedView();
+                            errorText.setError("");
+                            if(sp.getTag() != null){
+                                Toast.makeText(context, context.getString(R.string.missing_data) + "  " + sp.getTag().toString(),
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                            errorText.setTextColor(Color.RED);
+                            errorText.setText(context.getString(R.string.select_correct_data));
+                            isValid = false;
+                            break;
+                        }
+                    }
+                }
             }
             //endregion
 

@@ -78,8 +78,9 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:layout_marginTop="5dp"
+                                android:tag="@string/select_meter"
                                 android:background="@drawable/edit_text_back"
-                                android:id="@+id/AssociateMeterId"/>
+                                android:id="@+id/MeterId"/>
 
                         </LinearLayout>
 
@@ -104,8 +105,9 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:layout_marginTop="5dp"
+                                android:tag="@string/select_room"
                                 android:background="@drawable/edit_text_back"
-                                android:id="@+id/AssociateRoomId"/>
+                                android:id="@+id/RoomId"/>
 
                         </LinearLayout>
 

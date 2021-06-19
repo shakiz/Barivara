@@ -113,6 +113,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:layout_marginTop="5dp"
+                                android:tag="@string/select_month"
                                 android:background="@drawable/edit_text_back"
                                 android:id="@+id/StartMonthId"/>
 
@@ -139,6 +140,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:layout_marginTop="5dp"
+                                android:tag="@string/select_meter"
                                 android:background="@drawable/edit_text_back"
                                 android:id="@+id/AssociateMeterId"/>
 
@@ -165,8 +167,9 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:layout_marginTop="5dp"
+                                android:tag="@string/tenant_name"
                                 android:background="@drawable/edit_text_back"
-                                android:id="@+id/TenantId"/>
+                                android:id="@+id/TenantNameId"/>
 
                         </LinearLayout>
 

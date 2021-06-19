@@ -89,7 +89,7 @@ public class RoomActivity extends AppCompatActivity {
         //region validation
         validation.setEditTextIsNotEmpty(new String[]{"RoomName"},
                 new String[]{getString(R.string.room_name_validation)});
-        validation.setSpinnerIsNotEmpty(new String[]{"StartMonthId"});
+        validation.setSpinnerIsNotEmpty(new String[]{"StartMonthId","AssociateMeterId"});
         //endregion
 
         //region set meter spinner
@@ -115,10 +115,10 @@ public class RoomActivity extends AppCompatActivity {
                 tenantNames = nameList;
                 tenantNameSpinnerAdapter = new ArrayAdapter<>(RoomActivity.this, R.layout.spinner_drop, tenantNames);
                 tenantNameSpinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
-                activityAddNewRoomBinding.TenantId.setAdapter(tenantNameSpinnerAdapter);
+                activityAddNewRoomBinding.TenantNameId.setAdapter(tenantNameSpinnerAdapter);
 
                 if (room.getRoomId() != null) {
-                    activityAddNewRoomBinding.TenantId.setSelection(room.getTenantNameId(), true);
+                    activityAddNewRoomBinding.TenantNameId.setSelection(room.getTenantNameId(), true);
                 }
             }
         });
@@ -151,7 +151,7 @@ public class RoomActivity extends AppCompatActivity {
             }
         });
 
-        activityAddNewRoomBinding.TenantId.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        activityAddNewRoomBinding.TenantNameId.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 tenantNameStr = parent.getItemAtPosition(position).toString();

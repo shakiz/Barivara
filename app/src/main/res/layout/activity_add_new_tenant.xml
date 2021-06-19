@@ -218,6 +218,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:layout_marginTop="5dp"
+                                android:tag="@string/select_month"
                                 android:background="@drawable/edit_text_back"
                                 android:id="@+id/StartingMonthId"/>
 
@@ -244,6 +245,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:layout_marginTop="5dp"
+                                android:tag="@string/select_room"
                                 android:background="@drawable/edit_text_back"
                                 android:id="@+id/AssociateRoomId"/>
 

@@ -79,7 +79,7 @@ public class NewMeterActivity extends AppCompatActivity {
         if (meter.getMeterId() != null) {
             command = "update";
             activityNewMeterBinding.MeterName.setText(meter.getMeterName());
-            activityNewMeterBinding.MeterTypeName.setSelection(meter.getMeterTypeId(),true);
+            activityNewMeterBinding.MeterTypeId.setSelection(meter.getMeterTypeId(),true);
         }
     }
     //endregion
@@ -88,7 +88,7 @@ public class NewMeterActivity extends AppCompatActivity {
         //region validation
         validation.setEditTextIsNotEmpty(new String[]{"MeterName"},
                 new String[]{getString(R.string.meter_name_validation)});
-        validation.setSpinnerIsNotEmpty(new String[]{"RoomSpinner", "MeterTypeName"});
+        validation.setSpinnerIsNotEmpty(new String[]{"AssociateRoomId", "MeterTypeId"});
         //endregion
 
         //region set room spinner
@@ -98,18 +98,18 @@ public class NewMeterActivity extends AppCompatActivity {
                 roomNames = nameList;
                 roomNameSpinnerAdapter = new ArrayAdapter<>(NewMeterActivity.this, R.layout.spinner_drop, roomNames);
                 roomNameSpinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
-                activityNewMeterBinding.RoomSpinner.setAdapter(roomNameSpinnerAdapter);
+                activityNewMeterBinding.AssociateRoomId.setAdapter(roomNameSpinnerAdapter);
 
                 if (meter.getMeterId() != null){
-                    activityNewMeterBinding.RoomSpinner.setSelection(meter.getAssociateRoomId(),true);
+                    activityNewMeterBinding.AssociateRoomId.setSelection(meter.getAssociateRoomId(),true);
                 }
             }
         });
         //endregion
-        spinnerAdapter.setSpinnerAdapter(activityNewMeterBinding.MeterTypeName,this, spinnerData.setMeterTypeData());
+        spinnerAdapter.setSpinnerAdapter(activityNewMeterBinding.MeterTypeId,this, spinnerData.setMeterTypeData());
 
         //region select spinner
-        activityNewMeterBinding.RoomSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        activityNewMeterBinding.AssociateRoomId.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 roomNameStr = parent.getItemAtPosition(position).toString();
@@ -122,7 +122,7 @@ public class NewMeterActivity extends AppCompatActivity {
             }
         });
 
-        activityNewMeterBinding.MeterTypeName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        activityNewMeterBinding.MeterTypeId.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 meterTypeStr = parent.getItemAtPosition(position).toString();
