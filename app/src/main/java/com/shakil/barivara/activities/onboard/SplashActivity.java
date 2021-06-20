@@ -55,7 +55,6 @@ public class SplashActivity extends AppCompatActivity {
                 @Override
                 public void onResult(boolean updated) {
                     if(!updated){
-
                         appUpdate.checkUpdate(false, false);
                     }
                     else{
@@ -88,7 +87,7 @@ public class SplashActivity extends AppCompatActivity {
                 finish();
                 //endregion
             }
-        }, 1500);
+        }, 1000);
     }
     //endregion
 
@@ -111,7 +110,7 @@ public class SplashActivity extends AppCompatActivity {
         activitySplashBinding.AppName.setAnimation(middleAnim);
         activitySplashBinding.DevelopedBy.setAnimation(bottomAnim);
         activitySplashBinding.DeveloperName.setAnimation(bottomAnim);
-        activitySplashBinding.helloAnimation.animate().translationY(1400).setDuration(1000).setStartDelay(4000);
+        activitySplashBinding.helloAnimation.animate().translationY(1000).setDuration(1000).setStartDelay(6000);
     }
     //endregion
 }
