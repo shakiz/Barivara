@@ -88,7 +88,7 @@ public class NewMeterActivity extends AppCompatActivity {
         //region validation
         validation.setEditTextIsNotEmpty(new String[]{"MeterName"},
                 new String[]{getString(R.string.meter_name_validation)});
-        validation.setSpinnerIsNotEmpty(new String[]{"AssociateRoomId", "MeterTypeId"});
+        validation.setSpinnerIsNotEmpty(new String[]{"MeterTypeId"});
         //endregion
 
         //region set room spinner
