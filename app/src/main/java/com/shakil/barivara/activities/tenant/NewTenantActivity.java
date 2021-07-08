@@ -185,18 +185,23 @@ public class NewTenantActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //region validation and save data
                 if (validation.isValid()){
-                    if (activityAddNewTenantBinding.advanceAmountLayout.getVisibility() == View.VISIBLE){
-                        if (!TextUtils.isEmpty(activityAddNewTenantBinding.AdvanceAmount.getText().toString())) {
-                            advancedAmountInt = Integer.parseInt(activityAddNewTenantBinding.AdvanceAmount.getText().toString());
-                            tenant.setAdvancedAmount(advancedAmountInt);
-                            saveOrUpdateData();
+                    if (utilsForAll.isValidMobileNo(activityAddNewTenantBinding.MobileNo.getText().toString())){
+                        if (activityAddNewTenantBinding.advanceAmountLayout.getVisibility() == View.VISIBLE){
+                            if (!TextUtils.isEmpty(activityAddNewTenantBinding.AdvanceAmount.getText().toString())) {
+                                advancedAmountInt = Integer.parseInt(activityAddNewTenantBinding.AdvanceAmount.getText().toString());
+                                tenant.setAdvancedAmount(advancedAmountInt);
+                                saveOrUpdateData();
+                            }
+                            else{
+                                Toast.makeText(NewTenantActivity.this, getString(R.string.advance_amount_validation), Toast.LENGTH_SHORT).show();
+                            }
                         }
                         else{
-                            Toast.makeText(NewTenantActivity.this, getString(R.string.advance_amount_validation), Toast.LENGTH_SHORT).show();
+                            saveOrUpdateData();
                         }
                     }
                     else{
-                        saveOrUpdateData();
+                        Toast.makeText(NewTenantActivity.this, getString(R.string.validation_mobile_number_length), Toast.LENGTH_SHORT).show();
                     }
                 }
                 //endregion

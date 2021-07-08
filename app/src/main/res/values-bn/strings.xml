@@ -220,4 +220,5 @@
     <string name="no_update_version">আপনি ভার্সন ব্যবহার করছেন</string>
     <string name="has_been_released_small">বের হয়েছে</string>
     <string name="please_update_detail_text">দয়া করে আপডেট করুন এবং বাগ সংশোধন করুন।</string>
+    <string name="validation_mobile_number_length">মোবাইল নাম্বার ১১ সংখ্যার হতে হবে</string>
 </resources>

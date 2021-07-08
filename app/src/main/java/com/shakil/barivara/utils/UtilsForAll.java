@@ -100,4 +100,14 @@ public class UtilsForAll {
         return day;
     }
     //endregion
+
+    //region mobile number validation
+    public boolean isValidMobileNo(String mobileNo){
+        boolean isValid = false;
+        if (mobileNo.length() == 11){
+            isValid = true;
+        }
+        return isValid;
+    }
+    //endregion
 }

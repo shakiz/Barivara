@@ -220,4 +220,5 @@
     <string name="no_update_version">You are using version</string>
     <string name="has_been_released_small">has been released</string>
     <string name="please_update_detail_text">Please update and get the latest features, improvements and bug fixes.</string>
+    <string name="validation_mobile_number_length">Mobile number length is not valid</string>
 </resources>
