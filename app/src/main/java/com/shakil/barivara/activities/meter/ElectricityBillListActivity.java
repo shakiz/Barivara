@@ -32,6 +32,7 @@ public class ElectricityBillListActivity extends AppCompatActivity {
     private TextView noDataTXT;
     private FirebaseCrudHelper firebaseCrudHelper;
     private UX ux;
+    private Tools tools;
     private FilterManager filterManager;
     private ImageButton searchButton, refreshButton;
     private EditText searchName;
@@ -61,6 +62,7 @@ public class ElectricityBillListActivity extends AppCompatActivity {
         searchName = findViewById(R.id.SearchName);
         electricityBills = new ArrayList<>();
         ux = new UX(this);
+        tools = new Tools(this);
         noDataTXT = findViewById(R.id.mNoDataMessage);
         filterManager = new FilterManager(this);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
@@ -70,7 +72,13 @@ public class ElectricityBillListActivity extends AppCompatActivity {
     //region perform all UI interactions
     private void bindUIWithComponents(){
         searchName.setHint(getString(R.string.search_room_name));
-        setData();
+        //region check internet connection
+        if (tools.hasConnection()) {
+            setData();
+        } else {
+            Toast.makeText(this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT).show();
+        }
+        //endregion
 
         activityMeterCostListBinding.mAddMeterMaster.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,27 +91,31 @@ public class ElectricityBillListActivity extends AppCompatActivity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!TextUtils.isEmpty(searchName.getText().toString())){
-                    filterManager.onFilterClick(searchName.getText().toString(), electricityBills, new FilterManager.onBillFilterClick() {
-                        @Override
-                        public void onClick(ArrayList<ElectricityBill> objects) {
-                            if (objects.size() > 0) {
-                                electricityBills = objects;
-                                setRecyclerAdapter();
-                                Tools.hideKeyboard(ElectricityBillListActivity.this);
-                                Toast.makeText(ElectricityBillListActivity.this, getString(R.string.filterd), Toast.LENGTH_SHORT).show();
-                            } else {
-                                Tools.hideKeyboard(ElectricityBillListActivity.this);
-                                noDataTXT.setVisibility(View.VISIBLE);
-                                noDataTXT.setText(R.string.no_data_message);
-                                activityMeterCostListBinding.mRecylerView.setVisibility(View.GONE);
-                                Toast.makeText(ElectricityBillListActivity.this, getString(R.string.no_data_message), Toast.LENGTH_SHORT).show();
+                if (tools.hasConnection()) {
+                    if (!TextUtils.isEmpty(searchName.getText().toString())){
+                        filterManager.onFilterClick(searchName.getText().toString(), electricityBills, new FilterManager.onBillFilterClick() {
+                            @Override
+                            public void onClick(ArrayList<ElectricityBill> objects) {
+                                if (objects.size() > 0) {
+                                    electricityBills = objects;
+                                    setRecyclerAdapter();
+                                    Tools.hideKeyboard(ElectricityBillListActivity.this);
+                                    Toast.makeText(ElectricityBillListActivity.this, getString(R.string.filterd), Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Tools.hideKeyboard(ElectricityBillListActivity.this);
+                                    noDataTXT.setVisibility(View.VISIBLE);
+                                    noDataTXT.setText(R.string.no_data_message);
+                                    activityMeterCostListBinding.mRecylerView.setVisibility(View.GONE);
+                                    Toast.makeText(ElectricityBillListActivity.this, getString(R.string.no_data_message), Toast.LENGTH_SHORT).show();
+                                }
                             }
-                        }
-                    });
-                }
-                else{
-                    Toast.makeText(ElectricityBillListActivity.this, getString(R.string.enter_data_validation), Toast.LENGTH_SHORT).show();
+                        });
+                    }
+                    else{
+                        Toast.makeText(ElectricityBillListActivity.this, getString(R.string.enter_data_validation), Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(ElectricityBillListActivity.this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -111,12 +123,16 @@ public class ElectricityBillListActivity extends AppCompatActivity {
         refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activityMeterCostListBinding.mRecylerView.setVisibility(View.VISIBLE);
-                searchName.setText("");
-                noDataTXT.setVisibility(View.GONE);
-                Tools.hideKeyboard(ElectricityBillListActivity.this);
-                setData();
-                Toast.makeText(ElectricityBillListActivity.this, getString(R.string.list_refreshed), Toast.LENGTH_SHORT).show();
+                if (tools.hasConnection()) {
+                    activityMeterCostListBinding.mRecylerView.setVisibility(View.VISIBLE);
+                    searchName.setText("");
+                    noDataTXT.setVisibility(View.GONE);
+                    Tools.hideKeyboard(ElectricityBillListActivity.this);
+                    setData();
+                    Toast.makeText(ElectricityBillListActivity.this, getString(R.string.list_refreshed), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(ElectricityBillListActivity.this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT).show();
+                }
             }
         });
         //endregion

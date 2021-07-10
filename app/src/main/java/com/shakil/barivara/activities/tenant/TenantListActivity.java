@@ -32,6 +32,7 @@ public class TenantListActivity extends AppCompatActivity {
     private TextView noDataTXT;
     private FirebaseCrudHelper firebaseCrudHelper;
     private UX ux;
+    private Tools tools;
     private FilterManager filterManager;
     private ImageButton searchButton, refreshButton;
     private EditText searchName;
@@ -63,12 +64,19 @@ public class TenantListActivity extends AppCompatActivity {
         tenantList = new ArrayList<>();
         firebaseCrudHelper = new FirebaseCrudHelper(this);
         ux = new UX(this);
+        tools = new Tools(this);
         noDataTXT = findViewById(R.id.mNoDataMessage);
     }
 
     private void binUiWithComponents(){
         searchName.setHint(getString(R.string.search_tenant_name));
-        setData();
+        //region check internet connection
+        if (tools.hasConnection()) {
+            setData();
+        } else {
+            Toast.makeText(this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT).show();
+        }
+        //endregion
 
         activityTenantListBinding.mAddTenantMaster.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,27 +89,31 @@ public class TenantListActivity extends AppCompatActivity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!TextUtils.isEmpty(searchName.getText().toString())){
-                    filterManager.onFilterClick(searchName.getText().toString(), tenantList, new FilterManager.onTenantFilterClick() {
-                        @Override
-                        public void onClick(ArrayList<Tenant> objects) {
-                            if (objects.size() > 0) {
-                                tenantList = objects;
-                                setRecyclerAdapter();
-                                Tools.hideKeyboard(TenantListActivity.this);
-                                Toast.makeText(TenantListActivity.this, getString(R.string.filterd), Toast.LENGTH_SHORT).show();
-                            } else {
-                                Tools.hideKeyboard(TenantListActivity.this);
-                                noDataTXT.setVisibility(View.VISIBLE);
-                                noDataTXT.setText(R.string.no_data_message);
-                                activityTenantListBinding.mRecylerView.setVisibility(View.GONE);
-                                Toast.makeText(TenantListActivity.this, getString(R.string.no_data_message), Toast.LENGTH_SHORT).show();
+                if (tools.hasConnection()) {
+                    if (!TextUtils.isEmpty(searchName.getText().toString())){
+                        filterManager.onFilterClick(searchName.getText().toString(), tenantList, new FilterManager.onTenantFilterClick() {
+                            @Override
+                            public void onClick(ArrayList<Tenant> objects) {
+                                if (objects.size() > 0) {
+                                    tenantList = objects;
+                                    setRecyclerAdapter();
+                                    Tools.hideKeyboard(TenantListActivity.this);
+                                    Toast.makeText(TenantListActivity.this, getString(R.string.filterd), Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Tools.hideKeyboard(TenantListActivity.this);
+                                    noDataTXT.setVisibility(View.VISIBLE);
+                                    noDataTXT.setText(R.string.no_data_message);
+                                    activityTenantListBinding.mRecylerView.setVisibility(View.GONE);
+                                    Toast.makeText(TenantListActivity.this, getString(R.string.no_data_message), Toast.LENGTH_SHORT).show();
+                                }
                             }
-                        }
-                    });
-                }
-                else{
-                    Toast.makeText(TenantListActivity.this, getString(R.string.enter_data_validation), Toast.LENGTH_SHORT).show();
+                        });
+                    }
+                    else{
+                        Toast.makeText(TenantListActivity.this, getString(R.string.enter_data_validation), Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(TenantListActivity.this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -109,12 +121,16 @@ public class TenantListActivity extends AppCompatActivity {
         refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activityTenantListBinding.mRecylerView.setVisibility(View.VISIBLE);
-                searchName.setText("");
-                noDataTXT.setVisibility(View.GONE);
-                Tools.hideKeyboard(TenantListActivity.this);
-                setData();
-                Toast.makeText(TenantListActivity.this, getString(R.string.list_refreshed), Toast.LENGTH_SHORT).show();
+                if (tools.hasConnection()) {
+                    activityTenantListBinding.mRecylerView.setVisibility(View.VISIBLE);
+                    searchName.setText("");
+                    noDataTXT.setVisibility(View.GONE);
+                    Tools.hideKeyboard(TenantListActivity.this);
+                    setData();
+                    Toast.makeText(TenantListActivity.this, getString(R.string.list_refreshed), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(TenantListActivity.this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT).show();
+                }
             }
         });
         //endregion

@@ -77,40 +77,44 @@ public class RegistrationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (validation.isValid()){
-                    if (activityRegistrationBinding.password.getText().toString().length() >= 6){
-                        //region check email address validation
-                        if (!TextUtils.isEmpty(activityRegistrationBinding.email.getText().toString())){
-                            if (tools.validateEmailAddress(activityRegistrationBinding.email.getText().toString())){
-                                ux.getLoadingView();
-                                firebaseAuth.createUserWithEmailAndPassword(activityRegistrationBinding.email.getText().toString(),
-                                        activityRegistrationBinding.password.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<AuthResult> task) {
-                                        if (task.isSuccessful()){
-                                            Log.i(Constants.TAG+":onComplete",getString(R.string.registration_succcessful));
-                                            Toast.makeText(RegistrationActivity.this, getString(R.string.registration_succcessful), Toast.LENGTH_SHORT).show();
-                                            startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
+                    if (tools.hasConnection()) {
+                        if (activityRegistrationBinding.password.getText().toString().length() >= 6){
+                            //region check email address validation
+                            if (!TextUtils.isEmpty(activityRegistrationBinding.email.getText().toString())){
+                                if (tools.validateEmailAddress(activityRegistrationBinding.email.getText().toString())){
+                                    ux.getLoadingView();
+                                    firebaseAuth.createUserWithEmailAndPassword(activityRegistrationBinding.email.getText().toString(),
+                                            activityRegistrationBinding.password.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<AuthResult> task) {
+                                            if (task.isSuccessful()){
+                                                Log.i(Constants.TAG+":onComplete",getString(R.string.registration_succcessful));
+                                                Toast.makeText(RegistrationActivity.this, getString(R.string.registration_succcessful), Toast.LENGTH_SHORT).show();
+                                                startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
+                                            }
+                                            else{
+                                                Log.i(Constants.TAG+":onComplete",getString(R.string.registration_unsucccessful));
+                                                Toast.makeText(RegistrationActivity.this, getString(R.string.registration_unsucccessful), Toast.LENGTH_SHORT).show();
+                                            }
+                                            ux.removeLoadingView();
                                         }
-                                        else{
-                                            Log.i(Constants.TAG+":onComplete",getString(R.string.registration_unsucccessful));
-                                            Toast.makeText(RegistrationActivity.this, getString(R.string.registration_unsucccessful), Toast.LENGTH_SHORT).show();
-                                        }
-                                        ux.removeLoadingView();
-                                    }
-                                });
+                                    });
+                                }
+                                else{
+                                    Toast.makeText(RegistrationActivity.this, getString(R.string.not_a_valid_email_address),
+                                            Toast.LENGTH_SHORT).show();
+                                }
                             }
                             else{
-                                Toast.makeText(RegistrationActivity.this, getString(R.string.not_a_valid_email_address),
-                                        Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegistrationActivity.this, getString(R.string.email_validation), Toast.LENGTH_SHORT).show();
                             }
+                            //endregion
                         }
                         else{
-                            Toast.makeText(RegistrationActivity.this, getString(R.string.email_validation), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegistrationActivity.this, getString(R.string.password_must_be_six_character), Toast.LENGTH_SHORT).show();
                         }
-                        //endregion
-                    }
-                    else{
-                        Toast.makeText(RegistrationActivity.this, getString(R.string.password_must_be_six_character), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(RegistrationActivity.this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT).show();
                     }
                 }
             }

@@ -16,6 +16,7 @@ import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.meter.Meter;
 import com.shakil.barivara.utils.SpinnerAdapter;
 import com.shakil.barivara.utils.SpinnerData;
+import com.shakil.barivara.utils.Tools;
 import com.shakil.barivara.utils.Validation;
 
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ public class NewMeterActivity extends AppCompatActivity {
     private ArrayList<String> roomNames;
     private ArrayAdapter<String> roomNameSpinnerAdapter;
     private Validation validation;
+    private Tools tools;
     private Map<String, String[]> hashMap = new HashMap();
 
     @Override
@@ -92,20 +94,24 @@ public class NewMeterActivity extends AppCompatActivity {
         //endregion
 
         //region set room spinner
-        firebaseCrudHelper.getAllName("room", "roomName", new FirebaseCrudHelper.onNameFetch() {
-            @Override
-            public void onFetched(ArrayList<String> nameList) {
-                roomNames = nameList;
-                roomNameSpinnerAdapter = new ArrayAdapter<>(NewMeterActivity.this, R.layout.spinner_drop, roomNames);
-                roomNameSpinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
-                activityNewMeterBinding.AssociateRoomId.setAdapter(roomNameSpinnerAdapter);
+        if (tools.hasConnection()) {
+            firebaseCrudHelper.getAllName("room", "roomName", new FirebaseCrudHelper.onNameFetch() {
+                @Override
+                public void onFetched(ArrayList<String> nameList) {
+                    roomNames = nameList;
+                    setRoomNameSpinner();
 
-                if (meter.getMeterId() != null){
-                    activityNewMeterBinding.AssociateRoomId.setSelection(meter.getAssociateRoomId(),true);
+                    if (meter.getMeterId() != null){
+                        activityNewMeterBinding.AssociateRoomId.setSelection(meter.getAssociateRoomId(),true);
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            roomNames = spinnerData.setSpinnerNoData();
+            setRoomNameSpinner();
+        }
         //endregion
+
         spinnerAdapter.setSpinnerAdapter(activityNewMeterBinding.MeterTypeId,this, spinnerData.setMeterTypeData());
 
         //region select spinner
@@ -141,36 +147,48 @@ public class NewMeterActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //region validation and save data
                 if (validation.isValid()) {
-                    meterNameStr = activityNewMeterBinding.MeterName.getText().toString();
-                    meter.setMeterName(meterNameStr);
-                    meter.setAssociateRoom(roomNameStr);
-                    meter.setAssociateRoomId(AssociateRoomId);
-                    meter.setMeterTypeName(meterTypeStr);
-                    meter.setMeterTypeId(MeterTypeId);
-                    //region add meter to firebase
-                    if (command.equals("add")) {
-                        meter.setMeterId(UUID.randomUUID().toString());
-                        firebaseCrudHelper.add(meter, "meter");
+                    if (tools.hasConnection()) {
+                        meterNameStr = activityNewMeterBinding.MeterName.getText().toString();
+                        meter.setMeterName(meterNameStr);
+                        meter.setAssociateRoom(roomNameStr);
+                        meter.setAssociateRoomId(AssociateRoomId);
+                        meter.setMeterTypeName(meterTypeStr);
+                        meter.setMeterTypeId(MeterTypeId);
+                        //region add meter to firebase
+                        if (command.equals("add")) {
+                            meter.setMeterId(UUID.randomUUID().toString());
+                            firebaseCrudHelper.add(meter, "meter");
+                        } else {
+                            firebaseCrudHelper.update(meter, meter.getFireBaseKey(), "meter");
+                        }
+                        //endregion
+                        Toast.makeText(getApplicationContext(),R.string.success, Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(NewMeterActivity.this,MeterListActivity.class));
                     } else {
-                        firebaseCrudHelper.update(meter, meter.getFireBaseKey(), "meter");
+                        Toast.makeText(NewMeterActivity.this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT).show();
                     }
-                    //endregion
-                    Toast.makeText(getApplicationContext(),R.string.success, Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(NewMeterActivity.this,MeterListActivity.class));
                 }
                 //endregion
             }
         });
     }
 
-
     //region init all objects
     private void init() {
         roomNames = new ArrayList<>();
         spinnerAdapter = new SpinnerAdapter();
         spinnerData = new SpinnerData(this);
+        tools = new Tools(this);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
         validation = new Validation(this, hashMap);
+    }
+    //endregion
+
+    //region set room spinner adapter
+    private void setRoomNameSpinner(){
+        roomNameSpinnerAdapter = new ArrayAdapter<>(NewMeterActivity.this, R.layout.spinner_drop, roomNames);
+        roomNameSpinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
+        activityNewMeterBinding.AssociateRoomId.setAdapter(roomNameSpinnerAdapter);
     }
     //endregion
 

@@ -32,6 +32,7 @@ public class MeterListActivity extends AppCompatActivity {
     private TextView noDataTXT;
     private FirebaseCrudHelper firebaseCrudHelper;
     private UX ux;
+    private Tools tools;
     private FilterManager filterManager;
     private ImageButton searchButton, refreshButton;
     private EditText searchName;
@@ -56,7 +57,13 @@ public class MeterListActivity extends AppCompatActivity {
 
     private void binUiWIthComponents() {
         searchName.setHint(getString(R.string.search_meter_name));
-        setData();
+        //region check internet connection
+        if (tools.hasConnection()) {
+            setData();
+        } else {
+            Toast.makeText(this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT).show();
+        }
+        //endregion
 
         activityMeterListBinding.mAddMeterMaster.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,27 +76,31 @@ public class MeterListActivity extends AppCompatActivity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!TextUtils.isEmpty(searchName.getText().toString())){
-                    filterManager.onFilterClick(searchName.getText().toString(), meterList, new FilterManager.onMeterFilterClick() {
-                        @Override
-                        public void onClick(ArrayList<Meter> objects) {
-                            if (objects.size() > 0) {
-                                meterList = objects;
-                                setRecyclerAdapter();
-                                Tools.hideKeyboard(MeterListActivity.this);
-                                Toast.makeText(MeterListActivity.this, getString(R.string.filterd), Toast.LENGTH_SHORT).show();
-                            } else {
-                                Tools.hideKeyboard(MeterListActivity.this);
-                                noDataTXT.setVisibility(View.VISIBLE);
-                                noDataTXT.setText(R.string.no_data_message);
-                                activityMeterListBinding.mRecylerView.setVisibility(View.GONE);
-                                Toast.makeText(MeterListActivity.this, getString(R.string.no_data_message), Toast.LENGTH_SHORT).show();
+                if (tools.hasConnection()) {
+                    if (!TextUtils.isEmpty(searchName.getText().toString())){
+                        filterManager.onFilterClick(searchName.getText().toString(), meterList, new FilterManager.onMeterFilterClick() {
+                            @Override
+                            public void onClick(ArrayList<Meter> objects) {
+                                if (objects.size() > 0) {
+                                    meterList = objects;
+                                    setRecyclerAdapter();
+                                    Tools.hideKeyboard(MeterListActivity.this);
+                                    Toast.makeText(MeterListActivity.this, getString(R.string.filterd), Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Tools.hideKeyboard(MeterListActivity.this);
+                                    noDataTXT.setVisibility(View.VISIBLE);
+                                    noDataTXT.setText(R.string.no_data_message);
+                                    activityMeterListBinding.mRecylerView.setVisibility(View.GONE);
+                                    Toast.makeText(MeterListActivity.this, getString(R.string.no_data_message), Toast.LENGTH_SHORT).show();
+                                }
                             }
-                        }
-                    });
-                }
-                else{
-                    Toast.makeText(MeterListActivity.this, getString(R.string.enter_data_validation), Toast.LENGTH_SHORT).show();
+                        });
+                    }
+                    else{
+                        Toast.makeText(MeterListActivity.this, getString(R.string.enter_data_validation), Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(MeterListActivity.this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -97,12 +108,16 @@ public class MeterListActivity extends AppCompatActivity {
         refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activityMeterListBinding.mRecylerView.setVisibility(View.VISIBLE);
-                searchName.setText("");
-                noDataTXT.setVisibility(View.GONE);
-                Tools.hideKeyboard(MeterListActivity.this);
-                setData();
-                Toast.makeText(MeterListActivity.this, getString(R.string.list_refreshed), Toast.LENGTH_SHORT).show();
+                if (tools.hasConnection()) {
+                    activityMeterListBinding.mRecylerView.setVisibility(View.VISIBLE);
+                    searchName.setText("");
+                    noDataTXT.setVisibility(View.GONE);
+                    Tools.hideKeyboard(MeterListActivity.this);
+                    setData();
+                    Toast.makeText(MeterListActivity.this, getString(R.string.list_refreshed), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(MeterListActivity.this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT).show();
+                }
             }
         });
         //endregion
@@ -148,6 +163,7 @@ public class MeterListActivity extends AppCompatActivity {
         searchName = findViewById(R.id.SearchName);
         meterList = new ArrayList<>();
         ux = new UX(this);
+        tools = new Tools(this);
         filterManager = new FilterManager(this);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
         noDataTXT = findViewById(R.id.mNoDataMessage);

@@ -19,6 +19,7 @@ import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.tenant.Tenant;
 import com.shakil.barivara.utils.SpinnerAdapter;
 import com.shakil.barivara.utils.SpinnerData;
+import com.shakil.barivara.utils.Tools;
 import com.shakil.barivara.utils.UtilsForAll;
 import com.shakil.barivara.utils.Validation;
 
@@ -43,6 +44,7 @@ public class NewTenantActivity extends AppCompatActivity {
     private int advancedAmountInt;
     private Map<String, String[]> hashMap = new HashMap();
     private UtilsForAll utilsForAll;
+    private Tools tools;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +108,7 @@ public class NewTenantActivity extends AppCompatActivity {
         validation = new Validation(this, hashMap);
         spinnerData = new SpinnerData(this);
         spinnerAdapter = new SpinnerAdapter();
+        tools = new Tools(this);
         roomNames = new ArrayList<>();
     }
     //endregion
@@ -116,7 +119,7 @@ public class NewTenantActivity extends AppCompatActivity {
         validation.setEditTextIsNotEmpty(new String[]{"TenantName", "NID", "MobileNo"},
                 new String[]{getString(R.string.tenant_amount_validation), getString(R.string.nid_number_hint)
                 ,getString(R.string.mobile_number_hint)});
-        validation.setSpinnerIsNotEmpty(new String[]{"StartingMonthId","AssociateRoomId"});
+        validation.setSpinnerIsNotEmpty(new String[]{"StartingMonthId"});
         //endregion
 
         spinnerAdapter.setSpinnerAdapter(activityAddNewTenantBinding.StartingMonthId,this,spinnerData.setMonthData());
@@ -137,19 +140,22 @@ public class NewTenantActivity extends AppCompatActivity {
         //endregion
 
         //region set month spinner
-        firebaseCrudHelper.getAllName("room", "roomName", new FirebaseCrudHelper.onNameFetch() {
-            @Override
-            public void onFetched(ArrayList<String> nameList) {
-                roomNames = nameList;
-                roomNameSpinnerAdapter = new ArrayAdapter<>(NewTenantActivity.this, R.layout.spinner_drop, roomNames);
-                roomNameSpinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
-                activityAddNewTenantBinding.AssociateRoomId.setAdapter(roomNameSpinnerAdapter);
+        if (tools.hasConnection()) {
+            firebaseCrudHelper.getAllName("room", "roomName", new FirebaseCrudHelper.onNameFetch() {
+                @Override
+                public void onFetched(ArrayList<String> nameList) {
+                    roomNames = nameList;
+                    setRoomSpinner();
 
-                if (tenant.getTenantId() != null) {
-                    activityAddNewTenantBinding.AssociateRoomId.setSelection(tenant.getAssociateRoomId(),true);
+                    if (tenant.getTenantId() != null) {
+                        activityAddNewTenantBinding.AssociateRoomId.setSelection(tenant.getAssociateRoomId(),true);
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            roomNames = spinnerData.setSpinnerNoData();
+            setRoomSpinner();
+        }
         //endregion
 
         //region spinner on change
@@ -185,28 +191,40 @@ public class NewTenantActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //region validation and save data
                 if (validation.isValid()){
-                    if (utilsForAll.isValidMobileNo(activityAddNewTenantBinding.MobileNo.getText().toString())){
-                        if (activityAddNewTenantBinding.advanceAmountLayout.getVisibility() == View.VISIBLE){
-                            if (!TextUtils.isEmpty(activityAddNewTenantBinding.AdvanceAmount.getText().toString())) {
-                                advancedAmountInt = Integer.parseInt(activityAddNewTenantBinding.AdvanceAmount.getText().toString());
-                                tenant.setAdvancedAmount(advancedAmountInt);
-                                saveOrUpdateData();
+                    if (tools.hasConnection()) {
+                        if (utilsForAll.isValidMobileNo(activityAddNewTenantBinding.MobileNo.getText().toString())){
+                            if (activityAddNewTenantBinding.advanceAmountLayout.getVisibility() == View.VISIBLE){
+                                if (!TextUtils.isEmpty(activityAddNewTenantBinding.AdvanceAmount.getText().toString())) {
+                                    advancedAmountInt = Integer.parseInt(activityAddNewTenantBinding.AdvanceAmount.getText().toString());
+                                    tenant.setAdvancedAmount(advancedAmountInt);
+                                    saveOrUpdateData();
+                                }
+                                else{
+                                    Toast.makeText(NewTenantActivity.this, getString(R.string.advance_amount_validation), Toast.LENGTH_SHORT).show();
+                                }
                             }
                             else{
-                                Toast.makeText(NewTenantActivity.this, getString(R.string.advance_amount_validation), Toast.LENGTH_SHORT).show();
+                                saveOrUpdateData();
                             }
                         }
                         else{
-                            saveOrUpdateData();
+                            Toast.makeText(NewTenantActivity.this, getString(R.string.validation_mobile_number_length), Toast.LENGTH_SHORT).show();
                         }
-                    }
-                    else{
-                        Toast.makeText(NewTenantActivity.this, getString(R.string.validation_mobile_number_length), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(NewTenantActivity.this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT).show();
                     }
                 }
                 //endregion
             }
         });
+    }
+    //endregion
+
+    //region set room spinner
+    private void setRoomSpinner(){
+        roomNameSpinnerAdapter = new ArrayAdapter<>(NewTenantActivity.this, R.layout.spinner_drop, roomNames);
+        roomNameSpinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
+        activityAddNewTenantBinding.AssociateRoomId.setAdapter(roomNameSpinnerAdapter);
     }
     //endregion
 

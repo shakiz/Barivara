@@ -16,6 +16,7 @@ import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.room.Rent;
 import com.shakil.barivara.utils.SpinnerAdapter;
 import com.shakil.barivara.utils.SpinnerData;
+import com.shakil.barivara.utils.Tools;
 import com.shakil.barivara.utils.Validation;
 
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ public class RentDetailsActivity extends AppCompatActivity {
     private ArrayList<String> roomNames;
     private ArrayAdapter<String> roomNameSpinnerAdapter;
     private Validation validation;
+    private Tools tools;
     private Map<String, String[]> hashMap = new HashMap();
 
     @Override
@@ -87,25 +89,28 @@ public class RentDetailsActivity extends AppCompatActivity {
         //region validation
         validation.setEditTextIsNotEmpty(new String[]{"RentAmount"},
                 new String[]{getString(R.string.rent_amount_validation)});
-        validation.setSpinnerIsNotEmpty(new String[]{"MonthId", "AssociateRoomId"});
+        validation.setSpinnerIsNotEmpty(new String[]{"MonthId"});
         //endregion
 
         spinnerAdapter.setSpinnerAdapter(activityNewRentDetailsBinding.MonthId,this, spinnerData.setMonthData());
 
         //region set room spinner
-        firebaseCrudHelper.getAllName("room", "roomName", new FirebaseCrudHelper.onNameFetch() {
-            @Override
-            public void onFetched(ArrayList<String> nameList) {
-                roomNames = nameList;
-                roomNameSpinnerAdapter = new ArrayAdapter<>(RentDetailsActivity.this, R.layout.spinner_drop, roomNames);
-                roomNameSpinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
-                activityNewRentDetailsBinding.AssociateRoomId.setAdapter(roomNameSpinnerAdapter);
+        if (tools.hasConnection()) {
+            firebaseCrudHelper.getAllName("room", "roomName", new FirebaseCrudHelper.onNameFetch() {
+                @Override
+                public void onFetched(ArrayList<String> nameList) {
+                    roomNames = nameList;
+                    setRoomSpinner();
 
-                if (rent.getRentId() != null){
-                    activityNewRentDetailsBinding.AssociateRoomId.setSelection(rent.getAssociateRoomId(), true);
+                    if (rent.getRentId() != null){
+                        activityNewRentDetailsBinding.AssociateRoomId.setSelection(rent.getAssociateRoomId(), true);
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            roomNames = spinnerData.setSpinnerNoData();
+            setRoomSpinner();
+        }
         //endregion
 
         //region spinner on change
@@ -140,19 +145,23 @@ public class RentDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (validation.isValid()) {
-                    rent.setMonthId(MonthId);
-                    rent.setMonthName(MonthStr);
-                    rent.setAssociateRoomId(AssociateRoomId);
-                    rent.setAssociateRoomName(AssociateRoomStr);
-                    rent.setRentAmount(Integer.parseInt(activityNewRentDetailsBinding.RentAmount.getText().toString()));
-                    if (command.equals("add")) {
-                        rent.setRentId(UUID.randomUUID().toString());
-                        firebaseCrudHelper.add(rent, "rent");
+                    if (tools.hasConnection()) {
+                        rent.setMonthId(MonthId);
+                        rent.setMonthName(MonthStr);
+                        rent.setAssociateRoomId(AssociateRoomId);
+                        rent.setAssociateRoomName(AssociateRoomStr);
+                        rent.setRentAmount(Integer.parseInt(activityNewRentDetailsBinding.RentAmount.getText().toString()));
+                        if (command.equals("add")) {
+                            rent.setRentId(UUID.randomUUID().toString());
+                            firebaseCrudHelper.add(rent, "rent");
+                        } else {
+                            firebaseCrudHelper.update(rent, rent.getFireBaseKey(), "rent");
+                        }
+                        Toast.makeText(getApplicationContext(),R.string.success, Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(RentDetailsActivity.this, RentListActivity.class));
                     } else {
-                        firebaseCrudHelper.update(rent, rent.getFireBaseKey(), "rent");
+                        Toast.makeText(RentDetailsActivity.this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT).show();
                     }
-                    Toast.makeText(getApplicationContext(),R.string.success, Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(RentDetailsActivity.this, RentListActivity.class));
                 }
             }
         });
@@ -165,7 +174,16 @@ public class RentDetailsActivity extends AppCompatActivity {
         spinnerData = new SpinnerData(this);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
         spinnerAdapter = new SpinnerAdapter();
+        tools = new Tools(this);
         validation = new Validation(this, hashMap);
+    }
+    //endregion
+
+    //region set spinner adapter
+    private void setRoomSpinner(){
+        roomNameSpinnerAdapter = new ArrayAdapter<>(RentDetailsActivity.this, R.layout.spinner_drop, roomNames);
+        roomNameSpinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
+        activityNewRentDetailsBinding.AssociateRoomId.setAdapter(roomNameSpinnerAdapter);
     }
     //endregion
 

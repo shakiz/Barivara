@@ -18,6 +18,8 @@ import com.shakil.barivara.databinding.ActivityElectricityBillDetailsBinding;
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.meter.ElectricityBill;
 import com.shakil.barivara.utils.Constants;
+import com.shakil.barivara.utils.SpinnerData;
+import com.shakil.barivara.utils.Tools;
 import com.shakil.barivara.utils.UtilsForAll;
 import com.shakil.barivara.utils.Validation;
 
@@ -38,6 +40,8 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
     private ArrayList<String> roomNames, meterNames;
     private ArrayAdapter<String> roomNameSpinnerAdapter, meterNameSpinnerAdapter;
     private Validation validation;
+    private Tools tools;
+    private SpinnerData spinnerData;
     private Map<String, String[]> hashMap = new HashMap();
 
     @Override
@@ -94,7 +98,6 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
         validation.setEditTextIsNotEmpty(new String[]{"PastUnit", "PresentUnit", "UnitPrice"},
                 new String[]{getString(R.string.past_unit_validation), getString(R.string.present_unit_validation)
                         , getString(R.string.unit_price_validation)});
-        validation.setSpinnerIsNotEmpty(new String[]{"MeterId", "RoomId"});
         //endregion
 
         //region room name select spinner
@@ -126,33 +129,39 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
         //endregion
 
         //region set meter spinner
-        firebaseCrudHelper.getAllName("meter", "meterName", new FirebaseCrudHelper.onNameFetch() {
-            @Override
-            public void onFetched(ArrayList<String> nameList) {
-                meterNames = nameList;
-                meterNameSpinnerAdapter = new ArrayAdapter<>(ElectricityBillDetailsActivity.this, R.layout.spinner_drop, meterNames);
-                meterNameSpinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
-                activityMeterCostDetailsBinding.MeterId.setAdapter(meterNameSpinnerAdapter);
-                if (electricityBill.getBillId() != null) {
-                    activityMeterCostDetailsBinding.MeterId.setSelection(electricityBill.getMeterId(),true);
+        if (tools.hasConnection()) {
+            firebaseCrudHelper.getAllName("meter", "meterName", new FirebaseCrudHelper.onNameFetch() {
+                @Override
+                public void onFetched(ArrayList<String> nameList) {
+                    meterNames = nameList;
+                    setMeterAdapter();
+                    if (electricityBill.getBillId() != null) {
+                        activityMeterCostDetailsBinding.MeterId.setSelection(electricityBill.getMeterId(),true);
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            meterNames = spinnerData.setSpinnerNoData();
+            setMeterAdapter();
+        }
         //endregion
 
         //region set room spinner
-        firebaseCrudHelper.getAllName("room", "roomName", new FirebaseCrudHelper.onNameFetch() {
-            @Override
-            public void onFetched(ArrayList<String> nameList) {
-                roomNames = nameList;
-                roomNameSpinnerAdapter = new ArrayAdapter<>(ElectricityBillDetailsActivity.this, R.layout.spinner_drop, roomNames);
-                roomNameSpinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
-                activityMeterCostDetailsBinding.RoomId.setAdapter(roomNameSpinnerAdapter);
-                if (electricityBill.getBillId() != null) {
-                    activityMeterCostDetailsBinding.RoomId.setSelection(electricityBill.getRoomId(),true);
+        if (tools.hasConnection()) {
+            firebaseCrudHelper.getAllName("room", "roomName", new FirebaseCrudHelper.onNameFetch() {
+                @Override
+                public void onFetched(ArrayList<String> nameList) {
+                    roomNames = nameList;
+                    setRoomAdapter();
+                    if (electricityBill.getBillId() != null) {
+                        activityMeterCostDetailsBinding.RoomId.setSelection(electricityBill.getRoomId(),true);
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            roomNames = spinnerData.setSpinnerNoData();
+            setRoomAdapter();
+        }
         //endregion
 
         //region Adding new details
@@ -160,24 +169,28 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (validation.isValid()){
-                    electricityBill.setMeterId(AssociateMeterId);
-                    electricityBill.setRoomId(AssociateRoomId);
-                    electricityBill.setMeterName(meterNameStr);
-                    electricityBill.setRoomName(roomNameStr);
-                    electricityBill.setUnitPrice(Double.parseDouble(activityMeterCostDetailsBinding.UnitPrice.getText().toString().trim()));
-                    electricityBill.setPresentUnit(Integer.parseInt(activityMeterCostDetailsBinding.PresentUnit.getText().toString().trim()));
-                    electricityBill.setPastUnit(Integer.parseInt(activityMeterCostDetailsBinding.PastUnit.getText().toString().trim()));
-                    electricityBill.setTotalUnit(Double.parseDouble(activityMeterCostDetailsBinding.TotalUnit.getText().toString().trim()));
-                    electricityBill.setTotalBill(Double.parseDouble(activityMeterCostDetailsBinding.TotalAmount.getText().toString().trim()));
+                    if (tools.hasConnection()) {
+                        electricityBill.setMeterId(AssociateMeterId);
+                        electricityBill.setRoomId(AssociateRoomId);
+                        electricityBill.setMeterName(meterNameStr);
+                        electricityBill.setRoomName(roomNameStr);
+                        electricityBill.setUnitPrice(Double.parseDouble(activityMeterCostDetailsBinding.UnitPrice.getText().toString().trim()));
+                        electricityBill.setPresentUnit(Integer.parseInt(activityMeterCostDetailsBinding.PresentUnit.getText().toString().trim()));
+                        electricityBill.setPastUnit(Integer.parseInt(activityMeterCostDetailsBinding.PastUnit.getText().toString().trim()));
+                        electricityBill.setTotalUnit(Double.parseDouble(activityMeterCostDetailsBinding.TotalUnit.getText().toString().trim()));
+                        electricityBill.setTotalBill(Double.parseDouble(activityMeterCostDetailsBinding.TotalAmount.getText().toString().trim()));
 
-                    if (command.equals("add")) {
-                        electricityBill.setBillId(UUID.randomUUID().toString());
-                        firebaseCrudHelper.add(electricityBill,"electricityBill");
+                        if (command.equals("add")) {
+                            electricityBill.setBillId(UUID.randomUUID().toString());
+                            firebaseCrudHelper.add(electricityBill,"electricityBill");
+                        } else {
+                            firebaseCrudHelper.update(electricityBill, electricityBill.getFireBaseKey(), "electricityBill");
+                        }
+                        Toast.makeText(getApplicationContext(),R.string.success, Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(ElectricityBillDetailsActivity.this, ElectricityBillListActivity.class));
                     } else {
-                        firebaseCrudHelper.update(electricityBill, electricityBill.getFireBaseKey(), "electricityBill");
+                        Toast.makeText(ElectricityBillDetailsActivity.this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT).show();
                     }
-                    Toast.makeText(getApplicationContext(),R.string.success, Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(ElectricityBillDetailsActivity.this, ElectricityBillListActivity.class));
                 }
             }
         });
@@ -257,6 +270,22 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
         //endregion
     }
 
+    //region set meter spinner adapter
+    private void setMeterAdapter(){
+        meterNameSpinnerAdapter = new ArrayAdapter<>(ElectricityBillDetailsActivity.this, R.layout.spinner_drop, meterNames);
+        meterNameSpinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
+        activityMeterCostDetailsBinding.MeterId.setAdapter(meterNameSpinnerAdapter);
+    }
+    //endregion
+
+    //region set room spinner adapter
+    private void setRoomAdapter(){
+        roomNameSpinnerAdapter = new ArrayAdapter<>(ElectricityBillDetailsActivity.this, R.layout.spinner_drop, roomNames);
+        roomNameSpinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
+        activityMeterCostDetailsBinding.RoomId.setAdapter(roomNameSpinnerAdapter);
+    }
+    //endregion
+
     //region check unit value and calculate price
     private void checkUnitLimit(int previousMonthUnitValue , int presentMonthUnitValue){
         if (presentMonthUnitValue > previousMonthUnitValue) {
@@ -291,6 +320,8 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
         roomNames = new ArrayList<>();
         firebaseCrudHelper = new FirebaseCrudHelper(this);
         utilsForAll = new UtilsForAll(this,activityMeterCostDetailsBinding.mainLayout);
+        tools = new Tools(this);
+        spinnerData = new SpinnerData(this);
         validation = new Validation(this, hashMap);
     }
     //endregion

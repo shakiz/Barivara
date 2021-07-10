@@ -32,6 +32,7 @@ public class RoomListActivity extends AppCompatActivity {
     private ArrayList<Room> roomList;
     private FirebaseCrudHelper firebaseCrudHelper;
     private UX ux;
+    private Tools tools;
     private ImageButton searchButton, refreshButton;
     private EditText searchName;
     private FilterManager filterManager;
@@ -56,7 +57,13 @@ public class RoomListActivity extends AppCompatActivity {
 
     private void binUiWIthComponents() {
         searchName.setHint(getString(R.string.search_room_name));
-        setData();
+        //region check internet connection
+        if (tools.hasConnection()) {
+            setData();
+        } else {
+            Toast.makeText(this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT).show();
+        }
+        //endregion
 
         activityRoomListBinding.mAddRoomMaster.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,27 +76,31 @@ public class RoomListActivity extends AppCompatActivity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!TextUtils.isEmpty(searchName.getText().toString())){
-                    filterManager.onFilterClick(searchName.getText().toString(), roomList, new FilterManager.onFilterClick() {
-                        @Override
-                        public void onClick(ArrayList<Room> objects) {
-                            if (objects.size() > 0) {
-                                roomList = objects;
-                                setRecyclerAdapter();
-                                Tools.hideKeyboard(RoomListActivity.this);
-                                Toast.makeText(RoomListActivity.this, getString(R.string.filterd), Toast.LENGTH_SHORT).show();
-                            } else {
-                                Tools.hideKeyboard(RoomListActivity.this);
-                                noDataTXT.setVisibility(View.VISIBLE);
-                                noDataTXT.setText(R.string.no_data_message);
-                                activityRoomListBinding.mRecylerView.setVisibility(View.GONE);
-                                Toast.makeText(RoomListActivity.this, getString(R.string.no_data_message), Toast.LENGTH_SHORT).show();
+                if (tools.hasConnection()) {
+                    if (!TextUtils.isEmpty(searchName.getText().toString())){
+                        filterManager.onFilterClick(searchName.getText().toString(), roomList, new FilterManager.onFilterClick() {
+                            @Override
+                            public void onClick(ArrayList<Room> objects) {
+                                if (objects.size() > 0) {
+                                    roomList = objects;
+                                    setRecyclerAdapter();
+                                    Tools.hideKeyboard(RoomListActivity.this);
+                                    Toast.makeText(RoomListActivity.this, getString(R.string.filterd), Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Tools.hideKeyboard(RoomListActivity.this);
+                                    noDataTXT.setVisibility(View.VISIBLE);
+                                    noDataTXT.setText(R.string.no_data_message);
+                                    activityRoomListBinding.mRecylerView.setVisibility(View.GONE);
+                                    Toast.makeText(RoomListActivity.this, getString(R.string.no_data_message), Toast.LENGTH_SHORT).show();
+                                }
                             }
-                        }
-                    });
-                }
-                else{
-                    Toast.makeText(RoomListActivity.this, getString(R.string.enter_data_validation), Toast.LENGTH_SHORT).show();
+                        });
+                    }
+                    else{
+                        Toast.makeText(RoomListActivity.this, getString(R.string.enter_data_validation), Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(RoomListActivity.this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -97,12 +108,16 @@ public class RoomListActivity extends AppCompatActivity {
         refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activityRoomListBinding.mRecylerView.setVisibility(View.VISIBLE);
-                searchName.setText("");
-                noDataTXT.setVisibility(View.GONE);
-                Tools.hideKeyboard(RoomListActivity.this);
-                setData();
-                Toast.makeText(RoomListActivity.this, getString(R.string.list_refreshed), Toast.LENGTH_SHORT).show();
+                if (tools.hasConnection()) {
+                    activityRoomListBinding.mRecylerView.setVisibility(View.VISIBLE);
+                    searchName.setText("");
+                    noDataTXT.setVisibility(View.GONE);
+                    Tools.hideKeyboard(RoomListActivity.this);
+                    setData();
+                    Toast.makeText(RoomListActivity.this, getString(R.string.list_refreshed), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(RoomListActivity.this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT).show();
+                }
             }
         });
         //endregion
@@ -147,6 +162,7 @@ public class RoomListActivity extends AppCompatActivity {
         searchName = findViewById(R.id.SearchName);
         roomList = new ArrayList<>();
         ux = new UX(this);
+        tools = new Tools(this);
         filterManager = new FilterManager(this);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
         noDataTXT = findViewById(R.id.mNoDataMessage);

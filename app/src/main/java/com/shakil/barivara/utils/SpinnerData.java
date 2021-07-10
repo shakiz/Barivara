@@ -37,4 +37,13 @@ public class SpinnerData {
         }
         return spinnerValues;
     }
+
+    public ArrayList<String> setSpinnerNoData(){
+        ArrayList<String> spinnerValues = new ArrayList<>();
+        String[] meterTypeArray = {"No Data"};
+        for (int start = 0; start < meterTypeArray.length; start++) {
+            spinnerValues.add(meterTypeArray[start]);
+        }
+        return spinnerValues;
+    }
 }

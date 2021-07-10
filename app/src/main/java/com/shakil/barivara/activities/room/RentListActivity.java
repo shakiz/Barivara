@@ -32,6 +32,7 @@ public class RentListActivity extends AppCompatActivity {
     private TextView noDataTXT;
     private FirebaseCrudHelper firebaseCrudHelper;
     private UX ux;
+    private Tools tools;
     private FilterManager filterManager;
     private ImageButton searchButton, refreshButton;
     private EditText searchName;
@@ -62,6 +63,7 @@ public class RentListActivity extends AppCompatActivity {
         rentList = new ArrayList<>();
         firebaseCrudHelper = new FirebaseCrudHelper(this);
         ux = new UX(this);
+        tools = new Tools(this);
         filterManager = new FilterManager(this);
         noDataTXT = findViewById(R.id.mNoDataMessage);
     }
@@ -70,7 +72,13 @@ public class RentListActivity extends AppCompatActivity {
     //region perform all UI interactions
     private void bindUIWithComponents(){
         searchName.setHint(getString(R.string.search_month_name));
-        setData();
+        //region check internet connection
+        if (tools.hasConnection()) {
+            setData();
+        } else {
+            Toast.makeText(this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT).show();
+        }
+        //endregion
 
         activityRentListBinding.mAddMaster.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,27 +91,31 @@ public class RentListActivity extends AppCompatActivity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!TextUtils.isEmpty(searchName.getText().toString())){
-                    filterManager.onFilterClick(searchName.getText().toString(), rentList, new FilterManager.onRentFilterClick() {
-                        @Override
-                        public void onClick(ArrayList<Rent> objects) {
-                            if (objects.size() > 0) {
-                                rentList = objects;
-                                setRecyclerAdapter();
-                                Tools.hideKeyboard(RentListActivity.this);
-                                Toast.makeText(RentListActivity.this, getString(R.string.filterd), Toast.LENGTH_SHORT).show();
-                            } else {
-                                Tools.hideKeyboard(RentListActivity.this);
-                                noDataTXT.setVisibility(View.VISIBLE);
-                                noDataTXT.setText(R.string.no_data_message);
-                                activityRentListBinding.mRecylerView.setVisibility(View.GONE);
-                                Toast.makeText(RentListActivity.this, getString(R.string.no_data_message), Toast.LENGTH_SHORT).show();
+                if (tools.hasConnection()) {
+                    if (!TextUtils.isEmpty(searchName.getText().toString())){
+                        filterManager.onFilterClick(searchName.getText().toString(), rentList, new FilterManager.onRentFilterClick() {
+                            @Override
+                            public void onClick(ArrayList<Rent> objects) {
+                                if (objects.size() > 0) {
+                                    rentList = objects;
+                                    setRecyclerAdapter();
+                                    Tools.hideKeyboard(RentListActivity.this);
+                                    Toast.makeText(RentListActivity.this, getString(R.string.filterd), Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Tools.hideKeyboard(RentListActivity.this);
+                                    noDataTXT.setVisibility(View.VISIBLE);
+                                    noDataTXT.setText(R.string.no_data_message);
+                                    activityRentListBinding.mRecylerView.setVisibility(View.GONE);
+                                    Toast.makeText(RentListActivity.this, getString(R.string.no_data_message), Toast.LENGTH_SHORT).show();
+                                }
                             }
-                        }
-                    });
-                }
-                else{
-                    Toast.makeText(RentListActivity.this, getString(R.string.enter_data_validation), Toast.LENGTH_SHORT).show();
+                        });
+                    }
+                    else{
+                        Toast.makeText(RentListActivity.this, getString(R.string.enter_data_validation), Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(RentListActivity.this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -111,12 +123,16 @@ public class RentListActivity extends AppCompatActivity {
         refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activityRentListBinding.mRecylerView.setVisibility(View.VISIBLE);
-                searchName.setText("");
-                noDataTXT.setVisibility(View.GONE);
-                Tools.hideKeyboard(RentListActivity.this);
-                setData();
-                Toast.makeText(RentListActivity.this, getString(R.string.list_refreshed), Toast.LENGTH_SHORT).show();
+                if (tools.hasConnection()) {
+                    activityRentListBinding.mRecylerView.setVisibility(View.VISIBLE);
+                    searchName.setText("");
+                    noDataTXT.setVisibility(View.GONE);
+                    Tools.hideKeyboard(RentListActivity.this);
+                    setData();
+                    Toast.makeText(RentListActivity.this, getString(R.string.list_refreshed), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(RentListActivity.this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT).show();
+                }
             }
         });
         //endregion

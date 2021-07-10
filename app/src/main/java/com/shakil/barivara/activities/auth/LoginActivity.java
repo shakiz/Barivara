@@ -19,6 +19,7 @@ import com.shakil.barivara.activities.onboard.MainActivity;
 import com.shakil.barivara.databinding.ActivityLoginBinding;
 import com.shakil.barivara.utils.Constants;
 import com.shakil.barivara.utils.PrefManager;
+import com.shakil.barivara.utils.Tools;
 import com.shakil.barivara.utils.UX;
 import com.shakil.barivara.utils.Validation;
 
@@ -37,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     private UX ux;
     private PrefManager prefManager;
     private Validation validation;
+    private Tools tools;
     private Map<String, String[]> hashMap = new HashMap();
 
     @Override
@@ -57,6 +59,7 @@ public class LoginActivity extends AppCompatActivity {
     private void initUI() {
         firebaseAuth = FirebaseAuth.getInstance();
         ux = new UX(this);
+        tools = new Tools(this);
         validation = new Validation(this, hashMap);
         prefManager = new PrefManager(this);
     }
@@ -83,30 +86,35 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (validation.isValid()){
-                    ux.getLoadingView();
-                    firebaseAuth.signInWithEmailAndPassword(activityLoginBinding.email.getText().toString()
-                            ,activityLoginBinding.password.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()){
-                                Log.i(Constants.TAG+":onComplete",getString(R.string.login_succcessful));
-                                Toast.makeText(LoginActivity.this, getString(R.string.login_succcessful), Toast.LENGTH_SHORT).show();
-                                prefManager.set(mIsLoggedIn, true);
-                                if (task.getResult() != null){
-                                    prefManager.set(mUserId, task.getResult().getUser().getUid());
-                                    prefManager.set(mUserFullName, task.getResult().getUser().getDisplayName());
-                                    prefManager.set(mUserEmail, task.getResult().getUser().getEmail());
-                                    prefManager.set(mUserMobile, task.getResult().getUser().getPhoneNumber());
+                    if (tools.hasConnection()){
+                        ux.getLoadingView();
+                        firebaseAuth.signInWithEmailAndPassword(activityLoginBinding.email.getText().toString()
+                                ,activityLoginBinding.password.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()){
+                                    Log.i(Constants.TAG+":onComplete",getString(R.string.login_succcessful));
+                                    Toast.makeText(LoginActivity.this, getString(R.string.login_succcessful), Toast.LENGTH_SHORT).show();
+                                    prefManager.set(mIsLoggedIn, true);
+                                    if (task.getResult() != null){
+                                        prefManager.set(mUserId, task.getResult().getUser().getUid());
+                                        prefManager.set(mUserFullName, task.getResult().getUser().getDisplayName());
+                                        prefManager.set(mUserEmail, task.getResult().getUser().getEmail());
+                                        prefManager.set(mUserMobile, task.getResult().getUser().getPhoneNumber());
+                                    }
+                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                 }
-                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                else{
+                                    Log.i(Constants.TAG+":onComplete",getString(R.string.login_unsucccessful));
+                                    Toast.makeText(LoginActivity.this, getString(R.string.login_unsucccessful), Toast.LENGTH_SHORT).show();
+                                }
+                                ux.removeLoadingView();
                             }
-                            else{
-                                Log.i(Constants.TAG+":onComplete",getString(R.string.login_unsucccessful));
-                                Toast.makeText(LoginActivity.this, getString(R.string.login_unsucccessful), Toast.LENGTH_SHORT).show();
-                            }
-                            ux.removeLoadingView();
-                        }
-                    });
+                        });
+                    }
+                    else{
+                        Toast.makeText(LoginActivity.this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
