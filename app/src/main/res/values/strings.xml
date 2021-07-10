@@ -221,4 +221,10 @@
     <string name="has_been_released_small">has been released</string>
     <string name="please_update_detail_text">Please update and get the latest features, improvements and bug fixes.</string>
     <string name="validation_mobile_number_length">Mobile number length is not valid</string>
+    <string name="rooms">Rooms</string>
+    <string name="meters">Meters</string>
+    <string name="tenant_information">Tenant Information</string>
+    <string name="room_information">Room/Flat Information</string>
+    <string name="meter_information">Meter Information</string>
+    <string name="demo_tenant_name">Rahim</string>
 </resources>

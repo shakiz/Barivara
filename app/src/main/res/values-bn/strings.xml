@@ -21,7 +21,7 @@
     <!--Room end-->
 
     <!--Meter start-->
-    <string name="meter_name">মিটার নাম</string>
+    <string name="meter_name">মিটারের নাম</string>
     <string name="meter_hint">মিটারের নাম প্রবেশ করান</string>
     <string name="select_room">ঘর/ফ্লাট নির্বাচন করুন</string>
     <string name="select_meter_type">মিটারের প্রকার নির্বাচন করুন</string>
@@ -221,4 +221,10 @@
     <string name="has_been_released_small">বের হয়েছে</string>
     <string name="please_update_detail_text">দয়া করে আপডেট করুন এবং বাগ সংশোধন করুন।</string>
     <string name="validation_mobile_number_length">মোবাইল নাম্বার ১১ সংখ্যার হতে হবে</string>
+    <string name="rooms">Rooms</string>
+    <string name="meters">Meters</string>
+    <string name="tenant_information">ভাড়াটে তথ্য</string>
+    <string name="room_information">ঘর / ফ্ল্যাট সম্পর্কিত তথ্য</string>
+    <string name="meter_information">মিটারের তথ্য</string>
+    <string name="demo_tenant_name">রহিম</string>
 </resources>
