@@ -285,7 +285,6 @@
                     android:layout_marginTop="4dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:layout_weight="2"
                     android:clickable="true"
                     android:elevation="4dp"
                     android:foreground="?android:attr/selectableItemBackground"
@@ -312,8 +311,8 @@
                             android:orientation="vertical">
 
                             <ImageView
-                                android:layout_width="56dp"
-                                android:layout_height="56dp"
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
                                 android:layout_gravity="center"
                                 android:layout_marginTop="16dp"
                                 android:layout_marginBottom="16dp"
