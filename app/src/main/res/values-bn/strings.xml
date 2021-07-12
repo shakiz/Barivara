@@ -227,5 +227,7 @@
     <string name="room_information">ঘর / ফ্ল্যাট সম্পর্কিত তথ্য</string>
     <string name="meter_information">মিটারের তথ্য</string>
     <string name="demo_tenant_name">রহিম</string>
-    <string name="no_internet_title">Please enable internet connection</string>
+    <string name="no_internet_title">দয়া করে ইন্টারনেট সংযোগ চালু করুন</string>
+    <string name="default_notification_channel_id">fcm_default_channel</string>
+    <string name="new_notification">You have a new notification</string>
 </resources>

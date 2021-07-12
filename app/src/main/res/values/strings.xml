@@ -228,4 +228,6 @@
     <string name="meter_information">Meter Information</string>
     <string name="demo_tenant_name">Rahim</string>
     <string name="no_internet_title">Please enable internet connection</string>
+    <string name="default_notification_channel_id">fcm_default_channel</string>
+    <string name="new_notification">You have a new notification</string>
 </resources>
