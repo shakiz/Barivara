@@ -19,6 +19,8 @@ public class Tenant implements Parcelable {
     private int StartingMonthId;
     private String AssociateRoom;
     private int AssociateRoomId;
+    private String TenantTypeStr;
+    private int TenantTypeId;
     private String FireBaseKey;
 
     public Tenant() {
@@ -35,6 +37,8 @@ public class Tenant implements Parcelable {
         StartingMonthId = in.readInt();
         AssociateRoom = in.readString();
         AssociateRoomId = in.readInt();
+        TenantTypeStr = in.readString();
+        TenantTypeId = in.readInt();
         FireBaseKey = in.readString();
     }
 
@@ -50,6 +54,8 @@ public class Tenant implements Parcelable {
         dest.writeInt(StartingMonthId);
         dest.writeString(AssociateRoom);
         dest.writeInt(AssociateRoomId);
+        dest.writeString(TenantTypeStr);
+        dest.writeInt(TenantTypeId);
         dest.writeString(FireBaseKey);
     }
 
@@ -83,6 +89,8 @@ public class Tenant implements Parcelable {
         result.put("advancedAmount", AdvancedAmount);
         result.put("associateRoom", AssociateRoom);
         result.put("associateRoomId", AssociateRoomId);
+        result.put("tenantTypeStr", TenantTypeStr);
+        result.put("tenantTypeId", TenantTypeId);
 
         return result;
     }
@@ -167,11 +175,31 @@ public class Tenant implements Parcelable {
         AssociateRoomId = associateRoomId;
     }
 
+    public String getTenantTypeStr() {
+        return TenantTypeStr;
+    }
+
+    public void setTenantTypeStr(String tenantTypeStr) {
+        TenantTypeStr = tenantTypeStr;
+    }
+
+    public int getTenantTypeId() {
+        return TenantTypeId;
+    }
+
+    public void setTenantTypeId(int tenantTypeId) {
+        TenantTypeId = tenantTypeId;
+    }
+
     public String getFireBaseKey() {
         return FireBaseKey;
     }
 
     public void setFireBaseKey(String fireBaseKey) {
         FireBaseKey = fireBaseKey;
+    }
+
+    public static Creator<Tenant> getCREATOR() {
+        return CREATOR;
     }
 }

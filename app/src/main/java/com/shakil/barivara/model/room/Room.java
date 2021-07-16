@@ -13,6 +13,9 @@ public class Room implements Parcelable {
     private String RoomName;
     private String TenantName;
     private int TenantNameId;
+    private int NoOfRoom;
+    private int NoOfBathroom;
+    private int NoOfBalcony;
     private String StartMonthName;
     private int StartMonthId;
     private String AssociateMeterName;
@@ -23,25 +26,14 @@ public class Room implements Parcelable {
     public Room() {
     }
 
-    public Room(String roomName, String tenantName, String startMonth, String associateMeter, int advancedAmount) {
-        this.RoomName = roomName;
-        this.TenantName = tenantName;
-        this.StartMonthName = startMonth;
-        this.AssociateMeterName = associateMeter;
-        this.AdvancedAmount = advancedAmount;
-    }
-
-    public Room(String roomName, String tenantName, String startMonth) {
-        this.RoomName = roomName;
-        this.TenantName = tenantName;
-        this.StartMonthName = startMonth;
-    }
-
     protected Room(Parcel in) {
         RoomId = in.readString();
         RoomName = in.readString();
         TenantName = in.readString();
         TenantNameId = in.readInt();
+        NoOfRoom = in.readInt();
+        NoOfBathroom = in.readInt();
+        NoOfBalcony = in.readInt();
         StartMonthName = in.readString();
         StartMonthId = in.readInt();
         AssociateMeterName = in.readString();
@@ -56,6 +48,9 @@ public class Room implements Parcelable {
         dest.writeString(RoomName);
         dest.writeString(TenantName);
         dest.writeInt(TenantNameId);
+        dest.writeInt(NoOfRoom);
+        dest.writeInt(NoOfBathroom);
+        dest.writeInt(NoOfBalcony);
         dest.writeString(StartMonthName);
         dest.writeInt(StartMonthId);
         dest.writeString(AssociateMeterName);
@@ -113,6 +108,30 @@ public class Room implements Parcelable {
         TenantNameId = tenantNameId;
     }
 
+    public int getNoOfRoom() {
+        return NoOfRoom;
+    }
+
+    public void setNoOfRoom(int noOfRoom) {
+        NoOfRoom = noOfRoom;
+    }
+
+    public int getNoOfBathroom() {
+        return NoOfBathroom;
+    }
+
+    public void setNoOfBathroom(int noOfBathroom) {
+        NoOfBathroom = noOfBathroom;
+    }
+
+    public int getNoOfBalcony() {
+        return NoOfBalcony;
+    }
+
+    public void setNoOfBalcony(int noOfBalcony) {
+        NoOfBalcony = noOfBalcony;
+    }
+
     public String getStartMonthName() {
         return StartMonthName;
     }
@@ -161,6 +180,10 @@ public class Room implements Parcelable {
         FireBaseKey = fireBaseKey;
     }
 
+    public static Creator<Room> getCREATOR() {
+        return CREATOR;
+    }
+
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
@@ -173,6 +196,9 @@ public class Room implements Parcelable {
         result.put("associateMeterName", AssociateMeterName);
         result.put("associateMeterId", AssociateMeterId);
         result.put("advancedAmount", AdvancedAmount);
+        result.put("noOfRoom", NoOfRoom);
+        result.put("noOfBathroom", NoOfBathroom);
+        result.put("noOfBalcony", NoOfBalcony);
 
         return result;
     }

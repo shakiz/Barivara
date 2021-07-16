@@ -36,22 +36,25 @@
                 android:weightSum="8">
 
                 <RelativeLayout
+                    android:id="@+id/callLayout"
                     android:layout_width="0dp"
                     android:layout_weight="1.4"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:foreground="?attr/selectableItemBackgroundBorderless"
                     android:layout_marginLeft="8dp"
                     android:padding="4dp"
                     android:layout_gravity="center"
-                    android:gravity="center"
-                    android:layout_height="match_parent">
+                    android:gravity="center">
 
                     <ImageView
-                        android:id="@+id/listIcon"
-                        android:layout_width="42dp"
-                        android:layout_height="42dp"
-                        android:scaleType="centerInside"
-                        android:background="@drawable/red_circle_border"
-                        android:layout_centerInParent="true"
-                        android:src="@drawable/ic_action_adjust" />
+                        android:id="@+id/callIcon"
+                        android:src="@drawable/ic_call"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:padding="4dp" />
 
                 </RelativeLayout>
 

@@ -33,8 +33,8 @@ public class NewTenantActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private SpinnerAdapter spinnerAdapter;
     private SpinnerData spinnerData;
-    private int AssociateRoomId, StartingMonthId;
-    private String tenantNameStr, AssociateRoomStr, StartingMonthStr;
+    private int AssociateRoomId, StartingMonthId, TenantTypeId;
+    private String tenantNameStr, AssociateRoomStr, StartingMonthStr, TenantTypeStr;
     private Tenant tenant = new Tenant();
     private String command = "add";
     private FirebaseCrudHelper firebaseCrudHelper;
@@ -88,6 +88,7 @@ public class NewTenantActivity extends AppCompatActivity {
             command = "update";
             activityAddNewTenantBinding.TenantName.setText(tenant.getTenantName());
             activityAddNewTenantBinding.StartingMonthId.setSelection(tenant.getStartingMonthId(),true);
+            activityAddNewTenantBinding.TenantTypeId.setSelection(tenant.getTenantTypeId(),true);
             activityAddNewTenantBinding.NID.setText(tenant.getNID());
             activityAddNewTenantBinding.MobileNo.setText(tenant.getMobileNo());
             activityAddNewTenantBinding.NumberOfPerson.setText(""+tenant.getNumberOfPerson());
@@ -119,10 +120,13 @@ public class NewTenantActivity extends AppCompatActivity {
         validation.setEditTextIsNotEmpty(new String[]{"TenantName", "NID", "MobileNo"},
                 new String[]{getString(R.string.tenant_amount_validation), getString(R.string.nid_number_hint)
                 ,getString(R.string.mobile_number_hint)});
-        validation.setSpinnerIsNotEmpty(new String[]{"StartingMonthId"});
+        validation.setSpinnerIsNotEmpty(new String[]{"TenantTypeId","StartingMonthId"});
         //endregion
 
+        //region set spinners which are not fetched from server
         spinnerAdapter.setSpinnerAdapter(activityAddNewTenantBinding.StartingMonthId,this,spinnerData.setMonthData());
+        spinnerAdapter.setSpinnerAdapter(activityAddNewTenantBinding.TenantTypeId,this,spinnerData.setTenantTypeData());
+        //endregion
 
         //region is advance amount or not
         activityAddNewTenantBinding.AdvanceCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -159,6 +163,19 @@ public class NewTenantActivity extends AppCompatActivity {
         //endregion
 
         //region spinner on change
+        activityAddNewTenantBinding.TenantTypeId.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                TenantTypeStr = parent.getItemAtPosition(position).toString();
+                TenantTypeId = position;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         activityAddNewTenantBinding.StartingMonthId.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -238,6 +255,8 @@ public class NewTenantActivity extends AppCompatActivity {
         tenant.setTenantName(tenantNameStr);
         tenant.setAssociateRoom(AssociateRoomStr);
         tenant.setAssociateRoomId(AssociateRoomId);
+        tenant.setTenantTypeStr(TenantTypeStr);
+        tenant.setTenantTypeId(TenantTypeId);
         tenant.setStartingMonthId(StartingMonthId);
         tenant.setStartingMonth(StartingMonthStr);
         if (command.equals("add")) {

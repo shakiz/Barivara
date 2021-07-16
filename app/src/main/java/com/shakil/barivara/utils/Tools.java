@@ -1,5 +1,6 @@
 package com.shakil.barivara.utils;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
@@ -21,11 +22,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.shakil.barivara.R;
 
 import java.util.Date;
 import java.util.regex.Matcher;
 
+import static com.shakil.barivara.utils.Constants.REQUEST_CALL_CODE;
 import static com.shakil.barivara.utils.Constants.VALID_EMAIL_ADDRESS_REGEX;
 import static com.shakil.barivara.utils.Constants.mAppViewCount;
 import static com.shakil.barivara.utils.Constants.mIsLoggedIn;
@@ -48,6 +53,12 @@ public class Tools {
 
     public Tools(Context context) {
         this.context = context;
+    }
+
+    public void askCallPermission(Activity activity){
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.CALL_PHONE},REQUEST_CALL_CODE);
+        }
     }
 
     public static Long persistDate(Date date) {

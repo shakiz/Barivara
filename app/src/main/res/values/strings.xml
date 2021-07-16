@@ -2,9 +2,9 @@
     <string name="app_name">Vara Adai</string>
 
     <!--Room start-->
-    <string name="no_of_rooms">Number of Rooms</string>
+    <string name="no_of_rooms">No of Rooms</string>
     <string name="total_earnings">Total Earnings</string>
-    <string name="no_of_meters">Number Of Meters</string>
+    <string name="no_of_meters">No Of Meters</string>
     <string name="total_unit">Total Unit</string>
     <string name="add_room">Add New Room/Flat</string>
     <string name="add_meter">Add New Meter</string>
@@ -230,4 +230,13 @@
     <string name="no_internet_title">Please enable internet connection</string>
     <string name="default_notification_channel_id">fcm_default_channel</string>
     <string name="new_notification">You have a new notification</string>
+    <string name="tenant_type">Tenant Type</string>
+    <string name="bachelor">Bachelor</string>
+    <string name="family">Family</string>
+    <string name="small_family">Small Family</string>
+    <string name="female_only">Female Only</string>
+    <string name="male_only">Male Only</string>
+    <string name="no_of_bathrooms">No Of Bathrooms</string>
+    <string name="no_of_balcony">No Of Balcony</string>
+    <string name="calling">Calling</string>
 </resources>

@@ -29,7 +29,7 @@ public class RoomActivity extends AppCompatActivity {
     private SpinnerData spinnerData;
     private SpinnerAdapter spinnerAdapter;
     private String roomNameStr, startMonthStr,associateMeterStr,tenantNameStr;
-    private int StartMonthId, AssociateMeterId, TenantId;
+    private int StartMonthId, AssociateMeterId, TenantId, NoOfRoom, NoOfBathroom, NoOfBalcony;
     private Room room = new Room();
     private String command = "add";
     private FirebaseCrudHelper firebaseCrudHelper;
@@ -80,6 +80,12 @@ public class RoomActivity extends AppCompatActivity {
         if (room.getRoomId() != null) {
             command = "update";
             activityAddNewRoomBinding.RoomName.setText(room.getRoomName());
+            NoOfRoom = room.getNoOfRoom();
+            NoOfBathroom = room.getNoOfBathroom();
+            NoOfBalcony = room.getNoOfBalcony();
+            activityAddNewRoomBinding.NoOfRoom.setText(""+NoOfRoom);
+            activityAddNewRoomBinding.NoOfBalcony.setText(""+NoOfBalcony);
+            activityAddNewRoomBinding.NoOfBathroom.setText(""+NoOfBathroom);
             activityAddNewRoomBinding.StartMonthId.setSelection(room.getStartMonthId(), true);
         }
     }
@@ -173,6 +179,63 @@ public class RoomActivity extends AppCompatActivity {
         });
         //endregion
 
+        //region add or remove room click listener
+        activityAddNewRoomBinding.AddNoOfRoom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NoOfRoom++;
+                activityAddNewRoomBinding.NoOfRoom.setText(""+NoOfRoom);
+            }
+        });
+        activityAddNewRoomBinding.DeductNoOfRoom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (NoOfRoom > 0){
+                    NoOfRoom--;
+                    activityAddNewRoomBinding.NoOfRoom.setText(""+NoOfRoom);
+                }
+            }
+        });
+        //endregion
+
+        //region add or remove balcony click listener
+        activityAddNewRoomBinding.AddNoOfBalcony.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NoOfBalcony++;
+                activityAddNewRoomBinding.NoOfBalcony.setText(""+NoOfBalcony);
+            }
+        });
+        activityAddNewRoomBinding.DeductNoOfBalcony.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (NoOfBalcony > 0){
+                    NoOfBalcony--;
+                    activityAddNewRoomBinding.NoOfRoom.setText(""+NoOfBalcony);
+                }
+            }
+        });
+        //endregion
+
+        //region add or remove bathroom click listener
+        activityAddNewRoomBinding.AddNoOfBathRoom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NoOfBathroom++;
+                activityAddNewRoomBinding.NoOfBathroom.setText(""+NoOfBathroom);
+            }
+        });
+        activityAddNewRoomBinding.DeductNoOfBathroom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (NoOfBathroom > 0){
+                    NoOfBathroom--;
+                    activityAddNewRoomBinding.NoOfBathroom.setText(""+NoOfBathroom);
+                }
+            }
+        });
+        //endregion
+
         //region save or update click listener
         activityAddNewRoomBinding.mSaveRoomMaster.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -225,6 +288,9 @@ public class RoomActivity extends AppCompatActivity {
         room.setAssociateMeterId(AssociateMeterId);
         room.setTenantName(tenantNameStr);
         room.setTenantNameId(TenantId);
+        room.setNoOfRoom(NoOfRoom);
+        room.setNoOfBathroom(NoOfBathroom);
+        room.setNoOfBalcony(NoOfBalcony);
         if (command.equals("add")) {
             room.setRoomId(UUID.randomUUID().toString());
             firebaseCrudHelper.add(room, "room");

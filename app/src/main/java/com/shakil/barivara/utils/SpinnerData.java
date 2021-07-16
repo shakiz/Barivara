@@ -16,7 +16,7 @@ public class SpinnerData {
         this.context = context;
     }
 
-    public ArrayList<String>  setMonthData(){
+    public ArrayList<String> setMonthData(){
         ArrayList<String> spinnerValues = new ArrayList<>();
         String[] monthArray = {context.getString(R.string.select_data_1),context.getString(R.string.january),
                 context.getString(R.string.february), context.getString(R.string.march), context.getString(R.string.april),
@@ -25,6 +25,17 @@ public class SpinnerData {
                 context.getString(R.string.november), context.getString(R.string.december)};
         for (int start = 0; start < monthArray.length; start++) {
             spinnerValues.add(monthArray[start]);
+        }
+        return spinnerValues;
+    }
+
+    public ArrayList<String> setTenantTypeData(){
+        ArrayList<String> spinnerValues = new ArrayList<>();
+        String[] tenantTypeArray = {context.getString(R.string.select_data_1),context.getString(R.string.bachelor),
+                context.getString(R.string.family), context.getString(R.string.small_family), context.getString(R.string.female_only),
+                context.getString(R.string.male_only)};
+        for (int start = 0; start < tenantTypeArray.length; start++) {
+            spinnerValues.add(tenantTypeArray[start]);
         }
         return spinnerValues;
     }

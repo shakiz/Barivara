@@ -54,6 +54,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:paddingBottom="16dp"
                         android:orientation="vertical"
                         android:background="@drawable/back">
 
@@ -209,6 +210,33 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
+                                android:text="@string/tenant_type"
+                                android:textColor="@color/md_grey_900"
+                                android:textSize="16sp" />
+
+                            <Spinner
+                                style="@style/Base.TextAppearance.AppCompat.Medium"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:layout_marginTop="5dp"
+                                android:tag="@string/tenant_type"
+                                android:background="@drawable/edit_text_back"
+                                android:id="@+id/TenantTypeId"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginRight="12dp"
+                            android:layout_marginTop="8dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
                                 android:text="@string/select_month"
                                 android:textColor="@color/md_grey_900"
                                 android:textSize="16sp" />
@@ -252,15 +280,15 @@
                         </LinearLayout>
 
                         <CheckBox
+                            android:id="@+id/AdvanceCheckBox"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
+                            android:layout_gravity="center"
                             android:layout_marginLeft="12dp"
+                            android:layout_marginTop="14dp"
                             android:layout_marginRight="12dp"
                             android:background="@drawable/edit_text_back"
-                            android:layout_marginTop="12dp"
-                            android:layout_gravity="center"
-                            android:text="@string/advance_hint"
-                            android:id="@+id/AdvanceCheckBox"/>
+                            android:text="@string/advance_hint" />
 
                         <LinearLayout
                             android:layout_width="match_parent"

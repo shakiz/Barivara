@@ -1,6 +1,8 @@
 package com.shakil.barivara.activities.onboard;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -8,6 +10,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 
 import com.shakil.barivara.R;
@@ -31,6 +35,7 @@ import com.shakil.barivara.utils.UtilsForAll;
 
 import java.util.ArrayList;
 
+import static com.shakil.barivara.utils.Constants.REQUEST_CALL_CODE;
 import static com.shakil.barivara.utils.Constants.mAppViewCount;
 
 public class MainActivity extends AppCompatActivity{
@@ -44,6 +49,12 @@ public class MainActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         //region set language
         new LanguageManager(this).configLanguage();
+        //endregion
+
+        //region ask permission
+        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CALL_PHONE},REQUEST_CALL_CODE);
+        }
         //endregion
 
         super.onCreate(savedInstanceState);
