@@ -19,6 +19,7 @@ import com.shakil.barivara.R;
 import java.util.Locale;
 
 import static com.shakil.barivara.utils.Constants.mLanguage;
+import static com.shakil.barivara.utils.Constants.mLanguageSetup;
 
 public class LanguageManager {
     private Context context;
@@ -49,7 +50,7 @@ public class LanguageManager {
     }
 
     //region open language selector
-    public void doPopUpForLanguage(Class to){
+    private void doPopUpForLanguage(Class to){
         LinearLayout defaultLan, bengaliLan, englishLan;
         TextView DefaultTXT, BengaliTXT, EnglishTXT;
         Button ok;
@@ -69,16 +70,14 @@ public class LanguageManager {
         defaultLan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                defaultLan.setBackgroundResource(R.drawable.rectangle_green_selected);
-                DefaultTXT.setTextColor(context.getResources().getColor(R.color.md_white_1000));
-
-                bengaliLan.setBackgroundResource(R.drawable.rectangle_white);
-                BengaliTXT.setTextColor(context.getResources().getColor(R.color.md_grey_800));
-
-                englishLan.setBackgroundResource(R.drawable.rectangle_white);
-                EnglishTXT.setTextColor(context.getResources().getColor(R.color.md_grey_800));
+                changeColor(
+                        DefaultTXT, defaultLan,
+                        new TextView[]{BengaliTXT, EnglishTXT},
+                        new LinearLayout[]{bengaliLan, englishLan}
+                );
 
                 prefManager.set(mLanguage, "en");
+                prefManager.set(mLanguageSetup, true);
             }
         });
 
@@ -86,32 +85,28 @@ public class LanguageManager {
         bengaliLan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                defaultLan.setBackgroundResource(R.drawable.rectangle_white);
-                DefaultTXT.setTextColor(context.getResources().getColor(R.color.md_grey_800));
-
-                bengaliLan.setBackgroundResource(R.drawable.rectangle_green_selected);
-                BengaliTXT.setTextColor(context.getResources().getColor(R.color.md_white_1000));
-
-                englishLan.setBackgroundResource(R.drawable.rectangle_white);
-                EnglishTXT.setTextColor(context.getResources().getColor(R.color.md_grey_800));
+                changeColor(
+                        BengaliTXT, bengaliLan,
+                        new TextView[]{DefaultTXT, EnglishTXT},
+                        new LinearLayout[]{defaultLan, englishLan}
+                );
 
                 prefManager.set(mLanguage, "bn");
+                prefManager.set(mLanguageSetup, true);
             }
         });
 
         englishLan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                defaultLan.setBackgroundResource(R.drawable.rectangle_white);
-                DefaultTXT.setTextColor(context.getResources().getColor(R.color.md_grey_800));
-
-                bengaliLan.setBackgroundResource(R.drawable.rectangle_white);
-                BengaliTXT.setTextColor(context.getResources().getColor(R.color.md_grey_800));
-
-                englishLan.setBackgroundResource(R.drawable.rectangle_green_selected);
-                EnglishTXT.setTextColor(context.getResources().getColor(R.color.md_white_1000));
+                changeColor(
+                        EnglishTXT, englishLan,
+                        new TextView[]{DefaultTXT, BengaliTXT},
+                        new LinearLayout[]{defaultLan, bengaliLan}
+                );
 
                 prefManager.set(mLanguage, "en");
+                prefManager.set(mLanguageSetup, true);
             }
         });
 
@@ -119,7 +114,9 @@ public class LanguageManager {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                context.startActivity(new Intent(context, to));
+                if (to != null) {
+                    context.startActivity(new Intent(context, to));
+                }
             }
         });
 
@@ -127,6 +124,21 @@ public class LanguageManager {
         dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         dialog.getWindow().setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         dialog.show();
+    }
+    //endregion
+
+    //region set text and background color based on language selection
+    private void changeColor(TextView selectedTextResId, LinearLayout selectedBackResId,
+                             TextView[] unselectedTextResIds, LinearLayout[] unselectedBackResIds){
+        if (unselectedBackResIds != null && unselectedTextResIds != null){
+            for (int start = 0; start < unselectedBackResIds.length; start++) {
+                unselectedBackResIds[start].setBackgroundResource(R.drawable.rectangle_white);
+                unselectedTextResIds[start].setTextColor(context.getResources().getColor(R.color.md_grey_800));
+            }
+        }
+
+        selectedBackResId.setBackgroundResource(R.drawable.rectangle_green_selected);
+        selectedTextResId.setTextColor(context.getResources().getColor(R.color.md_white_1000));
     }
     //endregion
 }

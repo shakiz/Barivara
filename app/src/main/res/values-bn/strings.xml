@@ -238,5 +238,11 @@
     <string name="male_only">শুধুমাত্র পুরুষ</string>
     <string name="no_of_bathrooms">বাথরুমের সংখ্যা</string>
     <string name="no_of_balcony">বারান্দার সংখ্যা</string>
-    <string name="calling">Calling</string>
+    <string name="calling">কল করা হচ্ছে..</string>
+    <string name="email_or_mobile_hint">Enter email or mobile no</string>
+    <string name="email_or_mobile_no">Email or Mobile No</string>
+    <string name="email_mobile_validation">Email/Mobile can not be empty</string>
+    <string name="current_version">বর্তমান ভার্সন</string>
+    <string name="taking_into_message_section">মেসেজ করার জন্য প্রস্তুত হচ্ছে..</string>
+    <string name="please_allow_call_permission">দয়া করে কল করার অনুমতি দিন</string>
 </resources>

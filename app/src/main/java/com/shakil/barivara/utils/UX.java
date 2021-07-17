@@ -12,7 +12,6 @@ import android.icu.text.SimpleDateFormat;
 import android.os.Build;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
@@ -31,7 +30,6 @@ import java.util.Locale;
 public class UX {
     private Context context;
     public Dialog loadingDialog;
-    private ArrayAdapter<String> spinnerAdapter;
 
     public UX(Context context) {
         this.context = context;
@@ -79,15 +77,6 @@ public class UX {
         }
     }
     //End
-
-    //Set spinner adapter
-    public void setSpinnerAdapter(String[] dataSet, Spinner spinner) {
-        spinnerAdapter = new ArrayAdapter<String>(context,R.layout.spinner_drop,dataSet);
-        spinner.setAdapter(spinnerAdapter);
-        spinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
-        spinnerAdapter.notifyDataSetChanged();
-    }
-    //End spinner adapter
 
     //Spinner on change
     public void onSpinnerChange(Spinner spinner, onSpinnerChangeListener listener) {
@@ -147,67 +136,4 @@ public class UX {
         datePickerDialog.show();
     }
     //End
-
-    //Validation of all view
-    public boolean validation(int[] resIds, View view){
-        boolean valid = false;
-        for (int resId : resIds){
-            View child = view.findViewById(resId);
-
-            if (child instanceof EditText){
-                EditText editText = (EditText) child;
-                if (editText.getText().toString().isEmpty()){
-                    editText.setError(context.getResources().getString(R.string.invalid_input));
-                    editText.requestFocus();
-                    valid = false;
-                }
-                else{
-                    valid = true;
-                }
-            }
-            else if (child instanceof TextView){
-                TextView textView = (TextView) child;
-                if (textView.getText().toString().isEmpty()){
-                    textView.setError(context.getResources().getString(R.string.check_your_data));
-                    textView.requestFocus();
-                    valid = false;
-                }
-                else{
-                    if (textView.getText().toString().equals(context.getResources().getString(R.string.expiry_date))
-                     || textView.getText().toString().equals(context.getResources().getString(R.string.date_hint))){
-                        textView.setError(context.getResources().getString(R.string.select_valid_date));
-                        textView.requestFocus();
-                        valid = false;
-                    }
-                    else{
-                        valid = true;
-                    }
-                }
-            }
-            else if (child instanceof Spinner){
-                Spinner spinner = (Spinner) child;
-                if (spinner.getSelectedItemPosition() == 0) {
-                    TextView errorText = (TextView)spinner.getSelectedView();
-                    errorText.setError(context.getResources().getString(R.string.select_correct_data));
-                    errorText.setTextColor(context.getResources().getColor(R.color.md_red_400));
-                    valid = false;
-                }
-                else {
-                    valid = true;
-                }
-            }
-            else if (child instanceof CheckBox){
-                CheckBox checkBox = (CheckBox) child;
-                if (!checkBox.isSelected()) {
-                    checkBox.setError(context.getResources().getString(R.string.select_correct_data));
-                    valid = false;
-                }
-                else {
-                    valid = true;
-                }
-            }
-        }
-        return valid;
-    }
-    //Validation End
 }

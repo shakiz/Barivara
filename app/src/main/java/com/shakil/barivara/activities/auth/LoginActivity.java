@@ -67,6 +67,10 @@ public class LoginActivity extends AppCompatActivity {
 
     //region bind UI with components
     private void bindUiWithComponents(){
+        //region set current version name
+        activityLoginBinding.currentVersion.setText(getString(R.string.current_version) + " : " + new Tools(this).getAppVersionName());
+        //endregion
+
         //region validation
         validation.setEditTextIsNotEmpty(new String[]{"email", "password"},
                 new String[]{getString(R.string.email_validation), getString(R.string.password_validation)});
@@ -87,30 +91,12 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (validation.isValid()){
                     if (tools.hasConnection()){
-                        ux.getLoadingView();
-                        firebaseAuth.signInWithEmailAndPassword(activityLoginBinding.email.getText().toString()
-                                ,activityLoginBinding.password.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()){
-                                    Log.i(Constants.TAG+":onComplete",getString(R.string.login_succcessful));
-                                    Toast.makeText(LoginActivity.this, getString(R.string.login_succcessful), Toast.LENGTH_SHORT).show();
-                                    prefManager.set(mIsLoggedIn, true);
-                                    if (task.getResult() != null){
-                                        prefManager.set(mUserId, task.getResult().getUser().getUid());
-                                        prefManager.set(mUserFullName, task.getResult().getUser().getDisplayName());
-                                        prefManager.set(mUserEmail, task.getResult().getUser().getEmail());
-                                        prefManager.set(mUserMobile, task.getResult().getUser().getPhoneNumber());
-                                    }
-                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                                }
-                                else{
-                                    Log.i(Constants.TAG+":onComplete",getString(R.string.login_unsucccessful));
-                                    Toast.makeText(LoginActivity.this, getString(R.string.login_unsucccessful), Toast.LENGTH_SHORT).show();
-                                }
-                                ux.removeLoadingView();
-                            }
-                        });
+                        if (tools.validateEmailAddress(activityLoginBinding.email.getText().toString())){
+                            login();
+                        }
+                        else{
+                            Toast.makeText(LoginActivity.this, getString(R.string.not_a_valid_email_address), Toast.LENGTH_SHORT).show();
+                        }
                     }
                     else{
                         Toast.makeText(LoginActivity.this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT).show();
@@ -121,6 +107,33 @@ public class LoginActivity extends AppCompatActivity {
         //endregion
     }
     //endregion
+
+    private void login(){
+        ux.getLoadingView();
+        firebaseAuth.signInWithEmailAndPassword(activityLoginBinding.email.getText().toString()
+                ,activityLoginBinding.password.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()){
+                    Log.i(Constants.TAG+":onComplete",getString(R.string.login_succcessful));
+                    Toast.makeText(LoginActivity.this, getString(R.string.login_succcessful), Toast.LENGTH_SHORT).show();
+                    prefManager.set(mIsLoggedIn, true);
+                    if (task.getResult() != null){
+                        prefManager.set(mUserId, task.getResult().getUser().getUid());
+                        prefManager.set(mUserFullName, task.getResult().getUser().getDisplayName());
+                        prefManager.set(mUserEmail, task.getResult().getUser().getEmail());
+                        prefManager.set(mUserMobile, task.getResult().getUser().getPhoneNumber());
+                    }
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                }
+                else{
+                    Log.i(Constants.TAG+":onComplete",getString(R.string.login_unsucccessful));
+                    Toast.makeText(LoginActivity.this, getString(R.string.login_unsucccessful), Toast.LENGTH_SHORT).show();
+                }
+                ux.removeLoadingView();
+            }
+        });
+    }
 
     //region activity components
     @Override

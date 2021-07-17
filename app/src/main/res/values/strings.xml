@@ -238,5 +238,11 @@
     <string name="male_only">Male Only</string>
     <string name="no_of_bathrooms">No Of Bathrooms</string>
     <string name="no_of_balcony">No Of Balcony</string>
-    <string name="calling">Calling</string>
+    <string name="calling">Calling..</string>
+    <string name="email_or_mobile_hint">Enter email or mobile no</string>
+    <string name="email_or_mobile_no">Email or Mobile No</string>
+    <string name="email_mobile_validation">Email/Mobile can not be empty</string>
+    <string name="current_version">Current Version</string>
+    <string name="taking_into_message_section">Taking into messaging section..</string>
+    <string name="please_allow_call_permission">Please allow call permission</string>
 </resources>

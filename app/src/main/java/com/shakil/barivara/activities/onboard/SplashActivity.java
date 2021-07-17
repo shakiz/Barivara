@@ -2,7 +2,7 @@ package com.shakil.barivara.activities.onboard;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
+
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
@@ -72,22 +72,17 @@ public class SplashActivity extends AppCompatActivity {
 
     //region check for user login
     private void checkLogin(){
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                //region check for new update
-                Intent intent = null;
-                if (prefManager.getBoolean(mIsLoggedIn)){
-                    intent = new Intent(SplashActivity.this, MainActivity.class);
-                }
-                else{
-                    intent = new Intent(SplashActivity.this, LoginActivity.class);
-                }
-                startActivity(intent);
-                finish();
-                //endregion
-            }
-        }, 1000);
+        //region check for user login status
+        Intent intent = null;
+        if (prefManager.getBoolean(mIsLoggedIn)){
+            intent = new Intent(SplashActivity.this, MainActivity.class);
+        }
+        else{
+            intent = new Intent(SplashActivity.this, LoginActivity.class);
+        }
+        startActivity(intent);
+        finish();
+        //endregion
     }
     //endregion
 

@@ -2,10 +2,6 @@ package com.shakil.barivara.utils;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.text.InputFilter;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.TextUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -18,20 +14,16 @@ import com.shakil.barivara.R;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Validation {
     Map<String, String[]> validationMap = new HashMap<String, String[]>();
     String[] _msg;
-    int[] _length;
     private Context context;
 
     public Validation(Context context, Map<String, String[]> validationMap) {
         this.context = context;
         this.validationMap = validationMap;
     }
-
 
     public void setEditTextIsNotEmpty(String[] controls, String[] msgs) {
         if (msgs == null) {
@@ -43,14 +35,6 @@ public class Validation {
             _msg = msgs;
         } else
             Toast.makeText(context,"Validation messages and mapping controls are not equal", Toast.LENGTH_SHORT).show();
-    }
-
-    public void setEditTextLength(String[] controls, int[] length) {
-        if (controls.length == length.length) {
-            validationMap.put("EditTextLength", controls);
-            _length = length;
-        } else
-            Toast.makeText(context,"Missing controls length?", Toast.LENGTH_SHORT).show();
     }
 
     public void setSpinnerIsNotEmpty(String[] controls) {
@@ -107,8 +91,6 @@ public class Validation {
                     chkCtl.requestFocus();
 
                     if (!isChecked) {
-                        //isValid = isChecked;
-                        //msg(val[2] + " is important.");
                         chkCtl.setError(val[2] + " is important.");
                         break;
                     }
@@ -170,56 +152,5 @@ public class Validation {
             //endregion
         }
         return isValid;
-    }
-
-    public InputFilter getEditTextFilter() {
-        return new InputFilter() {
-
-            @Override
-            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-
-                boolean keepOriginal = true;
-                StringBuilder sb = new StringBuilder(end - start);
-                for (int i = start; i < end; i++) {
-                    char c = source.charAt(i);
-                    if (isCharAllowed(c)) // put your condition here
-                        sb.append(c);
-                    else
-                        keepOriginal = false;
-                }
-                if (keepOriginal)
-                    return null;
-                else {
-                    if (source instanceof Spanned) {
-                        SpannableString sp = new SpannableString(sb);
-                        TextUtils.copySpansFrom((Spanned) source, start, sb.length(), null, sp, 0);
-                        return sp;
-                    } else {
-                        return sb;
-                    }
-                }
-            }
-
-            private boolean isCharAllowed(char c) {
-                Pattern ps = Pattern.compile("^[a-zA-Z ]+$");
-                Matcher ms = ps.matcher(String.valueOf(c));
-                return ms.matches();
-            }
-        };
-    }
-
-
-    public String toTitleCase(String givenString) {
-        String text = "";
-        if(!TextUtils.isEmpty(givenString)){
-            String[] arr = givenString.split(" ");
-            StringBuffer sb = new StringBuffer();
-            for (int i = 0; i < arr.length; i++) {
-                sb.append(Character.toUpperCase(arr[i].charAt(0)))
-                        .append(arr[i].substring(1)).append(" ");
-            }
-            text = sb.toString().trim();
-        }
-        return text;
     }
 }

@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -74,7 +75,7 @@ public class RecyclerTenantListAdapter extends RecyclerView.Adapter<RecyclerTena
                 }
             }
         });
-        holder.callLayout.setOnClickListener(new View.OnClickListener() {
+        holder.call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
@@ -84,9 +85,17 @@ public class RecyclerTenantListAdapter extends RecyclerView.Adapter<RecyclerTena
                     Toast.makeText(context, context.getString(R.string.calling)+" "+tenant.getTenantName()+"....", Toast.LENGTH_SHORT).show();
                     context.startActivity(callIntent);
                 } else {
-                    Toast.makeText(context, "Please allow call permission", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, context.getString(R.string.please_allow_call_permission), Toast.LENGTH_SHORT).show();
                     new Tools(context).askCallPermission((Activity) context);
                 }
+            }
+        });
+
+        holder.message.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, context.getString(R.string.taking_into_message_section), Toast.LENGTH_SHORT).show();
+                new Tools(context).sendMessage(tenant.getMobileNo());
             }
         });
     }
@@ -99,14 +108,15 @@ public class RecyclerTenantListAdapter extends RecyclerView.Adapter<RecyclerTena
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView TenantName, StartingMonth, AssociateRoom;
         CardView item_card_view;
-        RelativeLayout callLayout;
+        ImageView call, message;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             TenantName = itemView.findViewById(R.id.TenantName);
             StartingMonth = itemView.findViewById(R.id.StartingMonth);
             AssociateRoom = itemView.findViewById(R.id.AssociateRoom);
             item_card_view = itemView.findViewById(R.id.item_card_view);
-            callLayout = itemView.findViewById(R.id.callLayout);
+            call = itemView.findViewById(R.id.callIcon);
+            message = itemView.findViewById(R.id.messageIcon);
         }
     }
 }

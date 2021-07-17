@@ -19,7 +19,6 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
@@ -31,6 +30,7 @@ import java.util.Date;
 import java.util.regex.Matcher;
 
 import static com.shakil.barivara.utils.Constants.REQUEST_CALL_CODE;
+import static com.shakil.barivara.utils.Constants.TAG;
 import static com.shakil.barivara.utils.Constants.VALID_EMAIL_ADDRESS_REGEX;
 import static com.shakil.barivara.utils.Constants.mAppViewCount;
 import static com.shakil.barivara.utils.Constants.mIsLoggedIn;
@@ -72,26 +72,13 @@ public class Tools {
         return new Date(cursor.getLong(cursor.getColumnIndex("")));
     }
 
-    public void exitApp(){
-        Intent exitIntent = new Intent(Intent.ACTION_MAIN);
-        exitIntent.addCategory(Intent.CATEGORY_HOME);
-        exitIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(exitIntent);
-    }
-
-    public void setCustomDesignTextView(int resId){
-        TextView textView = view.findViewById(resId);
-        textView.setTextColor(view.getResources().getColor(R.color.md_blue_grey_800));
-        textView.setSingleLine();
-    }
-
     public int toIntValue(String value){
         try{
-            Log.v("shakil",""+ Integer.parseInt(value));
+            Log.v(TAG,""+ Integer.parseInt(value));
             return Integer.parseInt(value);
         }
         catch (Exception e){
-            Log.v("shakil",e.getMessage());
+            Log.v(TAG,e.getMessage());
             return 0;
         }
     }
@@ -205,6 +192,16 @@ public class Tools {
             return true;
         }
         return false;
+    }
+    //endregion
+
+    //region send message
+    public void sendMessage(String number){
+        Intent smsIntent = new Intent(Intent.ACTION_SENDTO);
+        smsIntent.addCategory(Intent.CATEGORY_DEFAULT);
+        smsIntent.setType("vnd.android-dir/mms-sms");
+        smsIntent.setData(Uri.parse("sms:" + number));
+        context.startActivity(smsIntent);
     }
     //endregion
 }

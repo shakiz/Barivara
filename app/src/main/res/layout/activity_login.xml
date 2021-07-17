@@ -240,6 +240,23 @@
 
         </androidx.core.widget.NestedScrollView>
 
+        <TextView
+            android:id="@+id/currentVersion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/current_version"
+            android:layout_marginLeft="5dp"
+            android:textSize="16sp"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="16dp"
+            android:textStyle="bold"
+            android:clickable="true"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:textColor="@color/md_green_800"
+            android:focusable="true" />
+
     </RelativeLayout>
 
 </layout>
