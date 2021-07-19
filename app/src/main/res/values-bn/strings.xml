@@ -259,5 +259,9 @@
     <string name="calculate_utilities_tips_2">২.বাসা ভাড়ার সাথে বিদ্যুৎ বিলের মতো আরও যেইসব ইউটিলিটি বিল আছে ঐগুলো গণনা করা গুরুত্বপূর্ণ।</string>
     <string name="report_or_dashboard">রিপোর্ট / ড্যাশবোর্ড</string>
     <string name="report_or_dashboard_tips_1">1.এখন আপনি যা চান তা হল ,এমন একটি জায়গা যেখানে আপনি সমস্ত হিসাব দেখতে পাবেন।</string>
-    <string name="report_or_dashboard_tips_2">2. হোম পেজ থেকে এই রিপোর্ট / ড্যাশবোর্ডটি দেখতে Details Here এ ক্লিক করুন। </string>
+    <string name="report_or_dashboard_tips_2">2.হোম পেজ থেকে এই রিপোর্ট / ড্যাশবোর্ডটি দেখতে Details Here এ ক্লিক করুন। </string>
+    <string name="notifications">নোটিফিকেশন্স</string>
+    <string name="coming_soon">শীঘ্রই আসছে..</string>
+    <string name="end">শেষ</string>
+    <string name="tutorial">টিউটোরিয়াল</string>
 </resources>

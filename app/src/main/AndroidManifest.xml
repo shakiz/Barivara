@@ -109,6 +109,12 @@
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="adjustPan" />
 
+        <activity
+            android:name=".activities.tutorial.TutorialActivity"
+            android:screenOrientation="unspecified"
+            android:theme="@style/AppThemeNoActionBar"
+            android:windowSoftInputMode="adjustPan" />
+
 <!--        <service-->
 <!--            android:name="com.shakil.barivara.utils.MyFirebaseMessagingService"-->
 <!--            android:exported="false">-->

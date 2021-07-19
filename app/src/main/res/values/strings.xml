@@ -260,4 +260,8 @@
     <string name="report_or_dashboard">Report/Dashboard</string>
     <string name="report_or_dashboard_tips_1">1.Now what you want is a place where you can see all the details.</string>
     <string name="report_or_dashboard_tips_2">2.To see this report or dashboard, from home page click on the text Details Here.Well, here it is.</string>
+    <string name="notifications">Notifications</string>
+    <string name="coming_soon">Coming Soon..</string>
+    <string name="end">End</string>
+    <string name="tutorial">Tutorial</string>
 </resources>
