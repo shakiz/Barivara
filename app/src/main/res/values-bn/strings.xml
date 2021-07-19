@@ -245,4 +245,19 @@
     <string name="current_version">বর্তমান ভার্সন</string>
     <string name="taking_into_message_section">মেসেজ করার জন্য প্রস্তুত হচ্ছে..</string>
     <string name="please_allow_call_permission">দয়া করে কল করার অনুমতি দিন</string>
+    <string name="next">পরবর্তী</string>
+    <string name="got_it">শেষ</string>
+    <string name="how_to_use">কিভাবে ব্যবহার করবেন?</string>
+    <string name="add_tenant_first">ভাড়াটিয়ার তথ্য যোগ করুন</string>
+    <string name="tenant_add_tips_1">1.এই অ্যাপ্লিকেশনটি ব্যবহার করতে প্রথমে ভাড়াটিয়ার যাবতীয় তথ্য যোগ করুন</string>
+    <string name="tenant_add_tips_2">2.এই অ্যাপটির প্রধান উদ্দেশ্য হচ্ছে , ভাড়াটিয়াদের কাছ থেকে ভাড়া আদায় করা । তাই ভাড়াটিয়াদের তথ্য যুক্ত করা আবশ্যক ।</string>
+    <string name="assign_room">ঘর / ফ্ল্যাট বরাদ্দ করুন</string>
+    <string name="assign_room_tips_1">1.আমরা অনুমান করে নিচ্ছি যে আপনি ইতিমধ্যে কোনও ভাড়াটিয়া যুক্ত করেছেন।</string>
+    <string name="assign_room_tips_2">2.এখন এই ভাড়াটিয়ার জন্য একটি ঘর অথবা ফ্ল্যাট বরাদ্দ করুন।</string>
+    <string name="calculate_utilities">ইউটিলিটি বিল হিসাব</string>
+    <string name="calculate_utilities_tips_1">1.সুতরাং আপনি একটি নতুন ভাড়াটিয়া তৈরি করেছেন এবং তাকে একটি ঘর / ফ্ল্যাট বরাদ্দ করেছেন।</string>
+    <string name="calculate_utilities_tips_2">২.বাসা ভাড়ার সাথে বিদ্যুৎ বিলের মতো আরও যেইসব ইউটিলিটি বিল আছে ঐগুলো গণনা করা গুরুত্বপূর্ণ।</string>
+    <string name="report_or_dashboard">রিপোর্ট / ড্যাশবোর্ড</string>
+    <string name="report_or_dashboard_tips_1">1.এখন আপনি যা চান তা হল ,এমন একটি জায়গা যেখানে আপনি সমস্ত হিসাব দেখতে পাবেন।</string>
+    <string name="report_or_dashboard_tips_2">2. হোম পেজ থেকে এই রিপোর্ট / ড্যাশবোর্ডটি দেখতে Details Here এ ক্লিক করুন। </string>
 </resources>

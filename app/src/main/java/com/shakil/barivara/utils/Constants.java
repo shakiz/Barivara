@@ -20,4 +20,5 @@ public class Constants {
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
     public static final int REQUEST_CALL_CODE = 1111;
     public static final String mLanguageSetup = "LanguageSetup";
+    public static final String mOldUser = "OldUser";
 }

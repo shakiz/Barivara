@@ -15,7 +15,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.shakil.barivara.R;
-import com.shakil.barivara.activities.onboard.MainActivity;
+import com.shakil.barivara.activities.onboard.WelcomeActivity;
 import com.shakil.barivara.databinding.ActivityLoginBinding;
 import com.shakil.barivara.utils.Constants;
 import com.shakil.barivara.utils.PrefManager;
@@ -124,7 +124,7 @@ public class LoginActivity extends AppCompatActivity {
                         prefManager.set(mUserEmail, task.getResult().getUser().getEmail());
                         prefManager.set(mUserMobile, task.getResult().getUser().getPhoneNumber());
                     }
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    startActivity(new Intent(LoginActivity.this, WelcomeActivity.class));
                 }
                 else{
                     Log.i(Constants.TAG+":onComplete",getString(R.string.login_unsucccessful));

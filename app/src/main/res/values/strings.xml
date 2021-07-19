@@ -245,4 +245,19 @@
     <string name="current_version">Current Version</string>
     <string name="taking_into_message_section">Taking into messaging section..</string>
     <string name="please_allow_call_permission">Please allow call permission</string>
+    <string name="next">Next</string>
+    <string name="got_it">Got It</string>
+    <string name="how_to_use">How to use?</string>
+    <string name="add_tenant_first">Add tenant first</string>
+    <string name="tenant_add_tips_1">1.To use this app first add a tenant</string>
+    <string name="tenant_add_tips_2">2.As this app intended to collect rent from tenant so adding a tenant is a must</string>
+    <string name="assign_room">Assign Room/Flat</string>
+    <string name="assign_room_tips_1">1.So we guess that you have already added a tenant.</string>
+    <string name="assign_room_tips_2">2.Now assign a room/flat for that tenant.</string>
+    <string name="calculate_utilities">Calculate Utilities</string>
+    <string name="calculate_utilities_tips_1">1.So you have created a new tenant, assigned a room/flat.</string>
+    <string name="calculate_utilities_tips_2">2.Its important to calculate utility bills like electricity bills along with rent amount.</string>
+    <string name="report_or_dashboard">Report/Dashboard</string>
+    <string name="report_or_dashboard_tips_1">1.Now what you want is a place where you can see all the details.</string>
+    <string name="report_or_dashboard_tips_2">2.To see this report or dashboard, from home page click on the text Details Here.Well, here it is.</string>
 </resources>

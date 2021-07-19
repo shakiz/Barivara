@@ -327,4 +327,18 @@
     <color name="detailsLayoutColor">#4E93C9</color>
     <color name="textColor">#776D6D</color>
     <color name="button_color">#5D5EB2</color>
+
+    <array name="array_dot_active">
+        <item>@color/md_green_800</item>
+        <item>@color/md_green_800</item>
+        <item>@color/md_green_800</item>
+        <item>@color/md_green_800</item>
+    </array>
+
+    <array name="array_dot_inactive">
+        <item>@color/md_green_300</item>
+        <item>@color/md_green_300</item>
+        <item>@color/md_green_300</item>
+        <item>@color/md_green_300</item>
+    </array>
 </resources>

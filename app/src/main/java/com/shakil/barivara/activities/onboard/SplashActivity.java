@@ -3,6 +3,7 @@ package com.shakil.barivara.activities.onboard;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.os.Handler;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
@@ -17,6 +18,7 @@ import com.shakil.barivara.utils.PrefManager;
 import com.shakil.barivara.utils.Tools;
 
 import static com.shakil.barivara.utils.Constants.mIsLoggedIn;
+import static com.shakil.barivara.utils.Constants.mOldUser;
 
 public class SplashActivity extends AppCompatActivity {
     private ActivitySplashBinding activitySplashBinding;
@@ -73,15 +75,26 @@ public class SplashActivity extends AppCompatActivity {
     //region check for user login
     private void checkLogin(){
         //region check for user login status
-        Intent intent = null;
-        if (prefManager.getBoolean(mIsLoggedIn)){
-            intent = new Intent(SplashActivity.this, MainActivity.class);
-        }
-        else{
-            intent = new Intent(SplashActivity.this, LoginActivity.class);
-        }
-        startActivity(intent);
-        finish();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //region check for new update
+                Intent intent = null;
+                if (prefManager.getBoolean(mIsLoggedIn)){
+                    if (prefManager.getBoolean(mOldUser)) {
+                        intent = new Intent(SplashActivity.this, MainActivity.class);
+                    } else {
+                        intent = new Intent(SplashActivity.this, WelcomeActivity.class);
+                    }
+                }
+                else{
+                    intent = new Intent(SplashActivity.this, LoginActivity.class);
+                }
+                startActivity(intent);
+                finish();
+                //endregion
+            }
+        }, 1000);
         //endregion
     }
     //endregion
