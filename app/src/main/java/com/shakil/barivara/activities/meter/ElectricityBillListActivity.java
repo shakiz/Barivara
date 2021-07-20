@@ -159,7 +159,7 @@ public class ElectricityBillListActivity extends AppCompatActivity {
 
     //region set recycler adapter
     private void setRecyclerAdapter(){
-        recyclerBillListAdapter = new RecyclerElectricityBillListAdapter(electricityBills, this);
+        recyclerBillListAdapter = new RecyclerElectricityBillListAdapter(electricityBills);
         activityMeterCostListBinding.mRecylerView.setLayoutManager(new LinearLayoutManager(this));
         activityMeterCostListBinding.mRecylerView.setAdapter(recyclerBillListAdapter);
         recyclerBillListAdapter.notifyDataSetChanged();

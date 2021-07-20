@@ -1,12 +1,8 @@
 package com.shakil.barivara.utils;
 
 import android.content.Context;
-
 import com.shakil.barivara.R;
-import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
-
 import java.util.ArrayList;
-
 
 public class SpinnerData {
 

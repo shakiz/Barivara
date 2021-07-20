@@ -20,40 +20,24 @@ import com.shakil.barivara.activities.onboard.MainActivity;
 import static com.shakil.barivara.utils.Constants.TAG;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
-    /**
-     * Called when message is received.
-     *
-     * @param remoteMessage Object representing the message received from Firebase Cloud Messaging.
-     */
-    // [START receive_message]
+    //region Called when message is received.
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-
         Log.d(TAG, "From: " + remoteMessage.getFrom());
 
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
-
-            if (/* Check if data needs to be processed by long running job */ true) {
-                // For long-running tasks (10 seconds or more) use WorkManager.
-                scheduleJob();
-            } else {
-                // Handle message within 10 seconds
-                handleNow();
-            }
-
+            // Handle message within 10 seconds
+            handleNow();
         }
 
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
         }
-
-        // Also if you intend on generating your own notifications as a result of a received FCM
-        // message, here is where that should be initiated. See sendNotification method below.
     }
-    // [END receive_message]
+    //endregion
 
 
     // [START on_new_token]
@@ -78,17 +62,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     // [END on_new_token]
 
     /**
-     * Schedule async work using WorkManager.
-     */
-    private void scheduleJob() {
-        // [START dispatch_job]
-//        OneTimeWorkRequest work = new OneTimeWorkRequest.Builder(MyWorker.class)
-//                .build();
-//        WorkManager.getInstance().beginWith(work).enqueue();
-        // [END dispatch_job]
-    }
-
-    /**
      * Handle time allotted to BroadcastReceivers.
      */
     private void handleNow() {
@@ -107,11 +80,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // TODO: Implement this method to send token to your app server.
     }
 
-    /**
-     * Create and show a simple notification containing the received FCM message.
-     *
-     * @param messageBody FCM message body received.
-     */
+    //region Create and show a simple notification containing the received FCM message.
     private void sendNotification(String messageBody) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -142,4 +111,5 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
     }
+    //endregion
 }

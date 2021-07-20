@@ -197,7 +197,7 @@ public class MainActivity extends AppCompatActivity{
         items.add(new DrawerItem(R.drawable.ic_baseline_info_24, getString(R.string.tutorial)));
         items.add(new DrawerItem(R.drawable.ic_baseline_star_24, getString(R.string.rate_us)));
 
-        RecyclerNavDrawerAdapter recyclerNavDrawerAdapter = new RecyclerNavDrawerAdapter(items, this);
+        RecyclerNavDrawerAdapter recyclerNavDrawerAdapter = new RecyclerNavDrawerAdapter(items);
         navRecycler = findViewById(R.id.navRecycler);
         navRecycler.setLayoutManager(new LinearLayoutManager(this));
         navRecycler.setAdapter(recyclerNavDrawerAdapter);

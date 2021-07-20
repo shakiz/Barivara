@@ -159,7 +159,7 @@ public class RentListActivity extends AppCompatActivity {
 
     //region set recycler adapter
     private void setRecyclerAdapter(){
-        recyclerMeterListAdapter = new RecyclerRentListAdapter(rentList, this);
+        recyclerMeterListAdapter = new RecyclerRentListAdapter(rentList);
         activityRentListBinding.mRecylerView.setLayoutManager(new LinearLayoutManager(this));
         activityRentListBinding.mRecylerView.setAdapter(recyclerMeterListAdapter);
         recyclerMeterListAdapter.notifyDataSetChanged();

@@ -1,6 +1,5 @@
 package com.shakil.barivara.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,11 +19,9 @@ import java.util.ArrayList;
 public class RecyclerNavDrawerAdapter extends RecyclerView.Adapter<RecyclerNavDrawerAdapter.ViewHolder> {
 
     private ArrayList<DrawerItem> arrayList;
-    private Context context;
 
-    public RecyclerNavDrawerAdapter(ArrayList<DrawerItem> arrayList, Context context) {
+    public RecyclerNavDrawerAdapter(ArrayList<DrawerItem> arrayList) {
         this.arrayList = arrayList;
-        this.context = context;
     }
 
     //region click adapter
@@ -41,7 +38,7 @@ public class RecyclerNavDrawerAdapter extends RecyclerView.Adapter<RecyclerNavDr
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.drawer_item_layout,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.drawer_item_layout,parent,false);
         return new ViewHolder(view);
     }
 

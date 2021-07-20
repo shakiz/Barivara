@@ -143,7 +143,7 @@ public class RoomListActivity extends AppCompatActivity {
 
     //region set recycler adapter
     private void setRecyclerAdapter(){
-        recyclerRoomListAdapter = new RecyclerRoomListAdapter(roomList, this);
+        recyclerRoomListAdapter = new RecyclerRoomListAdapter(roomList);
         activityRoomListBinding.mRecylerView.setLayoutManager(new LinearLayoutManager(this));
         activityRoomListBinding.mRecylerView.setAdapter(recyclerRoomListAdapter);
         recyclerRoomListAdapter.notifyDataSetChanged();

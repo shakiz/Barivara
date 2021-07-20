@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,14 +28,6 @@ public class RecyclerTenantListAdapter extends RecyclerView.Adapter<RecyclerTena
 
     private ArrayList<Tenant> arrayList;
     private Context context;
-
-    public ArrayList<Tenant> getTenantList() {
-        return arrayList;
-    }
-
-    public void setTenantList(ArrayList<Tenant> arrayList) {
-        this.arrayList = arrayList;
-    }
 
     public RecyclerTenantListAdapter(ArrayList<Tenant> arrayList, Context context) {
         this.arrayList = arrayList;

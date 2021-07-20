@@ -5,7 +5,7 @@
 
     <gradient
         android:angle="45"
-        android:startColor="@color/md_cyan_400"
+        android:startColor="@color/md_cyan_300"
         android:endColor="@color/md_cyan_800"/>
 
     <padding

@@ -1,6 +1,5 @@
 package com.shakil.barivara.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,11 +17,9 @@ import java.util.ArrayList;
 public class RecyclerRentListAdapter extends RecyclerView.Adapter<RecyclerRentListAdapter.ViewHolder> {
 
     private ArrayList<Rent> arrayList;
-    private Context context;
 
-    public RecyclerRentListAdapter(ArrayList<Rent> arrayList, Context context) {
+    public RecyclerRentListAdapter(ArrayList<Rent> arrayList) {
         this.arrayList = arrayList;
-        this.context = context;
     }
 
     //region click adapter
@@ -39,7 +36,7 @@ public class RecyclerRentListAdapter extends RecyclerView.Adapter<RecyclerRentLi
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.adapter_layout_rent_list,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_layout_rent_list,parent,false);
         return new ViewHolder(view);
     }
 

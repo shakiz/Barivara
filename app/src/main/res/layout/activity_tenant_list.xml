@@ -62,53 +62,37 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
 
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="8dp"
                         android:layout_marginLeft="8dp"
                         android:layout_marginRight="8dp"
-                        android:layout_marginTop="8dp"
                         android:orientation="vertical">
 
-                        <LinearLayout
+                        <TextView
+                            android:id="@+id/mNoDataMessage"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical">
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/no_data_message"
+                            android:layout_centerInParent="true"
+                            android:textSize="24sp"
+                            android:textColor="@color/colorRed"
+                            android:textStyle="bold"
+                            android:visibility="gone"/>
 
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_margin="2dp"
-                                android:orientation="vertical">
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/mRecylerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            tools:listitem="@layout/adapter_layout_tenant_list"
+                            android:layout_margin="4dp"
+                            android:visibility="visible"
+                            app:reverseLayout="true"
+                            app:stackFromEnd="true"/>
 
-                                <TextView
-                                    android:id="@+id/mNoDataMessage"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:text="@string/no_data_message"
-                                    android:layout_centerInParent="true"
-                                    android:textSize="24sp"
-                                    android:textColor="@color/colorRed"
-                                    android:textStyle="bold"
-                                    android:visibility="gone"/>
-
-                                <androidx.recyclerview.widget.RecyclerView
-                                    android:id="@+id/mRecylerView"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    tools:listitem="@layout/adapter_layout_tenant_list"
-                                    android:layout_margin="4dp"
-                                    android:visibility="visible"
-                                    app:reverseLayout="true"
-                                    app:stackFromEnd="true"/>
-
-                            </RelativeLayout>
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
+                    </RelativeLayout>
 
                 </LinearLayout>
 
@@ -122,8 +106,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_margin="16dp"
             android:src="@drawable/ic_action_add"
+            android:layout_margin="16dp"
             app:backgroundTint="@color/md_blue_grey_400"
             app:fabSize="normal" />
 

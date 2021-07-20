@@ -125,7 +125,7 @@ public class MeterListActivity extends AppCompatActivity {
 
     //region recycler adapter
     private void setRecyclerAdapter(){
-        recyclerMeterListAdapter = new RecyclerMeterListAdapter(meterList, this);
+        recyclerMeterListAdapter = new RecyclerMeterListAdapter(meterList);
         activityMeterListBinding.mRecylerView.setLayoutManager(new LinearLayoutManager(this));
         activityMeterListBinding.mRecylerView.setAdapter(recyclerMeterListAdapter);
         recyclerMeterListAdapter.notifyDataSetChanged();

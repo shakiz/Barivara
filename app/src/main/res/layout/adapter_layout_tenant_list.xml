@@ -51,11 +51,11 @@
                         android:src="@drawable/ic_call"
                         android:clickable="true"
                         android:foreground="?attr/selectableItemBackgroundBorderless"
-                        android:layout_width="48dp"
+                        android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:padding="4dp"
+                        android:padding="8dp"
                         card_view:tint="@color/md_green_800" />
 
                     <ImageView
@@ -65,11 +65,11 @@
                         android:foreground="?attr/selectableItemBackgroundBorderless"
                         card_view:tint="@color/md_green_800"
                         android:layout_marginTop="8dp"
-                        android:layout_width="48dp"
+                        android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:padding="4dp" />
+                        android:padding="8dp" />
 
                 </LinearLayout>
 

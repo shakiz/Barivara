@@ -42,12 +42,10 @@ import static com.shakil.barivara.utils.Constants.mUserMobile;
 
 public class Tools {
     private Context context;
-    private View view;
     private PrefManager prefManager;
 
     public Tools(Context context, View view) {
         this.context = context;
-        this.view = view;
         prefManager = new PrefManager(context);
     }
 
