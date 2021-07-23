@@ -12,6 +12,16 @@ public class SpinnerData {
         this.context = context;
     }
 
+    public ArrayList<String> setYearData(){
+        ArrayList<String> spinnerValues = new ArrayList<>();
+        String[] yearArray = {context.getString(R.string.select_data_1),"2019","2020","2021","2022","2023","2024","2025"};
+        for (int start = 0; start < yearArray.length; start++) {
+            spinnerValues.add(yearArray[start]);
+        }
+        return spinnerValues;
+    }
+
+
     public ArrayList<String> setMonthData(){
         ArrayList<String> spinnerValues = new ArrayList<>();
         String[] monthArray = {context.getString(R.string.select_data_1),context.getString(R.string.january),

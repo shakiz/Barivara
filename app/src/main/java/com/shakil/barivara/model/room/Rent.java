@@ -12,16 +12,12 @@ public class Rent implements Parcelable {
     private String RentId;
     private String MonthName;
     private int MonthId;
+    private String YearName;
+    private int YearId;
     private String AssociateRoomName;
     private int AssociateRoomId;
     private int RentAmount;
     private String FireBaseKey;
-
-    public Rent(String rentForMonth, String rentRoom, int rentAmount) {
-        this.MonthName = rentForMonth;
-        this.AssociateRoomName = rentRoom;
-        this.RentAmount = rentAmount;
-    }
 
     public Rent() {
 
@@ -31,6 +27,8 @@ public class Rent implements Parcelable {
         RentId = in.readString();
         MonthName = in.readString();
         MonthId = in.readInt();
+        YearName = in.readString();
+        YearId = in.readInt();
         AssociateRoomName = in.readString();
         AssociateRoomId = in.readInt();
         RentAmount = in.readInt();
@@ -42,6 +40,8 @@ public class Rent implements Parcelable {
         dest.writeString(RentId);
         dest.writeString(MonthName);
         dest.writeInt(MonthId);
+        dest.writeString(YearName);
+        dest.writeInt(YearId);
         dest.writeString(AssociateRoomName);
         dest.writeInt(AssociateRoomId);
         dest.writeInt(RentAmount);
@@ -89,6 +89,22 @@ public class Rent implements Parcelable {
         MonthId = monthId;
     }
 
+    public String getYearName() {
+        return YearName;
+    }
+
+    public void setYearName(String yearName) {
+        YearName = yearName;
+    }
+
+    public int getYearId() {
+        return YearId;
+    }
+
+    public void setYearId(int yearId) {
+        YearId = yearId;
+    }
+
     public String getAssociateRoomName() {
         return AssociateRoomName;
     }
@@ -121,12 +137,18 @@ public class Rent implements Parcelable {
         FireBaseKey = fireBaseKey;
     }
 
+    public static Creator<Rent> getCREATOR() {
+        return CREATOR;
+    }
+
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
         result.put("rentId", RentId);
         result.put("monthName", MonthName);
         result.put("monthId", MonthId);
+        result.put("yearName", YearName);
+        result.put("yearId", YearId);
         result.put("associateRoomName", AssociateRoomName);
         result.put("associateRoomId", AssociateRoomId);
         result.put("rentAmount", RentAmount);

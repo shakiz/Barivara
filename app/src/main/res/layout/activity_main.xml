@@ -114,7 +114,8 @@
                             android:layout_below="@id/DayText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:padding="4dp"
+                            android:layout_marginTop="8dp"
+                            android:orientation="horizontal"
                             android:layout_margin="8dp"
                             android:weightSum="3">
 
@@ -122,46 +123,51 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:padding="4dp"
-                                android:layout_margin="8dp"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginRight="8dp"
+                                android:layout_marginBottom="4dp"
                                 app:cardCornerRadius="8dp"
                                 app:cardElevation="4dp"
                                 android:translationZ="2dp">
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:background="@drawable/top_back"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:background="@drawable/gradient_color"
+                                    android:gravity="center"
                                     android:orientation="vertical">
 
                                     <TextView
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_marginTop="4dp"
                                         android:ellipsize="end"
+                                        android:gravity="center"
                                         android:maxLines="1"
                                         android:padding="2dp"
                                         android:text="@string/total_rooms"
-                                        android:layout_gravity="center"
-                                        android:gravity="center"
-                                        android:textColor="@color/md_black_1000"
+                                        android:textColor="@color/md_white_1000"
                                         android:textSize="16sp" />
 
                                     <TextView
                                         android:id="@+id/totalRooms"
                                         android:layout_width="42dp"
                                         android:layout_height="40dp"
-                                        android:layout_marginBottom="4dp"
+                                        android:layout_gravity="center"
                                         android:layout_marginTop="4dp"
+                                        android:layout_marginBottom="8dp"
+                                        android:background="@drawable/green_circle"
                                         android:ellipsize="end"
+                                        android:gravity="center"
                                         android:maxLines="1"
                                         android:padding="2dp"
+                                        android:paddingBottom="8dp"
                                         android:text="@string/zero"
-                                        android:layout_gravity="center"
-                                        android:gravity="center"
-                                        android:textStyle="bold"
-                                        android:background="@drawable/green_circle"
-                                        android:textColor="@color/md_green_800"
-                                        android:textSize="18sp" />
+                                        android:textColor="@color/md_white_1000"
+                                        android:textSize="18sp"
+                                        android:textStyle="bold" />
 
                                 </LinearLayout>
 
@@ -170,8 +176,9 @@
                             <androidx.cardview.widget.CardView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:padding="4dp"
-                                android:layout_margin="8dp"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginRight="8dp"
+                                android:layout_marginBottom="4dp"
                                 app:cardCornerRadius="8dp"
                                 app:cardElevation="4dp"
                                 android:translationZ="2dp"
@@ -179,27 +186,30 @@
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:background="@drawable/top_back"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:background="@drawable/gradient_color"
                                     android:orientation="vertical">
 
                                     <TextView
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:ellipsize="end"
+                                        android:layout_marginTop="4dp"
                                         android:maxLines="1"
                                         android:padding="2dp"
                                         android:text="@string/total_meters"
                                         android:layout_gravity="center"
                                         android:gravity="center"
-                                        android:textColor="@color/md_black_1000"
+                                        android:textColor="@color/md_white_1000"
                                         android:textSize="16sp" />
 
                                     <TextView
                                         android:id="@+id/totalMeters"
                                         android:layout_width="42dp"
                                         android:layout_height="40dp"
-                                        android:layout_marginBottom="4dp"
+                                        android:layout_marginBottom="8dp"
                                         android:layout_marginTop="4dp"
                                         android:ellipsize="end"
                                         android:maxLines="1"
@@ -209,7 +219,7 @@
                                         android:background="@drawable/green_circle"
                                         android:layout_gravity="center"
                                         android:gravity="center"
-                                        android:textColor="@color/md_green_800"
+                                        android:textColor="@color/md_white_1000"
                                         android:textSize="18sp" />
 
                                 </LinearLayout>
@@ -220,35 +230,39 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:padding="4dp"
-                                android:layout_margin="8dp"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginRight="8dp"
+                                android:layout_marginBottom="4dp"
                                 app:cardCornerRadius="8dp"
                                 app:cardElevation="4dp"
                                 android:translationZ="2dp">
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:background="@drawable/top_back"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:background="@drawable/gradient_color"
                                     android:orientation="vertical">
 
                                     <TextView
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:ellipsize="end"
+                                        android:layout_marginTop="4dp"
                                         android:maxLines="1"
                                         android:padding="2dp"
                                         android:text="@string/total_tenants"
                                         android:layout_gravity="center"
                                         android:gravity="center"
-                                        android:textColor="@color/md_black_1000"
+                                        android:textColor="@color/md_white_1000"
                                         android:textSize="16sp" />
 
                                     <TextView
                                         android:id="@+id/totalTenants"
                                         android:layout_width="42dp"
                                         android:layout_height="40dp"
-                                        android:layout_marginBottom="4dp"
+                                        android:layout_marginBottom="8dp"
                                         android:layout_marginTop="4dp"
                                         android:background="@drawable/green_circle"
                                         android:ellipsize="end"
@@ -258,7 +272,7 @@
                                         android:textStyle="bold"
                                         android:layout_gravity="center"
                                         android:gravity="center"
-                                        android:textColor="@color/md_green_800"
+                                        android:textColor="@color/md_white_1000"
                                         android:textSize="18sp" />
 
                                 </LinearLayout>

@@ -30,8 +30,8 @@ public class RentDetailsActivity extends AppCompatActivity {
     private SpinnerAdapter spinnerAdapter;
     private Rent rent = new Rent();
     private String command = "add";
-    private int MonthId = 0, AssociateRoomId = 0;
-    private String MonthStr = "", AssociateRoomStr = "";
+    private int MonthId = 0, YearId = 0, AssociateRoomId = 0;
+    private String MonthStr = "", YearName = "", AssociateRoomStr = "";
     private FirebaseCrudHelper firebaseCrudHelper;
     private ArrayList<String> roomNames;
     private ArrayAdapter<String> roomNameSpinnerAdapter;
@@ -80,6 +80,7 @@ public class RentDetailsActivity extends AppCompatActivity {
             command = "update";
             activityNewRentDetailsBinding.RentAmount.setText(String.valueOf(rent.getRentAmount()));
             activityNewRentDetailsBinding.MonthId.setSelection(rent.getMonthId(), true);
+            activityNewRentDetailsBinding.YearId.setSelection(rent.getYearId(), true);
         }
     }
     //endregion
@@ -89,10 +90,11 @@ public class RentDetailsActivity extends AppCompatActivity {
         //region validation
         validation.setEditTextIsNotEmpty(new String[]{"RentAmount"},
                 new String[]{getString(R.string.rent_amount_validation)});
-        validation.setSpinnerIsNotEmpty(new String[]{"MonthId"});
+        validation.setSpinnerIsNotEmpty(new String[]{"YearId","MonthId"});
         //endregion
 
         spinnerAdapter.setSpinnerAdapter(activityNewRentDetailsBinding.MonthId,this, spinnerData.setMonthData());
+        spinnerAdapter.setSpinnerAdapter(activityNewRentDetailsBinding.YearId,this, spinnerData.setYearData());
 
         //region set room spinner
         if (tools.hasConnection()) {
@@ -127,6 +129,19 @@ public class RentDetailsActivity extends AppCompatActivity {
             }
         });
 
+        activityNewRentDetailsBinding.YearId.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                YearId = position;
+                YearName = parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         activityNewRentDetailsBinding.AssociateRoomId.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -148,6 +163,8 @@ public class RentDetailsActivity extends AppCompatActivity {
                     if (tools.hasConnection()) {
                         rent.setMonthId(MonthId);
                         rent.setMonthName(MonthStr);
+                        rent.setYearId(YearId);
+                        rent.setYearName(YearName);
                         rent.setAssociateRoomId(AssociateRoomId);
                         rent.setAssociateRoomName(AssociateRoomStr);
                         rent.setRentAmount(Integer.parseInt(activityNewRentDetailsBinding.RentAmount.getText().toString()));
