@@ -267,4 +267,6 @@
     <string name="total_unpaid">মোট বাকি</string>
     <string name="total_due">ভাড়া বাকি(এই মাসে)</string>
     <string name="select_year">বছর নির্বাচন করুন</string>
+    <string name="note">নোট</string>
+    <string name="note_hint">নোট লিখুন</string>
 </resources>

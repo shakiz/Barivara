@@ -267,4 +267,6 @@
     <string name="total_unpaid">Total Unpaid</string>
     <string name="total_due">Rent Due(This Month)</string>
     <string name="select_year">Select Year</string>
+    <string name="note">Note</string>
+    <string name="note_hint">Enter note</string>
 </resources>

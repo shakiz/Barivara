@@ -81,6 +81,7 @@ public class RentDetailsActivity extends AppCompatActivity {
             activityNewRentDetailsBinding.RentAmount.setText(String.valueOf(rent.getRentAmount()));
             activityNewRentDetailsBinding.MonthId.setSelection(rent.getMonthId(), true);
             activityNewRentDetailsBinding.YearId.setSelection(rent.getYearId(), true);
+            activityNewRentDetailsBinding.Note.setText(rent.getNote());
         }
     }
     //endregion
@@ -167,6 +168,7 @@ public class RentDetailsActivity extends AppCompatActivity {
                         rent.setYearName(YearName);
                         rent.setAssociateRoomId(AssociateRoomId);
                         rent.setAssociateRoomName(AssociateRoomStr);
+                        rent.setNote(activityNewRentDetailsBinding.Note.getText().toString());
                         rent.setRentAmount(Integer.parseInt(activityNewRentDetailsBinding.RentAmount.getText().toString()));
                         if (command.equals("add")) {
                             rent.setRentId(UUID.randomUUID().toString());

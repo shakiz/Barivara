@@ -17,6 +17,7 @@ public class Rent implements Parcelable {
     private String AssociateRoomName;
     private int AssociateRoomId;
     private int RentAmount;
+    private String Note;
     private String FireBaseKey;
 
     public Rent() {
@@ -32,6 +33,7 @@ public class Rent implements Parcelable {
         AssociateRoomName = in.readString();
         AssociateRoomId = in.readInt();
         RentAmount = in.readInt();
+        Note = in.readString();
         FireBaseKey = in.readString();
     }
 
@@ -45,6 +47,7 @@ public class Rent implements Parcelable {
         dest.writeString(AssociateRoomName);
         dest.writeInt(AssociateRoomId);
         dest.writeInt(RentAmount);
+        dest.writeString(Note);
         dest.writeString(FireBaseKey);
     }
 
@@ -129,6 +132,14 @@ public class Rent implements Parcelable {
         RentAmount = rentAmount;
     }
 
+    public String getNote() {
+        return Note;
+    }
+
+    public void setNote(String note) {
+        Note = note;
+    }
+
     public String getFireBaseKey() {
         return FireBaseKey;
     }
@@ -152,6 +163,7 @@ public class Rent implements Parcelable {
         result.put("associateRoomName", AssociateRoomName);
         result.put("associateRoomId", AssociateRoomId);
         result.put("rentAmount", RentAmount);
+        result.put("note", Note);
 
         return result;
     }

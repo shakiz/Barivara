@@ -174,7 +174,40 @@
 
                         </LinearLayout>
 
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginRight="12dp"
+                            android:layout_marginTop="8dp"
+                            android:orientation="vertical">
 
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="@string/note"
+                                android:textColor="@color/md_grey_900"
+                                android:textSize="16sp" />
+
+                            <EditText
+                                android:id="@+id/Note"
+                                android:layout_width="match_parent"
+                                android:layout_height="80dp"
+                                android:layout_marginTop="5dp"
+                                android:background="@drawable/edit_text_back"
+                                android:inputType="text"
+                                android:ellipsize="end"
+                                android:scrollHorizontally="true"
+                                android:maxLines="3"
+                                android:textColorHint="@color/md_grey_700"
+                                android:hint="@string/note_hint"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"
+                                android:textSize="14sp"
+                                android:textColor="@color/md_grey_800"/>
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
