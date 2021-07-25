@@ -269,4 +269,5 @@
     <string name="select_year">Select Year</string>
     <string name="note">Note</string>
     <string name="note_hint">Enter note</string>
+    <string name="coming_with_new_features">New features are coming here....</string>
 </resources>
