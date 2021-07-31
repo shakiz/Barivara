@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -18,6 +20,9 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.shakil.barivara.R;
 import com.shakil.barivara.activities.auth.LoginActivity;
 import com.shakil.barivara.activities.dashboard.DashboardActivity;
@@ -35,6 +40,7 @@ import com.shakil.barivara.model.drawer.DrawerItem;
 import com.shakil.barivara.model.meter.Meter;
 import com.shakil.barivara.model.room.Room;
 import com.shakil.barivara.model.tenant.Tenant;
+import com.shakil.barivara.utils.Constants;
 import com.shakil.barivara.utils.LanguageManager;
 import com.shakil.barivara.utils.PrefManager;
 import com.shakil.barivara.utils.Tools;
@@ -60,6 +66,21 @@ public class MainActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+
+        //region notification for general topic
+        FirebaseMessaging.getInstance().subscribeToTopic("general")
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()){
+                            Log.i(Constants.TAG,"Successfully received notification");
+                        }
+                        else{
+                            Log.i(Constants.TAG,"Notification received failed");
+                        }
+                    }
+                });
+        //endregion
 
         //region set language
         new LanguageManager(this).configLanguage();
