@@ -2,10 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.shakil.barivara">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:allowBackup="true"
@@ -31,6 +31,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="adjustNothing" />
+        <activity
+            android:name=".activities.auth.ForgotPasswordActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNoActionBar"
+            android:windowSoftInputMode="adjustNothing"/>
         <activity
             android:name=".activities.onboard.MainActivity"
             android:screenOrientation="portrait"
@@ -102,13 +107,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="adjustNothing" />
-
         <activity
             android:name=".activities.onboard.WelcomeActivity"
             android:screenOrientation="unspecified"
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="adjustPan" />
-
         <activity
             android:name=".activities.tutorial.TutorialActivity"
             android:screenOrientation="unspecified"
@@ -116,7 +119,7 @@
             android:windowSoftInputMode="adjustPan" />
 
         <service
-            android:name="com.shakil.barivara.utils.MyFirebaseMessagingService"
+            android:name=".utils.MyFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

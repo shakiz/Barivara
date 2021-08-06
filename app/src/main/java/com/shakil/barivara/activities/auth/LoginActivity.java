@@ -67,10 +67,6 @@ public class LoginActivity extends AppCompatActivity {
 
     //region bind UI with components
     private void bindUiWithComponents(){
-        //region set current version name
-        activityLoginBinding.currentVersion.setText(getString(R.string.current_version) + " : " + new Tools(this).getAppVersionName());
-        //endregion
-
         //region validation
         validation.setEditTextIsNotEmpty(new String[]{"email", "password"},
                 new String[]{getString(R.string.email_validation), getString(R.string.password_validation)});
@@ -105,6 +101,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
         //endregion
+
+        activityLoginBinding.forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, ForgotPasswordActivity.class));
+            }
+        });
     }
     //endregion
 
@@ -127,8 +130,17 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(new Intent(LoginActivity.this, WelcomeActivity.class));
                 }
                 else{
+                    if (task.getException().getMessage().equals(getString(R.string.firebase_password_not_valid_exception))){
+                        Toast.makeText(LoginActivity.this, getString(R.string.wrong_password), Toast.LENGTH_LONG).show();
+                    }
+                    else if (task.getException().getMessage().equals(getString(R.string.firebase_no_user_exception))){
+                        Toast.makeText(LoginActivity.this,
+                                getString(R.string.email_was_not_found_in_our_database), Toast.LENGTH_LONG).show();
+                    }
+                    else {
+                        Toast.makeText(LoginActivity.this, getString(R.string.login_unsucccessful), Toast.LENGTH_LONG).show();
+                    }
                     Log.i(Constants.TAG+":onComplete",getString(R.string.login_unsucccessful));
-                    Toast.makeText(LoginActivity.this, getString(R.string.login_unsucccessful), Toast.LENGTH_SHORT).show();
                 }
                 ux.removeLoadingView();
             }

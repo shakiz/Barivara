@@ -21,57 +21,12 @@
                 android:id="@+id/mainLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:weightSum="2"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    android:id="@+id/arcViewContainer"
+                <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight=".6"
-                    android:orientation="vertical">
-
-                    <!--arcView for customized view-->
-                    <com.github.florent37.shapeofview.shapes.ArcView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:elevation="4dp"
-                        app:shape_arc_cropDirection="outside"
-                        app:shape_arc_height="32dp"
-                        app:shape_arc_position="bottom">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:background="@drawable/gradient_color_new"
-                            android:gravity="center"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@string/welcome_back"
-                                android:textSize="28sp"
-                                android:layout_gravity="center"
-                                android:textColor="@color/md_white_1000"
-                                android:gravity="center"
-                                android:textStyle="bold"/>
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@string/login_without_underline"
-                                android:textSize="28sp"
-                                android:layout_gravity="center"
-                                android:gravity="center"
-                                android:textColor="@color/md_white_1000"
-                                android:textStyle="bold"/>
-
-                        </LinearLayout>
-                    </com.github.florent37.shapeofview.shapes.ArcView>
-
-                </LinearLayout>
+                    android:layout_height="256dp"
+                    android:src="@drawable/user_login"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -79,6 +34,16 @@
                     android:layout_weight="1.4"
                     android:layout_margin="16dp"
                     android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/welcome_back_login"
+                        android:layout_marginLeft="24dp"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/md_green_800"
+                        android:focusable="true" />
 
                     <RelativeLayout
                         android:id="@+id/emailAddressLayout"
@@ -112,7 +77,7 @@
                                 android:inputType="textEmailAddress"
                                 android:hint="@string/email_hint"
                                 android:padding="4dp"
-                                android:textColor="@color/md_grey_700"
+                                android:textColor="@color/md_grey_900"
                                 android:textColorHighlight="@color/md_grey_700"
                                 android:textColorHint="@color/md_grey_700"
                                 android:textSize="14sp" />
@@ -167,7 +132,7 @@
                                 android:background="@null"
                                 android:inputType="numberPassword"
                                 android:hint="@string/password_hint"
-                                android:textColor="@color/md_grey_700"
+                                android:textColor="@color/md_grey_900"
                                 android:textColorHighlight="@color/md_grey_700"
                                 android:textColorHint="@color/md_grey_700"
                                 android:textSize="14sp" />
@@ -234,28 +199,27 @@
 
                     </LinearLayout>
 
+                    <TextView
+                        android:id="@+id/forgotPassword"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/forgot_your_password"
+                        android:layout_marginLeft="5dp"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:clickable="true"
+                        android:foreground="?attr/selectableItemBackgroundBorderless"
+                        android:textColor="@color/md_green_800"
+                        android:focusable="true" />
+
                 </LinearLayout>
 
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
-
-        <TextView
-            android:id="@+id/currentVersion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/current_version"
-            android:layout_marginLeft="5dp"
-            android:textSize="16sp"
-            android:layout_alignParentBottom="true"
-            android:gravity="center"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="16dp"
-            android:textStyle="bold"
-            android:clickable="true"
-            android:foreground="?attr/selectableItemBackgroundBorderless"
-            android:textColor="@color/md_green_800"
-            android:focusable="true" />
 
     </RelativeLayout>
 

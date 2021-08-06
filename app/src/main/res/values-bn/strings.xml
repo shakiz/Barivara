@@ -270,4 +270,18 @@
     <string name="note">নোট</string>
     <string name="note_hint">নোট লিখুন</string>
     <string name="coming_with_new_features">রিপোর্ট এর নতুন নতুন অনেক ফিচারস আসছে....</string>
+    <string name="forgot_your_password">পাসওয়ার্ড ভুলে গেছেন?</string>
+    <string name="change_password">পাসওয়ার্ড পরিবর্তন করুন</string>
+    <string name="an_email_will_be_sent_to_your_mail">আপনার মেইলে একটি ইমেইল পাঠানো হবে</string>
+    <string name="we_have_sent_password_reset_mail">পাসওয়ার্ড রিসেট করার জন্য আমরা আপনার ইমেইলে, একটি মেইল পাঠিয়েছি</string>
+    <string name="go_back_login">লগইন এ ফিরে যান</string>
+    <string name="check_your_email">আপনার ইমেইল চেক করুন</string>
+    <string name="welcome_back_login">স্বাগতম, এখানে লগইন করুন</string>
+    <string name="email_sent">ইমেইল পাঠানো হয়েছে !!</string>
+    <string name="failed_to_sent_reset_email">রিসেট ইমেল পাঠানো ব্যর্থ হয়েছে !!</string>
+    <string name="please_enter_your_valid_email">Please enter your valid email</string>
+    <string name="firebase_no_user_exception">There is no user record corresponding to this identifier. The user may have been deleted.</string>
+    <string name="email_was_not_found_in_our_database">Email was not found in our database.</string>
+    <string name="firebase_password_not_valid_exception">The password is invalid or the user does not have a password.</string>
+    <string name="wrong_password">You have entered a wrong password</string>
 </resources>
