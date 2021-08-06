@@ -42,7 +42,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/gradient_color"
                 android:orientation="vertical"
                 android:id="@+id/mainLayout">
 
@@ -52,8 +51,10 @@
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="16dp"
                     android:translationZ="4dp"
-                    android:layout_marginTop="-24dp"
-                    app:cardBackgroundColor="@color/md_white_1000"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginRight="24dp"
+                    app:cardBackgroundColor="@color/md_green_100"
                     android:clickable="false"
                     app:elevation="4dp">
 
@@ -64,12 +65,6 @@
                         android:paddingBottom="8dp"
                         android:orientation="vertical">
 
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="160dp"
-                            android:scaleType="fitEnd"
-                            android:src="@drawable/home_bg"/>
-
                         <TextView
                             android:id="@+id/GreetingsText"
                             android:layout_width="wrap_content"
@@ -78,7 +73,7 @@
                             android:layout_marginLeft="16dp"
                             android:layout_marginRight="16dp"
                             android:layout_marginTop="16dp"
-                            android:textColor="@color/md_green_800"
+                            android:textColor="@color/md_grey_800"
                             android:textStyle="bold"
                             android:textSize="20sp"
                             android:text="@string/good_morning"/>
@@ -91,7 +86,7 @@
                             android:layout_marginRight="16dp"
                             android:layout_below="@+id/GreetingsText"
                             android:layout_alignParentLeft="true"
-                            android:textColor="@color/md_green_900"
+                            android:textColor="@color/md_grey_800"
                             android:textStyle="bold"
                             android:textSize="20sp"
                             android:text="@string/demo_month"/>
@@ -104,7 +99,7 @@
                             android:layout_marginRight="16dp"
                             android:layout_below="@+id/DateTimeText"
                             android:layout_alignParentLeft="true"
-                            android:textColor="@color/md_green_900"
+                            android:textColor="@color/md_grey_800"
                             android:textStyle="bold"
                             android:textSize="20sp"
                             android:text="@string/demo_day"/>
@@ -148,7 +143,7 @@
                                         android:maxLines="1"
                                         android:padding="2dp"
                                         android:text="@string/total_rooms"
-                                        android:textColor="@color/md_white_1000"
+                                        android:textColor="@color/md_grey_800"
                                         android:textSize="16sp" />
 
                                     <TextView
@@ -165,7 +160,7 @@
                                         android:padding="2dp"
                                         android:paddingBottom="8dp"
                                         android:text="@string/zero"
-                                        android:textColor="@color/md_white_1000"
+                                        android:textColor="@color/md_grey_800"
                                         android:textSize="18sp"
                                         android:textStyle="bold" />
 
@@ -202,7 +197,7 @@
                                         android:text="@string/total_meters"
                                         android:layout_gravity="center"
                                         android:gravity="center"
-                                        android:textColor="@color/md_white_1000"
+                                        android:textColor="@color/md_grey_800"
                                         android:textSize="16sp" />
 
                                     <TextView
@@ -219,7 +214,7 @@
                                         android:background="@drawable/white_circle_border"
                                         android:layout_gravity="center"
                                         android:gravity="center"
-                                        android:textColor="@color/md_white_1000"
+                                        android:textColor="@color/md_grey_800"
                                         android:textSize="18sp" />
 
                                 </LinearLayout>
@@ -255,7 +250,7 @@
                                         android:text="@string/total_tenants"
                                         android:layout_gravity="center"
                                         android:gravity="center"
-                                        android:textColor="@color/md_white_1000"
+                                        android:textColor="@color/md_grey_800"
                                         android:textSize="16sp" />
 
                                     <TextView
@@ -272,7 +267,7 @@
                                         android:textStyle="bold"
                                         android:layout_gravity="center"
                                         android:gravity="center"
-                                        android:textColor="@color/md_white_1000"
+                                        android:textColor="@color/md_grey_800"
                                         android:textSize="18sp" />
 
                                 </LinearLayout>
@@ -311,10 +306,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginTop="12dp"
-                    android:textColor="@color/md_white_1000"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="16dp"
+                    android:textColor="@color/md_green_800"
                     android:textStyle="bold"
                     android:textSize="20sp"
                     android:text="@string/tenant_information"/>
@@ -324,8 +319,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
                     android:clickable="true"
                     android:elevation="4dp"
                     android:foreground="?android:attr/selectableItemBackground"
@@ -403,10 +398,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
                     android:layout_marginTop="10dp"
-                    android:textColor="@color/md_white_1000"
+                    android:textColor="@color/md_green_800"
                     android:textStyle="bold"
                     android:textSize="20sp"
                     android:text="@string/room_information"/>
@@ -415,8 +410,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
                     android:weightSum="2"
                     android:orientation="horizontal">
 
@@ -585,10 +580,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
                     android:layout_marginTop="10dp"
-                    android:textColor="@color/md_white_1000"
+                    android:textColor="@color/md_green_800"
                     android:textStyle="bold"
                     android:textSize="20sp"
                     android:text="@string/meter_information"/>
@@ -596,8 +591,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
                     android:layout_marginBottom="16dp"
                     android:weightSum="2"
                     android:orientation="horizontal">

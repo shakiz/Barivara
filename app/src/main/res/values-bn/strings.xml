@@ -279,9 +279,13 @@
     <string name="welcome_back_login">স্বাগতম, এখানে লগইন করুন</string>
     <string name="email_sent">ইমেইল পাঠানো হয়েছে !!</string>
     <string name="failed_to_sent_reset_email">রিসেট ইমেল পাঠানো ব্যর্থ হয়েছে !!</string>
-    <string name="please_enter_your_valid_email">Please enter your valid email</string>
+    <string name="please_enter_your_valid_email">আপনার সঠিক ইমেইল লিখুন</string>
     <string name="firebase_no_user_exception">There is no user record corresponding to this identifier. The user may have been deleted.</string>
-    <string name="email_was_not_found_in_our_database">Email was not found in our database.</string>
+    <string name="email_was_not_found_in_our_database">আমাদের ডাটাবেসে ইমেলটি পাওয়া যায়নি।</string>
     <string name="firebase_password_not_valid_exception">The password is invalid or the user does not have a password.</string>
-    <string name="wrong_password">You have entered a wrong password</string>
+    <string name="wrong_password">আপনি ভুল পাসওয়ার্ড লিখেছেন</string>
+    <string name="firebase_user_exists_exception">The email address is already in use by another account.</string>
+    <string name="user_already_exists">ইমেইল আইডি ইতোমধ্যে অন্য একজন ব্যবহার করছেন । অন্য ইমেল দিয়ে চেষ্টা করুন।</string>
+    <string name="title">Title</string>
+    <string name="message">message</string>
 </resources>

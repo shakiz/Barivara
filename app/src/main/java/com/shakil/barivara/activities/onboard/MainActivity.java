@@ -9,8 +9,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,6 +26,7 @@ import com.shakil.barivara.activities.auth.LoginActivity;
 import com.shakil.barivara.activities.dashboard.DashboardActivity;
 import com.shakil.barivara.activities.meter.ElectricityBillListActivity;
 import com.shakil.barivara.activities.meter.MeterListActivity;
+import com.shakil.barivara.activities.notification.NotificationActivity;
 import com.shakil.barivara.activities.room.RentListActivity;
 import com.shakil.barivara.activities.room.RoomListActivity;
 import com.shakil.barivara.activities.settings.SettingsActivity;
@@ -38,6 +37,7 @@ import com.shakil.barivara.databinding.ActivityMainBinding;
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.drawer.DrawerItem;
 import com.shakil.barivara.model.meter.Meter;
+import com.shakil.barivara.model.notification.Notification;
 import com.shakil.barivara.model.room.Room;
 import com.shakil.barivara.model.tenant.Tenant;
 import com.shakil.barivara.utils.Constants;
@@ -49,6 +49,7 @@ import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import static com.shakil.barivara.utils.Constants.REQUEST_CALL_CODE;
 import static com.shakil.barivara.utils.Constants.mAppViewCount;
@@ -74,6 +75,9 @@ public class MainActivity extends AppCompatActivity{
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()){
                             Log.i(Constants.TAG,"Successfully received notification");
+                            Notification notification = new Notification(UUID.randomUUID().toString(),
+                                    "","","",0);
+                            firebaseCrudHelper.add(notification, "notification");
                         }
                         else{
                             Log.i(Constants.TAG,"Notification received failed");
@@ -214,7 +218,7 @@ public class MainActivity extends AppCompatActivity{
     private void setDataAdapter() {
         ArrayList<DrawerItem> items = new ArrayList<DrawerItem>();
         items.add(new DrawerItem(R.drawable.ic_baseline_settings, getString(R.string.settings)));
-        items.add(new DrawerItem(R.drawable.ic_notifications, getString(R.string.notifications)));
+        //items.add(new DrawerItem(R.drawable.ic_notifications, getString(R.string.notifications)));
         items.add(new DrawerItem(R.drawable.ic_baseline_info_24, getString(R.string.tutorial)));
         items.add(new DrawerItem(R.drawable.ic_baseline_star_24, getString(R.string.rate_us)));
 
@@ -235,7 +239,7 @@ public class MainActivity extends AppCompatActivity{
                     startActivity(new Intent(MainActivity.this, TutorialActivity.class));
                 }
                 else if (drawerItem.getIcon() == R.drawable.ic_notifications){
-                    Toast.makeText(MainActivity.this, getString(R.string.coming_soon), Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(MainActivity.this, NotificationActivity.class));
                 }
                 slidingRootNav.closeMenu();
             }

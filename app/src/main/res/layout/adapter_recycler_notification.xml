@@ -1,0 +1,70 @@
+<RelativeLayout
+    android:id="@+id/item_card_view"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:foreground="?attr/selectableItemBackgroundBorderless"
+    android:layout_margin="4dp">
+
+    <View
+        android:id="@+id/viewLine"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="4dp"
+        android:background="@color/md_grey_200"/>
+
+    <LinearLayout
+        android:layout_below="@id/viewLine"
+        android:id="@+id/itemContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/title"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textSize="16sp"
+            android:textColor="@color/md_grey_800"/>
+
+        <TextView
+            android:id="@+id/Message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/message"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textSize="16sp"
+            android:textColor="@color/md_grey_800"/>
+
+        <TextView
+            android:id="@+id/DateTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_gravity="center"
+            android:text="@string/date_hint"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textSize="14sp"
+            android:textColor="@color/md_grey_600"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/SeenStatus"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:src="@drawable/ic_ellipse_green_gradient"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="8dp"/>
+
+</RelativeLayout>

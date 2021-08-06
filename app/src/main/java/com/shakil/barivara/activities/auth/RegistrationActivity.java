@@ -93,8 +93,15 @@ public class RegistrationActivity extends AppCompatActivity {
                                                 startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
                                             }
                                             else{
+                                                if (task.getException().getMessage().equals(getString(R.string.firebase_user_exists_exception))){
+                                                    Toast.makeText(RegistrationActivity.this,
+                                                            getString(R.string.user_already_exists), Toast.LENGTH_LONG).show();
+                                                }
+                                                else{
+                                                    Toast.makeText(RegistrationActivity.this,
+                                                            getString(R.string.registration_unsucccessful), Toast.LENGTH_LONG).show();
+                                                }
                                                 Log.i(Constants.TAG+":onComplete",getString(R.string.registration_unsucccessful));
-                                                Toast.makeText(RegistrationActivity.this, getString(R.string.registration_unsucccessful), Toast.LENGTH_SHORT).show();
                                             }
                                             ux.removeLoadingView();
                                         }

@@ -284,4 +284,8 @@
     <string name="email_was_not_found_in_our_database">Email was not found in our database.</string>
     <string name="firebase_password_not_valid_exception">The password is invalid or the user does not have a password.</string>
     <string name="wrong_password">You have entered a wrong password</string>
+    <string name="firebase_user_exists_exception">The email address is already in use by another account.</string>
+    <string name="user_already_exists">User already exists.Try with different email.</string>
+    <string name="title">Title</string>
+    <string name="message">message</string>
 </resources>

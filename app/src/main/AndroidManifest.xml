@@ -37,6 +37,11 @@
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="adjustNothing"/>
         <activity
+            android:name=".activities.notification.NotificationActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNoActionBar"
+            android:windowSoftInputMode="adjustNothing"/>
+        <activity
             android:name=".activities.onboard.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeNoActionBar"
