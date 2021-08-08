@@ -221,6 +221,7 @@ public class MainActivity extends AppCompatActivity{
         //items.add(new DrawerItem(R.drawable.ic_notifications, getString(R.string.notifications)));
         items.add(new DrawerItem(R.drawable.ic_baseline_info_24, getString(R.string.tutorial)));
         items.add(new DrawerItem(R.drawable.ic_baseline_star_24, getString(R.string.rate_us)));
+        items.add(new DrawerItem(R.drawable.ic_logout, getString(R.string.logout)));
 
         RecyclerNavDrawerAdapter recyclerNavDrawerAdapter = new RecyclerNavDrawerAdapter(items);
         navRecycler = findViewById(R.id.navRecycler);
@@ -240,6 +241,9 @@ public class MainActivity extends AppCompatActivity{
                 }
                 else if (drawerItem.getIcon() == R.drawable.ic_notifications){
                     startActivity(new Intent(MainActivity.this, NotificationActivity.class));
+                }
+                else if (drawerItem.getIcon() == R.drawable.ic_logout){
+                    tools.doPopUpForLogout(LoginActivity.class);
                 }
                 slidingRootNav.closeMenu();
             }

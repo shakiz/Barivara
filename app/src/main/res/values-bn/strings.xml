@@ -286,6 +286,7 @@
     <string name="wrong_password">আপনি ভুল পাসওয়ার্ড লিখেছেন</string>
     <string name="firebase_user_exists_exception">The email address is already in use by another account.</string>
     <string name="user_already_exists">ইমেইল আইডি ইতোমধ্যে অন্য একজন ব্যবহার করছেন । অন্য ইমেল দিয়ে চেষ্টা করুন।</string>
-    <string name="title">Title</string>
-    <string name="message">message</string>
+    <string name="title">টাইটেল</string>
+    <string name="message">মেসেজ</string>
+    <string name="call_tenant">কল করুন</string>
 </resources>

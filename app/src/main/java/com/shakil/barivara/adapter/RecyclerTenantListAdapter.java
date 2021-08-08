@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,7 +67,7 @@ public class RecyclerTenantListAdapter extends RecyclerView.Adapter<RecyclerTena
                 }
             }
         });
-        holder.call.setOnClickListener(new View.OnClickListener() {
+        holder.callLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
@@ -82,7 +83,7 @@ public class RecyclerTenantListAdapter extends RecyclerView.Adapter<RecyclerTena
             }
         });
 
-        holder.message.setOnClickListener(new View.OnClickListener() {
+        holder.messageLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(context, context.getString(R.string.taking_into_message_section), Toast.LENGTH_SHORT).show();
@@ -99,15 +100,15 @@ public class RecyclerTenantListAdapter extends RecyclerView.Adapter<RecyclerTena
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView TenantName, StartingMonth, AssociateRoom;
         CardView item_card_view;
-        ImageView call, message;
+        LinearLayout callLayout, messageLayout;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             TenantName = itemView.findViewById(R.id.TenantName);
             StartingMonth = itemView.findViewById(R.id.StartingMonth);
             AssociateRoom = itemView.findViewById(R.id.AssociateRoom);
             item_card_view = itemView.findViewById(R.id.item_card_view);
-            call = itemView.findViewById(R.id.callIcon);
-            message = itemView.findViewById(R.id.messageIcon);
+            callLayout = itemView.findViewById(R.id.callLayout);
+            messageLayout = itemView.findViewById(R.id.messageLayout);
         }
     }
 }

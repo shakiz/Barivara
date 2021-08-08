@@ -54,6 +54,7 @@ public class RecyclerRentListAdapter extends RecyclerView.Adapter<RecyclerRentLi
                 }
             }
         });
+        holder.listCount.setText(""+(position+1));
     }
 
     @Override
@@ -64,11 +65,13 @@ public class RecyclerRentListAdapter extends RecyclerView.Adapter<RecyclerRentLi
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView MonthName, AssociateRoomName, RentAmount;
         CardView item_card_view;
+        TextView listCount;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             MonthName = itemView.findViewById(R.id.MonthName);
             AssociateRoomName = itemView.findViewById(R.id.AssociateRoomName);
             RentAmount = itemView.findViewById(R.id.RentAmount);
+            listCount = itemView.findViewById(R.id.listCount);
             item_card_view = itemView.findViewById(R.id.item_card_view);
         }
     }

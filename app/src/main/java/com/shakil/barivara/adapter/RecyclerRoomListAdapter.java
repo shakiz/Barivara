@@ -54,6 +54,7 @@ public class RecyclerRoomListAdapter extends RecyclerView.Adapter<RecyclerRoomLi
                 }
             }
         });
+        holder.listCount.setText(""+(position+1));
     }
 
     @Override
@@ -64,11 +65,13 @@ public class RecyclerRoomListAdapter extends RecyclerView.Adapter<RecyclerRoomLi
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView roomName, ownerName, startDate;
         CardView item_card_view;
+        TextView listCount;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             roomName = itemView.findViewById(R.id.roomName);
             ownerName = itemView.findViewById(R.id.roomOwner);
             startDate = itemView.findViewById(R.id.startMonth);
+            listCount = itemView.findViewById(R.id.listCount);
             item_card_view = itemView.findViewById(R.id.item_card_view);
         }
     }

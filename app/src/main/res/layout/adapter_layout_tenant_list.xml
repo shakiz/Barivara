@@ -17,7 +17,7 @@
         android:translationZ="2dp"
         android:foreground="?android:attr/selectableItemBackground"
         app:ignore="NamespaceTypo"
-        card_view:cardCornerRadius="4dp"
+        card_view:cardCornerRadius="8dp"
         card_view:cardUseCompatPadding="true"
         android:focusable="true">
 
@@ -29,204 +29,232 @@
             android:gravity="center">
 
             <LinearLayout
+                android:id="@+id/basicDetailsLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:layout_margin="8dp"
+                android:orientation="vertical"
                 android:paddingTop="4dp"
-                android:paddingBottom="4dp"
-                android:weightSum="8">
+                android:paddingBottom="4dp">
 
                 <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1.4"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="8dp"
-                    android:padding="4dp"
-                    android:orientation="vertical"
-                    android:layout_gravity="center"
-                    android:gravity="center">
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center|left"
+                    android:gravity="center|left"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:background="@drawable/rectangle_border_light_green">
 
-                    <ImageView
-                        android:id="@+id/callIcon"
-                        android:src="@drawable/ic_call"
-                        android:clickable="true"
-                        android:foreground="?attr/selectableItemBackgroundBorderless"
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tenant_name"
                         android:layout_gravity="center"
-                        android:gravity="center"
-                        android:padding="8dp"
-                        card_view:tint="@color/md_green_800" />
+                        android:gravity="center|left"
+                        android:textColor="@color/md_grey_800"
+                        android:textSize="16sp"/>
 
-                    <ImageView
-                        android:id="@+id/messageIcon"
-                        android:src="@drawable/ic_message"
-                        android:clickable="true"
-                        android:foreground="?attr/selectableItemBackgroundBorderless"
-                        card_view:tint="@color/md_green_800"
-                        android:layout_marginTop="8dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
                         android:layout_gravity="center"
-                        android:gravity="center"
-                        android:padding="8dp" />
+                        android:gravity="center|left"
+                        android:textColor="@color/md_grey_800"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:id="@+id/TenantName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/demo_tenant_name"
+                        android:layout_gravity="center"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:gravity="center|left"
+                        android:textColor="@color/md_grey_800"
+                        android:textStyle="bold"
+                        android:textSize="16sp"/>
 
                 </LinearLayout>
 
                 <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center|left"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center|left"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:background="@drawable/rectangle_border_light_green">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/month_name"
+                        android:layout_gravity="center"
+                        android:gravity="center|left"
+                        android:textColor="@color/md_blue_800"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=":"
+                        android:layout_gravity="center"
+                        android:gravity="center|left"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        android:textColor="@color/md_blue_800"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:id="@+id/StartingMonth"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/demo_month"
+                        android:layout_gravity="center"
+                        android:gravity="center|left"
+                        android:textStyle="bold"
+                        android:textColor="@color/md_blue_800"
+                        android:textSize="14sp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center|left"
+                    android:gravity="center|left"
+                    android:layout_marginTop="4dp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:background="@drawable/rectangle_border_light_green">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:text="@string/room_name"
+                        android:layout_gravity="center"
+                        android:gravity="center|left"
+                        android:scrollHorizontally="true"
+                        android:textColor="@color/md_grey_800"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:text=":"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        android:layout_gravity="center"
+                        android:gravity="center|left"
+                        android:scrollHorizontally="true"
+                        android:textColor="@color/md_grey_800"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:id="@+id/AssociateRoom"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:text="@string/demo_room_name"
+                        android:layout_gravity="center"
+                        android:gravity="center|left"
+                        android:scrollHorizontally="true"
+                        android:textColor="@color/md_orange_800"
+                        android:textStyle="bold"
+                        android:textSize="14sp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2"
+                android:layout_below="@id/basicDetailsLayout"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:id="@+id/callLayout"
                     android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="8dp"
+                    android:clickable="true"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:background="@drawable/rectangle_green"
+                    android:foreground="?attr/selectableItemBackgroundBorderless"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="48dp"
+                        android:layout_height="match_parent"
+                        android:padding="8dp"
+                        card_view:tint="@color/md_green_800"
+                        android:src="@drawable/ic_call"/>
+
+                    <TextView
+                        android:text="@string/call_tenant"
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:textSize="16sp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textColor="@color/md_grey_800" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/messageLayout"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="8dp"
-                    android:layout_weight="6.6"
-                    android:padding="4dp"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical">
+                    android:clickable="true"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:background="@drawable/rectangle_green"
+                    android:foreground="?attr/selectableItemBackgroundBorderless"
+                    android:orientation="horizontal">
 
-                    <LinearLayout
+                    <ImageView
+                        android:layout_width="48dp"
+                        android:layout_height="match_parent"
+                        android:padding="8dp"
+                        card_view:tint="@color/md_green_800"
+                        android:src="@drawable/ic_message"/>
+
+                    <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_gravity="center|left"
-                        android:gravity="center|left"
-                        android:paddingLeft="8dp"
-                        android:paddingRight="8dp"
-                        android:paddingTop="4dp"
-                        android:paddingBottom="4dp"
-                        android:background="@drawable/rectangle_border_light_green">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/tenant_name"
-                            android:layout_gravity="center"
-                            android:gravity="center|left"
-                            android:textColor="@color/md_grey_800"
-                            android:textSize="16sp"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=":"
-                            android:layout_marginLeft="4dp"
-                            android:layout_marginRight="4dp"
-                            android:layout_gravity="center"
-                            android:gravity="center|left"
-                            android:textColor="@color/md_grey_800"
-                            android:textSize="16sp"/>
-
-                        <TextView
-                            android:id="@+id/TenantName"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/demo_tenant_name"
-                            android:layout_gravity="center"
-                            android:maxLines="1"
-                            android:ellipsize="end"
-                            android:gravity="center|left"
-                            android:textColor="@color/md_grey_800"
-                            android:textStyle="bold"
-                            android:textSize="16sp"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_gravity="center|left"
-                        android:layout_marginTop="4dp"
-                        android:gravity="center|left"
-                        android:paddingLeft="8dp"
-                        android:paddingRight="8dp"
-                        android:paddingTop="4dp"
-                        android:paddingBottom="4dp"
-                        android:background="@drawable/rectangle_border_light_green">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/month_name"
-                            android:layout_gravity="center"
-                            android:gravity="center|left"
-                            android:textColor="@color/md_blue_800"
-                            android:textSize="14sp"/>
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text=":"
-                            android:layout_gravity="center"
-                            android:gravity="center|left"
-                            android:layout_marginLeft="4dp"
-                            android:layout_marginRight="4dp"
-                            android:textColor="@color/md_blue_800"
-                            android:textSize="14sp"/>
-
-                        <TextView
-                            android:id="@+id/StartingMonth"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/demo_month"
-                            android:layout_gravity="center"
-                            android:gravity="center|left"
-                            android:textStyle="bold"
-                            android:textColor="@color/md_blue_800"
-                            android:textSize="14sp"/>
-
-                    </LinearLayout>
-
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_gravity="center|left"
-                        android:gravity="center|left"
-                        android:layout_marginTop="4dp"
-                        android:paddingLeft="8dp"
-                        android:paddingRight="8dp"
-                        android:paddingTop="4dp"
-                        android:paddingBottom="4dp"
-                        android:background="@drawable/rectangle_border_light_green">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:ellipsize="end"
-                            android:text="@string/room_name"
-                            android:layout_gravity="center"
-                            android:gravity="center|left"
-                            android:scrollHorizontally="true"
-                            android:textColor="@color/md_grey_800"
-                            android:textSize="14sp"/>
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:ellipsize="end"
-                            android:text=":"
-                            android:layout_marginLeft="4dp"
-                            android:layout_marginRight="4dp"
-                            android:layout_gravity="center"
-                            android:gravity="center|left"
-                            android:scrollHorizontally="true"
-                            android:textColor="@color/md_grey_800"
-                            android:textSize="14sp"/>
-
-                        <TextView
-                            android:id="@+id/AssociateRoom"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:ellipsize="end"
-                            android:text="@string/demo_room_name"
-                            android:layout_gravity="center"
-                            android:gravity="center|left"
-                            android:scrollHorizontally="true"
-                            android:textColor="@color/md_orange_800"
-                            android:textStyle="bold"
-                            android:textSize="14sp"/>
-
-                    </LinearLayout>
+                        android:layout_height="match_parent"
+                        android:textSize="16sp"
+                        android:layout_gravity="center"
+                        android:textColor="@color/md_grey_800"
+                        android:text="@string/message"
+                        android:gravity="center" />
 
                 </LinearLayout>
 

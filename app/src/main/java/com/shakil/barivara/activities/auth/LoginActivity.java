@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.airbnb.lottie.utils.Utils;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -21,6 +22,7 @@ import com.shakil.barivara.utils.Constants;
 import com.shakil.barivara.utils.PrefManager;
 import com.shakil.barivara.utils.Tools;
 import com.shakil.barivara.utils.UX;
+import com.shakil.barivara.utils.UtilsForAll;
 import com.shakil.barivara.utils.Validation;
 
 import java.util.HashMap;
@@ -150,7 +152,7 @@ public class LoginActivity extends AppCompatActivity {
     //region activity components
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        new UtilsForAll(this).exitApp();
     }
     //endregion
 }

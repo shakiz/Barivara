@@ -112,6 +112,7 @@ public class Tools {
         Dialog dialog = new Dialog(context, android.R.style.Theme_Dialog);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.logout_confirmation_layout);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         dialog.setCanceledOnTouchOutside(true);
 
         cancel = dialog.findViewById(R.id.cancelButton);
