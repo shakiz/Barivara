@@ -13,6 +13,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.shakil.barivara.R;
 import com.shakil.barivara.model.meter.ElectricityBill;
 import com.shakil.barivara.model.meter.Meter;
+import com.shakil.barivara.model.notification.Notification;
 import com.shakil.barivara.model.room.Rent;
 import com.shakil.barivara.model.room.Room;
 import com.shakil.barivara.model.tenant.Tenant;
@@ -38,6 +39,15 @@ public class FirebaseCrudHelper {
     //region add object in firebase
     public void add(Object object, String path){
         databaseReference = FirebaseDatabase.getInstance().getReference(path).child(prefManager.getString(mUserId));
+        Log.i(Constants.TAG,""+databaseReference.getParent());
+        String id = databaseReference.push().getKey();
+        databaseReference.child(id).setValue(object);
+    }
+    //endregion
+
+    //region add object in firebase
+    public void addNotification(Notification object, String path){
+        databaseReference = FirebaseDatabase.getInstance().getReference(path);
         Log.i(Constants.TAG,""+databaseReference.getParent());
         String id = databaseReference.push().getKey();
         databaseReference.child(id).setValue(object);
@@ -214,6 +224,34 @@ public class FirebaseCrudHelper {
                         objects.add(object);
                     }
                     onTenantDataFetch.onFetch(objects);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.i(Constants.TAG,""+error.getMessage());
+            }
+        });
+    }
+    //endregion
+
+    //region fetch rent table data from firebase db
+    public interface onNotificationDataFetch{
+        void onFetch(ArrayList<Notification> objects);
+    }
+    public void fetchAllNotification(String path, onNotificationDataFetch onNotificationDataFetch){
+        ArrayList<Notification> objects = new ArrayList<>();
+        databaseReference = FirebaseDatabase.getInstance().getReference(path);
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getChildren() != null) {
+                    for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                        Notification object = dataSnapshot.getValue(Notification.class);
+                        Log.i(Constants.TAG+":fetchAllNotification",""+object.getTitle());
+                        objects.add(object);
+                    }
+                    onNotificationDataFetch.onFetch(objects);
                 }
             }
 

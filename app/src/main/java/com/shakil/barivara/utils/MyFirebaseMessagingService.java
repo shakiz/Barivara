@@ -16,10 +16,16 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.shakil.barivara.R;
 import com.shakil.barivara.activities.onboard.MainActivity;
+import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
+import com.shakil.barivara.model.notification.Notification;
+
+import java.util.UUID;
 
 import static com.shakil.barivara.utils.Constants.TAG;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
+    private FirebaseCrudHelper firebaseCrudHelper;
+    private UtilsForAll utilsForAll;
     //region Called when message is received.
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -29,6 +35,16 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Log.i(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
         sendNotification(remoteMessage.getNotification().getTitle(),
                 remoteMessage.getNotification().getBody());
+        //endregion
+
+        //region save notification
+        firebaseCrudHelper = new FirebaseCrudHelper(this);
+        utilsForAll = new UtilsForAll(this);
+        Notification notification = new Notification(UUID.randomUUID().toString(),
+                remoteMessage.getNotification().getTitle(),remoteMessage.getNotification().getBody(),
+                utilsForAll.getDateTimeText(),0);
+        firebaseCrudHelper.addNotification(notification, "notification");
+        Log.i(TAG,"Notification data saved");
         //endregion
     }
     //endregion

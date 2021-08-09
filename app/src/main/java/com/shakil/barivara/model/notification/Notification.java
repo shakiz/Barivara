@@ -7,6 +7,9 @@ public class Notification {
     private String DateTime;
     private int SeenStatus;
 
+    public Notification() {
+    }
+
     public Notification(String NotificationId, String Title, String Message, String DateTime, int seenStatus) {
         this.NotificationId = NotificationId;
         this.Title = Title;

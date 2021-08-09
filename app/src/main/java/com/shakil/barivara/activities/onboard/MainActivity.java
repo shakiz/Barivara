@@ -75,9 +75,6 @@ public class MainActivity extends AppCompatActivity{
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()){
                             Log.i(Constants.TAG,"Successfully received notification");
-                            Notification notification = new Notification(UUID.randomUUID().toString(),
-                                    "","","",0);
-                            firebaseCrudHelper.add(notification, "notification");
                         }
                         else{
                             Log.i(Constants.TAG,"Notification received failed");
@@ -218,7 +215,7 @@ public class MainActivity extends AppCompatActivity{
     private void setDataAdapter() {
         ArrayList<DrawerItem> items = new ArrayList<DrawerItem>();
         items.add(new DrawerItem(R.drawable.ic_baseline_settings, getString(R.string.settings)));
-        //items.add(new DrawerItem(R.drawable.ic_notifications, getString(R.string.notifications)));
+        items.add(new DrawerItem(R.drawable.ic_notifications, getString(R.string.notifications)));
         items.add(new DrawerItem(R.drawable.ic_baseline_info_24, getString(R.string.tutorial)));
         items.add(new DrawerItem(R.drawable.ic_baseline_star_24, getString(R.string.rate_us)));
         items.add(new DrawerItem(R.drawable.ic_logout, getString(R.string.logout)));
