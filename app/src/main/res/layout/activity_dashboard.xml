@@ -614,9 +614,9 @@
                             android:layout_height="56dp"
                             android:gravity="center"
                             android:padding="8dp"
-                            android:src="@drawable/ic_see"
-                            android:textColor="@color/md_white_1000"
-                            android:text="4"/>
+                            android:src="@drawable/ic_visibility_black_24dp"
+                            app:tint="@color/md_grey_800"
+                            android:textColor="@color/md_white_1000"/>
 
                         <LinearLayout
                             android:layout_width="0dp"

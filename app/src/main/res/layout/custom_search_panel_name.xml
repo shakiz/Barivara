@@ -62,7 +62,8 @@
                     android:padding="8dp"
                     android:foreground="?attr/selectableItemBackground"
                     android:background="@color/transparent"
-                    android:src="@drawable/ic_search"
+                    android:src="@drawable/ic_search_black_24dp"
+                    app:tint="@color/md_grey_800"
                     android:layout_gravity="center"/>
 
                 <ImageButton
@@ -74,7 +75,8 @@
                     android:padding="8dp"
                     android:foreground="?attr/selectableItemBackground"
                     android:background="@color/transparent"
-                    android:src="@drawable/ic_refresh"
+                    app:tint="@color/md_grey_800"
+                    android:src="@drawable/ic_refresh_black_24dp"
                     android:layout_gravity="center"/>
 
             </LinearLayout>

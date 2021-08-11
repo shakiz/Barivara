@@ -171,7 +171,7 @@
                                     android:layout_marginRight="4dp"
                                     android:layout_marginBottom="8dp"
                                     android:layout_marginTop="8dp"
-                                    android:src="@drawable/ic_language_settings"
+                                    android:src="@drawable/ic_language_black_24dp"
                                     app:backgroundTint="@color/md_white_1000"
                                     android:tint="@color/md_green_700"
                                     app:fabSize="mini"/>
@@ -234,7 +234,8 @@
                                     android:layout_height="32dp"
                                     android:padding="8dp"
                                     android:background="@drawable/circle_border_settings_green"
-                                    android:src="@drawable/ic_sync_new" />
+                                    android:src="@drawable/ic_sync_black_24dp"
+                                    app:tint="@color/md_white_1000" />
 
                             </LinearLayout>
 
@@ -290,7 +291,7 @@
                                     android:layout_marginRight="4dp"
                                     android:layout_marginBottom="8dp"
                                     android:layout_marginTop="8dp"
-                                    android:src="@drawable/ic_save"
+                                    android:src="@drawable/ic_save_alt_black_24dp"
                                     app:backgroundTint="@color/md_white_1000"
                                     android:tint="@color/md_green_700"
                                     app:fabSize="mini"/>
@@ -342,7 +343,8 @@
                                     android:layout_height="32dp"
                                     android:padding="8dp"
                                     android:background="@drawable/circle_border_settings_green"
-                                    android:src="@drawable/ic_sync_new" />
+                                    android:src="@drawable/ic_sync_black_24dp"
+                                    app:tint="@color/md_white_1000"/>
 
                             </LinearLayout>
 

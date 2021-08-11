@@ -214,11 +214,11 @@ public class MainActivity extends AppCompatActivity{
     //region set nav recycler data and adapter
     private void setDataAdapter() {
         ArrayList<DrawerItem> items = new ArrayList<DrawerItem>();
-        items.add(new DrawerItem(R.drawable.ic_baseline_settings, getString(R.string.settings)));
-        items.add(new DrawerItem(R.drawable.ic_notifications, getString(R.string.notifications)));
-        items.add(new DrawerItem(R.drawable.ic_baseline_info_24, getString(R.string.tutorial)));
-        items.add(new DrawerItem(R.drawable.ic_baseline_star_24, getString(R.string.rate_us)));
-        items.add(new DrawerItem(R.drawable.ic_logout, getString(R.string.logout)));
+        items.add(new DrawerItem(R.drawable.ic_settings_black_24dp, getString(R.string.settings)));
+        items.add(new DrawerItem(R.drawable.ic_notifications_black_24dp, getString(R.string.notifications)));
+        items.add(new DrawerItem(R.drawable.ic_info_black_24dp, getString(R.string.tutorial)));
+        items.add(new DrawerItem(R.drawable.ic_star_border_black_24dp, getString(R.string.rate_us)));
+        items.add(new DrawerItem(R.drawable.ic_logout_black_24dp, getString(R.string.logout)));
 
         RecyclerNavDrawerAdapter recyclerNavDrawerAdapter = new RecyclerNavDrawerAdapter(items);
         navRecycler = findViewById(R.id.navRecycler);
@@ -227,19 +227,19 @@ public class MainActivity extends AppCompatActivity{
         recyclerNavDrawerAdapter.setOnItemClickListener(new RecyclerNavDrawerAdapter.onItemClickListener() {
             @Override
             public void onItemClick(DrawerItem drawerItem) {
-                if (drawerItem.getIcon() == R.drawable.ic_baseline_settings){
+                if (drawerItem.getIcon() == R.drawable.ic_settings_black_24dp){
                     startActivity(new Intent(MainActivity.this, SettingsActivity.class));
                 }
-                else if (drawerItem.getIcon() == R.drawable.ic_baseline_star_24){
+                else if (drawerItem.getIcon() == R.drawable.ic_star_border_black_24dp){
                     tools.rateApp();
                 }
-                else if (drawerItem.getIcon() == R.drawable.ic_baseline_info_24){
+                else if (drawerItem.getIcon() == R.drawable.ic_info_black_24dp){
                     startActivity(new Intent(MainActivity.this, TutorialActivity.class));
                 }
-                else if (drawerItem.getIcon() == R.drawable.ic_notifications){
+                else if (drawerItem.getIcon() == R.drawable.ic_notifications_black_24dp){
                     startActivity(new Intent(MainActivity.this, NotificationActivity.class));
                 }
-                else if (drawerItem.getIcon() == R.drawable.ic_logout){
+                else if (drawerItem.getIcon() == R.drawable.ic_logout_black_24dp){
                     tools.doPopUpForLogout(LoginActivity.class);
                 }
                 slidingRootNav.closeMenu();

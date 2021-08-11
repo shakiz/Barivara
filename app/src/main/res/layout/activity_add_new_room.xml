@@ -136,10 +136,10 @@
                                         android:id="@+id/DeductNoOfRoom"
                                         android:layout_width="32dp"
                                         android:layout_height="24dp"
-                                        android:padding="8dp"
                                         android:clickable="true"
+                                        app:tint="@color/md_grey_800"
                                         android:foreground="?attr/selectableItemBackgroundBorderless"
-                                        android:src="@drawable/ic_icon_minus"/>
+                                        android:src="@drawable/ic_remove_black_24dp"/>
 
                                 </LinearLayout>
 
@@ -224,10 +224,10 @@
                                         android:id="@+id/DeductNoOfBathroom"
                                         android:layout_width="32dp"
                                         android:layout_height="24dp"
-                                        android:padding="8dp"
                                         android:clickable="true"
+                                        app:tint="@color/md_grey_800"
                                         android:foreground="?attr/selectableItemBackgroundBorderless"
-                                        android:src="@drawable/ic_icon_minus"/>
+                                        android:src="@drawable/ic_remove_black_24dp"/>
 
                                 </LinearLayout>
 
@@ -312,10 +312,10 @@
                                         android:id="@+id/DeductNoOfBalcony"
                                         android:layout_width="32dp"
                                         android:layout_height="24dp"
-                                        android:padding="8dp"
+                                        app:tint="@color/md_grey_800"
                                         android:clickable="true"
                                         android:foreground="?attr/selectableItemBackgroundBorderless"
-                                        android:src="@drawable/ic_icon_minus"/>
+                                        android:src="@drawable/ic_remove_black_24dp"/>
 
                                 </LinearLayout>
 

@@ -23,8 +23,9 @@
             android:id="@+id/icon"
             android:layout_width="0dp"
             android:layout_weight=".25"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_info"
+            android:layout_height="40dp"
+            android:padding="8dp"
+            android:src="@drawable/ic_info_black_24dp"
             app:tint="@color/md_green_800"
             android:tag="Drawable"/>
 

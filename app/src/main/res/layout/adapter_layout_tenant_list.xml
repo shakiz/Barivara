@@ -214,7 +214,7 @@
                         android:layout_height="match_parent"
                         android:padding="8dp"
                         card_view:tint="@color/md_green_800"
-                        android:src="@drawable/ic_call"/>
+                        android:src="@drawable/ic_call_black_24dp"/>
 
                     <TextView
                         android:text="@string/call_tenant"
@@ -245,7 +245,7 @@
                         android:layout_height="match_parent"
                         android:padding="8dp"
                         card_view:tint="@color/md_green_800"
-                        android:src="@drawable/ic_message"/>
+                        android:src="@drawable/ic_message_black_24dp"/>
 
                     <TextView
                         android:layout_width="wrap_content"

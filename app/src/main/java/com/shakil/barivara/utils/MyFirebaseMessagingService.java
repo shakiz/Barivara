@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
@@ -40,11 +41,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         //region save notification
         firebaseCrudHelper = new FirebaseCrudHelper(this);
         utilsForAll = new UtilsForAll(this);
-        Notification notification = new Notification(UUID.randomUUID().toString(),
-                remoteMessage.getNotification().getTitle(),remoteMessage.getNotification().getBody(),
-                utilsForAll.getDateTimeText(),0);
-        firebaseCrudHelper.addNotification(notification, "notification");
-        Log.i(TAG,"Notification data saved");
+        if (!TextUtils.isEmpty(remoteMessage.getNotification().getTitle()) &&
+                !TextUtils.isEmpty(remoteMessage.getNotification().getBody())) {
+            Notification notification = new Notification(UUID.randomUUID().toString(),
+                    remoteMessage.getNotification().getTitle(),remoteMessage.getNotification().getBody(),
+                    utilsForAll.getDateTimeText(),0);
+            firebaseCrudHelper.addNotification(notification, "notification");
+            Log.i(TAG,"Notification data saved");
+        }
         //endregion
     }
     //endregion
@@ -59,7 +63,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(this, "1001")
-                        .setSmallIcon(R.drawable.ic_notifications)
+                        .setSmallIcon(R.drawable.ic_notifications_black_24dp)
                         .setContentTitle(title)
                         .setContentText(message)
                         .setAutoCancel(true)

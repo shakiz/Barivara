@@ -205,8 +205,9 @@
                         android:id="@+id/DeleteFromCart"
                         android:layout_width="match_parent"
                         android:layout_height="24dp"
-                        android:src="@drawable/ic_icon_delete"
+                        android:src="@drawable/ic_delete_circle_black_24dp"
                         android:clickable="true"
+                        card_view:tint="@color/colorRed"
                         android:foreground="?attr/selectableItemBackgroundBorderless"
                         android:focusable="true" />
 
