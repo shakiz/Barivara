@@ -2,6 +2,7 @@ package com.shakil.barivara.activities.notification;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import android.view.View;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ import com.shakil.barivara.utils.Tools;
 import com.shakil.barivara.utils.UX;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class NotificationActivity extends AppCompatActivity {
     private ActivityNotificationBinding activityNotificationBinding;
@@ -77,7 +79,9 @@ public class NotificationActivity extends AppCompatActivity {
                 notificationList = objects;
                 if (notificationList.size() <= 0){
                     activityNotificationBinding.mNoDataMessage.setVisibility(View.VISIBLE);
-                    activityNotificationBinding.mNoDataMessage.setText(R.string.no_data_message);
+                }
+                else{
+                    activityNotificationBinding.mNoDataMessage.setVisibility(View.GONE);
                 }
                 setNotificationRecycler();
                 ux.removeLoadingView();
@@ -88,6 +92,14 @@ public class NotificationActivity extends AppCompatActivity {
 
     //region set notification recycler adapter
     private void setNotificationRecycler(){
+        if (notificationList != null) {
+            Iterator<Notification> iter = notificationList.iterator();
+            while (iter.hasNext()) {
+                Notification value = iter.next();
+                if (value.getTitle() == null)
+                    iter.remove();
+            }
+        }
         notificationRecyclerAdapter = new NotificationRecyclerAdapter(notificationList);
         activityNotificationBinding.mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         activityNotificationBinding.mRecyclerView.setAdapter(notificationRecyclerAdapter);

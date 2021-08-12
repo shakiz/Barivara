@@ -93,6 +93,14 @@ public class UtilsForAll {
     }
     //endregion
 
+    //region get dateTime with PM
+    public String getDateTimeWithPM() {
+        String  currentDateTimeString = DateFormat.getDateTimeInstance()
+                .format(new Date());
+        return currentDateTimeString;
+    }
+    //endregion
+
     //region get day of the month
     public String getDayOfTheMonth(){
         DateFormat dateFormat = new SimpleDateFormat("EEE");

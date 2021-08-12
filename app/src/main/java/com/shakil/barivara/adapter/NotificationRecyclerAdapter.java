@@ -35,13 +35,6 @@ public class NotificationRecyclerAdapter extends RecyclerView.Adapter<Notificati
         holder.DateTime.setText(notification.getDateTime());
         holder.Title.setText(notification.getTitle());
         holder.Message.setText(notification.getMessage());
-
-        if (notification.getSeenStatus() == 0){
-            holder.SeenStatus.setVisibility(View.VISIBLE);
-        }
-        else{
-            holder.SeenStatus.setVisibility(View.GONE);
-        }
     }
 
     @Override

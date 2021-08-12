@@ -41,11 +41,15 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         //region save notification
         firebaseCrudHelper = new FirebaseCrudHelper(this);
         utilsForAll = new UtilsForAll(this);
-        if (!TextUtils.isEmpty(remoteMessage.getNotification().getTitle()) &&
-                !TextUtils.isEmpty(remoteMessage.getNotification().getBody())) {
+        if (
+                remoteMessage.getNotification().getTitle() != null &&
+                remoteMessage.getNotification().getBody() != null &&
+                !TextUtils.isEmpty(remoteMessage.getNotification().getTitle()) &&
+                !TextUtils.isEmpty(remoteMessage.getNotification().getBody())
+                ) {
             Notification notification = new Notification(UUID.randomUUID().toString(),
                     remoteMessage.getNotification().getTitle(),remoteMessage.getNotification().getBody(),
-                    utilsForAll.getDateTimeText(),0);
+                    utilsForAll.getDateTimeWithPM(),0);
             firebaseCrudHelper.addNotification(notification, "notification");
             Log.i(TAG,"Notification data saved");
         }
