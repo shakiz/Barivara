@@ -279,6 +279,57 @@
 
                         </LinearLayout>
 
+                        <LinearLayout
+                            android:id="@+id/IsActiveLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginTop="14dp"
+                            android:layout_marginRight="12dp"
+                            android:paddingLeft="4dp"
+                            android:paddingRight="4dp"
+                            android:paddingTop="4dp"
+                            android:background="@drawable/edit_text_back"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:textColor="@color/md_grey_900"
+                                android:gravity="center|left"
+                                android:text="@string/is_tenant_active" />
+
+                            <RadioGroup
+                                android:id="@+id/IsActive"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:layout_marginBottom="4dp"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <RadioButton
+                                    android:id="@+id/IsActive_Yes"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="16dp"
+                                    android:tag="@string/yes"
+                                    android:text="@string/yes"/>
+
+                                <RadioButton
+                                    android:id="@+id/IsActive_No"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="16dp"
+                                    android:tag="@string/no"
+                                    android:text="@string/no"/>
+
+                            </RadioGroup>
+
+                        </LinearLayout>
+
                         <CheckBox
                             android:id="@+id/AdvanceCheckBox"
                             android:layout_width="match_parent"

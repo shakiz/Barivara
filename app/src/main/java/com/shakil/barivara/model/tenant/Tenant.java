@@ -21,6 +21,8 @@ public class Tenant implements Parcelable {
     private int AssociateRoomId;
     private String TenantTypeStr;
     private int TenantTypeId;
+    private int IsActiveId;
+    private String IsActiveValue;
     private String FireBaseKey;
 
     public Tenant() {
@@ -39,6 +41,8 @@ public class Tenant implements Parcelable {
         AssociateRoomId = in.readInt();
         TenantTypeStr = in.readString();
         TenantTypeId = in.readInt();
+        IsActiveId = in.readInt();
+        IsActiveValue = in.readString();
         FireBaseKey = in.readString();
     }
 
@@ -56,6 +60,8 @@ public class Tenant implements Parcelable {
         dest.writeInt(AssociateRoomId);
         dest.writeString(TenantTypeStr);
         dest.writeInt(TenantTypeId);
+        dest.writeInt(IsActiveId);
+        dest.writeString(IsActiveValue);
         dest.writeString(FireBaseKey);
     }
 
@@ -90,9 +96,15 @@ public class Tenant implements Parcelable {
         result.put("associateRoom", AssociateRoom);
         result.put("associateRoomId", AssociateRoomId);
         result.put("tenantTypeStr", TenantTypeStr);
+        result.put("isActiveValue", IsActiveValue);
+        result.put("isActiveId", IsActiveId);
         result.put("tenantTypeId", TenantTypeId);
 
         return result;
+    }
+
+    public static Creator<Tenant> getCREATOR() {
+        return CREATOR;
     }
 
     public String getTenantId() {
@@ -191,15 +203,27 @@ public class Tenant implements Parcelable {
         TenantTypeId = tenantTypeId;
     }
 
+    public int getIsActiveId() {
+        return IsActiveId;
+    }
+
+    public void setIsActiveId(int isActiveId) {
+        IsActiveId = isActiveId;
+    }
+
+    public String getIsActiveValue() {
+        return IsActiveValue;
+    }
+
+    public void setIsActiveValue(String isActiveValue) {
+        IsActiveValue = isActiveValue;
+    }
+
     public String getFireBaseKey() {
         return FireBaseKey;
     }
 
     public void setFireBaseKey(String fireBaseKey) {
         FireBaseKey = fireBaseKey;
-    }
-
-    public static Creator<Tenant> getCREATOR() {
-        return CREATOR;
     }
 }

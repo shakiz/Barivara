@@ -289,4 +289,9 @@
     <string name="title">টাইটেল</string>
     <string name="message">মেসেজ</string>
     <string name="call_tenant">কল করুন</string>
+    <string name="is_tenant_active">ভাড়াটিয়ার কি এখনও রুম নেওয়া আছে ?</string>
+    <string name="yes">হ্যাঁ</string>
+    <string name="no">না</string>
+    <string name="running">Running</string>
+    <string name="left">Left</string>
 </resources>

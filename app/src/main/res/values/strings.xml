@@ -289,4 +289,9 @@
     <string name="title">Title</string>
     <string name="message">Message</string>
     <string name="call_tenant">Call Tenant</string>
+    <string name="is_tenant_active">Does the tenant still have room?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="running">Running</string>
+    <string name="left">Left</string>
 </resources>

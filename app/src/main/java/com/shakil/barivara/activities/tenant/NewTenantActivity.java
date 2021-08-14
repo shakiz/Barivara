@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,14 +36,14 @@ public class NewTenantActivity extends AppCompatActivity {
     private SpinnerAdapter spinnerAdapter;
     private SpinnerData spinnerData;
     private int AssociateRoomId, StartingMonthId, TenantTypeId;
-    private String tenantNameStr, AssociateRoomStr, StartingMonthStr, TenantTypeStr;
+    private String tenantNameStr, AssociateRoomStr, StartingMonthStr, TenantTypeStr, IsActiveValue;
     private Tenant tenant = new Tenant();
     private String command = "add";
     private FirebaseCrudHelper firebaseCrudHelper;
     private ArrayList<String> roomNames;
     private ArrayAdapter<String> roomNameSpinnerAdapter;
     private Validation validation;
-    private int advancedAmountInt;
+    private int advancedAmountInt, isActiveId = 0;
     private Map<String, String[]> hashMap = new HashMap();
     private UtilsForAll utilsForAll;
     private Tools tools;
@@ -86,7 +88,10 @@ public class NewTenantActivity extends AppCompatActivity {
     private void loadData(){
         if (tenant.getTenantId() != null) {
             command = "update";
+            activityAddNewTenantBinding.IsActiveLayout.setVisibility(View.VISIBLE);
+            activityAddNewTenantBinding.IsActive.check(tenant.getIsActiveId());
             activityAddNewTenantBinding.TenantName.setText(tenant.getTenantName());
+            activityAddNewTenantBinding.AssociateRoomId.setVisibility(View.GONE);
             activityAddNewTenantBinding.StartingMonthId.setSelection(tenant.getStartingMonthId(),true);
             activityAddNewTenantBinding.TenantTypeId.setSelection(tenant.getTenantTypeId(),true);
             activityAddNewTenantBinding.NID.setText(tenant.getNID());
@@ -96,6 +101,8 @@ public class NewTenantActivity extends AppCompatActivity {
                 activityAddNewTenantBinding.advanceAmountLayout.setVisibility(View.VISIBLE);
                 activityAddNewTenantBinding.AdvanceCheckBox.setChecked(true);
                 activityAddNewTenantBinding.AdvanceAmount.setText(""+tenant.getAdvancedAmount());
+                activityAddNewTenantBinding.AdvanceCheckBox.setEnabled(false);
+                activityAddNewTenantBinding.AdvanceAmount.setEnabled(false);
             }
         }
     }
@@ -203,6 +210,19 @@ public class NewTenantActivity extends AppCompatActivity {
         });
         //endregion
 
+        //region radio group IsActive value listener
+        activityAddNewTenantBinding.IsActive.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                RadioButton radioButton = (RadioButton) findViewById(checkedId);
+                isActiveId = checkedId;
+                if (radioButton != null) {
+                    IsActiveValue = radioButton.getTag().toString();
+                }
+            }
+        });
+        //endregion
+
         activityAddNewTenantBinding.mSaveTenantMaster.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -259,6 +279,8 @@ public class NewTenantActivity extends AppCompatActivity {
         tenant.setTenantTypeId(TenantTypeId);
         tenant.setStartingMonthId(StartingMonthId);
         tenant.setStartingMonth(StartingMonthStr);
+        tenant.setIsActiveId(isActiveId);
+        tenant.setIsActiveValue(IsActiveValue);
         if (command.equals("add")) {
             tenant.setTenantId(UUID.randomUUID().toString());
             firebaseCrudHelper.add(tenant, "tenant");

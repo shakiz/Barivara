@@ -6,10 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +22,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.shakil.barivara.R;
 import com.shakil.barivara.model.tenant.Tenant;
 import com.shakil.barivara.utils.Tools;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -67,6 +69,7 @@ public class RecyclerTenantListAdapter extends RecyclerView.Adapter<RecyclerTena
                 }
             }
         });
+        //region call and message listeners
         holder.callLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,6 +93,20 @@ public class RecyclerTenantListAdapter extends RecyclerView.Adapter<RecyclerTena
                 new Tools(context).sendMessage(tenant.getMobileNo());
             }
         });
+        //endregion
+
+        //region set tenant status
+        if (tenant.getIsActiveValue() != null && !TextUtils.isEmpty(tenant.getIsActiveValue())) {
+            if (tenant.getIsActiveValue().equals(context.getString(R.string.yes))){
+                holder.IsActive.setText(context.getString(R.string.running));
+                holder.IsActive.setBackgroundResource(R.drawable.rectangle_green_on_side_curve);
+            }
+            else{
+                holder.IsActive.setText(context.getString(R.string.left));
+                holder.IsActive.setBackgroundResource(R.drawable.rectangle_light_red_on_sided_curve);
+            }
+        }
+        //endregion
     }
 
     @Override
@@ -98,7 +115,7 @@ public class RecyclerTenantListAdapter extends RecyclerView.Adapter<RecyclerTena
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView TenantName, StartingMonth, AssociateRoom;
+        TextView TenantName, StartingMonth, AssociateRoom, IsActive;
         CardView item_card_view;
         LinearLayout callLayout, messageLayout;
         public ViewHolder(@NonNull View itemView) {
@@ -106,9 +123,10 @@ public class RecyclerTenantListAdapter extends RecyclerView.Adapter<RecyclerTena
             TenantName = itemView.findViewById(R.id.TenantName);
             StartingMonth = itemView.findViewById(R.id.StartingMonth);
             AssociateRoom = itemView.findViewById(R.id.AssociateRoom);
-            item_card_view = itemView.findViewById(R.id.item_card_view);
             callLayout = itemView.findViewById(R.id.callLayout);
             messageLayout = itemView.findViewById(R.id.messageLayout);
+            IsActive = itemView.findViewById(R.id.IsActive);
+            item_card_view = itemView.findViewById(R.id.item_card_view);
         }
     }
 }
