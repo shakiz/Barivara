@@ -292,6 +292,8 @@
     <string name="is_tenant_active">ভাড়াটিয়ার কি এখনও রুম নেওয়া আছে ?</string>
     <string name="yes">হ্যাঁ</string>
     <string name="no">না</string>
-    <string name="running">Running</string>
-    <string name="left">Left</string>
+    <string name="running">ভাড়া আছে</string>
+    <string name="left">চলে গেছে </string>
+    <string name="total_tenants_current">ভাড়াটিয়া - চলমান</string>
+    <string name="total_tenants_left">ভাড়াটিয়া - চলে গেছে</string>
 </resources>

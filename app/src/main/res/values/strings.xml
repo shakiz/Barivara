@@ -294,4 +294,6 @@
     <string name="no">No</string>
     <string name="running">Running</string>
     <string name="left">Left</string>
+    <string name="total_tenants_current">Total Tenant (Current)</string>
+    <string name="total_tenants_left">Total Tenant (Left)</string>
 </resources>

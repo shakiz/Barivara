@@ -31,6 +31,7 @@ public class DashboardActivity extends AppCompatActivity {
     private PrefManager prefManager;
     private SpinnerAdapter spinnerAdapter;
     private SpinnerData spinnerData;
+    private int totalTenantCurrent = 0, totalTenantLeft = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +67,16 @@ public class DashboardActivity extends AppCompatActivity {
         firebaseCrudHelper.fetchAllTenant("tenant", new FirebaseCrudHelper.onTenantDataFetch() {
             @Override
             public void onFetch(ArrayList<Tenant> objects) {
-                activityDashboardBinding.TotalTenants.setText(""+objects.size());
+                for (Tenant tenant : objects) {
+                    if (tenant.getIsActiveId() != 0){
+                        totalTenantCurrent++;
+                    }
+                    else{
+                        totalTenantLeft++;
+                    }
+                }
+                activityDashboardBinding.TotalTenantsCurrent.setText(""+totalTenantCurrent);
+                activityDashboardBinding.TotalTenantLeft.setText(""+totalTenantLeft);
             }
         });
 

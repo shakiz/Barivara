@@ -63,7 +63,6 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="112dp"
-                            android:background="@drawable/dashboard_back"
                             android:gravity="center"
                             android:layout_gravity="center"
                             android:orientation="vertical">
@@ -134,7 +133,6 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="112dp"
-                            android:background="@drawable/dashboard_back"
                             android:gravity="center"
                             android:layout_gravity="center"
                             android:orientation="vertical">
@@ -214,7 +212,6 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="112dp"
-                            android:background="@drawable/dashboard_back"
                             android:gravity="center"
                             android:layout_gravity="center"
                             android:orientation="vertical">
@@ -232,8 +229,8 @@
                                 android:layout_marginTop="8dp"
                                 android:layout_marginLeft="8dp"
                                 android:layout_marginRight="8dp"
-                                android:textColor="@color/md_blue_900"
-                                android:text="@string/total_tenants"/>
+                                android:textColor="@color/md_green_800"
+                                android:text="@string/total_tenants_current"/>
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -248,13 +245,13 @@
                                 <ImageView
                                     android:layout_width="48dp"
                                     android:layout_height="48dp"
-                                    app:tint="@color/md_blue_900"
+                                    app:tint="@color/md_green_800"
                                     android:src="@drawable/ic_tenant"
                                     android:layout_gravity="center"
                                     android:layout_marginLeft="8dp"/>
 
                                 <TextView
-                                    android:id="@+id/TotalTenants"
+                                    android:id="@+id/TotalTenantsCurrent"
                                     android:layout_width="0dp"
                                     android:layout_weight=".8"
                                     android:layout_height="match_parent"
@@ -263,7 +260,7 @@
                                     android:textSize="24sp"
                                     android:tag="Duration"
                                     android:textStyle="bold"
-                                    android:textColor="@color/md_blue_900"
+                                    android:textColor="@color/md_green_800"
                                     android:text="@string/zero"/>
 
                             </LinearLayout>
@@ -282,14 +279,13 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="16dp"
                         android:layout_marginBottom="16dp"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginRight="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="16dp"
                         app:cardCornerRadius="10dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="112dp"
-                            android:background="@drawable/dashboard_back"
                             android:gravity="center"
                             android:layout_gravity="center"
                             android:orientation="vertical">
@@ -297,47 +293,51 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:paddingTop="4dp"
+                                android:paddingBottom="4dp"
+                                android:gravity="center|left"
+                                android:maxLines="1"
                                 android:ellipsize="end"
-                                android:gravity="center"
-                                android:layout_gravity="center"
                                 android:textSize="16sp"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="8dp"
                                 android:layout_marginLeft="8dp"
                                 android:layout_marginRight="8dp"
-                                android:textColor="@color/md_deep_orange_900"
-                                android:text="@string/coming_with_new_features"/>
+                                android:textColor="@color/md_red_400"
+                                android:text="@string/total_tenants_left"/>
 
-<!--                            <LinearLayout-->
-<!--                                android:layout_width="match_parent"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:layout_marginTop="8dp"-->
-<!--                                android:layout_marginBottom="8dp"-->
-<!--                                android:layout_gravity="center"-->
-<!--                                android:gravity="center"-->
-<!--                                android:orientation="horizontal"-->
-<!--                                android:weightSum="1">-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginBottom="8dp"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:weightSum="1">
 
-<!--                                <ImageView-->
-<!--                                    android:layout_width="48dp"-->
-<!--                                    android:layout_height="48dp"-->
-<!--                                    android:src="@drawable/ic_taka"-->
-<!--                                    android:layout_gravity="center"-->
-<!--                                    app:tint="@color/md_deep_orange_900"-->
-<!--                                    android:layout_marginLeft="8dp"/>-->
+                                <ImageView
+                                    android:layout_width="48dp"
+                                    android:layout_height="48dp"
+                                    app:tint="@color/md_red_400"
+                                    android:src="@drawable/ic_tenant"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="8dp"/>
 
-<!--                                <TextView-->
-<!--                                    android:id="@+id/TotalDue"-->
-<!--                                    android:layout_width="0dp"-->
-<!--                                    android:layout_weight=".8"-->
-<!--                                    android:layout_height="match_parent"-->
-<!--                                    android:layout_marginLeft="4dp"-->
-<!--                                    android:gravity="center"-->
-<!--                                    android:textSize="24sp"-->
-<!--                                    android:tag="Duration"-->
-<!--                                    android:textStyle="bold"-->
-<!--                                    android:textColor="@color/md_deep_orange_900"-->
-<!--                                    android:text="@string/zero"/>-->
+                                <TextView
+                                    android:id="@+id/TotalTenantLeft"
+                                    android:layout_width="0dp"
+                                    android:layout_weight=".8"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginLeft="4dp"
+                                    android:gravity="center"
+                                    android:textSize="24sp"
+                                    android:tag="Duration"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/md_red_400"
+                                    android:text="@string/zero"/>
 
-<!--                            </LinearLayout>-->
+                            </LinearLayout>
 
                         </LinearLayout>
 
