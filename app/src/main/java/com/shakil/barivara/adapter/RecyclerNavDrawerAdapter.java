@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class RecyclerNavDrawerAdapter extends RecyclerView.Adapter<RecyclerNavDrawerAdapter.ViewHolder> {
 
-    private ArrayList<DrawerItem> arrayList;
+    private final ArrayList<DrawerItem> arrayList;
 
     public RecyclerNavDrawerAdapter(ArrayList<DrawerItem> arrayList) {
         this.arrayList = arrayList;

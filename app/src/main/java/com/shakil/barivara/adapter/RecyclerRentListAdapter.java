@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class RecyclerRentListAdapter extends RecyclerView.Adapter<RecyclerRentListAdapter.ViewHolder> {
 
-    private ArrayList<Rent> arrayList;
+    private final ArrayList<Rent> arrayList;
 
     public RecyclerRentListAdapter(ArrayList<Rent> arrayList) {
         this.arrayList = arrayList;

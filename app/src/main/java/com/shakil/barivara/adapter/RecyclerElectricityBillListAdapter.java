@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class RecyclerElectricityBillListAdapter extends RecyclerView.Adapter<RecyclerElectricityBillListAdapter.ViewHolder> {
 
-    private ArrayList<ElectricityBill> arrayList;
+    private final ArrayList<ElectricityBill> arrayList;
 
     public RecyclerElectricityBillListAdapter(ArrayList<ElectricityBill> arrayList) {
         this.arrayList = arrayList;

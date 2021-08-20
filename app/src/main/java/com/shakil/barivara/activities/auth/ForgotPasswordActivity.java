@@ -24,7 +24,7 @@ import java.util.Map;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
     private ActivityForgotPasswordBinding activityForgotPasswordBinding;
-    private Map<String, String[]> hashMap = new HashMap();
+    private final Map<String, String[]> hashMap = new HashMap();
     private Validation validation;
     private FirebaseAuth firebaseAuth;
     private UX ux;

@@ -16,7 +16,7 @@ import com.shakil.barivara.model.notification.Notification;
 import java.util.ArrayList;
 
 public class NotificationRecyclerAdapter extends RecyclerView.Adapter<NotificationRecyclerAdapter.ViewHolder> {
-    private ArrayList<Notification> notifications;
+    private final ArrayList<Notification> notifications;
 
     public NotificationRecyclerAdapter(ArrayList<Notification> notifications) {
         this.notifications = notifications;

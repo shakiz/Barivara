@@ -29,8 +29,8 @@ import java.util.ArrayList;
 
 public class RecyclerTenantListAdapter extends RecyclerView.Adapter<RecyclerTenantListAdapter.ViewHolder> {
 
-    private ArrayList<Tenant> arrayList;
-    private Context context;
+    private final ArrayList<Tenant> arrayList;
+    private final Context context;
 
     public RecyclerTenantListAdapter(ArrayList<Tenant> arrayList, Context context) {
         this.arrayList = arrayList;

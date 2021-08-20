@@ -37,7 +37,7 @@ public class RoomActivity extends AppCompatActivity {
     private ArrayAdapter<String> meterNameSpinnerAdapter, tenantNameSpinnerAdapter;
     private Validation validation;
     private Tools tools;
-    private Map<String, String[]> hashMap = new HashMap();
+    private final Map<String, String[]> hashMap = new HashMap();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

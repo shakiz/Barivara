@@ -28,9 +28,9 @@ import java.util.Map;
 import static com.shakil.barivara.utils.Constants.mUserId;
 
 public class FirebaseCrudHelper {
-    private Context context;
+    private final Context context;
     private DatabaseReference databaseReference;
-    private PrefManager prefManager;
+    private final PrefManager prefManager;
 
     public FirebaseCrudHelper(Context context) {
         this.context = context;

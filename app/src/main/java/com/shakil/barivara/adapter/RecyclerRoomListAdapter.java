@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class RecyclerRoomListAdapter extends RecyclerView.Adapter<RecyclerRoomListAdapter.ViewHolder> {
 
-    private ArrayList<Room> arrayList;
+    private final ArrayList<Room> arrayList;
 
     public RecyclerRoomListAdapter(ArrayList<Room> arrayList) {
         this.arrayList = arrayList;

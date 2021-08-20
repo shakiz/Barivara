@@ -31,7 +31,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private UX ux;
     private Tools tools;
     private Validation validation;
-    private Map<String, String[]> hashMap = new HashMap();
+    private final Map<String, String[]> hashMap = new HashMap();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

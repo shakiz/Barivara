@@ -1,6 +1,7 @@
 package com.shakil.barivara.activities.note;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.view.View;
@@ -15,12 +16,10 @@ import com.shakil.barivara.R;
 import com.shakil.barivara.databinding.ActivityNewNoteBinding;
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.note.Note;
+import com.shakil.barivara.utils.AppAnalytics;
 import com.shakil.barivara.utils.Tools;
 import com.shakil.barivara.utils.Validation;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -35,9 +34,10 @@ public class NewNoteActivity extends AppCompatActivity {
     private Note note = new Note();
     private String command = "add";
     private FirebaseCrudHelper firebaseCrudHelper;
-    private Map<String, String[]> hashMap = new HashMap();
+    private final Map<String, String[]> hashMap = new HashMap();
     private Tools tools;
     private Validation validation;
+    private AppAnalytics appAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,19 +93,29 @@ public class NewNoteActivity extends AppCompatActivity {
     }
     //endregion
 
+    //region init objects
     private void init() {
         firebaseCrudHelper = new FirebaseCrudHelper(this);
         validation = new Validation(this, hashMap);
         tools = new Tools(this);
+        appAnalytics = new AppAnalytics(this);
         listenIcon = findViewById(R.id.listenIcon);
         listenHint = findViewById(R.id.listenHint);
     }
+    //endregion
 
-    private void bindUiWithComponents() {//region validation
+    //region perform all UI interactions
+    private void bindUiWithComponents() {
+        //region validation
         validation.setEditTextIsNotEmpty(new String[]{"Title", "Description"},
                 new String[]{getString(R.string.title_validation), getString(R.string.description_validation)});
         validation.setSpinnerIsNotEmpty(new String[]{"TenantTypeId","StartingMonthId"});
         //endregion
+
+        //region send analytics report to firebase
+        appAnalytics.registerEvent("newNote", appAnalytics.setData("newNoteActivity",""));
+        //region check internet connection
+
         activityNewNoteBinding.save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,7 +132,9 @@ public class NewNoteActivity extends AppCompatActivity {
             }
         });
     }
+    //endregion
 
+    //region save or update note
     private void saveOrUpdateNote() {
         //region validation and save data
         if (validation.isValid()){
@@ -135,6 +147,9 @@ public class NewNoteActivity extends AppCompatActivity {
                 } else {
                     firebaseCrudHelper.update(note, note.getFireBaseKey(), "note");
                 }
+                //region send analytics report to firebase
+                appAnalytics.registerEvent("newNote", appAnalytics.setData("newNoteActivity","Note Created or Updated."));
+                //region check internet connection
                 Toast.makeText(getApplicationContext(),R.string.success, Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(NewNoteActivity.this, NoteListActivity.class));
             } else {
@@ -143,15 +158,9 @@ public class NewNoteActivity extends AppCompatActivity {
         }
         //endregion
     }
+    //endregion
 
-    private String getCurrentDate() {
-        Date c = Calendar.getInstance().getTime();
-        System.out.println("Current time => " + c);
-        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
-        String formattedDate = df.format(c);
-        return formattedDate;
-    }
-
+    //region play note
     private void listenNote() {
         if (isTextToSpeechOn) {
             textToSpeech.stop();
@@ -160,16 +169,26 @@ public class NewNoteActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Text to Speech Stopped", Toast.LENGTH_SHORT).show();
         }
         else {
-            textToSpeech.speak("Dear user your note title is"+activityNewNoteBinding.Title
-                            .getText().toString() + "Now you will hear your note description"+
-                            activityNewNoteBinding.Description.getText().toString(),
-                    TextToSpeech.QUEUE_ADD, null, "onNote");
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                textToSpeech.speak("Dear user your note title is"+activityNewNoteBinding.Title
+                                .getText().toString() + "Now you will hear your note description"+
+                                activityNewNoteBinding.Description.getText().toString(),
+                        TextToSpeech.QUEUE_ADD, null, "onNote");
+            }
+            else{
+                textToSpeech.speak("Dear user your note title is"+activityNewNoteBinding.Title
+                                .getText().toString() + "Now you will hear your note description"+
+                                activityNewNoteBinding.Description.getText().toString(),
+                        TextToSpeech.QUEUE_ADD, null);
+            }
             listenIcon.setImageDrawable(getResources().getDrawable(R.drawable.ic_stop_circle));
             isTextToSpeechOn = true;
             Toast.makeText(getApplicationContext(), "Text to Speech Started", Toast.LENGTH_SHORT).show();
         }
     }
+    //endregion
 
+    //region activity components
     @Override
     public void onBackPressed() {
         startActivity(new Intent(NewNoteActivity.this,NoteListActivity.class));
@@ -186,4 +205,5 @@ public class NewNoteActivity extends AppCompatActivity {
         super.onStop();
         textToSpeech.stop();
     }
+    //endregion
 }

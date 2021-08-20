@@ -22,7 +22,7 @@ import static com.shakil.barivara.utils.Constants.mLanguage;
 import static com.shakil.barivara.utils.Constants.mLanguageSetup;
 
 public class LanguageManager {
-    private Context context;
+    private final Context context;
     PrefManager prefManager;
 
     public LanguageManager(Context context) {

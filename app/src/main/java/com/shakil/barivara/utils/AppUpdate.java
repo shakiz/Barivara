@@ -22,9 +22,9 @@ import com.github.javiersantos.appupdater.objects.Update;
 import com.shakil.barivara.R;
 
 public class AppUpdate {
-    private Context context;
-    private PrefManager prefManager;
-    private Tools tools;
+    private final Context context;
+    private final PrefManager prefManager;
+    private final Tools tools;
 
     public AppUpdate(Context context) {
         this.context = context;

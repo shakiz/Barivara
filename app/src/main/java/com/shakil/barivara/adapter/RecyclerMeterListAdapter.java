@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class RecyclerMeterListAdapter extends RecyclerView.Adapter<RecyclerMeterListAdapter.ViewHolder> {
 
-    private ArrayList<Meter> arrayList;
+    private final ArrayList<Meter> arrayList;
 
     public RecyclerMeterListAdapter(ArrayList<Meter> arrayList) {
         this.arrayList = arrayList;

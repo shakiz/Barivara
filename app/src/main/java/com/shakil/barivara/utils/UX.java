@@ -28,7 +28,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class UX {
-    private Context context;
+    private final Context context;
     public Dialog loadingDialog;
 
     public UX(Context context) {

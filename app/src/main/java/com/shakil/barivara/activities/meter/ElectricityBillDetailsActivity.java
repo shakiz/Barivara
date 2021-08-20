@@ -42,7 +42,7 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
     private Validation validation;
     private Tools tools;
     private SpinnerData spinnerData;
-    private Map<String, String[]> hashMap = new HashMap();
+    private final Map<String, String[]> hashMap = new HashMap();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -41,7 +41,7 @@ import static com.shakil.barivara.utils.Constants.mUserId;
 import static com.shakil.barivara.utils.Constants.mUserMobile;
 
 public class Tools {
-    private Context context;
+    private final Context context;
     private PrefManager prefManager;
 
     public Tools(Context context, View view) {
@@ -187,10 +187,7 @@ public class Tools {
             return true;
         }
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        if (activeNetwork != null && activeNetwork.isConnected()) {
-            return true;
-        }
-        return false;
+        return activeNetwork != null && activeNetwork.isConnected();
     }
     //endregion
 

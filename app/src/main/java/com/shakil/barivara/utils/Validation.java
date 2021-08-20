@@ -18,7 +18,7 @@ import java.util.Map;
 public class Validation {
     Map<String, String[]> validationMap = new HashMap<String, String[]>();
     String[] _msg;
-    private Context context;
+    private final Context context;
 
     public Validation(Context context, Map<String, String[]> validationMap) {
         this.context = context;
@@ -55,11 +55,11 @@ public class Validation {
                 int iMsg = 0;
                 for (String controlName : entry.getValue()) {
                     int resID = context.getResources().getIdentifier(controlName, "id", context.getPackageName());
-                    EditText et = (EditText) ((android.app.Activity) context).findViewById(resID);
+                    EditText et = ((android.app.Activity) context).findViewById(resID);
                     if(et!=null){
                         if (et.getText().toString().isEmpty()) {
                             et.requestFocus();
-                            InputMethodManager imm = (InputMethodManager) ((android.app.Activity) context).getSystemService(Context.INPUT_METHOD_SERVICE);
+                            InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
                             imm.showSoftInput(et, InputMethodManager.SHOW_IMPLICIT);
                             if (_msg != null)
                                 et.setError(_msg[iMsg]);
@@ -86,7 +86,7 @@ public class Validation {
                 for (int i = 1; i <= Integer.parseInt(val[1]); i++) {
                     String ctlName = val[0] + i;
                     int resID = context.getResources().getIdentifier(ctlName, "id", context.getPackageName());
-                    CheckBox chkCtl = (CheckBox) ((android.app.Activity) context).findViewById(resID);
+                    CheckBox chkCtl = ((android.app.Activity) context).findViewById(resID);
                     isChecked = chkCtl.isChecked();
                     chkCtl.requestFocus();
 
@@ -109,7 +109,7 @@ public class Validation {
                     }
                     int resID = context.getResources().getIdentifier(viewName, "id", context.getPackageName());
 
-                    Spinner sp = (Spinner) ((android.app.Activity) context).findViewById(resID);
+                    Spinner sp = ((android.app.Activity) context).findViewById(resID);
                     if(sp!=null){
                         String spinnerValue = (String) sp.getSelectedItem();
                         if (spinnerValue.equals(context.getString(R.string.select_data))) {
@@ -137,7 +137,7 @@ public class Validation {
                 for (int i = 1; i <= Integer.parseInt(val[1]); i++) {
                     String ctlName = val[0] + i;
                     int resID = context.getResources().getIdentifier(ctlName, "id", context.getPackageName());
-                    RadioButton chkCtl = (RadioButton) ((android.app.Activity) context).findViewById(resID);
+                    RadioButton chkCtl = ((android.app.Activity) context).findViewById(resID);
                     if (chkCtl.isChecked() == true) {
                         isChecked = true;
                     }

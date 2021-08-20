@@ -16,6 +16,7 @@ import com.shakil.barivara.adapter.NoteRecyclerAdapter;
 import com.shakil.barivara.databinding.ActivityNoteListBinding;
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.note.Note;
+import com.shakil.barivara.utils.AppAnalytics;
 import com.shakil.barivara.utils.Tools;
 import com.shakil.barivara.utils.UX;
 
@@ -28,6 +29,7 @@ public class NoteListActivity extends AppCompatActivity {
     private LinearLayout LayoutNoNotes;
     private FirebaseCrudHelper firebaseCrudHelper;
     private UX ux;
+    private AppAnalytics appAnalytics;
     private Tools tools;
 
     @Override
@@ -52,12 +54,15 @@ public class NoteListActivity extends AppCompatActivity {
         ux = new UX(this);
         tools = new Tools(this);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
+        appAnalytics = new AppAnalytics(this);
         LayoutNoNotes = findViewById(R.id.LayoutNoNotes);
     }
     //endregion
 
     //region perform all UI interactions
     private void bindUiWithComponents() {
+        //region send analytics report to firebase
+        appAnalytics.registerEvent("noteList", appAnalytics.setData("listActivity",""));
         //region check internet connection
         if (tools.hasConnection()) {
             setData();
@@ -69,6 +74,10 @@ public class NoteListActivity extends AppCompatActivity {
         activityNoteListBinding.add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //region send analytics report to firebase
+                appAnalytics.registerEvent("noteList", appAnalytics.setData("newNote",""));
+                //region check internet connection
+                startActivity(new Intent(NoteListActivity.this, NewNoteActivity.class));
             }
         });
     }

@@ -34,8 +34,6 @@ android {
 }
 
 dependencies {
-    def lifecycle_version = "1.1.1"
-    def room_version = "1.1.1"
     def hTextView_version = "0.1.6"
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
@@ -49,36 +47,6 @@ dependencies {
 
     // Add the Firebase Crashlytics SDK.
     implementation 'com.google.firebase:firebase-crashlytics:17.1.0'
-
-    // ViewModel and LiveData
-    implementation "android.arch.lifecycle:extensions:$lifecycle_version"
-    //Alternatively - just ViewModel
-    implementation "android.arch.lifecycle:viewmodel:$lifecycle_version" // For Kotlin use viewmodel-ktx
-    //Alternatively - just LiveData
-    implementation "android.arch.lifecycle:livedata:$lifecycle_version"
-    // alternatively - Lifecycles only (no ViewModel or LiveData).
-    //Support library depends on this lightweight import
-    implementation "android.arch.lifecycle:runtime:$lifecycle_version"
-    annotationProcessor "android.arch.lifecycle:compiler:$lifecycle_version" // For Kotlin use kapt instead of annotationProcessor
-    //Alternately - if using Java8, use the following instead of compiler
-    implementation "android.arch.lifecycle:common-java8:$lifecycle_version"
-    //Optional - ReactiveStreams support for LiveData
-    implementation "android.arch.lifecycle:reactivestreams:$lifecycle_version"
-    //Optional - Test helpers for LiveData
-    testImplementation "android.arch.core:core-testing:$lifecycle_version"
-
-    //Room starts
-    implementation "android.arch.persistence.room:runtime:$room_version"
-    annotationProcessor "android.arch.persistence.room:compiler:$room_version"
-    //Optional - RxJava support for Room
-    implementation "android.arch.persistence.room:rxjava2:$room_version"
-    //Optional - Guava support for Room, including Optional and ListenableFuture
-    implementation "android.arch.persistence.room:guava:$room_version"
-    //Test helpers
-    testImplementation "android.arch.persistence.room:testing:$room_version"
-    //Test helpers
-    testImplementation "androidx.room:room-testing:$room_version"
-    //Room ends
 
     //Animated textView
     implementation "com.hanks:htextview-base:$hTextView_version"

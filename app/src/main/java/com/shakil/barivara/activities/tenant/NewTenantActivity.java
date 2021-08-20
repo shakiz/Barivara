@@ -44,7 +44,7 @@ public class NewTenantActivity extends AppCompatActivity {
     private ArrayAdapter<String> roomNameSpinnerAdapter;
     private Validation validation;
     private int advancedAmountInt, isActiveId = 0;
-    private Map<String, String[]> hashMap = new HashMap();
+    private final Map<String, String[]> hashMap = new HashMap();
     private UtilsForAll utilsForAll;
     private Tools tools;
 
@@ -214,7 +214,7 @@ public class NewTenantActivity extends AppCompatActivity {
         activityAddNewTenantBinding.IsActive.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                RadioButton radioButton = (RadioButton) findViewById(checkedId);
+                RadioButton radioButton = findViewById(checkedId);
                 isActiveId = checkedId;
                 if (radioButton != null) {
                     IsActiveValue = radioButton.getTag().toString();

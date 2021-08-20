@@ -11,7 +11,7 @@ import com.shakil.barivara.model.tenant.Tenant;
 import java.util.ArrayList;
 
 public class FilterManager{
-    private Context context;
+    private final Context context;
 
     public FilterManager(Context context) {
         this.context = context;

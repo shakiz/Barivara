@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class SpinnerData {
 
-    private Context context;
+    private final Context context;
 
     public SpinnerData(Context context) {
         this.context = context;

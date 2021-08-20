@@ -6,10 +6,10 @@ import android.content.SharedPreferences;
 import static com.shakil.barivara.utils.Constants.PREF_NAME;
 
 public class PrefManager {
-    private int PRIVATE_MODE = 0;
+    private final int PRIVATE_MODE = 0;
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
-    private Context context;
+    private final Context context;
 
     public PrefManager(Context context) {
         this.context = context;
