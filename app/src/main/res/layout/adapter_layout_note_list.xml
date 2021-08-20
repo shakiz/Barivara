@@ -1,0 +1,60 @@
+<androidx.cardview.widget.CardView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cardItemLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:cardCornerRadius="8dp"
+    android:clickable="true"
+    app:cardBackgroundColor="@color/md_white_1000"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardUseCompatPadding="true"
+    android:translationZ="4dp"
+    app:cardElevation="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:weightSum="2"
+        android:padding="4dp"
+        android:layout_margin="4dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/md_grey_800"
+            android:padding="2dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:text="@string/title"/>
+
+        <TextView
+            android:id="@+id/Date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/md_grey_600"
+            android:padding="2dp"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:text="@string/date_hint"/>
+
+        <TextView
+            android:id="@+id/Description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/md_grey_600"
+            android:maxLines="3"
+            android:ellipsize="end"
+            android:padding="2dp"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:text="@string/description"/>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

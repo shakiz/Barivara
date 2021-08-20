@@ -296,4 +296,12 @@
     <string name="left">Left</string>
     <string name="total_tenants_current">Total Tenant (Current)</string>
     <string name="total_tenants_left">Total Tenant (Left)</string>
+    <string name="new_note">New Note</string>
+    <string name="description">Description</string>
+    <string name="icon_click_listen">Click the icon to listen</string>
+    <string name="no_notes">No notes</string>
+    <string name="add_new_notes_hint">You can try writing the first one</string>
+    <string name="your_notes">Your Notes</string>
+    <string name="title_validation">Please enter note title</string>
+    <string name="description_validation">Please enter description</string>
 </resources>

@@ -26,6 +26,7 @@ import com.shakil.barivara.activities.auth.LoginActivity;
 import com.shakil.barivara.activities.dashboard.DashboardActivity;
 import com.shakil.barivara.activities.meter.ElectricityBillListActivity;
 import com.shakil.barivara.activities.meter.MeterListActivity;
+import com.shakil.barivara.activities.note.NoteListActivity;
 import com.shakil.barivara.activities.notification.NotificationActivity;
 import com.shakil.barivara.activities.room.RentListActivity;
 import com.shakil.barivara.activities.room.RoomListActivity;
@@ -37,7 +38,6 @@ import com.shakil.barivara.databinding.ActivityMainBinding;
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.drawer.DrawerItem;
 import com.shakil.barivara.model.meter.Meter;
-import com.shakil.barivara.model.notification.Notification;
 import com.shakil.barivara.model.room.Room;
 import com.shakil.barivara.model.tenant.Tenant;
 import com.shakil.barivara.utils.Constants;
@@ -49,7 +49,6 @@ import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
 import static com.shakil.barivara.utils.Constants.REQUEST_CALL_CODE;
 import static com.shakil.barivara.utils.Constants.mAppViewCount;
@@ -218,6 +217,7 @@ public class MainActivity extends AppCompatActivity{
         items.add(new DrawerItem(R.drawable.ic_notifications_black_24dp, getString(R.string.notifications)));
         items.add(new DrawerItem(R.drawable.ic_info_black_24dp, getString(R.string.tutorial)));
         items.add(new DrawerItem(R.drawable.ic_star_border_black_24dp, getString(R.string.rate_us)));
+        items.add(new DrawerItem(R.drawable.ic_note_add, getString(R.string.new_note)));
         items.add(new DrawerItem(R.drawable.ic_logout_black_24dp, getString(R.string.logout)));
 
         RecyclerNavDrawerAdapter recyclerNavDrawerAdapter = new RecyclerNavDrawerAdapter(items);
@@ -238,6 +238,9 @@ public class MainActivity extends AppCompatActivity{
                 }
                 else if (drawerItem.getIcon() == R.drawable.ic_notifications_black_24dp){
                     startActivity(new Intent(MainActivity.this, NotificationActivity.class));
+                }
+                else if (drawerItem.getIcon() == R.drawable.ic_note_add){
+                    startActivity(new Intent(MainActivity.this, NoteListActivity.class));
                 }
                 else if (drawerItem.getIcon() == R.drawable.ic_logout_black_24dp){
                     tools.doPopUpForLogout(LoginActivity.class);

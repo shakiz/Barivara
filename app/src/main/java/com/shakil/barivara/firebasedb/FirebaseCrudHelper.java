@@ -13,6 +13,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.shakil.barivara.R;
 import com.shakil.barivara.model.meter.ElectricityBill;
 import com.shakil.barivara.model.meter.Meter;
+import com.shakil.barivara.model.note.Note;
 import com.shakil.barivara.model.notification.Notification;
 import com.shakil.barivara.model.room.Rent;
 import com.shakil.barivara.model.room.Room;
@@ -73,6 +74,10 @@ public class FirebaseCrudHelper {
         else if (path.equals("room")){
             Room room = (Room) object;
             postValues = room.toMap();
+        }
+        else if (path.equals("note")){
+            Note note = (Note) object;
+            postValues = note.toMap();
         }
         else if (path.equals("electricityBill")){
             ElectricityBill electricityBill = (ElectricityBill) object;
@@ -252,6 +257,35 @@ public class FirebaseCrudHelper {
                         objects.add(object);
                     }
                     onNotificationDataFetch.onFetch(objects);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.i(Constants.TAG,""+error.getMessage());
+            }
+        });
+    }
+    //endregion
+
+    //region fetch tenant table data from firebase db
+    public interface onNoteDataFetch{
+        void onFetch(ArrayList<Note> objects);
+    }
+    public void fetchAllNote(String path, onNoteDataFetch onNoteDataFetch){
+        ArrayList<Note> objects = new ArrayList<>();
+        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(prefManager.getString(mUserId));
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getChildren() != null) {
+                    for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                        Note object = dataSnapshot.getValue(Note.class);
+                        object.setFireBaseKey(dataSnapshot.getKey());
+                        Log.i(Constants.TAG+":fetchNote",""+object.getTitle());
+                        objects.add(object);
+                    }
+                    onNoteDataFetch.onFetch(objects);
                 }
             }
 

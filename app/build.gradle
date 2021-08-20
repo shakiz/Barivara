@@ -50,9 +50,6 @@ dependencies {
     // Add the Firebase Crashlytics SDK.
     implementation 'com.google.firebase:firebase-crashlytics:17.1.0'
 
-    // circle image view
-    implementation 'de.hdodenhof:circleimageview:2.1.0'
-
     // ViewModel and LiveData
     implementation "android.arch.lifecycle:extensions:$lifecycle_version"
     //Alternatively - just ViewModel
@@ -87,13 +84,8 @@ dependencies {
     implementation "com.hanks:htextview-base:$hTextView_version"
     implementation "com.hanks:htextview-evaporate:$hTextView_version"
 
-    //Android gif loader
-    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.0'
     //lottie animation loader
     implementation 'com.airbnb.android:lottie:3.4.2'
-
-    //library for shape
-    implementation 'com.github.florent37:shapeofview:1.4.4'
 
     //library for app update
     implementation 'com.github.javiersantos:AppUpdater:2.7'
