@@ -3,6 +3,7 @@ package com.shakil.barivara.activities.tenant;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,6 +20,7 @@ import com.shakil.barivara.R;
 import com.shakil.barivara.databinding.ActivityAddNewTenantBinding;
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.tenant.Tenant;
+import com.shakil.barivara.utils.Constants;
 import com.shakil.barivara.utils.SpinnerAdapter;
 import com.shakil.barivara.utils.SpinnerData;
 import com.shakil.barivara.utils.Tools;
@@ -214,7 +216,12 @@ public class NewTenantActivity extends AppCompatActivity {
         activityAddNewTenantBinding.IsActive.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                RadioButton radioButton = findViewById(checkedId);
+                RadioButton radioButton = null;
+                try {
+                    radioButton = findViewById(checkedId);
+                } catch (Exception e) {
+                    Log.i(Constants.TAG, "Radio Button Error : "+e.getMessage());
+                }
                 isActiveId = checkedId;
                 if (radioButton != null) {
                     IsActiveValue = radioButton.getTag().toString();
