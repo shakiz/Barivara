@@ -21,7 +21,7 @@
                 android:id="@+id/tool_bar"
                 app:navigationIcon="?attr/homeAsUpIndicator"
                 style="@style/TextAppearance.Widget.Event.Toolbar.Title"
-                app:title="@string/your_notes"
+                app:title="@string/my_notes"
                 app:titleTextColor="@color/md_grey_800">
 
             </androidx.appcompat.widget.Toolbar>

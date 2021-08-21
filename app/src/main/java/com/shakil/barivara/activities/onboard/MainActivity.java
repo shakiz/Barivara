@@ -275,6 +275,9 @@ public class MainActivity extends AppCompatActivity{
             case R.id.menu_logout:
                 tools.doPopUpForLogout(LoginActivity.class);
                 return true;
+            case R.id.menu_notification:
+                startActivity(new Intent(MainActivity.this, NotificationActivity.class));
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

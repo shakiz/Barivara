@@ -37,9 +37,10 @@
             android:id="@+id/Date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/md_grey_600"
+            android:textColor="@color/md_orange_700"
+            android:layout_marginTop="4dp"
             android:padding="2dp"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:textStyle="bold"
             android:text="@string/date_hint"/>
 
@@ -47,6 +48,7 @@
             android:id="@+id/Description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:textColor="@color/md_grey_600"
             android:maxLines="3"
             android:ellipsize="end"

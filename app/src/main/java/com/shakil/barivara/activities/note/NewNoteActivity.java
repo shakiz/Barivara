@@ -18,6 +18,7 @@ import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.note.Note;
 import com.shakil.barivara.utils.AppAnalytics;
 import com.shakil.barivara.utils.Tools;
+import com.shakil.barivara.utils.UtilsForAll;
 import com.shakil.barivara.utils.Validation;
 
 import java.util.HashMap;
@@ -38,6 +39,7 @@ public class NewNoteActivity extends AppCompatActivity {
     private Tools tools;
     private Validation validation;
     private AppAnalytics appAnalytics;
+    private UtilsForAll utilsForAll;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +101,7 @@ public class NewNoteActivity extends AppCompatActivity {
         validation = new Validation(this, hashMap);
         tools = new Tools(this);
         appAnalytics = new AppAnalytics(this);
+        utilsForAll = new UtilsForAll(this);
         listenIcon = findViewById(R.id.listenIcon);
         listenHint = findViewById(R.id.listenHint);
     }
@@ -141,6 +144,7 @@ public class NewNoteActivity extends AppCompatActivity {
             if (tools.hasConnection()) {
                 note.setTitle(activityNewNoteBinding.Title.getText().toString());
                 note.setDescription(activityNewNoteBinding.Description.getText().toString());
+                note.setDate(utilsForAll.getDateTimeWithPM());
                 if (command.equals("add")) {
                     note.setNoteId(UUID.randomUUID().toString());
                     firebaseCrudHelper.add(note, "note");
