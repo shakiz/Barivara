@@ -163,6 +163,110 @@
 
                         </LinearLayout>
 
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginRight="12dp"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/gender"
+                            android:textColor="@color/md_grey_900"
+                            android:textSize="16sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginRight="12dp"
+                            android:background="@drawable/rectangle_background_filled_with_border"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
+                            <RelativeLayout
+                                android:id="@+id/maleLayout"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:elevation="4dp"
+                                android:translationZ="2dp"
+                                android:paddingTop="4dp"
+                                android:paddingBottom="4dp"
+                                android:layout_marginBottom="4dp"
+                                android:layout_marginLeft="4dp"
+                                android:layout_marginTop="4dp"
+                                android:background="@drawable/rectangle_background_filled_gender"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:id="@+id/MaleIcon"
+                                    android:layout_width="18dp"
+                                    android:layout_height="32dp"
+                                    android:layout_centerVertical="true"
+                                    android:layout_centerHorizontal="true"
+                                    android:src="@drawable/ic_male_white"/>
+
+                                <TextView
+                                    android:id="@+id/Male"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_toRightOf="@id/MaleIcon"
+                                    android:layout_marginLeft="4dp"
+                                    android:layout_gravity="center"
+                                    android:text="@string/male"
+                                    android:gravity="center"
+                                    android:layout_centerVertical="true"
+                                    android:layout_centerHorizontal="true"
+                                    android:textSize="16sp"
+                                    android:textColor="@color/md_white_1000"/>
+
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:id="@+id/femaleLayout"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:elevation="4dp"
+                                android:translationZ="2dp"
+                                android:paddingTop="4dp"
+                                android:paddingBottom="4dp"
+                                android:layout_marginBottom="4dp"
+                                android:layout_marginLeft="4dp"
+                                android:layout_marginRight="4dp"
+                                android:layout_marginTop="4dp"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:id="@+id/FemaleIcon"
+                                    android:layout_width="18dp"
+                                    android:layout_height="32dp"
+                                    android:layout_centerVertical="true"
+                                    android:layout_centerHorizontal="true"
+                                    android:src="@drawable/ic_female_green"/>
+
+                                <TextView
+                                    android:id="@+id/Female"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_toRightOf="@id/FemaleIcon"
+                                    android:layout_marginLeft="4dp"
+                                    android:layout_gravity="center"
+                                    android:text="@string/female"
+                                    android:gravity="center"
+                                    android:layout_centerVertical="true"
+                                    android:layout_centerHorizontal="true"
+                                    android:textSize="16sp"
+                                    android:textColor="@color/md_green_600"/>
+
+                            </RelativeLayout>
+
+                        </LinearLayout>
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

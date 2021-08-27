@@ -217,7 +217,7 @@ public class MainActivity extends AppCompatActivity{
         items.add(new DrawerItem(R.drawable.ic_notifications_black_24dp, getString(R.string.notifications)));
         items.add(new DrawerItem(R.drawable.ic_info_black_24dp, getString(R.string.tutorial)));
         items.add(new DrawerItem(R.drawable.ic_star_border_black_24dp, getString(R.string.rate_us)));
-        items.add(new DrawerItem(R.drawable.ic_note_add, getString(R.string.new_note)));
+        items.add(new DrawerItem(R.drawable.ic_note_add, getString(R.string.your_notes)));
         items.add(new DrawerItem(R.drawable.ic_logout_black_24dp, getString(R.string.logout)));
 
         RecyclerNavDrawerAdapter recyclerNavDrawerAdapter = new RecyclerNavDrawerAdapter(items);

@@ -73,7 +73,7 @@
                             android:layout_marginLeft="16dp"
                             android:layout_marginRight="16dp"
                             android:layout_marginTop="8dp"
-                            android:textColor="@color/md_grey_800"
+                            android:textColor="@color/md_grey_700"
                             android:textStyle="bold"
                             android:textSize="20sp"
                             android:text="@string/good_morning"/>
@@ -86,7 +86,7 @@
                             android:layout_marginRight="16dp"
                             android:layout_below="@+id/GreetingsText"
                             android:layout_alignParentLeft="true"
-                            android:textColor="@color/md_grey_800"
+                            android:textColor="@color/md_grey_700"
                             android:textStyle="bold"
                             android:textSize="20sp"
                             android:text="@string/demo_month"/>
@@ -99,7 +99,7 @@
                             android:layout_marginRight="16dp"
                             android:layout_below="@+id/DateTimeText"
                             android:layout_alignParentLeft="true"
-                            android:textColor="@color/md_grey_800"
+                            android:textColor="@color/md_grey_700"
                             android:textStyle="bold"
                             android:textSize="20sp"
                             android:text="@string/demo_day"/>

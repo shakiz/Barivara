@@ -305,4 +305,7 @@
     <string name="title_validation">Please enter note title</string>
     <string name="description_validation">Please enter description</string>
     <string name="my_notes">My Notes</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="gender">Gender</string>
 </resources>

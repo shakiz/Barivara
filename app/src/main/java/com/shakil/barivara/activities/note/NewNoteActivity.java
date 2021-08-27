@@ -28,8 +28,6 @@ import java.util.UUID;
 
 public class NewNoteActivity extends AppCompatActivity {
     private ActivityNewNoteBinding activityNewNoteBinding;
-    private ImageView listenIcon;
-    private TextView listenHint;
     private TextToSpeech textToSpeech;
     private boolean isTextToSpeechOn = false;
     private Note note = new Note();
@@ -82,15 +80,8 @@ public class NewNoteActivity extends AppCompatActivity {
             command = "update";
             activityNewNoteBinding.Title.setText(note.getTitle());
             activityNewNoteBinding.Description.setText(note.getDescription());
-            listenHint.setVisibility(View.VISIBLE);
-            listenIcon.setVisibility(View.VISIBLE);
-
-            listenIcon.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    listenNote();
-                }
-            });
+            activityNewNoteBinding.listenHint.setVisibility(View.VISIBLE);
+            activityNewNoteBinding.listenIcon.setVisibility(View.VISIBLE);
         }
     }
     //endregion
@@ -102,8 +93,6 @@ public class NewNoteActivity extends AppCompatActivity {
         tools = new Tools(this);
         appAnalytics = new AppAnalytics(this);
         utilsForAll = new UtilsForAll(this);
-        listenIcon = findViewById(R.id.listenIcon);
-        listenHint = findViewById(R.id.listenHint);
     }
     //endregion
 
@@ -113,6 +102,15 @@ public class NewNoteActivity extends AppCompatActivity {
         validation.setEditTextIsNotEmpty(new String[]{"Title", "Description"},
                 new String[]{getString(R.string.title_validation), getString(R.string.description_validation)});
         validation.setSpinnerIsNotEmpty(new String[]{"TenantTypeId","StartingMonthId"});
+        //endregion
+
+        //region listen the note
+        activityNewNoteBinding.listenIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listenNote();
+            }
+        });
         //endregion
 
         //region send analytics report to firebase
@@ -168,7 +166,7 @@ public class NewNoteActivity extends AppCompatActivity {
     private void listenNote() {
         if (isTextToSpeechOn) {
             textToSpeech.stop();
-            listenIcon.setImageDrawable(getResources().getDrawable(R.drawable.ic_record_voice_over));
+            activityNewNoteBinding.listenIcon.setImageDrawable(getResources().getDrawable(R.drawable.ic_record_voice_over));
             isTextToSpeechOn = false;
             Toast.makeText(getApplicationContext(), "Text to Speech Stopped", Toast.LENGTH_SHORT).show();
         }
@@ -185,7 +183,7 @@ public class NewNoteActivity extends AppCompatActivity {
                                 activityNewNoteBinding.Description.getText().toString(),
                         TextToSpeech.QUEUE_ADD, null);
             }
-            listenIcon.setImageDrawable(getResources().getDrawable(R.drawable.ic_stop_circle));
+            activityNewNoteBinding.listenIcon.setImageDrawable(getResources().getDrawable(R.drawable.ic_stop_circle));
             isTextToSpeechOn = true;
             Toast.makeText(getApplicationContext(), "Text to Speech Started", Toast.LENGTH_SHORT).show();
         }

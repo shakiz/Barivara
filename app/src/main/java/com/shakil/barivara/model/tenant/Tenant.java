@@ -11,6 +11,7 @@ import java.util.Map;
 public class Tenant implements Parcelable {
     private String TenantId;
     private String TenantName;
+    private String Gender;
     private String StartingMonth;
     private String NID;
     private String MobileNo;
@@ -31,6 +32,7 @@ public class Tenant implements Parcelable {
     protected Tenant(Parcel in) {
         TenantId = in.readString();
         TenantName = in.readString();
+        Gender = in.readString();
         StartingMonth = in.readString();
         NID = in.readString();
         MobileNo = in.readString();
@@ -50,6 +52,7 @@ public class Tenant implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(TenantId);
         dest.writeString(TenantName);
+        dest.writeString(Gender);
         dest.writeString(StartingMonth);
         dest.writeString(NID);
         dest.writeString(MobileNo);
@@ -87,6 +90,7 @@ public class Tenant implements Parcelable {
         HashMap<String, Object> result = new HashMap<>();
         result.put("tenantId", TenantId);
         result.put("tenantName", TenantName);
+        result.put("gender", Gender);
         result.put("startingMonth", StartingMonth);
         result.put("startingMonthId", StartingMonthId);
         result.put("nID", NID);
@@ -103,10 +107,6 @@ public class Tenant implements Parcelable {
         return result;
     }
 
-    public static Creator<Tenant> getCREATOR() {
-        return CREATOR;
-    }
-
     public String getTenantId() {
         return TenantId;
     }
@@ -121,6 +121,14 @@ public class Tenant implements Parcelable {
 
     public void setTenantName(String tenantName) {
         TenantName = tenantName;
+    }
+
+    public String getGender() {
+        return Gender;
+    }
+
+    public void setGender(String gender) {
+        Gender = gender;
     }
 
     public String getStartingMonth() {
@@ -225,5 +233,9 @@ public class Tenant implements Parcelable {
 
     public void setFireBaseKey(String fireBaseKey) {
         FireBaseKey = fireBaseKey;
+    }
+
+    public static Creator<Tenant> getCREATOR() {
+        return CREATOR;
     }
 }

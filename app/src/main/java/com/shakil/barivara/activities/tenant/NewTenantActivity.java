@@ -13,7 +13,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 
 import com.shakil.barivara.R;
@@ -34,11 +34,10 @@ import java.util.UUID;
 
 public class NewTenantActivity extends AppCompatActivity {
     private ActivityAddNewTenantBinding activityAddNewTenantBinding;
-    private Toolbar toolbar;
     private SpinnerAdapter spinnerAdapter;
     private SpinnerData spinnerData;
     private int AssociateRoomId, StartingMonthId, TenantTypeId;
-    private String tenantNameStr, AssociateRoomStr, StartingMonthStr, TenantTypeStr, IsActiveValue;
+    private String tenantNameStr, gender, AssociateRoomStr, StartingMonthStr, TenantTypeStr, IsActiveValue;
     private Tenant tenant = new Tenant();
     private String command = "add";
     private FirebaseCrudHelper firebaseCrudHelper;
@@ -60,9 +59,9 @@ public class NewTenantActivity extends AppCompatActivity {
         //endregion
 
         init();
-        setSupportActionBar(toolbar);
+        setSupportActionBar(activityAddNewTenantBinding.toolBar);
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        activityAddNewTenantBinding.toolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
@@ -90,6 +89,9 @@ public class NewTenantActivity extends AppCompatActivity {
     private void loadData(){
         if (tenant.getTenantId() != null) {
             command = "update";
+            if (tenant.getGender() != null && !TextUtils.isEmpty(tenant.getGender())) {
+                changeGender(tenant.getGender());
+            }
             activityAddNewTenantBinding.IsActiveLayout.setVisibility(View.VISIBLE);
             activityAddNewTenantBinding.IsActive.check(tenant.getIsActiveId());
             activityAddNewTenantBinding.TenantName.setText(tenant.getTenantName());
@@ -112,7 +114,6 @@ public class NewTenantActivity extends AppCompatActivity {
 
     ///region init all objects
     private void init() {
-        toolbar = findViewById(R.id.tool_bar);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
         utilsForAll = new UtilsForAll(this);
         validation = new Validation(this, hashMap);
@@ -135,6 +136,23 @@ public class NewTenantActivity extends AppCompatActivity {
         //region set spinners which are not fetched from server
         spinnerAdapter.setSpinnerAdapter(activityAddNewTenantBinding.StartingMonthId,this,spinnerData.setMonthData());
         spinnerAdapter.setSpinnerAdapter(activityAddNewTenantBinding.TenantTypeId,this,spinnerData.setTenantTypeData());
+        //endregion
+
+        //region gender click
+        activityAddNewTenantBinding.maleLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gender = getString(R.string.male);
+                changeGender(getString(R.string.male));
+            }
+        });
+        activityAddNewTenantBinding.femaleLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gender = getString(R.string.female);
+                changeGender(getString(R.string.female));
+            }
+        });
         //endregion
 
         //region is advance amount or not
@@ -276,6 +294,7 @@ public class NewTenantActivity extends AppCompatActivity {
     private void saveOrUpdateData(){
         tenantNameStr = activityAddNewTenantBinding.TenantName.getText().toString();
         tenant.setTenantName(tenantNameStr);
+        tenant.setGender(gender);
         tenant.setNID(activityAddNewTenantBinding.NID.getText().toString());
         tenant.setMobileNo(activityAddNewTenantBinding.MobileNo.getText().toString());
         tenant.setNumberOfPerson(utilsForAll.toIntValue(activityAddNewTenantBinding.NumberOfPerson.getText().toString()));
@@ -296,6 +315,28 @@ public class NewTenantActivity extends AppCompatActivity {
         }
         Toast.makeText(getApplicationContext(),R.string.success, Toast.LENGTH_SHORT).show();
         startActivity(new Intent(NewTenantActivity.this,TenantListActivity.class));
+    }
+    //endregion
+
+    //region change gender UI
+    private void changeGender(String gender){
+        if (gender.equals(getString(R.string.male))) {
+            activityAddNewTenantBinding.maleLayout.setBackground(ContextCompat.getDrawable(this,R.drawable.rectangle_background_filled_gender));
+            activityAddNewTenantBinding.Male.setBackgroundResource(0);
+            activityAddNewTenantBinding.Male.setTextColor(ContextCompat.getColor(this,R.color.md_white_1000));
+            activityAddNewTenantBinding.femaleLayout.setBackgroundResource(0);
+            activityAddNewTenantBinding.Female.setTextColor(ContextCompat.getColor(this,R.color.md_green_600));
+            activityAddNewTenantBinding.MaleIcon.setImageResource(R.drawable.ic_male_white);
+            activityAddNewTenantBinding.FemaleIcon.setImageResource(R.drawable.ic_female_green);
+        } else {
+            activityAddNewTenantBinding.femaleLayout.setBackground(ContextCompat.getDrawable(this,R.drawable.rectangle_background_filled_gender));
+            activityAddNewTenantBinding.Female.setBackgroundResource(0);
+            activityAddNewTenantBinding.Female.setTextColor(ContextCompat.getColor(this,R.color.md_white_1000));
+            activityAddNewTenantBinding.maleLayout.setBackgroundResource(0);
+            activityAddNewTenantBinding.Male.setTextColor(ContextCompat.getColor(this,R.color.md_green_600));
+            activityAddNewTenantBinding.MaleIcon.setImageResource(R.drawable.ic_male_green);
+            activityAddNewTenantBinding.FemaleIcon.setImageResource(R.drawable.ic_female_white);
+        }
     }
     //endregion
 
