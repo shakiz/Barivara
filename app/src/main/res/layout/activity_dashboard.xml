@@ -700,6 +700,16 @@
 
         </androidx.core.widget.NestedScrollView>
 
+        <com.google.android.gms.ads.AdView
+            xmlns:ads="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/adView"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            ads:adSize="BANNER"
+            ads:adUnitId="ca-app-pub-3017517613101119/6533321471"/>
+
     </RelativeLayout>
 
 </layout>
