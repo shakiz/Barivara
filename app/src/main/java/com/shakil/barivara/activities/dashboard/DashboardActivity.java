@@ -17,6 +17,7 @@ import com.shakil.barivara.model.meter.Meter;
 import com.shakil.barivara.model.room.Room;
 import com.shakil.barivara.model.tenant.Tenant;
 import com.shakil.barivara.utils.Constants;
+import com.shakil.barivara.utils.CustomAdManager;
 import com.shakil.barivara.utils.PrefManager;
 import com.shakil.barivara.utils.SpinnerAdapter;
 import com.shakil.barivara.utils.SpinnerData;
@@ -31,6 +32,7 @@ public class DashboardActivity extends AppCompatActivity {
     private PrefManager prefManager;
     private SpinnerAdapter spinnerAdapter;
     private SpinnerData spinnerData;
+    private CustomAdManager customAdManager;
     private int totalTenantCurrent = 0, totalTenantLeft = 0;
 
     @Override
@@ -53,6 +55,7 @@ public class DashboardActivity extends AppCompatActivity {
     //region init objects
     private void init(){
         prefManager = new PrefManager(this);
+        customAdManager = new CustomAdManager(activityDashboardBinding.adView, this);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
         spinnerData = new SpinnerData(this);
         spinnerAdapter = new SpinnerAdapter();
@@ -62,6 +65,10 @@ public class DashboardActivity extends AppCompatActivity {
     //region init objects
     private void bindUiWithComponents(){
         spinnerAdapter.setSpinnerAdapter(activityDashboardBinding.FilterMonth,this,spinnerData.setMonthData());
+
+        //region for ad
+        customAdManager.generateAd();
+        //endregion
 
         //region set all counts
         firebaseCrudHelper.fetchAllTenant("tenant", new FirebaseCrudHelper.onTenantDataFetch() {

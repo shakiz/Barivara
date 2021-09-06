@@ -19,6 +19,7 @@ import com.shakil.barivara.adapter.RecyclerTenantListAdapter;
 import com.shakil.barivara.databinding.ActivityTenantListBinding;
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.tenant.Tenant;
+import com.shakil.barivara.utils.CustomAdManager;
 import com.shakil.barivara.utils.FilterManager;
 import com.shakil.barivara.utils.Tools;
 import com.shakil.barivara.utils.UX;
@@ -36,6 +37,7 @@ public class TenantListActivity extends AppCompatActivity {
     private FilterManager filterManager;
     private ImageButton searchButton, refreshButton;
     private EditText searchName;
+    private CustomAdManager customAdManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,9 +68,14 @@ public class TenantListActivity extends AppCompatActivity {
         ux = new UX(this);
         tools = new Tools(this);
         noDataTXT = findViewById(R.id.mNoDataMessage);
+        customAdManager = new CustomAdManager(activityTenantListBinding.adView, this);
     }
 
     private void binUiWithComponents(){
+        //region for ad
+        customAdManager.generateAd();
+        //endregion
+
         searchName.setHint(getString(R.string.search_tenant_name));
         //region check internet connection
         if (tools.hasConnection()) {

@@ -12,8 +12,8 @@ android {
         applicationId "com.shakil.barivara"
         minSdkVersion 16
         targetSdkVersion 30
-        versionCode 33
-        versionName "1.0.33"
+        versionCode 34
+        versionName "1.0.34"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
@@ -65,6 +65,8 @@ dependencies {
 
     //sliding root nav
     implementation 'com.yarolegovich:sliding-root-nav:1.1.0'
+    //google admob
+    implementation 'com.google.android.gms:play-services-ads:19.3.0'
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

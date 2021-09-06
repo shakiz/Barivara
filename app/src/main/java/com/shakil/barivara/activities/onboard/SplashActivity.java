@@ -57,7 +57,7 @@ public class SplashActivity extends AppCompatActivity {
                 @Override
                 public void onResult(boolean updated) {
                     if(!updated){
-                        appUpdate.checkUpdate(false, false);
+                        appUpdate.checkUpdate(false, true);
                     }
                     else{
                         checkLogin();
