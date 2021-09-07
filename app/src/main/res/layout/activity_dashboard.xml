@@ -45,25 +45,25 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:weightSum="2"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="4dp">
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         app:cardBackgroundColor="@color/md_white_1000"
-                        app:cardElevation="2dp"
-                        android:translationZ="4dp"
+                        app:cardElevation="1dp"
+                        android:translationZ="2dp"
                         android:layout_gravity="center"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="16dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="16dp"
-                        app:cardCornerRadius="8dp">
+                        app:cardUseCompatPadding="true"
+                        android:layout_marginRight="8dp"
+                        app:cardCornerRadius="4dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="112dp"
+                            android:layout_height="100dp"
                             android:gravity="center"
                             android:layout_gravity="center"
                             android:orientation="vertical">
@@ -85,8 +85,7 @@
 
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="8dp"
+                                android:layout_height="match_parent"
                                 android:orientation="horizontal"
                                 android:layout_gravity="center"
                                 android:gravity="center"
@@ -108,7 +107,7 @@
                                     android:layout_height="match_parent"
                                     android:gravity="center"
                                     android:textStyle="bold"
-                                    android:textSize="24sp"
+                                    android:textSize="20sp"
                                     android:textColor="@color/md_amber_900"
                                     android:text="0"/>
 
@@ -120,20 +119,18 @@
                     <androidx.cardview.widget.CardView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
                         android:layout_weight="1"
                         app:cardBackgroundColor="@color/md_white_1000"
-                        app:cardElevation="2dp"
-                        android:translationZ="4dp"
+                        app:cardElevation="1dp"
+                        android:translationZ="2dp"
+                        app:cardUseCompatPadding="true"
                         android:layout_gravity="center"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="16dp"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginRight="8dp"
-                        app:cardCornerRadius="8dp">
+                        app:cardCornerRadius="4dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="112dp"
+                            android:layout_height="100dp"
                             android:gravity="center"
                             android:layout_gravity="center"
                             android:orientation="vertical">
@@ -155,10 +152,9 @@
 
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
                                 android:layout_gravity="center"
                                 android:gravity="center"
-                                android:layout_margin="8dp"
                                 android:orientation="horizontal"
                                 android:weightSum="1">
 
@@ -178,7 +174,7 @@
                                     android:textStyle="bold"
                                     android:gravity="center"
                                     android:layout_marginLeft="4dp"
-                                    android:textSize="24sp"
+                                    android:textSize="20sp"
                                     android:textColor="@color/md_purple_900"
                                     android:text="@string/zero"/>
 
@@ -193,6 +189,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="4dp"
                     android:orientation="horizontal"
                     android:layout_weight="2">
 
@@ -201,18 +199,16 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         app:cardBackgroundColor="@color/md_white_1000"
-                        app:cardElevation="2dp"
-                        android:translationZ="4dp"
+                        app:cardElevation="1dp"
+                        android:translationZ="2dp"
+                        android:layout_marginRight="8dp"
+                        app:cardUseCompatPadding="true"
                         android:layout_gravity="center"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="16dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="16dp"
-                        app:cardCornerRadius="10dp">
+                        app:cardCornerRadius="4dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="112dp"
+                            android:layout_height="100dp"
                             android:gravity="center"
                             android:layout_gravity="center"
                             android:orientation="vertical">
@@ -237,8 +233,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_gravity="center"
-                                android:layout_marginTop="8dp"
-                                android:layout_marginBottom="8dp"
                                 android:gravity="center"
                                 android:orientation="horizontal"
                                 android:weightSum="1">
@@ -258,11 +252,10 @@
                                     android:layout_height="match_parent"
                                     android:layout_marginLeft="4dp"
                                     android:gravity="center"
-                                    android:textSize="24sp"
-                                    android:tag="Duration"
                                     android:textStyle="bold"
-                                    android:textColor="@color/md_green_800"
-                                    android:text="@string/zero"/>
+                                    android:textSize="20sp"
+                                    android:textColor="@color/md_amber_900"
+                                    android:text="0"/>
 
                             </LinearLayout>
 
@@ -275,18 +268,16 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         app:cardBackgroundColor="@color/md_white_1000"
-                        app:cardElevation="2dp"
-                        android:translationZ="4dp"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="16dp"
+                        app:cardElevation="1dp"
+                        android:translationZ="2dp"
                         android:layout_marginLeft="8dp"
-                        android:layout_marginRight="16dp"
-                        app:cardCornerRadius="10dp">
+                        app:cardUseCompatPadding="true"
+                        android:layout_gravity="center"
+                        app:cardCornerRadius="4dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="112dp"
+                            android:layout_height="100dp"
                             android:gravity="center"
                             android:layout_gravity="center"
                             android:orientation="vertical">
@@ -311,8 +302,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_gravity="center"
-                                android:layout_marginTop="8dp"
-                                android:layout_marginBottom="8dp"
                                 android:gravity="center"
                                 android:orientation="horizontal"
                                 android:weightSum="1">
@@ -332,8 +321,7 @@
                                     android:layout_height="match_parent"
                                     android:layout_marginLeft="4dp"
                                     android:gravity="center"
-                                    android:textSize="24sp"
-                                    android:tag="Duration"
+                                    android:textSize="20sp"
                                     android:textStyle="bold"
                                     android:textColor="@color/md_red_400"
                                     android:text="@string/zero"/>
@@ -349,13 +337,14 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
                     android:layout_weight="1"
-                    android:translationZ="4dp"
+                    app:cardElevation="1dp"
+                    android:translationZ="2dp"
                     app:cardBackgroundColor="@color/md_white_1000"
-                    app:cardElevation="4dp"
                     android:layout_gravity="center"
-                    android:layout_margin="10dp"
-                    app:cardCornerRadius="5dp">
+                    app:cardUseCompatPadding="true"
+                    app:cardCornerRadius="4dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -377,7 +366,6 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:layout_marginTop="8dp"
-                            android:layout_marginBottom="8dp"
                             android:layout_gravity="center"
                             android:weightSum="2"
                             android:orientation="horizontal">
@@ -391,8 +379,8 @@
                                 android:orientation="horizontal">
 
                                 <ImageView
-                                    android:layout_width="42dp"
-                                    android:layout_height="42dp"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
                                     android:scaleType="centerInside"
                                     android:padding="8dp"
                                     android:background="@drawable/ic_taka"/>
@@ -407,7 +395,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:gravity="center|left"
-                                        android:textSize="18sp"
+                                        android:textSize="16sp"
                                         android:textColor="@color/md_orange_600"
                                         android:text="@string/rent_amount"/>
 
@@ -418,7 +406,7 @@
                                         android:gravity="center|left"
                                         android:maxLines="2"
                                         android:ellipsize="end"
-                                        android:textSize="18sp"
+                                        android:textSize="16sp"
                                         android:layout_marginRight="2dp"
                                         android:textStyle="bold"
                                         android:textColor="@color/md_grey_800"
@@ -438,8 +426,8 @@
                                 android:orientation="horizontal">
 
                                 <ImageView
-                                    android:layout_width="42dp"
-                                    android:layout_height="42dp"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
                                     android:background="@drawable/ic_electricity_bill"/>
 
                                 <LinearLayout
@@ -452,7 +440,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:gravity="center|left"
-                                        android:textSize="18sp"
+                                        android:textSize="16sp"
                                         android:textColor="@color/md_cyan_800"
                                         android:text="@string/electricity_bill"/>
 
@@ -463,7 +451,7 @@
                                         android:gravity="center|left"
                                         android:maxLines="2"
                                         android:ellipsize="end"
-                                        android:textSize="18sp"
+                                        android:textSize="16sp"
                                         android:layout_marginRight="2dp"
                                         android:textStyle="bold"
                                         android:textColor="@color/md_grey_800"
@@ -482,13 +470,13 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:translationZ="4dp"
+                    app:cardElevation="1dp"
+                    android:translationZ="2dp"
                     app:cardBackgroundColor="@color/md_white_1000"
-                    app:cardElevation="4dp"
                     android:layout_gravity="center"
-                    android:layout_margin="10dp"
-                    app:cardCornerRadius="5dp">
+                    android:layout_marginTop="12dp"
+                    app:cardUseCompatPadding="true"
+                    app:cardCornerRadius="4dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -499,11 +487,72 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/filter_monthly_data"
+                            android:text="@string/filter_rent_yearly"
                             android:textColor="@color/md_grey_800"
                             android:typeface="serif"
-                            android:paddingTop="4dp"
                             android:paddingBottom="4dp"/>
+
+                        <Spinner
+                            style="@style/Base.TextAppearance.AppCompat.Medium"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="4dp"
+                            android:background="@drawable/edit_text_back"
+                            android:id="@+id/FilterYear"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center|left"
+                            android:layout_marginTop="12dp"
+                            android:layout_marginBottom="8dp"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="42dp"
+                                android:layout_height="42dp"
+                                android:scaleType="centerInside"
+                                android:padding="8dp"
+                                android:background="@drawable/ic_taka"/>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="8dp"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center|left"
+                                    android:textSize="16sp"
+                                    android:textColor="@color/md_orange_800"
+                                    android:text="@string/yearly_rent_amount"/>
+
+                                <TextView
+                                    android:id="@+id/TotalRentAmountYearly"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center|left"
+                                    android:textSize="16sp"
+                                    android:layout_marginRight="2dp"
+                                    android:textStyle="bold"
+                                    android:maxLines="2"
+                                    android:ellipsize="end"
+                                    android:textColor="@color/md_grey_800"
+                                    android:text="@string/zero_taka"/>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginBottom="4dp"
+                            android:background="@color/md_green_500"/>
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -514,16 +563,15 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:text="@string/select_month_2"
+                                android:text="@string/filter_rent_monthly"
                                 android:textColor="@color/md_grey_800"
-                                android:textSize="16sp" />
+                                android:typeface="serif"/>
 
                             <Spinner
                                 style="@style/Base.TextAppearance.AppCompat.Medium"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
-                                android:layout_marginTop="5dp"
+                                android:layout_marginTop="4dp"
                                 android:background="@drawable/edit_text_back"
                                 android:id="@+id/FilterMonth"/>
 
@@ -532,59 +580,46 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:layout_marginTop="12dp"
-                            android:layout_marginBottom="8dp"
                             android:layout_gravity="center"
-                            android:weightSum="2"
+                            android:gravity="center|left"
+                            android:layout_marginTop="12dp"
                             android:orientation="horizontal">
 
+                            <ImageView
+                                android:layout_width="42dp"
+                                android:layout_height="42dp"
+                                android:scaleType="centerInside"
+                                android:padding="8dp"
+                                android:background="@drawable/ic_taka"/>
+
                             <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_weight="2"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:gravity="center|left"
-                                android:orientation="horizontal">
+                                android:layout_marginLeft="8dp"
+                                android:orientation="vertical">
 
-                                <ImageView
-                                    android:layout_width="42dp"
-                                    android:layout_height="42dp"
-                                    android:scaleType="centerInside"
-                                    android:padding="8dp"
-                                    android:background="@drawable/ic_taka"/>
-
-                                <LinearLayout
+                                <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="8dp"
-                                    android:orientation="vertical">
+                                    android:gravity="center|left"
+                                    android:textSize="16sp"
+                                    android:textColor="@color/md_orange_800"
+                                    android:text="@string/monthly_rent_amount"/>
 
-                                    <TextView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center|left"
-                                        android:textSize="18sp"
-                                        android:textColor="@color/md_orange_600"
-                                        android:text="@string/monthly_rent_amount"/>
-
-                                    <TextView
-                                        android:id="@+id/TotalRentAmountMonthly"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center|left"
-                                        android:textSize="18sp"
-                                        android:layout_marginRight="2dp"
-                                        android:textStyle="bold"
-                                        android:maxLines="2"
-                                        android:ellipsize="end"
-                                        android:textColor="@color/md_grey_800"
-                                        android:text="@string/zero_taka"/>
-
-                                </LinearLayout>
+                                <TextView
+                                    android:id="@+id/TotalRentAmountMonthly"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center|left"
+                                    android:textSize="16sp"
+                                    android:layout_marginRight="2dp"
+                                    android:textStyle="bold"
+                                    android:maxLines="2"
+                                    android:ellipsize="end"
+                                    android:textColor="@color/md_grey_800"
+                                    android:text="@string/zero_taka"/>
 
                             </LinearLayout>
-
 
                         </LinearLayout>
 
@@ -595,24 +630,24 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     app:cardBackgroundColor="@color/md_white_1000"
-                    app:cardElevation="2dp"
-                    android:translationZ="5dp"
+                    app:cardElevation="1dp"
+                    android:translationZ="2dp"
                     android:layout_gravity="center"
-                    android:layout_margin="10dp"
-                    app:cardCornerRadius="10dp">
+                    android:layout_marginTop="12dp"
+                    app:cardUseCompatPadding="true"
+                    app:cardCornerRadius="4dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center|left"
-                        android:layout_margin="10dp"
+                        android:layout_margin="8dp"
                         android:orientation="horizontal">
 
                         <ImageView
-                            android:layout_width="56dp"
-                            android:layout_height="56dp"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
                             android:gravity="center"
                             android:padding="8dp"
                             android:src="@drawable/ic_visibility_black_24dp"
@@ -632,7 +667,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
-                                android:textSize="18sp"
+                                android:textSize="16sp"
                                 android:textColor="@color/md_grey_800"
                                 android:text="@string/total_app_visit"/>
 
@@ -645,7 +680,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
-                                    android:textSize="15sp"
+                                    android:textSize="14sp"
                                     android:textColor="@color/md_grey_700"
                                     android:text="@string/app_visited"/>
 
@@ -654,7 +689,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="4dp"
                                     android:gravity="center"
-                                    android:textSize="15sp"
+                                    android:textSize="14sp"
                                     android:textColor="@color/md_grey_700"
                                     android:text="@string/start_bracket"/>
 
@@ -663,7 +698,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
-                                    android:textSize="16sp"
+                                    android:textSize="14sp"
                                     android:textStyle="bold"
                                     android:textColor="@color/md_green_800"
                                     android:text="@string/zero"/>
@@ -673,7 +708,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginRight="4dp"
                                     android:gravity="center"
-                                    android:textSize="15sp"
+                                    android:textSize="14sp"
                                     android:textColor="@color/md_grey_700"
                                     android:text="@string/end_bracket"/>
 
@@ -681,7 +716,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
-                                    android:textSize="15sp"
+                                    android:textSize="14sp"
                                     android:textColor="@color/md_grey_700"
                                     android:text="@string/times"/>
 

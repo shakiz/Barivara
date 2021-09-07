@@ -409,7 +409,7 @@ public class FirebaseCrudHelper {
                             object[0] = object[0] + rent.getRentAmount();
                         }
                     }
-                    Log.i(Constants.TAG,"getDataByQuery:"+object[0]);
+                    Log.i(Constants.TAG,"getDataByQuery: Monthly :"+object[0]);
                 }
                 if (onDataQuery != null){
                     onDataQuery.onQueryFinished(object[0]);
@@ -421,7 +421,45 @@ public class FirebaseCrudHelper {
                 if (onDataQuery != null){
                     onDataQuery.onQueryFinished(object[0]);
                 }
-                Log.i(Constants.TAG,"getDataByQuery:"+error.getMessage());
+                Log.i(Constants.TAG,"getDataByQuery: Monthly :"+error.getMessage());
+            }
+        });
+    }
+    //endregion
+
+    //region query on db based on value
+    public interface onDataQueryYearlyRent{
+        void onQueryFinished(int data);
+    }
+    public void getRentDataByYear(String path, String queryValue, String fieldName, onDataQueryYearlyRent onDataQueryYearlyRent){
+        final int[] object = {0};
+
+        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(prefManager.getString(mUserId));
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getChildren() != null){
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        Rent rent = dataSnapshot.getValue(Rent.class);
+                        if (rent.getYearName().equals(queryValue) || rent.getYearName().contains(queryValue) ){
+                            Log.i(Constants.TAG,fieldName+ ":" +rent.getRentAmount());
+                            object[0] = object[0] + rent.getRentAmount();
+                        }
+                    }
+                    Log.i(Constants.TAG,"getDataByQuery: Yearly :"+object[0]);
+                }
+                if (onDataQueryYearlyRent != null){
+                    onDataQueryYearlyRent.onQueryFinished(object[0]);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                if (onDataQueryYearlyRent != null){
+                    onDataQueryYearlyRent.onQueryFinished(object[0]);
+                }
+                Log.i(Constants.TAG,"getDataByQuery: Yearly :"+error.getMessage());
             }
         });
     }

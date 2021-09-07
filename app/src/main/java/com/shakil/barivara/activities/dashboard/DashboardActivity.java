@@ -53,7 +53,7 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     //region init objects
-    private void init(){
+    private void init() {
         prefManager = new PrefManager(this);
         customAdManager = new CustomAdManager(activityDashboardBinding.adView, this);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
@@ -63,8 +63,9 @@ public class DashboardActivity extends AppCompatActivity {
     //endregion
 
     //region init objects
-    private void bindUiWithComponents(){
-        spinnerAdapter.setSpinnerAdapter(activityDashboardBinding.FilterMonth,this,spinnerData.setMonthData());
+    private void bindUiWithComponents() {
+        spinnerAdapter.setSpinnerAdapter(activityDashboardBinding.FilterYear, this, spinnerData.setYearData());
+        spinnerAdapter.setSpinnerAdapter(activityDashboardBinding.FilterMonth, this, spinnerData.setMonthData());
 
         //region for ad
         customAdManager.generateAd();
@@ -75,48 +76,69 @@ public class DashboardActivity extends AppCompatActivity {
             @Override
             public void onFetch(ArrayList<Tenant> objects) {
                 for (Tenant tenant : objects) {
-                    if (tenant.getIsActiveId() != 0){
-                        totalTenantCurrent++;
-                    }
-                    else{
-                        totalTenantLeft++;
+                    if (tenant.getIsActiveValue() != null) {
+                        if (tenant.getIsActiveValue().equals(getString(R.string.yes))) {
+                            totalTenantCurrent++;
+                        } else if (tenant.getIsActiveValue().equals(getString(R.string.no))) {
+                            totalTenantLeft++;
+                        }
                     }
                 }
-                activityDashboardBinding.TotalTenantsCurrent.setText(""+totalTenantCurrent);
-                activityDashboardBinding.TotalTenantLeft.setText(""+totalTenantLeft);
+                activityDashboardBinding.TotalTenantsCurrent.setText("" + totalTenantCurrent);
+                activityDashboardBinding.TotalTenantLeft.setText("" + totalTenantLeft);
             }
         });
 
         firebaseCrudHelper.fetchAllMeter("meter", new FirebaseCrudHelper.onDataFetch() {
             @Override
             public void onFetch(ArrayList<Meter> objects) {
-                activityDashboardBinding.TotalMeters.setText(""+objects.size());
+                activityDashboardBinding.TotalMeters.setText("" + objects.size());
             }
         });
 
         firebaseCrudHelper.fetchAllRoom("room", new FirebaseCrudHelper.onRoomDataFetch() {
             @Override
             public void onFetch(ArrayList<Room> objects) {
-                activityDashboardBinding.TotalRooms.setText(""+objects.size());
+                activityDashboardBinding.TotalRooms.setText("" + objects.size());
             }
         });
 
         firebaseCrudHelper.getAdditionalInfo("rent", "rentAmount", new FirebaseCrudHelper.onAdditionalInfoFetch() {
             @Override
             public void onFetched(double data) {
-                activityDashboardBinding.TotalRentAmount.animateText(data +" "+getString(R.string.taka));
+                activityDashboardBinding.TotalRentAmount.animateText(data + " " + getString(R.string.taka));
             }
         });
 
         firebaseCrudHelper.getAdditionalInfo("electricityBill", "totalBill", new FirebaseCrudHelper.onAdditionalInfoFetch() {
             @Override
             public void onFetched(double data) {
-                activityDashboardBinding.TotalElectricityBill.animateText(data +" "+getString(R.string.taka));
+                activityDashboardBinding.TotalElectricityBill.animateText(data + " " + getString(R.string.taka));
             }
 
         });
 
         activityDashboardBinding.AppVisitCount.setText(String.valueOf(prefManager.getInt(mAppViewCount)));
+        //endregion
+
+        //region daily data filter by year
+        activityDashboardBinding.FilterYear.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                firebaseCrudHelper.getRentDataByYear("rent", String.valueOf(parent.getItemAtPosition(position))
+                        , "RentAmount", new FirebaseCrudHelper.onDataQueryYearlyRent() {
+                            @Override
+                            public void onQueryFinished(int data) {
+                                activityDashboardBinding.TotalRentAmountYearly.setText(data + " " + getString(R.string.taka));
+                            }
+                        });
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                Log.i(Constants.TAG, "FilterYear Spinner : onNothingSelected");
+            }
+        });
         //endregion
 
         //region daily data filter by month
@@ -127,16 +149,17 @@ public class DashboardActivity extends AppCompatActivity {
                         , "RentAmount", new FirebaseCrudHelper.onDataQuery() {
                             @Override
                             public void onQueryFinished(int data) {
-                                activityDashboardBinding.TotalRentAmountMonthly.setText(data+" "+getString(R.string.taka));
+                                activityDashboardBinding.TotalRentAmountMonthly.setText(data + " " + getString(R.string.taka));
                             }
                         });
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                Log.i(Constants.TAG,"FilterMonth Spinner : onNothingSelected");
+                Log.i(Constants.TAG, "FilterMonth Spinner : onNothingSelected");
             }
         });
+        //endregion
     }
     //endregion
 

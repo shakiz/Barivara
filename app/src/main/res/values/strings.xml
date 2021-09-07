@@ -308,4 +308,16 @@
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="gender">Gender</string>
+    <string name="filter_rent">Filter the Rents</string>
+    <string name="yearly_rent_amount">Yearly Rent Amount</string>
+    <string name="twenty_fiften">2015</string>
+    <string name="twenty_sixteen">2016</string>
+    <string name="twenty_seventeen">2017</string>
+    <string name="twenty_eightteen">2018</string>
+    <string name="twenty_nineteen">2019</string>
+    <string name="twenty_twenty_one">2021</string>
+    <string name="twenty_twenty_two">2022</string>
+    <string name="twenty_twenty_three">2023</string>
+    <string name="filter_rent_yearly">Filter the Rent Yearly</string>
+    <string name="filter_rent_monthly">Filter the Rent Monthly</string>
 </resources>

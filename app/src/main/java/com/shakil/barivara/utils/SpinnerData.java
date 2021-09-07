@@ -14,7 +14,15 @@ public class SpinnerData {
 
     public ArrayList<String> setYearData(){
         ArrayList<String> spinnerValues = new ArrayList<>();
-        String[] yearArray = {context.getString(R.string.select_data_1),"2019","2020","2021","2022","2023","2024","2025"};
+        String[] yearArray = {context.getString(R.string.select_data_1), context.getString(R.string.twenty_fiften),
+                context.getString(R.string.twenty_sixteen),
+                context.getString(R.string.twenty_seventeen),
+                context.getString(R.string.twenty_eightteen),
+                context.getString(R.string.twenty_nineteen),
+                context.getString(R.string.twenty_twenty_one),
+                context.getString(R.string.twenty_twenty_two),
+                context.getString(R.string.twenty_twenty_three),
+        };
         for (int start = 0; start < yearArray.length; start++) {
             spinnerValues.add(yearArray[start]);
         }

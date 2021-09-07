@@ -26,7 +26,7 @@ public class CustomAdManager {
         MobileAds.initialize(context, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
-                Log.v("onInitComplete","InitializationComplete");
+                Log.i("onInitComplete","InitializationComplete");
             }
         });
         AdRequest adRequest = new AdRequest.Builder().build();
@@ -34,35 +34,35 @@ public class CustomAdManager {
         adView.setAdListener(new AdListener(){
             @Override
             public void onAdLoaded() {
-                Log.v(Constants.TAG+"::onAdListener","AdlLoaded");
+                Log.i(Constants.TAG+"::onAdListener","AdlLoaded");
             }
 
             @Override
             public void onAdFailedToLoad(LoadAdError adError) {
-                Log.v(Constants.TAG+"::onAdListener","AdFailedToLoad");
-                Log.v(Constants.TAG+"::onAdListener","AdFailedToLoad Error "+adError.getMessage());
+                Log.i(Constants.TAG+"::onAdListener","AdFailedToLoad");
+                Log.i(Constants.TAG+"::onAdListener","AdFailedToLoad Error "+adError.getMessage());
             }
 
             @Override
             public void onAdOpened() {
                 // Code to be executed when an ad opens an overlay that
                 // covers the screen.
-                Log.v(Constants.TAG+"::onAdListener","AdOpened");
+                Log.i(Constants.TAG+"::onAdListener","AdOpened");
             }
 
             @Override
             public void onAdClicked() {
-                Log.v(Constants.TAG+"::onAdListener","AdClicked");
+                Log.i(Constants.TAG+"::onAdListener","AdClicked");
             }
 
             @Override
             public void onAdLeftApplication() {
-                Log.v(Constants.TAG+"::onAdListener","AdLeftApplication");
+                Log.i(Constants.TAG+"::onAdListener","AdLeftApplication");
             }
 
             @Override
             public void onAdClosed() {
-                Log.v(Constants.TAG+"::onAdListener","AdClosed");
+                Log.i(Constants.TAG+"::onAdListener","AdClosed");
             }
         });
         //endregion
