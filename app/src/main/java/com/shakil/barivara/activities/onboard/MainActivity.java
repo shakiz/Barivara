@@ -41,6 +41,7 @@ import com.shakil.barivara.model.meter.Meter;
 import com.shakil.barivara.model.room.Room;
 import com.shakil.barivara.model.tenant.Tenant;
 import com.shakil.barivara.utils.Constants;
+import com.shakil.barivara.utils.CustomAdManager;
 import com.shakil.barivara.utils.LanguageManager;
 import com.shakil.barivara.utils.PrefManager;
 import com.shakil.barivara.utils.Tools;
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity{
     private Tools tools;
     private SlidingRootNav slidingRootNav;
     private RecyclerView navRecycler;
+    private CustomAdManager customAdManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,6 +132,10 @@ public class MainActivity extends AppCompatActivity{
 
     //region UI interactions
     private void bindUIWithComponents() {
+        //region for ad
+        customAdManager.generateAd();
+        //endregion
+
         //region Update App ViewCount
         if(prefManager.getInt(mAppViewCount)>0) {
             prefManager.set(mAppViewCount,prefManager.getInt(mAppViewCount)+1);
@@ -257,6 +263,7 @@ public class MainActivity extends AppCompatActivity{
         tools = new Tools(this, activityMainBinding.mainLayout);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
         utilsForAll = new UtilsForAll(this,activityMainBinding.mainLayout);
+        customAdManager = new CustomAdManager(activityMainBinding.adView, this);
     }
     //endregion
 

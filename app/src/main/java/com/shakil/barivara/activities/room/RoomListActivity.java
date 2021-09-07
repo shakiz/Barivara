@@ -19,6 +19,7 @@ import com.shakil.barivara.adapter.RecyclerRoomListAdapter;
 import com.shakil.barivara.databinding.ActivityRoomListBinding;
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.room.Room;
+import com.shakil.barivara.utils.CustomAdManager;
 import com.shakil.barivara.utils.FilterManager;
 import com.shakil.barivara.utils.Tools;
 import com.shakil.barivara.utils.UX;
@@ -36,6 +37,7 @@ public class RoomListActivity extends AppCompatActivity {
     private ImageButton searchButton, refreshButton;
     private EditText searchName;
     private FilterManager filterManager;
+    private CustomAdManager customAdManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +57,24 @@ public class RoomListActivity extends AppCompatActivity {
         binUiWIthComponents();
     }
 
+    private void init() {
+        searchButton = findViewById(R.id.searchButton);
+        refreshButton = findViewById(R.id.refreshButton);
+        searchName = findViewById(R.id.SearchName);
+        roomList = new ArrayList<>();
+        ux = new UX(this);
+        tools = new Tools(this);
+        filterManager = new FilterManager(this);
+        firebaseCrudHelper = new FirebaseCrudHelper(this);
+        noDataTXT = findViewById(R.id.mNoDataMessage);
+        customAdManager = new CustomAdManager(activityRoomListBinding.adView, this);
+    }
+
     private void binUiWIthComponents() {
+        //region for ad
+        customAdManager.generateAd();
+        //endregion
+
         searchName.setHint(getString(R.string.search_room_name));
         //region check internet connection
         if (tools.hasConnection()) {
@@ -155,18 +174,6 @@ public class RoomListActivity extends AppCompatActivity {
         });
     }
     //endregion
-
-    private void init() {
-        searchButton = findViewById(R.id.searchButton);
-        refreshButton = findViewById(R.id.refreshButton);
-        searchName = findViewById(R.id.SearchName);
-        roomList = new ArrayList<>();
-        ux = new UX(this);
-        tools = new Tools(this);
-        filterManager = new FilterManager(this);
-        firebaseCrudHelper = new FirebaseCrudHelper(this);
-        noDataTXT = findViewById(R.id.mNoDataMessage);
-    }
 
     @Override
     public void onBackPressed() {
