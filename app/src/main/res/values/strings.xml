@@ -320,4 +320,18 @@
     <string name="twenty_twenty_three">2023</string>
     <string name="filter_rent_yearly">Filter the Rent Yearly</string>
     <string name="filter_rent_monthly">Filter the Rent Monthly</string>
+    <string name="generate_bill">Generate Bill</string>
+    <string name="utility_bills">Utility Bills</string>
+    <string name="utility_bills_hint">Enter utility bill amount</string>
+    <string name="room_rent_amount">Room Rent Amount</string>
+    <string name="gas_bill">Gas Bill</string>
+    <string name="gas_bill_hint">Enter gas bill amount</string>
+    <string name="water_bill">Water Bill</string>
+    <string name="water_bill_hint">Enter water bill amount</string>
+    <string name="service_charge">Service Charge</string>
+    <string name="service_charge_hint">Enter service charge amount</string>
+    <string name="electricity_bill_hint">Enter electricity bill</string>
+    <string name="send_message">Send Message</string>
+    <string name="bill_details">Bill Details</string>
+    <string name="day_and_month">Day and Month</string>
 </resources>

@@ -358,6 +358,7 @@
                             android:text="@string/all_spend_earnings"
                             android:textColor="@color/md_grey_800"
                             android:typeface="serif"
+                            android:textStyle="bold"
                             android:paddingTop="4dp"
                             android:paddingBottom="4dp"/>
 
@@ -489,6 +490,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/filter_rent_yearly"
                             android:textColor="@color/md_grey_800"
+                            android:textStyle="bold"
                             android:typeface="serif"
                             android:paddingBottom="4dp"/>
 
@@ -565,6 +567,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/filter_rent_monthly"
                                 android:textColor="@color/md_grey_800"
+                                android:textStyle="bold"
                                 android:typeface="serif"/>
 
                             <Spinner

@@ -22,6 +22,11 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".activities.generatebill.GenerateBillActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNoActionBar"
+            android:windowSoftInputMode="adjustNothing" />
+        <activity
             android:name=".activities.auth.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeNoActionBar"
@@ -35,12 +40,12 @@
             android:name=".activities.auth.ForgotPasswordActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeNoActionBar"
-            android:windowSoftInputMode="adjustNothing"/>
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".activities.notification.NotificationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeNoActionBar"
-            android:windowSoftInputMode="adjustNothing"/>
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".activities.onboard.MainActivity"
             android:screenOrientation="portrait"
@@ -124,15 +129,14 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activities.note.NoteListActivity"
-            android:theme="@style/AppThemeNoActionBar"
             android:launchMode="singleTop"
-            android:windowSoftInputMode="adjustNothing"/>
-
+            android:theme="@style/AppThemeNoActionBar"
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".activities.note.NewNoteActivity"
-            android:theme="@style/AppThemeNoActionBar"
             android:parentActivityName=".activities.note.NoteListActivity"
-            android:windowSoftInputMode="adjustNothing"/>
+            android:theme="@style/AppThemeNoActionBar"
+            android:windowSoftInputMode="adjustNothing" />
 
         <service
             android:name=".utils.MyFirebaseMessagingService"
@@ -145,7 +149,6 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-3017517613101119~4596141661" />
-
     </application>
 
 </manifest>

@@ -24,6 +24,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.shakil.barivara.R;
 import com.shakil.barivara.activities.auth.LoginActivity;
 import com.shakil.barivara.activities.dashboard.DashboardActivity;
+import com.shakil.barivara.activities.generatebill.GenerateBillActivity;
 import com.shakil.barivara.activities.meter.ElectricityBillListActivity;
 import com.shakil.barivara.activities.meter.MeterListActivity;
 import com.shakil.barivara.activities.note.NoteListActivity;
@@ -219,11 +220,12 @@ public class MainActivity extends AppCompatActivity{
     //region set nav recycler data and adapter
     private void setDataAdapter() {
         ArrayList<DrawerItem> items = new ArrayList<DrawerItem>();
+        items.add(new DrawerItem(R.drawable.ic_invoice, getString(R.string.generate_bill)));
         items.add(new DrawerItem(R.drawable.ic_settings_black_24dp, getString(R.string.settings)));
+        items.add(new DrawerItem(R.drawable.ic_note_add, getString(R.string.your_notes)));
         items.add(new DrawerItem(R.drawable.ic_notifications_black_24dp, getString(R.string.notifications)));
         items.add(new DrawerItem(R.drawable.ic_info_black_24dp, getString(R.string.tutorial)));
         items.add(new DrawerItem(R.drawable.ic_star_border_black_24dp, getString(R.string.rate_us)));
-        items.add(new DrawerItem(R.drawable.ic_note_add, getString(R.string.your_notes)));
         items.add(new DrawerItem(R.drawable.ic_logout_black_24dp, getString(R.string.logout)));
 
         RecyclerNavDrawerAdapter recyclerNavDrawerAdapter = new RecyclerNavDrawerAdapter(items);
@@ -235,6 +237,9 @@ public class MainActivity extends AppCompatActivity{
             public void onItemClick(DrawerItem drawerItem) {
                 if (drawerItem.getIcon() == R.drawable.ic_settings_black_24dp){
                     startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+                }
+                else if (drawerItem.getIcon() == R.drawable.ic_invoice){
+                    startActivity(new Intent(MainActivity.this, GenerateBillActivity.class));
                 }
                 else if (drawerItem.getIcon() == R.drawable.ic_star_border_black_24dp){
                     tools.rateApp();
