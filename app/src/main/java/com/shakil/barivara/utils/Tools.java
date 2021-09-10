@@ -200,4 +200,25 @@ public class Tools {
         context.startActivity(smsIntent);
     }
     //endregion
+
+    //region validate mobile number
+    public boolean isValidMobile(String mobileNumber) {
+        boolean valid = false;
+        if (mobileNumber != null) {
+            if (mobileNumber.length() == 11) {
+                String[] codes = {"011", "013", "014", "015", "016", "017", "018", "019"};
+                String userCode = mobileNumber.substring(0, 3);
+                for (String tempCode : codes) {
+                    if (tempCode.equals(userCode)) {
+                        valid = true;
+                        break;
+                    }
+                }
+            } else {
+                valid = false;
+            }
+        }
+        return valid;
+    }
+    //endregion
 }

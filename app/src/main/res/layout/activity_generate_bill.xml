@@ -55,6 +55,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_marginBottom="12dp"
                         android:orientation="vertical">
 
                         <LinearLayout
@@ -69,18 +70,26 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:text="@string/select_room"
+                                android:text="@string/room_name"
                                 android:textColor="@color/md_grey_900"
                                 android:textSize="16sp" />
 
-                            <Spinner
-                                style="@style/Base.TextAppearance.AppCompat.Medium"
+                            <EditText
+                                android:id="@+id/AssociateRoom"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:layout_marginTop="5dp"
-                                android:tag="@string/select_room"
                                 android:background="@drawable/edit_text_back"
-                                android:id="@+id/AssociateRoomId"/>
+                                android:inputType="text"
+                                android:ellipsize="end"
+                                android:scrollHorizontally="true"
+                                android:maxLines="1"
+                                android:textColorHint="@color/md_grey_700"
+                                android:hint="@string/room_hint"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"
+                                android:textSize="14sp"
+                                android:textColor="@color/md_grey_800"/>
 
                         </LinearLayout>
 
@@ -151,27 +160,80 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginRight="12dp"
-                            android:layout_marginTop="8dp"
-                            android:orientation="vertical">
+                            android:orientation="horizontal"
+                            android:weightSum="2">
 
-                            <TextView
-                                android:layout_width="match_parent"
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:text="@string/tenant_name"
-                                android:textColor="@color/md_grey_900"
-                                android:textSize="16sp" />
+                                android:layout_marginLeft="12dp"
+                                android:layout_marginRight="12dp"
+                                android:layout_marginTop="8dp"
+                                android:orientation="vertical">
 
-                            <Spinner
-                                style="@style/Base.TextAppearance.AppCompat.Medium"
-                                android:layout_width="match_parent"
-                                android:layout_height="40dp"
-                                android:layout_marginTop="5dp"
-                                android:tag="@string/tenant_name"
-                                android:background="@drawable/edit_text_back"
-                                android:id="@+id/TenantNameId"/>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp"
+                                    android:text="@string/tenant_name"
+                                    android:textColor="@color/md_grey_900"
+                                    android:textSize="16sp" />
+
+                                <EditText
+                                    android:id="@+id/TenantName"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:layout_marginTop="5dp"
+                                    android:background="@drawable/edit_text_back"
+                                    android:inputType="text"
+                                    android:ellipsize="end"
+                                    android:scrollHorizontally="true"
+                                    android:maxLines="1"
+                                    android:textColorHint="@color/md_grey_700"
+                                    android:hint="@string/tenant_hint"
+                                    android:paddingLeft="10dp"
+                                    android:paddingRight="10dp"
+                                    android:textSize="14sp"
+                                    android:textColor="@color/md_grey_800"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="12dp"
+                                android:layout_marginRight="12dp"
+                                android:layout_marginTop="8dp"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp"
+                                    android:text="@string/tenant_mobile_number"
+                                    android:textColor="@color/md_grey_900"
+                                    android:textSize="16sp" />
+
+                                <EditText
+                                    android:id="@+id/MobileNo"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:layout_marginTop="5dp"
+                                    android:background="@drawable/edit_text_back"
+                                    android:inputType="numberSigned"
+                                    android:ellipsize="end"
+                                    android:scrollHorizontally="true"
+                                    android:maxLines="1"
+                                    android:textColorHint="@color/md_grey_700"
+                                    android:hint="@string/mobile_number_hint"
+                                    android:paddingLeft="10dp"
+                                    android:paddingRight="10dp"
+                                    android:textSize="14sp"
+                                    android:textColor="@color/md_grey_800"/>
+
+                            </LinearLayout>
 
                         </LinearLayout>
 
@@ -241,6 +303,7 @@
                                     android:background="@drawable/edit_text_back"
                                     android:inputType="number"
                                     android:ellipsize="end"
+                                    android:text="0"
                                     android:scrollHorizontally="true"
                                     android:maxLines="1"
                                     android:textColorHint="@color/md_grey_700"
@@ -276,6 +339,7 @@
                                     android:layout_marginTop="5dp"
                                     android:background="@drawable/edit_text_back"
                                     android:inputType="number"
+                                    android:text="0"
                                     android:ellipsize="end"
                                     android:scrollHorizontally="true"
                                     android:maxLines="1"
@@ -313,6 +377,7 @@
                                 android:layout_marginTop="5dp"
                                 android:background="@drawable/edit_text_back"
                                 android:inputType="number"
+                                android:text="0"
                                 android:ellipsize="end"
                                 android:scrollHorizontally="true"
                                 android:maxLines="1"
@@ -349,6 +414,7 @@
                                 android:background="@drawable/edit_text_back"
                                 android:inputType="number"
                                 android:ellipsize="end"
+                                android:text="0"
                                 android:scrollHorizontally="true"
                                 android:maxLines="1"
                                 android:textColorHint="@color/md_grey_700"
@@ -386,6 +452,8 @@
                 android:id="@+id/generateBill"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:clickable="true"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
                 android:textColor="@color/md_white_1000"
                 app:backgroundTint="@color/md_blue_grey_400"
                 android:text="@string/generate_bill"/>

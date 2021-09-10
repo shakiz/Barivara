@@ -334,4 +334,13 @@
     <string name="send_message">Send Message</string>
     <string name="bill_details">Bill Details</string>
     <string name="day_and_month">Day and Month</string>
+    <string name="tenant_mobile_number">Tenant Mobile No</string>
+    <string name="mobile_validation">Mobile can not be empty</string>
+    <string name="tenant_name_validation">Please enter meter name</string>
+    <string name="month_and_year">Month and Year</string>
+    <string name="rent_details">Rent Details</string>
+    <string name="message_sent">Message Sent Successfully</string>
+    <string name="message_not_sent">Message Not Sent</string>
+    <string name="try_again">Try Again</string>
+    <string name="mobile_number_not_valid">Mobile number is not valid</string>
 </resources>

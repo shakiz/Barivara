@@ -77,7 +77,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/MonthAndYearLayout"
+            android:id="@+id/TenantMobileLayout"
             android:layout_below="@id/TenantNameLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -89,7 +89,55 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="8dp"
-                android:text="@string/day_and_month"
+                android:text="@string/tenant_mobile_number"
+                android:gravity="center|left"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:textColor="@color/md_green_800"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:text=":"
+                android:gravity="center"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:textColor="@color/md_green_800"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/MobileNo"
+                android:layout_below="@id/heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="16dp"
+                android:text="@string/mobile_number"
+                android:gravity="center"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:textColor="@color/md_green_800"
+                android:textSize="14sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/MonthAndYearLayout"
+            android:layout_below="@id/TenantMobileLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="112dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="8dp"
+                android:text="@string/month_and_year"
                 android:gravity="center|left"
                 android:paddingTop="4dp"
                 android:paddingBottom="4dp"
@@ -124,7 +172,54 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/RoomNameLayout"
             android:layout_below="@id/MonthAndYearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="112dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="8dp"
+                android:text="@string/room_name"
+                android:gravity="center|left"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:textColor="@color/md_green_800"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:text=":"
+                android:gravity="center"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:textColor="@color/md_green_800"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/RoomName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="16dp"
+                android:text="@string/room_name"
+                android:gravity="center"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:textColor="@color/md_green_800"
+                android:textSize="14sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_below="@id/RoomNameLayout"
             android:id="@+id/RentAmountLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -1,22 +1,29 @@
 package com.shakil.barivara.activities.generatebill;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-
+import android.Manifest;
 import android.app.Dialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.databinding.DataBindingUtil;
 
 import com.shakil.barivara.R;
-import com.shakil.barivara.activities.room.RentDetailsActivity;
-import com.shakil.barivara.activities.room.RoomActivity;
+import com.shakil.barivara.activities.onboard.MainActivity;
 import com.shakil.barivara.databinding.ActivityGenerateBillBinding;
-import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
+import com.shakil.barivara.model.bill.GenerateBill;
 import com.shakil.barivara.utils.SpinnerAdapter;
 import com.shakil.barivara.utils.SpinnerData;
 import com.shakil.barivara.utils.Tools;
@@ -26,16 +33,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.shakil.barivara.utils.Constants.REQUEST_CALL_CODE;
+
 public class GenerateBillActivity extends AppCompatActivity {
     private ActivityGenerateBillBinding activityBinding;
     private final Map<String, String[]> hashMap = new HashMap();
-    private ArrayList<String> roomNames, tenantNames;
-    private ArrayAdapter<String> roomNameSpinnerAdapter, tenantNameSpinnerAdapter;
+    private String YearStr, MonthStr;
     private Validation validation;
     private SpinnerData spinnerData;
     private SpinnerAdapter spinnerAdapter;
-    private FirebaseCrudHelper firebaseCrudHelper;
     private Tools tools;
+    private Dialog dialogBill;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,17 +61,25 @@ public class GenerateBillActivity extends AppCompatActivity {
         validation = new Validation(this, hashMap);
         spinnerData = new SpinnerData(this);
         spinnerAdapter = new SpinnerAdapter();
-        firebaseCrudHelper = new FirebaseCrudHelper(this);
         tools = new Tools(this);
     }
     //endregion
 
     //region perform all Ui interactions
     private void binUIWithComponents(){
+        //region ask permission
+        if (ContextCompat.checkSelfPermission(GenerateBillActivity.this,
+                Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(GenerateBillActivity.this, new String[]{Manifest.permission.SEND_SMS},
+                    REQUEST_CALL_CODE);
+        }
+        //endregion
+
         //region validation
-        validation.setEditTextIsNotEmpty(new String[]{"RentAmount"},
-                new String[]{getString(R.string.rent_amount_validation)});
-        validation.setSpinnerIsNotEmpty(new String[]{"AssociateRoomId","YearId","MonthId","TenantNameId"});
+        validation.setEditTextIsNotEmpty(new String[]{"AssociateRoom","TenantName","MobileNo","RentAmount"},
+                new String[]{getString(R.string.room_name_validation), getString(R.string.tenant_name_validation),
+                        getString(R.string.rent_amount_validation), getString(R.string.mobile_validation)});
+        validation.setSpinnerIsNotEmpty(new String[]{"YearId","MonthId"});
         //endregion
 
         //region set spinner data
@@ -71,35 +87,30 @@ public class GenerateBillActivity extends AppCompatActivity {
         spinnerAdapter.setSpinnerAdapter(activityBinding.YearId,this, spinnerData.setYearData());
         //endregion
 
-        //region set room spinner
-        if (tools.hasConnection()) {
-            firebaseCrudHelper.getAllName("room", "roomName", new FirebaseCrudHelper.onNameFetch() {
-                @Override
-                public void onFetched(ArrayList<String> nameList) {
-                    roomNames = nameList;
-                    setRoomSpinner();
-                }
-            });
-        } else {
-            roomNames = spinnerData.setSpinnerNoData();
-            setRoomSpinner();
-        }
-        //endregion
+        //region spinner onChange listeners
+        activityBinding.YearId.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                YearStr = parent.getItemAtPosition(position).toString();
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
-        //region set tenant spinner
-        if (tools.hasConnection()) {
-            firebaseCrudHelper.getAllName("tenant", "tenantName", new FirebaseCrudHelper.onNameFetch() {
-                @Override
-                public void onFetched(ArrayList<String> nameList) {
-                    tenantNames = nameList;
-                    setTenantSpinner();
-                }
-            });
-        } else {
-            tenantNames = spinnerData.setSpinnerNoData();
-            setTenantSpinner();
-        }
+            }
+        });
+
+        activityBinding.MonthId.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                MonthStr = parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         //endregion
 
         //region generate bill listener
@@ -107,7 +118,24 @@ public class GenerateBillActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (validation.isValid()){
-                    doPopUpForBillDetails();
+                    if (tools.isValidMobile(activityBinding.MobileNo.getText().toString())){
+                        GenerateBill generateBill = new GenerateBill(
+                                activityBinding.TenantName.getText().toString(),
+                                activityBinding.MobileNo.getText().toString(),
+                                MonthStr + " "+YearStr,
+                                activityBinding.AssociateRoom.getText().toString(),
+                                Integer.parseInt(activityBinding.RentAmount.getText().toString()),
+                                Integer.parseInt(activityBinding.GasBill.getText().toString()),
+                                Integer.parseInt(activityBinding.WaterBill.getText().toString()),
+                                Integer.parseInt(activityBinding.ElectricityBill.getText().toString()),
+                                Integer.parseInt(activityBinding.ServiceCharge.getText().toString())
+                        );
+                        doPopUpForBillDetails(generateBill);
+                    }
+                    else{
+                        Toast.makeText(GenerateBillActivity.this,
+                                getString(R.string.mobile_number_not_valid), Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
@@ -115,51 +143,104 @@ public class GenerateBillActivity extends AppCompatActivity {
     }
     //endregion
 
-    //region set spinner adapter
-    private void setRoomSpinner(){
-        roomNameSpinnerAdapter = new ArrayAdapter<>(GenerateBillActivity.this, R.layout.spinner_drop, roomNames);
-        roomNameSpinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
-        activityBinding.AssociateRoomId.setAdapter(roomNameSpinnerAdapter);
-    }
-    //endregion
-
-    //region set tenant spinner
-    private void setTenantSpinner(){
-        tenantNameSpinnerAdapter = new ArrayAdapter<>(GenerateBillActivity.this, R.layout.spinner_drop, tenantNames);
-        tenantNameSpinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
-        activityBinding.TenantNameId.setAdapter(tenantNameSpinnerAdapter);
-    }
-    //endregion
-
     //region sending message to tenant with bill details
-    public void doPopUpForBillDetails(){
+    public void doPopUpForBillDetails(GenerateBill generateBill){
         Button cancel, sendMessage;
-        Dialog dialog = new Dialog(this, android.R.style.Theme_Dialog);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.bill_confirmation_layout);
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        dialog.setCanceledOnTouchOutside(true);
+        TextView tenantName, mobileNo, monthAndYear, roomName, rentAmount, gasBill, waterBill, serviceCharge, electricityBill;
+        dialogBill = new Dialog(this, android.R.style.Theme_Dialog);
+        dialogBill.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialogBill.setContentView(R.layout.bill_confirmation_layout);
+        dialogBill.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialogBill.setCanceledOnTouchOutside(true);
 
-        cancel = dialog.findViewById(R.id.cancelButton);
-        sendMessage = dialog.findViewById(R.id.sendMessage);
+        //region dialogs findViewByIds
+        cancel = dialogBill.findViewById(R.id.cancelButton);
+        sendMessage = dialogBill.findViewById(R.id.sendMessage);
+        tenantName = dialogBill.findViewById(R.id.TenantName);
+        mobileNo = dialogBill.findViewById(R.id.MobileNo);
+        roomName = dialogBill.findViewById(R.id.RoomName);
+        monthAndYear = dialogBill.findViewById(R.id.MonthAndYear);
+        rentAmount = dialogBill.findViewById(R.id.RentAmount);
+        gasBill = dialogBill.findViewById(R.id.GasBill);
+        waterBill = dialogBill.findViewById(R.id.WaterBill);
+        serviceCharge = dialogBill.findViewById(R.id.ServiceCharge);
+        electricityBill = dialogBill.findViewById(R.id.ElectricityBill);
+        //endregion
+
+        //region set data
+        tenantName.setText(generateBill.getTenantName());
+        mobileNo.setText(generateBill.getMobileNo());
+        monthAndYear.setText(generateBill.getMonthAndYear());
+        roomName.setText(generateBill.getAssociateRoom());
+        rentAmount.setText(""+generateBill.getRentAmount()+" "+getString(R.string.taka));
+        gasBill.setText(""+generateBill.getGasBill()+" "+getString(R.string.taka));
+        waterBill.setText(""+generateBill.getWaterBill()+" "+getString(R.string.taka));
+        serviceCharge.setText(""+generateBill.getServiceCharge()+" "+getString(R.string.taka));
+        electricityBill.setText(""+generateBill.getElectricityBill()+" "+getString(R.string.taka));
+        //endregion
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.dismiss();
+                dialogBill.dismiss();
             }
         });
 
         sendMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                sendMessage(generateBill);
             }
         });
 
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        dialog.getWindow().setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        dialog.show();
+        dialogBill.setCanceledOnTouchOutside(false);
+        dialogBill.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        dialogBill.getWindow().setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        dialogBill.show();
+    }
+    //endregion
+
+    //region send message to tenant with details
+    private void sendMessage(GenerateBill generateBill){
+        //region ask permission
+        if (ContextCompat.checkSelfPermission(GenerateBillActivity.this,
+                Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(GenerateBillActivity.this, new String[]{Manifest.permission.SEND_SMS},
+                    REQUEST_CALL_CODE);
+
+            return;
+        }
+        //endregion
+        /*This will be the actual content you wish you share.*/
+        String message =
+                        "Name : "+generateBill.getTenantName()+"\n"+
+                        "Mobile : "+generateBill.getMobileNo()+"\n"+
+                        "Month and Year: "+generateBill.getMonthAndYear()+"\n"+
+                        "Room Name : "+generateBill.getAssociateRoom()+"\n"+
+                        "Rent Amount : "+generateBill.getRentAmount()+"\n"+
+                        "Gas Bill : "+generateBill.getGasBill()+"\n"+
+                        "Water Bill : "+generateBill.getWaterBill()+"\n"+
+                        "Electricity Bill : "+generateBill.getElectricityBill()+"\n"+
+                        "Service Charge : "+generateBill.getServiceCharge()+"\n"
+                ;
+        try{
+            SmsManager smsManager = SmsManager.getDefault();
+            ArrayList<String> parts = smsManager.divideMessage(message);
+            smsManager.sendMultipartTextMessage(generateBill.getMobileNo(),null,parts,null,null);
+            Toast.makeText(this, getString(R.string.message_sent), Toast.LENGTH_SHORT).show();
+        }
+        catch (Exception e){
+            Toast.makeText(this, getString(R.string.message_not_sent)+"\n"+
+                    getString(R.string.try_again), Toast.LENGTH_SHORT).show();
+        }
+        dialogBill.dismiss();
+    }
+    //endregion
+
+    //region activity components
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(GenerateBillActivity.this, MainActivity.class));
     }
     //endregion
 }
