@@ -211,17 +211,16 @@ public class GenerateBillActivity extends AppCompatActivity {
             return;
         }
         //endregion
-        /*This will be the actual content you wish you share.*/
         String message =
                         "Name : "+generateBill.getTenantName()+"\n"+
                         "Mobile : "+generateBill.getMobileNo()+"\n"+
                         "Month and Year: "+generateBill.getMonthAndYear()+"\n"+
                         "Room Name : "+generateBill.getAssociateRoom()+"\n"+
-                        "Rent Amount : "+generateBill.getRentAmount()+"\n"+
-                        "Gas Bill : "+generateBill.getGasBill()+"\n"+
-                        "Water Bill : "+generateBill.getWaterBill()+"\n"+
-                        "Electricity Bill : "+generateBill.getElectricityBill()+"\n"+
-                        "Service Charge : "+generateBill.getServiceCharge()+"\n"
+                        "Rent Amount : "+generateBill.getRentAmount()+" "+getString(R.string.taka)+"\n"+
+                        "Gas Bill : "+generateBill.getGasBill()+" "+getString(R.string.taka)+"\n"+
+                        "Water Bill : "+generateBill.getWaterBill()+" "+getString(R.string.taka)+"\n"+
+                        "Electricity Bill : "+generateBill.getElectricityBill()+" "+getString(R.string.taka)+"\n"+
+                        "Service Charge : "+generateBill.getServiceCharge()+" "+getString(R.string.taka)
                 ;
         try{
             SmsManager smsManager = SmsManager.getDefault();
