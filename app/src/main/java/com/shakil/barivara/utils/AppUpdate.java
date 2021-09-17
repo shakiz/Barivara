@@ -101,6 +101,8 @@ public class AppUpdate {
                         @Override
                         public void onClick(View view) {
                             mPopupDialogNoTitle.dismiss();
+                            Tools tools = new Tools(context);
+                            tools.checkLogin();
                         }
                     });
                     btnOk.setOnClickListener(new View.OnClickListener() {

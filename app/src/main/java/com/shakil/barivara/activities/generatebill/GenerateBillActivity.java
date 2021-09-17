@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.view.View;
@@ -34,6 +35,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.shakil.barivara.utils.Constants.REQUEST_CALL_CODE;
+import static java.net.Proxy.Type.HTTP;
 
 public class GenerateBillActivity extends AppCompatActivity {
     private ActivityGenerateBillBinding activityBinding;
@@ -202,15 +204,6 @@ public class GenerateBillActivity extends AppCompatActivity {
 
     //region send message to tenant with details
     private void sendMessage(GenerateBill generateBill){
-        //region ask permission
-        if (ContextCompat.checkSelfPermission(GenerateBillActivity.this,
-                Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(GenerateBillActivity.this, new String[]{Manifest.permission.SEND_SMS},
-                    REQUEST_CALL_CODE);
-
-            return;
-        }
-        //endregion
         String message =
                         "Name : "+generateBill.getTenantName()+"\n"+
                         "Mobile : "+generateBill.getMobileNo()+"\n"+
@@ -222,16 +215,14 @@ public class GenerateBillActivity extends AppCompatActivity {
                         "Electricity Bill : "+generateBill.getElectricityBill()+" "+getString(R.string.taka)+"\n"+
                         "Service Charge : "+generateBill.getServiceCharge()+" "+getString(R.string.taka)
                 ;
-        try{
-            SmsManager smsManager = SmsManager.getDefault();
-            ArrayList<String> parts = smsManager.divideMessage(message);
-            smsManager.sendMultipartTextMessage(generateBill.getMobileNo(),null,parts,null,null);
-            Toast.makeText(this, getString(R.string.message_sent), Toast.LENGTH_SHORT).show();
-        }
-        catch (Exception e){
-            Toast.makeText(this, getString(R.string.message_not_sent)+"\n"+
-                    getString(R.string.try_again), Toast.LENGTH_SHORT).show();
-        }
+
+        Intent smsIntent = new Intent(Intent.ACTION_SENDTO);
+        smsIntent.addCategory(Intent.CATEGORY_DEFAULT);
+        smsIntent.setType("text/plain");
+        smsIntent.putExtra("sms_body", message);
+        smsIntent.setData(Uri.parse("sms:" + generateBill.getMobileNo()));
+        startActivity(smsIntent);
+        Toast.makeText(this, getString(R.string.message_sent), Toast.LENGTH_SHORT).show();
         dialogBill.dismiss();
     }
     //endregion

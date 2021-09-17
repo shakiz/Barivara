@@ -12,6 +12,7 @@ import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -25,6 +26,10 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.shakil.barivara.R;
+import com.shakil.barivara.activities.auth.LoginActivity;
+import com.shakil.barivara.activities.onboard.MainActivity;
+import com.shakil.barivara.activities.onboard.SplashActivity;
+import com.shakil.barivara.activities.onboard.WelcomeActivity;
 
 import java.util.Date;
 import java.util.regex.Matcher;
@@ -35,6 +40,7 @@ import static com.shakil.barivara.utils.Constants.VALID_EMAIL_ADDRESS_REGEX;
 import static com.shakil.barivara.utils.Constants.mAppViewCount;
 import static com.shakil.barivara.utils.Constants.mIsLoggedIn;
 import static com.shakil.barivara.utils.Constants.mLanguage;
+import static com.shakil.barivara.utils.Constants.mOldUser;
 import static com.shakil.barivara.utils.Constants.mUserEmail;
 import static com.shakil.barivara.utils.Constants.mUserFullName;
 import static com.shakil.barivara.utils.Constants.mUserId;
@@ -51,6 +57,7 @@ public class Tools {
 
     public Tools(Context context) {
         this.context = context;
+        prefManager = new PrefManager(context);
     }
 
     public void askCallPermission(Activity activity){
@@ -221,4 +228,29 @@ public class Tools {
         return valid;
     }
     //endregion
+
+    //region check login
+    public void checkLogin(){
+        //region check for user login status
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //region check for new update
+                Intent intent = null;
+                if (prefManager.getBoolean(mIsLoggedIn)){
+                    if (prefManager.getBoolean(mOldUser)) {
+                        intent = new Intent(context, MainActivity.class);
+                    } else {
+                        intent = new Intent(context, WelcomeActivity.class);
+                    }
+                }
+                else{
+                    intent = new Intent(context, LoginActivity.class);
+                }
+                context.startActivity(intent);
+                //endregion
+            }
+        }, 1000);
+        //endregion
+    }
 }
