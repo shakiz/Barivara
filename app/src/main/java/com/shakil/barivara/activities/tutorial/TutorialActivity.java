@@ -1,12 +1,9 @@
 package com.shakil.barivara.activities.tutorial;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,9 +25,6 @@ public class TutorialActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (Build.VERSION.SDK_INT >= 21) {
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-        }
         activityTutorialBinding = DataBindingUtil.setContentView(this, R.layout.activity_tutorial);
 
         //layouts of all welcome sliders
@@ -41,7 +35,6 @@ public class TutorialActivity extends AppCompatActivity {
                 R.layout.welcome_overall_dashboard};
 
         addBottomDots(0);
-        changeStatusBarColor();
 
         myViewPagerAdapter = new MyViewPagerAdapter(this, layouts);
         activityTutorialBinding.viewPager.setAdapter(myViewPagerAdapter);
@@ -57,8 +50,9 @@ public class TutorialActivity extends AppCompatActivity {
                     // move to next screen
                     activityTutorialBinding.viewPager.setCurrentItem(current);
                 }
-                else{
-                    Toast.makeText(TutorialActivity.this, getString(R.string.end), Toast.LENGTH_SHORT).show();
+                else if (current == layouts.length){
+                    Toast.makeText(TutorialActivity.this, getString(R.string.finish), Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(TutorialActivity.this, MainActivity.class));
                 }
             }
         });
@@ -116,16 +110,6 @@ public class TutorialActivity extends AppCompatActivity {
 
         }
     };
-    //endregion
-
-    //region Making notification bar transparent
-    private void changeStatusBarColor() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(getResources().getColor(R.color.md_white_1000));
-        }
-    }
     //endregion
 
     //region option menu, back press and broadcast register

@@ -9,17 +9,19 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.shakil.barivara.R;
 import com.shakil.barivara.activities.auth.LoginActivity;
@@ -34,41 +36,51 @@ import com.shakil.barivara.activities.room.RoomListActivity;
 import com.shakil.barivara.activities.settings.SettingsActivity;
 import com.shakil.barivara.activities.tenant.TenantListActivity;
 import com.shakil.barivara.activities.tutorial.TutorialActivity;
-import com.shakil.barivara.adapter.RecyclerNavDrawerAdapter;
 import com.shakil.barivara.databinding.ActivityMainBinding;
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
-import com.shakil.barivara.model.drawer.DrawerItem;
 import com.shakil.barivara.model.meter.Meter;
 import com.shakil.barivara.model.room.Room;
 import com.shakil.barivara.model.tenant.Tenant;
+import com.shakil.barivara.utils.AppAnalytics;
 import com.shakil.barivara.utils.Constants;
 import com.shakil.barivara.utils.CustomAdManager;
 import com.shakil.barivara.utils.LanguageManager;
 import com.shakil.barivara.utils.PrefManager;
 import com.shakil.barivara.utils.Tools;
 import com.shakil.barivara.utils.UtilsForAll;
-import com.yarolegovich.slidingrootnav.SlidingRootNav;
-import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 
 import java.util.ArrayList;
 
 import static com.shakil.barivara.utils.Constants.REQUEST_CALL_CODE;
 import static com.shakil.barivara.utils.Constants.mAppViewCount;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private ActivityMainBinding activityMainBinding;
     private UtilsForAll utilsForAll;
     private FirebaseCrudHelper firebaseCrudHelper;
     private PrefManager prefManager;
     private Tools tools;
-    private SlidingRootNav slidingRootNav;
-    private RecyclerView navRecycler;
     private CustomAdManager customAdManager;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
+    private AppAnalytics appAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+
+        //region setup toolBar
+        activityMainBinding.toolBar.setTitleTextColor(ContextCompat.getColor(this, R.color.md_green_800));
+        setSupportActionBar(activityMainBinding.toolBar);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        //endregion
+
+        //region set drawer
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_icon_menu);
+        setupDrawerToggle();
+        //endregion
 
         //region notification for general topic
         FirebaseMessaging.getInstance().subscribeToTopic("general")
@@ -95,35 +107,8 @@ public class MainActivity extends AppCompatActivity{
         }
         //endregion
 
-        //region setting the navigation menu recycler
-        slidingRootNav = new SlidingRootNavBuilder(this)
-                .withToolbarMenuToggle(activityMainBinding.toolBar)
-                .withMenuOpened(false)
-                .withContentClickableWhenMenuOpened(true)
-                .withSavedState(savedInstanceState)
-                .withMenuLayout(R.layout.drawer_menu)
-                .inject();
-
-        setDataAdapter();
-        //endregion
-
         //region init objects
         init();
-        //endregion
-
-        //region set toolbar
-        setSupportActionBar(activityMainBinding.toolBar);
-        //endregion
-
-        //region nav drawer open and close listener
-        activityMainBinding.toolBar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (slidingRootNav.isMenuClosed())
-                    slidingRootNav.openMenu();
-                else slidingRootNav.closeMenu();
-            }
-        });
         //endregion
 
         //region perform all UI interactions
@@ -131,8 +116,19 @@ public class MainActivity extends AppCompatActivity{
         //endregion
     }
 
+    //region drawer toggle
+    private void setupDrawerToggle(){
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, activityMainBinding.myDrawerLayout, activityMainBinding.toolBar, R.string.app_name, R.string.app_name);
+        activityMainBinding.myDrawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+    }
+    //endregion
+
     //region UI interactions
     private void bindUIWithComponents() {
+        //region set nav drawer item click listener
+        activityMainBinding.navigationView.setNavigationItemSelectedListener(this);
+        //endregion
         //region for ad
         customAdManager.generateAd();
         //endregion
@@ -217,51 +213,6 @@ public class MainActivity extends AppCompatActivity{
     }
     //endregion
 
-    //region set nav recycler data and adapter
-    private void setDataAdapter() {
-        ArrayList<DrawerItem> items = new ArrayList<DrawerItem>();
-        items.add(new DrawerItem(R.drawable.ic_invoice, getString(R.string.generate_bill)));
-        items.add(new DrawerItem(R.drawable.ic_settings_black_24dp, getString(R.string.settings)));
-        items.add(new DrawerItem(R.drawable.ic_note_add, getString(R.string.your_notes)));
-        items.add(new DrawerItem(R.drawable.ic_notifications_black_24dp, getString(R.string.notifications)));
-        items.add(new DrawerItem(R.drawable.ic_info_black_24dp, getString(R.string.tutorial)));
-        items.add(new DrawerItem(R.drawable.ic_star_border_black_24dp, getString(R.string.rate_us)));
-        items.add(new DrawerItem(R.drawable.ic_logout_black_24dp, getString(R.string.logout)));
-
-        RecyclerNavDrawerAdapter recyclerNavDrawerAdapter = new RecyclerNavDrawerAdapter(items);
-        navRecycler = findViewById(R.id.navRecycler);
-        navRecycler.setLayoutManager(new LinearLayoutManager(this));
-        navRecycler.setAdapter(recyclerNavDrawerAdapter);
-        recyclerNavDrawerAdapter.setOnItemClickListener(new RecyclerNavDrawerAdapter.onItemClickListener() {
-            @Override
-            public void onItemClick(DrawerItem drawerItem) {
-                if (drawerItem.getIcon() == R.drawable.ic_settings_black_24dp){
-                    startActivity(new Intent(MainActivity.this, SettingsActivity.class));
-                }
-                else if (drawerItem.getIcon() == R.drawable.ic_invoice){
-                    startActivity(new Intent(MainActivity.this, GenerateBillActivity.class));
-                }
-                else if (drawerItem.getIcon() == R.drawable.ic_star_border_black_24dp){
-                    tools.rateApp();
-                }
-                else if (drawerItem.getIcon() == R.drawable.ic_info_black_24dp){
-                    startActivity(new Intent(MainActivity.this, TutorialActivity.class));
-                }
-                else if (drawerItem.getIcon() == R.drawable.ic_notifications_black_24dp){
-                    startActivity(new Intent(MainActivity.this, NotificationActivity.class));
-                }
-                else if (drawerItem.getIcon() == R.drawable.ic_note_add){
-                    startActivity(new Intent(MainActivity.this, NoteListActivity.class));
-                }
-                else if (drawerItem.getIcon() == R.drawable.ic_logout_black_24dp){
-                    tools.doPopUpForLogout(LoginActivity.class);
-                }
-                slidingRootNav.closeMenu();
-            }
-        });
-    }
-    //endregion
-
     //region init components
     private void init() {
         prefManager = new PrefManager(this);
@@ -269,6 +220,7 @@ public class MainActivity extends AppCompatActivity{
         firebaseCrudHelper = new FirebaseCrudHelper(this);
         utilsForAll = new UtilsForAll(this,activityMainBinding.mainLayout);
         customAdManager = new CustomAdManager(activityMainBinding.adView, this);
+        appAnalytics = new AppAnalytics(this);
     }
     //endregion
 
@@ -292,6 +244,42 @@ public class MainActivity extends AppCompatActivity{
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menu_generate_bill:
+                appAnalytics.registerEvent("generate_bill", appAnalytics.setData("generate_bill","Generate Bill Activity Launched"));
+                startActivity(new Intent(MainActivity.this, GenerateBillActivity.class));
+                break;
+            case R.id.menu_settings:
+                appAnalytics.registerEvent("settings", appAnalytics.setData("settings","Settings Activity Launched"));
+                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+                break;
+            case R.id.menu_note:
+                appAnalytics.registerEvent("note", appAnalytics.setData("note","Note Activity Launched"));
+                startActivity(new Intent(MainActivity.this, NoteListActivity.class));
+                break;
+            case R.id.menu_notification:
+                appAnalytics.registerEvent("notification", appAnalytics.setData("notification","Notification Activity Launched"));
+                startActivity(new Intent(MainActivity.this, NotificationActivity.class));
+                break;
+            case R.id.menu_tutorial:
+                appAnalytics.registerEvent("tutorial", appAnalytics.setData("tutorial","Tutorial Activity Launched"));
+                startActivity(new Intent(MainActivity.this, TutorialActivity.class));
+                break;
+            case R.id.menu_rate_us:
+                appAnalytics.registerEvent("rate_us", appAnalytics.setData("rate_us","Rate Us Launched"));
+                tools.rateApp();
+                break;
+            case R.id.menu_logout:
+                tools.doPopUpForLogout(LoginActivity.class);
+                break;
+        }
+        //close navigation drawer
+        activityMainBinding.myDrawerLayout.closeDrawer(GravityCompat.START);
+        return true;
     }
 
     @Override

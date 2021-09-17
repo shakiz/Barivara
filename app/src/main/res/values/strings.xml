@@ -343,4 +343,7 @@
     <string name="message_not_sent">Message Not Sent</string>
     <string name="try_again">Try Again</string>
     <string name="mobile_number_not_valid">Mobile number is not valid</string>
+    <string name="nav_open">Open</string>
+    <string name="nav_close">Close</string>
+    <string name="finish">Finish</string>
 </resources>

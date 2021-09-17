@@ -39,7 +39,7 @@ public class WelcomeActivity extends AppCompatActivity {
         init();
         //endregion
 
-        //layouts of all welcome sliders
+        //region layouts of all welcome sliders
         layouts = new int[]{
                 R.layout.welcome_add_tenant_first,
                 R.layout.welcome_assign_room_to_a_tenant,
@@ -62,12 +62,12 @@ public class WelcomeActivity extends AppCompatActivity {
                 if (current < layouts.length) {
                     // move to next screen
                     activityWelcomeBinding.viewPager.setCurrentItem(current);
-                }
-                else{
+                } else {
                     goHome();
                 }
             }
         });
+        //endregion
     }
 
     //region init objects
@@ -77,7 +77,7 @@ public class WelcomeActivity extends AppCompatActivity {
     //endregion
 
     //region stop downloading and go home
-    private void goHome(){
+    private void goHome() {
         prefManager.set(mOldUser, true);
         startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
     }

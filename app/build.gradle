@@ -63,8 +63,6 @@ dependencies {
     // Import the BoM for the Firebase platform
     implementation platform('com.google.firebase:firebase-bom:28.2.1')
 
-    //sliding root nav
-    implementation 'com.yarolegovich:sliding-root-nav:1.1.0'
     //google admob
     implementation 'com.google.android.gms:play-services-ads:19.3.0'
 
