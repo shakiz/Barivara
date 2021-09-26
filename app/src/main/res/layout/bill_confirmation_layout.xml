@@ -461,21 +461,17 @@
             android:orientation="horizontal"
             android:layout_marginBottom="16dp"
             android:layout_marginTop="16dp"
-            android:weightSum="2">
-
-            <View
-                android:layout_width="0dp"
-                android:layout_weight=".4"
-                android:layout_height="1dp"/>
+            android:weightSum="3">
 
             <Button
                 android:id="@+id/cancelButton"
                 android:layout_width="0dp"
-                android:layout_weight=".8"
+                android:layout_weight="1"
                 android:layout_height="42dp"
                 android:text="@string/cancel"
-                android:layout_marginRight="16dp"
-                android:layout_marginLeft="16dp"
+                android:textSize="12sp"
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="4dp"
                 android:textAllCaps="true"
@@ -485,13 +481,31 @@
                 android:focusable="true" />
 
             <Button
+                android:id="@+id/saveAsPdf"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="42dp"
+                android:text="@string/save_as_pdf"
+                android:textSize="12sp"
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:textAllCaps="true"
+                android:clickable="true"
+                android:textColor="@color/md_white_1000"
+                android:background="@drawable/rectangle_green_selected"
+                android:focusable="true" />
+
+            <Button
                 android:id="@+id/sendMessage"
                 android:layout_width="0dp"
-                android:layout_weight=".8"
+                android:layout_weight="1"
                 android:layout_height="42dp"
                 android:text="@string/send_message"
-                android:layout_marginRight="16dp"
-                android:layout_marginLeft="16dp"
+                android:textSize="12sp"
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="4dp"
                 android:textAllCaps="true"

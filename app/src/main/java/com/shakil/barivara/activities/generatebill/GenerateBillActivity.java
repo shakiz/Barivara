@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.telephony.SmsManager;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -30,12 +29,10 @@ import com.shakil.barivara.utils.SpinnerData;
 import com.shakil.barivara.utils.Tools;
 import com.shakil.barivara.utils.Validation;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import static com.shakil.barivara.utils.Constants.REQUEST_CALL_CODE;
-import static java.net.Proxy.Type.HTTP;
 
 public class GenerateBillActivity extends AppCompatActivity {
     private ActivityGenerateBillBinding activityBinding;
@@ -59,7 +56,7 @@ public class GenerateBillActivity extends AppCompatActivity {
     }
 
     //region init objects
-    private void init(){
+    private void init() {
         validation = new Validation(this, hashMap);
         spinnerData = new SpinnerData(this);
         spinnerAdapter = new SpinnerAdapter();
@@ -68,25 +65,38 @@ public class GenerateBillActivity extends AppCompatActivity {
     //endregion
 
     //region perform all Ui interactions
-    private void binUIWithComponents(){
+    private void binUIWithComponents() {
+
         //region ask permission
-        if (ContextCompat.checkSelfPermission(GenerateBillActivity.this,
-                Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(GenerateBillActivity.this, new String[]{Manifest.permission.SEND_SMS},
+        if ((ContextCompat.checkSelfPermission(GenerateBillActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED)
+        || (ContextCompat.checkSelfPermission(GenerateBillActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED)){
+            ActivityCompat.requestPermissions(GenerateBillActivity.this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     REQUEST_CALL_CODE);
         }
         //endregion
 
+        //region toolbar back click listener
+        activityBinding.toolBar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+        //endregion
+
         //region validation
-        validation.setEditTextIsNotEmpty(new String[]{"AssociateRoom","TenantName","MobileNo","RentAmount"},
+        validation.setEditTextIsNotEmpty(new String[]{"AssociateRoom", "TenantName", "MobileNo", "RentAmount"},
                 new String[]{getString(R.string.room_name_validation), getString(R.string.tenant_name_validation),
                         getString(R.string.rent_amount_validation), getString(R.string.mobile_validation)});
-        validation.setSpinnerIsNotEmpty(new String[]{"YearId","MonthId"});
+        validation.setSpinnerIsNotEmpty(new String[]{"YearId", "MonthId"});
         //endregion
 
         //region set spinner data
-        spinnerAdapter.setSpinnerAdapter(activityBinding.MonthId,this, spinnerData.setMonthData());
-        spinnerAdapter.setSpinnerAdapter(activityBinding.YearId,this, spinnerData.setYearData());
+        spinnerAdapter.setSpinnerAdapter(activityBinding.MonthId, this, spinnerData.setMonthData());
+        spinnerAdapter.setSpinnerAdapter(activityBinding.YearId, this, spinnerData.setYearData());
         //endregion
 
         //region spinner onChange listeners
@@ -119,12 +129,12 @@ public class GenerateBillActivity extends AppCompatActivity {
         activityBinding.generateBill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (validation.isValid()){
-                    if (tools.isValidMobile(activityBinding.MobileNo.getText().toString())){
+                if (validation.isValid()) {
+                    if (tools.isValidMobile(activityBinding.MobileNo.getText().toString())) {
                         GenerateBill generateBill = new GenerateBill(
                                 activityBinding.TenantName.getText().toString(),
                                 activityBinding.MobileNo.getText().toString(),
-                                MonthStr + " "+YearStr,
+                                MonthStr + " " + YearStr,
                                 activityBinding.AssociateRoom.getText().toString(),
                                 Integer.parseInt(activityBinding.RentAmount.getText().toString()),
                                 Integer.parseInt(activityBinding.GasBill.getText().toString()),
@@ -133,8 +143,7 @@ public class GenerateBillActivity extends AppCompatActivity {
                                 Integer.parseInt(activityBinding.ServiceCharge.getText().toString())
                         );
                         doPopUpForBillDetails(generateBill);
-                    }
-                    else{
+                    } else {
                         Toast.makeText(GenerateBillActivity.this,
                                 getString(R.string.mobile_number_not_valid), Toast.LENGTH_SHORT).show();
                     }
@@ -146,8 +155,8 @@ public class GenerateBillActivity extends AppCompatActivity {
     //endregion
 
     //region sending message to tenant with bill details
-    public void doPopUpForBillDetails(GenerateBill generateBill){
-        Button cancel, sendMessage;
+    public void doPopUpForBillDetails(GenerateBill generateBill) {
+        Button cancel, sendMessage, saveAsPdf;
         TextView tenantName, mobileNo, monthAndYear, roomName, rentAmount, gasBill, waterBill, serviceCharge, electricityBill;
         dialogBill = new Dialog(this, android.R.style.Theme_Dialog);
         dialogBill.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -155,9 +164,11 @@ public class GenerateBillActivity extends AppCompatActivity {
         dialogBill.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         dialogBill.setCanceledOnTouchOutside(true);
 
+
         //region dialogs findViewByIds
         cancel = dialogBill.findViewById(R.id.cancelButton);
         sendMessage = dialogBill.findViewById(R.id.sendMessage);
+        saveAsPdf = dialogBill.findViewById(R.id.saveAsPdf);
         tenantName = dialogBill.findViewById(R.id.TenantName);
         mobileNo = dialogBill.findViewById(R.id.MobileNo);
         roomName = dialogBill.findViewById(R.id.RoomName);
@@ -169,16 +180,25 @@ public class GenerateBillActivity extends AppCompatActivity {
         electricityBill = dialogBill.findViewById(R.id.ElectricityBill);
         //endregion
 
+        //region check version and show or hide generate pdf option
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+            saveAsPdf.setVisibility(View.VISIBLE);
+        }
+        else{
+            saveAsPdf.setVisibility(View.GONE);
+        }
+        //endregion
+
         //region set data
         tenantName.setText(generateBill.getTenantName());
         mobileNo.setText(generateBill.getMobileNo());
         monthAndYear.setText(generateBill.getMonthAndYear());
         roomName.setText(generateBill.getAssociateRoom());
-        rentAmount.setText(""+generateBill.getRentAmount()+" "+getString(R.string.taka));
-        gasBill.setText(""+generateBill.getGasBill()+" "+getString(R.string.taka));
-        waterBill.setText(""+generateBill.getWaterBill()+" "+getString(R.string.taka));
-        serviceCharge.setText(""+generateBill.getServiceCharge()+" "+getString(R.string.taka));
-        electricityBill.setText(""+generateBill.getElectricityBill()+" "+getString(R.string.taka));
+        rentAmount.setText("" + generateBill.getRentAmount() + " " + getString(R.string.taka));
+        gasBill.setText("" + generateBill.getGasBill() + " " + getString(R.string.taka));
+        waterBill.setText("" + generateBill.getWaterBill() + " " + getString(R.string.taka));
+        serviceCharge.setText("" + generateBill.getServiceCharge() + " " + getString(R.string.taka));
+        electricityBill.setText("" + generateBill.getElectricityBill() + " " + getString(R.string.taka));
         //endregion
 
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -191,7 +211,34 @@ public class GenerateBillActivity extends AppCompatActivity {
         sendMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendMessage(generateBill);
+                String message =
+                        "Name : " + generateBill.getTenantName() + "\n" +
+                                "Mobile : " + generateBill.getMobileNo() + "\n" +
+                                "Month and Year: " + generateBill.getMonthAndYear() + "\n" +
+                                "Room Name : " + generateBill.getAssociateRoom() + "\n" +
+                                "Rent Amount : " + generateBill.getRentAmount() + " " + getString(R.string.taka) + "\n" +
+                                "Gas Bill : " + generateBill.getGasBill() + " " + getString(R.string.taka) + "\n" +
+                                "Water Bill : " + generateBill.getWaterBill() + " " + getString(R.string.taka) + "\n" +
+                                "Electricity Bill : " + generateBill.getElectricityBill() + " " + getString(R.string.taka) + "\n" +
+                                "Service Charge : " + generateBill.getServiceCharge() + " " + getString(R.string.taka);
+                sendMessage(message, generateBill.getMobileNo());
+            }
+        });
+
+        saveAsPdf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String content =
+                        "Name : " + generateBill.getTenantName() + "\n" +
+                                "Mobile : " + generateBill.getMobileNo() + "\n" +
+                                "Month and Year: " + generateBill.getMonthAndYear() + "\n" +
+                                "Room Name : " + generateBill.getAssociateRoom() + "\n" +
+                                "Rent Amount : " + generateBill.getRentAmount() + " " + getString(R.string.taka) + "\n" +
+                                "Gas Bill : " + generateBill.getGasBill() + " " + getString(R.string.taka) + "\n" +
+                                "Water Bill : " + generateBill.getWaterBill() + " " + getString(R.string.taka) + "\n" +
+                                "Electricity Bill : " + generateBill.getElectricityBill() + " " + getString(R.string.taka) + "\n" +
+                                "Service Charge : " + generateBill.getServiceCharge() + " " + getString(R.string.taka);
+                tools.generatePDF(content);
             }
         });
 
@@ -203,24 +250,12 @@ public class GenerateBillActivity extends AppCompatActivity {
     //endregion
 
     //region send message to tenant with details
-    private void sendMessage(GenerateBill generateBill){
-        String message =
-                        "Name : "+generateBill.getTenantName()+"\n"+
-                        "Mobile : "+generateBill.getMobileNo()+"\n"+
-                        "Month and Year: "+generateBill.getMonthAndYear()+"\n"+
-                        "Room Name : "+generateBill.getAssociateRoom()+"\n"+
-                        "Rent Amount : "+generateBill.getRentAmount()+" "+getString(R.string.taka)+"\n"+
-                        "Gas Bill : "+generateBill.getGasBill()+" "+getString(R.string.taka)+"\n"+
-                        "Water Bill : "+generateBill.getWaterBill()+" "+getString(R.string.taka)+"\n"+
-                        "Electricity Bill : "+generateBill.getElectricityBill()+" "+getString(R.string.taka)+"\n"+
-                        "Service Charge : "+generateBill.getServiceCharge()+" "+getString(R.string.taka)
-                ;
-
+    private void sendMessage(String message, String mobileNo) {
         Intent smsIntent = new Intent(Intent.ACTION_SENDTO);
         smsIntent.addCategory(Intent.CATEGORY_DEFAULT);
         smsIntent.setType("text/plain");
         smsIntent.putExtra("sms_body", message);
-        smsIntent.setData(Uri.parse("sms:" + generateBill.getMobileNo()));
+        smsIntent.setData(Uri.parse("sms:" + mobileNo));
         startActivity(smsIntent);
         Toast.makeText(this, getString(R.string.message_sent), Toast.LENGTH_SHORT).show();
         dialogBill.dismiss();

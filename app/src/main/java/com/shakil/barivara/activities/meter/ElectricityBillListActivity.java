@@ -80,7 +80,7 @@ public class ElectricityBillListActivity extends AppCompatActivity {
         }
         //endregion
 
-        activityMeterCostListBinding.mAddMeterMaster.setOnClickListener(new View.OnClickListener() {
+        activityMeterCostListBinding.mAddBillMaster.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(ElectricityBillListActivity.this, ElectricityBillDetailsActivity.class));

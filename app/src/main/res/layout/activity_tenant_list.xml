@@ -34,7 +34,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="42dp"
+            android:layout_marginBottom="56dp"
             android:layout_below="@id/app_bar"
             android:id="@+id/mainLayout"
             android:orientation="vertical">
@@ -45,7 +45,6 @@
                 app:cardBackgroundColor="@color/md_white_1000"
                 app:cardCornerRadius="0dp"
                 app:cardElevation="0dp"
-                android:elevation="0dp"
                 android:translationZ="0dp">
 
                 <LinearLayout
@@ -66,7 +65,6 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="8dp"
                         android:layout_marginLeft="8dp"
                         android:layout_marginRight="8dp"
                         android:orientation="vertical">
@@ -101,16 +99,42 @@
 
         </LinearLayout>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <LinearLayout
             android:id="@+id/mAddTenantMaster"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
+            android:clickable="true"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
             android:layout_alignParentBottom="true"
+            android:background="@drawable/button_shape_round_corner_gradient_light"
+            android:layout_marginBottom="56dp"
+            android:layout_marginRight="16dp"
+            android:gravity="center"
             android:layout_alignParentRight="true"
-            android:src="@drawable/ic_action_add"
-            android:layout_margin="16dp"
-            app:backgroundTint="@color/md_blue_grey_400"
-            app:fabSize="normal" />
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="42dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="8dp"
+                android:clickable="false"
+                android:padding="8dp"
+                android:src="@drawable/ic_action_add"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center|left"
+                android:gravity="center|left"
+                android:clickable="false"
+                android:text="@string/add_tenant"
+                android:textSize="14sp"
+                android:layout_marginRight="20dp"
+                android:background="@color/transparent"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white" />
+
+        </LinearLayout>
 
         <com.google.android.gms.ads.AdView
             xmlns:ads="http://schemas.android.com/apk/res-auto"

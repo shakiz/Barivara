@@ -9,9 +9,14 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Typeface;
+import android.graphics.pdf.PdfDocument;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
@@ -28,10 +33,13 @@ import androidx.core.content.ContextCompat;
 import com.shakil.barivara.R;
 import com.shakil.barivara.activities.auth.LoginActivity;
 import com.shakil.barivara.activities.onboard.MainActivity;
-import com.shakil.barivara.activities.onboard.SplashActivity;
 import com.shakil.barivara.activities.onboard.WelcomeActivity;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Date;
+import java.util.UUID;
 import java.util.regex.Matcher;
 
 import static com.shakil.barivara.utils.Constants.REQUEST_CALL_CODE;
@@ -253,4 +261,41 @@ public class Tools {
         }, 1000);
         //endregion
     }
+    //endregion
+
+    //region generate pdf from content only above of SDK version 19
+    public void generatePDF(String content){
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+            PdfDocument myPdfDocument = new PdfDocument();
+            PdfDocument.PageInfo myPageInfo = new PdfDocument.PageInfo.Builder(300,600,1).create();
+            PdfDocument.Page myPage = myPdfDocument.startPage(myPageInfo);
+
+            Paint myPaint = new Paint();
+            String myString = content;
+            int x = 10, y=25;
+
+            for (String line:myString.split("\n")){
+                myPage.getCanvas().drawText(line, x, y, myPaint);
+                y+=myPaint.descent()-myPaint.ascent();
+            }
+
+            myPdfDocument.finishPage(myPage);
+
+            String myFilePath = Environment.getExternalStorageDirectory().getPath() + "/myPDFFile.pdf";
+            File myFile = new File(myFilePath);
+            try {
+                myPdfDocument.writeTo(new FileOutputStream(myFile));
+            }
+            catch (Exception e){
+                e.printStackTrace();
+                Toast.makeText(context, "ERROR!!!!", Toast.LENGTH_SHORT).show();
+            }
+
+            myPdfDocument.close();
+        }
+        else{
+            Toast.makeText(context, context.getString(R.string.your_device_does_not_support_this_feature), Toast.LENGTH_LONG).show();
+        }
+    }
+    //endregion
 }

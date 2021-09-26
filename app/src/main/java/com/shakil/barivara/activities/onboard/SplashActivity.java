@@ -1,9 +1,6 @@
 package com.shakil.barivara.activities.onboard;
 
-import android.content.Intent;
 import android.os.Bundle;
-
-import android.os.Handler;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
@@ -11,14 +8,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.shakil.barivara.R;
-import com.shakil.barivara.activities.auth.LoginActivity;
 import com.shakil.barivara.databinding.ActivitySplashBinding;
 import com.shakil.barivara.utils.AppUpdate;
 import com.shakil.barivara.utils.PrefManager;
 import com.shakil.barivara.utils.Tools;
-
-import static com.shakil.barivara.utils.Constants.mIsLoggedIn;
-import static com.shakil.barivara.utils.Constants.mOldUser;
 
 public class SplashActivity extends AppCompatActivity {
     private ActivitySplashBinding activitySplashBinding;
@@ -60,41 +53,16 @@ public class SplashActivity extends AppCompatActivity {
                         appUpdate.checkUpdate(false, true);
                     }
                     else{
-                        checkLogin();
+                        //region check for user login
+                        tools.checkLogin();
+                        //endregion
                     }
                 }
             });
         }
         else{
-            checkLogin();
+            tools.checkLogin();
         }
-        //endregion
-    }
-    //endregion
-
-    //region check for user login
-    private void checkLogin(){
-        //region check for user login status
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                //region check for new update
-                Intent intent = null;
-                if (prefManager.getBoolean(mIsLoggedIn)){
-                    if (prefManager.getBoolean(mOldUser)) {
-                        intent = new Intent(SplashActivity.this, MainActivity.class);
-                    } else {
-                        intent = new Intent(SplashActivity.this, WelcomeActivity.class);
-                    }
-                }
-                else{
-                    intent = new Intent(SplashActivity.this, LoginActivity.class);
-                }
-                startActivity(intent);
-                finish();
-                //endregion
-            }
-        }, 1000);
         //endregion
     }
     //endregion

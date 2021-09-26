@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,6 +26,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
+
+import static com.shakil.barivara.utils.Constants.TAG;
 
 public class NewNoteActivity extends AppCompatActivity {
     private ActivityNewNoteBinding activityNewNoteBinding;
@@ -124,14 +127,24 @@ public class NewNoteActivity extends AppCompatActivity {
             }
         });
 
-        textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                textToSpeech.setLanguage(Locale.US);
-                textToSpeech.setSpeechRate(0.7f);
-                textToSpeech.setPitch(1);
-            }
-        });
+        try {
+            textToSpeech = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+                @Override
+                public void onInit(int status) {
+                    if (status == TextToSpeech.SUCCESS) {
+                        textToSpeech.setLanguage(Locale.US);
+                        textToSpeech.setSpeechRate(0.7f);
+                        textToSpeech.setPitch(1);
+                    }
+                    else{
+                        Log.v(TAG,"Text To Speech Init Failed");
+                    }
+                }
+            });
+        } catch (Exception e) {
+            Log.v(TAG,"::NewNoteActivity"+e.getMessage());
+            e.printStackTrace();
+        }
     }
     //endregion
 
@@ -175,13 +188,13 @@ public class NewNoteActivity extends AppCompatActivity {
                 textToSpeech.speak("Dear user your note title is"+activityNewNoteBinding.Title
                                 .getText().toString() + "Now you will hear your note description"+
                                 activityNewNoteBinding.Description.getText().toString(),
-                        TextToSpeech.QUEUE_ADD, null, "onNote");
+                        TextToSpeech.QUEUE_FLUSH, null, "onNote");
             }
             else{
                 textToSpeech.speak("Dear user your note title is"+activityNewNoteBinding.Title
                                 .getText().toString() + "Now you will hear your note description"+
                                 activityNewNoteBinding.Description.getText().toString(),
-                        TextToSpeech.QUEUE_ADD, null);
+                        TextToSpeech.QUEUE_FLUSH, null);
             }
             activityNewNoteBinding.listenIcon.setImageDrawable(getResources().getDrawable(R.drawable.ic_stop_circle));
             isTextToSpeechOn = true;
