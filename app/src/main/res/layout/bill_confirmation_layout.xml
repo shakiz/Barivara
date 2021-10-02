@@ -457,6 +457,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center|right"
             android:layout_below="@id/ElectricityBillLayout"
             android:orientation="horizontal"
             android:layout_marginBottom="16dp"
@@ -483,6 +484,7 @@
             <Button
                 android:id="@+id/saveAsPdf"
                 android:layout_width="0dp"
+                android:visibility="gone"
                 android:layout_weight="1"
                 android:layout_height="42dp"
                 android:text="@string/save_as_pdf"
