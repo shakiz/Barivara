@@ -156,7 +156,7 @@ public class GenerateBillActivity extends AppCompatActivity {
 
     //region sending message to tenant with bill details
     public void doPopUpForBillDetails(GenerateBill generateBill) {
-        Button cancel, sendMessage, saveAsPdf;
+        Button cancel, sendMessage;
         TextView tenantName, mobileNo, monthAndYear, roomName, rentAmount, gasBill, waterBill, serviceCharge, electricityBill;
         dialogBill = new Dialog(this, android.R.style.Theme_Dialog);
         dialogBill.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -168,7 +168,6 @@ public class GenerateBillActivity extends AppCompatActivity {
         //region dialogs findViewByIds
         cancel = dialogBill.findViewById(R.id.cancelButton);
         sendMessage = dialogBill.findViewById(R.id.sendMessage);
-        saveAsPdf = dialogBill.findViewById(R.id.saveAsPdf);
         tenantName = dialogBill.findViewById(R.id.TenantName);
         mobileNo = dialogBill.findViewById(R.id.MobileNo);
         roomName = dialogBill.findViewById(R.id.RoomName);
@@ -178,15 +177,6 @@ public class GenerateBillActivity extends AppCompatActivity {
         waterBill = dialogBill.findViewById(R.id.WaterBill);
         serviceCharge = dialogBill.findViewById(R.id.ServiceCharge);
         electricityBill = dialogBill.findViewById(R.id.ElectricityBill);
-        //endregion
-
-        //region check version and show or hide generate pdf option
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-            saveAsPdf.setVisibility(View.VISIBLE);
-        }
-        else{
-            saveAsPdf.setVisibility(View.GONE);
-        }
         //endregion
 
         //region set data
@@ -225,23 +215,6 @@ public class GenerateBillActivity extends AppCompatActivity {
             }
         });
 
-        saveAsPdf.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String content =
-                        "Name : " + generateBill.getTenantName() + "\n" +
-                                "Mobile : " + generateBill.getMobileNo() + "\n" +
-                                "Month and Year: " + generateBill.getMonthAndYear() + "\n" +
-                                "Room Name : " + generateBill.getAssociateRoom() + "\n" +
-                                "Rent Amount : " + generateBill.getRentAmount() + " " + getString(R.string.taka) + "\n" +
-                                "Gas Bill : " + generateBill.getGasBill() + " " + getString(R.string.taka) + "\n" +
-                                "Water Bill : " + generateBill.getWaterBill() + " " + getString(R.string.taka) + "\n" +
-                                "Electricity Bill : " + generateBill.getElectricityBill() + " " + getString(R.string.taka) + "\n" +
-                                "Service Charge : " + generateBill.getServiceCharge() + " " + getString(R.string.taka);
-                tools.generatePDF(content);
-            }
-        });
-
         dialogBill.setCanceledOnTouchOutside(false);
         dialogBill.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         dialogBill.getWindow().setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
@@ -257,7 +230,7 @@ public class GenerateBillActivity extends AppCompatActivity {
         smsIntent.putExtra("sms_body", message);
         smsIntent.setData(Uri.parse("sms:" + mobileNo));
         startActivity(smsIntent);
-        Toast.makeText(this, getString(R.string.message_sent), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.please_wait), Toast.LENGTH_SHORT).show();
         dialogBill.dismiss();
     }
     //endregion

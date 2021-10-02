@@ -14,6 +14,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.viewpager.widget.ViewPager;
 
 import com.shakil.barivara.R;
+import com.shakil.barivara.activities.auth.LoginActivity;
 import com.shakil.barivara.databinding.ActivityWelcomeBinding;
 import com.shakil.barivara.utils.MyViewPagerAdapter;
 import com.shakil.barivara.utils.PrefManager;
@@ -41,6 +42,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
         //region layouts of all welcome sliders
         layouts = new int[]{
+                R.layout.welcome_about_app,
                 R.layout.welcome_add_tenant_first,
                 R.layout.welcome_assign_room_to_a_tenant,
                 R.layout.welcome_calculate_electricity_rent_amount,
@@ -63,7 +65,7 @@ public class WelcomeActivity extends AppCompatActivity {
                     // move to next screen
                     activityWelcomeBinding.viewPager.setCurrentItem(current);
                 } else {
-                    goHome();
+                    goLogin();
                 }
             }
         });
@@ -77,9 +79,9 @@ public class WelcomeActivity extends AppCompatActivity {
     //endregion
 
     //region stop downloading and go home
-    private void goHome() {
+    private void goLogin() {
         prefManager.set(mOldUser, true);
-        startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
+        startActivity(new Intent(WelcomeActivity.this, LoginActivity.class));
     }
     //endregion
 
@@ -118,7 +120,7 @@ public class WelcomeActivity extends AppCompatActivity {
             // changing the next button text 'NEXT' / 'GOT IT'
             if (position == layouts.length - 1) {
                 // last page. make button text to GOT IT
-                activityWelcomeBinding.btnNext.setText(getString(R.string.got_it));
+                activityWelcomeBinding.btnNext.setText(getString(R.string.finish));
             } else {
                 // still pages are left
                 activityWelcomeBinding.btnNext.setText(getString(R.string.next));

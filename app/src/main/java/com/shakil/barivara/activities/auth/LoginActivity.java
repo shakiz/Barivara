@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.shakil.barivara.R;
+import com.shakil.barivara.activities.onboard.MainActivity;
 import com.shakil.barivara.activities.onboard.WelcomeActivity;
 import com.shakil.barivara.databinding.ActivityLoginBinding;
 import com.shakil.barivara.utils.Constants;
@@ -90,7 +91,11 @@ public class LoginActivity extends AppCompatActivity {
                 if (validation.isValid()){
                     if (tools.hasConnection()){
                         if (tools.validateEmailAddress(activityLoginBinding.email.getText().toString())){
-                            login();
+                            if (tools.hasConnection()) {
+                                login();
+                            } else {
+                                Toast.makeText(LoginActivity.this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT).show();
+                            }
                         }
                         else{
                             Toast.makeText(LoginActivity.this, getString(R.string.not_a_valid_email_address), Toast.LENGTH_SHORT).show();
@@ -129,7 +134,7 @@ public class LoginActivity extends AppCompatActivity {
                         prefManager.set(mUserEmail, task.getResult().getUser().getEmail());
                         prefManager.set(mUserMobile, task.getResult().getUser().getPhoneNumber());
                     }
-                    startActivity(new Intent(LoginActivity.this, WelcomeActivity.class));
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 }
                 else{
                     if (task.getException().getMessage().equals(getString(R.string.firebase_password_not_valid_exception))){

@@ -245,15 +245,15 @@ public class Tools {
             public void run() {
                 //region check for new update
                 Intent intent = null;
-                if (prefManager.getBoolean(mIsLoggedIn)){
-                    if (prefManager.getBoolean(mOldUser)) {
+                if (prefManager.getBoolean(mOldUser)){
+                    if (prefManager.getBoolean(mIsLoggedIn)) {
                         intent = new Intent(context, MainActivity.class);
                     } else {
-                        intent = new Intent(context, WelcomeActivity.class);
+                        intent = new Intent(context, LoginActivity.class);
                     }
                 }
                 else{
-                    intent = new Intent(context, LoginActivity.class);
+                    intent = new Intent(context, WelcomeActivity.class);
                 }
                 context.startActivity(intent);
                 //endregion

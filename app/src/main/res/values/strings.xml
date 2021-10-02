@@ -348,4 +348,21 @@
     <string name="finish">Finish</string>
     <string name="save_as_pdf">Save as PDF</string>
     <string name="your_device_does_not_support_this_feature">Your feature doesnt support this device.</string>
+    <string name="what_is_vara_adai">What is Vara Adai?</string>
+    <string name="about_app_1">
+        A home owner can track any kind of status of a tenant by this app.
+        Like generating bill, send message and make call to tenant.
+        How many tenants are left or active etc.
+    </string>
+    <string name="about_app_2">
+        In addition there will have a dashboard from where a home owner can see number of rooms,
+        tenants, filter data by month and year etc.
+    </string>
+    <string name="please_wait">Please Wait</string>
+    <string name="core_features">Core Features</string>
+    <string name="feature_1">1. Dashboard.</string>
+    <string name="feature_2">2. Monthly and Yearly data filter.</string>
+    <string name="feature_3">3. Generate Bill with all details.</string>
+    <string name="feature_4">4. Send bill via message to tenant.</string>
+    <string name="feature_5">5. Call e tenant if necessary.</string>
 </resources>

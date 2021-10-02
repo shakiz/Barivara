@@ -348,4 +348,20 @@
     <string name="finish">শেষ</string>
     <string name="save_as_pdf">PDF সেভ করুন</string>
     <string name="your_device_does_not_support_this_feature">Your feature doesnt support this device.</string>
+    <string name="what_is_vara_adai">ভারা আদায় কি?</string>
+    <string name="about_app_1">
+        একজন বাড়ির মালিক এই অ্যাপের মাধ্যমে ভাড়াটিয়ার যেকোনো ধরনের অবস্থা ট্র্যাক করতে পারেন।
+         বিল তৈরী , কতজন ভাড়াটিয়া আছে অথবা চলে গেছে, কল করা , মেসেজ পাঠানো ইত্যাদি।
+    </string>
+    <string name="about_app_2">
+        এছাড়াও, একটি ড্যাশবোর্ড থাকবে যেখান থেকে বাড়ির মালিক কক্ষের সংখ্যা,
+        ভাড়াটিয়া, মাস এবং বছর অনুসারে ফিল্টার ডেটা ইত্যাদি দেখতে পারবেন।
+    </string>
+    <string name="please_wait">অপেক্ষা করুন</string>
+    <string name="core_features">প্রধান বৈশিষ্ট্য</string>
+    <string name="feature_1">১. ড্যাশবোর্ড ।</string>
+    <string name="feature_2">২. মাসিক এবং বার্ষিক ডেটা ফিল্টার ।</string>
+    <string name="feature_3">৩. সমস্ত বিবরণ সহ বিল তৈরি ।</string>
+    <string name="feature_4">৪. ভাড়াটিয়াকে মেসেজের মাধ্যমে বিল পাঠান ।</string>
+    <string name="feature_5">৫. প্রয়োজনে ভাড়াটিয়াকে কল করুন ।</string>
 </resources>

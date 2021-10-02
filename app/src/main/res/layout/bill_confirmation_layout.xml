@@ -45,7 +45,7 @@
                 android:gravity="center|left"
                 android:paddingTop="4dp"
                 android:paddingBottom="4dp"
-                android:textColor="@color/md_green_800"
+                android:textColor="@color/md_grey_800"
                 android:textSize="14sp"/>
 
             <TextView
@@ -57,7 +57,7 @@
                 android:gravity="center"
                 android:paddingTop="4dp"
                 android:paddingBottom="4dp"
-                android:textColor="@color/md_green_800"
+                android:textColor="@color/md_grey_800"
                 android:textSize="14sp"/>
 
             <TextView
@@ -93,7 +93,7 @@
                 android:gravity="center|left"
                 android:paddingTop="4dp"
                 android:paddingBottom="4dp"
-                android:textColor="@color/md_green_800"
+                android:textColor="@color/md_grey_800"
                 android:textSize="14sp"/>
 
             <TextView
@@ -105,7 +105,7 @@
                 android:gravity="center"
                 android:paddingTop="4dp"
                 android:paddingBottom="4dp"
-                android:textColor="@color/md_green_800"
+                android:textColor="@color/md_grey_800"
                 android:textSize="14sp"/>
 
             <TextView
@@ -141,7 +141,7 @@
                 android:gravity="center|left"
                 android:paddingTop="4dp"
                 android:paddingBottom="4dp"
-                android:textColor="@color/md_green_800"
+                android:textColor="@color/md_grey_800"
                 android:textSize="14sp"/>
 
             <TextView
@@ -153,7 +153,7 @@
                 android:gravity="center"
                 android:paddingTop="4dp"
                 android:paddingBottom="4dp"
-                android:textColor="@color/md_green_800"
+                android:textColor="@color/md_grey_800"
                 android:textSize="14sp"/>
 
             <TextView
@@ -188,7 +188,7 @@
                 android:gravity="center|left"
                 android:paddingTop="4dp"
                 android:paddingBottom="4dp"
-                android:textColor="@color/md_green_800"
+                android:textColor="@color/md_grey_800"
                 android:textSize="14sp"/>
 
             <TextView
@@ -200,7 +200,7 @@
                 android:gravity="center"
                 android:paddingTop="4dp"
                 android:paddingBottom="4dp"
-                android:textColor="@color/md_green_800"
+                android:textColor="@color/md_grey_800"
                 android:textSize="14sp"/>
 
             <TextView
@@ -235,7 +235,7 @@
                 android:gravity="center|left"
                 android:paddingTop="4dp"
                 android:paddingBottom="4dp"
-                android:textColor="@color/md_green_800"
+                android:textColor="@color/md_grey_800"
                 android:textSize="14sp"/>
 
             <TextView
@@ -247,7 +247,7 @@
                 android:gravity="center"
                 android:paddingTop="4dp"
                 android:paddingBottom="4dp"
-                android:textColor="@color/md_green_800"
+                android:textColor="@color/md_grey_800"
                 android:textSize="14sp"/>
 
             <TextView
@@ -283,7 +283,7 @@
                 android:paddingTop="4dp"
                 android:paddingBottom="4dp"
                 android:text="@string/gas_bill"
-                android:textColor="@color/md_green_800"
+                android:textColor="@color/md_grey_800"
                 android:textSize="14sp" />
 
             <TextView
@@ -295,7 +295,7 @@
                 android:paddingTop="4dp"
                 android:paddingBottom="4dp"
                 android:text=":"
-                android:textColor="@color/md_green_800"
+                android:textColor="@color/md_grey_800"
                 android:textSize="14sp" />
 
             <TextView
@@ -330,7 +330,7 @@
                 android:gravity="center|left"
                 android:paddingTop="4dp"
                 android:paddingBottom="4dp"
-                android:textColor="@color/md_green_800"
+                android:textColor="@color/md_grey_800"
                 android:textSize="14sp"/>
 
             <TextView
@@ -342,7 +342,7 @@
                 android:gravity="center"
                 android:paddingTop="4dp"
                 android:paddingBottom="4dp"
-                android:textColor="@color/md_green_800"
+                android:textColor="@color/md_grey_800"
                 android:textSize="14sp"/>
 
             <TextView
@@ -377,7 +377,7 @@
                 android:gravity="center|left"
                 android:paddingTop="4dp"
                 android:paddingBottom="4dp"
-                android:textColor="@color/md_green_800"
+                android:textColor="@color/md_grey_800"
                 android:textSize="14sp"/>
 
             <TextView
@@ -389,7 +389,7 @@
                 android:gravity="center"
                 android:paddingTop="4dp"
                 android:paddingBottom="4dp"
-                android:textColor="@color/md_green_800"
+                android:textColor="@color/md_grey_800"
                 android:textSize="14sp"/>
 
             <TextView
@@ -424,7 +424,7 @@
                 android:gravity="center|left"
                 android:paddingTop="4dp"
                 android:paddingBottom="4dp"
-                android:textColor="@color/md_green_800"
+                android:textColor="@color/md_grey_800"
                 android:textSize="14sp"/>
 
             <TextView
@@ -436,7 +436,7 @@
                 android:gravity="center"
                 android:paddingTop="4dp"
                 android:paddingBottom="4dp"
-                android:textColor="@color/md_green_800"
+                android:textColor="@color/md_grey_800"
                 android:textSize="14sp"/>
 
             <TextView
@@ -462,7 +462,7 @@
             android:orientation="horizontal"
             android:layout_marginBottom="16dp"
             android:layout_marginTop="16dp"
-            android:weightSum="3">
+            android:weightSum="2">
 
             <Button
                 android:id="@+id/cancelButton"
@@ -481,23 +481,23 @@
                 android:background="@drawable/rectangle_white"
                 android:focusable="true" />
 
-            <Button
-                android:id="@+id/saveAsPdf"
-                android:layout_width="0dp"
-                android:visibility="gone"
-                android:layout_weight="1"
-                android:layout_height="42dp"
-                android:text="@string/save_as_pdf"
-                android:textSize="12sp"
-                android:layout_marginRight="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="4dp"
-                android:textAllCaps="true"
-                android:clickable="true"
-                android:textColor="@color/md_white_1000"
-                android:background="@drawable/rectangle_green_selected"
-                android:focusable="true" />
+<!--            <Button-->
+<!--                android:id="@+id/saveAsPdf"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:visibility="gone"-->
+<!--                android:layout_weight="1"-->
+<!--                android:layout_height="42dp"-->
+<!--                android:text="@string/save_as_pdf"-->
+<!--                android:textSize="12sp"-->
+<!--                android:layout_marginRight="8dp"-->
+<!--                android:layout_marginLeft="8dp"-->
+<!--                android:layout_marginTop="4dp"-->
+<!--                android:layout_marginBottom="4dp"-->
+<!--                android:textAllCaps="true"-->
+<!--                android:clickable="true"-->
+<!--                android:textColor="@color/md_white_1000"-->
+<!--                android:background="@drawable/rectangle_green_selected"-->
+<!--                android:focusable="true" />-->
 
             <Button
                 android:id="@+id/sendMessage"
@@ -513,7 +513,7 @@
                 android:textAllCaps="true"
                 android:clickable="true"
                 android:textColor="@color/md_white_1000"
-                android:background="@drawable/rectangle_light_red"
+                android:background="@drawable/rectangle_green_selected"
                 android:focusable="true" />
 
         </LinearLayout>

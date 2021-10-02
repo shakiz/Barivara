@@ -74,7 +74,7 @@
                 android:layout_marginTop="12dp"
                 android:text="@string/report_or_dashboard_tips_1"
                 android:textColor="@color/md_black_1000"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="normal" />
 
             <TextView
@@ -86,7 +86,7 @@
                 android:layout_marginTop="12dp"
                 android:text="@string/report_or_dashboard_tips_2"
                 android:textColor="@color/md_black_1000"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="normal" />
 
         </LinearLayout>
