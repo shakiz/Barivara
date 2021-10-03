@@ -32,7 +32,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private UX ux;
     private Tools tools;
-    private String registerWithStr= "";
+    private String registerWithStr = "";
     private Validation validation;
     private final Map<String, String[]> hashMap = new HashMap();
 
@@ -51,7 +51,7 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     //region init UI
-    private void initUI(){
+    private void initUI() {
         firebaseAuth = FirebaseAuth.getInstance();
         ux = new UX(this);
         validation = new Validation(this, hashMap);
@@ -60,10 +60,10 @@ public class RegistrationActivity extends AppCompatActivity {
     //endregion
 
     //region bind UI with components
-    private void bindUiWithComponents(){
+    private void bindUiWithComponents() {
         //region validation
-        validation.setEditTextIsNotEmpty(new String[]{"email", "password"},
-                new String[]{getString(R.string.email_validation), getString(R.string.password_validation)});
+        validation(new String[]{"mobileNumber"},
+                new String[]{getString(R.string.mobile_validation)});
         //endregion
 
         //region login click listener
@@ -81,6 +81,10 @@ public class RegistrationActivity extends AppCompatActivity {
             public void onClick(View v) {
                 registerWithStr = getString(R.string.email);
                 registerWith(registerWithStr);
+                //region validation
+                validation(new String[]{"email", "password"},
+                        new String[]{getString(R.string.email_validation), getString(R.string.password_validation)});
+                //endregion
             }
         });
         activityBinding.mobileLayout.setOnClickListener(new View.OnClickListener() {
@@ -88,6 +92,10 @@ public class RegistrationActivity extends AppCompatActivity {
             public void onClick(View v) {
                 registerWithStr = getString(R.string.mobile);
                 registerWith(registerWithStr);
+                //region validation
+                validation(new String[]{"mobileNumber"},
+                        new String[]{getString(R.string.mobile_validation)});
+                //endregion
             }
         });
         //endregion
@@ -96,53 +104,41 @@ public class RegistrationActivity extends AppCompatActivity {
         activityBinding.signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (validation.isValid()){
+                if (validation.isValid()) {
                     if (tools.hasConnection()) {
-                        if (activityBinding.password.getText().toString().length() >= 6){
+                        //region check for register with mobile or email
+                        if (registerWithStr.equals(getString(R.string.email))) {
                             //region check email address validation
-                            if (!TextUtils.isEmpty(activityBinding.email.getText().toString())){
-                                if (tools.validateEmailAddress(activityBinding.email.getText().toString())){
-                                    ux.getLoadingView();
-                                    firebaseAuth.createUserWithEmailAndPassword(activityBinding.email.getText().toString(),
-                                            activityBinding.password.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<AuthResult> task) {
-                                            if (task.isSuccessful()){
-                                                Log.i(Constants.TAG+":onComplete",getString(R.string.registration_succcessful));
-                                                Toast.makeText(RegistrationActivity.this, getString(R.string.registration_succcessful), Toast.LENGTH_SHORT).show();
-                                                startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
-                                            }
-                                            else{
-                                                if (task.getException().getMessage().equals(getString(R.string.firebase_user_exists_exception))){
-                                                    Toast.makeText(RegistrationActivity.this,
-                                                            getString(R.string.user_already_exists), Toast.LENGTH_LONG).show();
-                                                }
-                                                else{
-                                                    Toast.makeText(RegistrationActivity.this,
-                                                            getString(R.string.registration_unsucccessful), Toast.LENGTH_LONG).show();
-                                                }
-                                                Log.i(Constants.TAG+":onComplete",getString(R.string.registration_unsucccessful));
-                                            }
-                                            ux.removeLoadingView();
-                                        }
-                                    });
+                            if (tools.validateEmailAddress(activityBinding.email.getText().toString())) {
+                                if (activityBinding.password.getText().toString().length() >= 6) {
+                                    registerWithEmailPass();
+                                } else {
+                                    Toast.makeText(RegistrationActivity.this, getString(R.string.password_must_be_six_character), Toast.LENGTH_SHORT).show();
                                 }
-                                else{
-                                    Toast.makeText(RegistrationActivity.this, getString(R.string.not_a_valid_email_address),
-                                            Toast.LENGTH_SHORT).show();
-                                }
+                            } else {
+                                Toast.makeText(RegistrationActivity.this, getString(R.string.not_a_valid_email_address),
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                            //endregion
+                        } else if (registerWithStr.equals(getString(R.string.mobile))) {
+                            //region check for mobile number validation and do register
+                            if (tools.isValidMobile(activityBinding.mobileNumber.getText().toString())){
+                                registerWithMobile();
                             }
                             else{
-                                Toast.makeText(RegistrationActivity.this, getString(R.string.email_validation), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegistrationActivity.this, getString(R.string.not_a_valid_mobile_number),
+                                        Toast.LENGTH_SHORT).show();
                             }
                             //endregion
                         }
                         else{
-                            Toast.makeText(RegistrationActivity.this, getString(R.string.password_must_be_six_character), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegistrationActivity.this, getString(R.string.validation_registration_type),
+                                    Toast.LENGTH_SHORT).show();
                         }
-                    } else {
-                        Toast.makeText(RegistrationActivity.this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT).show();
+                        //endregion
                     }
+                } else {
+                    Toast.makeText(RegistrationActivity.this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -151,28 +147,67 @@ public class RegistrationActivity extends AppCompatActivity {
     //endregion
 
     //region change gender UI
-    private void registerWith(String registerWith){
+    private void registerWith(String registerWith) {
         if (registerWith.equals(getString(R.string.email))) {
             activityBinding.mainMobileRegistrationLayout.setVisibility(View.GONE);
             activityBinding.mainEmailRegistrationLayout.setVisibility(View.VISIBLE);
-            activityBinding.emailIdLayout.setBackground(ContextCompat.getDrawable(this,R.drawable.rectangle_background_filled_gender));
-            activityBinding.EmailId.setTextColor(ContextCompat.getColor(this,R.color.md_white_1000));
+            activityBinding.emailIdLayout.setBackground(ContextCompat.getDrawable(this, R.drawable.rectangle_background_filled_gender));
+            activityBinding.EmailId.setTextColor(ContextCompat.getColor(this, R.color.md_white_1000));
             activityBinding.mobileLayout.setBackgroundResource(0);
-            activityBinding.Mobile.setTextColor(ContextCompat.getColor(this,R.color.md_green_800));
+            activityBinding.Mobile.setTextColor(ContextCompat.getColor(this, R.color.md_green_800));
             activityBinding.MobileIcon.setImageResource(R.drawable.ic_call_green);
             activityBinding.EmailIcon.setImageResource(R.drawable.ic_email_white);
         } else {
             activityBinding.mainEmailRegistrationLayout.setVisibility(View.GONE);
             activityBinding.mainMobileRegistrationLayout.setVisibility(View.VISIBLE);
-            activityBinding.mobileLayout.setBackground(ContextCompat.getDrawable(this,R.drawable.rectangle_background_filled_gender));
+            activityBinding.mobileLayout.setBackground(ContextCompat.getDrawable(this, R.drawable.rectangle_background_filled_gender));
             activityBinding.emailIdLayout.setBackgroundResource(0);
-            activityBinding.EmailId.setTextColor(ContextCompat.getColor(this,R.color.md_green_800));
-            activityBinding.Mobile.setTextColor(ContextCompat.getColor(this,R.color.md_white_1000));
+            activityBinding.EmailId.setTextColor(ContextCompat.getColor(this, R.color.md_green_800));
+            activityBinding.Mobile.setTextColor(ContextCompat.getColor(this, R.color.md_white_1000));
             activityBinding.MobileIcon.setImageResource(R.drawable.ic_call_white);
             activityBinding.EmailIcon.setImageResource(R.drawable.ic_email_green);
         }
     }
     //endregion
+
+    private void validation(String[] resNames, String[] validationMessages) {
+        //region validation
+        validation.setEditTextIsNotEmpty(resNames, validationMessages);
+        //endregion
+    }
+
+    //region register with email and pass
+    private void registerWithEmailPass() {
+        ux.getLoadingView();
+        firebaseAuth.createUserWithEmailAndPassword(activityBinding.email.getText().toString(),
+                activityBinding.password.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    Log.i(Constants.TAG + ":onComplete", getString(R.string.registration_succcessful));
+                    Toast.makeText(RegistrationActivity.this, getString(R.string.registration_succcessful), Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
+                } else {
+                    if (task.getException().getMessage().equals(getString(R.string.firebase_user_exists_exception))) {
+                        Toast.makeText(RegistrationActivity.this,
+                                getString(R.string.user_already_exists), Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(RegistrationActivity.this,
+                                getString(R.string.registration_unsucccessful), Toast.LENGTH_LONG).show();
+                    }
+                    Log.i(Constants.TAG + ":onComplete", getString(R.string.registration_unsucccessful));
+                }
+                ux.removeLoadingView();
+            }
+        });
+    }
+    //endregion
+
+    //region register with mobile number
+    private void registerWithMobile(){
+        ux.getLoadingView();
+
+    }
 
     //region activity components
     @Override

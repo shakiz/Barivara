@@ -366,4 +366,6 @@
     <string name="feature_4">4. Send bill via message to tenant.</string>
     <string name="feature_5">5. Call e tenant if necessary.</string>
     <string name="register_with">Register With</string>
+    <string name="not_a_valid_mobile_number">Not a valid mobile number</string>
+    <string name="validation_registration_type">Please select registration type</string>
 </resources>
