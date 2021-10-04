@@ -127,13 +127,9 @@ public class LoginActivity extends AppCompatActivity {
                 if (task.isSuccessful()){
                     Log.i(Constants.TAG+":onComplete",getString(R.string.login_succcessful));
                     Toast.makeText(LoginActivity.this, getString(R.string.login_succcessful), Toast.LENGTH_SHORT).show();
-                    prefManager.set(mIsLoggedIn, true);
-                    if (task.getResult() != null){
-                        prefManager.set(mUserId, task.getResult().getUser().getUid());
-                        prefManager.set(mUserFullName, task.getResult().getUser().getDisplayName());
-                        prefManager.set(mUserEmail, task.getResult().getUser().getEmail());
-                        prefManager.set(mUserMobile, task.getResult().getUser().getPhoneNumber());
-                    }
+                    //region set pref
+                    tools.setLoginPrefs(task);
+                    //endregion
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 }
                 else{

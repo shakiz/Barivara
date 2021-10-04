@@ -32,7 +32,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private UX ux;
     private Tools tools;
-    private String registerWithStr = "";
+    private String registerWithStr;
     private Validation validation;
     private final Map<String, String[]> hashMap = new HashMap();
 
@@ -43,6 +43,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
         //region init UI
         initUI();
+        registerWithStr = getString(R.string.mobile);
         //endregion
 
         //region bind UI with components
@@ -205,8 +206,9 @@ public class RegistrationActivity extends AppCompatActivity {
 
     //region register with mobile number
     private void registerWithMobile(){
-        ux.getLoadingView();
-
+        Intent intent = new Intent(RegistrationActivity.this, MobileRegVerificationActivity.class);
+        intent.putExtra("mobile", activityBinding.mobileNumber.getText().toString());
+        startActivity(intent);
     }
 
     //region activity components

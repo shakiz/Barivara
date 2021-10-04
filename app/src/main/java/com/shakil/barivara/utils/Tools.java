@@ -27,9 +27,12 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.shakil.barivara.R;
 import com.shakil.barivara.activities.auth.LoginActivity;
 import com.shakil.barivara.activities.onboard.MainActivity;
@@ -295,6 +298,18 @@ public class Tools {
         }
         else{
             Toast.makeText(context, context.getString(R.string.your_device_does_not_support_this_feature), Toast.LENGTH_LONG).show();
+        }
+    }
+    //endregion
+
+    //region set login prefs
+    public void setLoginPrefs(@NonNull Task<AuthResult> task){
+        prefManager.set(mIsLoggedIn, true);
+        if (task.getResult() != null){
+            prefManager.set(mUserId, task.getResult().getUser().getUid());
+            prefManager.set(mUserFullName, task.getResult().getUser().getDisplayName());
+            prefManager.set(mUserEmail, task.getResult().getUser().getEmail());
+            prefManager.set(mUserMobile, task.getResult().getUser().getPhoneNumber());
         }
     }
     //endregion

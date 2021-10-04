@@ -367,4 +367,10 @@
     <string name="register_with">Register With</string>
     <string name="not_a_valid_mobile_number">Not a valid mobile number</string>
     <string name="validation_registration_type">Please select registration type</string>
+    <string name="sent_you_code_on_your_number">Sent a code to your number</string>
+    <string name="verification_code">Verification Code</string>
+    <string name="type_code_here">Type Code Here</string>
+    <string name="verify">Verify</string>
+    <string name="otp_or_code_can_not_be_empty">OTP/Code can not be empty</string>
+    <string name="not_valid_otp_or_code">Not a valid OTP/Code</string>
 </resources>

@@ -6,16 +6,16 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher_square"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_circle"
         android:supportsRtl="true"
-        android:requestLegacyExternalStorage="true"
         android:theme="@style/AppThemeNoActionBar">
         <activity android:name=".activities.onboard.SplashActivity">
             <intent-filter>
@@ -24,6 +24,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activities.auth.MobileRegVerificationActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNoActionBar"
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".activities.generatebill.GenerateBillActivity"
             android:screenOrientation="portrait"
