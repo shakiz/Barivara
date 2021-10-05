@@ -167,7 +167,7 @@
     <string name="hello">হ্যালো</string>
     <string name="sign_up_here">এখানে রেজিস্ট্রেশন করুন</string>
     <string name="sign_up">রেজিস্ট্রেশন</string>
-    <string name="registration_here">আপনি এখানে নিজেকে রেজিস্ট্রেশন করতে পারেন</string>
+    <string name="registration_here">আপনি এখানে রেজিস্ট্রেশন করতে পারেন</string>
     <string name="not_registered">নিবন্ধিত না?</string>
     <string name="register">রেজিস্ট্রেশন করুন</string>
     <string name="already_have_an_account">ইতিমধ্যে একটি একাউন্ট আছে ?</string>
@@ -373,4 +373,9 @@
     <string name="verify">Verify</string>
     <string name="otp_or_code_can_not_be_empty">OTP/Code can not be empty</string>
     <string name="not_valid_otp_or_code">Not a valid OTP/Code</string>
+    <string name="login_with">Login With</string>
+    <string name="code_sent_please_check">Code was sent to your mobile number</string>
+    <string name="code_verification_failed">Code verification failed</string>
+    <string name="invalid_code_entered">Invalid code entered</string>
+    <string name="we_are_verifying_you">We are verifying you</string>
 </resources>

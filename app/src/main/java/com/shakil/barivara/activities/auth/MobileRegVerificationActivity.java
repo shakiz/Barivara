@@ -3,6 +3,7 @@ package com.shakil.barivara.activities.auth;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -23,6 +24,7 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import com.shakil.barivara.R;
 import com.shakil.barivara.activities.onboard.MainActivity;
 import com.shakil.barivara.databinding.ActivityMobileRegVerificationBinding;
+import com.shakil.barivara.utils.Constants;
 import com.shakil.barivara.utils.Tools;
 import com.shakil.barivara.utils.UX;
 
@@ -88,6 +90,7 @@ public class MobileRegVerificationActivity extends AppCompatActivity {
         if (getIntent().getStringExtra("mobile") != null) {
             mobileNumber = getIntent().getStringExtra("mobile");
             if (tools.hasConnection()) {
+                Toast.makeText(this, getString(R.string.please_wait)+"/n"+getString(R.string.we_are_verifying_you), Toast.LENGTH_SHORT).show();
                 sendVerificationCode(mobileNumber);
             } else {
                 Snackbar snackbar = Snackbar.make(findViewById(R.id.parent), getString(R.string.no_internet_title), Snackbar.LENGTH_LONG);
@@ -109,16 +112,20 @@ public class MobileRegVerificationActivity extends AppCompatActivity {
                             public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
                                 String code = phoneAuthCredential.getSmsCode();
                                 if (code != null) {
+                                    Log.i(Constants.TAG+":VerificationCompleted","Code::"+code);
                                     activityBinding.verificationCode.setText(code);
                                     verifyVerificationCode(code);
                                 }
                             }
                             @Override
                             public void onVerificationFailed(FirebaseException e) {
-                                Toast.makeText(MobileRegVerificationActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                                Log.i(Constants.TAG+":onVerificationFailed","Error::"+e.getMessage());
+                                Toast.makeText(MobileRegVerificationActivity.this, getString(R.string.code_verification_failed)+"/"+getString(R.string.try_again), Toast.LENGTH_SHORT).show();
                             }
                             @Override
                             public void onCodeSent(String s, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+                                Log.i(Constants.TAG+":onCodeSent","Verification ID::"+s);
+                                Toast.makeText(MobileRegVerificationActivity.this, getString(R.string.code_sent_please_check), Toast.LENGTH_SHORT).show();
                                 super.onCodeSent(s, forceResendingToken);
                                 //storing the verification id that is sent to the user
                                 mVerificationId = s;
@@ -134,10 +141,11 @@ public class MobileRegVerificationActivity extends AppCompatActivity {
     //region verify code
     private void verifyVerificationCode(String code) {
         if (tools.hasConnection()) {
+            Log.i(Constants.TAG+":verifyVerificationCode","Code:"+code);
             //creating the credential
             PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, code);
             //signing the user
-            signInWithPhoneAuthCredential(credential);
+            loginWithMobile(credential);
         }
         else{
             Snackbar snackbar = Snackbar.make(findViewById(R.id.parent), getString(R.string.no_internet_title), Snackbar.LENGTH_LONG);
@@ -147,25 +155,28 @@ public class MobileRegVerificationActivity extends AppCompatActivity {
     //endregion
 
     //region sign in with credentials
-    private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
+    private void loginWithMobile(PhoneAuthCredential credential) {
         ux.getLoadingView();
         firebaseAuth.signInWithCredential(credential)
                 .addOnCompleteListener(MobileRegVerificationActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            Log.i(Constants.TAG+":loginWithMobile","Success");
                             tools.setLoginPrefs(task);
                             ux.removeLoadingView();
+                            Toast.makeText(MobileRegVerificationActivity.this, getString(R.string.login_succcessful), Toast.LENGTH_SHORT).show();
                             //verification successful we will start the profile activity
                             Intent intent = new Intent(MobileRegVerificationActivity.this, MainActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
                         } else {
+                            Log.i(Constants.TAG+":loginWithMobile","Failed");
                             ux.removeLoadingView();
                             //verification unsuccessful.. display an error message
-                            String message = "Something is wrong, we will fix it soon...";
+                            String message = getString(R.string.login_unsucccessful);
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-                                message = "Invalid code entered...";
+                                message = getString(R.string.invalid_code_entered);
                             }
                             Snackbar snackbar = Snackbar.make(findViewById(R.id.parent), message, Snackbar.LENGTH_LONG);
                             snackbar.setAction("Dismiss", new View.OnClickListener() {

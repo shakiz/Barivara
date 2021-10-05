@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "216403585373",
+    "firebase_url": "https://bari-vara-92016-default-rtdb.firebaseio.com",
     "project_id": "bari-vara-92016",
     "storage_bucket": "bari-vara-92016.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "216403585373-jj9cvnacn0mqog316qk4fjoitgldsqh2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shakil.barivara",
+            "certificate_hash": "c3334ddc73fa85c87203a9a93977057738dd8264"
+          }
+        },
         {
           "client_id": "216403585373-le7an9m43s1u1433hb3f5ivnjt4r258e.apps.googleusercontent.com",
           "client_type": 3

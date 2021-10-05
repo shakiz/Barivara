@@ -147,7 +147,7 @@ public class RegistrationActivity extends AppCompatActivity {
     }
     //endregion
 
-    //region change gender UI
+    //region change register with UI
     private void registerWith(String registerWith) {
         if (registerWith.equals(getString(R.string.email))) {
             activityBinding.mainMobileRegistrationLayout.setVisibility(View.GONE);
@@ -171,11 +171,11 @@ public class RegistrationActivity extends AppCompatActivity {
     }
     //endregion
 
+    //region custom validation
     private void validation(String[] resNames, String[] validationMessages) {
-        //region validation
         validation.setEditTextIsNotEmpty(resNames, validationMessages);
-        //endregion
     }
+    //endregion
 
     //region register with email and pass
     private void registerWithEmailPass() {
@@ -210,6 +210,7 @@ public class RegistrationActivity extends AppCompatActivity {
         intent.putExtra("mobile", activityBinding.mobileNumber.getText().toString());
         startActivity(intent);
     }
+    //endregion
 
     //region activity components
     @Override

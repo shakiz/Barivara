@@ -29,7 +29,7 @@
                 android:focusable="true"
                 android:text="@string/registration_here"
                 android:textColor="@color/md_green_800"
-                android:textSize="16sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -145,8 +145,8 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="2dp"
                 android:layout_marginBottom="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:orientation="vertical"
                 android:visibility="gone"
                 android:paddingBottom="8dp">
@@ -164,10 +164,10 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="48dp"
+                        android:layout_height="52dp"
                         android:layout_below="@+id/emailAddressText"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
                         android:background="@drawable/profile_text_bg"
                         android:orientation="horizontal"
                         android:padding="4dp">
@@ -175,7 +175,7 @@
                         <EditText
                             android:id="@+id/email"
                             android:layout_width="match_parent"
-                            android:layout_height="42dp"
+                            android:layout_height="52dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="16dp"
                             android:background="@null"
@@ -219,10 +219,10 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="48dp"
+                        android:layout_height="52dp"
                         android:layout_below="@+id/passwordText"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
                         android:background="@drawable/profile_text_bg"
                         android:orientation="horizontal"
                         android:padding="4dp">
@@ -230,7 +230,7 @@
                         <EditText
                             android:id="@+id/password"
                             android:layout_width="match_parent"
-                            android:layout_height="42dp"
+                            android:layout_height="52dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="16dp"
                             android:background="@null"
@@ -277,8 +277,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
                 android:layout_marginBottom="16dp"
                 android:layout_marginTop="8dp"
                 android:orientation="vertical"
@@ -289,15 +289,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="16dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
                     android:layout_marginTop="4dp"
-                    android:layout_marginRight="16dp"
                     android:clickable="false"
                     android:gravity="center">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="48dp"
+                        android:layout_height="52dp"
                         android:layout_below="@+id/mobileNumberText"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
@@ -308,7 +308,7 @@
                         <EditText
                             android:id="@+id/mobileNumber"
                             android:layout_width="match_parent"
-                            android:layout_height="42dp"
+                            android:layout_height="52dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="16dp"
                             android:background="@null"
@@ -347,7 +347,7 @@
                 android:layout_height="42dp"
                 android:layout_gravity="center"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="12dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="4dp"
                 android:background="@drawable/button_shape_round_corner"

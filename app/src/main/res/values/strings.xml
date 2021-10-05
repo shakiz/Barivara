@@ -374,4 +374,9 @@
     <string name="verify">Verify</string>
     <string name="otp_or_code_can_not_be_empty">OTP/Code can not be empty</string>
     <string name="not_valid_otp_or_code">Not a valid OTP/Code</string>
+    <string name="login_with">Login With</string>
+    <string name="code_sent_please_check">Code was sent to your mobile number</string>
+    <string name="code_verification_failed">Code verification failed</string>
+    <string name="invalid_code_entered">Invalid code entered</string>
+    <string name="we_are_verifying_you">We are verifying you</string>
 </resources>
