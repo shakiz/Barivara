@@ -1,9 +1,7 @@
 package com.shakil.barivara.activities.auth;
 
 import android.content.Intent;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;

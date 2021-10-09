@@ -275,64 +275,49 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginBottom="16dp"
-                    android:layout_marginTop="8dp"
-                    android:orientation="vertical"
-                    android:paddingBottom="8dp">
+                    android:layout_marginTop="16dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
 
-                    <RelativeLayout
-                        android:id="@+id/mobileNumberLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                    <EditText
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight=".2"
                         android:layout_gravity="center"
                         android:layout_marginLeft="16dp"
                         android:layout_marginTop="4dp"
+                        android:layout_marginBottom="4dp"
+                        android:scrollbarSize="16sp"
+                        android:focusable="false"
+                        android:gravity="center"
+                        android:text="@string/bd_mobile_code"
+                        android:padding="4dp"
+                        android:background="@drawable/profile_text_bg"
+                        android:textColor="@color/md_grey_700"
+                        android:textSize="14sp" />
+
+                    <EditText
+                        android:id="@+id/mobileNumber"
+                        android:layout_width="0dp"
+                        android:layout_weight=".8"
+                        android:layout_height="48dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="4dp"
                         android:layout_marginRight="16dp"
-                        android:clickable="false"
-                        android:gravity="center">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="52dp"
-                            android:layout_below="@+id/mobileNumberText"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginRight="8dp"
-                            android:background="@drawable/profile_text_bg"
-                            android:orientation="horizontal"
-                            android:padding="4dp">
-
-                            <EditText
-                                android:id="@+id/mobileNumber"
-                                android:layout_width="match_parent"
-                                android:layout_height="52dp"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="16dp"
-                                android:background="@null"
-                                android:gravity="center_vertical"
-                                android:hint="@string/mobile_number_hint"
-                                android:inputType="numberSigned"
-                                android:padding="4dp"
-                                android:textColor="@color/md_grey_700"
-                                android:textColorHighlight="@color/md_grey_700"
-                                android:textColorHint="@color/md_grey_700"
-                                android:textSize="14sp" />
-
-                        </LinearLayout>
-
-                        <TextView
-                            android:id="@+id/mobileNumberText"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentTop="true"
-                            android:layout_marginLeft="32dp"
-                            android:layout_marginBottom="-10dp"
-                            android:background="@color/md_white_1000"
-                            android:paddingLeft="8dp"
-                            android:paddingRight="8dp"
-                            android:text="@string/mobile_number"
-                            android:textColor="@color/md_grey_800"
-                            android:textSize="14sp" />
-
-                    </RelativeLayout>
+                        android:layout_marginBottom="4dp"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/profile_text_bg"
+                        android:hint="@string/mobile_number_with_digit_hint"
+                        android:inputType="numberSigned"
+                        android:padding="8dp"
+                        android:maxLength="11"
+                        android:textColor="@color/md_grey_700"
+                        android:textColorHighlight="@color/md_grey_700"
+                        android:textColorHint="@color/md_grey_700"
+                        android:textSize="14sp" />
 
                 </LinearLayout>
 
@@ -340,7 +325,10 @@
                     android:id="@+id/login"
                     android:layout_width="200dp"
                     android:layout_height="42dp"
-                    android:layout_margin="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginTop="8dp"
                     android:text="@string/login_without_underline"
                     android:layout_gravity="center"
                     android:gravity="center"
@@ -358,7 +346,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center"
-                    android:layout_marginTop="16dp">
+                    android:layout_marginTop="8dp">
 
                     <TextView
                         android:layout_width="wrap_content"

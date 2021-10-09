@@ -32,7 +32,7 @@ import java.util.concurrent.TimeUnit;
 
 public class MobileRegVerificationActivity extends AppCompatActivity {
     private ActivityMobileRegVerificationBinding activityBinding;
-    String mobileNumber = "", mVerificationId = "";
+    private String mobileNumber = "", mVerificationId = "";
     private FirebaseAuth firebaseAuth;
     private Tools tools;
     private UX ux;

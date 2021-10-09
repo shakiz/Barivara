@@ -379,4 +379,6 @@
     <string name="code_verification_failed">Code verification failed</string>
     <string name="invalid_code_entered">Invalid code entered</string>
     <string name="we_are_verifying_you">We are verifying you</string>
+    <string name="bd_mobile_code">+88</string>
+    <string name="mobile_number_with_digit_hint">Mobile Number (11 Digit Only)</string>
 </resources>
