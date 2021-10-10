@@ -34,7 +34,6 @@ public class NewMeterActivity extends AppCompatActivity {
     private String command = "add";
     private FirebaseCrudHelper firebaseCrudHelper;
     private ArrayList<String> roomNames;
-    private ArrayAdapter<String> roomNameSpinnerAdapter;
     private Validation validation;
     private Tools tools;
     private final Map<String, String[]> hashMap = new HashMap();
@@ -186,7 +185,7 @@ public class NewMeterActivity extends AppCompatActivity {
 
     //region set room spinner adapter
     private void setRoomNameSpinner(){
-        roomNameSpinnerAdapter = new ArrayAdapter<>(NewMeterActivity.this, R.layout.spinner_drop, roomNames);
+        ArrayAdapter<String> roomNameSpinnerAdapter = new ArrayAdapter<>(NewMeterActivity.this, R.layout.spinner_drop, roomNames);
         roomNameSpinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
         activityNewMeterBinding.AssociateRoomId.setAdapter(roomNameSpinnerAdapter);
     }

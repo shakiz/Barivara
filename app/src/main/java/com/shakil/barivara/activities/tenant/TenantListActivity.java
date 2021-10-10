@@ -28,7 +28,6 @@ import java.util.ArrayList;
 
 public class TenantListActivity extends AppCompatActivity {
     private ActivityTenantListBinding activityTenantListBinding;
-    private RecyclerTenantListAdapter recyclerTenantListAdapter;
     private ArrayList<Tenant> tenantList;
     private TextView noDataTXT;
     private FirebaseCrudHelper firebaseCrudHelper;
@@ -163,7 +162,7 @@ public class TenantListActivity extends AppCompatActivity {
 
     //region set recycler adapter
     private void setRecyclerAdapter(){
-        recyclerTenantListAdapter = new RecyclerTenantListAdapter(tenantList, this);
+        RecyclerTenantListAdapter recyclerTenantListAdapter = new RecyclerTenantListAdapter(tenantList, this);
         activityTenantListBinding.mRecylerView.setLayoutManager(new LinearLayoutManager(this));
         activityTenantListBinding.mRecylerView.setAdapter(recyclerTenantListAdapter);
         recyclerTenantListAdapter.notifyDataSetChanged();

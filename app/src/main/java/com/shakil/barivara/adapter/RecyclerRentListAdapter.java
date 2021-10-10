@@ -62,7 +62,7 @@ public class RecyclerRentListAdapter extends RecyclerView.Adapter<RecyclerRentLi
         return arrayList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView MonthName, AssociateRoomName, RentAmount;
         CardView item_card_view;
         TextView listCount;

@@ -61,7 +61,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private PrefManager prefManager;
     private Tools tools;
     private CustomAdManager customAdManager;
-    private ActionBarDrawerToggle actionBarDrawerToggle;
     private AppAnalytics appAnalytics;
 
     @Override
@@ -118,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     //region drawer toggle
     private void setupDrawerToggle(){
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this, activityMainBinding.myDrawerLayout, activityMainBinding.toolBar, R.string.app_name, R.string.app_name);
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, activityMainBinding.myDrawerLayout, activityMainBinding.toolBar, R.string.app_name, R.string.app_name);
         activityMainBinding.myDrawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
     }

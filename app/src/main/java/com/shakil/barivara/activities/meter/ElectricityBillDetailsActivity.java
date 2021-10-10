@@ -38,7 +38,6 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
     private int AssociateMeterId = 0 , AssociateRoomId = 0;
     private FirebaseCrudHelper firebaseCrudHelper;
     private ArrayList<String> roomNames, meterNames;
-    private ArrayAdapter<String> roomNameSpinnerAdapter, meterNameSpinnerAdapter;
     private Validation validation;
     private Tools tools;
     private SpinnerData spinnerData;
@@ -272,7 +271,7 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
 
     //region set meter spinner adapter
     private void setMeterAdapter(){
-        meterNameSpinnerAdapter = new ArrayAdapter<>(ElectricityBillDetailsActivity.this, R.layout.spinner_drop, meterNames);
+        ArrayAdapter<String> meterNameSpinnerAdapter = new ArrayAdapter<>(ElectricityBillDetailsActivity.this, R.layout.spinner_drop, meterNames);
         meterNameSpinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
         activityMeterCostDetailsBinding.MeterId.setAdapter(meterNameSpinnerAdapter);
     }
@@ -280,7 +279,7 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
 
     //region set room spinner adapter
     private void setRoomAdapter(){
-        roomNameSpinnerAdapter = new ArrayAdapter<>(ElectricityBillDetailsActivity.this, R.layout.spinner_drop, roomNames);
+        ArrayAdapter<String> roomNameSpinnerAdapter = new ArrayAdapter<>(ElectricityBillDetailsActivity.this, R.layout.spinner_drop, roomNames);
         roomNameSpinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
         activityMeterCostDetailsBinding.RoomId.setAdapter(roomNameSpinnerAdapter);
     }

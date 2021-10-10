@@ -27,7 +27,6 @@ import java.util.ArrayList;
 
 public class RentListActivity extends AppCompatActivity {
     private ActivityRentListBinding activityRentListBinding;
-    private RecyclerRentListAdapter recyclerMeterListAdapter;
     private ArrayList<Rent> rentList;
     private TextView noDataTXT;
     private FirebaseCrudHelper firebaseCrudHelper;
@@ -159,7 +158,7 @@ public class RentListActivity extends AppCompatActivity {
 
     //region set recycler adapter
     private void setRecyclerAdapter(){
-        recyclerMeterListAdapter = new RecyclerRentListAdapter(rentList);
+        RecyclerRentListAdapter recyclerMeterListAdapter = new RecyclerRentListAdapter(rentList);
         activityRentListBinding.mRecylerView.setLayoutManager(new LinearLayoutManager(this));
         activityRentListBinding.mRecylerView.setAdapter(recyclerMeterListAdapter);
         recyclerMeterListAdapter.notifyDataSetChanged();

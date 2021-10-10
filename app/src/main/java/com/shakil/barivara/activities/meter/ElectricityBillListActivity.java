@@ -27,7 +27,6 @@ import java.util.ArrayList;
 
 public class ElectricityBillListActivity extends AppCompatActivity {
     private ActivityElectricityBillListBinding activityMeterCostListBinding;
-    private RecyclerElectricityBillListAdapter recyclerBillListAdapter;
     private ArrayList<ElectricityBill> electricityBills;
     private TextView noDataTXT;
     private FirebaseCrudHelper firebaseCrudHelper;
@@ -159,7 +158,7 @@ public class ElectricityBillListActivity extends AppCompatActivity {
 
     //region set recycler adapter
     private void setRecyclerAdapter(){
-        recyclerBillListAdapter = new RecyclerElectricityBillListAdapter(electricityBills);
+        RecyclerElectricityBillListAdapter recyclerBillListAdapter = new RecyclerElectricityBillListAdapter(electricityBills);
         activityMeterCostListBinding.mRecylerView.setLayoutManager(new LinearLayoutManager(this));
         activityMeterCostListBinding.mRecylerView.setAdapter(recyclerBillListAdapter);
         recyclerBillListAdapter.notifyDataSetChanged();

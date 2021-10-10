@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Validation {
-    Map<String, String[]> validationMap = new HashMap<String, String[]>();
+    Map<String, String[]> validationMap;
     String[] _msg;
     private final Context context;
 
@@ -51,7 +51,7 @@ public class Validation {
         for (Map.Entry<String, String[]> entry : validationMap.entrySet()) {
 
             //region edit text empty validation
-            if (entry.getKey() == "EditText") {
+            if (entry.getKey().equals("EditText")) {
                 int iMsg = 0;
                 for (String controlName : entry.getValue()) {
                     int resID = context.getResources().getIdentifier(controlName, "id", context.getPackageName());
@@ -80,7 +80,7 @@ public class Validation {
             //endregion
 
             //region single checkbox validation
-            if (entry.getKey() == "CheckBox") {
+            if (entry.getKey().equals("CheckBox")) {
                 String[] val = entry.getValue();
                 boolean isChecked = false;
                 for (int i = 1; i <= Integer.parseInt(val[1]); i++) {
@@ -100,7 +100,7 @@ public class Validation {
             //endregion
 
             //region spinner validation
-            if (entry.getKey() == "Spinner") {
+            if (entry.getKey().equals("Spinner")) {
                 for (String controlName : entry.getValue()) {
                     String viewName = controlName;
                     if (controlName.contains("-")) {
@@ -131,7 +131,7 @@ public class Validation {
             //endregion
 
             //region radio button validation
-            if (entry.getKey() == "RadioButton") {
+            if (entry.getKey().equals("RadioButton")) {
                 String[] val = entry.getValue();
                 boolean isChecked = false;
                 for (int i = 1; i <= Integer.parseInt(val[1]); i++) {

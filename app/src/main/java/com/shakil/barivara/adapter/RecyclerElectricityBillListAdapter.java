@@ -84,7 +84,7 @@ public class RecyclerElectricityBillListAdapter extends RecyclerView.Adapter<Rec
         return arrayList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView MeterId, RoomId, TotalBill;
         CardView item_card_view;
         ImageView DeleteFromCart;

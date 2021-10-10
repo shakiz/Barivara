@@ -15,11 +15,19 @@
       },
       "oauth_client": [
         {
-          "client_id": "216403585373-jj9cvnacn0mqog316qk4fjoitgldsqh2.apps.googleusercontent.com",
+          "client_id": "216403585373-f6p64prl3i83bq931ik81mfrpj11e5gi.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.shakil.barivara",
             "certificate_hash": "c3334ddc73fa85c87203a9a93977057738dd8264"
+          }
+        },
+        {
+          "client_id": "216403585373-ofnqong5om8obv2qe6mpsac66itprt8a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shakil.barivara",
+            "certificate_hash": "91a29974eb5752d41f772801206480b2f27acc97"
           }
         },
         {

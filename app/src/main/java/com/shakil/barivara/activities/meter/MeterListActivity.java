@@ -27,7 +27,6 @@ import java.util.ArrayList;
 
 public class MeterListActivity extends AppCompatActivity {
     private ActivityMeterListBinding activityMeterListBinding;
-    private RecyclerMeterListAdapter recyclerMeterListAdapter;
     private ArrayList<Meter> meterList;
     private TextView noDataTXT;
     private FirebaseCrudHelper firebaseCrudHelper;
@@ -125,7 +124,7 @@ public class MeterListActivity extends AppCompatActivity {
 
     //region recycler adapter
     private void setRecyclerAdapter(){
-        recyclerMeterListAdapter = new RecyclerMeterListAdapter(meterList);
+        RecyclerMeterListAdapter recyclerMeterListAdapter = new RecyclerMeterListAdapter(meterList);
         activityMeterListBinding.mRecylerView.setLayoutManager(new LinearLayoutManager(this));
         activityMeterListBinding.mRecylerView.setAdapter(recyclerMeterListAdapter);
         recyclerMeterListAdapter.notifyDataSetChanged();

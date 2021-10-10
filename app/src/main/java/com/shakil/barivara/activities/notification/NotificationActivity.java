@@ -24,7 +24,6 @@ import java.util.Iterator;
 
 public class NotificationActivity extends AppCompatActivity {
     private ActivityNotificationBinding activityNotificationBinding;
-    private NotificationRecyclerAdapter notificationRecyclerAdapter;
     private ArrayList<Notification> notificationList;
     private FirebaseCrudHelper firebaseCrudHelper;
     private UX ux;
@@ -100,7 +99,7 @@ public class NotificationActivity extends AppCompatActivity {
                     iter.remove();
             }
         }
-        notificationRecyclerAdapter = new NotificationRecyclerAdapter(notificationList);
+        NotificationRecyclerAdapter notificationRecyclerAdapter = new NotificationRecyclerAdapter(notificationList);
         activityNotificationBinding.mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         activityNotificationBinding.mRecyclerView.setAdapter(notificationRecyclerAdapter);
         notificationRecyclerAdapter.notifyDataSetChanged();

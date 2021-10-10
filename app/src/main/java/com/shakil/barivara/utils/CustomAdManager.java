@@ -13,7 +13,7 @@ import com.google.android.gms.ads.initialization.OnInitializationCompleteListene
 
 public class CustomAdManager {
     private AdView adView;
-    private Context context;
+    private final Context context;
 
     public CustomAdManager(AdView adView, Context context) {
         this.adView = adView;

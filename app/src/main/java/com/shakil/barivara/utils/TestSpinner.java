@@ -13,7 +13,7 @@ import java.util.HashMap;
 public class TestSpinner {
     Spinner spinner;
     Context context;
-    HashMap<String, TestSpinnerData[]> spinnerValueMap = new HashMap<>();
+    HashMap<String, TestSpinnerData[]> spinnerValueMap;
 
     public TestSpinner(Context context, HashMap<String, TestSpinnerData[]> spinnerValueMap) {
         this.context = context;

@@ -15,7 +15,7 @@ import com.shakil.barivara.model.note.Note;
 import java.util.ArrayList;
 
 public class NoteRecyclerAdapter extends RecyclerView.Adapter<NoteRecyclerAdapter.ViewHolder> {
-    private ArrayList<Note> allNotes = new ArrayList<>();
+    private ArrayList<Note> allNotes;
 
     public NoteRecyclerAdapter(ArrayList<Note> allNotes) {
         this.allNotes = allNotes;
@@ -59,7 +59,7 @@ public class NoteRecyclerAdapter extends RecyclerView.Adapter<NoteRecyclerAdapte
         else return 0;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView Title,Date,Description;
         CardView cardItemLayout;
         public ViewHolder(@NonNull View itemView) {

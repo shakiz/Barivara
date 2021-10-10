@@ -42,7 +42,7 @@ public class NotificationRecyclerAdapter extends RecyclerView.Adapter<Notificati
         return notifications.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         RelativeLayout item_card_view;
         TextView DateTime, Title, Message;
         ImageView SeenStatus;

@@ -24,7 +24,6 @@ import java.util.ArrayList;
 
 public class NoteListActivity extends AppCompatActivity {
     private ActivityNoteListBinding activityNoteListBinding;
-    private NoteRecyclerAdapter noteRecyclerAdapter;
     private ArrayList<Note> noteList;
     private LinearLayout LayoutNoNotes;
     private FirebaseCrudHelper firebaseCrudHelper;
@@ -106,7 +105,7 @@ public class NoteListActivity extends AppCompatActivity {
 
 
     private void setRecyclerAdapter() {
-        noteRecyclerAdapter = new NoteRecyclerAdapter(noteList);
+        NoteRecyclerAdapter noteRecyclerAdapter = new NoteRecyclerAdapter(noteList);
         activityNoteListBinding.mRecyclerViewNote.setLayoutManager(new GridLayoutManager(this, 2));
         activityNoteListBinding.mRecyclerViewNote.setAdapter(noteRecyclerAdapter);
         noteRecyclerAdapter.notifyDataSetChanged();

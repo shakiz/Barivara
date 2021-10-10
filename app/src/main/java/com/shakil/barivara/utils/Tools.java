@@ -9,9 +9,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Typeface;
 import android.graphics.pdf.PdfDocument;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -40,9 +38,7 @@ import com.shakil.barivara.activities.onboard.WelcomeActivity;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.Date;
-import java.util.UUID;
 import java.util.regex.Matcher;
 
 import static com.shakil.barivara.utils.Constants.REQUEST_CALL_CODE;
@@ -59,7 +55,7 @@ import static com.shakil.barivara.utils.Constants.mUserMobile;
 
 public class Tools {
     private final Context context;
-    private PrefManager prefManager;
+    private final PrefManager prefManager;
 
     public Tools(Context context, View view) {
         this.context = context;

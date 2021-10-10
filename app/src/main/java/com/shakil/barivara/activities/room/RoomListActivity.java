@@ -28,7 +28,6 @@ import java.util.ArrayList;
 
 public class RoomListActivity extends AppCompatActivity {
     private ActivityRoomListBinding activityRoomListBinding;
-    private RecyclerRoomListAdapter recyclerRoomListAdapter;
     private TextView noDataTXT;
     private ArrayList<Room> roomList;
     private FirebaseCrudHelper firebaseCrudHelper;
@@ -162,7 +161,7 @@ public class RoomListActivity extends AppCompatActivity {
 
     //region set recycler adapter
     private void setRecyclerAdapter(){
-        recyclerRoomListAdapter = new RecyclerRoomListAdapter(roomList);
+        RecyclerRoomListAdapter recyclerRoomListAdapter = new RecyclerRoomListAdapter(roomList);
         activityRoomListBinding.mRecylerView.setLayoutManager(new LinearLayoutManager(this));
         activityRoomListBinding.mRecylerView.setAdapter(recyclerRoomListAdapter);
         recyclerRoomListAdapter.notifyDataSetChanged();

@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.shakil.barivara.R;
 import com.shakil.barivara.model.drawer.DrawerItem;
-import com.shakil.barivara.model.meter.ElectricityBill;
 
 import java.util.ArrayList;
 
@@ -62,7 +61,7 @@ public class RecyclerNavDrawerAdapter extends RecyclerView.Adapter<RecyclerNavDr
         return arrayList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView title;
         ImageView icon;
         CardView item_card_view;

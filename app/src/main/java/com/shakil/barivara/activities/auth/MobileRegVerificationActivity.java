@@ -90,7 +90,7 @@ public class MobileRegVerificationActivity extends AppCompatActivity {
         if (getIntent().getStringExtra("mobile") != null) {
             mobileNumber = getIntent().getStringExtra("mobile");
             if (tools.hasConnection()) {
-                Toast.makeText(this, getString(R.string.please_wait)+"/n"+getString(R.string.we_are_verifying_you), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.please_wait)+"\n"+getString(R.string.we_are_verifying_you), Toast.LENGTH_SHORT).show();
                 sendVerificationCode(mobileNumber);
             } else {
                 Snackbar snackbar = Snackbar.make(findViewById(R.id.parent), getString(R.string.no_internet_title), Snackbar.LENGTH_LONG);
@@ -120,7 +120,7 @@ public class MobileRegVerificationActivity extends AppCompatActivity {
                             @Override
                             public void onVerificationFailed(FirebaseException e) {
                                 Log.i(Constants.TAG+":onVerificationFailed","Error::"+e.getMessage());
-                                Toast.makeText(MobileRegVerificationActivity.this, getString(R.string.code_verification_failed)+"/"+getString(R.string.try_again), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MobileRegVerificationActivity.this, getString(R.string.code_verification_failed)+"\n"+getString(R.string.try_again), Toast.LENGTH_SHORT).show();
                             }
                             @Override
                             public void onCodeSent(String s, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
@@ -142,10 +142,15 @@ public class MobileRegVerificationActivity extends AppCompatActivity {
     private void verifyVerificationCode(String code) {
         if (tools.hasConnection()) {
             Log.i(Constants.TAG+":verifyVerificationCode","Code:"+code);
-            //creating the credential
-            PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, code);
-            //signing the user
-            loginWithMobile(credential);
+            try{
+                //creating the credential
+                PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, code);
+                //signing the user
+                loginWithMobile(credential);
+            }
+            catch (Exception e){
+                Log.i(Constants.TAG+":verifyVerificationCode",e.getMessage());
+            }
         }
         else{
             Snackbar snackbar = Snackbar.make(findViewById(R.id.parent), getString(R.string.no_internet_title), Snackbar.LENGTH_LONG);
@@ -168,7 +173,6 @@ public class MobileRegVerificationActivity extends AppCompatActivity {
                             Toast.makeText(MobileRegVerificationActivity.this, getString(R.string.login_succcessful), Toast.LENGTH_SHORT).show();
                             //verification successful we will start the profile activity
                             Intent intent = new Intent(MobileRegVerificationActivity.this, MainActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
                         } else {
                             Log.i(Constants.TAG+":loginWithMobile","Failed");
@@ -176,16 +180,9 @@ public class MobileRegVerificationActivity extends AppCompatActivity {
                             //verification unsuccessful.. display an error message
                             String message = getString(R.string.login_unsucccessful);
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-                                message = getString(R.string.invalid_code_entered);
+                                message = "\n"+getString(R.string.invalid_code_entered);
                             }
-                            Snackbar snackbar = Snackbar.make(findViewById(R.id.parent), message, Snackbar.LENGTH_LONG);
-                            snackbar.setAction("Dismiss", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-
-                                }
-                            });
-                            snackbar.show();
+                            Toast.makeText(MobileRegVerificationActivity.this, message, Toast.LENGTH_LONG).show();
                         }
                     }
                 });

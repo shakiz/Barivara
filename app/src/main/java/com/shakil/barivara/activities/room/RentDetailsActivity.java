@@ -34,7 +34,6 @@ public class RentDetailsActivity extends AppCompatActivity {
     private String MonthStr = "", YearName = "", AssociateRoomStr = "";
     private FirebaseCrudHelper firebaseCrudHelper;
     private ArrayList<String> roomNames;
-    private ArrayAdapter<String> roomNameSpinnerAdapter;
     private Validation validation;
     private Tools tools;
     private final Map<String, String[]> hashMap = new HashMap();
@@ -200,7 +199,7 @@ public class RentDetailsActivity extends AppCompatActivity {
 
     //region set spinner adapter
     private void setRoomSpinner(){
-        roomNameSpinnerAdapter = new ArrayAdapter<>(RentDetailsActivity.this, R.layout.spinner_drop, roomNames);
+        ArrayAdapter<String> roomNameSpinnerAdapter = new ArrayAdapter<>(RentDetailsActivity.this, R.layout.spinner_drop, roomNames);
         roomNameSpinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
         activityNewRentDetailsBinding.AssociateRoomId.setAdapter(roomNameSpinnerAdapter);
     }

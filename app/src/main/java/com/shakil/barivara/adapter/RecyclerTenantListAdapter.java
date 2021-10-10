@@ -23,8 +23,6 @@ import com.shakil.barivara.R;
 import com.shakil.barivara.model.tenant.Tenant;
 import com.shakil.barivara.utils.Tools;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
 public class RecyclerTenantListAdapter extends RecyclerView.Adapter<RecyclerTenantListAdapter.ViewHolder> {
@@ -114,7 +112,7 @@ public class RecyclerTenantListAdapter extends RecyclerView.Adapter<RecyclerTena
         return arrayList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView TenantName, StartingMonth, AssociateRoom, IsActive;
         CardView item_card_view;
         LinearLayout callLayout, messageLayout;
