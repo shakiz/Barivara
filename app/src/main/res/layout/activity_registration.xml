@@ -31,116 +31,6 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="16dp"
-                android:focusable="true"
-                android:text="@string/register_with"
-                android:textColor="@color/md_green_800"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:background="@drawable/rectangle_background_filled_with_border"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:weightSum="2">
-
-                <RelativeLayout
-                    android:id="@+id/mobileLayout"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:elevation="4dp"
-                    android:translationZ="2dp"
-                    android:paddingTop="4dp"
-                    android:paddingBottom="4dp"
-                    android:layout_marginBottom="4dp"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginTop="4dp"
-                    android:background="@drawable/rectangle_background_filled_gender"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:id="@+id/MobileIcon"
-                        android:layout_width="18dp"
-                        android:layout_height="32dp"
-                        android:layout_centerVertical="true"
-                        android:layout_centerHorizontal="true"
-                        android:src="@drawable/ic_call_white"/>
-
-                    <TextView
-                        android:id="@+id/Mobile"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@id/MobileIcon"
-                        android:layout_marginLeft="4dp"
-                        android:layout_gravity="center"
-                        android:text="@string/mobile"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:gravity="center"
-                        android:layout_centerVertical="true"
-                        android:layout_centerHorizontal="true"
-                        android:textSize="16sp"
-                        android:textColor="@color/md_white_1000"/>
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/emailIdLayout"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:elevation="4dp"
-                    android:translationZ="2dp"
-                    android:paddingTop="4dp"
-                    android:paddingBottom="4dp"
-                    android:layout_marginBottom="4dp"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    android:layout_marginTop="4dp"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:id="@+id/EmailIcon"
-                        android:layout_width="18dp"
-                        android:layout_height="32dp"
-                        android:layout_centerVertical="true"
-                        android:layout_centerHorizontal="true"
-                        android:src="@drawable/ic_email_green"/>
-
-                    <TextView
-                        android:id="@+id/EmailId"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@id/EmailIcon"
-                        android:layout_marginLeft="4dp"
-                        android:layout_gravity="center"
-                        android:text="@string/email"
-                        android:gravity="center"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:layout_centerVertical="true"
-                        android:layout_centerHorizontal="true"
-                        android:textSize="16sp"
-                        android:textColor="@color/md_green_600"/>
-
-                </RelativeLayout>
-
-            </LinearLayout>
-
             <LinearLayout
                 android:id="@+id/mainEmailRegistrationLayout"
                 android:layout_width="match_parent"
@@ -151,7 +41,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:orientation="vertical"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:paddingBottom="8dp">
 
                 <RelativeLayout
@@ -264,56 +154,6 @@
                     android:text="@string/password_must_be_six_character"
                     android:textColor="@color/md_green_800"
                     android:textSize="12sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/mainMobileRegistrationLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="16dp"
-                android:layout_marginTop="16dp"
-                android:orientation="horizontal"
-                android:weightSum="1">
-
-                <EditText
-                    android:layout_width="0dp"
-                    android:layout_height="48dp"
-                    android:layout_weight=".2"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginBottom="4dp"
-                    android:scrollbarSize="16sp"
-                    android:focusable="false"
-                    android:gravity="center"
-                    android:text="@string/bd_mobile_code"
-                    android:padding="4dp"
-                    android:background="@drawable/profile_text_bg"
-                    android:textColor="@color/md_grey_700"
-                    android:textSize="14sp" />
-
-                <EditText
-                    android:id="@+id/mobileNumber"
-                    android:layout_width="0dp"
-                    android:layout_weight=".8"
-                    android:layout_height="48dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginBottom="4dp"
-                    android:gravity="center_vertical"
-                    android:background="@drawable/profile_text_bg"
-                    android:hint="@string/mobile_number_with_digit_hint"
-                    android:inputType="numberSigned"
-                    android:padding="8dp"
-                    android:maxLength="11"
-                    android:textColor="@color/md_grey_700"
-                    android:textColorHighlight="@color/md_grey_700"
-                    android:textColorHint="@color/md_grey_700"
-                    android:textSize="14sp" />
 
             </LinearLayout>
 
