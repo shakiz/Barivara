@@ -16,15 +16,15 @@
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="244dp"
+                android:layout_height="224dp"
                 android:src="@drawable/registration" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
+                android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginRight="24dp"
+                android:layout_marginRight="16dp"
                 android:focusable="true"
                 android:text="@string/registration_here"
                 android:textColor="@color/md_green_800"
@@ -34,9 +34,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
+                android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginRight="24dp"
+                android:layout_marginRight="16dp"
                 android:focusable="true"
                 android:text="@string/register_with"
                 android:textColor="@color/md_green_800"
@@ -47,8 +47,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="40dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:background="@drawable/rectangle_background_filled_with_border"
                 android:layout_gravity="center"
                 android:gravity="center"
@@ -87,6 +87,8 @@
                         android:layout_marginLeft="4dp"
                         android:layout_gravity="center"
                         android:text="@string/mobile"
+                        android:ellipsize="end"
+                        android:maxLines="1"
                         android:gravity="center"
                         android:layout_centerVertical="true"
                         android:layout_centerHorizontal="true"
@@ -128,6 +130,8 @@
                         android:layout_gravity="center"
                         android:text="@string/email"
                         android:gravity="center"
+                        android:ellipsize="end"
+                        android:maxLines="1"
                         android:layout_centerVertical="true"
                         android:layout_centerHorizontal="true"
                         android:textSize="16sp"
@@ -155,9 +159,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
-                    android:layout_marginRight="16dp"
                     android:clickable="false"
                     android:gravity="center">
 
@@ -165,8 +167,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="52dp"
                         android:layout_below="@+id/emailAddressText"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
                         android:background="@drawable/profile_text_bg"
                         android:orientation="horizontal"
                         android:padding="4dp">
@@ -210,9 +210,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
-                    android:layout_marginRight="16dp"
                     android:clickable="false"
                     android:gravity="center">
 
@@ -220,8 +218,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="52dp"
                         android:layout_below="@+id/passwordText"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
                         android:background="@drawable/profile_text_bg"
                         android:orientation="horizontal"
                         android:padding="4dp">
@@ -278,8 +274,6 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="16dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginLeft="24dp"
-                android:layout_marginRight="24dp"
                 android:orientation="horizontal"
                 android:weightSum="1">
 

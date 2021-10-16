@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "216403585373-frv29ubve7dspukv03kd9sbbtr4i0bm1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shakil.barivara",
+            "certificate_hash": "522f44483f357400217430fc1626017407ee81ab"
+          }
+        },
+        {
           "client_id": "216403585373-ofnqong5om8obv2qe6mpsac66itprt8a.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

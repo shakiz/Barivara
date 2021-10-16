@@ -7,6 +7,11 @@
         android:icon="@drawable/ic_invoice"/>
 
     <item
+        android:id="@+id/menu_change_password"
+        android:title="@string/change_password"
+        android:icon="@drawable/ic_key"/>
+
+    <item
         android:id="@+id/menu_settings"
         android:title="@string/settings"
         android:icon="@drawable/ic_settings_black_24dp"/>

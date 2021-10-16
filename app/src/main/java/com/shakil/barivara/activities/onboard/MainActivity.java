@@ -24,6 +24,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.shakil.barivara.R;
+import com.shakil.barivara.activities.auth.ForgotPasswordActivity;
 import com.shakil.barivara.activities.auth.LoginActivity;
 import com.shakil.barivara.activities.dashboard.DashboardActivity;
 import com.shakil.barivara.activities.generatebill.GenerateBillActivity;
@@ -255,6 +256,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.menu_settings:
                 appAnalytics.registerEvent("settings", appAnalytics.setData("settings","Settings Activity Launched"));
                 startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+                break;
+            case R.id.menu_change_password:
+                appAnalytics.registerEvent("changePassword", appAnalytics.setData("changePassword","Change Password Activity Launched"));
+                startActivity(new Intent(MainActivity.this, ForgotPasswordActivity.class));
                 break;
             case R.id.menu_note:
                 appAnalytics.registerEvent("note", appAnalytics.setData("note","Note Activity Launched"));
