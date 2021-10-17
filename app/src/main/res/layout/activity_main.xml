@@ -124,6 +124,7 @@
                                     android:weightSum="3">
 
                                     <androidx.cardview.widget.CardView
+                                        android:id="@+id/totalRoomFlatLayout"
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
@@ -153,7 +154,7 @@
                                                 android:padding="2dp"
                                                 android:text="@string/total_rooms"
                                                 android:textColor="@color/md_grey_800"
-                                                android:textSize="16sp" />
+                                                android:textSize="14sp" />
 
                                             <TextView
                                                 android:id="@+id/totalRooms"
@@ -178,6 +179,7 @@
                                     </androidx.cardview.widget.CardView>
 
                                     <androidx.cardview.widget.CardView
+                                        android:id="@+id/totalMeterLayout"
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="8dp"
@@ -207,7 +209,7 @@
                                                 android:layout_gravity="center"
                                                 android:gravity="center"
                                                 android:textColor="@color/md_grey_800"
-                                                android:textSize="16sp" />
+                                                android:textSize="14sp" />
 
                                             <TextView
                                                 android:id="@+id/totalMeters"
@@ -231,6 +233,7 @@
                                     </androidx.cardview.widget.CardView>
 
                                     <androidx.cardview.widget.CardView
+                                        android:id="@+id/totalTenantLayout"
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
@@ -260,7 +263,7 @@
                                                 android:layout_gravity="center"
                                                 android:gravity="center"
                                                 android:textColor="@color/md_grey_800"
-                                                android:textSize="16sp" />
+                                                android:textSize="14sp" />
 
                                             <TextView
                                                 android:id="@+id/totalTenants"

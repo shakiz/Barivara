@@ -380,4 +380,5 @@
     <string name="we_are_verifying_you">আমরা আপনাকে যাচাই করছি</string>
     <string name="bd_mobile_code">+88</string>
     <string name="mobile_number_with_digit_hint">মোবাইল নম্বর (শুধুমাত্র 11 ডিজিট)</string>
+    <string name="about_us">About Us</string>
 </resources>

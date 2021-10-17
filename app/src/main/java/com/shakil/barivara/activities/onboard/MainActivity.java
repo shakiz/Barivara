@@ -34,6 +34,7 @@ import com.shakil.barivara.activities.note.NoteListActivity;
 import com.shakil.barivara.activities.notification.NotificationActivity;
 import com.shakil.barivara.activities.room.RentListActivity;
 import com.shakil.barivara.activities.room.RoomListActivity;
+import com.shakil.barivara.activities.settings.AboutUsActivity;
 import com.shakil.barivara.activities.settings.SettingsActivity;
 import com.shakil.barivara.activities.tenant.TenantListActivity;
 import com.shakil.barivara.activities.tutorial.TutorialActivity;
@@ -131,6 +132,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //endregion
         //region for ad
         customAdManager.generateAd();
+        //endregion
+
+        //region total layouts click listeners
+        activityMainBinding.totalRoomFlatLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, RoomListActivity.class));
+            }
+        });
+        activityMainBinding.totalMeterLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, MeterListActivity.class));
+            }
+        });
+        activityMainBinding.totalTenantLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, TenantListActivity.class));
+            }
+        });
         //endregion
 
         //region Update App ViewCount
@@ -272,6 +294,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.menu_tutorial:
                 appAnalytics.registerEvent("tutorial", appAnalytics.setData("tutorial","Tutorial Activity Launched"));
                 startActivity(new Intent(MainActivity.this, TutorialActivity.class));
+                break;
+            case R.id.menu_about_us:
+                appAnalytics.registerEvent("about_us", appAnalytics.setData("about_us","About Us Launched"));
+                startActivity(new Intent(MainActivity.this, AboutUsActivity.class));
                 break;
             case R.id.menu_rate_us:
                 appAnalytics.registerEvent("rate_us", appAnalytics.setData("rate_us","Rate Us Launched"));

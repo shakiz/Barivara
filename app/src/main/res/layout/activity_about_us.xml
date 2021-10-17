@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:id="@+id/parent_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusable="true"
+        android:background="@color/md_white_1000"
+        android:focusableInTouchMode="true">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:id="@+id/app_bar">
+
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tool_bar"
+                app:navigationIcon="?attr/homeAsUpIndicator"
+                style="@style/TextAppearance.Widget.Event.Toolbar.Title"
+                app:title="@string/about_us"
+                app:titleTextColor="@color/md_grey_800">
+
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_below="@id/app_bar"
+            android:id="@+id/scrollView"
+            android:fillViewport="true"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/mainLayout"
+                android:layout_margin="12dp"
+                android:orientation="vertical">
+
+
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </RelativeLayout>
+
+</layout>

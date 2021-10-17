@@ -66,8 +66,11 @@ dependencies {
     //google admob
     implementation 'com.google.android.gms:play-services-ads:19.3.0'
 
-    //fore reCaptcha verification browser
+    //for reCaptcha verification browser
     implementation "androidx.browser:browser:1.2.0"
+
+    //toast library
+    implementation 'com.github.GrenderG:Toasty:1.5.2'
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

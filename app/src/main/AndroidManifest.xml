@@ -25,6 +25,11 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".activities.settings.AboutUsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
             android:name=".activities.auth.MobileRegVerificationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeNoActionBar"
