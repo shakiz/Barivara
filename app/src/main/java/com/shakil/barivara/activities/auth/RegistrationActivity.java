@@ -85,15 +85,15 @@ public class RegistrationActivity extends AppCompatActivity {
                             if (activityBinding.password.getText().toString().length() >= 6) {
                                 registerWithEmailPass();
                             } else {
-                                Toasty.warning(RegistrationActivity.this, getString(R.string.password_must_be_six_character), Toast.LENGTH_SHORT, true).show();
+                                Toasty.warning(RegistrationActivity.this, getString(R.string.password_must_be_six_character), Toast.LENGTH_LONG, true).show();
                             }
                         } else {
-                            Toasty.warning(RegistrationActivity.this, getString(R.string.not_a_valid_email_address), Toast.LENGTH_SHORT, true).show();
+                            Toasty.warning(RegistrationActivity.this, getString(R.string.not_a_valid_email_address), Toast.LENGTH_LONG, true).show();
                         }
                         //endregion
                     }
                 } else {
-                    Toasty.warning(RegistrationActivity.this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT, true).show();
+                    Toasty.warning(RegistrationActivity.this, getString(R.string.no_internet_title), Toast.LENGTH_LONG, true).show();
                 }
             }
         });
@@ -110,13 +110,13 @@ public class RegistrationActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     Log.i(Constants.TAG + ":onComplete", getString(R.string.registration_succcessful));
-                    Toasty.success(RegistrationActivity.this, getString(R.string.registration_succcessful), Toast.LENGTH_SHORT, true).show();
+                    Toasty.success(RegistrationActivity.this, getString(R.string.registration_succcessful), Toast.LENGTH_LONG, true).show();
                     startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
                 } else {
                     if (task.getException().getMessage().equals(getString(R.string.firebase_user_exists_exception))) {
-                        Toasty.error(RegistrationActivity.this, getString(R.string.user_already_exists), Toast.LENGTH_SHORT, true).show();
+                        Toasty.error(RegistrationActivity.this, getString(R.string.user_already_exists), Toast.LENGTH_LONG, true).show();
                     } else {
-                        Toasty.error(RegistrationActivity.this, getString(R.string.registration_unsucccessful), Toast.LENGTH_SHORT, true).show();
+                        Toasty.error(RegistrationActivity.this, getString(R.string.registration_unsucccessful), Toast.LENGTH_LONG, true).show();
                     }
                     Log.i(Constants.TAG + ":onComplete", getString(R.string.registration_unsucccessful));
                 }

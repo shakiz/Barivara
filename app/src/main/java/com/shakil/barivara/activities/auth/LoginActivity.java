@@ -115,15 +115,22 @@ public class LoginActivity extends AppCompatActivity {
                                 loginWithEmail();
                             }
                             else{
-                                Toasty.warning(LoginActivity.this, getString(R.string.not_a_valid_email_address), Toast.LENGTH_SHORT, true).show();
+                                Toasty.warning(LoginActivity.this, getString(R.string.not_a_valid_email_address), Toast.LENGTH_LONG, true).show();
                             }
                         } else if (loginWithStr.equals(getString(R.string.mobile))){
-                            loginWithMobile();
+                            //region check for mobile number validation and do register
+                            if (tools.isValidMobile(activityBinding.mobileNumber.getText().toString())){
+                                loginWithMobile();
+                            }
+                            else{
+                                Toasty.warning(LoginActivity.this, getString(R.string.not_a_valid_mobile_number), Toast.LENGTH_LONG, true).show();
+                            }
+                            //endregion
                         }
                         //endregion
                     }
                     else{
-                        Toasty.warning(LoginActivity.this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT, true).show();
+                        Toasty.warning(LoginActivity.this, getString(R.string.no_internet_title), Toast.LENGTH_LONG, true).show();
                     }
                 }
             }
@@ -148,7 +155,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
                     Log.i(Constants.TAG+":onComplete",getString(R.string.login_succcessful));
-                    Toasty.success(LoginActivity.this, getString(R.string.login_succcessful), Toast.LENGTH_SHORT, true).show();
+                    Toasty.success(LoginActivity.this, getString(R.string.login_succcessful), Toast.LENGTH_LONG, true).show();
                     //region set pref
                     tools.setLoginPrefs(task);
                     //endregion
@@ -156,13 +163,13 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 else{
                     if (task.getException().getMessage().equals(getString(R.string.firebase_password_not_valid_exception))){
-                        Toasty.error(LoginActivity.this, getString(R.string.wrong_password), Toast.LENGTH_SHORT, true).show();
+                        Toasty.error(LoginActivity.this, getString(R.string.wrong_password), Toast.LENGTH_LONG, true).show();
                     }
                     else if (task.getException().getMessage().equals(getString(R.string.firebase_no_user_exception))){
-                        Toasty.error(LoginActivity.this, getString(R.string.email_was_not_found_in_our_database), Toast.LENGTH_SHORT, true).show();
+                        Toasty.error(LoginActivity.this, getString(R.string.email_was_not_found_in_our_database), Toast.LENGTH_LONG, true).show();
                     }
                     else {
-                        Toasty.error(LoginActivity.this, getString(R.string.login_unsucccessful), Toast.LENGTH_SHORT, true).show();
+                        Toasty.error(LoginActivity.this, getString(R.string.login_unsucccessful), Toast.LENGTH_LONG, true).show();
                     }
                     Log.i(Constants.TAG+":onComplete",getString(R.string.login_unsucccessful));
                 }

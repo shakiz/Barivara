@@ -69,16 +69,16 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
                                         Log.i(Constants.TAG, "Reset pass mail sent.");
-                                        Toasty.info(ForgotPasswordActivity.this, getString(R.string.email_sent), Toast.LENGTH_SHORT, true).show();
+                                        Toasty.info(ForgotPasswordActivity.this, getString(R.string.email_sent), Toast.LENGTH_LONG, true).show();
                                         activityForgotPasswordBinding.changePasswordLayout.setVisibility(View.GONE);
                                         activityForgotPasswordBinding.afterChangePasswordLayout.setVisibility(View.VISIBLE);
                                     } else {
                                         Log.i(Constants.TAG, "Reset pass error : "+task.isSuccessful());
                                         if (task.getException().getMessage().equals(getString(R.string.firebase_no_user_exception))){
-                                            Toasty.error(ForgotPasswordActivity.this, getString(R.string.email_was_not_found_in_our_database), Toast.LENGTH_SHORT, true).show();
+                                            Toasty.error(ForgotPasswordActivity.this, getString(R.string.email_was_not_found_in_our_database), Toast.LENGTH_LONG, true).show();
                                         }
                                         else{
-                                            Toasty.error(ForgotPasswordActivity.this, getString(R.string.failed_to_sent_reset_email), Toast.LENGTH_SHORT, true).show();
+                                            Toasty.error(ForgotPasswordActivity.this, getString(R.string.failed_to_sent_reset_email), Toast.LENGTH_LONG, true).show();
                                         }
                                         activityForgotPasswordBinding.changePasswordLayout.setVisibility(View.VISIBLE);
                                         activityForgotPasswordBinding.afterChangePasswordLayout.setVisibility(View.GONE);

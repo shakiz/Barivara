@@ -69,7 +69,7 @@ public class MobileRegVerificationActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (!TextUtils.isEmpty(activityBinding.verificationCode.getText().toString())){
                     if (activityBinding.verificationCode.getText().toString().length() < 6){
-                        Toasty.error(MobileRegVerificationActivity.this, getString(R.string.not_valid_otp_or_code), Toast.LENGTH_SHORT, true).show();
+                        Toasty.error(MobileRegVerificationActivity.this, getString(R.string.not_valid_otp_or_code), Toast.LENGTH_LONG, true).show();
                     }
                     else{
                         //verifying the code entered manually
@@ -91,7 +91,7 @@ public class MobileRegVerificationActivity extends AppCompatActivity {
         if (getIntent().getStringExtra("mobile") != null) {
             mobileNumber = getIntent().getStringExtra("mobile");
             if (tools.hasConnection()) {
-                Toasty.info(this, getString(R.string.please_wait)+"\n"+getString(R.string.we_are_verifying_you), Toast.LENGTH_SHORT, true).show();
+                Toasty.info(this, getString(R.string.please_wait)+"\n"+getString(R.string.we_are_verifying_you), Toast.LENGTH_LONG, true).show();
                 sendVerificationCode(mobileNumber);
             } else {
                 Snackbar snackbar = Snackbar.make(findViewById(R.id.parent), getString(R.string.no_internet_title), Snackbar.LENGTH_LONG);
@@ -121,12 +121,12 @@ public class MobileRegVerificationActivity extends AppCompatActivity {
                             @Override
                             public void onVerificationFailed(FirebaseException e) {
                                 Log.i(Constants.TAG+":onVerificationFailed","Error::"+e.getMessage());
-                                Toasty.error(MobileRegVerificationActivity.this, getString(R.string.code_verification_failed)+"\n"+getString(R.string.try_again), Toast.LENGTH_SHORT, true).show();
+                                Toasty.error(MobileRegVerificationActivity.this, getString(R.string.code_verification_failed)+"\n"+getString(R.string.try_again), Toast.LENGTH_LONG, true).show();
                             }
                             @Override
                             public void onCodeSent(String s, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
                                 Log.i(Constants.TAG+":onCodeSent","Verification ID::"+s);
-                                Toasty.info(MobileRegVerificationActivity.this,  getString(R.string.code_sent_please_check), Toast.LENGTH_SHORT, true).show();
+                                Toasty.info(MobileRegVerificationActivity.this,  getString(R.string.code_sent_please_check), Toast.LENGTH_LONG, true).show();
                                 super.onCodeSent(s, forceResendingToken);
                                 //storing the verification id that is sent to the user
                                 mVerificationId = s;
@@ -171,7 +171,7 @@ public class MobileRegVerificationActivity extends AppCompatActivity {
                             Log.i(Constants.TAG+":loginWithMobile","Success");
                             tools.setLoginPrefs(task);
                             ux.removeLoadingView();
-                            Toasty.success(MobileRegVerificationActivity.this, getString(R.string.login_succcessful), Toast.LENGTH_SHORT, true).show();
+                            Toasty.success(MobileRegVerificationActivity.this, getString(R.string.login_succcessful), Toast.LENGTH_LONG, true).show();
                             //verification successful we will start the profile activity
                             Intent intent = new Intent(MobileRegVerificationActivity.this, MainActivity.class);
                             startActivity(intent);
@@ -183,7 +183,7 @@ public class MobileRegVerificationActivity extends AppCompatActivity {
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                                 message = "\n"+getString(R.string.invalid_code_entered);
                             }
-                            Toasty.error(MobileRegVerificationActivity.this, message, Toast.LENGTH_SHORT, true).show();
+                            Toasty.error(MobileRegVerificationActivity.this, message, Toast.LENGTH_LONG, true).show();
                         }
                     }
                 });
