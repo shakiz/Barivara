@@ -382,4 +382,15 @@
     <string name="bd_mobile_code">+88</string>
     <string name="mobile_number_with_digit_hint">Mobile Number (11 Digit Only)</string>
     <string name="about_us">About Us</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="for_any_query_and_regular_updates">For any query and regular updates follow our page or contact us by message or email.</string>
+    <string name="who_am_i">Who am I?</string>
+    <string name="about_me_text">I am Sakhawat Hossain. I am wokring as a Software Engineer in Save The Children Bangladesh. I have several years of experience working with mobile technologies. If you have any business queries contact with me by the following ways.</string>
+    <string name="contact_with_me">Contact With Me</string>
+    <string name="other_applications_services">Other applications/services</string>
+    <string name="other_applications_services_details">Beside this application I have developed couple of application which are available in play store. You can give it a try, they are attached below.</string>
+    <string name="sagor_konna_details">Sagarakanya - This application is designed to make it easy for those who come to visit Kuakata to get all the information. This application is absolutely ad free.</string>
+    <string name="git_lib_details">Git Lib is developed with a good motive to provide the developers with trending GitHub libraries or open-source resources.</string>
+    <string name="sagor_konna">সাগরকন্যা</string>
+    <string name="git_lib">Git Lib</string>
 </resources>

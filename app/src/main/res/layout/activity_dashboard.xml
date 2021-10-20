@@ -41,6 +41,11 @@
                 android:layout_marginRight="16dp"
                 android:orientation="vertical">
 
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="224dp"
+                    android:src="@drawable/dashboard_image"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -107,7 +112,7 @@
                                     android:layout_height="match_parent"
                                     android:gravity="center"
                                     android:textStyle="bold"
-                                    android:textSize="20sp"
+                                    android:textSize="24sp"
                                     android:textColor="@color/md_amber_900"
                                     android:text="0"/>
 
@@ -174,7 +179,7 @@
                                     android:textStyle="bold"
                                     android:gravity="center"
                                     android:layout_marginLeft="4dp"
-                                    android:textSize="20sp"
+                                    android:textSize="24sp"
                                     android:textColor="@color/md_purple_900"
                                     android:text="@string/zero"/>
 
@@ -253,7 +258,7 @@
                                     android:layout_marginLeft="4dp"
                                     android:gravity="center"
                                     android:textStyle="bold"
-                                    android:textSize="20sp"
+                                    android:textSize="24sp"
                                     android:textColor="@color/md_amber_900"
                                     android:text="0"/>
 
@@ -321,7 +326,7 @@
                                     android:layout_height="match_parent"
                                     android:layout_marginLeft="4dp"
                                     android:gravity="center"
-                                    android:textSize="20sp"
+                                    android:textSize="24sp"
                                     android:textStyle="bold"
                                     android:textColor="@color/md_red_400"
                                     android:text="@string/zero"/>
