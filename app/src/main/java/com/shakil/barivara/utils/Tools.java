@@ -41,6 +41,8 @@ import java.io.FileOutputStream;
 import java.util.Date;
 import java.util.regex.Matcher;
 
+import es.dmoral.toasty.Toasty;
+
 import static com.shakil.barivara.utils.Constants.REQUEST_CALL_CODE;
 import static com.shakil.barivara.utils.Constants.TAG;
 import static com.shakil.barivara.utils.Constants.VALID_EMAIL_ADDRESS_REGEX;
@@ -307,6 +309,37 @@ public class Tools {
             prefManager.set(mUserEmail, task.getResult().getUser().getEmail());
             prefManager.set(mUserMobile, task.getResult().getUser().getPhoneNumber());
         }
+    }
+    //endregion
+
+    //region launch app by package name
+    public void launchAppByPackageName(String appPackageName){
+        try {
+            Toasty.info(context,context.getString(R.string.redirecting_to_play_store), Toasty.LENGTH_LONG).show();
+            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+        } catch (android.content.ActivityNotFoundException anfe) {
+            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+        }
+    }
+    //endregion
+
+    //region launch url
+    public void launchUrl(String url){
+        if (!url.contains("https")){
+            url = "https://"+url;
+        }
+        Uri uri = Uri.parse(url);
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        context.startActivity(intent);
+    }
+    //endregion
+
+    //region launch gmail
+    public void launchGmail(){
+        Intent emailIntent = new Intent(Intent.ACTION_VIEW, Uri.fromParts(
+                "mailto", "shakil.play335@gmail.com", null));
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "This is my subject text");
+        context.startActivity(Intent.createChooser(emailIntent, null));
     }
     //endregion
 }

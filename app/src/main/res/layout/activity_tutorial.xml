@@ -14,38 +14,45 @@
             android:layout_marginTop="8dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight=".85"/>
+            android:layout_weight=".9"/>
 
         <LinearLayout
             android:id="@+id/view_pager_bottom"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight=".15"
-            android:orientation="vertical">
+            android:layout_weight=".1"
+            android:weightSum="1"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:id="@+id/layoutDots"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_width="0dp"
+                android:layout_weight=".6"
+                android:layout_height="36dp"
                 android:gravity="center"
-                android:layout_marginBottom="16dp"
+                android:layout_marginRight="4dp"
                 android:layout_gravity="center"
                 android:orientation="horizontal">
             </LinearLayout>
 
             <Button
                 android:id="@+id/btn_next"
-                android:layout_width="116dp"
-                android:layout_height="35dp"
+                android:layout_width="0dp"
+                android:layout_weight=".4"
+                android:layout_height="36dp"
                 android:layout_gravity="center"
                 android:gravity="center"
+                android:layout_marginLeft="4dp"
                 android:text="@string/next"
                 android:textSize="14sp"
                 android:foreground="?android:attr/selectableItemBackground"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/button_shape_round_corner"
                 android:textAllCaps="true"
-                android:textColor="@android:color/white" />
+                android:background="@color/transparent"
+                android:textColor="@color/md_green_800" />
 
         </LinearLayout>
 

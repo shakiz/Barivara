@@ -388,8 +388,10 @@
     <string name="contact_with_me">Contact With Me</string>
     <string name="other_applications_services">Other applications/services</string>
     <string name="other_applications_services_details">Beside this application I have developed couple of application which are available in play store. You can give it a try, they are attached below.</string>
-    <string name="sagor_konna_details">সাগরকন্যা - এই এপ্লিকেশন টি কুয়াকাটা তে যারা ঘুরতে আসবেন তাদের যাতে করে সব তথ্য সহজে পাওয়া যাই সেই চিন্তা করেই বানানো হয়েছে।এই এপ্লিকেশন টি একদম এড ফ্রি ।</string>
+    <string name="sagor_konna_details">সাগরকন্যা (কুয়াকাটা) - এই এপ্লিকেশন টি কুয়াকাটা তে যারা ঘুরতে আসবেন তাদের যাতে করে সব তথ্য সহজে পাওয়া যাই সেই চিন্তা করেই বানানো হয়েছে।এই এপ্লিকেশন টি একদম এড ফ্রি ।</string>
     <string name="git_lib_details">Git Lib একটি ভাল উদ্দেশ্য নিয়ে ডেভেলপারদের ট্রেন্ডিং গিটহাব লাইব্রেরি বা ওপেন সোর্স রিসোর্স সরবরাহ করার জন্য তৈরি করা হয়েছে।</string>
     <string name="sagor_konna">সাগরকন্যা</string>
     <string name="git_lib">Git Lib</string>
+    <string name="redirecting_to_play_store">Redirecting to play store</string>
+    <string name="opening_facebook">Opening Facebook</string>
 </resources>

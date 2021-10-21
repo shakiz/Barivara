@@ -234,7 +234,7 @@
                                 android:weightSum="2">
 
                                 <androidx.cardview.widget.CardView
-                                    android:id="@+id/giLibApp"
+                                    android:id="@+id/sagorKonnyaApp"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="8dp"
@@ -290,7 +290,7 @@
                                 </androidx.cardview.widget.CardView>
 
                                 <androidx.cardview.widget.CardView
-                                    android:id="@+id/sagorKonnaApp"
+                                    android:id="@+id/giLibApp"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="32dp"

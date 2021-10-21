@@ -389,8 +389,10 @@
     <string name="contact_with_me">Contact With Me</string>
     <string name="other_applications_services">Other applications/services</string>
     <string name="other_applications_services_details">Beside this application I have developed couple of application which are available in play store. You can give it a try, they are attached below.</string>
-    <string name="sagor_konna_details">Sagarakanya - This application is designed to make it easy for those who come to visit Kuakata to get all the information. This application is absolutely ad free.</string>
+    <string name="sagor_konna_details">Sagarakanya (Kuakata) - This application is designed to make it easy for those who come to visit Kuakata to get all the information. This application is absolutely ad free.</string>
     <string name="git_lib_details">Git Lib is developed with a good motive to provide the developers with trending GitHub libraries or open-source resources.</string>
     <string name="sagor_konna">সাগরকন্যা</string>
     <string name="git_lib">Git Lib</string>
+    <string name="redirecting_to_play_store">Redirecting to play store</string>
+    <string name="opening_facebook">Opening Facebook</string>
 </resources>
