@@ -171,6 +171,19 @@ public class RoomListActivity extends AppCompatActivity {
                 startActivity(new Intent(RoomListActivity.this, RoomActivity.class).putExtra("room", room));
             }
         });
+        recyclerRoomListAdapter.onEditListener(new RecyclerRoomListAdapter.onEditListener() {
+            @Override
+            public void onEdit(Room room) {
+                startActivity(new Intent(RoomListActivity.this, RoomActivity.class).putExtra("room", room));
+            }
+        });
+        recyclerRoomListAdapter.onDeleteListener(new RecyclerRoomListAdapter.onDeleteListener() {
+            @Override
+            public void onDelete(Room room) {
+                firebaseCrudHelper.deleteRecord("room",room.getFireBaseKey());
+                setData();
+            }
+        });
     }
     //endregion
 

@@ -3,6 +3,7 @@ package com.shakil.barivara.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,7 +23,7 @@ public class RecyclerRoomListAdapter extends RecyclerView.Adapter<RecyclerRoomLi
         this.arrayList = arrayList;
     }
 
-    //region click adapter
+    //region edit, delete and item click interfaces
     public onItemClickListener onItemClickListener;
     public interface onItemClickListener{
         void onItemClick(Room room);
@@ -30,6 +31,22 @@ public class RecyclerRoomListAdapter extends RecyclerView.Adapter<RecyclerRoomLi
 
     public void setOnItemClickListener(onItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
+    }
+    public onEditListener onEditListener;
+    public interface onEditListener{
+        void onEdit(Room room);
+    }
+
+    public void onEditListener(onEditListener onEditListener) {
+        this.onEditListener = onEditListener;
+    }
+    public onDeleteListener onDeleteListener;
+    public interface onDeleteListener{
+        void onDelete(Room room);
+    }
+
+    public void onDeleteListener(onDeleteListener onDeleteListener) {
+        this.onDeleteListener = onDeleteListener;
     }
     //endregion
 
@@ -55,6 +72,21 @@ public class RecyclerRoomListAdapter extends RecyclerView.Adapter<RecyclerRoomLi
             }
         });
         holder.listCount.setText(""+(position+1));
+
+        //region edit and delete click listeners
+        holder.editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onEditListener != null) onEditListener.onEdit(room);
+            }
+        });
+        holder.deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onDeleteListener != null) onDeleteListener.onDelete(room);
+            }
+        });
+        //endregion
     }
 
     @Override
@@ -66,12 +98,15 @@ public class RecyclerRoomListAdapter extends RecyclerView.Adapter<RecyclerRoomLi
         TextView roomName, ownerName, startDate;
         CardView item_card_view;
         TextView listCount;
+        Button editButton, deleteButton;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             roomName = itemView.findViewById(R.id.roomName);
             ownerName = itemView.findViewById(R.id.roomOwner);
             startDate = itemView.findViewById(R.id.startMonth);
             listCount = itemView.findViewById(R.id.listCount);
+            editButton = itemView.findViewById(R.id.editButton);
+            deleteButton = itemView.findViewById(R.id.deleteButton);
             item_card_view = itemView.findViewById(R.id.item_card_view);
         }
     }

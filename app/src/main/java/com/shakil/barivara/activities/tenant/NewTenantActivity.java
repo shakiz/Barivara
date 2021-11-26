@@ -21,6 +21,7 @@ import com.shakil.barivara.databinding.ActivityAddNewTenantBinding;
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.tenant.Tenant;
 import com.shakil.barivara.utils.Constants;
+import com.shakil.barivara.utils.CustomAdManager;
 import com.shakil.barivara.utils.SpinnerAdapter;
 import com.shakil.barivara.utils.SpinnerData;
 import com.shakil.barivara.utils.Tools;
@@ -48,6 +49,7 @@ public class NewTenantActivity extends AppCompatActivity {
     private final Map<String, String[]> hashMap = new HashMap();
     private UtilsForAll utilsForAll;
     private Tools tools;
+    private CustomAdManager customAdManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +116,7 @@ public class NewTenantActivity extends AppCompatActivity {
 
     ///region init all objects
     private void init() {
+        customAdManager = new CustomAdManager(activityAddNewTenantBinding.adView, this);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
         utilsForAll = new UtilsForAll(this);
         validation = new Validation(this, hashMap);
@@ -126,6 +129,10 @@ public class NewTenantActivity extends AppCompatActivity {
 
     //region bind UI with components
     private void bindUiWithComponents(){
+        //region for ad
+        customAdManager.generateAd();
+        //endregion
+
         //region validation
         validation.setEditTextIsNotEmpty(new String[]{"TenantName", "NID", "MobileNo"},
                 new String[]{getString(R.string.tenant_amount_validation), getString(R.string.nid_number_hint)

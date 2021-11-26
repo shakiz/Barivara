@@ -3,6 +3,7 @@ package com.shakil.barivara.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,6 +32,22 @@ public class RecyclerMeterListAdapter extends RecyclerView.Adapter<RecyclerMeter
     public void setOnItemClickListener(onItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
+    public onEditListener onEditListener;
+    public interface onEditListener{
+        void onEdit(Meter meter);
+    }
+
+    public void onEditListener(onEditListener onEditListener) {
+        this.onEditListener = onEditListener;
+    }
+    public onDeleteListener onDeleteListener;
+    public interface onDeleteListener{
+        void onDelete(Meter meter);
+    }
+
+    public void onDeleteListener(onDeleteListener onDeleteListener) {
+        this.onDeleteListener = onDeleteListener;
+    }
     //endregion
 
     @NonNull
@@ -55,6 +72,21 @@ public class RecyclerMeterListAdapter extends RecyclerView.Adapter<RecyclerMeter
             }
         });
         holder.listCount.setText(""+(position+1));
+
+        //region edit and delete click listeners
+        holder.editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onEditListener != null) onEditListener.onEdit(meter);
+            }
+        });
+        holder.deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onDeleteListener != null) onDeleteListener.onDelete(meter);
+            }
+        });
+        //endregion
     }
 
     @Override
@@ -66,12 +98,15 @@ public class RecyclerMeterListAdapter extends RecyclerView.Adapter<RecyclerMeter
         TextView meterName, roomName, meterType;
         CardView item_card_view;
         TextView listCount;
+        Button editButton, deleteButton;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             meterName = itemView.findViewById(R.id.meterName);
             roomName = itemView.findViewById(R.id.roomName);
             meterType = itemView.findViewById(R.id.meterType);
             listCount = itemView.findViewById(R.id.listCount);
+            editButton = itemView.findViewById(R.id.editButton);
+            deleteButton = itemView.findViewById(R.id.deleteButton);
             item_card_view = itemView.findViewById(R.id.item_card_view);
         }
     }

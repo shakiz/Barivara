@@ -16,9 +16,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.shakil.barivara.R;
 import com.shakil.barivara.activities.onboard.MainActivity;
 import com.shakil.barivara.adapter.RecyclerRentListAdapter;
+import com.shakil.barivara.adapter.RecyclerRoomListAdapter;
 import com.shakil.barivara.databinding.ActivityRentListBinding;
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.room.Rent;
+import com.shakil.barivara.model.room.Room;
 import com.shakil.barivara.utils.FilterManager;
 import com.shakil.barivara.utils.Tools;
 import com.shakil.barivara.utils.UX;
@@ -166,6 +168,19 @@ public class RentListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(Rent rent) {
                 startActivity(new Intent(RentListActivity.this, RentDetailsActivity.class).putExtra("rent", rent));
+            }
+        });
+        recyclerMeterListAdapter.onEditListener(new RecyclerRentListAdapter.onEditListener() {
+            @Override
+            public void onEdit(Rent rent) {
+                startActivity(new Intent(RentListActivity.this, RentDetailsActivity.class).putExtra("rent", rent));
+            }
+        });
+        recyclerMeterListAdapter.onDeleteListener(new RecyclerRentListAdapter.onDeleteListener() {
+            @Override
+            public void onDelete(Rent rent) {
+                firebaseCrudHelper.deleteRecord("rent",rent.getFireBaseKey());
+                setData();
             }
         });
     }

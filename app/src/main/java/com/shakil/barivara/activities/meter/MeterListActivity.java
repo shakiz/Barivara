@@ -15,10 +15,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.shakil.barivara.R;
 import com.shakil.barivara.activities.onboard.MainActivity;
+import com.shakil.barivara.activities.room.RoomActivity;
+import com.shakil.barivara.activities.room.RoomListActivity;
 import com.shakil.barivara.adapter.RecyclerMeterListAdapter;
+import com.shakil.barivara.adapter.RecyclerRoomListAdapter;
 import com.shakil.barivara.databinding.ActivityMeterListBinding;
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.meter.Meter;
+import com.shakil.barivara.model.room.Room;
 import com.shakil.barivara.utils.FilterManager;
 import com.shakil.barivara.utils.Tools;
 import com.shakil.barivara.utils.UX;
@@ -132,6 +136,20 @@ public class MeterListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(Meter meter) {
                 startActivity(new Intent(MeterListActivity.this, NewMeterActivity.class).putExtra("meter", meter));
+            }
+        });
+
+        recyclerMeterListAdapter.onEditListener(new RecyclerMeterListAdapter.onEditListener() {
+            @Override
+            public void onEdit(Meter meter) {
+                startActivity(new Intent(MeterListActivity.this, NewMeterActivity.class).putExtra("meter", meter));
+            }
+        });
+        recyclerMeterListAdapter.onDeleteListener(new RecyclerMeterListAdapter.onDeleteListener() {
+            @Override
+            public void onDelete(Meter meter) {
+                firebaseCrudHelper.deleteRecord("meter",meter.getFireBaseKey());
+                setData();
             }
         });
     }

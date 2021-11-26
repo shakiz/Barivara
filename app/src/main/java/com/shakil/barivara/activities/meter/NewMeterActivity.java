@@ -99,10 +99,6 @@ public class NewMeterActivity extends AppCompatActivity {
                 public void onFetched(ArrayList<String> nameList) {
                     roomNames = nameList;
                     setRoomNameSpinner();
-
-                    if (meter.getMeterId() != null){
-                        activityNewMeterBinding.AssociateRoomId.setSelection(meter.getAssociateRoomId(),true);
-                    }
                 }
             });
         } else {

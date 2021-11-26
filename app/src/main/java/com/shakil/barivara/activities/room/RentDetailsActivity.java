@@ -103,10 +103,6 @@ public class RentDetailsActivity extends AppCompatActivity {
                 public void onFetched(ArrayList<String> nameList) {
                     roomNames = nameList;
                     setRoomSpinner();
-
-                    if (rent.getRentId() != null){
-                        activityNewRentDetailsBinding.AssociateRoomId.setSelection(rent.getAssociateRoomId(), true);
-                    }
                 }
             });
         } else {

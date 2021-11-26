@@ -15,9 +15,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.shakil.barivara.R;
 import com.shakil.barivara.activities.onboard.MainActivity;
+import com.shakil.barivara.activities.room.RoomActivity;
+import com.shakil.barivara.activities.room.RoomListActivity;
+import com.shakil.barivara.adapter.RecyclerRoomListAdapter;
 import com.shakil.barivara.adapter.RecyclerTenantListAdapter;
 import com.shakil.barivara.databinding.ActivityTenantListBinding;
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
+import com.shakil.barivara.model.room.Room;
 import com.shakil.barivara.model.tenant.Tenant;
 import com.shakil.barivara.utils.CustomAdManager;
 import com.shakil.barivara.utils.FilterManager;
@@ -170,6 +174,19 @@ public class TenantListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(Tenant tenant) {
                 startActivity(new Intent(TenantListActivity.this, NewTenantActivity.class).putExtra("tenant", tenant));
+            }
+        });
+        recyclerTenantListAdapter.onEditListener(new RecyclerTenantListAdapter.onEditListener() {
+            @Override
+            public void onEdit(Tenant tenant) {
+                startActivity(new Intent(TenantListActivity.this, NewTenantActivity.class).putExtra("tenant", tenant));
+            }
+        });
+        recyclerTenantListAdapter.onDeleteListener(new RecyclerTenantListAdapter.onDeleteListener() {
+            @Override
+            public void onDelete(Tenant tenant) {
+                firebaseCrudHelper.deleteRecord("tenant",tenant.getFireBaseKey());
+                setData();
             }
         });
     }

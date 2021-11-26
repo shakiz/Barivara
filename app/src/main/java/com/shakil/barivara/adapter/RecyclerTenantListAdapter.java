@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +21,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.shakil.barivara.R;
+import com.shakil.barivara.model.room.Room;
 import com.shakil.barivara.model.tenant.Tenant;
 import com.shakil.barivara.utils.Tools;
 
@@ -43,6 +45,22 @@ public class RecyclerTenantListAdapter extends RecyclerView.Adapter<RecyclerTena
 
     public void setOnItemClickListener(onItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
+    }
+    public onEditListener onEditListener;
+    public interface onEditListener{
+        void onEdit(Tenant tenant);
+    }
+
+    public void onEditListener(onEditListener onEditListener) {
+        this.onEditListener = onEditListener;
+    }
+    public onDeleteListener onDeleteListener;
+    public interface onDeleteListener{
+        void onDelete(Tenant tenant);
+    }
+
+    public void onDeleteListener(onDeleteListener onDeleteListener) {
+        this.onDeleteListener = onDeleteListener;
     }
     //endregion
 
@@ -105,6 +123,21 @@ public class RecyclerTenantListAdapter extends RecyclerView.Adapter<RecyclerTena
             }
         }
         //endregion
+
+        //region edit and delete click listeners
+        holder.editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onEditListener != null) onEditListener.onEdit(tenant);
+            }
+        });
+        holder.deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onDeleteListener != null) onDeleteListener.onDelete(tenant);
+            }
+        });
+        //endregion
     }
 
     @Override
@@ -116,6 +149,7 @@ public class RecyclerTenantListAdapter extends RecyclerView.Adapter<RecyclerTena
         TextView TenantName, StartingMonth, AssociateRoom, IsActive;
         CardView item_card_view;
         LinearLayout callLayout, messageLayout;
+        Button editButton, deleteButton;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             TenantName = itemView.findViewById(R.id.TenantName);
@@ -124,6 +158,8 @@ public class RecyclerTenantListAdapter extends RecyclerView.Adapter<RecyclerTena
             callLayout = itemView.findViewById(R.id.callLayout);
             messageLayout = itemView.findViewById(R.id.messageLayout);
             IsActive = itemView.findViewById(R.id.IsActive);
+            editButton = itemView.findViewById(R.id.editButton);
+            deleteButton = itemView.findViewById(R.id.deleteButton);
             item_card_view = itemView.findViewById(R.id.item_card_view);
         }
     }

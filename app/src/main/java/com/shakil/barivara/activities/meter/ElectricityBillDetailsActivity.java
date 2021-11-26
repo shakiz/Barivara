@@ -134,9 +134,6 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
                 public void onFetched(ArrayList<String> nameList) {
                     meterNames = nameList;
                     setMeterAdapter();
-                    if (electricityBill.getBillId() != null) {
-                        activityMeterCostDetailsBinding.MeterId.setSelection(electricityBill.getMeterId(),true);
-                    }
                 }
             });
         } else {
@@ -152,9 +149,6 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
                 public void onFetched(ArrayList<String> nameList) {
                     roomNames = nameList;
                     setRoomAdapter();
-                    if (electricityBill.getBillId() != null) {
-                        activityMeterCostDetailsBinding.RoomId.setSelection(electricityBill.getRoomId(),true);
-                    }
                 }
             });
         } else {

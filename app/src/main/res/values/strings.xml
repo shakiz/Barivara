@@ -395,4 +395,7 @@
     <string name="git_lib">Git Lib</string>
     <string name="redirecting_to_play_store">Redirecting to play store</string>
     <string name="opening_facebook">Opening Facebook</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="no_meter_found">No Meter Found</string>
 </resources>

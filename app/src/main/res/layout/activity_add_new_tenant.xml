@@ -34,6 +34,7 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginBottom="56dp"
             android:layout_below="@id/app_bar"
             android:fillViewport="true">
 
@@ -499,10 +500,23 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_margin="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="32dp"
             android:src="@drawable/ic_action_done"
             app:backgroundTint="@color/md_blue_grey_400"
             app:fabSize="normal" />
+
+        <com.google.android.gms.ads.AdView
+            xmlns:ads="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/adView"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            ads:adSize="BANNER"
+            ads:adUnitId="ca-app-pub-3017517613101119/5605971007"/>
 
     </RelativeLayout>
 

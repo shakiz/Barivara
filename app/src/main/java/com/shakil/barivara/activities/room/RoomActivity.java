@@ -14,6 +14,7 @@ import com.shakil.barivara.R;
 import com.shakil.barivara.databinding.ActivityAddNewRoomBinding;
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.room.Room;
+import com.shakil.barivara.utils.CustomAdManager;
 import com.shakil.barivara.utils.SpinnerAdapter;
 import com.shakil.barivara.utils.SpinnerData;
 import com.shakil.barivara.utils.Tools;
@@ -23,6 +24,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+
+import es.dmoral.toasty.Toasty;
 
 public class RoomActivity extends AppCompatActivity {
     private ActivityAddNewRoomBinding activityAddNewRoomBinding;
@@ -38,6 +41,7 @@ public class RoomActivity extends AppCompatActivity {
     private Validation validation;
     private Tools tools;
     private final Map<String, String[]> hashMap = new HashMap();
+    private CustomAdManager customAdManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +96,10 @@ public class RoomActivity extends AppCompatActivity {
     //endregion
 
     private void bindUIWithComponents() {
+        //region for ad
+        customAdManager.generateAd();
+        //endregion
+
         spinnerAdapter.setSpinnerAdapter(activityAddNewRoomBinding.StartMonthId,this,spinnerData.setMonthData());
 
         //region validation
@@ -126,10 +134,6 @@ public class RoomActivity extends AppCompatActivity {
                 public void onFetched(ArrayList<String> nameList) {
                     tenantNames = nameList;
                     setTenantSpinner();
-
-                    if (room.getRoomId() != null) {
-                        activityAddNewRoomBinding.TenantNameId.setSelection(room.getTenantNameId(), true);
-                    }
                 }
             });
         } else {
@@ -254,6 +258,7 @@ public class RoomActivity extends AppCompatActivity {
 
     //region init all objects
     private void init() {
+        customAdManager = new CustomAdManager(activityAddNewRoomBinding.adView, this);
         spinnerData = new SpinnerData(this);
         spinnerAdapter = new SpinnerAdapter();
         tools = new Tools(this);

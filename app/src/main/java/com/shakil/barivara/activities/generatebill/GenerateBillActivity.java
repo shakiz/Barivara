@@ -24,6 +24,7 @@ import com.shakil.barivara.R;
 import com.shakil.barivara.activities.onboard.MainActivity;
 import com.shakil.barivara.databinding.ActivityGenerateBillBinding;
 import com.shakil.barivara.model.bill.GenerateBill;
+import com.shakil.barivara.utils.CustomAdManager;
 import com.shakil.barivara.utils.SpinnerAdapter;
 import com.shakil.barivara.utils.SpinnerData;
 import com.shakil.barivara.utils.Tools;
@@ -43,6 +44,7 @@ public class GenerateBillActivity extends AppCompatActivity {
     private SpinnerAdapter spinnerAdapter;
     private Tools tools;
     private Dialog dialogBill;
+    private CustomAdManager customAdManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +59,7 @@ public class GenerateBillActivity extends AppCompatActivity {
 
     //region init objects
     private void init() {
+        customAdManager = new CustomAdManager(activityBinding.adView, this);
         validation = new Validation(this, hashMap);
         spinnerData = new SpinnerData(this);
         spinnerAdapter = new SpinnerAdapter();
@@ -66,6 +69,9 @@ public class GenerateBillActivity extends AppCompatActivity {
 
     //region perform all Ui interactions
     private void binUIWithComponents() {
+        //region for ad
+        customAdManager.generateAd();
+        //endregion
 
         //region ask permission
         if ((ContextCompat.checkSelfPermission(GenerateBillActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)

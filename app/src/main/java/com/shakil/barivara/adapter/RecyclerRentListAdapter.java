@@ -3,6 +3,7 @@ package com.shakil.barivara.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.shakil.barivara.R;
 import com.shakil.barivara.model.room.Rent;
+import com.shakil.barivara.model.room.Room;
 
 import java.util.ArrayList;
 
@@ -30,6 +32,22 @@ public class RecyclerRentListAdapter extends RecyclerView.Adapter<RecyclerRentLi
 
     public void setOnItemClickListener(onItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
+    }
+    public onEditListener onEditListener;
+    public interface onEditListener{
+        void onEdit(Rent rent);
+    }
+
+    public void onEditListener(onEditListener onEditListener) {
+        this.onEditListener = onEditListener;
+    }
+    public onDeleteListener onDeleteListener;
+    public interface onDeleteListener{
+        void onDelete(Rent rent);
+    }
+
+    public void onDeleteListener(onDeleteListener onDeleteListener) {
+        this.onDeleteListener = onDeleteListener;
     }
     //endregion
 
@@ -55,6 +73,21 @@ public class RecyclerRentListAdapter extends RecyclerView.Adapter<RecyclerRentLi
             }
         });
         holder.listCount.setText(""+(position+1));
+
+        //region edit and delete click listeners
+        holder.editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onEditListener != null) onEditListener.onEdit(rent);
+            }
+        });
+        holder.deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onDeleteListener != null) onDeleteListener.onDelete(rent);
+            }
+        });
+        //endregion
     }
 
     @Override
@@ -66,12 +99,15 @@ public class RecyclerRentListAdapter extends RecyclerView.Adapter<RecyclerRentLi
         TextView MonthName, AssociateRoomName, RentAmount;
         CardView item_card_view;
         TextView listCount;
+        Button editButton, deleteButton;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             MonthName = itemView.findViewById(R.id.MonthName);
             AssociateRoomName = itemView.findViewById(R.id.AssociateRoomName);
             RentAmount = itemView.findViewById(R.id.RentAmount);
             listCount = itemView.findViewById(R.id.listCount);
+            editButton = itemView.findViewById(R.id.editButton);
+            deleteButton = itemView.findViewById(R.id.deleteButton);
             item_card_view = itemView.findViewById(R.id.item_card_view);
         }
     }
