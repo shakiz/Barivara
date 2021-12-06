@@ -15,13 +15,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.shakil.barivara.R;
 import com.shakil.barivara.activities.onboard.MainActivity;
-import com.shakil.barivara.activities.room.RoomActivity;
-import com.shakil.barivara.activities.room.RoomListActivity;
-import com.shakil.barivara.adapter.RecyclerRoomListAdapter;
 import com.shakil.barivara.adapter.RecyclerTenantListAdapter;
 import com.shakil.barivara.databinding.ActivityTenantListBinding;
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
-import com.shakil.barivara.model.room.Room;
 import com.shakil.barivara.model.tenant.Tenant;
 import com.shakil.barivara.utils.CustomAdManager;
 import com.shakil.barivara.utils.FilterManager;

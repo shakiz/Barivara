@@ -219,7 +219,7 @@
                 android:id="@+id/editDeleteLayout"
                 android:layout_below="@id/detailsLayout"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="56dp"
                 android:gravity="center|right"
                 android:orientation="horizontal">
 
@@ -228,6 +228,8 @@
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
                     android:text="@string/edit"
                     android:background="@drawable/rectangle_green_selected"
                     android:textColor="@color/md_white_1000"
@@ -239,6 +241,9 @@
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginRight="16dp"
                     android:text="@string/delete"
                     android:background="@drawable/rectangle_white"
                     android:textColor="@color/md_red_600"
