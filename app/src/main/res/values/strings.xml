@@ -398,4 +398,5 @@
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="no_meter_found">No Meter Found</string>
+    <string name="my_profile">My Profile</string>
 </resources>

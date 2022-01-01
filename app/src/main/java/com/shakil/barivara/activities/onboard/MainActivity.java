@@ -32,6 +32,7 @@ import com.shakil.barivara.activities.meter.ElectricityBillListActivity;
 import com.shakil.barivara.activities.meter.MeterListActivity;
 import com.shakil.barivara.activities.note.NoteListActivity;
 import com.shakil.barivara.activities.notification.NotificationActivity;
+import com.shakil.barivara.activities.profile.ProfileActivity;
 import com.shakil.barivara.activities.room.RentListActivity;
 import com.shakil.barivara.activities.room.RoomListActivity;
 import com.shakil.barivara.activities.settings.AboutUsActivity;
@@ -277,6 +278,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.menu_generate_bill:
                 appAnalytics.registerEvent("generate_bill", appAnalytics.setData("generate_bill","Generate Bill Activity Launched"));
                 startActivity(new Intent(MainActivity.this, GenerateBillActivity.class));
+                break;
+            case R.id.menu_profile:
+                appAnalytics.registerEvent("profile", appAnalytics.setData("profile","Profile Activity Launched"));
+                startActivity(new Intent(MainActivity.this, ProfileActivity.class));
                 break;
             case R.id.menu_settings:
                 appAnalytics.registerEvent("settings", appAnalytics.setData("settings","Settings Activity Launched"));
