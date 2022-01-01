@@ -38,6 +38,7 @@ import com.shakil.barivara.activities.onboard.WelcomeActivity;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.regex.Matcher;
 
@@ -340,6 +341,18 @@ public class Tools {
                 "mailto", "shakil.play335@gmail.com", null));
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, "This is my subject text");
         context.startActivity(Intent.createChooser(emailIntent, null));
+    }
+    //endregion
+
+    //region check if its first day of the month
+    public boolean isFirstDayOfMonth(Calendar calendar){
+        if (calendar == null) {
+            throw new IllegalArgumentException("Calendar cannot be null.");
+        }
+        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+        Log.i(TAG+"-Current Day","::"+dayOfMonth);
+        //return dayOfMonth == 1;
+        return true;
     }
     //endregion
 }

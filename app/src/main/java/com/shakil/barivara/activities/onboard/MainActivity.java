@@ -52,6 +52,7 @@ import com.shakil.barivara.utils.Tools;
 import com.shakil.barivara.utils.UtilsForAll;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import static com.shakil.barivara.utils.Constants.REQUEST_CALL_CODE;
 import static com.shakil.barivara.utils.Constants.mAppViewCount;
@@ -69,6 +70,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+
+        new Tools(this).isFirstDayOfMonth(Calendar.getInstance());
 
         //region setup toolBar
         activityMainBinding.toolBar.setTitleTextColor(ContextCompat.getColor(this, R.color.md_green_800));

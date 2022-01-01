@@ -159,6 +159,13 @@
             </intent-filter>
         </service>
 
+        <service
+            android:name=".utils.NewMonthAlarmService"
+            android:enabled="true"
+            android:stopWithTask="false"
+            android:exported="false" >
+        </service>
+
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-3017517613101119~4596141661" />
