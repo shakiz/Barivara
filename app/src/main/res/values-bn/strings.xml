@@ -398,4 +398,10 @@
     <string name="delete">Delete</string>
     <string name="no_meter_found">No Meter Found</string>
     <string name="my_profile">My Profile</string>
+    <string name="account_info">Account Info</string>
+    <string name="name">Name</string>
+    <string name="address">Address</string>
+    <string name="dob">Date of Birth</string>
+    <string name="demo_email">user@gmail.com</string>
+    <string name="save">Save</string>
 </resources>
