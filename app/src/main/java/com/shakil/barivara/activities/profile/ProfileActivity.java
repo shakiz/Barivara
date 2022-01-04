@@ -13,7 +13,6 @@ import com.shakil.barivara.databinding.ActivityProfileBinding;
 
 public class ProfileActivity extends AppCompatActivity {
     private ActivityProfileBinding activityBinding;
-    private boolean isEditable = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +44,13 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 activityBinding.Name.setFocusable(true);
-                activityBinding.Mobile.setFocusable(true);
-                activityBinding.Email.setFocusable(true);
                 activityBinding.Address.setFocusable(true);
                 activityBinding.DOB.setFocusable(true);
+                activityBinding.Name.setFocusableInTouchMode(true);
+                activityBinding.Address.setFocusableInTouchMode(true);
+                activityBinding.DOB.setFocusableInTouchMode(true);
                 activityBinding.editIcon.setVisibility(View.GONE);
+                activityBinding.saveCancelLayout.setVisibility(View.VISIBLE);
             }
         });
 
@@ -57,9 +58,8 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 activityBinding.editIcon.setVisibility(View.VISIBLE);
+                activityBinding.saveCancelLayout.setVisibility(View.GONE);
                 activityBinding.Name.setFocusable(false);
-                activityBinding.Mobile.setFocusable(false);
-                activityBinding.Email.setFocusable(false);
                 activityBinding.Address.setFocusable(false);
                 activityBinding.DOB.setFocusable(false);
             }

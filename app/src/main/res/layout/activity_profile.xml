@@ -70,7 +70,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:clickable="true"
-                        android:foreground="?attr/selectableItemBackgroundBorderless"
                         android:gravity="center"
                         android:layout_gravity="bottom"
                         android:layout_marginTop="20dp"
@@ -116,7 +115,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         android:textColor="@color/md_green_800"
                         android:textStyle="bold"
                         android:text="@string/account_info"
@@ -124,8 +123,8 @@
 
                     <ImageView
                         android:id="@+id/editIcon"
-                        android:layout_height="42dp"
-                        android:layout_width="42dp"
+                        android:layout_height="32dp"
+                        android:layout_width="32dp"
                         android:clickable="true"
                         android:foreground="?attr/selectableItemBackgroundBorderless"
                         android:layout_alignParentRight="true"
@@ -144,15 +143,16 @@
 
                     <ImageView
                         android:id="@+id/nameImageView"
-                        android:layout_height="42dp"
-                        android:layout_width="42dp"
+                        android:layout_height="36dp"
+                        android:layout_width="36dp"
+                        android:layout_centerVertical="true"
                         android:src="@drawable/ic_baseline_person_24"
                         app:tint="@color/md_grey_600"/>
 
                     <EditText
                         android:id="@+id/Name"
                         android:layout_width="match_parent"
-                        android:layout_height="48dp"
+                        android:layout_height="42dp"
                         android:gravity="center|left"
                         android:text="@string/name"
                         android:layout_centerVertical="true"
@@ -171,15 +171,16 @@
 
                     <ImageView
                         android:id="@+id/mobileImageView"
-                        android:layout_height="42dp"
-                        android:layout_width="42dp"
+                        android:layout_height="36dp"
+                        android:layout_width="36dp"
+                        android:layout_centerVertical="true"
                         android:src="@drawable/ic_phone"
                         app:tint="@color/md_grey_600"/>
 
                     <EditText
                         android:id="@+id/Mobile"
                         android:layout_width="match_parent"
-                        android:layout_height="48dp"
+                        android:layout_height="42dp"
                         android:gravity="center|left"
                         android:text="@string/mobile"
                         android:layout_centerVertical="true"
@@ -198,15 +199,16 @@
 
                     <ImageView
                         android:id="@+id/emailImageView"
-                        android:layout_height="42dp"
-                        android:layout_width="42dp"
+                        android:layout_height="36dp"
+                        android:layout_width="36dp"
+                        android:layout_centerVertical="true"
                         android:src="@drawable/ic_email_green"
                         app:tint="@color/md_grey_600" />
 
                     <EditText
                         android:id="@+id/Email"
                         android:layout_width="match_parent"
-                        android:layout_height="48dp"
+                        android:layout_height="42dp"
                         android:gravity="center|left"
                         android:text="@string/email"
                         android:layout_centerVertical="true"
@@ -225,15 +227,16 @@
 
                     <ImageView
                         android:id="@+id/addressImageView"
-                        android:layout_height="42dp"
-                        android:layout_width="42dp"
+                        android:layout_height="36dp"
+                        android:layout_width="36dp"
+                        android:layout_centerVertical="true"
                         android:src="@drawable/ic_location"
                         app:tint="@color/md_grey_600" />
 
                     <EditText
                         android:id="@+id/Address"
                         android:layout_width="match_parent"
-                        android:layout_height="48dp"
+                        android:layout_height="42dp"
                         android:gravity="center|left"
                         android:text="@string/address"
                         android:layout_centerVertical="true"
@@ -252,15 +255,16 @@
 
                     <ImageView
                         android:id="@+id/dobImageView"
-                        android:layout_height="42dp"
-                        android:layout_width="42dp"
+                        android:layout_height="36dp"
+                        android:layout_width="36dp"
+                        android:layout_centerVertical="true"
                         android:src="@drawable/ic_date_range"
                         app:tint="@color/md_grey_600" />
 
                     <EditText
                         android:id="@+id/DOB"
                         android:layout_width="match_parent"
-                        android:layout_height="48dp"
+                        android:layout_height="42dp"
                         android:gravity="center|left"
                         android:text="@string/dob"
                         android:layout_centerVertical="true"
@@ -277,8 +281,10 @@
                     android:layout_marginTop="20dp"/>
 
                 <LinearLayout
+                    android:id="@+id/saveCancelLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:layout_marginBottom="20dp"
                     android:orientation="horizontal"
                     android:weightSum="2">
