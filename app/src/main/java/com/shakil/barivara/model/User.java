@@ -1,5 +1,10 @@
 package com.shakil.barivara.model;
 
+import com.google.firebase.database.Exclude;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class User {
     private String ID;
     private String FirebaseKey;
@@ -54,5 +59,16 @@ public class User {
 
     public void setDOB(String DOB) {
         this.DOB = DOB;
+    }
+
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("id", ID);
+        result.put("name", Name);
+        result.put("userName", UserName);
+        result.put("dob", DOB);
+
+        return result;
     }
 }

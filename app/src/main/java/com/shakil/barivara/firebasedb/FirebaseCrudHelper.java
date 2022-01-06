@@ -11,6 +11,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.shakil.barivara.R;
+import com.shakil.barivara.model.User;
 import com.shakil.barivara.model.meter.ElectricityBill;
 import com.shakil.barivara.model.meter.Meter;
 import com.shakil.barivara.model.note.Note;
@@ -83,6 +84,10 @@ public class FirebaseCrudHelper {
             ElectricityBill electricityBill = (ElectricityBill) object;
             postValues = electricityBill.toMap();
         }
+        else if (path.equals("user")){
+            User user = (User) object;
+            postValues = user.toMap();
+        }
         databaseReference.child(firebaseId).updateChildren(postValues);
     }
     //endregion
@@ -91,6 +96,28 @@ public class FirebaseCrudHelper {
     public void deleteRecord(String path, String firebaseId){
         databaseReference = FirebaseDatabase.getInstance().getReference(path).child(prefManager.getString(mUserId)).child(firebaseId);
         databaseReference.removeValue();
+    }
+    //endregion
+
+    //region fetch  meter table data from firebase db
+    public interface onProfileFetch{
+        void onFetch(User user);
+    }
+    public void fetchProfile(String path, onProfileFetch onProfileFetch){
+        ArrayList<Meter> objects = new ArrayList<>();
+        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(prefManager.getString(mUserId));
+        Log.i(Constants.TAG,""+databaseReference.getParent());
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.i(Constants.TAG,""+error.getMessage());
+            }
+        });
     }
     //endregion
 
