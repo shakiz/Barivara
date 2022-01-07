@@ -13,6 +13,18 @@ public class User {
     private String Email;
     private String DOB;
 
+    public User() {
+    }
+
+    public User(String ID, String firebaseKey, String name, String userName, String email, String DOB) {
+        this.ID = ID;
+        FirebaseKey = firebaseKey;
+        Name = name;
+        UserName = userName;
+        Email = email;
+        this.DOB = DOB;
+    }
+
     public String getID() {
         return ID;
     }

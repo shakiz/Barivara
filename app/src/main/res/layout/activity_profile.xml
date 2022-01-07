@@ -151,16 +151,16 @@
 
                     <EditText
                         android:id="@+id/Name"
+                        style="@style/profileDetailsTextMain"
                         android:layout_width="match_parent"
                         android:layout_height="42dp"
-                        android:gravity="center|left"
-                        android:text="@string/name"
                         android:layout_centerVertical="true"
                         android:layout_toRightOf="@id/nameImageView"
-                        android:paddingLeft="8dp"
                         android:background="@drawable/edit_text_back"
                         android:focusable="false"
-                        style="@style/profileDetailsTextMain" />
+                        android:gravity="center|left"
+                        android:paddingLeft="8dp"
+                        android:text="@string/name" />
 
                 </RelativeLayout>
 
@@ -235,16 +235,16 @@
 
                     <EditText
                         android:id="@+id/Address"
+                        style="@style/profileDetailsTextMain"
                         android:layout_width="match_parent"
                         android:layout_height="42dp"
-                        android:gravity="center|left"
-                        android:text="@string/address"
                         android:layout_centerVertical="true"
-                        android:paddingLeft="8dp"
+                        android:layout_toRightOf="@id/addressImageView"
                         android:background="@drawable/edit_text_back"
                         android:focusable="false"
-                        android:layout_toRightOf="@id/addressImageView"
-                        style="@style/profileDetailsTextMain" />
+                        android:gravity="center|left"
+                        android:paddingLeft="8dp"
+                        android:text="@string/address" />
 
                 </RelativeLayout>
 
@@ -263,16 +263,16 @@
 
                     <EditText
                         android:id="@+id/DOB"
+                        style="@style/profileDetailsTextMain"
                         android:layout_width="match_parent"
                         android:layout_height="42dp"
-                        android:gravity="center|left"
-                        android:text="@string/dob"
                         android:layout_centerVertical="true"
-                        android:paddingLeft="8dp"
+                        android:layout_toRightOf="@id/dobImageView"
                         android:background="@drawable/edit_text_back"
                         android:focusable="false"
-                        android:layout_toRightOf="@id/dobImageView"
-                        style="@style/profileDetailsTextMain" />
+                        android:gravity="center|left"
+                        android:paddingLeft="8dp"
+                        android:text="@string/dob" />
 
                 </RelativeLayout>
 

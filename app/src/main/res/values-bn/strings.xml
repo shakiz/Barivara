@@ -404,4 +404,7 @@
     <string name="dob">Date of Birth</string>
     <string name="demo_email">user@gmail.com</string>
     <string name="save">Save</string>
+    <string name="validation_name">Please type your name</string>
+    <string name="validation_address">Please type your address</string>
+    <string name="validation_dob">Please type your birth date</string>
 </resources>
