@@ -81,7 +81,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        activityBinding.save.setOnClickListener(new View.OnClickListener() {
+        activityBinding.saveOrUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (validation.isValid()){

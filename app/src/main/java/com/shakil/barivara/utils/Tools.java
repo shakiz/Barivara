@@ -156,6 +156,39 @@ public class Tools {
     }
     //endregion
 
+    //region logout action
+    public void doPopUpForExitApp(Context context){
+        Button cancel, exit;
+        Dialog dialog = new Dialog(context, android.R.style.Theme_Dialog);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.exit_app_confirmation_layout);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setCanceledOnTouchOutside(true);
+
+        cancel = dialog.findViewById(R.id.cancelButton);
+        exit = dialog.findViewById(R.id.exitButton);
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new UtilsForAll(context).exitApp();
+            }
+        });
+
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        dialog.getWindow().setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        dialog.show();
+    }
+    //endregion
+
     //region clear login pref
     private void clearPrefForLogout(Class to){
         prefManager.set(mAppViewCount, 0);

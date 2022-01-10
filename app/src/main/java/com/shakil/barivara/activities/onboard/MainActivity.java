@@ -322,7 +322,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onBackPressed() {
-        utilsForAll.exitApp();
+        tools.doPopUpForExitApp(this);
     }
     //endregion
 }

@@ -407,4 +407,7 @@
     <string name="validation_name">Please type your name</string>
     <string name="validation_address">Please type your address</string>
     <string name="validation_dob">Please type your birth date</string>
+    <string name="exit_confirmation">Are you sure you want to exit?</string>
+    <string name="exit_app_detail_text">Please come back again to keep track of your record!</string>
+    <string name="exit">Exit</string>
 </resources>

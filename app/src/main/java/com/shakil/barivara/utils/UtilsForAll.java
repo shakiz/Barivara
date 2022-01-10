@@ -25,6 +25,9 @@ public class UtilsForAll {
         this.view = view;
     }
 
+    public UtilsForAll() {
+    }
+
     public UtilsForAll(Context context) {
         this.context = context;
     }
