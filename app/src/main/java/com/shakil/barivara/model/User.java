@@ -10,17 +10,19 @@ public class User {
     private String FirebaseKey;
     private String Name;
     private String UserName;
+    private String Mobile;
     private String Email;
     private String DOB;
 
     public User() {
     }
 
-    public User(String ID, String firebaseKey, String name, String userName, String email, String DOB) {
+    public User(String ID, String firebaseKey, String name, String userName, String mobile, String email, String DOB) {
         this.ID = ID;
         FirebaseKey = firebaseKey;
         Name = name;
         UserName = userName;
+        Mobile = mobile;
         Email = email;
         this.DOB = DOB;
     }
@@ -57,6 +59,14 @@ public class User {
         UserName = userName;
     }
 
+    public String getMobile() {
+        return Mobile;
+    }
+
+    public void setMobile(String mobile) {
+        Mobile = mobile;
+    }
+
     public String getEmail() {
         return Email;
     }
@@ -76,10 +86,11 @@ public class User {
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
-        result.put("id", ID);
         result.put("name", Name);
         result.put("userName", UserName);
-        result.put("dob", DOB);
+        result.put("email", Email);
+        result.put("mobile", Mobile);
+        result.put("dOB", DOB);
 
         return result;
     }

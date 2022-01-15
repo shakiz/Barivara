@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 
 import com.shakil.barivara.R;
 import com.shakil.barivara.activities.onboard.MainActivity;
@@ -16,6 +17,9 @@ import com.shakil.barivara.utils.Validation;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
+
+import es.dmoral.toasty.Toasty;
 
 public class ProfileActivity extends AppCompatActivity {
     private ActivityProfileBinding activityBinding;
@@ -49,12 +53,28 @@ public class ProfileActivity extends AppCompatActivity {
                         ,getString(R.string.validation_dob)});
         //endregion
 
-        activityBinding.backToHome.setOnClickListener(new View.OnClickListener() {
+        //region toolbar back click listener
+        activityBinding.toolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
             }
         });
+        //endregion
+
+        //region load profile details
+        firebaseCrudHelper.fetchProfile("user", new FirebaseCrudHelper.onProfileFetch() {
+            @Override
+            public void onFetch(User user) {
+                if (user != null){
+                    Toasty.info(ProfileActivity.this, "Test").show();
+                }
+                else{
+                    Toasty.info(ProfileActivity.this, "Fetch Error !!!!").show();
+                }
+            }
+        });
+        //endregion
 
         activityBinding.editIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +87,7 @@ public class ProfileActivity extends AppCompatActivity {
                 activityBinding.DOB.setFocusableInTouchMode(true);
                 activityBinding.editIcon.setVisibility(View.GONE);
                 activityBinding.saveCancelLayout.setVisibility(View.VISIBLE);
+                changeEditTextBack(new EditText[]{activityBinding.Name, activityBinding.Address, activityBinding.DOB}, R.drawable.edit_text_back_green);
             }
         });
 
@@ -78,6 +99,7 @@ public class ProfileActivity extends AppCompatActivity {
                 activityBinding.Name.setFocusable(false);
                 activityBinding.Address.setFocusable(false);
                 activityBinding.DOB.setFocusable(false);
+                changeEditTextBack(new EditText[]{activityBinding.Name, activityBinding.Address, activityBinding.DOB}, R.drawable.edit_text_back);
             }
         });
 
@@ -85,11 +107,20 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (validation.isValid()){
-                    User user = new User();
-                    firebaseCrudHelper.update(user, "user", "");
+                    User user = new User(UUID.randomUUID().toString(), "", activityBinding.Name.getText().toString(),
+                            "", activityBinding.Mobile.getText().toString(), activityBinding.Email.getText().toString(), activityBinding.DOB.getText().toString());
+                    firebaseCrudHelper.add(user, "user");
                 }
             }
         });
+    }
+    //endregion
+
+    //region change edit text back
+    private void changeEditTextBack(EditText[] editTexts, int backDrawable){
+        for (EditText editText : editTexts) {
+            editText.setBackgroundResource(backDrawable);
+        }
     }
     //endregion
 

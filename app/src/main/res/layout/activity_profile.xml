@@ -12,85 +12,21 @@
         android:background="@color/profileBackground">
 
         <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/app_bar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fitsSystemWindows="true"
-            android:theme="@style/AppTheme.AppBarOverlay">
+            android:layout_height="48dp"
+            android:id="@+id/app_bar">
 
-            <com.google.android.material.appbar.CollapsingToolbarLayout
-                android:id="@+id/toolbar_layout"
+            <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fitsSystemWindows="true"
-                app:contentScrim="@color/md_green_800"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                app:toolbarId="@+id/toolbar"
-                app:expandedTitleMarginEnd="64dp"
-                app:expandedTitleMarginStart="48dp"
-                app:expandedTitleTextAppearance="@style/TransparentText">
+                android:layout_height="wrap_content"
+                android:id="@+id/tool_bar"
+                app:navigationIcon="?attr/homeAsUpIndicator"
+                style="@style/TextAppearance.Widget.Event.Toolbar.Title"
+                app:title="@string/my_profile"
+                app:titleTextColor="@color/md_grey_800">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical"
-                    android:id="@+id/linearLayout"
-                    android:background="@drawable/profile_bk">
+            </androidx.appcompat.widget.Toolbar>
 
-                    <ImageView
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
-                        android:background="@drawable/circle_border_settings_green"
-                        android:padding="4dp"
-                        android:elevation="8dp"
-                        android:translationZ="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginTop="24dp"
-                        app:tint="@color/md_white_1000"
-                        android:src="@drawable/ic_action_person" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="\@username"
-                        android:textSize="28dp"
-                        android:textStyle="bold"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/demo_email"
-                        android:textSize="14sp"
-                        android:textStyle="bold"/>
-
-                    <RelativeLayout
-                        android:id="@+id/backToHome"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:clickable="true"
-                        android:gravity="center"
-                        android:layout_gravity="bottom"
-                        android:layout_marginTop="20dp"
-                        android:background="@color/profileBackground">
-
-                        <View
-                            android:layout_alignParentTop="true"
-                            android:layout_width="match_parent"
-                            android:layout_height="30dp"
-                            android:background="@drawable/profile_bk"/>
-
-                        <TextView
-                            android:text="Back to\nHome"
-                            android:textColor="@color/md_white_1000"
-                            style="@style/profileStyledBackButton" />
-
-                    </RelativeLayout>
-
-                </LinearLayout>
-
-            </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.core.widget.NestedScrollView
@@ -106,6 +42,19 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="24dp">
+
+                <ImageView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:background="@drawable/circle_border_settings_green"
+                    android:padding="4dp"
+                    android:elevation="4dp"
+                    android:translationZ="2dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp"
+                    app:tint="@color/md_white_1000"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_action_person" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -179,16 +128,16 @@
 
                     <EditText
                         android:id="@+id/Mobile"
+                        style="@style/profileDetailsTextMain"
                         android:layout_width="match_parent"
                         android:layout_height="42dp"
-                        android:gravity="center|left"
-                        android:text="@string/mobile"
                         android:layout_centerVertical="true"
-                        android:paddingLeft="8dp"
+                        android:layout_toRightOf="@id/mobileImageView"
                         android:background="@drawable/edit_text_back"
                         android:focusable="false"
-                        android:layout_toRightOf="@id/mobileImageView"
-                        style="@style/profileDetailsTextMain"/>
+                        android:gravity="center|left"
+                        android:paddingLeft="8dp"
+                        android:text="@string/mobile" />
 
                 </RelativeLayout>
 
@@ -207,16 +156,16 @@
 
                     <EditText
                         android:id="@+id/Email"
+                        style="@style/profileDetailsTextMain"
                         android:layout_width="match_parent"
                         android:layout_height="42dp"
-                        android:gravity="center|left"
-                        android:text="@string/email"
                         android:layout_centerVertical="true"
-                        android:paddingLeft="8dp"
+                        android:layout_toRightOf="@id/emailImageView"
                         android:background="@drawable/edit_text_back"
                         android:focusable="false"
-                        android:layout_toRightOf="@id/emailImageView"
-                        style="@style/profileDetailsTextMain" />
+                        android:gravity="center|left"
+                        android:paddingLeft="8dp"
+                        android:text="@string/email" />
 
                 </RelativeLayout>
 
@@ -284,7 +233,7 @@
                     android:id="@+id/saveCancelLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="16dp"
                     android:orientation="horizontal"
