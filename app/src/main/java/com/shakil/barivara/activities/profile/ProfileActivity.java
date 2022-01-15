@@ -19,8 +19,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import es.dmoral.toasty.Toasty;
-
 public class ProfileActivity extends AppCompatActivity {
     private ActivityProfileBinding activityBinding;
     private Validation validation;
@@ -67,10 +65,8 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onFetch(User user) {
                 if (user != null){
-                    Toasty.info(ProfileActivity.this, "Test").show();
-                }
-                else{
-                    Toasty.info(ProfileActivity.this, "Fetch Error !!!!").show();
+                    if (user.getName() != null && !user.getName().isEmpty()) activityBinding.Name.setText(user.getName());
+                    if (user.getDOB() != null && !user.getDOB().isEmpty()) activityBinding.DOB.setText(user.getDOB());
                 }
             }
         });
@@ -79,14 +75,7 @@ public class ProfileActivity extends AppCompatActivity {
         activityBinding.editIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activityBinding.Name.setFocusable(true);
-                activityBinding.Address.setFocusable(true);
-                activityBinding.DOB.setFocusable(true);
-                activityBinding.Name.setFocusableInTouchMode(true);
-                activityBinding.Address.setFocusableInTouchMode(true);
-                activityBinding.DOB.setFocusableInTouchMode(true);
-                activityBinding.editIcon.setVisibility(View.GONE);
-                activityBinding.saveCancelLayout.setVisibility(View.VISIBLE);
+                changeVisibilityAndFocusable(true, View.GONE, View.VISIBLE, true);
                 changeEditTextBack(new EditText[]{activityBinding.Name, activityBinding.Address, activityBinding.DOB}, R.drawable.edit_text_back_green);
             }
         });
@@ -94,11 +83,7 @@ public class ProfileActivity extends AppCompatActivity {
         activityBinding.cancelEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activityBinding.editIcon.setVisibility(View.VISIBLE);
-                activityBinding.saveCancelLayout.setVisibility(View.GONE);
-                activityBinding.Name.setFocusable(false);
-                activityBinding.Address.setFocusable(false);
-                activityBinding.DOB.setFocusable(false);
+                changeVisibilityAndFocusable(false, View.VISIBLE, View.GONE, false);
                 changeEditTextBack(new EditText[]{activityBinding.Name, activityBinding.Address, activityBinding.DOB}, R.drawable.edit_text_back);
             }
         });
@@ -110,9 +95,33 @@ public class ProfileActivity extends AppCompatActivity {
                     User user = new User(UUID.randomUUID().toString(), "", activityBinding.Name.getText().toString(),
                             "", activityBinding.Mobile.getText().toString(), activityBinding.Email.getText().toString(), activityBinding.DOB.getText().toString());
                     firebaseCrudHelper.add(user, "user");
+                    changeVisibilityAndFocusable(false, View.VISIBLE, View.GONE, false);
+                    changeEditTextBack(new EditText[]{activityBinding.Name, activityBinding.Address, activityBinding.DOB}, R.drawable.edit_text_back);
+                    firebaseCrudHelper.fetchProfile("user", new FirebaseCrudHelper.onProfileFetch() {
+                        @Override
+                        public void onFetch(User user) {
+                            if (user != null){
+                                if (user.getName() != null && !user.getName().isEmpty()) activityBinding.Name.setText(user.getName());
+                                if (user.getDOB() != null && !user.getDOB().isEmpty()) activityBinding.DOB.setText(user.getDOB());
+                            }
+                        }
+                    });
                 }
             }
         });
+    }
+    //endregion
+
+    //region change visibility and editable
+    private void changeVisibilityAndFocusable(boolean editTextVisibility, int editIconVisibility, int saveCancelLayoutVisibility, boolean isFocusable){
+        activityBinding.editIcon.setVisibility(editIconVisibility);
+        activityBinding.saveCancelLayout.setVisibility(saveCancelLayoutVisibility);
+        activityBinding.Name.setFocusable(editTextVisibility);
+        activityBinding.Address.setFocusable(editTextVisibility);
+        activityBinding.DOB.setFocusable(editTextVisibility);
+        activityBinding.Name.setFocusableInTouchMode(isFocusable);
+        activityBinding.Address.setFocusableInTouchMode(isFocusable);
+        activityBinding.DOB.setFocusableInTouchMode(isFocusable);
     }
     //endregion
 

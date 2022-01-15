@@ -104,14 +104,25 @@ public class FirebaseCrudHelper {
         void onFetch(User user);
     }
     public void fetchProfile(String path, onProfileFetch onProfileFetch){
-        ArrayList<Meter> objects = new ArrayList<>();
+        ArrayList<User> objects = new ArrayList<>();
         databaseReference = FirebaseDatabase.getInstance().getReference(path).child(prefManager.getString(mUserId));
         Log.i(Constants.TAG,""+databaseReference.getParent());
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                User user = snapshot.getValue(User.class);
-                onProfileFetch.onFetch(user);
+                if (snapshot.getChildren() != null) {
+                    for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                        User user = dataSnapshot.getValue(User.class);
+                        user.setFirebaseKey(dataSnapshot.getKey());
+                        objects.add(user);
+                        Log.i(Constants.TAG+":fetchProfile",""+user.getFirebaseKey());
+                    }
+                    if (objects != null && objects.size() > 0) {
+                        onProfileFetch.onFetch(objects.get(0));
+                    } else {
+                        onProfileFetch.onFetch(null);
+                    }
+                }
             }
 
             @Override
