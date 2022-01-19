@@ -48,6 +48,7 @@ import com.shakil.barivara.utils.AppAnalytics;
 import com.shakil.barivara.utils.Constants;
 import com.shakil.barivara.utils.CustomAdManager;
 import com.shakil.barivara.utils.LanguageManager;
+import com.shakil.barivara.utils.NewMonthAlarmService;
 import com.shakil.barivara.utils.PrefManager;
 import com.shakil.barivara.utils.Tools;
 import com.shakil.barivara.utils.UtilsForAll;
@@ -72,7 +73,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        new Tools(this).isFirstDayOfMonth(Calendar.getInstance());
+        //region init objects
+        init();
+        //endregion
+
+        if (tools.isFirstDayOfMonth(Calendar.getInstance())){
+            startService(new Intent(MainActivity.this, NewMonthAlarmService.class));
+        }
 
         //region setup toolBar
         activityMainBinding.toolBar.setTitleTextColor(ContextCompat.getColor(this, R.color.md_green_800));
@@ -112,14 +119,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         //endregion
 
-        //region init objects
-        init();
-        //endregion
-
         //region perform all UI interactions
         bindUIWithComponents();
         //endregion
     }
+
+    //region init components
+    private void init() {
+        prefManager = new PrefManager(this);
+        tools = new Tools(this, activityMainBinding.mainLayout);
+        firebaseCrudHelper = new FirebaseCrudHelper(this);
+        utilsForAll = new UtilsForAll(this,activityMainBinding.mainLayout);
+        customAdManager = new CustomAdManager(activityMainBinding.adView, this);
+        appAnalytics = new AppAnalytics(this);
+    }
+    //endregion
 
     //region drawer toggle
     private void setupDrawerToggle(){
@@ -236,17 +250,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
         //endregion
-    }
-    //endregion
-
-    //region init components
-    private void init() {
-        prefManager = new PrefManager(this);
-        tools = new Tools(this, activityMainBinding.mainLayout);
-        firebaseCrudHelper = new FirebaseCrudHelper(this);
-        utilsForAll = new UtilsForAll(this,activityMainBinding.mainLayout);
-        customAdManager = new CustomAdManager(activityMainBinding.adView, this);
-        appAnalytics = new AppAnalytics(this);
     }
     //endregion
 

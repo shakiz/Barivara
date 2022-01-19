@@ -15,6 +15,7 @@ import android.os.IBinder;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
+import com.shakil.barivara.activities.generatebill.GenerateBillActivity;
 import com.shakil.barivara.activities.onboard.MainActivity;
 
 public class NewMonthAlarmService extends Service {
@@ -77,13 +78,13 @@ public class NewMonthAlarmService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         this.handler.post(this.runnableCode);
         createNotificationChannel();
-        Intent notificationIntent = new Intent(this, MainActivity.class);
+        Intent notificationIntent = new Intent(this, GenerateBillActivity.class);
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent,
                 PendingIntent.FLAG_CANCEL_CURRENT);
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentTitle("Notification service")
+                .setContentTitle("New Month Started!!")
                 .setContentIntent(contentIntent)
-                .setContentText("Running...")
+                .setContentText("Generate bill and send via message!!!")
                 .setAutoCancel(false)
                 .setOngoing(true)
                 .build();
