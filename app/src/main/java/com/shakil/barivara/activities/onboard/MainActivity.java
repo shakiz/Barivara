@@ -52,10 +52,13 @@ import com.shakil.barivara.utils.NewMonthAlarmService;
 import com.shakil.barivara.utils.PrefManager;
 import com.shakil.barivara.utils.Tools;
 import com.shakil.barivara.utils.UtilsForAll;
+import com.shakil.barivara.utils.background_job.JobScheduleService;
+import com.shakil.barivara.utils.background_job.JobScheduler;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import static com.shakil.barivara.utils.Constants.IsStartOfMonth;
 import static com.shakil.barivara.utils.Constants.REQUEST_CALL_CODE;
 import static com.shakil.barivara.utils.Constants.mAppViewCount;
 
@@ -67,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Tools tools;
     private CustomAdManager customAdManager;
     private AppAnalytics appAnalytics;
+    public JobScheduler scheduler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,9 +81,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         init();
         //endregion
 
+        //region background notification
         if (tools.isFirstDayOfMonth(Calendar.getInstance())){
             startService(new Intent(MainActivity.this, NewMonthAlarmService.class));
         }
+        if(!scheduler.isWorkScheduled(IsStartOfMonth)){
+            scheduler.periodicJobHourly(JobScheduleService.class, 2, IsStartOfMonth);
+        }
+        //endregion
 
         //region setup toolBar
         activityMainBinding.toolBar.setTitleTextColor(ContextCompat.getColor(this, R.color.md_green_800));
@@ -127,6 +136,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //region init components
     private void init() {
         prefManager = new PrefManager(this);
+        scheduler = new JobScheduler(this);
         tools = new Tools(this, activityMainBinding.mainLayout);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
         utilsForAll = new UtilsForAll(this,activityMainBinding.mainLayout);
