@@ -74,6 +74,8 @@ dependencies {
 
     //toast library
     implementation 'com.github.GrenderG:Toasty:1.5.2'
+    // background job
+    implementation 'androidx.work:work-runtime:2.3.4'
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

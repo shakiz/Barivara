@@ -21,4 +21,6 @@ public class Constants {
     public static final int REQUEST_CALL_CODE = 1111;
     public static final String mLanguageSetup = "LanguageSetup";
     public static final String mOldUser = "OldUser";
+    public static final String mJobName = "JobName";
+    public static final String IsStartOfMonth = "IsStartOfMonth";
 }
