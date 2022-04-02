@@ -18,7 +18,6 @@
         android:roundIcon="@mipmap/ic_launcher_circle"
         android:supportsRtl="true"
         android:theme="@style/AppThemeNoActionBar">
-        <activity android:name=".activities.profile.ProfileActivity"></activity>
         <activity android:name=".activities.onboard.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,6 +25,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activities.profile.ProfileActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".activities.settings.AboutUsActivity"
             android:screenOrientation="portrait"
@@ -160,11 +164,6 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service
-            android:name=".utils.NewMonthAlarmService"
-            android:enabled="true"
-            android:exported="false"
-            android:stopWithTask="false"></service>
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
