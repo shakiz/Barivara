@@ -12,8 +12,8 @@
         android:layout_height="wrap_content"
         android:background="@color/md_white_1000"
         android:clickable="true"
-        card_view:cardElevation="4dp"
-        android:translationZ="2dp"
+        card_view:cardElevation="2dp"
+        android:translationZ="1dp"
         android:foreground="?android:attr/selectableItemBackground"
         app:ignore="NamespaceTypo"
         card_view:cardCornerRadius="8dp"
@@ -215,42 +215,11 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/editDeleteLayout"
+            <include
                 android:layout_below="@id/detailsLayout"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:gravity="center|right"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/editButton"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:text="@string/edit"
-                    android:background="@drawable/rectangle_green_selected"
-                    android:textColor="@color/md_white_1000"
-                    android:clickable="true"
-                    android:foreground="?attr/selectableItemBackgroundBorderless"/>
-
-                <Button
-                    android:id="@+id/deleteButton"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginRight="16dp"
-                    android:text="@string/delete"
-                    android:background="@drawable/rectangle_white"
-                    android:textColor="@color/md_red_600"
-                    android:clickable="true"
-                    android:foreground="?attr/selectableItemBackgroundBorderless"/>
-
-            </LinearLayout>
+                layout="@layout/adapter_recycler_all_bottom_actions"
+                android:layout_height="52dp"
+                android:layout_width="match_parent" />
 
         </RelativeLayout>
 

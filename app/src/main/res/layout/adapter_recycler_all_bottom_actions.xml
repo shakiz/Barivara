@@ -1,0 +1,36 @@
+<LinearLayout
+    android:id="@+id/editDeleteLayout"
+    android:layout_width="match_parent"
+    android:layout_height="52dp"
+    android:gravity="center|right"
+    android:orientation="horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Button
+        android:id="@+id/editButton"
+        android:layout_width="82dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/rectangle_green_selected"
+        android:clickable="true"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:text="@string/edit"
+        android:textColor="@color/md_white_1000" />
+
+    <Button
+        android:id="@+id/deleteButton"
+        android:layout_width="82dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/rectangle_white"
+        android:clickable="true"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:text="@string/delete"
+        android:textColor="@color/md_red_600" />
+
+</LinearLayout>
