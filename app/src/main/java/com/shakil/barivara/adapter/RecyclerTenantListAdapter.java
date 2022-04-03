@@ -10,8 +10,8 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,7 +21,6 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.shakil.barivara.R;
-import com.shakil.barivara.model.room.Room;
 import com.shakil.barivara.model.tenant.Tenant;
 import com.shakil.barivara.utils.Tools;
 
@@ -77,6 +76,7 @@ public class RecyclerTenantListAdapter extends RecyclerView.Adapter<RecyclerTena
         holder.TenantName.setText(tenant.getTenantName());
         holder.StartingMonth.setText(tenant.getStartingMonth());
         holder.AssociateRoom.setText(tenant.getAssociateRoom());
+        holder.TenantTypeStr.setText(tenant.getTenantTypeStr());
         holder.item_card_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,7 +86,7 @@ public class RecyclerTenantListAdapter extends RecyclerView.Adapter<RecyclerTena
             }
         });
         //region call and message listeners
-        holder.callLayout.setOnClickListener(new View.OnClickListener() {
+        holder.callIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
@@ -102,7 +102,7 @@ public class RecyclerTenantListAdapter extends RecyclerView.Adapter<RecyclerTena
             }
         });
 
-        holder.messageLayout.setOnClickListener(new View.OnClickListener() {
+        holder.messageIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(context, context.getString(R.string.taking_into_message_section), Toast.LENGTH_SHORT).show();
@@ -114,24 +114,22 @@ public class RecyclerTenantListAdapter extends RecyclerView.Adapter<RecyclerTena
         //region set tenant status
         if (tenant.getIsActiveValue() != null && !TextUtils.isEmpty(tenant.getIsActiveValue())) {
             if (tenant.getIsActiveValue().equals(context.getString(R.string.yes))){
-                holder.IsActive.setText(context.getString(R.string.running));
-                holder.IsActive.setBackgroundResource(R.drawable.rectangle_green_on_side_curve);
+                holder.activeColorIndicator.setBackgroundColor(context.getResources().getColor(R.color.md_green_400));
             }
             else{
-                holder.IsActive.setText(context.getString(R.string.left));
-                holder.IsActive.setBackgroundResource(R.drawable.rectangle_light_red_on_sided_curve);
+                holder.activeColorIndicator.setBackgroundColor(context.getResources().getColor(R.color.md_red_400));
             }
         }
         //endregion
 
         //region edit and delete click listeners
-        holder.editButton.setOnClickListener(new View.OnClickListener() {
+        holder.editIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (onEditListener != null) onEditListener.onEdit(tenant);
             }
         });
-        holder.deleteButton.setOnClickListener(new View.OnClickListener() {
+        holder.deleteIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (onDeleteListener != null) onDeleteListener.onDelete(tenant);
@@ -146,20 +144,21 @@ public class RecyclerTenantListAdapter extends RecyclerView.Adapter<RecyclerTena
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView TenantName, StartingMonth, AssociateRoom, IsActive;
+        TextView TenantName, StartingMonth, AssociateRoom, TenantTypeStr;
         CardView item_card_view;
-        LinearLayout callLayout, messageLayout;
-        Button editButton, deleteButton;
+        ImageView callIcon, messageIcon, editIcon, deleteIcon;
+        RelativeLayout activeColorIndicator;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             TenantName = itemView.findViewById(R.id.TenantName);
             StartingMonth = itemView.findViewById(R.id.StartingMonth);
             AssociateRoom = itemView.findViewById(R.id.AssociateRoom);
-            callLayout = itemView.findViewById(R.id.callLayout);
-            messageLayout = itemView.findViewById(R.id.messageLayout);
-            IsActive = itemView.findViewById(R.id.IsActive);
-            editButton = itemView.findViewById(R.id.editButton);
-            deleteButton = itemView.findViewById(R.id.deleteButton);
+            TenantTypeStr = itemView.findViewById(R.id.TenantTypeStr);
+            activeColorIndicator = itemView.findViewById(R.id.activeColorIndicator);
+            callIcon = itemView.findViewById(R.id.callIcon);
+            messageIcon = itemView.findViewById(R.id.messageIcon);
+            editIcon = itemView.findViewById(R.id.editIcon);
+            deleteIcon = itemView.findViewById(R.id.deleteIcon);
             item_card_view = itemView.findViewById(R.id.item_card_view);
         }
     }
