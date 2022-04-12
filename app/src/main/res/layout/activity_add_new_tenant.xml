@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -14,16 +13,16 @@
         tools:context=".activities.activities.room.RoomActivity">
 
         <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:id="@+id/app_bar">
+            android:layout_height="48dp">
 
             <androidx.appcompat.widget.Toolbar
+                android:id="@+id/tool_bar"
+                style="@style/TextAppearance.Widget.Event.Toolbar.Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/tool_bar"
                 app:navigationIcon="?attr/homeAsUpIndicator"
-                style="@style/TextAppearance.Widget.Event.Toolbar.Title"
                 app:title="@string/add_tenant"
                 app:titleTextColor="@color/md_grey_800">
 
@@ -34,37 +33,37 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="56dp"
             android:layout_below="@id/app_bar"
+            android:layout_marginBottom="56dp"
             android:fillViewport="true">
 
             <LinearLayout
+                android:id="@+id/mainLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/mainLayout"
                 android:orientation="vertical">
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:cardCornerRadius="12dp"
-                    android:elevation="4dp"
                     android:layout_margin="8dp"
-                    android:translationZ="4dp">
+                    android:elevation="4dp"
+                    android:translationZ="4dp"
+                    app:cardCornerRadius="12dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:paddingBottom="16dp"
+                        android:background="@drawable/back"
                         android:orientation="vertical"
-                        android:background="@drawable/back">
+                        android:paddingBottom="16dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="12dp"
-                            android:layout_marginRight="12dp"
                             android:layout_marginTop="8dp"
+                            android:layout_marginRight="12dp"
                             android:orientation="vertical">
 
                             <TextView
@@ -81,16 +80,16 @@
                                 android:layout_height="40dp"
                                 android:layout_marginTop="5dp"
                                 android:background="@drawable/edit_text_back"
-                                android:inputType="text"
                                 android:ellipsize="end"
-                                android:scrollHorizontally="true"
-                                android:maxLines="1"
-                                android:textColorHint="@color/md_grey_700"
                                 android:hint="@string/tenant_hint"
+                                android:inputType="text"
+                                android:maxLines="1"
                                 android:paddingLeft="10dp"
                                 android:paddingRight="10dp"
-                                android:textSize="14sp"
-                                android:textColor="@color/md_grey_800"/>
+                                android:scrollHorizontally="true"
+                                android:textColor="@color/md_grey_800"
+                                android:textColorHint="@color/md_grey_700"
+                                android:textSize="14sp" />
 
                         </LinearLayout>
 
@@ -98,8 +97,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="12dp"
-                            android:layout_marginRight="12dp"
                             android:layout_marginTop="8dp"
+                            android:layout_marginRight="12dp"
                             android:orientation="vertical">
 
                             <TextView
@@ -116,16 +115,16 @@
                                 android:layout_height="40dp"
                                 android:layout_marginTop="5dp"
                                 android:background="@drawable/edit_text_back"
-                                android:inputType="text"
                                 android:ellipsize="end"
-                                android:scrollHorizontally="true"
-                                android:maxLines="1"
-                                android:textColorHint="@color/md_grey_700"
                                 android:hint="@string/nid_number_hint"
+                                android:inputType="text"
+                                android:maxLines="1"
                                 android:paddingLeft="10dp"
                                 android:paddingRight="10dp"
-                                android:textSize="14sp"
-                                android:textColor="@color/md_grey_800"/>
+                                android:scrollHorizontally="true"
+                                android:textColor="@color/md_grey_800"
+                                android:textColorHint="@color/md_grey_700"
+                                android:textSize="14sp" />
 
                         </LinearLayout>
 
@@ -133,8 +132,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="12dp"
-                            android:layout_marginRight="12dp"
                             android:layout_marginTop="8dp"
+                            android:layout_marginRight="12dp"
                             android:orientation="vertical">
 
                             <TextView
@@ -151,16 +150,16 @@
                                 android:layout_height="40dp"
                                 android:layout_marginTop="5dp"
                                 android:background="@drawable/edit_text_back"
-                                android:inputType="numberSigned"
                                 android:ellipsize="end"
-                                android:scrollHorizontally="true"
-                                android:maxLines="1"
-                                android:textColorHint="@color/md_grey_700"
                                 android:hint="@string/mobile_number_hint"
+                                android:inputType="numberSigned"
+                                android:maxLines="1"
                                 android:paddingLeft="10dp"
                                 android:paddingRight="10dp"
-                                android:textSize="14sp"
-                                android:textColor="@color/md_grey_800"/>
+                                android:scrollHorizontally="true"
+                                android:textColor="@color/md_grey_800"
+                                android:textColorHint="@color/md_grey_700"
+                                android:textSize="14sp" />
 
                         </LinearLayout>
 
@@ -168,8 +167,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="12dp"
-                            android:layout_marginRight="12dp"
                             android:layout_marginTop="8dp"
+                            android:layout_marginRight="12dp"
                             android:text="@string/gender"
                             android:textColor="@color/md_grey_900"
                             android:textSize="16sp" />
@@ -177,11 +176,11 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
+                            android:layout_gravity="center"
                             android:layout_marginLeft="12dp"
+                            android:layout_marginTop="5dp"
                             android:layout_marginRight="12dp"
                             android:background="@drawable/rectangle_background_filled_with_border"
-                            android:layout_gravity="center"
                             android:gravity="center"
                             android:orientation="horizontal"
                             android:weightSum="2">
@@ -189,80 +188,80 @@
                             <RelativeLayout
                                 android:id="@+id/maleLayout"
                                 android:layout_width="0dp"
-                                android:layout_weight="1"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:elevation="4dp"
-                                android:translationZ="2dp"
-                                android:paddingTop="4dp"
-                                android:paddingBottom="4dp"
-                                android:layout_marginBottom="4dp"
                                 android:layout_marginLeft="4dp"
                                 android:layout_marginTop="4dp"
+                                android:layout_marginBottom="4dp"
+                                android:layout_weight="1"
                                 android:background="@drawable/rectangle_background_filled_gender"
-                                android:gravity="center">
+                                android:elevation="4dp"
+                                android:gravity="center"
+                                android:paddingTop="4dp"
+                                android:paddingBottom="4dp"
+                                android:translationZ="2dp">
 
                                 <ImageView
                                     android:id="@+id/MaleIcon"
                                     android:layout_width="18dp"
                                     android:layout_height="32dp"
-                                    android:layout_centerVertical="true"
                                     android:layout_centerHorizontal="true"
-                                    android:src="@drawable/ic_male_white"/>
+                                    android:layout_centerVertical="true"
+                                    android:src="@drawable/ic_male_white" />
 
                                 <TextView
                                     android:id="@+id/Male"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_toRightOf="@id/MaleIcon"
-                                    android:layout_marginLeft="4dp"
-                                    android:layout_gravity="center"
-                                    android:text="@string/male"
-                                    android:gravity="center"
-                                    android:layout_centerVertical="true"
                                     android:layout_centerHorizontal="true"
-                                    android:textSize="16sp"
-                                    android:textColor="@color/md_white_1000"/>
+                                    android:layout_centerVertical="true"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="4dp"
+                                    android:layout_toRightOf="@id/MaleIcon"
+                                    android:gravity="center"
+                                    android:text="@string/male"
+                                    android:textColor="@color/md_white_1000"
+                                    android:textSize="16sp" />
 
                             </RelativeLayout>
 
                             <RelativeLayout
                                 android:id="@+id/femaleLayout"
                                 android:layout_width="0dp"
-                                android:layout_weight="1"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
+                                android:layout_marginLeft="4dp"
+                                android:layout_marginTop="4dp"
+                                android:layout_marginRight="4dp"
+                                android:layout_marginBottom="4dp"
+                                android:layout_weight="1"
                                 android:elevation="4dp"
-                                android:translationZ="2dp"
+                                android:gravity="center"
                                 android:paddingTop="4dp"
                                 android:paddingBottom="4dp"
-                                android:layout_marginBottom="4dp"
-                                android:layout_marginLeft="4dp"
-                                android:layout_marginRight="4dp"
-                                android:layout_marginTop="4dp"
-                                android:gravity="center">
+                                android:translationZ="2dp">
 
                                 <ImageView
                                     android:id="@+id/FemaleIcon"
                                     android:layout_width="18dp"
                                     android:layout_height="32dp"
-                                    android:layout_centerVertical="true"
                                     android:layout_centerHorizontal="true"
-                                    android:src="@drawable/ic_female_green"/>
+                                    android:layout_centerVertical="true"
+                                    android:src="@drawable/ic_female_green" />
 
                                 <TextView
                                     android:id="@+id/Female"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_toRightOf="@id/FemaleIcon"
-                                    android:layout_marginLeft="4dp"
-                                    android:layout_gravity="center"
-                                    android:text="@string/female"
-                                    android:gravity="center"
-                                    android:layout_centerVertical="true"
                                     android:layout_centerHorizontal="true"
-                                    android:textSize="16sp"
-                                    android:textColor="@color/md_green_600"/>
+                                    android:layout_centerVertical="true"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="4dp"
+                                    android:layout_toRightOf="@id/FemaleIcon"
+                                    android:gravity="center"
+                                    android:text="@string/female"
+                                    android:textColor="@color/md_green_600"
+                                    android:textSize="16sp" />
 
                             </RelativeLayout>
 
@@ -272,8 +271,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="12dp"
-                            android:layout_marginRight="12dp"
                             android:layout_marginTop="8dp"
+                            android:layout_marginRight="12dp"
                             android:orientation="vertical">
 
                             <TextView
@@ -290,16 +289,16 @@
                                 android:layout_height="40dp"
                                 android:layout_marginTop="5dp"
                                 android:background="@drawable/edit_text_back"
-                                android:inputType="numberSigned"
                                 android:ellipsize="end"
-                                android:scrollHorizontally="true"
-                                android:maxLines="1"
-                                android:textColorHint="@color/md_grey_700"
                                 android:hint="@string/number_of_family_member_hint"
+                                android:inputType="numberSigned"
+                                android:maxLines="1"
                                 android:paddingLeft="10dp"
                                 android:paddingRight="10dp"
-                                android:textSize="14sp"
-                                android:textColor="@color/md_grey_800"/>
+                                android:scrollHorizontally="true"
+                                android:textColor="@color/md_grey_800"
+                                android:textColorHint="@color/md_grey_700"
+                                android:textSize="14sp" />
 
                         </LinearLayout>
 
@@ -307,8 +306,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="12dp"
-                            android:layout_marginRight="12dp"
                             android:layout_marginTop="8dp"
+                            android:layout_marginRight="12dp"
                             android:orientation="vertical">
 
                             <TextView
@@ -320,13 +319,13 @@
                                 android:textSize="16sp" />
 
                             <Spinner
+                                android:id="@+id/TenantTypeId"
                                 style="@style/Base.TextAppearance.AppCompat.Medium"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:layout_marginTop="5dp"
-                                android:tag="@string/tenant_type"
                                 android:background="@drawable/edit_text_back"
-                                android:id="@+id/TenantTypeId"/>
+                                android:tag="@string/tenant_type" />
 
                         </LinearLayout>
 
@@ -334,8 +333,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="12dp"
-                            android:layout_marginRight="12dp"
                             android:layout_marginTop="8dp"
+                            android:layout_marginRight="12dp"
                             android:orientation="vertical">
 
                             <TextView
@@ -347,13 +346,13 @@
                                 android:textSize="16sp" />
 
                             <Spinner
+                                android:id="@+id/StartingMonthId"
                                 style="@style/Base.TextAppearance.AppCompat.Medium"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:layout_marginTop="5dp"
-                                android:tag="@string/select_month"
                                 android:background="@drawable/edit_text_back"
-                                android:id="@+id/StartingMonthId"/>
+                                android:tag="@string/select_month" />
 
                         </LinearLayout>
 
@@ -361,8 +360,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="12dp"
-                            android:layout_marginRight="12dp"
                             android:layout_marginTop="8dp"
+                            android:layout_marginRight="12dp"
                             android:orientation="vertical">
 
                             <TextView
@@ -374,13 +373,13 @@
                                 android:textSize="16sp" />
 
                             <Spinner
+                                android:id="@+id/AssociateRoomId"
                                 style="@style/Base.TextAppearance.AppCompat.Medium"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:layout_marginTop="5dp"
-                                android:tag="@string/select_room"
                                 android:background="@drawable/edit_text_back"
-                                android:id="@+id/AssociateRoomId"/>
+                                android:tag="@string/select_room" />
 
                         </LinearLayout>
 
@@ -391,29 +390,29 @@
                             android:layout_marginLeft="12dp"
                             android:layout_marginTop="14dp"
                             android:layout_marginRight="12dp"
-                            android:paddingLeft="4dp"
-                            android:paddingRight="4dp"
-                            android:paddingTop="4dp"
                             android:background="@drawable/edit_text_back"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:paddingLeft="4dp"
+                            android:paddingTop="4dp"
+                            android:paddingRight="4dp">
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:textSize="16sp"
-                                android:padding="4dp"
-                                android:textColor="@color/md_grey_900"
                                 android:gravity="center|left"
-                                android:text="@string/is_tenant_active" />
+                                android:padding="4dp"
+                                android:text="@string/is_tenant_active"
+                                android:textColor="@color/md_grey_900"
+                                android:textSize="16sp" />
 
                             <RadioGroup
                                 android:id="@+id/IsActive"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="center"
                                 android:layout_marginTop="4dp"
                                 android:layout_marginBottom="4dp"
-                                android:layout_gravity="center"
                                 android:gravity="center"
                                 android:orientation="horizontal">
 
@@ -423,7 +422,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginRight="16dp"
                                     android:tag="@string/yes"
-                                    android:text="@string/yes"/>
+                                    android:text="@string/yes" />
 
                                 <RadioButton
                                     android:id="@+id/IsActive_No"
@@ -431,7 +430,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="16dp"
                                     android:tag="@string/no"
-                                    android:text="@string/no"/>
+                                    android:text="@string/no" />
 
                             </RadioGroup>
 
@@ -449,15 +448,15 @@
                             android:text="@string/advance_hint" />
 
                         <LinearLayout
+                            android:id="@+id/advanceAmountLayout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
                             android:layout_marginLeft="12dp"
+                            android:layout_marginTop="8dp"
                             android:layout_marginRight="12dp"
                             android:layout_marginBottom="16dp"
-                            android:visibility="gone"
-                            android:id="@+id/advanceAmountLayout"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:visibility="gone">
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -473,16 +472,16 @@
                                 android:layout_height="40dp"
                                 android:layout_marginTop="5dp"
                                 android:background="@drawable/edit_text_back"
-                                android:inputType="number"
                                 android:ellipsize="end"
-                                android:scrollHorizontally="true"
-                                android:maxLines="1"
-                                android:textColorHint="@color/md_grey_700"
                                 android:hint="@string/advance_hint2"
+                                android:inputType="number"
+                                android:maxLines="1"
                                 android:paddingLeft="10dp"
                                 android:paddingRight="10dp"
-                                android:textSize="14sp"
-                                android:textColor="@color/md_grey_800"/>
+                                android:scrollHorizontally="true"
+                                android:textColor="@color/md_grey_800"
+                                android:textColorHint="@color/md_grey_700"
+                                android:textSize="14sp" />
 
                         </LinearLayout>
 
@@ -498,25 +497,24 @@
             android:id="@+id/mSaveTenantMaster"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
             android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
             android:layout_marginTop="16dp"
+            android:layout_marginRight="16dp"
             android:layout_marginBottom="32dp"
             android:src="@drawable/ic_action_done"
             app:backgroundTint="@color/md_blue_grey_400"
             app:fabSize="normal" />
 
-        <com.google.android.gms.ads.AdView
-            xmlns:ads="http://schemas.android.com/apk/res-auto"
+        <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
             android:id="@+id/adView"
             android:layout_width="match_parent"
             android:layout_height="42dp"
-            android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
             ads:adSize="BANNER"
-            ads:adUnitId="ca-app-pub-3017517613101119/5605971007"/>
+            ads:adUnitId="ca-app-pub-3017517613101119/5605971007" />
 
     </RelativeLayout>
 

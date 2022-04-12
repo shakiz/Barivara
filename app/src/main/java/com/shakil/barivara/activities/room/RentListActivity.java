@@ -19,6 +19,7 @@ import com.shakil.barivara.adapter.RecyclerRentListAdapter;
 import com.shakil.barivara.databinding.ActivityRentListBinding;
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.room.Rent;
+import com.shakil.barivara.utils.CustomAdManager;
 import com.shakil.barivara.utils.FilterManager;
 import com.shakil.barivara.utils.Tools;
 import com.shakil.barivara.utils.UX;
@@ -35,6 +36,7 @@ public class RentListActivity extends AppCompatActivity {
     private FilterManager filterManager;
     private ImageButton searchButton, refreshButton;
     private EditText searchName;
+    private CustomAdManager customAdManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,12 +67,18 @@ public class RentListActivity extends AppCompatActivity {
         tools = new Tools(this);
         filterManager = new FilterManager(this);
         noDataTXT = findViewById(R.id.mNoDataMessage);
+        customAdManager = new CustomAdManager(activityRentListBinding.adView, this);
     }
     //endregion
 
     //region perform all UI interactions
     private void bindUIWithComponents(){
         searchName.setHint(getString(R.string.search_month_name));
+
+        //region for ad
+        customAdManager.generateAd();
+        //endregion
+
         //region check internet connection
         if (tools.hasConnection()) {
             setData();

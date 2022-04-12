@@ -25,6 +25,7 @@ import androidx.databinding.DataBindingUtil;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.shakil.barivara.R;
 import com.shakil.barivara.activities.auth.ForgotPasswordActivity;
@@ -89,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //endregion
 
         //region notification for general topic
+        FirebaseApp.initializeApp(this);
         FirebaseMessaging.getInstance().subscribeToTopic("general")
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
