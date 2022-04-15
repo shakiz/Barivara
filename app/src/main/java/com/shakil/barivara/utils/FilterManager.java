@@ -24,7 +24,7 @@ public class FilterManager{
     public void onFilterClick(String searchText, ArrayList<Room> sourceList, onFilterClick onFilterClick){
         ArrayList<Room> roomList = new ArrayList<>();
         for (int start = 0; start < sourceList.size(); start++) {
-            if (sourceList.get(start).getRoomName().contains(searchText)){
+            if (sourceList.get(start).getRoomName().toLowerCase().contains(searchText.toLowerCase())){
                 roomList.add(sourceList.get(start));
             }
         }
@@ -41,7 +41,7 @@ public class FilterManager{
     public void onFilterClick(String searchText, ArrayList<Rent> sourceList, onRentFilterClick onRentFilterClick){
         ArrayList<Rent> rentList = new ArrayList<>();
         for (int start = 0; start < sourceList.size(); start++) {
-            if (sourceList.get(start).getMonthName().contains(searchText)){
+            if (sourceList.get(start).getMonthName().toLowerCase().contains(searchText.toLowerCase())){
                 rentList.add(sourceList.get(start));
             }
         }
@@ -58,7 +58,7 @@ public class FilterManager{
     public void onFilterClick(String searchText, ArrayList<Meter> sourceList, onMeterFilterClick onMeterFilterClick){
         ArrayList<Meter> meterList = new ArrayList<>();
         for (int start = 0; start < sourceList.size(); start++) {
-            if (sourceList.get(start).getMeterName().contains(searchText)){
+            if (sourceList.get(start).getMeterName().toLowerCase().contains(searchText.toLowerCase())){
                 meterList.add(sourceList.get(start));
             }
         }
@@ -75,7 +75,7 @@ public class FilterManager{
     public void onFilterClick(String searchText, ArrayList<ElectricityBill> sourceList, onBillFilterClick onBillFilterClick){
         ArrayList<ElectricityBill> billList = new ArrayList<>();
         for (int start = 0; start < sourceList.size(); start++) {
-            if (sourceList.get(start).getRoomName().contains(searchText)){
+            if (sourceList.get(start).getRoomName().toLowerCase().contains(searchText.toLowerCase())){
                 billList.add(sourceList.get(start));
             }
         }
@@ -92,7 +92,7 @@ public class FilterManager{
     public void onFilterClick(String searchText, ArrayList<Tenant> sourceList, onTenantFilterClick onTenantFilterClick){
         ArrayList<Tenant> billList = new ArrayList<>();
         for (int start = 0; start < sourceList.size(); start++) {
-            if (sourceList.get(start).getTenantName().contains(searchText)){
+            if (sourceList.get(start).getTenantName().toLowerCase().contains(searchText.toLowerCase())){
                 billList.add(sourceList.get(start));
             }
         }
