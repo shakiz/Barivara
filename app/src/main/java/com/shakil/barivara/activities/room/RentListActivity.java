@@ -1,11 +1,16 @@
 package com.shakil.barivara.activities.room;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,10 +20,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.shakil.barivara.R;
 import com.shakil.barivara.activities.onboard.MainActivity;
+import com.shakil.barivara.activities.tenant.TenantListActivity;
 import com.shakil.barivara.adapter.RecyclerRentListAdapter;
 import com.shakil.barivara.databinding.ActivityRentListBinding;
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.room.Rent;
+import com.shakil.barivara.model.tenant.Tenant;
 import com.shakil.barivara.utils.CustomAdManager;
 import com.shakil.barivara.utils.FilterManager;
 import com.shakil.barivara.utils.Tools;
@@ -185,10 +192,44 @@ public class RentListActivity extends AppCompatActivity {
         recyclerMeterListAdapter.onDeleteListener(new RecyclerRentListAdapter.onDeleteListener() {
             @Override
             public void onDelete(Rent rent) {
+                doPopUpForDeleteConfirmation(rent);
+            }
+        });
+    }
+    //endregion
+
+    //region ask to delete confirmation
+    private void doPopUpForDeleteConfirmation(Rent rent){
+        Button cancel, delete;
+        Dialog dialog = new Dialog(RentListActivity.this, android.R.style.Theme_Dialog);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.delete_confirmation_layout);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setCanceledOnTouchOutside(true);
+
+        cancel = dialog.findViewById(R.id.cancelButton);
+        delete = dialog.findViewById(R.id.deleteButton);
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 firebaseCrudHelper.deleteRecord("rent",rent.getFireBaseKey());
+                dialog.dismiss();
                 setData();
             }
         });
+
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        dialog.getWindow().setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        dialog.show();
     }
     //endregion
 
