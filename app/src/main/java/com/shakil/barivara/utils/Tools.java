@@ -153,6 +153,7 @@ public class Tools {
             @Override
             public void onClick(View v) {
                 clearPrefForLogout(to);
+                dialog.dismiss();
             }
         });
 

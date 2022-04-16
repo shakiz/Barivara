@@ -53,14 +53,14 @@
 
             <View
                 android:layout_width="0dp"
-                android:layout_weight=".4"
+                android:layout_weight=".5"
                 android:layout_height="1dp"/>
 
             <Button
                 android:id="@+id/cancelButton"
                 android:layout_width="0dp"
-                android:layout_weight=".8"
-                android:layout_height="48dp"
+                android:layout_weight=".7"
+                android:layout_height="42dp"
                 android:text="@string/cancel"
                 android:layout_marginRight="16dp"
                 android:layout_marginLeft="16dp"
@@ -75,8 +75,8 @@
             <Button
                 android:id="@+id/logoutButton"
                 android:layout_width="0dp"
-                android:layout_weight=".8"
-                android:layout_height="48dp"
+                android:layout_weight=".7"
+                android:layout_height="42dp"
                 android:text="@string/logout"
                 android:layout_marginRight="16dp"
                 android:layout_marginLeft="16dp"
