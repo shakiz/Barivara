@@ -81,12 +81,14 @@
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentLeft="true"
                                     android:layout_marginLeft="16dp"
-                                    android:layout_marginRight="16dp"
                                     android:layout_marginTop="8dp"
+                                    android:includeFontPadding="false"
+                                    android:layout_marginRight="16dp"
+                                    android:text="@string/good_morning"
                                     android:textColor="@color/md_grey_700"
-                                    android:textStyle="bold"
                                     android:textSize="20sp"
-                                    android:text="@string/good_morning"/>
+                                    android:textStyle="bold"
+                                    android:layout_alignParentStart="true" />
 
                                 <TextView
                                     android:id="@+id/DateTimeText"
@@ -94,25 +96,29 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="16dp"
                                     android:layout_marginRight="16dp"
+                                    android:includeFontPadding="false"
                                     android:layout_below="@+id/GreetingsText"
                                     android:layout_alignParentLeft="true"
                                     android:textColor="@color/md_grey_700"
                                     android:textStyle="bold"
                                     android:textSize="20sp"
-                                    android:text="@string/demo_month"/>
+                                    android:text="@string/demo_month"
+                                    android:layout_alignParentStart="true" />
 
                                 <TextView
                                     android:id="@+id/DayText"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="16dp"
-                                    android:layout_marginRight="16dp"
                                     android:layout_below="@+id/DateTimeText"
                                     android:layout_alignParentLeft="true"
+                                    android:layout_marginLeft="16dp"
+                                    android:layout_marginRight="16dp"
+                                    android:includeFontPadding="false"
+                                    android:text="@string/demo_day"
                                     android:textColor="@color/md_grey_700"
-                                    android:textStyle="bold"
                                     android:textSize="20sp"
-                                    android:text="@string/demo_day"/>
+                                    android:textStyle="bold"
+                                    android:layout_alignParentStart="true" />
 
                                 <LinearLayout
                                     android:id="@+id/topLayout"
@@ -132,8 +138,7 @@
                                         android:layout_marginRight="8dp"
                                         android:layout_marginBottom="8dp"
                                         app:cardCornerRadius="8dp"
-                                        app:cardElevation="4dp"
-                                        android:translationZ="2dp">
+                                        app:cardElevation="4dp">
 
                                         <LinearLayout
                                             android:layout_width="match_parent"
@@ -187,7 +192,6 @@
                                         android:layout_marginBottom="8dp"
                                         app:cardCornerRadius="8dp"
                                         app:cardElevation="4dp"
-                                        android:translationZ="2dp"
                                         android:layout_weight="1">
 
                                         <LinearLayout
@@ -241,8 +245,7 @@
                                         android:layout_marginRight="8dp"
                                         android:layout_marginBottom="8dp"
                                         app:cardCornerRadius="8dp"
-                                        app:cardElevation="4dp"
-                                        android:translationZ="2dp">
+                                        app:cardElevation="4dp">
 
                                         <LinearLayout
                                             android:layout_width="match_parent"
@@ -290,25 +293,29 @@
 
                                 <TextView
                                     android:id="@+id/moreDetails"
-                                    android:layout_below="@id/topLayout"
-                                    android:layout_alignParentRight="true"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_below="@id/topLayout"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_gravity="center|right"
                                     android:layout_marginRight="16dp"
-                                    android:drawableLeft="@drawable/ic_chart"
-                                    android:drawablePadding="4dp"
                                     android:clickable="true"
-                                    android:foreground="?attr/selectableItemBackgroundBorderless"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_marginEnd="16dp"
+                                    android:drawablePadding="4dp"
                                     android:ellipsize="end"
+                                    android:focusable="true"
+                                    android:foreground="?attr/selectableItemBackgroundBorderless"
+                                    android:gravity="center|right"
                                     android:maxLines="1"
                                     android:padding="2dp"
                                     android:text="@string/details_here"
-                                    android:layout_gravity="center|right"
-                                    android:gravity="center|right"
                                     android:textColor="@color/md_black_1000"
                                     android:textSize="16sp"
-                                    android:focusable="true"
-                                    app:drawableRightCompat="@drawable/ic_arrow_right" />
+                                    app:drawableRightCompat="@drawable/ic_arrow_right"
+                                    app:drawableLeftCompat="@drawable/ic_chart"
+                                    app:drawableStartCompat="@drawable/ic_chart"
+                                    app:drawableEndCompat="@drawable/ic_arrow_right" />
 
                             </RelativeLayout>
 
