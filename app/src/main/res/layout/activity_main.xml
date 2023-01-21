@@ -339,9 +339,7 @@
                             android:layout_marginLeft="20dp"
                             android:layout_marginRight="20dp"
                             android:clickable="true"
-                            android:elevation="4dp"
                             android:foreground="?android:attr/selectableItemBackground"
-                            android:translationZ="2dp"
                             app:cardBackgroundColor="@color/md_white_1000"
                             app:cardCornerRadius="10dp"
                             app:cardUseCompatPadding="true"
@@ -351,7 +349,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
-                                android:padding="2dp"
                                 android:weightSum="8">
 
                                 <LinearLayout
@@ -438,9 +435,7 @@
                                 android:layout_marginRight="4dp"
                                 android:layout_weight="1"
                                 android:clickable="true"
-                                android:elevation="4dp"
                                 android:foreground="?android:attr/selectableItemBackground"
-                                android:translationZ="2dp"
                                 app:cardBackgroundColor="@color/md_white_1000"
                                 app:cardCornerRadius="10dp"
                                 app:cardUseCompatPadding="true"
@@ -450,7 +445,6 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:orientation="horizontal"
-                                    android:padding="2dp"
                                     android:weightSum="8">
 
                                     <LinearLayout
@@ -517,9 +511,7 @@
                                 android:layout_marginLeft="4dp"
                                 android:layout_weight="1"
                                 android:clickable="true"
-                                android:elevation="4dp"
                                 android:foreground="?android:attr/selectableItemBackground"
-                                android:translationZ="2dp"
                                 app:cardBackgroundColor="@color/md_white_1000"
                                 app:cardCornerRadius="10dp"
                                 app:cardUseCompatPadding="true"
@@ -529,7 +521,6 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:orientation="horizontal"
-                                    android:padding="2dp"
                                     android:weightSum="8">
 
                                     <LinearLayout
@@ -619,9 +610,7 @@
                                 android:layout_marginTop="4dp"
                                 android:layout_weight="1"
                                 android:clickable="true"
-                                android:elevation="4dp"
                                 android:foreground="?android:attr/selectableItemBackground"
-                                android:translationZ="2dp"
                                 app:cardBackgroundColor="@color/md_white_1000"
                                 app:cardCornerRadius="10dp"
                                 app:cardUseCompatPadding="true"
@@ -631,7 +620,6 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:orientation="horizontal"
-                                    android:padding="2dp"
                                     android:weightSum="8">
 
                                     <LinearLayout
@@ -699,9 +687,7 @@
                                 android:layout_marginTop="4dp"
                                 android:layout_weight="1"
                                 android:clickable="true"
-                                android:elevation="4dp"
                                 android:foreground="?android:attr/selectableItemBackground"
-                                android:translationZ="2dp"
                                 app:cardBackgroundColor="@color/md_white_1000"
                                 app:cardCornerRadius="10dp"
                                 app:cardUseCompatPadding="true"
@@ -711,7 +697,6 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:orientation="horizontal"
-                                    android:padding="2dp"
                                     android:weightSum="8">
 
                                     <LinearLayout
