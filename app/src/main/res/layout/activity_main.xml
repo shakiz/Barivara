@@ -296,26 +296,25 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_below="@id/topLayout"
+                                    android:layout_alignParentEnd="true"
                                     android:layout_alignParentRight="true"
                                     android:layout_gravity="center|right"
+                                    android:layout_marginEnd="16dp"
                                     android:layout_marginRight="16dp"
                                     android:clickable="true"
-                                    android:layout_alignParentEnd="true"
-                                    android:layout_marginEnd="16dp"
                                     android:drawablePadding="4dp"
                                     android:ellipsize="end"
                                     android:focusable="true"
                                     android:foreground="?attr/selectableItemBackgroundBorderless"
                                     android:gravity="center|right"
                                     android:maxLines="1"
-                                    android:padding="2dp"
                                     android:text="@string/details_here"
                                     android:textColor="@color/md_black_1000"
                                     android:textSize="16sp"
-                                    app:drawableRightCompat="@drawable/ic_arrow_right"
+                                    app:drawableEndCompat="@drawable/ic_arrow_right"
                                     app:drawableLeftCompat="@drawable/ic_chart"
-                                    app:drawableStartCompat="@drawable/ic_chart"
-                                    app:drawableEndCompat="@drawable/ic_arrow_right" />
+                                    app:drawableRightCompat="@drawable/ic_arrow_right"
+                                    app:drawableStartCompat="@drawable/ic_chart" />
 
                             </RelativeLayout>
 
@@ -371,7 +370,6 @@
                                         android:layout_marginTop="16dp"
                                         android:layout_marginBottom="16dp"
                                         android:background="@drawable/rectangle_green"
-                                        android:elevation="4dp"
                                         android:padding="8dp"
                                         android:scaleType="centerInside"
                                         android:src="@drawable/ic_owner"/>
@@ -471,7 +469,6 @@
                                             android:layout_marginTop="16dp"
                                             android:layout_marginBottom="16dp"
                                             android:background="@drawable/rectangle_green"
-                                            android:elevation="4dp"
                                             android:padding="8dp"
                                             android:scaleType="centerInside"
                                             android:src="@drawable/ic_rooms"/>
@@ -551,7 +548,6 @@
                                             android:layout_marginTop="16dp"
                                             android:layout_marginBottom="16dp"
                                             android:background="@drawable/rectangle_green"
-                                            android:elevation="4dp"
                                             android:padding="8dp"
                                             android:scaleType="centerInside"
                                             android:src="@drawable/ic_tenant"/>
@@ -654,7 +650,6 @@
                                             android:layout_marginTop="16dp"
                                             android:layout_marginBottom="16dp"
                                             android:background="@drawable/rectangle_green"
-                                            android:elevation="4dp"
                                             android:padding="8dp"
                                             android:scaleType="centerInside"
                                             android:src="@drawable/ic_electric_meter"/>
@@ -735,7 +730,6 @@
                                             android:layout_marginTop="16dp"
                                             android:layout_marginBottom="16dp"
                                             android:background="@drawable/rectangle_green"
-                                            android:elevation="4dp"
                                             android:padding="8dp"
                                             android:scaleType="centerInside"
                                             android:src="@drawable/ic_electricity_bill"/>
