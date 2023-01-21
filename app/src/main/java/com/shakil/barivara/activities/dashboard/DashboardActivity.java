@@ -69,6 +69,7 @@ public class DashboardActivity extends AppCompatActivity {
 
         //region for ad
         customAdManager.generateAd(activityDashboardBinding.adView);
+        customAdManager.generateAd(activityDashboardBinding.adViewSecond);
         //endregion
 
         //region set all counts
