@@ -74,7 +74,7 @@ public class RentListActivity extends AppCompatActivity {
         tools = new Tools(this);
         filterManager = new FilterManager(this);
         noDataTXT = findViewById(R.id.mNoDataMessage);
-        customAdManager = new CustomAdManager(activityRentListBinding.adView, this);
+        customAdManager = new CustomAdManager(this);
     }
     //endregion
 
@@ -83,7 +83,7 @@ public class RentListActivity extends AppCompatActivity {
         searchName.setHint(getString(R.string.search_month_name));
 
         //region for ad
-        customAdManager.generateAd();
+        customAdManager.generateAd(activityRentListBinding.adView);
         //endregion
 
         //region check internet connection

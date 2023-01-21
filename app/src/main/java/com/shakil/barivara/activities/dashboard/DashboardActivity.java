@@ -55,7 +55,7 @@ public class DashboardActivity extends AppCompatActivity {
     //region init objects
     private void init() {
         prefManager = new PrefManager(this);
-        customAdManager = new CustomAdManager(activityDashboardBinding.adView, this);
+        customAdManager = new CustomAdManager(this);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
         spinnerData = new SpinnerData(this);
         spinnerAdapter = new SpinnerAdapter();
@@ -68,7 +68,7 @@ public class DashboardActivity extends AppCompatActivity {
         spinnerAdapter.setSpinnerAdapter(activityDashboardBinding.FilterMonth, this, spinnerData.setMonthData());
 
         //region for ad
-        customAdManager.generateAd();
+        customAdManager.generateAd(activityDashboardBinding.adView);
         //endregion
 
         //region set all counts

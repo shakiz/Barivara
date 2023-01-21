@@ -97,7 +97,7 @@ public class RoomActivity extends AppCompatActivity {
 
     private void bindUIWithComponents() {
         //region for ad
-        customAdManager.generateAd();
+        customAdManager.generateAd(activityAddNewRoomBinding.adView);
         //endregion
 
         spinnerAdapter.setSpinnerAdapter(activityAddNewRoomBinding.StartMonthId,this,spinnerData.setMonthData());
@@ -258,7 +258,7 @@ public class RoomActivity extends AppCompatActivity {
 
     //region init all objects
     private void init() {
-        customAdManager = new CustomAdManager(activityAddNewRoomBinding.adView, this);
+        customAdManager = new CustomAdManager(this);
         spinnerData = new SpinnerData(this);
         spinnerAdapter = new SpinnerAdapter();
         tools = new Tools(this);

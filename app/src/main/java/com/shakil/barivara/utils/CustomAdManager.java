@@ -12,16 +12,14 @@ import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
 public class CustomAdManager {
-    private AdView adView;
     private final Context context;
 
-    public CustomAdManager(AdView adView, Context context) {
-        this.adView = adView;
+    public CustomAdManager(Context context) {
         this.context = context;
     }
 
     //region generate ad
-    public void generateAd(){
+    public void generateAd(AdView adView){
         //region adMob
         MobileAds.initialize(context, new OnInitializationCompleteListener() {
             @Override
@@ -66,12 +64,6 @@ public class CustomAdManager {
             }
         });
         //endregion
-    }
-    //endregion
-
-    //region clear adVIew reference
-    public void disposeViews(){
-        adView = null;
     }
     //endregion
 }

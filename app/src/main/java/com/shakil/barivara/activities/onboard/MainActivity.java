@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         tools = new Tools(this, activityMainBinding.mainLayout);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
         utilsForAll = new UtilsForAll(this,activityMainBinding.mainLayout);
-        customAdManager = new CustomAdManager(activityMainBinding.adView, this);
+        customAdManager = new CustomAdManager(this);
         appAnalytics = new AppAnalytics(this);
     }
     //endregion
@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         activityMainBinding.navigationView.setNavigationItemSelectedListener(this);
         //endregion
         //region for ad
-        customAdManager.generateAd();
+        customAdManager.generateAd(activityMainBinding.adView);
         //endregion
 
         //region total layouts click listeners

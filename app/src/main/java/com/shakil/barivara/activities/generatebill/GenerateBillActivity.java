@@ -59,7 +59,7 @@ public class GenerateBillActivity extends AppCompatActivity {
 
     //region init objects
     private void init() {
-        customAdManager = new CustomAdManager(activityBinding.adView, this);
+        customAdManager = new CustomAdManager(this);
         validation = new Validation(this, hashMap);
         spinnerData = new SpinnerData(this);
         spinnerAdapter = new SpinnerAdapter();
@@ -70,7 +70,7 @@ public class GenerateBillActivity extends AppCompatActivity {
     //region perform all Ui interactions
     private void binUIWithComponents() {
         //region for ad
-        customAdManager.generateAd();
+        customAdManager.generateAd(activityBinding.adView);
         //endregion
 
         //region ask permission

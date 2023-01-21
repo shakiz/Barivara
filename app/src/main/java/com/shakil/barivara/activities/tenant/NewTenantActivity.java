@@ -116,7 +116,7 @@ public class NewTenantActivity extends AppCompatActivity {
 
     ///region init all objects
     private void init() {
-        customAdManager = new CustomAdManager(activityAddNewTenantBinding.adView, this);
+        customAdManager = new CustomAdManager(this);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
         utilsForAll = new UtilsForAll(this);
         validation = new Validation(this, hashMap);
@@ -130,7 +130,7 @@ public class NewTenantActivity extends AppCompatActivity {
     //region bind UI with components
     private void bindUiWithComponents(){
         //region for ad
-        customAdManager.generateAd();
+        customAdManager.generateAd(activityAddNewTenantBinding.adView);
         //endregion
 
         //region validation

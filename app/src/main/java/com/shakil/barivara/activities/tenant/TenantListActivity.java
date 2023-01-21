@@ -72,12 +72,12 @@ public class TenantListActivity extends AppCompatActivity {
         ux = new UX(this);
         tools = new Tools(this);
         noDataTXT = findViewById(R.id.mNoDataMessage);
-        customAdManager = new CustomAdManager(activityTenantListBinding.adView, this);
+        customAdManager = new CustomAdManager(this);
     }
 
     private void binUiWithComponents(){
         //region for ad
-        customAdManager.generateAd();
+        customAdManager.generateAd(activityTenantListBinding.adView);
         //endregion
 
         searchName.setHint(getString(R.string.search_tenant_name));

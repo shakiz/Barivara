@@ -14,7 +14,6 @@ import com.shakil.barivara.R;
 import com.shakil.barivara.databinding.ActivityNewRentDetailsBinding;
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.room.Rent;
-import com.shakil.barivara.utils.CustomAdManager;
 import com.shakil.barivara.utils.SpinnerAdapter;
 import com.shakil.barivara.utils.SpinnerData;
 import com.shakil.barivara.utils.Tools;
@@ -38,7 +37,6 @@ public class RentDetailsActivity extends AppCompatActivity {
     private Validation validation;
     private Tools tools;
     private final Map<String, String[]> hashMap = new HashMap();
-    private CustomAdManager customAdManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -192,7 +190,6 @@ public class RentDetailsActivity extends AppCompatActivity {
         spinnerAdapter = new SpinnerAdapter();
         tools = new Tools(this);
         validation = new Validation(this, hashMap);
-        customAdManager = new CustomAdManager(activityNewRentDetailsBinding.adView, this);
     }
     //endregion
 

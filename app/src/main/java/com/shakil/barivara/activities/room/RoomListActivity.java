@@ -71,12 +71,12 @@ public class RoomListActivity extends AppCompatActivity {
         filterManager = new FilterManager(this);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
         noDataTXT = findViewById(R.id.mNoDataMessage);
-        customAdManager = new CustomAdManager(activityRoomListBinding.adView, this);
+        customAdManager = new CustomAdManager(this);
     }
 
     private void binUiWIthComponents() {
         //region for ad
-        customAdManager.generateAd();
+        customAdManager.generateAd(activityRoomListBinding.adView);
         //endregion
 
         searchName.setHint(getString(R.string.search_room_name));
