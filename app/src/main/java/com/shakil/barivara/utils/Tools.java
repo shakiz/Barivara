@@ -90,10 +90,6 @@ public class Tools {
         return null;
     }
 
-    public static Date loadDate(Cursor cursor) {
-        return new Date(cursor.getLong(cursor.getColumnIndex("")));
-    }
-
     public int toIntValue(String value){
         try{
             Log.v(TAG,""+ Integer.parseInt(value));
@@ -400,9 +396,13 @@ public class Tools {
     //region Create and show a simple notification containing the received FCM message.
     public static void sendNotification(Context context, String title, String message) {
         Intent intent = new Intent(context, SplashActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent,
-                PendingIntent.FLAG_ONE_SHOT);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(
+                context,
+                1001,
+                intent,
+                PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT
+        );
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder =
@@ -424,7 +424,6 @@ public class Tools {
                     NotificationManager.IMPORTANCE_DEFAULT);
             notificationManager.createNotificationChannel(channel);
         }
-
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
     }
     //endregion
