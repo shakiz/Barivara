@@ -5,13 +5,13 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.3"
+    compileSdkVersion 31
+    buildToolsVersion "31.0.0"
 
     defaultConfig {
         applicationId "com.shakil.barivara"
         minSdkVersion 16
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 49
         versionName "1.1.15"
 
@@ -62,7 +62,7 @@ dependencies {
     implementation 'com.github.javiersantos:AppUpdater:2.7'
 
     //Firebase messaging
-    implementation "com.google.firebase:firebase-messaging:20.2.0"
+    implementation "com.google.firebase:firebase-messaging:21.0.0"
     // Import the BoM for the Firebase platform
     implementation platform('com.google.firebase:firebase-bom:28.2.1')
 
@@ -76,6 +76,8 @@ dependencies {
     implementation 'com.github.GrenderG:Toasty:1.5.2'
     // background job
     implementation 'androidx.work:work-runtime:2.3.4'
+
+    implementation 'androidx.work:work-runtime-ktx:2.7.0'
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
