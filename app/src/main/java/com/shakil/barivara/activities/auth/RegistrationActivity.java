@@ -53,7 +53,7 @@ public class RegistrationActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         ux = new UX(this);
         validation = new Validation(this, hashMap);
-        tools = new Tools(this, activityBinding.mainLayout);
+        tools = new Tools(this);
     }
     //endregion
 

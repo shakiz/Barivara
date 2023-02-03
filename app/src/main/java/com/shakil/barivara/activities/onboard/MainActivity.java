@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //region init components
     private void init() {
         prefManager = new PrefManager(this);
-        tools = new Tools(this, activityMainBinding.mainLayout);
+        tools = new Tools(this);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
         utilsForAll = new UtilsForAll(this,activityMainBinding.mainLayout);
         customAdManager = new CustomAdManager(this);

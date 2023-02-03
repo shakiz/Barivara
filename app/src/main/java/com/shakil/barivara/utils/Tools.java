@@ -1,5 +1,17 @@
 package com.shakil.barivara.utils;
 
+import static com.shakil.barivara.utils.Constants.REQUEST_CALL_CODE;
+import static com.shakil.barivara.utils.Constants.TAG;
+import static com.shakil.barivara.utils.Constants.VALID_EMAIL_ADDRESS_REGEX;
+import static com.shakil.barivara.utils.Constants.mAppViewCount;
+import static com.shakil.barivara.utils.Constants.mIsLoggedIn;
+import static com.shakil.barivara.utils.Constants.mLanguage;
+import static com.shakil.barivara.utils.Constants.mOldUser;
+import static com.shakil.barivara.utils.Constants.mUserEmail;
+import static com.shakil.barivara.utils.Constants.mUserFullName;
+import static com.shakil.barivara.utils.Constants.mUserId;
+import static com.shakil.barivara.utils.Constants.mUserMobile;
+
 import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
@@ -11,7 +23,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Paint;
 import android.graphics.pdf.PdfDocument;
 import android.media.RingtoneManager;
@@ -51,26 +62,9 @@ import java.util.regex.Matcher;
 
 import es.dmoral.toasty.Toasty;
 
-import static com.shakil.barivara.utils.Constants.REQUEST_CALL_CODE;
-import static com.shakil.barivara.utils.Constants.TAG;
-import static com.shakil.barivara.utils.Constants.VALID_EMAIL_ADDRESS_REGEX;
-import static com.shakil.barivara.utils.Constants.mAppViewCount;
-import static com.shakil.barivara.utils.Constants.mIsLoggedIn;
-import static com.shakil.barivara.utils.Constants.mLanguage;
-import static com.shakil.barivara.utils.Constants.mOldUser;
-import static com.shakil.barivara.utils.Constants.mUserEmail;
-import static com.shakil.barivara.utils.Constants.mUserFullName;
-import static com.shakil.barivara.utils.Constants.mUserId;
-import static com.shakil.barivara.utils.Constants.mUserMobile;
-
 public class Tools {
     private final Context context;
     private final PrefManager prefManager;
-
-    public Tools(Context context, View view) {
-        this.context = context;
-        prefManager = new PrefManager(context);
-    }
 
     public Tools(Context context) {
         this.context = context;

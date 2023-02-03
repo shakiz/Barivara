@@ -54,7 +54,7 @@ public class SettingsActivity extends AppCompatActivity {
     private void init() {
         languageManager = new LanguageManager(this);
         prefManager = new PrefManager(this);
-        tools = new Tools(this, activitySettingsBinding.mainLayout);
+        tools = new Tools(this);
         setupLanguage();
     }
     //endregion

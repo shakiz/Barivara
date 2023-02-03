@@ -92,4 +92,23 @@
         <item name="android:layout_marginTop">5dp</item>
     </style>
 
+
+    <style name="NormalTextStyle" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:lineSpacingExtra">6dp</item>
+        <item name="android:textColor">@color/md_black_1000</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <!--    Theme.MaterialComponents.Light.NoActionBar-->
+    <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/md_black_1000</item>
+        <item name="android:textColorSecondary">@color/md_black_1000</item>
+        <item name="android:textViewStyle">@style/NormalTextStyle</item>
+        <item name="android:windowBackground">@color/md_white_1000</item>
+    </style>
+
 </resources>
