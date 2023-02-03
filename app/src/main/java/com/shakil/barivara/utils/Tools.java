@@ -176,6 +176,7 @@ public class Tools {
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dialog.dismiss();
                 new UtilsForAll(context).exitApp();
             }
         });

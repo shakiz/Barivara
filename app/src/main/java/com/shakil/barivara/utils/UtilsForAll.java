@@ -25,9 +25,6 @@ public class UtilsForAll {
         this.view = view;
     }
 
-    public UtilsForAll() {
-    }
-
     public UtilsForAll(Context context) {
         this.context = context;
     }
@@ -114,10 +111,7 @@ public class UtilsForAll {
 
     //region mobile number validation
     public boolean isValidMobileNo(String mobileNo){
-        boolean isValid = false;
-        if (mobileNo.length() == 11){
-            isValid = true;
-        }
+        boolean isValid = mobileNo.length() == 11;
         return isValid;
     }
     //endregion
