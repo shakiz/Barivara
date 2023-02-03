@@ -13,6 +13,7 @@ import com.shakil.barivara.R;
 import com.shakil.barivara.activities.auth.LoginActivity;
 import com.shakil.barivara.activities.onboard.MainActivity;
 import com.shakil.barivara.databinding.ActivitySettingsBinding;
+import com.shakil.barivara.utils.CustomAdManager;
 import com.shakil.barivara.utils.LanguageManager;
 import com.shakil.barivara.utils.PrefManager;
 import com.shakil.barivara.utils.Tools;
@@ -31,6 +32,7 @@ public class SettingsActivity extends AppCompatActivity {
     private LanguageManager languageManager;
     private PrefManager prefManager;
     private Tools tools;
+    private CustomAdManager customAdManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,7 @@ public class SettingsActivity extends AppCompatActivity {
         languageManager = new LanguageManager(this);
         prefManager = new PrefManager(this);
         tools = new Tools(this);
+        customAdManager = new CustomAdManager(this);
         setupLanguage();
     }
     //endregion
@@ -67,6 +70,11 @@ public class SettingsActivity extends AppCompatActivity {
 
     //region perform all UI operations
     private void bindUiWithComponents() {
+
+        //region for ad
+        customAdManager.generateAd(activitySettingsBinding.adView);
+        //endregion
+
         //region account section
         if (!TextUtils.isEmpty(prefManager.getString(mUserFullName))){
             activitySettingsBinding.UserFullName.setText(getString(R.string.username)+":"+prefManager.getString(mUserFullName));
