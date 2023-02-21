@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,12 +19,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.shakil.barivara.R;
 import com.shakil.barivara.activities.onboard.MainActivity;
-import com.shakil.barivara.activities.tenant.TenantListActivity;
 import com.shakil.barivara.adapter.RecyclerRentListAdapter;
 import com.shakil.barivara.databinding.ActivityRentListBinding;
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.room.Rent;
-import com.shakil.barivara.model.tenant.Tenant;
 import com.shakil.barivara.utils.CustomAdManager;
 import com.shakil.barivara.utils.FilterManager;
 import com.shakil.barivara.utils.Tools;
@@ -36,7 +33,6 @@ import java.util.ArrayList;
 public class RentListActivity extends AppCompatActivity {
     private ActivityRentListBinding activityRentListBinding;
     private ArrayList<Rent> rentList;
-    private TextView noDataTXT;
     private FirebaseCrudHelper firebaseCrudHelper;
     private UX ux;
     private Tools tools;
@@ -73,7 +69,6 @@ public class RentListActivity extends AppCompatActivity {
         ux = new UX(this);
         tools = new Tools(this);
         filterManager = new FilterManager(this);
-        noDataTXT = findViewById(R.id.mNoDataMessage);
         customAdManager = new CustomAdManager(this);
     }
     //endregion
@@ -117,8 +112,8 @@ public class RentListActivity extends AppCompatActivity {
                                     Toast.makeText(RentListActivity.this, getString(R.string.filterd), Toast.LENGTH_SHORT).show();
                                 } else {
                                     Tools.hideKeyboard(RentListActivity.this);
-                                    noDataTXT.setVisibility(View.VISIBLE);
-                                    noDataTXT.setText(R.string.no_data_message);
+                                    activityRentListBinding.mNoDataMessage.setVisibility(View.VISIBLE);
+                                    activityRentListBinding.mNoDataMessage.setText(R.string.no_data_message);
                                     activityRentListBinding.mRecylerView.setVisibility(View.GONE);
                                     Toast.makeText(RentListActivity.this, getString(R.string.no_data_message), Toast.LENGTH_SHORT).show();
                                 }
@@ -140,7 +135,7 @@ public class RentListActivity extends AppCompatActivity {
                 if (tools.hasConnection()) {
                     activityRentListBinding.mRecylerView.setVisibility(View.VISIBLE);
                     searchName.setText("");
-                    noDataTXT.setVisibility(View.GONE);
+                    activityRentListBinding.mNoDataMessage.setVisibility(View.GONE);
                     Tools.hideKeyboard(RentListActivity.this);
                     setData();
                     Toast.makeText(RentListActivity.this, getString(R.string.list_refreshed), Toast.LENGTH_SHORT).show();
@@ -161,8 +156,8 @@ public class RentListActivity extends AppCompatActivity {
             public void onFetch(ArrayList<Rent> objects) {
                 rentList = objects;
                 if (rentList.size() <= 0){
-                    noDataTXT.setVisibility(View.VISIBLE);
-                    noDataTXT.setText(R.string.no_data_message);
+                    activityRentListBinding.mNoDataMessage.setVisibility(View.VISIBLE);
+                    activityRentListBinding.mNoDataMessage.setText(R.string.no_data_message);
                 }
                 setRecyclerAdapter();
                 ux.removeLoadingView();

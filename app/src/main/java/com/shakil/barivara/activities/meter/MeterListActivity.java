@@ -6,7 +6,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,7 +27,6 @@ import java.util.ArrayList;
 public class MeterListActivity extends AppCompatActivity {
     private ActivityMeterListBinding activityMeterListBinding;
     private ArrayList<Meter> meterList;
-    private TextView noDataTXT;
     private FirebaseCrudHelper firebaseCrudHelper;
     private UX ux;
     private Tools tools;
@@ -87,8 +85,8 @@ public class MeterListActivity extends AppCompatActivity {
                                     Toast.makeText(MeterListActivity.this, getString(R.string.filterd), Toast.LENGTH_SHORT).show();
                                 } else {
                                     Tools.hideKeyboard(MeterListActivity.this);
-                                    noDataTXT.setVisibility(View.VISIBLE);
-                                    noDataTXT.setText(R.string.no_data_message);
+                                    activityMeterListBinding.mNoDataMessage.setVisibility(View.VISIBLE);
+                                    activityMeterListBinding.mNoDataMessage.setText(R.string.no_data_message);
                                     activityMeterListBinding.mRecylerView.setVisibility(View.GONE);
                                     Toast.makeText(MeterListActivity.this, getString(R.string.no_data_message), Toast.LENGTH_SHORT).show();
                                 }
@@ -110,7 +108,7 @@ public class MeterListActivity extends AppCompatActivity {
                 if (tools.hasConnection()) {
                     activityMeterListBinding.mRecylerView.setVisibility(View.VISIBLE);
                     searchName.setText("");
-                    noDataTXT.setVisibility(View.GONE);
+                    activityMeterListBinding.mNoDataMessage.setVisibility(View.GONE);
                     Tools.hideKeyboard(MeterListActivity.this);
                     setData();
                     Toast.makeText(MeterListActivity.this, getString(R.string.list_refreshed), Toast.LENGTH_SHORT).show();
@@ -162,8 +160,8 @@ public class MeterListActivity extends AppCompatActivity {
                 ux.removeLoadingView();
 
                 if (meterList.size() <= 0){
-                    noDataTXT.setVisibility(View.VISIBLE);
-                    noDataTXT.setText(R.string.no_data_message);
+                    activityMeterListBinding.mNoDataMessage.setVisibility(View.VISIBLE);
+                    activityMeterListBinding.mNoDataMessage.setText(R.string.no_data_message);
                 }
             }
         });
@@ -179,7 +177,6 @@ public class MeterListActivity extends AppCompatActivity {
         tools = new Tools(this);
         filterManager = new FilterManager(this);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
-        noDataTXT = findViewById(R.id.mNoDataMessage);
     }
 
     @Override

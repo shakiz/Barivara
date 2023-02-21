@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,7 +32,6 @@ import java.util.ArrayList;
 
 public class RoomListActivity extends AppCompatActivity {
     private ActivityRoomListBinding activityRoomListBinding;
-    private TextView noDataTXT;
     private ArrayList<Room> roomList;
     private FirebaseCrudHelper firebaseCrudHelper;
     private UX ux;
@@ -70,7 +68,6 @@ public class RoomListActivity extends AppCompatActivity {
         tools = new Tools(this);
         filterManager = new FilterManager(this);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
-        noDataTXT = findViewById(R.id.mNoDataMessage);
         customAdManager = new CustomAdManager(this);
     }
 
@@ -111,8 +108,8 @@ public class RoomListActivity extends AppCompatActivity {
                                     Toast.makeText(RoomListActivity.this, getString(R.string.filterd), Toast.LENGTH_SHORT).show();
                                 } else {
                                     Tools.hideKeyboard(RoomListActivity.this);
-                                    noDataTXT.setVisibility(View.VISIBLE);
-                                    noDataTXT.setText(R.string.no_data_message);
+                                    activityRoomListBinding.mNoDataMessage.setVisibility(View.VISIBLE);
+                                    activityRoomListBinding.mNoDataMessage.setText(R.string.no_data_message);
                                     activityRoomListBinding.mRecylerView.setVisibility(View.GONE);
                                     Toast.makeText(RoomListActivity.this, getString(R.string.no_data_message), Toast.LENGTH_SHORT).show();
                                 }
@@ -134,7 +131,7 @@ public class RoomListActivity extends AppCompatActivity {
                 if (tools.hasConnection()) {
                     activityRoomListBinding.mRecylerView.setVisibility(View.VISIBLE);
                     searchName.setText("");
-                    noDataTXT.setVisibility(View.GONE);
+                    activityRoomListBinding.mNoDataMessage.setVisibility(View.GONE);
                     Tools.hideKeyboard(RoomListActivity.this);
                     setData();
                     Toast.makeText(RoomListActivity.this, getString(R.string.list_refreshed), Toast.LENGTH_SHORT).show();
@@ -154,8 +151,8 @@ public class RoomListActivity extends AppCompatActivity {
             public void onFetch(ArrayList<Room> objects) {
                 roomList = objects;
                 if (roomList.size()<=0){
-                    noDataTXT.setVisibility(View.VISIBLE);
-                    noDataTXT.setText(R.string.no_data_message);
+                    activityRoomListBinding.mNoDataMessage.setVisibility(View.VISIBLE);
+                    activityRoomListBinding.mNoDataMessage.setText(R.string.no_data_message);
                 }
                 setRecyclerAdapter();
                 ux.removeLoadingView();

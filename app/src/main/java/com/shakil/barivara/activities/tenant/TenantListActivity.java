@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,7 +33,6 @@ import java.util.ArrayList;
 public class TenantListActivity extends AppCompatActivity {
     private ActivityTenantListBinding activityTenantListBinding;
     private ArrayList<Tenant> tenantList;
-    private TextView noDataTXT;
     private FirebaseCrudHelper firebaseCrudHelper;
     private UX ux;
     private Tools tools;
@@ -71,7 +69,6 @@ public class TenantListActivity extends AppCompatActivity {
         firebaseCrudHelper = new FirebaseCrudHelper(this);
         ux = new UX(this);
         tools = new Tools(this);
-        noDataTXT = findViewById(R.id.mNoDataMessage);
         customAdManager = new CustomAdManager(this);
     }
 
@@ -112,8 +109,8 @@ public class TenantListActivity extends AppCompatActivity {
                                     Toast.makeText(TenantListActivity.this, getString(R.string.filterd), Toast.LENGTH_SHORT).show();
                                 } else {
                                     Tools.hideKeyboard(TenantListActivity.this);
-                                    noDataTXT.setVisibility(View.VISIBLE);
-                                    noDataTXT.setText(R.string.no_data_message);
+                                    activityTenantListBinding.mNoDataMessage.setVisibility(View.VISIBLE);
+                                    activityTenantListBinding.mNoDataMessage.setText(R.string.no_data_message);
                                     activityTenantListBinding.mRecylerView.setVisibility(View.GONE);
                                     Toast.makeText(TenantListActivity.this, getString(R.string.no_data_message), Toast.LENGTH_SHORT).show();
                                 }
@@ -135,7 +132,7 @@ public class TenantListActivity extends AppCompatActivity {
                 if (tools.hasConnection()) {
                     activityTenantListBinding.mRecylerView.setVisibility(View.VISIBLE);
                     searchName.setText("");
-                    noDataTXT.setVisibility(View.GONE);
+                    activityTenantListBinding.mNoDataMessage.setVisibility(View.GONE);
                     Tools.hideKeyboard(TenantListActivity.this);
                     setData();
                     Toast.makeText(TenantListActivity.this, getString(R.string.list_refreshed), Toast.LENGTH_SHORT).show();
@@ -155,8 +152,8 @@ public class TenantListActivity extends AppCompatActivity {
             public void onFetch(ArrayList<Tenant> objects) {
                 tenantList = objects;
                 if (tenantList.size() <= 0){
-                    noDataTXT.setVisibility(View.VISIBLE);
-                    noDataTXT.setText(R.string.no_data_message);
+                    activityTenantListBinding.mNoDataMessage.setVisibility(View.VISIBLE);
+                    activityTenantListBinding.mNoDataMessage.setText(R.string.no_data_message);
                 }
                 setRecyclerAdapter();
                 ux.removeLoadingView();

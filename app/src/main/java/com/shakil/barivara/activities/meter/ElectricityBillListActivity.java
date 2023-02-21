@@ -6,7 +6,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,7 +27,6 @@ import java.util.ArrayList;
 public class ElectricityBillListActivity extends AppCompatActivity {
     private ActivityElectricityBillListBinding activityMeterCostListBinding;
     private ArrayList<ElectricityBill> electricityBills;
-    private TextView noDataTXT;
     private FirebaseCrudHelper firebaseCrudHelper;
     private UX ux;
     private Tools tools;
@@ -62,7 +60,6 @@ public class ElectricityBillListActivity extends AppCompatActivity {
         electricityBills = new ArrayList<>();
         ux = new UX(this);
         tools = new Tools(this);
-        noDataTXT = findViewById(R.id.mNoDataMessage);
         filterManager = new FilterManager(this);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
     }
@@ -102,8 +99,8 @@ public class ElectricityBillListActivity extends AppCompatActivity {
                                     Toast.makeText(ElectricityBillListActivity.this, getString(R.string.filterd), Toast.LENGTH_SHORT).show();
                                 } else {
                                     Tools.hideKeyboard(ElectricityBillListActivity.this);
-                                    noDataTXT.setVisibility(View.VISIBLE);
-                                    noDataTXT.setText(R.string.no_data_message);
+                                    activityMeterCostListBinding.mNoDataMessage.setVisibility(View.VISIBLE);
+                                    activityMeterCostListBinding.mNoDataMessage.setText(R.string.no_data_message);
                                     activityMeterCostListBinding.mRecylerView.setVisibility(View.GONE);
                                     Toast.makeText(ElectricityBillListActivity.this, getString(R.string.no_data_message), Toast.LENGTH_SHORT).show();
                                 }
@@ -125,7 +122,7 @@ public class ElectricityBillListActivity extends AppCompatActivity {
                 if (tools.hasConnection()) {
                     activityMeterCostListBinding.mRecylerView.setVisibility(View.VISIBLE);
                     searchName.setText("");
-                    noDataTXT.setVisibility(View.GONE);
+                    activityMeterCostListBinding.mNoDataMessage.setVisibility(View.GONE);
                     Tools.hideKeyboard(ElectricityBillListActivity.this);
                     setData();
                     Toast.makeText(ElectricityBillListActivity.this, getString(R.string.list_refreshed), Toast.LENGTH_SHORT).show();
@@ -146,8 +143,8 @@ public class ElectricityBillListActivity extends AppCompatActivity {
             public void onFetch(ArrayList<ElectricityBill> objects) {
                 electricityBills = objects;
                 if (electricityBills.size() <= 0){
-                    noDataTXT.setVisibility(View.VISIBLE);
-                    noDataTXT.setText(R.string.no_data_message);
+                    activityMeterCostListBinding.mNoDataMessage.setVisibility(View.VISIBLE);
+                    activityMeterCostListBinding.mNoDataMessage.setText(R.string.no_data_message);
                 }
                 setRecyclerAdapter();
                 ux.removeLoadingView();
