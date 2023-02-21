@@ -25,7 +25,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:paddingBottom="8dp"
             android:gravity="center">
 
             <LinearLayout
@@ -216,10 +215,10 @@
             </LinearLayout>
 
             <include
-                android:layout_below="@id/detailsLayout"
                 layout="@layout/adapter_recycler_all_bottom_actions"
+                android:layout_width="match_parent"
                 android:layout_height="52dp"
-                android:layout_width="match_parent" />
+                android:layout_below="@id/detailsLayout" />
 
         </RelativeLayout>
 
