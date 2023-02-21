@@ -175,7 +175,7 @@ public class MeterListActivity extends AppCompatActivity {
         meterList = new ArrayList<>();
         ux = new UX(this);
         tools = new Tools(this);
-        filterManager = new FilterManager(this);
+        filterManager = new FilterManager();
         firebaseCrudHelper = new FirebaseCrudHelper(this);
     }
 

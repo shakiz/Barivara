@@ -68,7 +68,7 @@ public class RentListActivity extends AppCompatActivity {
         firebaseCrudHelper = new FirebaseCrudHelper(this);
         ux = new UX(this);
         tools = new Tools(this);
-        filterManager = new FilterManager(this);
+        filterManager = new FilterManager();
         customAdManager = new CustomAdManager(this);
     }
     //endregion

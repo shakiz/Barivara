@@ -1,7 +1,5 @@
 package com.shakil.barivara.utils;
 
-import android.content.Context;
-
 import com.shakil.barivara.model.meter.ElectricityBill;
 import com.shakil.barivara.model.meter.Meter;
 import com.shakil.barivara.model.room.Rent;
@@ -11,11 +9,6 @@ import com.shakil.barivara.model.tenant.Tenant;
 import java.util.ArrayList;
 
 public class FilterManager{
-    private final Context context;
-
-    public FilterManager(Context context) {
-        this.context = context;
-    }
 
     //region room search listener
     public interface onFilterClick{

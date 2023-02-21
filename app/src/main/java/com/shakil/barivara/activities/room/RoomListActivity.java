@@ -66,7 +66,7 @@ public class RoomListActivity extends AppCompatActivity {
         roomList = new ArrayList<>();
         ux = new UX(this);
         tools = new Tools(this);
-        filterManager = new FilterManager(this);
+        filterManager = new FilterManager();
         firebaseCrudHelper = new FirebaseCrudHelper(this);
         customAdManager = new CustomAdManager(this);
     }

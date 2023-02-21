@@ -64,7 +64,7 @@ public class TenantListActivity extends AppCompatActivity {
         searchButton = findViewById(R.id.searchButton);
         refreshButton = findViewById(R.id.refreshButton);
         searchName = findViewById(R.id.SearchName);
-        filterManager = new FilterManager(this);
+        filterManager = new FilterManager();
         tenantList = new ArrayList<>();
         firebaseCrudHelper = new FirebaseCrudHelper(this);
         ux = new UX(this);
