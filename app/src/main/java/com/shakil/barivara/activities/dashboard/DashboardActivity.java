@@ -52,7 +52,6 @@ public class DashboardActivity extends AppCompatActivity {
         });
     }
 
-    //region init objects
     private void init() {
         prefManager = new PrefManager(this);
         customAdManager = new CustomAdManager(this);
@@ -60,19 +59,14 @@ public class DashboardActivity extends AppCompatActivity {
         spinnerData = new SpinnerData(this);
         spinnerAdapter = new SpinnerAdapter();
     }
-    //endregion
 
-    //region init objects
     private void bindUiWithComponents() {
         spinnerAdapter.setSpinnerAdapter(activityDashboardBinding.FilterYear, this, spinnerData.setYearData());
         spinnerAdapter.setSpinnerAdapter(activityDashboardBinding.FilterMonth, this, spinnerData.setMonthData());
 
-        //region for ad
         customAdManager.generateAd(activityDashboardBinding.adView);
         customAdManager.generateAd(activityDashboardBinding.adViewSecond);
-        //endregion
 
-        //region set all counts
         firebaseCrudHelper.fetchAllTenant("tenant", new FirebaseCrudHelper.onTenantDataFetch() {
             @Override
             public void onFetch(ArrayList<Tenant> objects) {
@@ -120,9 +114,7 @@ public class DashboardActivity extends AppCompatActivity {
         });
 
         activityDashboardBinding.AppVisitCount.setText(String.valueOf(prefManager.getInt(mAppViewCount)));
-        //endregion
 
-        //region daily data filter by year
         activityDashboardBinding.FilterYear.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -140,9 +132,7 @@ public class DashboardActivity extends AppCompatActivity {
                 Log.i(Constants.TAG, "FilterYear Spinner : onNothingSelected");
             }
         });
-        //endregion
 
-        //region daily data filter by month
         activityDashboardBinding.FilterMonth.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -160,11 +150,7 @@ public class DashboardActivity extends AppCompatActivity {
                 Log.i(Constants.TAG, "FilterMonth Spinner : onNothingSelected");
             }
         });
-        //endregion
     }
-    //endregion
-
-    //region activity components
 
     @Override
     public void onBackPressed() {
@@ -175,6 +161,4 @@ public class DashboardActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
-
-    //endregion
 }

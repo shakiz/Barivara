@@ -39,48 +39,34 @@ public class RegistrationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         activityBinding = DataBindingUtil.setContentView(this, R.layout.activity_registration);
 
-        //region init UI
         initUI();
-        //endregion
 
-        //region bind UI with components
         bindUiWithComponents();
-        //endregion
     }
 
-    //region init UI
     private void initUI() {
         firebaseAuth = FirebaseAuth.getInstance();
         ux = new UX(this);
         validation = new Validation(this, hashMap);
         tools = new Tools(this);
     }
-    //endregion
 
-    //region bind UI with components
     private void bindUiWithComponents() {
-        //region validation
         validation.setEditTextIsNotEmpty(new String[]{"email", "password"},
                 new String[]{getString(R.string.email_validation), getString(R.string.password_validation)});
-        //endregion
 
-        //region login click listener
         activityBinding.login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
             }
         });
-        //endregion
 
-
-        //region register click listener
         activityBinding.signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (validation.isValid()) {
                     if (tools.hasConnection()) {
-                        //region check email address validation
                         if (tools.validateEmailAddress(activityBinding.email.getText().toString())) {
                             if (activityBinding.password.getText().toString().length() >= 6) {
                                 registerWithEmailPass();
@@ -90,18 +76,14 @@ public class RegistrationActivity extends AppCompatActivity {
                         } else {
                             Toasty.warning(RegistrationActivity.this, getString(R.string.not_a_valid_email_address), Toast.LENGTH_LONG, true).show();
                         }
-                        //endregion
                     }
                 } else {
                     Toasty.warning(RegistrationActivity.this, getString(R.string.no_internet_title), Toast.LENGTH_LONG, true).show();
                 }
             }
         });
-        //endregion
     }
-    //endregion
 
-    //region register with email and pass
     private void registerWithEmailPass() {
         ux.getLoadingView();
         firebaseAuth.createUserWithEmailAndPassword(activityBinding.email.getText().toString(),
@@ -124,12 +106,9 @@ public class RegistrationActivity extends AppCompatActivity {
             }
         });
     }
-    //endregion
 
-    //region activity components
     @Override
     public void onBackPressed() {
         super.onBackPressed();
     }
-    //endregion
 }

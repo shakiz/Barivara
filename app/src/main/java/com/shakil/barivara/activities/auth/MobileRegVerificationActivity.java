@@ -44,26 +44,20 @@ public class MobileRegVerificationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         activityBinding = DataBindingUtil.setContentView(this, R.layout.activity_mobile_reg_verification);
 
-        //region get intent data, init UI and perform interactions
         initUI();
         getIntentData();
         bindUIWithComponents();
-        //endregion
     }
 
-    //region init UI
     private void initUI() {
         firebaseAuth = FirebaseAuth.getInstance();
         tools = new Tools(this);
         ux = new UX(this);
     }
-    //endregion
 
-    //region perform interactions
     private void bindUIWithComponents() {
         activityBinding.sentCodeHintText.setText(getString(R.string.sent_you_code_on_your_number) +"("+mobileNumber+")");
 
-        //region verify button click listener
         activityBinding.verify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,11 +76,8 @@ public class MobileRegVerificationActivity extends AppCompatActivity {
                 }
             }
         });
-        //endregion
     }
-    //endregion
 
-    //region get intent data
     private void getIntentData() {
         if (getIntent().getStringExtra("mobile") != null) {
             mobileNumber = getIntent().getStringExtra("mobile");
@@ -99,9 +90,7 @@ public class MobileRegVerificationActivity extends AppCompatActivity {
             }
         }
     }
-    //endregion
 
-    //region send verification code
     private void sendVerificationCode(String mobile) {
         PhoneAuthOptions options =
                 PhoneAuthOptions.newBuilder(firebaseAuth)
@@ -137,16 +126,12 @@ public class MobileRegVerificationActivity extends AppCompatActivity {
                 options
         );
     }
-    //endregion
 
-    //region verify code
     private void verifyVerificationCode(String code) {
         if (tools.hasConnection()) {
             Log.i(Constants.TAG+":verifyVerificationCode","Code:"+code);
             try{
-                //creating the credential
                 PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, code);
-                //signing the user
                 loginWithMobile(credential);
             }
             catch (Exception e){
@@ -158,9 +143,7 @@ public class MobileRegVerificationActivity extends AppCompatActivity {
             snackbar.show();
         }
     }
-    //endregion
 
-    //region sign in with credentials
     private void loginWithMobile(PhoneAuthCredential credential) {
         ux.getLoadingView();
         firebaseAuth.signInWithCredential(credential)
@@ -172,13 +155,11 @@ public class MobileRegVerificationActivity extends AppCompatActivity {
                             tools.setLoginPrefs(task);
                             ux.removeLoadingView();
                             Toasty.success(MobileRegVerificationActivity.this, getString(R.string.login_succcessful), Toast.LENGTH_LONG, true).show();
-                            //verification successful we will start the profile activity
                             Intent intent = new Intent(MobileRegVerificationActivity.this, MainActivity.class);
                             startActivity(intent);
                         } else {
                             Log.i(Constants.TAG+":loginWithMobile","Failed");
                             ux.removeLoadingView();
-                            //verification unsuccessful.. display an error message
                             String message = getString(R.string.login_unsucccessful);
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                                 message = "\n"+getString(R.string.invalid_code_entered);
@@ -188,14 +169,9 @@ public class MobileRegVerificationActivity extends AppCompatActivity {
                     }
                 });
     }
-    //endregion
-
-    //region activity components
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
     }
-
-    //endregion
 }

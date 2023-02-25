@@ -36,28 +36,20 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         activityForgotPasswordBinding = DataBindingUtil.setContentView(this, R.layout.activity_forgot_password);
 
-        //region init objects and perform all UI interactions
         initUI();
         bindUiWithComponents();
-        //endregion
     }
 
-    //region init objects
     private void initUI() {
         ux = new UX(this);
         validation = new Validation(this, hashMap);
         firebaseAuth = FirebaseAuth.getInstance();
     }
-    //endregion
 
-    //region perform all UI interactions
     private void bindUiWithComponents() {
-        //region validation
         validation.setEditTextIsNotEmpty(new String[]{"email"},
                 new String[]{getString(R.string.email_validation)});
-        //endregion
 
-        //region reset email send listener job
         activityForgotPasswordBinding.changePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,7 +81,6 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                 }
             }
         });
-        //endregion
 
         activityForgotPasswordBinding.login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,12 +89,9 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             }
         });
     }
-    //endregion
 
-    //region activity components
     @Override
     public void onBackPressed() {
         super.onBackPressed();
     }
-    //endregion
 }

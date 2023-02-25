@@ -43,42 +43,30 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         activityBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
 
-        //region init UI
         initUI();
         loginWithStr = getString(R.string.mobile);
-        //endregion
 
-        //region bind UI with components
         bindUiWithComponents();
-        //endregion
     }
 
-    //region init UI
     private void initUI() {
         firebaseAuth = FirebaseAuth.getInstance();
         ux = new UX(this);
         tools = new Tools(this);
         validation = new Validation(this, hashMap);
     }
-    //endregion
 
-    //region bind UI with components
     private void bindUiWithComponents(){
-        //region validation
         validation(new String[]{"mobileNumber"},
                 new String[]{getString(R.string.mobile_validation)});
-        //endregion
 
-        //region register with click
         activityBinding.emailIdLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 loginWithStr = getString(R.string.email);
                 loginWith(loginWithStr);
-                //region validation
                 validation(new String[]{"email", "password"},
                         new String[]{getString(R.string.email_validation), getString(R.string.password_validation)});
-                //endregion
             }
         });
         activityBinding.mobileLayout.setOnClickListener(new View.OnClickListener() {
@@ -86,30 +74,23 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 loginWithStr = getString(R.string.mobile);
                 loginWith(loginWithStr);
-                //region validation
                 validation(new String[]{"mobileNumber"},
                         new String[]{getString(R.string.mobile_validation)});
-                //endregion
             }
         });
-        //endregion
 
-        //region register text click listener
         activityBinding.register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(LoginActivity.this, RegistrationActivity.class));
             }
         });
-        //endregion
 
-        //region login click listener
         activityBinding.login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (validation.isValid()){
                     if (tools.hasConnection()){
-                        ///region check use choose mobile or email option for login
                         if (loginWithStr.equals(getString(R.string.email))) {
                             if (tools.validateEmailAddress(activityBinding.email.getText().toString())){
                                 loginWithEmail();
@@ -118,16 +99,13 @@ public class LoginActivity extends AppCompatActivity {
                                 Toasty.warning(LoginActivity.this, getString(R.string.not_a_valid_email_address), Toast.LENGTH_LONG, true).show();
                             }
                         } else if (loginWithStr.equals(getString(R.string.mobile))){
-                            //region check for mobile number validation and do register
                             if (tools.isValidMobile(activityBinding.mobileNumber.getText().toString())){
                                 loginWithMobile();
                             }
                             else{
                                 Toasty.warning(LoginActivity.this, getString(R.string.not_a_valid_mobile_number), Toast.LENGTH_LONG, true).show();
                             }
-                            //endregion
                         }
-                        //endregion
                     }
                     else{
                         Toasty.warning(LoginActivity.this, getString(R.string.no_internet_title), Toast.LENGTH_LONG, true).show();
@@ -135,7 +113,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-        //endregion
 
         activityBinding.forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,9 +121,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-    //endregion
 
-    //region login with email
     private void loginWithEmail(){
         ux.getLoadingView();
         firebaseAuth.signInWithEmailAndPassword(activityBinding.email.getText().toString()
@@ -156,9 +131,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (task.isSuccessful()){
                     Log.i(Constants.TAG+":onComplete",getString(R.string.login_succcessful));
                     Toasty.success(LoginActivity.this, getString(R.string.login_succcessful), Toast.LENGTH_LONG, true).show();
-                    //region set pref
                     tools.setLoginPrefs(task);
-                    //endregion
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 }
                 else{
@@ -177,17 +150,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-    //endregion
 
-    //region login with mobile
     private void loginWithMobile(){
         Intent intent = new Intent(LoginActivity.this, MobileRegVerificationActivity.class);
         intent.putExtra("mobile", activityBinding.mobileNumber.getText().toString());
         startActivity(intent);
     }
-    //endregion
 
-    //region change register with UI
     private void loginWith(String registerWith) {
         if (registerWith.equals(getString(R.string.email))) {
             activityBinding.mainMobileRegistrationLayout.setVisibility(View.GONE);
@@ -209,18 +178,13 @@ public class LoginActivity extends AppCompatActivity {
             activityBinding.EmailIcon.setImageResource(R.drawable.ic_email_green);
         }
     }
-    //endregion
 
-    //region custom validation
     private void validation(String[] resNames, String[] validationMessages) {
         validation.setEditTextIsNotEmpty(resNames, validationMessages);
     }
-    //endregion
 
-    //region activity components
     @Override
     public void onBackPressed() {
         new UtilsForAll(this).exitApp();
     }
-    //endregion
 }
