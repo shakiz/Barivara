@@ -14,9 +14,6 @@ public class User {
     private String Email;
     private String DOB;
 
-    public User() {
-    }
-
     public User(String ID, String firebaseKey, String name, String userName, String mobile, String email, String DOB) {
         this.ID = ID;
         FirebaseKey = firebaseKey;
