@@ -49,7 +49,6 @@ public class LanguageManager {
         }
     }
 
-    //region open language selector
     private void doPopUpForLanguage(Class to){
         LinearLayout defaultLan, bengaliLan, englishLan;
         TextView DefaultTXT, BengaliTXT, EnglishTXT;
@@ -125,9 +124,7 @@ public class LanguageManager {
         dialog.getWindow().setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         dialog.show();
     }
-    //endregion
 
-    //region set text and background color based on language selection
     private void changeColor(TextView selectedTextResId, LinearLayout selectedBackResId,
                              TextView[] unselectedTextResIds, LinearLayout[] unselectedBackResIds){
         if (unselectedBackResIds != null && unselectedTextResIds != null){
@@ -140,5 +137,4 @@ public class LanguageManager {
         selectedBackResId.setBackgroundResource(R.drawable.rectangle_green_selected);
         selectedTextResId.setTextColor(context.getResources().getColor(R.color.md_white_1000));
     }
-    //endregion
 }

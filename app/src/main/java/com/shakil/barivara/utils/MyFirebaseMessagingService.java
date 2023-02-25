@@ -16,7 +16,6 @@ import java.util.UUID;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
-    //region Called when message is received.
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         Log.i(TAG, "From: " + remoteMessage.getFrom());
@@ -39,7 +38,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             Log.i(TAG,"Notification data saved");
         }
     }
-    //endregion
 
 
     @Override
