@@ -45,7 +45,6 @@ public class LoginActivity extends AppCompatActivity {
 
         initUI();
         loginWithStr = getString(R.string.mobile);
-
         bindUiWithComponents();
     }
 
