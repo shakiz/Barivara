@@ -1,11 +1,16 @@
 package com.shakil.barivara.activities.meter;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -142,8 +147,7 @@ public class MeterListActivity extends AppCompatActivity {
         recyclerMeterListAdapter.onDeleteListener(new RecyclerMeterListAdapter.onDeleteListener() {
             @Override
             public void onDelete(Meter meter) {
-                firebaseCrudHelper.deleteRecord("meter",meter.getFireBaseKey());
-                setData();
+                doPopUpForDeleteConfirmation(meter);
             }
         });
     }
@@ -178,6 +182,41 @@ public class MeterListActivity extends AppCompatActivity {
         filterManager = new FilterManager();
         firebaseCrudHelper = new FirebaseCrudHelper(this);
     }
+
+    //region ask to delete confirmation
+    private void doPopUpForDeleteConfirmation(Meter meter){
+        Button cancel, delete;
+        Dialog dialog = new Dialog(MeterListActivity.this, android.R.style.Theme_Dialog);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.delete_confirmation_layout);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setCanceledOnTouchOutside(true);
+
+        cancel = dialog.findViewById(R.id.cancelButton);
+        delete = dialog.findViewById(R.id.deleteButton);
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                firebaseCrudHelper.deleteRecord("meter",meter.getFireBaseKey());
+                dialog.dismiss();
+                setData();
+            }
+        });
+
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        dialog.getWindow().setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        dialog.show();
+    }
+    //endregion
 
     @Override
     public void onBackPressed() {
