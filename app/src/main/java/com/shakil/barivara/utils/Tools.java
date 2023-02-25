@@ -77,25 +77,6 @@ public class Tools {
         }
     }
 
-    public static Long persistDate(Date date) {
-        if (date != null) {
-            return date.getTime();
-        }
-        return null;
-    }
-
-    public int toIntValue(String value){
-        try{
-            Log.v(TAG,""+ Integer.parseInt(value));
-            return Integer.parseInt(value);
-        }
-        catch (Exception e){
-            Log.v(TAG,e.getMessage());
-            return 0;
-        }
-    }
-
-    //region hide soft keyboard
     public static void hideKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
         //Find the currently focused view, so we can grab the correct window token from it.
@@ -106,9 +87,7 @@ public class Tools {
         }
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
-    //endregion
 
-    //region rate app in google play store
     public void rateApp(){
         Uri uri = Uri.parse("market://details?id=" + context.getPackageName());
         Intent myAppLinkToMarket = new Intent(Intent.ACTION_VIEW, uri);
@@ -118,9 +97,7 @@ public class Tools {
             Toast.makeText(context, context.getString(R.string.unable_to_open_play_store), Toast.LENGTH_LONG).show();
         }
     }
-    //endregion
 
-    //region logout action
     public void doPopUpForLogout(Class to){
         Button cancel, logout;
         Dialog dialog = new Dialog(context, android.R.style.Theme_Dialog);
@@ -152,9 +129,7 @@ public class Tools {
         dialog.getWindow().setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         dialog.show();
     }
-    //endregion
 
-    //region logout action
     public void doPopUpForExitApp(Context context){
         Button cancel, exit;
         Dialog dialog = new Dialog(context, android.R.style.Theme_Dialog);
@@ -186,9 +161,7 @@ public class Tools {
         dialog.getWindow().setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         dialog.show();
     }
-    //endregion
 
-    //region clear login pref
     private void clearPrefForLogout(Class to){
         prefManager.set(mAppViewCount, 0);
         prefManager.set(mIsLoggedIn, false);
@@ -200,18 +173,14 @@ public class Tools {
         context.startActivity(new Intent(context, to));
         Toast.makeText(context, context.getString(R.string.logged_out_successfully), Toast.LENGTH_SHORT).show();
     }
-    //endregion
 
-    //region validate email address
     public boolean validateEmailAddress(String emailAddress){
         boolean isValidEmail = false;
         Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailAddress);
         isValidEmail = matcher.find();
         return isValidEmail;
     }
-    //endregion
 
-    //region get app version name
     public String getAppVersionName() {
         PackageManager manager = context.getPackageManager();
         PackageInfo info = null;
@@ -222,9 +191,7 @@ public class Tools {
         }
         return String.valueOf(info.versionName);
     }
-    //endregion
 
-    //region internet connection check
     public boolean hasConnection() {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo wifiNetwork = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
@@ -238,9 +205,7 @@ public class Tools {
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         return activeNetwork != null && activeNetwork.isConnected();
     }
-    //endregion
 
-    //region send message
     public void sendMessage(String number){
         Intent smsIntent = new Intent(Intent.ACTION_SENDTO);
         smsIntent.addCategory(Intent.CATEGORY_DEFAULT);
@@ -248,9 +213,7 @@ public class Tools {
         smsIntent.setData(Uri.parse("sms:" + number));
         context.startActivity(smsIntent);
     }
-    //endregion
 
-    //region validate mobile number
     public boolean isValidMobile(String mobileNumber) {
         boolean valid = false;
         if (mobileNumber != null) {
@@ -269,15 +232,11 @@ public class Tools {
         }
         return valid;
     }
-    //endregion
 
-    //region check login
     public void checkLogin(){
-        //region check for user login status
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                //region check for new update
                 Intent intent = null;
                 if (prefManager.getBoolean(mOldUser)){
                     if (prefManager.getBoolean(mIsLoggedIn)) {
@@ -290,14 +249,10 @@ public class Tools {
                     intent = new Intent(context, WelcomeActivity.class);
                 }
                 context.startActivity(intent);
-                //endregion
             }
         }, 1000);
-        //endregion
     }
-    //endregion
 
-    //region generate pdf from content only above of SDK version 19
     public void generatePDF(String content){
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
             PdfDocument myPdfDocument = new PdfDocument();
@@ -331,9 +286,7 @@ public class Tools {
             Toast.makeText(context, context.getString(R.string.your_device_does_not_support_this_feature), Toast.LENGTH_LONG).show();
         }
     }
-    //endregion
 
-    //region set login prefs
     public void setLoginPrefs(@NonNull Task<AuthResult> task){
         prefManager.set(mIsLoggedIn, true);
         if (task.getResult() != null){
@@ -343,9 +296,7 @@ public class Tools {
             prefManager.set(mUserMobile, task.getResult().getUser().getPhoneNumber());
         }
     }
-    //endregion
 
-    //region launch app by package name
     public void launchAppByPackageName(String appPackageName){
         try {
             Toasty.info(context,context.getString(R.string.redirecting_to_play_store), Toasty.LENGTH_LONG).show();
@@ -354,9 +305,7 @@ public class Tools {
             context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
         }
     }
-    //endregion
 
-    //region launch url
     public void launchUrl(String url){
         if (!url.contains("https")){
             url = "https://"+url;
@@ -365,18 +314,14 @@ public class Tools {
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         context.startActivity(intent);
     }
-    //endregion
 
-    //region launch gmail
     public void launchGmail(){
         Intent emailIntent = new Intent(Intent.ACTION_VIEW, Uri.fromParts(
                 "mailto", "shakil.play335@gmail.com", null));
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, "This is my subject text");
         context.startActivity(Intent.createChooser(emailIntent, null));
     }
-    //endregion
 
-    //region check if its first day of the month
     public boolean isFirstDayOfMonth(Calendar calendar){
         if (calendar == null) {
             throw new IllegalArgumentException("Calendar cannot be null.");
@@ -386,9 +331,7 @@ public class Tools {
         //return dayOfMonth == 1;
         return true;
     }
-    //endregion
 
-    //region Create and show a simple notification containing the received FCM message.
     public static void sendNotification(Context context, String title, String message) {
         Intent intent = new Intent(context, SplashActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -421,5 +364,4 @@ public class Tools {
         }
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
     }
-    //endregion
 }
