@@ -48,11 +48,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="4dp"
-                    tools:listitem="@layout/adapter_layout_note_list"
+                    android:layout_marginRight="4dp"
+                    android:layout_marginBottom="4dp"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     app:spanCount="2"
-                    android:layout_marginRight="4dp"
-                    android:layout_marginBottom="4dp"/>
+                    tools:listitem="@layout/adapter_layout_note_list" />
 
             </RelativeLayout>
 
@@ -68,7 +68,9 @@
             android:layout_margin="16dp"
             android:src="@drawable/ic_add"
             app:backgroundTint="@color/white_transparent"
-            app:fabSize="normal" />
+            app:fabSize="normal"
+            android:focusable="true"
+            android:layout_alignParentEnd="true" />
 
     </RelativeLayout>
 

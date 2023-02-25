@@ -42,149 +42,149 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/account_section"
                     android:layout_marginLeft="18dp"
-                    android:layout_marginRight="16dp"
                     android:layout_marginTop="16dp"
+                    android:layout_marginRight="16dp"
+                    android:text="@string/account_section"
                     android:textColor="@color/md_grey_800"
                     android:textSize="18sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <ImageView
                     android:layout_width="64dp"
                     android:layout_height="64dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_action_person"
                     android:background="@drawable/rectangle_green"
                     android:padding="4dp"
-                    app:tint="@color/md_green_800"/>
+                    android:src="@drawable/ic_action_person"
+                    app:tint="@color/md_green_800" />
 
                 <TextView
                     android:id="@+id/UserFullName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:layout_marginTop="4dp"
                     android:layout_marginLeft="16dp"
+                    android:layout_marginTop="4dp"
                     android:layout_marginRight="16dp"
+                    android:gravity="center"
                     android:text="@string/not_found"
+                    android:textColor="@color/md_grey_800"
                     android:textSize="16sp"
-                    android:textColor="@color/md_grey_800"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/Email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:gravity="center"
-                    android:layout_marginTop="4dp"
                     android:layout_marginLeft="16dp"
+                    android:layout_marginTop="4dp"
                     android:layout_marginRight="16dp"
+                    android:gravity="center"
                     android:text="@string/not_found"
-                    android:textSize="16sp"
-                    android:textColor="@color/md_grey_800"/>
+                    android:textColor="@color/md_grey_800"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/Mobile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:gravity="center"
-                    android:layout_marginTop="4dp"
                     android:layout_marginLeft="16dp"
+                    android:layout_marginTop="4dp"
                     android:layout_marginRight="16dp"
+                    android:gravity="center"
                     android:text="@string/not_found"
-                    android:textSize="16sp"
-                    android:textColor="@color/md_grey_800"/>
+                    android:textColor="@color/md_grey_800"
+                    android:textSize="16sp" />
 
                 <Button
                     android:id="@+id/logoutButton"
                     android:layout_width="112dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
-                    android:gravity="center"
-                    android:background="@drawable/rectangle_light_red"
                     android:layout_marginTop="4dp"
-                    android:text="@string/logout"
-                    android:textColor="@color/md_white_1000"
+                    android:background="@drawable/rectangle_light_red"
                     android:clickable="true"
                     android:focusable="true"
                     android:foreground="?attr/selectableItemBackgroundBorderless"
-                    android:textSize="16sp"/>
+                    android:gravity="center"
+                    android:text="@string/logout"
+                    android:textColor="@color/md_white_1000"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/preferences"
                     android:layout_marginLeft="18dp"
-                    android:layout_marginRight="16dp"
                     android:layout_marginTop="16dp"
+                    android:layout_marginRight="16dp"
+                    android:text="@string/preferences"
                     android:textColor="@color/md_grey_800"
                     android:textSize="18sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/language"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:foreground="?attr/selectableItemBackground"
                     android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginRight="16dp"
                     android:layout_marginBottom="8dp"
                     android:background="@color/md_white_1000"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
                     app:cardCornerRadius="8dp"
                     app:cardUseCompatPadding="true"
-                    app:elevation="16dp"
-                    android:focusable="true">
+                    app:elevation="16dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="4dp"
+                        android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
-                        android:layout_marginTop="8dp">
+                        android:orientation="vertical"
+                        android:padding="4dp">
 
                         <!--Language-->
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:weightSum="8"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:weightSum="8">
 
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:gravity="center"
                                 android:layout_gravity="center"
-                                android:layout_weight="1.4">
+                                android:layout_weight="1.4"
+                                android:gravity="center">
 
                                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:scaleType="fitCenter"
                                     android:layout_marginLeft="4dp"
+                                    android:layout_marginTop="8dp"
                                     android:layout_marginRight="4dp"
                                     android:layout_marginBottom="8dp"
-                                    android:layout_marginTop="8dp"
+                                    android:scaleType="fitCenter"
                                     android:src="@drawable/ic_language_black_24dp"
-                                    app:backgroundTint="@color/md_white_1000"
                                     android:tint="@color/md_green_700"
-                                    app:fabSize="mini"/>
+                                    app:backgroundTint="@color/md_white_1000"
+                                    app:fabSize="mini" />
 
                             </LinearLayout>
 
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="center"
                                 android:layout_marginLeft="8dp"
                                 android:layout_weight="5.4"
                                 android:orientation="vertical"
-                                android:layout_gravity="center"
                                 android:paddingTop="0dp">
 
                                 <TextView
@@ -199,10 +199,10 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="top"
-                                    android:paddingTop="4dp"
-                                    android:paddingBottom="4dp"
-                                    android:paddingRight="4dp"
                                     android:gravity="top"
+                                    android:paddingTop="4dp"
+                                    android:paddingRight="4dp"
+                                    android:paddingBottom="4dp"
                                     android:text="@string/change_language"
                                     android:textColor="@color/md_grey_800"
                                     android:textSize="14sp" />
@@ -212,8 +212,8 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="top"
-                                    android:paddingRight="4dp"
                                     android:gravity="top"
+                                    android:paddingRight="4dp"
                                     android:text="@string/english"
                                     android:textColor="@color/md_grey_800"
                                     android:textSize="14sp" />
@@ -223,17 +223,17 @@
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="center"
                                 android:layout_margin="4dp"
                                 android:layout_weight="1.2"
                                 android:gravity="center"
-                                android:layout_gravity="center"
                                 android:orientation="vertical">
 
                                 <ImageView
                                     android:layout_width="32dp"
                                     android:layout_height="32dp"
-                                    android:padding="8dp"
                                     android:background="@drawable/circle_border_settings_green"
+                                    android:padding="8dp"
                                     android:src="@drawable/ic_sync_black_24dp"
                                     app:tint="@color/md_white_1000" />
 
@@ -249,62 +249,62 @@
                     android:id="@+id/google_login_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:foreground="?attr/selectableItemBackground"
                     android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginRight="16dp"
                     android:layout_marginBottom="8dp"
                     android:background="@color/md_white_1000"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
                     app:cardCornerRadius="8dp"
                     app:cardUseCompatPadding="true"
-                    app:elevation="16dp"
-                    android:focusable="true">
+                    app:elevation="16dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="4dp"
+                        android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
-                        android:layout_marginTop="8dp">
+                        android:orientation="vertical"
+                        android:padding="4dp">
 
                         <!--Language-->
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:weightSum="8"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:weightSum="8">
 
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:gravity="center"
                                 android:layout_gravity="center"
-                                android:layout_weight="1.4">
+                                android:layout_weight="1.4"
+                                android:gravity="center">
 
                                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:scaleType="fitCenter"
                                     android:layout_marginLeft="4dp"
+                                    android:layout_marginTop="8dp"
                                     android:layout_marginRight="4dp"
                                     android:layout_marginBottom="8dp"
-                                    android:layout_marginTop="8dp"
+                                    android:scaleType="fitCenter"
                                     android:src="@drawable/ic_save_alt_black_24dp"
-                                    app:backgroundTint="@color/md_white_1000"
                                     android:tint="@color/md_green_700"
-                                    app:fabSize="mini"/>
+                                    app:backgroundTint="@color/md_white_1000"
+                                    app:fabSize="mini" />
 
                             </LinearLayout>
 
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="center"
                                 android:layout_marginLeft="8dp"
                                 android:layout_weight="5.4"
                                 android:orientation="vertical"
-                                android:layout_gravity="center"
                                 android:paddingTop="0dp">
 
                                 <TextView
@@ -319,10 +319,10 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="top"
-                                    android:paddingTop="4dp"
-                                    android:paddingBottom="4dp"
-                                    android:paddingRight="4dp"
                                     android:gravity="top"
+                                    android:paddingTop="4dp"
+                                    android:paddingRight="4dp"
+                                    android:paddingBottom="4dp"
                                     android:text="@string/save_your_data_using_google_account"
                                     android:textColor="@color/md_grey_800"
                                     android:textSize="14sp" />
@@ -332,19 +332,19 @@
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="center"
                                 android:layout_margin="4dp"
                                 android:layout_weight="1.2"
                                 android:gravity="center"
-                                android:layout_gravity="center"
                                 android:orientation="vertical">
 
                                 <ImageView
                                     android:layout_width="32dp"
                                     android:layout_height="32dp"
-                                    android:padding="8dp"
                                     android:background="@drawable/circle_border_settings_green"
+                                    android:padding="8dp"
                                     android:src="@drawable/ic_sync_black_24dp"
-                                    app:tint="@color/md_white_1000"/>
+                                    app:tint="@color/md_white_1000" />
 
                             </LinearLayout>
 

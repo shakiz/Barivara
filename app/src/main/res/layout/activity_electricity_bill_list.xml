@@ -86,11 +86,16 @@
                             android:id="@+id/mRecylerView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            tools:listitem="@layout/adapter_layout_electricity_bill_list"
-                            android:layout_margin="4dp"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginEnd="4dp"
+                            android:layout_marginRight="4dp"
+                            android:layout_marginBottom="4dp"
                             android:visibility="visible"
                             app:reverseLayout="true"
-                            app:stackFromEnd="true"/>
+                            app:stackFromEnd="true"
+                            tools:listitem="@layout/adapter_layout_electricity_bill_list" />
 
                     </RelativeLayout>
 
