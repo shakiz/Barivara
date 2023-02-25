@@ -3,14 +3,10 @@ package com.shakil.barivara.utils;
 import java.util.regex.Pattern;
 
 public class Constants {
-    public static String DATABASE_NAME = "home_rent";
-    public static int DATABASE_VERSION = 3;
     public static String TAG = "dev-shakil";
     public static final String PREF_NAME = "vara-adai";
     public static final String mAppViewCount = "AppViewCount";
-    public static final String mShouldRemember = "isRemembered";
     public static final String mIsLoggedIn = "isLoggedIn";
-    public static final String mAlreadyVisited = "alreadyVisited";
     public static final String mLanguage = "Language";
     public static final String mUserId = "UserId";
     public static final String mUserFullName = "UserFullName";

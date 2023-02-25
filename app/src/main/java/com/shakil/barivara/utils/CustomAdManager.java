@@ -2,7 +2,6 @@ package com.shakil.barivara.utils;
 
 import android.content.Context;
 import android.util.Log;
-
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -18,9 +17,7 @@ public class CustomAdManager {
         this.context = context;
     }
 
-    //region generate ad
     public void generateAd(AdView adView){
-        //region adMob
         MobileAds.initialize(context, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
@@ -63,7 +60,5 @@ public class CustomAdManager {
                 Log.i(Constants.TAG+"::onAdListener","AdClosed");
             }
         });
-        //endregion
     }
-    //endregion
 }
