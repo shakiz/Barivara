@@ -38,71 +38,56 @@ public class FirebaseCrudHelper {
         prefManager = new PrefManager(context);
     }
 
-    //region add object in firebase
     public void add(Object object, String path){
         databaseReference = FirebaseDatabase.getInstance().getReference(path).child(prefManager.getString(mUserId));
         Log.i(Constants.TAG,""+databaseReference.getParent());
         String id = databaseReference.push().getKey();
         databaseReference.child(id).setValue(object);
     }
-    //endregion
 
-    //region add object in firebase
     public void addNotification(Notification object, String path){
         databaseReference = FirebaseDatabase.getInstance().getReference(path);
         Log.i(Constants.TAG,""+databaseReference.getParent());
         String id = databaseReference.push().getKey();
         databaseReference.child(id).setValue(object);
     }
-    //endregion
 
-    //region update object in firebase
     public void update(Object object, String firebaseId, String path){
         databaseReference = FirebaseDatabase.getInstance().getReference(path).child(prefManager.getString(mUserId));
         Map<String, Object> postValues = new HashMap<>();
-        if (path.equals("tenant")){
+        if (path.equals("tenant")) {
             Tenant tenant = (Tenant) object;
             postValues = tenant.toMap();
-        }
-        else if (path.equals("meter")){
+        } else if (path.equals("meter")) {
             Meter meter = (Meter) object;
             postValues = meter.toMap();
-        }
-        else if (path.equals("rent")){
+        } else if (path.equals("rent")) {
             Rent rent = (Rent) object;
             postValues = rent.toMap();
-        }
-        else if (path.equals("room")){
+        } else if (path.equals("room")) {
             Room room = (Room) object;
             postValues = room.toMap();
-        }
-        else if (path.equals("note")){
+        } else if (path.equals("note")) {
             Note note = (Note) object;
             postValues = note.toMap();
-        }
-        else if (path.equals("electricityBill")){
+        } else if (path.equals("electricityBill")) {
             ElectricityBill electricityBill = (ElectricityBill) object;
             postValues = electricityBill.toMap();
-        }
-        else if (path.equals("user")){
+        } else if (path.equals("user")) {
             User user = (User) object;
             postValues = user.toMap();
+        } else {
+            //empty implementation
+            Log.i(Constants.TAG,"Update Failed:: Not Table Found");
         }
         databaseReference.child(firebaseId).updateChildren(postValues);
     }
-    //endregion
 
-    //region delete record from database
     public void deleteRecord(String path, String firebaseId){
         databaseReference = FirebaseDatabase.getInstance().getReference(path).child(prefManager.getString(mUserId)).child(firebaseId);
         databaseReference.removeValue();
     }
-    //endregion
 
-    //region fetch  meter table data from firebase db
-    public interface onProfileFetch{
-        void onFetch(User user);
-    }
     public void fetchProfile(String path, onProfileFetch onProfileFetch){
         ArrayList<User> objects = new ArrayList<>();
         databaseReference = FirebaseDatabase.getInstance().getReference(path).child(prefManager.getString(mUserId));
@@ -131,12 +116,7 @@ public class FirebaseCrudHelper {
             }
         });
     }
-    //endregion
 
-    //region fetch  meter table data from firebase db
-    public interface onDataFetch{
-        void onFetch(ArrayList<Meter> objects);
-    }
     public void fetchAllMeter(String path, onDataFetch onDataFetch){
         ArrayList<Meter> objects = new ArrayList<>();
         databaseReference = FirebaseDatabase.getInstance().getReference(path).child(prefManager.getString(mUserId));
@@ -161,12 +141,7 @@ public class FirebaseCrudHelper {
             }
         });
     }
-    //endregion
 
-    //region fetch room table data from firebase db
-    public interface onRoomDataFetch{
-        void onFetch(ArrayList<Room> objects);
-    }
     public void fetchAllRoom(String path, onRoomDataFetch onRoomDataFetch){
         ArrayList<Room> objects = new ArrayList<>();
         databaseReference = FirebaseDatabase.getInstance().getReference(path).child(prefManager.getString(mUserId));
@@ -190,12 +165,7 @@ public class FirebaseCrudHelper {
             }
         });
     }
-    //endregion
 
-    //region fetch rent table data from firebase db
-    public interface onRentDataFetch{
-        void onFetch(ArrayList<Rent> objects);
-    }
     public void fetchAllRent(String path, onRentDataFetch onRentDataFetch){
         ArrayList<Rent> objects = new ArrayList<>();
         databaseReference = FirebaseDatabase.getInstance().getReference(path).child(prefManager.getString(mUserId));
@@ -219,12 +189,7 @@ public class FirebaseCrudHelper {
             }
         });
     }
-    //endregion
 
-    //region fetch electricity bill table data from firebase db
-    public interface onElectricityBillDataFetch{
-        void onFetch(ArrayList<ElectricityBill> objects);
-    }
     public void fetchAllElectricityBills(String path, onElectricityBillDataFetch onElectricityBillDataFetch){
         ArrayList<ElectricityBill> objects = new ArrayList<>();
         databaseReference = FirebaseDatabase.getInstance().getReference(path).child(prefManager.getString(mUserId));
@@ -248,12 +213,7 @@ public class FirebaseCrudHelper {
             }
         });
     }
-    //endregion
 
-    //region fetch tenant table data from firebase db
-    public interface onTenantDataFetch{
-        void onFetch(ArrayList<Tenant> objects);
-    }
     public void fetchAllTenant(String path, onTenantDataFetch onTenantDataFetch){
         ArrayList<Tenant> objects = new ArrayList<>();
         databaseReference = FirebaseDatabase.getInstance().getReference(path).child(prefManager.getString(mUserId));
@@ -277,12 +237,7 @@ public class FirebaseCrudHelper {
             }
         });
     }
-    //endregion
 
-    //region fetch rent table data from firebase db
-    public interface onNotificationDataFetch{
-        void onFetch(ArrayList<Notification> objects);
-    }
     public void fetchAllNotification(String path, onNotificationDataFetch onNotificationDataFetch){
         ArrayList<Notification> objects = new ArrayList<>();
         databaseReference = FirebaseDatabase.getInstance().getReference(path);
@@ -305,12 +260,7 @@ public class FirebaseCrudHelper {
             }
         });
     }
-    //endregion
 
-    //region fetch tenant table data from firebase db
-    public interface onNoteDataFetch{
-        void onFetch(ArrayList<Note> objects);
-    }
     public void fetchAllNote(String path, onNoteDataFetch onNoteDataFetch){
         ArrayList<Note> objects = new ArrayList<>();
         databaseReference = FirebaseDatabase.getInstance().getReference(path).child(prefManager.getString(mUserId));
@@ -334,12 +284,7 @@ public class FirebaseCrudHelper {
             }
         });
     }
-    //endregion
 
-    //region get all name
-    public interface onNameFetch{
-        void onFetched(ArrayList<String> nameList);
-    }
     public void getAllName(String path, String fieldName, onNameFetch onNameFetch){
         ArrayList<String> roomNameList = new ArrayList<>();
         databaseReference = FirebaseDatabase.getInstance().getReference(path).child(prefManager.getString(mUserId));
@@ -367,12 +312,7 @@ public class FirebaseCrudHelper {
             }
         });
     }
-    //endregion
 
-    //region get all bill, rent amount and total units used
-    public interface onAdditionalInfoFetch{
-        void onFetched(double data);
-    }
     public void getAdditionalInfo(String path, String fieldName, onAdditionalInfoFetch onAdditionalInfoFetch){
         final double[] data = {0};
         databaseReference = FirebaseDatabase.getInstance().getReference(path).child(prefManager.getString(mUserId));
@@ -398,12 +338,7 @@ public class FirebaseCrudHelper {
             }
         });
     }
-    //endregion
 
-    //region get single column data
-    public interface onSingleDataFetch{
-        void onFetched(Object data);
-    }
     public void getSingleColumnValue(String path, String fieldName, onSingleDataFetch onSingleDataFetch){
         final Object[] object = {0};
         databaseReference = FirebaseDatabase.getInstance().getReference(path).child(prefManager.getString(mUserId));
@@ -426,12 +361,7 @@ public class FirebaseCrudHelper {
             }
         });
     }
-    //endregion
 
-    //region query on db based on value
-    public interface onDataQuery{
-        void onQueryFinished(int data);
-    }
     public void getRentDataByMonth(String path, String queryValue, String fieldName, onDataQuery onDataQuery){
         final int[] object = {0};
 
@@ -464,12 +394,7 @@ public class FirebaseCrudHelper {
             }
         });
     }
-    //endregion
 
-    //region query on db based on value
-    public interface onDataQueryYearlyRent{
-        void onQueryFinished(int data);
-    }
     public void getRentDataByYear(String path, String queryValue, String fieldName, onDataQueryYearlyRent onDataQueryYearlyRent){
         final int[] object = {0};
 
@@ -502,5 +427,19 @@ public class FirebaseCrudHelper {
             }
         });
     }
-    //endregion
+
+
+    public interface onProfileFetch{ void onFetch(User user);}
+    public interface onDataFetch{ void onFetch(ArrayList<Meter> objects);}
+    public interface onRoomDataFetch{ void onFetch(ArrayList<Room> objects);}
+    public interface onRentDataFetch{ void onFetch(ArrayList<Rent> objects);}
+    public interface onTenantDataFetch{ void onFetch(ArrayList<Tenant> objects);}
+    public interface onElectricityBillDataFetch{ void onFetch(ArrayList<ElectricityBill> objects);}
+    public interface onNotificationDataFetch{ void onFetch(ArrayList<Notification> objects);}
+    public interface onNoteDataFetch{ void onFetch(ArrayList<Note> objects);}
+    public interface onNameFetch{ void onFetched(ArrayList<String> nameList);}
+    public interface onAdditionalInfoFetch{ void onFetched(double data);}
+    public interface onSingleDataFetch{ void onFetched(Object data);}
+    public interface onDataQuery{ void onQueryFinished(int data);}
+    public interface onDataQueryYearlyRent{ void onQueryFinished(int data);}
 }
