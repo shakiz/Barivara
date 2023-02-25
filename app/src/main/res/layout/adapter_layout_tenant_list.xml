@@ -7,8 +7,7 @@
     android:layout_height="wrap_content"
     android:background="@color/md_white_1000"
     android:clickable="true"
-    card_view:cardElevation="2dp"
-    android:translationZ="1dp"
+    card_view:cardElevation="0dp"
     android:foreground="?android:attr/selectableItemBackground"
     app:ignore="NamespaceTypo"
     card_view:cardCornerRadius="8dp"
@@ -26,22 +25,22 @@
 
         <LinearLayout
             android:id="@+id/basicDetailsLayout"
-            android:weightSum="2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
-            android:orientation="horizontal"
-            android:gravity="center"
             android:background="@color/md_white_1000"
-            android:layout_marginStart="8dp">
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="2">
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_weight="1.7"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
-                android:orientation="vertical"
-                android:layout_marginStart="8dp">
+                android:layout_weight="1.7"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -244,9 +243,9 @@
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_weight=".3"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="4dp"
+                android:layout_weight=".3"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -257,8 +256,8 @@
                     android:clickable="true"
                     android:foreground="?attr/selectableItemBackgroundBorderless"
                     android:padding="8dp"
-                    card_view:tint="@color/md_green_800"
-                    android:src="@drawable/ic_call_white"/>
+                    android:src="@drawable/ic_call_white"
+                    card_view:tint="@color/md_green_800" />
 
                 <ImageView
                     android:id="@+id/messageIcon"
@@ -267,8 +266,8 @@
                     android:clickable="true"
                     android:foreground="?attr/selectableItemBackgroundBorderless"
                     android:padding="8dp"
-                    card_view:tint="@color/md_green_800"
-                    android:src="@drawable/ic_message_black_24dp"/>
+                    android:src="@drawable/ic_message_black_24dp"
+                    card_view:tint="@color/md_green_800" />
 
                 <ImageView
                     android:id="@+id/editIcon"
@@ -277,8 +276,8 @@
                     android:clickable="true"
                     android:foreground="?attr/selectableItemBackgroundBorderless"
                     android:padding="8dp"
-                    card_view:tint="@color/md_green_800"
-                    android:src="@drawable/ic_baseline_edit_24"/>
+                    android:src="@drawable/ic_baseline_edit_24"
+                    card_view:tint="@color/md_green_800" />
 
                 <ImageView
                     android:id="@+id/deleteIcon"
@@ -287,8 +286,8 @@
                     android:clickable="true"
                     android:foreground="?attr/selectableItemBackgroundBorderless"
                     android:padding="8dp"
-                    card_view:tint="@color/md_red_400"
-                    android:src="@drawable/ic_delete_circle_black_24dp"/>
+                    android:src="@drawable/ic_delete_circle_black_24dp"
+                    card_view:tint="@color/md_red_400" />
 
             </LinearLayout>
 
