@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import com.shakil.barivara.R;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class Validation {
@@ -50,7 +49,6 @@ public class Validation {
         boolean isValid = true;
         for (Map.Entry<String, String[]> entry : validationMap.entrySet()) {
 
-            //region edit text empty validation
             if (entry.getKey().equals("EditText")) {
                 int iMsg = 0;
                 for (String controlName : entry.getValue()) {
@@ -77,9 +75,7 @@ public class Validation {
                     }
                 }
             }
-            //endregion
 
-            //region single checkbox validation
             if (entry.getKey().equals("CheckBox")) {
                 String[] val = entry.getValue();
                 boolean isChecked = false;
@@ -97,9 +93,7 @@ public class Validation {
                 }
                 isValid = isChecked;
             }
-            //endregion
 
-            //region spinner validation
             if (entry.getKey().equals("Spinner")) {
                 for (String controlName : entry.getValue()) {
                     String viewName = controlName;
@@ -128,9 +122,7 @@ public class Validation {
                     }
                 }
             }
-            //endregion
 
-            //region radio button validation
             if (entry.getKey().equals("RadioButton")) {
                 String[] val = entry.getValue();
                 boolean isChecked = false;
@@ -149,7 +141,6 @@ public class Validation {
                 }
                 isValid = isChecked;
             }
-            //endregion
         }
         return isValid;
     }
