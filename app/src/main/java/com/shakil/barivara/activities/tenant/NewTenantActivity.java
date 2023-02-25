@@ -56,9 +56,7 @@ public class NewTenantActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         activityAddNewTenantBinding = DataBindingUtil.setContentView(this, R.layout.activity_add_new_tenant);
 
-        //region get intent data
         getIntentData();
-        //endregion
 
         init();
         setSupportActionBar(activityAddNewTenantBinding.toolBar);
@@ -72,12 +70,9 @@ public class NewTenantActivity extends AppCompatActivity {
 
         bindUiWithComponents();
 
-        //region load intent data to UI
         loadData();
-        //endregion
     }
 
-    //region get intent data
     private void getIntentData(){
         if (getIntent().getExtras() != null) {
             if (getIntent().getExtras().getParcelable("tenant") != null){
@@ -85,9 +80,7 @@ public class NewTenantActivity extends AppCompatActivity {
             }
         }
     }
-    //endregion
 
-    //region load intent data to UI
     private void loadData(){
         if (tenant.getTenantId() != null) {
             command = "update";
@@ -112,9 +105,7 @@ public class NewTenantActivity extends AppCompatActivity {
             }
         }
     }
-    //endregion
 
-    ///region init all objects
     private void init() {
         customAdManager = new CustomAdManager(this);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
@@ -125,27 +116,18 @@ public class NewTenantActivity extends AppCompatActivity {
         tools = new Tools(this);
         roomNames = new ArrayList<>();
     }
-    //endregion
 
-    //region bind UI with components
     private void bindUiWithComponents(){
-        //region for ad
         customAdManager.generateAd(activityAddNewTenantBinding.adView);
-        //endregion
 
-        //region validation
         validation.setEditTextIsNotEmpty(new String[]{"TenantName", "NID", "MobileNo"},
                 new String[]{getString(R.string.tenant_amount_validation), getString(R.string.nid_number_hint)
                 ,getString(R.string.mobile_number_hint)});
         validation.setSpinnerIsNotEmpty(new String[]{"TenantTypeId","StartingMonthId"});
-        //endregion
 
-        //region set spinners which are not fetched from server
         spinnerAdapter.setSpinnerAdapter(activityAddNewTenantBinding.StartingMonthId,this,spinnerData.setMonthData());
         spinnerAdapter.setSpinnerAdapter(activityAddNewTenantBinding.TenantTypeId,this,spinnerData.setTenantTypeData());
-        //endregion
 
-        //region gender click
         activityAddNewTenantBinding.maleLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -160,9 +142,7 @@ public class NewTenantActivity extends AppCompatActivity {
                 changeGender(getString(R.string.female));
             }
         });
-        //endregion
 
-        //region is advance amount or not
         activityAddNewTenantBinding.AdvanceCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean visibilityValue) {
@@ -175,9 +155,7 @@ public class NewTenantActivity extends AppCompatActivity {
                 }
             }
         });
-        //endregion
 
-        //region set month spinner
         if (tools.hasConnection()) {
             firebaseCrudHelper.getAllName("room", "roomName", new FirebaseCrudHelper.onNameFetch() {
                 @Override
@@ -194,9 +172,7 @@ public class NewTenantActivity extends AppCompatActivity {
             roomNames = spinnerData.setSpinnerNoData();
             setRoomSpinner();
         }
-        //endregion
 
-        //region spinner on change
         activityAddNewTenantBinding.TenantTypeId.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -235,9 +211,7 @@ public class NewTenantActivity extends AppCompatActivity {
 
             }
         });
-        //endregion
 
-        //region radio group IsActive value listener
         activityAddNewTenantBinding.IsActive.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -253,12 +227,10 @@ public class NewTenantActivity extends AppCompatActivity {
                 }
             }
         });
-        //endregion
 
         activityAddNewTenantBinding.mSaveTenantMaster.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //region validation and save data
                 if (validation.isValid()){
                     if (tools.hasConnection()) {
                         if (utilsForAll.isValidMobileNo(activityAddNewTenantBinding.MobileNo.getText().toString())){
@@ -283,21 +255,16 @@ public class NewTenantActivity extends AppCompatActivity {
                         Toast.makeText(NewTenantActivity.this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT).show();
                     }
                 }
-                //endregion
             }
         });
     }
-    //endregion
 
-    //region set room spinner
     private void setRoomSpinner(){
         roomNameSpinnerAdapter = new ArrayAdapter<>(NewTenantActivity.this, R.layout.spinner_drop, roomNames);
         roomNameSpinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
         activityAddNewTenantBinding.AssociateRoomId.setAdapter(roomNameSpinnerAdapter);
     }
-    //endregion
 
-    //region save all data
     private void saveOrUpdateData(){
         tenantNameStr = activityAddNewTenantBinding.TenantName.getText().toString();
         tenant.setTenantName(tenantNameStr);
@@ -323,9 +290,7 @@ public class NewTenantActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(),R.string.success, Toast.LENGTH_SHORT).show();
         startActivity(new Intent(NewTenantActivity.this,TenantListActivity.class));
     }
-    //endregion
 
-    //region change gender UI
     private void changeGender(String gender){
         if (gender.equals(getString(R.string.male))) {
             activityAddNewTenantBinding.maleLayout.setBackground(ContextCompat.getDrawable(this,R.drawable.rectangle_background_filled_gender));
@@ -345,9 +310,7 @@ public class NewTenantActivity extends AppCompatActivity {
             activityAddNewTenantBinding.FemaleIcon.setImageResource(R.drawable.ic_female_white);
         }
     }
-    //endregion
 
-    //region activity components
     @Override
     public void onBackPressed() {
         startActivity(new Intent(NewTenantActivity.this, TenantListActivity.class));
@@ -357,5 +320,4 @@ public class NewTenantActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
-    //endregion
 }

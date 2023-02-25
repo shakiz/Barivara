@@ -59,13 +59,12 @@ public class MeterListActivity extends AppCompatActivity {
 
     private void binUiWIthComponents() {
         searchName.setHint(getString(R.string.search_meter_name));
-        //region check internet connection
+
         if (tools.hasConnection()) {
             setData();
         } else {
             Toast.makeText(this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT).show();
         }
-        //endregion
 
         activityMeterListBinding.mAddMeterMaster.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,7 +73,6 @@ public class MeterListActivity extends AppCompatActivity {
             }
         });
 
-        //region filter
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,10 +120,8 @@ public class MeterListActivity extends AppCompatActivity {
                 }
             }
         });
-        //endregion
     }
 
-    //region recycler adapter
     private void setRecyclerAdapter(){
         RecyclerMeterListAdapter recyclerMeterListAdapter = new RecyclerMeterListAdapter(meterList);
         activityMeterListBinding.mRecylerView.setLayoutManager(new LinearLayoutManager(this));
@@ -151,9 +147,7 @@ public class MeterListActivity extends AppCompatActivity {
             }
         });
     }
-    //endregion
 
-    //region set recycler data
     private void setData() {
         ux.getLoadingView();
         firebaseCrudHelper.fetchAllMeter("meter", new FirebaseCrudHelper.onDataFetch() {
@@ -170,7 +164,6 @@ public class MeterListActivity extends AppCompatActivity {
             }
         });
     }
-    //endregion
 
     private void init() {
         searchButton = findViewById(R.id.searchButton);
@@ -183,7 +176,6 @@ public class MeterListActivity extends AppCompatActivity {
         firebaseCrudHelper = new FirebaseCrudHelper(this);
     }
 
-    //region ask to delete confirmation
     private void doPopUpForDeleteConfirmation(Meter meter){
         Button cancel, delete;
         Dialog dialog = new Dialog(MeterListActivity.this, android.R.style.Theme_Dialog);
@@ -216,7 +208,6 @@ public class MeterListActivity extends AppCompatActivity {
         dialog.getWindow().setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         dialog.show();
     }
-    //endregion
 
     @Override
     public void onBackPressed() {

@@ -27,7 +27,6 @@ public class TutorialActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         activityTutorialBinding = DataBindingUtil.setContentView(this, R.layout.activity_tutorial);
 
-        //layouts of all welcome sliders
         layouts = new int[]{
                 R.layout.welcome_add_tenant_first,
                 R.layout.welcome_assign_room_to_a_tenant,
@@ -43,11 +42,8 @@ public class TutorialActivity extends AppCompatActivity {
         activityTutorialBinding.btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // checking for last page
-                // if last page home screen will be launched
                 int current = getItem(+1);
                 if (current < layouts.length) {
-                    // move to next screen
                     activityTutorialBinding.viewPager.setCurrentItem(current);
                 }
                 else if (current == layouts.length){
@@ -58,7 +54,6 @@ public class TutorialActivity extends AppCompatActivity {
         });
     }
 
-    //region bottom dots
     private void addBottomDots(int currentPage) {
         dots = new TextView[layouts.length];
 
@@ -78,24 +73,19 @@ public class TutorialActivity extends AppCompatActivity {
             dots[currentPage].setTextColor(colorsActive[currentPage]);
         }
     }
-    //endregion
 
     private int getItem(int i) {
         return activityTutorialBinding.viewPager.getCurrentItem() + i;
     }
 
-    //region viewpager change listener
     ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
 
         @Override
         public void onPageSelected(int position) {
             addBottomDots(position);
-            // changing the next button text 'NEXT' / 'GOT IT'
             if (position == layouts.length - 1) {
-                // last page. make button text to GOT IT
                 activityTutorialBinding.btnNext.setText(getString(R.string.got_it));
             } else {
-                // still pages are left
                 activityTutorialBinding.btnNext.setText(getString(R.string.next));
             }
         }
@@ -110,12 +100,9 @@ public class TutorialActivity extends AppCompatActivity {
 
         }
     };
-    //endregion
 
-    //region option menu, back press and broadcast register
     @Override
     public void onBackPressed() {
         startActivity(new Intent(TutorialActivity.this, MainActivity.class));
     }
-    //endregion
 }

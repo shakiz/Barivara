@@ -23,7 +23,6 @@ public class AboutUsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         activityBinding = DataBindingUtil.setContentView(this, R.layout.activity_about_us);
 
-        //region toolbar
         setSupportActionBar(activityBinding.toolBar);
 
         activityBinding.toolBar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -32,23 +31,16 @@ public class AboutUsActivity extends AppCompatActivity {
                 startActivity(new Intent(AboutUsActivity.this, MainActivity.class));
             }
         });
-        //endregion
 
-        //region init UI and perform all UI interactions
         initUI();
         bindUIWithComponents();
-        //endregion
     }
 
-    //region init UI
     private void initUI() {
         tools = new Tools(this);
     }
-    //endregion
 
-    //region perform all UI interactions
     private void bindUIWithComponents() {
-        //region launch apps
         activityBinding.giLibApp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,9 +53,7 @@ public class AboutUsActivity extends AppCompatActivity {
                 tools.launchAppByPackageName("com.shakil.tourdekuakata");
             }
         });
-        //endregion
 
-        //region social click listeners
         activityBinding.fbContactUs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,16 +73,10 @@ public class AboutUsActivity extends AppCompatActivity {
                 tools.sendMessage("01688499299");
             }
         });
-        //endregion
     }
-    //endregion
-
-    //region activity components
 
     @Override
     public void onBackPressed() {
         startActivity(new Intent(AboutUsActivity.this, MainActivity.class));
     }
-
-    //endregion
 }

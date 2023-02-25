@@ -43,33 +43,24 @@ public class NotificationActivity extends AppCompatActivity {
             }
         });
 
-        //region init UI and perform UI interactions
         initUI();
         bindUiWithComponents();
-        //endregion
     }
 
-    //region init UI
     private void initUI() {
         firebaseCrudHelper = new FirebaseCrudHelper(this);
         ux = new UX(this);
         tools = new Tools(this);
     }
-    //endregion
 
-    //region perform UI interactions
     private void bindUiWithComponents() {
-        //region check internet connection
         if (tools.hasConnection()) {
             setData();
         } else {
             Toast.makeText(this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT).show();
         }
-        //endregion
     }
-    //endregion
 
-    //region set recycler data
     private void setData() {
         ux.getLoadingView();
         firebaseCrudHelper.fetchAllNotification("notification", new FirebaseCrudHelper.onNotificationDataFetch() {
@@ -87,9 +78,7 @@ public class NotificationActivity extends AppCompatActivity {
             }
         });
     }
-    //endregion
 
-    //region set notification recycler adapter
     private void setNotificationRecycler(){
         if (notificationList != null) {
             Iterator<Notification> iter = notificationList.iterator();
@@ -104,12 +93,9 @@ public class NotificationActivity extends AppCompatActivity {
         activityNotificationBinding.mRecyclerView.setAdapter(notificationRecyclerAdapter);
         notificationRecyclerAdapter.notifyDataSetChanged();
     }
-    //endregion
 
-    //region activity components
     @Override
     public void onBackPressed() {
         startActivity(new Intent(NotificationActivity.this, MainActivity.class));
     }
-    //endregion
 }

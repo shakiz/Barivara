@@ -36,11 +36,8 @@ public class WelcomeActivity extends AppCompatActivity {
         }
         activityWelcomeBinding = DataBindingUtil.setContentView(this, R.layout.activity_welcome);
 
-        //region init objects
         init();
-        //endregion
 
-        //region layouts of all welcome sliders
         layouts = new int[]{
                 R.layout.welcome_about_app,
                 R.layout.welcome_add_tenant_first,
@@ -58,34 +55,25 @@ public class WelcomeActivity extends AppCompatActivity {
         activityWelcomeBinding.btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // checking for last page
-                // if last page home screen will be launched
                 int current = getItem(+1);
                 if (current < layouts.length) {
-                    // move to next screen
                     activityWelcomeBinding.viewPager.setCurrentItem(current);
                 } else {
                     goLogin();
                 }
             }
         });
-        //endregion
     }
 
-    //region init objects
     private void init() {
         prefManager = new PrefManager(this);
     }
-    //endregion
 
-    //region stop downloading and go home
     private void goLogin() {
         prefManager.set(mOldUser, true);
         startActivity(new Intent(WelcomeActivity.this, LoginActivity.class));
     }
-    //endregion
 
-    //region bottom dots
     private void addBottomDots(int currentPage) {
         dots = new TextView[layouts.length];
 
@@ -105,13 +93,11 @@ public class WelcomeActivity extends AppCompatActivity {
             dots[currentPage].setTextColor(colorsActive[currentPage]);
         }
     }
-    //endregion
 
     private int getItem(int i) {
         return activityWelcomeBinding.viewPager.getCurrentItem() + i;
     }
 
-    //region viewpager change listener
     ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
 
         @Override
@@ -137,9 +123,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
         }
     };
-    //endregion
 
-    //region Making notification bar transparent
     private void changeStatusBarColor() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
@@ -147,12 +131,9 @@ public class WelcomeActivity extends AppCompatActivity {
             window.setStatusBarColor(getResources().getColor(R.color.md_white_1000));
         }
     }
-    //endregion
 
-    //region option menu, back press and broadcast register
     @Override
     public void onBackPressed() {
         super.onBackPressed();
     }
-    //endregion
 }

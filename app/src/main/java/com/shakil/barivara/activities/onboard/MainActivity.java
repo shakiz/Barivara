@@ -72,24 +72,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        //region init objects
         init();
-        //endregion
 
-        //region setup toolBar
         activityMainBinding.toolBar.setTitleTextColor(ContextCompat.getColor(this, R.color.md_green_800));
         setSupportActionBar(activityMainBinding.toolBar);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        //endregion
 
-        //region set drawer
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_icon_menu);
         setupDrawerToggle();
-        //endregion
 
-        //region notification for general topic
         FirebaseApp.initializeApp(this);
         FirebaseMessaging.getInstance().subscribeToTopic("general")
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -103,24 +96,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         }
                     }
                 });
-        //endregion
 
-        //region set language
         new LanguageManager(this).configLanguage();
-        //endregion
 
-        //region ask permission
         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CALL_PHONE},REQUEST_CALL_CODE);
         }
-        //endregion
 
-        //region perform all UI interactions
         bindUIWithComponents();
-        //endregion
     }
 
-    //region init components
     private void init() {
         prefManager = new PrefManager(this);
         tools = new Tools(this);
@@ -129,26 +114,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         customAdManager = new CustomAdManager(this);
         appAnalytics = new AppAnalytics(this);
     }
-    //endregion
 
-    //region drawer toggle
     private void setupDrawerToggle(){
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, activityMainBinding.myDrawerLayout, activityMainBinding.toolBar, R.string.app_name, R.string.app_name);
         activityMainBinding.myDrawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
     }
-    //endregion
 
-    //region UI interactions
     private void bindUIWithComponents() {
-        //region set nav drawer item click listener
         activityMainBinding.navigationView.setNavigationItemSelectedListener(this);
-        //endregion
-        //region for ad
-        customAdManager.generateAd(activityMainBinding.adView);
-        //endregion
 
-        //region total layouts click listeners
+        customAdManager.generateAd(activityMainBinding.adView);
+
         activityMainBinding.totalRoomFlatLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -167,16 +144,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(new Intent(MainActivity.this, TenantListActivity.class));
             }
         });
-        //endregion
 
-        //region Update App ViewCount
         if(prefManager.getInt(mAppViewCount)>0) {
             prefManager.set(mAppViewCount,prefManager.getInt(mAppViewCount)+1);
         }
         else prefManager.set(mAppViewCount,1);
-        //endregion
 
-        //region set text for greetings, dateTime, totalRooms, totalMeter, totalTenants
         activityMainBinding.GreetingsText.setText(utilsForAll.setGreetings());
         activityMainBinding.DateTimeText.setText(utilsForAll.getDateTime());
         activityMainBinding.DayText.setText(utilsForAll.getDayOfTheMonth());
@@ -201,9 +174,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 activityMainBinding.totalRooms.setText(""+objects.size());
             }
         });
-        //endregion
 
-        //region on click listener for all list home item
         activityMainBinding.moreDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -245,11 +216,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(new Intent(MainActivity.this, TenantListActivity.class));
             }
         });
-        //endregion
     }
-    //endregion
-
-    //region activity components
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -314,7 +281,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 tools.doPopUpForLogout(LoginActivity.class);
                 break;
         }
-        //close navigation drawer
         activityMainBinding.myDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -323,5 +289,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onBackPressed() {
         tools.doPopUpForExitApp(this);
     }
-    //endregion
 }

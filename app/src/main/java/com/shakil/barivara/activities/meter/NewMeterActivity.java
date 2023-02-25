@@ -43,9 +43,7 @@ public class NewMeterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         activityNewMeterBinding = DataBindingUtil.setContentView(this, R.layout.activity_new_meter);
 
-        //region get intent data
         getIntentData();
-        //endregion
 
         init();
 
@@ -60,12 +58,9 @@ public class NewMeterActivity extends AppCompatActivity {
 
         bindUIWithComponents();
 
-        //region load intent data to UI
         loadData();
-        //endregion
     }
 
-    //region get intent data
     private void getIntentData(){
         if (getIntent().getExtras() != null) {
             if (getIntent().getExtras().getParcelable("meter") != null){
@@ -73,9 +68,7 @@ public class NewMeterActivity extends AppCompatActivity {
             }
         }
     }
-    //endregion
 
-    //region load intent data to UI
     private void loadData(){
         if (meter.getMeterId() != null) {
             command = "update";
@@ -83,16 +76,12 @@ public class NewMeterActivity extends AppCompatActivity {
             activityNewMeterBinding.MeterTypeId.setSelection(meter.getMeterTypeId(),true);
         }
     }
-    //endregion
 
     private void bindUIWithComponents() {
-        //region validation
         validation.setEditTextIsNotEmpty(new String[]{"MeterName"},
                 new String[]{getString(R.string.meter_name_validation)});
         validation.setSpinnerIsNotEmpty(new String[]{"MeterTypeId"});
-        //endregion
 
-        //region set room spinner
         if (tools.hasConnection()) {
             firebaseCrudHelper.getAllName("room", "roomName", new FirebaseCrudHelper.onNameFetch() {
                 @Override
@@ -105,11 +94,9 @@ public class NewMeterActivity extends AppCompatActivity {
             roomNames = spinnerData.setSpinnerNoData();
             setRoomNameSpinner();
         }
-        //endregion
 
         spinnerAdapter.setSpinnerAdapter(activityNewMeterBinding.MeterTypeId,this, spinnerData.setMeterTypeData());
 
-        //region select spinner
         activityNewMeterBinding.AssociateRoomId.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -135,12 +122,10 @@ public class NewMeterActivity extends AppCompatActivity {
 
             }
         });
-        //endregion
 
         activityNewMeterBinding.mSaveMeterMaster.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //region validation and save data
                 if (validation.isValid()) {
                     if (tools.hasConnection()) {
                         meterNameStr = activityNewMeterBinding.MeterName.getText().toString();
@@ -149,26 +134,22 @@ public class NewMeterActivity extends AppCompatActivity {
                         meter.setAssociateRoomId(AssociateRoomId);
                         meter.setMeterTypeName(meterTypeStr);
                         meter.setMeterTypeId(MeterTypeId);
-                        //region add meter to firebase
                         if (command.equals("add")) {
                             meter.setMeterId(UUID.randomUUID().toString());
                             firebaseCrudHelper.add(meter, "meter");
                         } else {
                             firebaseCrudHelper.update(meter, meter.getFireBaseKey(), "meter");
                         }
-                        //endregion
                         Toast.makeText(getApplicationContext(),R.string.success, Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(NewMeterActivity.this,MeterListActivity.class));
                     } else {
                         Toast.makeText(NewMeterActivity.this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT).show();
                     }
                 }
-                //endregion
             }
         });
     }
 
-    //region init all objects
     private void init() {
         roomNames = new ArrayList<>();
         spinnerAdapter = new SpinnerAdapter();
@@ -177,27 +158,20 @@ public class NewMeterActivity extends AppCompatActivity {
         firebaseCrudHelper = new FirebaseCrudHelper(this);
         validation = new Validation(this, hashMap);
     }
-    //endregion
 
-    //region set room spinner adapter
     private void setRoomNameSpinner(){
         ArrayAdapter<String> roomNameSpinnerAdapter = new ArrayAdapter<>(NewMeterActivity.this, R.layout.spinner_drop, roomNames);
         roomNameSpinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
         activityNewMeterBinding.AssociateRoomId.setAdapter(roomNameSpinnerAdapter);
     }
-    //endregion
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
     }
 
-    //region activity components
-
     @Override
     public void onBackPressed() {
         startActivity(new Intent(NewMeterActivity.this, MeterListActivity.class));
     }
-
-    //endregion
 }

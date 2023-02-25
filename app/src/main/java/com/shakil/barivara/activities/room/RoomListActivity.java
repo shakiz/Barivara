@@ -72,18 +72,15 @@ public class RoomListActivity extends AppCompatActivity {
     }
 
     private void binUiWIthComponents() {
-        //region for ad
         customAdManager.generateAd(activityRoomListBinding.adView);
-        //endregion
 
         searchName.setHint(getString(R.string.search_room_name));
-        //region check internet connection
+
         if (tools.hasConnection()) {
             setData();
         } else {
             Toast.makeText(this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT).show();
         }
-        //endregion
 
         activityRoomListBinding.mAddRoomMaster.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,7 +89,6 @@ public class RoomListActivity extends AppCompatActivity {
             }
         });
 
-        //region filter
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,10 +136,8 @@ public class RoomListActivity extends AppCompatActivity {
                 }
             }
         });
-        //endregion
     }
 
-    //region set recycler data
     private void setData() {
         ux.getLoadingView();
         firebaseCrudHelper.fetchAllRoom("room", new FirebaseCrudHelper.onRoomDataFetch() {
@@ -159,9 +153,7 @@ public class RoomListActivity extends AppCompatActivity {
             }
         });
     }
-    //endregion
 
-    //region set recycler adapter
     private void setRecyclerAdapter(){
         RecyclerRoomListAdapter recyclerRoomListAdapter = new RecyclerRoomListAdapter(roomList);
         activityRoomListBinding.mRecylerView.setLayoutManager(new LinearLayoutManager(this));
@@ -186,9 +178,7 @@ public class RoomListActivity extends AppCompatActivity {
             }
         });
     }
-    //endregion
 
-    //region ask to delete confirmation
     private void doPopUpForDeleteConfirmation(Room room){
         Button cancel, delete;
         Dialog dialog = new Dialog(RoomListActivity.this, android.R.style.Theme_Dialog);
@@ -221,7 +211,6 @@ public class RoomListActivity extends AppCompatActivity {
         dialog.getWindow().setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         dialog.show();
     }
-    //endregion
 
     @Override
     public void onBackPressed() {

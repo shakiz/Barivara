@@ -51,13 +51,10 @@ public class GenerateBillActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         activityBinding = DataBindingUtil.setContentView(this, R.layout.activity_generate_bill);
 
-        //region init and bind UI actions
         init();
         binUIWithComponents();
-        //endregion
     }
 
-    //region init objects
     private void init() {
         customAdManager = new CustomAdManager(this);
         validation = new Validation(this, hashMap);
@@ -65,15 +62,10 @@ public class GenerateBillActivity extends AppCompatActivity {
         spinnerAdapter = new SpinnerAdapter();
         tools = new Tools(this);
     }
-    //endregion
 
-    //region perform all Ui interactions
     private void binUIWithComponents() {
-        //region for ad
         customAdManager.generateAd(activityBinding.adView);
-        //endregion
 
-        //region ask permission
         if ((ContextCompat.checkSelfPermission(GenerateBillActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED)
         || (ContextCompat.checkSelfPermission(GenerateBillActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -82,30 +74,22 @@ public class GenerateBillActivity extends AppCompatActivity {
                     new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     REQUEST_CALL_CODE);
         }
-        //endregion
 
-        //region toolbar back click listener
         activityBinding.toolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
             }
         });
-        //endregion
 
-        //region validation
         validation.setEditTextIsNotEmpty(new String[]{"AssociateRoom", "TenantName", "MobileNo", "RentAmount"},
                 new String[]{getString(R.string.room_name_validation), getString(R.string.tenant_name_validation),
                         getString(R.string.rent_amount_validation), getString(R.string.mobile_validation)});
         validation.setSpinnerIsNotEmpty(new String[]{"YearId", "MonthId"});
-        //endregion
 
-        //region set spinner data
         spinnerAdapter.setSpinnerAdapter(activityBinding.MonthId, this, spinnerData.setMonthData());
         spinnerAdapter.setSpinnerAdapter(activityBinding.YearId, this, spinnerData.setYearData());
-        //endregion
 
-        //region spinner onChange listeners
         activityBinding.YearId.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -129,9 +113,7 @@ public class GenerateBillActivity extends AppCompatActivity {
 
             }
         });
-        //endregion
 
-        //region generate bill listener
         activityBinding.generateBill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -156,11 +138,8 @@ public class GenerateBillActivity extends AppCompatActivity {
                 }
             }
         });
-        //endregion
     }
-    //endregion
 
-    //region sending message to tenant with bill details
     public void doPopUpForBillDetails(GenerateBill generateBill) {
         Button cancel, sendMessage;
         TextView tenantName, mobileNo, monthAndYear, roomName, rentAmount, gasBill, waterBill, serviceCharge, electricityBill;
@@ -170,8 +149,6 @@ public class GenerateBillActivity extends AppCompatActivity {
         dialogBill.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         dialogBill.setCanceledOnTouchOutside(true);
 
-
-        //region dialogs findViewByIds
         cancel = dialogBill.findViewById(R.id.cancelButton);
         sendMessage = dialogBill.findViewById(R.id.sendMessage);
         tenantName = dialogBill.findViewById(R.id.TenantName);
@@ -183,9 +160,7 @@ public class GenerateBillActivity extends AppCompatActivity {
         waterBill = dialogBill.findViewById(R.id.WaterBill);
         serviceCharge = dialogBill.findViewById(R.id.ServiceCharge);
         electricityBill = dialogBill.findViewById(R.id.ElectricityBill);
-        //endregion
 
-        //region set data
         tenantName.setText(generateBill.getTenantName());
         mobileNo.setText(generateBill.getMobileNo());
         monthAndYear.setText(generateBill.getMonthAndYear());
@@ -195,7 +170,6 @@ public class GenerateBillActivity extends AppCompatActivity {
         waterBill.setText("" + generateBill.getWaterBill() + " " + getString(R.string.taka));
         serviceCharge.setText("" + generateBill.getServiceCharge() + " " + getString(R.string.taka));
         electricityBill.setText("" + generateBill.getElectricityBill() + " " + getString(R.string.taka));
-        //endregion
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -226,9 +200,7 @@ public class GenerateBillActivity extends AppCompatActivity {
         dialogBill.getWindow().setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         dialogBill.show();
     }
-    //endregion
 
-    //region send message to tenant with details
     private void sendMessage(String message, String mobileNo) {
         Intent smsIntent = new Intent(Intent.ACTION_SENDTO);
         smsIntent.addCategory(Intent.CATEGORY_DEFAULT);
@@ -239,12 +211,9 @@ public class GenerateBillActivity extends AppCompatActivity {
         Toast.makeText(this, getString(R.string.please_wait), Toast.LENGTH_SHORT).show();
         dialogBill.dismiss();
     }
-    //endregion
 
-    //region activity components
     @Override
     public void onBackPressed() {
         startActivity(new Intent(GenerateBillActivity.this, MainActivity.class));
     }
-    //endregion
 }

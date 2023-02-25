@@ -48,9 +48,7 @@ public class RoomActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         activityAddNewRoomBinding = DataBindingUtil.setContentView(this, R.layout.activity_add_new_room);
 
-        //region get intent data
         getIntentData();
-        //endregion
 
         init();
         setSupportActionBar(activityAddNewRoomBinding.toolBar);
@@ -64,12 +62,9 @@ public class RoomActivity extends AppCompatActivity {
 
         bindUIWithComponents();
 
-        //region load intent data to UI
         loadData();
-        //endregion
     }
 
-    //region get intent data
     private void getIntentData(){
         if (getIntent().getExtras() != null) {
             if (getIntent().getExtras().getParcelable("room") != null){
@@ -77,9 +72,7 @@ public class RoomActivity extends AppCompatActivity {
             }
         }
     }
-    //endregion
 
-    //region load intent data to UI
     private void loadData(){
         if (room.getRoomId() != null) {
             command = "update";
@@ -93,22 +86,16 @@ public class RoomActivity extends AppCompatActivity {
             activityAddNewRoomBinding.StartMonthId.setSelection(room.getStartMonthId(), true);
         }
     }
-    //endregion
 
     private void bindUIWithComponents() {
-        //region for ad
         customAdManager.generateAd(activityAddNewRoomBinding.adView);
-        //endregion
 
         spinnerAdapter.setSpinnerAdapter(activityAddNewRoomBinding.StartMonthId,this,spinnerData.setMonthData());
 
-        //region validation
         validation.setEditTextIsNotEmpty(new String[]{"RoomName"},
                 new String[]{getString(R.string.room_name_validation)});
         validation.setSpinnerIsNotEmpty(new String[]{"StartMonthId"});
-        //endregion
 
-        //region set meter spinner
         if (tools.hasConnection()) {
             firebaseCrudHelper.getAllName("meter", "meterName", new FirebaseCrudHelper.onNameFetch() {
                 @Override
@@ -125,9 +112,7 @@ public class RoomActivity extends AppCompatActivity {
             meterNames = spinnerData.setSpinnerNoData();
             setMeterSpinner();
         }
-        //endregion
 
-        //region set tenant spinner
         if (tools.hasConnection()) {
             firebaseCrudHelper.getAllName("tenant", "tenantName", new FirebaseCrudHelper.onNameFetch() {
                 @Override
@@ -140,9 +125,7 @@ public class RoomActivity extends AppCompatActivity {
             tenantNames = spinnerData.setSpinnerNoData();
             setTenantSpinner();
         }
-        //endregion
 
-        //region month and meter selection spinner
         activityAddNewRoomBinding.StartMonthId.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -181,9 +164,7 @@ public class RoomActivity extends AppCompatActivity {
 
             }
         });
-        //endregion
 
-        //region add or remove room click listener
         activityAddNewRoomBinding.AddNoOfRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -200,9 +181,7 @@ public class RoomActivity extends AppCompatActivity {
                 }
             }
         });
-        //endregion
 
-        //region add or remove balcony click listener
         activityAddNewRoomBinding.AddNoOfBalcony.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -219,9 +198,7 @@ public class RoomActivity extends AppCompatActivity {
                 }
             }
         });
-        //endregion
 
-        //region add or remove bathroom click listener
         activityAddNewRoomBinding.AddNoOfBathRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -238,9 +215,7 @@ public class RoomActivity extends AppCompatActivity {
                 }
             }
         });
-        //endregion
 
-        //region save or update click listener
         activityAddNewRoomBinding.mSaveRoomMaster.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -253,10 +228,8 @@ public class RoomActivity extends AppCompatActivity {
                 }
             }
         });
-        //endregion
     }
 
-    //region init all objects
     private void init() {
         customAdManager = new CustomAdManager(this);
         spinnerData = new SpinnerData(this);
@@ -265,25 +238,19 @@ public class RoomActivity extends AppCompatActivity {
         firebaseCrudHelper = new FirebaseCrudHelper(this);
         validation = new Validation(this, hashMap);
     }
-    //endregion
 
-    //region set tenant spinner
     private void setTenantSpinner(){
         tenantNameSpinnerAdapter = new ArrayAdapter<>(RoomActivity.this, R.layout.spinner_drop, tenantNames);
         tenantNameSpinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
         activityAddNewRoomBinding.TenantNameId.setAdapter(tenantNameSpinnerAdapter);
     }
-    //endregion
 
-    //region set tenant spinner
     private void setMeterSpinner(){
         meterNameSpinnerAdapter = new ArrayAdapter<>(RoomActivity.this, R.layout.spinner_drop, meterNames);
         meterNameSpinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
         activityAddNewRoomBinding.AssociateMeterId.setAdapter(meterNameSpinnerAdapter);
     }
-    //endregion
 
-    //region save all data
     private void saveOrUpdateData(){
         roomNameStr = activityAddNewRoomBinding.RoomName.getText().toString();
         room.setRoomName(roomNameStr);
@@ -305,9 +272,7 @@ public class RoomActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(),R.string.success, Toast.LENGTH_SHORT).show();
         startActivity(new Intent(RoomActivity.this,RoomListActivity.class));
     }
-    //endregion
 
-    //region activity components
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -317,6 +282,4 @@ public class RoomActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
-    //endregion
-
 }

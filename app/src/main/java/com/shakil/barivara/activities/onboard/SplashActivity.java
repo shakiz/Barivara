@@ -38,9 +38,7 @@ public class SplashActivity extends AppCompatActivity {
                         appUpdate.checkUpdate(false, true);
                     }
                     else{
-                        //region check for user login
                         tools.checkLogin();
-                        //endregion
                     }
                 }
             });

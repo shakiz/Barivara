@@ -48,7 +48,6 @@ public class NoteListActivity extends AppCompatActivity {
         bindUiWithComponents();
     }
 
-    //region init objects
     private void init() {
         ux = new UX(this);
         tools = new Tools(this);
@@ -56,19 +55,15 @@ public class NoteListActivity extends AppCompatActivity {
         appAnalytics = new AppAnalytics(this);
         LayoutNoNotes = findViewById(R.id.LayoutNoNotes);
     }
-    //endregion
 
-    //region perform all UI interactions
     private void bindUiWithComponents() {
-        //region send analytics report to firebase
         appAnalytics.registerEvent("noteList", appAnalytics.setData("listActivity",""));
-        //region check internet connection
+
         if (tools.hasConnection()) {
             setData();
         } else {
             Toast.makeText(this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT).show();
         }
-        //endregion
 
         activityNoteListBinding.add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,9 +75,7 @@ public class NoteListActivity extends AppCompatActivity {
             }
         });
     }
-    //endregion
 
-    //region set recycler data
     private void setData() {
         ux.getLoadingView();
         firebaseCrudHelper.fetchAllNote("note", new FirebaseCrudHelper.onNoteDataFetch() {
@@ -101,8 +94,6 @@ public class NoteListActivity extends AppCompatActivity {
             }
         });
     }
-    //endregion
-
 
     private void setRecyclerAdapter() {
         NoteRecyclerAdapter noteRecyclerAdapter = new NoteRecyclerAdapter(noteList);
@@ -118,10 +109,8 @@ public class NoteListActivity extends AppCompatActivity {
         });
     }
 
-    //region activity components
     @Override
     public void onBackPressed() {
         startActivity(new Intent(NoteListActivity.this, MainActivity.class));
     }
-    //endregion
 }

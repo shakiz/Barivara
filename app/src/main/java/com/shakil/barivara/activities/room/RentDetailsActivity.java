@@ -43,9 +43,7 @@ public class RentDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         activityNewRentDetailsBinding = DataBindingUtil.setContentView(this, R.layout.activity_new_rent_details);
 
-        //region get intent data
         getIntentData();
-        //endregion
 
         init();
         setSupportActionBar(activityNewRentDetailsBinding.toolBar);
@@ -58,12 +56,9 @@ public class RentDetailsActivity extends AppCompatActivity {
         });
         bindUiWithComponents();
 
-        //region load intent data to UI
         loadData();
-        //endregion
     }
 
-    //region get intent data
     private void getIntentData(){
         if (getIntent().getExtras() != null) {
             if (getIntent().getExtras().getParcelable("rent") != null){
@@ -71,9 +66,7 @@ public class RentDetailsActivity extends AppCompatActivity {
             }
         }
     }
-    //endregion
 
-    //region load intent data to UI
     private void loadData(){
         if (rent.getRentId() != null) {
             command = "update";
@@ -83,20 +76,15 @@ public class RentDetailsActivity extends AppCompatActivity {
             activityNewRentDetailsBinding.Note.setText(rent.getNote());
         }
     }
-    //endregion
 
-    //region bind ui and perform all UI interactions
     private void bindUiWithComponents() {
-        //region validation
         validation.setEditTextIsNotEmpty(new String[]{"RentAmount"},
                 new String[]{getString(R.string.rent_amount_validation)});
         validation.setSpinnerIsNotEmpty(new String[]{"YearId","MonthId"});
-        //endregion
 
         spinnerAdapter.setSpinnerAdapter(activityNewRentDetailsBinding.MonthId,this, spinnerData.setMonthData());
         spinnerAdapter.setSpinnerAdapter(activityNewRentDetailsBinding.YearId,this, spinnerData.setYearData());
 
-        //region set room spinner
         if (tools.hasConnection()) {
             firebaseCrudHelper.getAllName("room", "roomName", new FirebaseCrudHelper.onNameFetch() {
                 @Override
@@ -109,9 +97,7 @@ public class RentDetailsActivity extends AppCompatActivity {
             roomNames = spinnerData.setSpinnerNoData();
             setRoomSpinner();
         }
-        //endregion
 
-        //region spinner on change
         activityNewRentDetailsBinding.MonthId.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -150,7 +136,6 @@ public class RentDetailsActivity extends AppCompatActivity {
 
             }
         });
-        //endregion
 
         activityNewRentDetailsBinding.mAddRentMaster.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -180,9 +165,7 @@ public class RentDetailsActivity extends AppCompatActivity {
             }
         });
     }
-    //endregion
 
-    //region init objects
     private void init() {
         roomNames = new ArrayList<>();
         spinnerData = new SpinnerData(this);
@@ -191,20 +174,15 @@ public class RentDetailsActivity extends AppCompatActivity {
         tools = new Tools(this);
         validation = new Validation(this, hashMap);
     }
-    //endregion
 
-    //region set spinner adapter
     private void setRoomSpinner(){
         ArrayAdapter<String> roomNameSpinnerAdapter = new ArrayAdapter<>(RentDetailsActivity.this, R.layout.spinner_drop, roomNames);
         roomNameSpinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
         activityNewRentDetailsBinding.AssociateRoomId.setAdapter(roomNameSpinnerAdapter);
     }
-    //endregion
 
-    //region activity components
     @Override
     public void onBackPressed() {
         startActivity(new Intent(RentDetailsActivity.this, RentListActivity.class));
     }
-    //endregion
 }

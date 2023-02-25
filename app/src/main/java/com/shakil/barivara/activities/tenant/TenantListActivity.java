@@ -73,18 +73,15 @@ public class TenantListActivity extends AppCompatActivity {
     }
 
     private void binUiWithComponents(){
-        //region for ad
         customAdManager.generateAd(activityTenantListBinding.adView);
-        //endregion
 
         searchName.setHint(getString(R.string.search_tenant_name));
-        //region check internet connection
+
         if (tools.hasConnection()) {
             setData();
         } else {
             Toast.makeText(this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT).show();
         }
-        //endregion
 
         activityTenantListBinding.mAddTenantMaster.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,7 +90,6 @@ public class TenantListActivity extends AppCompatActivity {
             }
         });
 
-        //region filter
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -141,10 +137,8 @@ public class TenantListActivity extends AppCompatActivity {
                 }
             }
         });
-        //endregion
     }
 
-    //region set recycler data
     private void setData() {
         ux.getLoadingView();
         firebaseCrudHelper.fetchAllTenant("tenant", new FirebaseCrudHelper.onTenantDataFetch() {
@@ -160,9 +154,7 @@ public class TenantListActivity extends AppCompatActivity {
             }
         });
     }
-    //endregion
 
-    //region set recycler adapter
     private void setRecyclerAdapter(){
         RecyclerTenantListAdapter recyclerTenantListAdapter = new RecyclerTenantListAdapter(tenantList, this);
         activityTenantListBinding.mRecylerView.setLayoutManager(new LinearLayoutManager(this));
@@ -187,9 +179,7 @@ public class TenantListActivity extends AppCompatActivity {
             }
         });
     }
-    //endregion
 
-    //region ask to delete confirmation
     private void doPopUpForDeleteConfirmation(Tenant tenant){
         Button cancel, delete;
         Dialog dialog = new Dialog(TenantListActivity.this, android.R.style.Theme_Dialog);
@@ -222,9 +212,6 @@ public class TenantListActivity extends AppCompatActivity {
         dialog.getWindow().setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         dialog.show();
     }
-    //endregion
-
-    //region activity components
 
     @Override
     public void onBackPressed() {
@@ -235,6 +222,4 @@ public class TenantListActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
-
-    //endregion
 }

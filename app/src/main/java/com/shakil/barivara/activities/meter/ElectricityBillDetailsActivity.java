@@ -48,9 +48,7 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         activityMeterCostDetailsBinding = DataBindingUtil.setContentView(this, R.layout.activity_electricity_bill_details);
 
-        //region get intent data
         getIntentData();
-        //endregion
 
         init();
         setSupportActionBar(activityMeterCostDetailsBinding.toolBar);
@@ -63,12 +61,9 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
         });
         bindUiWithComponents();
 
-        //region load intent data to UI
         loadData();
-        //endregion
     }
 
-    //region get intent data
     private void getIntentData(){
         if (getIntent().getExtras() != null) {
             if (getIntent().getExtras().getParcelable("electricityBill") != null){
@@ -76,9 +71,7 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
             }
         }
     }
-    //endregion
 
-    //region load intent data to UI
     private void loadData(){
         if (electricityBill.getBillId() != null) {
             command = "update";
@@ -90,16 +83,12 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
             activityMeterCostDetailsBinding.TotalAmount.setText(""+(electricityBill.getTotalUnit() * electricityBill.getUnitPrice()));
         }
     }
-    //endregion
 
     private void bindUiWithComponents() {
-        //region validation
         validation.setEditTextIsNotEmpty(new String[]{"PastUnit", "PresentUnit", "UnitPrice"},
                 new String[]{getString(R.string.past_unit_validation), getString(R.string.present_unit_validation)
                         , getString(R.string.unit_price_validation)});
-        //endregion
 
-        //region room name select spinner
         activityMeterCostDetailsBinding.MeterId.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -125,9 +114,7 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
 
             }
         });
-        //endregion
 
-        //region set meter spinner
         if (tools.hasConnection()) {
             firebaseCrudHelper.getAllName("meter", "meterName", new FirebaseCrudHelper.onNameFetch() {
                 @Override
@@ -140,9 +127,7 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
             meterNames = spinnerData.setSpinnerNoData();
             setMeterAdapter();
         }
-        //endregion
 
-        //region set room spinner
         if (tools.hasConnection()) {
             firebaseCrudHelper.getAllName("room", "roomName", new FirebaseCrudHelper.onNameFetch() {
                 @Override
@@ -155,9 +140,7 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
             roomNames = spinnerData.setSpinnerNoData();
             setRoomAdapter();
         }
-        //endregion
 
-        //region Adding new details
         activityMeterCostDetailsBinding.mAddMeterDetailsMaster.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -187,9 +170,7 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
                 }
             }
         });
-        //region end
 
-        //region present month unit on change
         activityMeterCostDetailsBinding.PastUnit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -212,9 +193,7 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
 
             }
         });
-        //region end
 
-        //region previous month unit on change
         activityMeterCostDetailsBinding.PresentUnit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -237,9 +216,7 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
 
             }
         });
-        //region end
 
-        //region unit price on change
         activityMeterCostDetailsBinding.UnitPrice.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -260,26 +237,20 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
 
             }
         });
-        //endregion
     }
 
-    //region set meter spinner adapter
     private void setMeterAdapter(){
         ArrayAdapter<String> meterNameSpinnerAdapter = new ArrayAdapter<>(ElectricityBillDetailsActivity.this, R.layout.spinner_drop, meterNames);
         meterNameSpinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
         activityMeterCostDetailsBinding.MeterId.setAdapter(meterNameSpinnerAdapter);
     }
-    //endregion
 
-    //region set room spinner adapter
     private void setRoomAdapter(){
         ArrayAdapter<String> roomNameSpinnerAdapter = new ArrayAdapter<>(ElectricityBillDetailsActivity.this, R.layout.spinner_drop, roomNames);
         roomNameSpinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
         activityMeterCostDetailsBinding.RoomId.setAdapter(roomNameSpinnerAdapter);
     }
-    //endregion
 
-    //region check unit value and calculate price
     private void checkUnitLimit(int previousMonthUnitValue , int presentMonthUnitValue){
         if (presentMonthUnitValue > previousMonthUnitValue) {
             calculateUnit(presentMonthUnitValue, previousMonthUnitValue);
@@ -292,8 +263,8 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
         }
     }
 
-    private int calculateUnit(int presentMonthUnitValue, int previousMonthUnitValue){
-        if (presentMonthUnitValue >0 ){
+    private void calculateUnit(int presentMonthUnitValue, int previousMonthUnitValue){
+        if (presentMonthUnitValue > 0 ){
             totalUnitInt = presentMonthUnitValue - previousMonthUnitValue;
             activityMeterCostDetailsBinding.TotalUnit.setText(String.valueOf(totalUnitInt));
             activityMeterCostDetailsBinding.TotalUnit.setTextColor(getResources().getColor(R.color.md_grey_800));
@@ -304,11 +275,8 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
             activityMeterCostDetailsBinding.TotalUnit.setText(String.valueOf(totalUnitInt));
             activityMeterCostDetailsBinding.TotalUnit.setTextColor(getResources().getColor(R.color.md_red_400));
         }
-        return totalUnitInt;
     }
-    //endregion
 
-    //region init all objects
     private void init() {
         roomNames = new ArrayList<>();
         firebaseCrudHelper = new FirebaseCrudHelper(this);
@@ -317,9 +285,7 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
         spinnerData = new SpinnerData(this);
         validation = new Validation(this, hashMap);
     }
-    //endregion
 
-    //region activity components
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -329,6 +295,4 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
-
-    //endregion
 }

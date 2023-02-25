@@ -51,13 +51,10 @@ public class ElectricityBillListActivity extends AppCompatActivity {
             }
         });
 
-        //region init UI and perform all UI interactions
         init();
         bindUIWithComponents();
-        //endregion
     }
 
-    //region init components
     private void init(){
         searchButton = findViewById(R.id.searchButton);
         refreshButton = findViewById(R.id.refreshButton);
@@ -68,18 +65,15 @@ public class ElectricityBillListActivity extends AppCompatActivity {
         filterManager = new FilterManager();
         firebaseCrudHelper = new FirebaseCrudHelper(this);
     }
-    //endregion
 
-    //region perform all UI interactions
     private void bindUIWithComponents(){
         searchName.setHint(getString(R.string.search_room_name));
-        //region check internet connection
+
         if (tools.hasConnection()) {
             setData();
         } else {
             Toast.makeText(this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT).show();
         }
-        //endregion
 
         activityMeterCostListBinding.mAddBillMaster.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,7 +82,6 @@ public class ElectricityBillListActivity extends AppCompatActivity {
             }
         });
 
-        //region filter
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -136,11 +129,8 @@ public class ElectricityBillListActivity extends AppCompatActivity {
                 }
             }
         });
-        //endregion
     }
-    //endregion
 
-    //region set data for recycler
     private void setData() {
         ux.getLoadingView();
         firebaseCrudHelper.fetchAllElectricityBills("electricityBill", new FirebaseCrudHelper.onElectricityBillDataFetch() {
@@ -156,9 +146,7 @@ public class ElectricityBillListActivity extends AppCompatActivity {
             }
         });
     }
-    //endregion
 
-    //region set recycler adapter
     private void setRecyclerAdapter(){
         RecyclerElectricityBillListAdapter recyclerBillListAdapter = new RecyclerElectricityBillListAdapter(electricityBills);
         activityMeterCostListBinding.mRecylerView.setLayoutManager(new LinearLayoutManager(this));
@@ -178,9 +166,7 @@ public class ElectricityBillListActivity extends AppCompatActivity {
             }
         });
     }
-    //endregion
 
-    //region ask to delete confirmation
     private void doPopUpForDeleteConfirmation(ElectricityBill electricityBill){
         Button cancel, delete;
         Dialog dialog = new Dialog(ElectricityBillListActivity.this, android.R.style.Theme_Dialog);
@@ -213,12 +199,9 @@ public class ElectricityBillListActivity extends AppCompatActivity {
         dialog.getWindow().setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         dialog.show();
     }
-    //endregion
 
-    //region activity components
     @Override
     public void onBackPressed() {
         startActivity(new Intent(ElectricityBillListActivity.this, MainActivity.class));
     }
-    //endregion
 }

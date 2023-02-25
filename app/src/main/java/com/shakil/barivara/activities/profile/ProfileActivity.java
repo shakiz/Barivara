@@ -30,37 +30,27 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         activityBinding = DataBindingUtil.setContentView(this, R.layout.activity_profile);
 
-        //region init objects and perform all UI operations
         initUI();
         bindUiWithComponents();
-        //endregion
     }
 
-    //region init objects
     private void initUI() {
         validation = new Validation(this, hashMap);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
     }
-    //endregion
 
-    //region perform all UI operations
     private void bindUiWithComponents() {
-        //region validation
         validation.setEditTextIsNotEmpty(new String[]{"Name", "Address", "DOB"},
                 new String[]{getString(R.string.validation_name), getString(R.string.validation_address)
                         ,getString(R.string.validation_dob)});
-        //endregion
 
-        //region toolbar back click listener
         activityBinding.toolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
             }
         });
-        //endregion
 
-        //region load profile details
         firebaseCrudHelper.fetchProfile("user", new FirebaseCrudHelper.onProfileFetch() {
             @Override
             public void onFetch(User user) {
@@ -70,7 +60,6 @@ public class ProfileActivity extends AppCompatActivity {
                 }
             }
         });
-        //endregion
 
         activityBinding.editIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,9 +99,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
     }
-    //endregion
 
-    //region change visibility and editable
     private void changeVisibilityAndFocusable(boolean editTextVisibility, int editIconVisibility, int saveCancelLayoutVisibility, boolean isFocusable){
         activityBinding.editIcon.setVisibility(editIconVisibility);
         activityBinding.saveCancelLayout.setVisibility(saveCancelLayoutVisibility);
@@ -123,20 +110,15 @@ public class ProfileActivity extends AppCompatActivity {
         activityBinding.Address.setFocusableInTouchMode(isFocusable);
         activityBinding.DOB.setFocusableInTouchMode(isFocusable);
     }
-    //endregion
 
-    //region change edit text back
     private void changeEditTextBack(EditText[] editTexts, int backDrawable){
         for (EditText editText : editTexts) {
             editText.setBackgroundResource(backDrawable);
         }
     }
-    //endregion
 
-    //region activity components
     @Override
     public void onBackPressed() {
         startActivity(new Intent(ProfileActivity.this, MainActivity.class));
     }
-    //endregion
 }

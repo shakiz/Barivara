@@ -53,13 +53,10 @@ public class RentListActivity extends AppCompatActivity {
             }
         });
 
-        //region init UI and perform all UI interactions
         init();
         bindUIWithComponents();
-        //endregion
     }
 
-    //region init components
     private void init(){
         searchButton = findViewById(R.id.searchButton);
         refreshButton = findViewById(R.id.refreshButton);
@@ -71,23 +68,17 @@ public class RentListActivity extends AppCompatActivity {
         filterManager = new FilterManager();
         customAdManager = new CustomAdManager(this);
     }
-    //endregion
 
-    //region perform all UI interactions
     private void bindUIWithComponents(){
         searchName.setHint(getString(R.string.search_month_name));
 
-        //region for ad
         customAdManager.generateAd(activityRentListBinding.adView);
-        //endregion
 
-        //region check internet connection
         if (tools.hasConnection()) {
             setData();
         } else {
             Toast.makeText(this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT).show();
         }
-        //endregion
 
         activityRentListBinding.mAddMaster.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,7 +87,6 @@ public class RentListActivity extends AppCompatActivity {
             }
         });
 
-        //region filter
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -144,11 +134,8 @@ public class RentListActivity extends AppCompatActivity {
                 }
             }
         });
-        //endregion
     }
-    //endregion
 
-    //region set recycler data
     private void setData() {
         ux.getLoadingView();
         firebaseCrudHelper.fetchAllRent("rent", new FirebaseCrudHelper.onRentDataFetch() {
@@ -164,9 +151,7 @@ public class RentListActivity extends AppCompatActivity {
             }
         });
     }
-    //endregion
 
-    //region set recycler adapter
     private void setRecyclerAdapter(){
         RecyclerRentListAdapter recyclerMeterListAdapter = new RecyclerRentListAdapter(rentList);
         activityRentListBinding.mRecylerView.setLayoutManager(new LinearLayoutManager(this));
@@ -191,9 +176,7 @@ public class RentListActivity extends AppCompatActivity {
             }
         });
     }
-    //endregion
 
-    //region ask to delete confirmation
     private void doPopUpForDeleteConfirmation(Rent rent){
         Button cancel, delete;
         Dialog dialog = new Dialog(RentListActivity.this, android.R.style.Theme_Dialog);
@@ -226,9 +209,7 @@ public class RentListActivity extends AppCompatActivity {
         dialog.getWindow().setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         dialog.show();
     }
-    //endregion
 
-    //region activity components
     @Override
     public void onBackPressed() {
         startActivity(new Intent(RentListActivity.this, MainActivity.class));
@@ -238,5 +219,4 @@ public class RentListActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
-    //endregion
 }

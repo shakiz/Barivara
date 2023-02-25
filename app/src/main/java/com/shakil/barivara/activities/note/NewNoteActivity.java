@@ -45,9 +45,7 @@ public class NewNoteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         activityNewNoteBinding = DataBindingUtil.setContentView(this, R.layout.activity_new_note);
 
-        //region get intent data
         getIntentData();
-        //endregion
 
         init();
         setSupportActionBar(activityNewNoteBinding.toolBar);
@@ -60,12 +58,9 @@ public class NewNoteActivity extends AppCompatActivity {
         });
         bindUiWithComponents();
 
-        //region load intent data to UI
         loadData();
-        //endregion
     }
 
-    //region get intent data
     private void getIntentData(){
         if (getIntent().getExtras() != null) {
             if (getIntent().getExtras().getParcelable("note") != null){
@@ -73,9 +68,7 @@ public class NewNoteActivity extends AppCompatActivity {
             }
         }
     }
-    //endregion
 
-    //region load intent data to UI
     private void loadData(){
         if (note.getNoteId() != null) {
             command = "update";
@@ -85,9 +78,7 @@ public class NewNoteActivity extends AppCompatActivity {
             activityNewNoteBinding.listenIcon.setVisibility(View.VISIBLE);
         }
     }
-    //endregion
 
-    //region init objects
     private void init() {
         firebaseCrudHelper = new FirebaseCrudHelper(this);
         validation = new Validation(this, hashMap);
@@ -95,28 +86,20 @@ public class NewNoteActivity extends AppCompatActivity {
         appAnalytics = new AppAnalytics(this);
         utilsForAll = new UtilsForAll(this);
     }
-    //endregion
 
-    //region perform all UI interactions
     private void bindUiWithComponents() {
-        //region validation
         validation.setEditTextIsNotEmpty(new String[]{"Title", "Description"},
                 new String[]{getString(R.string.title_validation), getString(R.string.description_validation)});
         validation.setSpinnerIsNotEmpty(new String[]{"TenantTypeId","StartingMonthId"});
-        //endregion
 
-        //region listen the note
         activityNewNoteBinding.listenIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 listenNote();
             }
         });
-        //endregion
 
-        //region send analytics report to firebase
         appAnalytics.registerEvent("newNote", appAnalytics.setData("newNoteActivity",""));
-        //region check internet connection
 
         activityNewNoteBinding.save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,11 +127,8 @@ public class NewNoteActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-    //endregion
 
-    //region save or update note
     private void saveOrUpdateNote() {
-        //region validation and save data
         if (validation.isValid()){
             if (tools.hasConnection()) {
                 note.setTitle(activityNewNoteBinding.Title.getText().toString());
@@ -160,20 +140,15 @@ public class NewNoteActivity extends AppCompatActivity {
                 } else {
                     firebaseCrudHelper.update(note, note.getFireBaseKey(), "note");
                 }
-                //region send analytics report to firebase
                 appAnalytics.registerEvent("newNote", appAnalytics.setData("newNoteActivity","Note Created or Updated."));
-                //region check internet connection
                 Toast.makeText(getApplicationContext(),R.string.success, Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(NewNoteActivity.this, NoteListActivity.class));
             } else {
                 Toast.makeText(NewNoteActivity.this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT).show();
             }
         }
-        //endregion
     }
-    //endregion
 
-    //region play note
     private void listenNote() {
         if (isTextToSpeechOn) {
             textToSpeech.stop();
@@ -199,9 +174,7 @@ public class NewNoteActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Text to Speech Started", Toast.LENGTH_SHORT).show();
         }
     }
-    //endregion
 
-    //region activity components
     @Override
     public void onBackPressed() {
         startActivity(new Intent(NewNoteActivity.this,NoteListActivity.class));
@@ -218,5 +191,4 @@ public class NewNoteActivity extends AppCompatActivity {
         super.onStop();
         textToSpeech.stop();
     }
-    //endregion
 }

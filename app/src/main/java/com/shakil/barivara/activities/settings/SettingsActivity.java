@@ -52,7 +52,6 @@ public class SettingsActivity extends AppCompatActivity {
         bindUiWithComponents();
     }
 
-    //region init objects
     private void init() {
         languageManager = new LanguageManager(this);
         prefManager = new PrefManager(this);
@@ -60,7 +59,6 @@ public class SettingsActivity extends AppCompatActivity {
         customAdManager = new CustomAdManager(this);
         setupLanguage();
     }
-    //endregion
 
     private void setupLanguage(){
         languageMap.clear();
@@ -68,14 +66,9 @@ public class SettingsActivity extends AppCompatActivity {
         languageMap.put("en", getString(R.string.english));
     }
 
-    //region perform all UI operations
     private void bindUiWithComponents() {
-
-        //region for ad
         customAdManager.generateAd(activitySettingsBinding.adView);
-        //endregion
 
-        //region account section
         if (!TextUtils.isEmpty(prefManager.getString(mUserFullName))){
             activitySettingsBinding.UserFullName.setText(getString(R.string.username)+":"+prefManager.getString(mUserFullName));
         }
@@ -94,9 +87,7 @@ public class SettingsActivity extends AppCompatActivity {
         else{
             activitySettingsBinding.Mobile.setText(getString(R.string.mobile_not_found));
         }
-        //endregion
 
-        //region language part
         String language = prefManager.getString(mLanguage);
         if(language != null){
             if(!TextUtils.isEmpty(language)){
@@ -107,18 +98,14 @@ public class SettingsActivity extends AppCompatActivity {
         } else {
             activitySettingsBinding.currentAppLanguage.setText(getString(R.string.english));
         }
-        //endregion
 
-        //region logout click listener
         activitySettingsBinding.logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 tools.doPopUpForLogout(LoginActivity.class);
             }
         });
-        //endregion
 
-        //region language and login click listeners
         activitySettingsBinding.language.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -138,16 +125,10 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             }
         });
-        //endregion
     }
-    //endregion
-
-    //region activity components
 
     @Override
     public void onBackPressed() {
         startActivity(new Intent(SettingsActivity.this, MainActivity.class));
     }
-
-    //endregion
 }
