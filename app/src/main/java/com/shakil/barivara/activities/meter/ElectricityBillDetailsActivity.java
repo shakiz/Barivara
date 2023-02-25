@@ -279,7 +279,7 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
     private void init() {
         roomNames = new ArrayList<>();
         firebaseCrudHelper = new FirebaseCrudHelper(this);
-        utilsForAll = new UtilsForAll(this,activityMeterCostDetailsBinding.mainLayout);
+        utilsForAll = new UtilsForAll(this);
         tools = new Tools(this);
         spinnerData = new SpinnerData(this);
         validation = new Validation(this, hashMap);

@@ -1,10 +1,10 @@
 package com.shakil.barivara.utils;
 
+import static com.shakil.barivara.utils.Constants.TAG;
+
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
 
 import com.shakil.barivara.R;
 
@@ -13,24 +13,12 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import static com.shakil.barivara.utils.Constants.TAG;
-
 public class UtilsForAll {
 
-    private Context context;
-    private View view;
-
-    public UtilsForAll(Context context, View view) {
-        this.context = context;
-        this.view = view;
-    }
+    private final Context context;
 
     public UtilsForAll(Context context) {
         this.context = context;
-    }
-
-    public UtilsForAll(View view) {
-        this.view = view;
     }
 
     public void exitApp(){
@@ -38,12 +26,6 @@ public class UtilsForAll {
         exitIntent.addCategory(Intent.CATEGORY_HOME);
         exitIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(exitIntent);
-    }
-
-    public void setCustomDesignTextView(int resId){
-        TextView textView = view.findViewById(resId);
-        textView.setTextColor(view.getResources().getColor(R.color.md_blue_grey_800));
-        textView.setSingleLine();
     }
 
     public int toIntValue(String value){
@@ -57,7 +39,6 @@ public class UtilsForAll {
         }
     }
 
-    //region get greetings
     public String setGreetings() {
         String greetings = "";
         Calendar calendar = Calendar.getInstance();
@@ -75,44 +56,27 @@ public class UtilsForAll {
         }
         return greetings;
     }
-    //endregion
 
-    //region get dateTime text
-    public String getDateTimeText() {
-        DateFormat df = new SimpleDateFormat("MMM d, yyyy || EEE");
-        String dateTimeText = df.format(new Date());
-        return dateTimeText;
-    }
-    //endregion
-
-    //region get date
     public String getDateTime() {
         DateFormat df = new SimpleDateFormat("MMM d, yyyy");
         String dateTimeText = df.format(new Date());
         return dateTimeText;
     }
-    //endregion
 
-    //region get dateTime with PM
     public String getDateTimeWithPM() {
         String  currentDateTimeString = DateFormat.getDateTimeInstance()
                 .format(new Date());
         return currentDateTimeString;
     }
-    //endregion
 
-    //region get day of the month
     public String getDayOfTheMonth(){
         DateFormat dateFormat = new SimpleDateFormat("EEE");
         String day = dateFormat.format(new Date());
         return day;
     }
-    //endregion
 
-    //region mobile number validation
     public boolean isValidMobileNo(String mobileNo){
         boolean isValid = mobileNo.length() == 11;
         return isValid;
     }
-    //endregion
 }

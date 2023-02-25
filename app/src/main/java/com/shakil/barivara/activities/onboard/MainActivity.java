@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         prefManager = new PrefManager(this);
         tools = new Tools(this);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
-        utilsForAll = new UtilsForAll(this,activityMainBinding.mainLayout);
+        utilsForAll = new UtilsForAll(this);
         customAdManager = new CustomAdManager(this);
         appAnalytics = new AppAnalytics(this);
     }
