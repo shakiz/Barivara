@@ -55,30 +55,39 @@ public class FirebaseCrudHelper {
     public void update(Object object, String firebaseId, String path){
         databaseReference = FirebaseDatabase.getInstance().getReference(path).child(prefManager.getString(mUserId));
         Map<String, Object> postValues = new HashMap<>();
-        if (path.equals("tenant")) {
-            Tenant tenant = (Tenant) object;
-            postValues = tenant.toMap();
-        } else if (path.equals("meter")) {
-            Meter meter = (Meter) object;
-            postValues = meter.toMap();
-        } else if (path.equals("rent")) {
-            Rent rent = (Rent) object;
-            postValues = rent.toMap();
-        } else if (path.equals("room")) {
-            Room room = (Room) object;
-            postValues = room.toMap();
-        } else if (path.equals("note")) {
-            Note note = (Note) object;
-            postValues = note.toMap();
-        } else if (path.equals("electricityBill")) {
-            ElectricityBill electricityBill = (ElectricityBill) object;
-            postValues = electricityBill.toMap();
-        } else if (path.equals("user")) {
-            User user = (User) object;
-            postValues = user.toMap();
-        } else {
-            //empty implementation
-            Log.i(Constants.TAG,"Update Failed:: Not Table Found");
+        switch (path) {
+            case "tenant":
+                Tenant tenant = (Tenant) object;
+                postValues = tenant.toMap();
+                break;
+            case "meter":
+                Meter meter = (Meter) object;
+                postValues = meter.toMap();
+                break;
+            case "rent":
+                Rent rent = (Rent) object;
+                postValues = rent.toMap();
+                break;
+            case "room":
+                Room room = (Room) object;
+                postValues = room.toMap();
+                break;
+            case "note":
+                Note note = (Note) object;
+                postValues = note.toMap();
+                break;
+            case "electricityBill":
+                ElectricityBill electricityBill = (ElectricityBill) object;
+                postValues = electricityBill.toMap();
+                break;
+            case "user":
+                User user = (User) object;
+                postValues = user.toMap();
+                break;
+            default:
+                //empty implementation
+                Log.i(Constants.TAG, "Update Failed:: Not Table Found");
+                break;
         }
         databaseReference.child(firebaseId).updateChildren(postValues);
     }
