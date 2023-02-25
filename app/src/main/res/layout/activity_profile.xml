@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
@@ -43,196 +43,183 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="24dp">
 
+                <TextView
+                    android:id="@+id/tvHeadingAccInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/account_info"
+                    android:textColor="@color/md_green_800"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/editIcon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <ImageView
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:background="@drawable/circle_border_settings_green"
-                    android:padding="4dp"
-                    android:elevation="4dp"
-                    android:translationZ="2dp"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginTop="8dp"
-                    app:tint="@color/md_white_1000"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_action_person" />
+                    android:id="@+id/editIcon"
+                    android:layout_height="32dp"
+                    android:layout_width="32dp"
+                    android:clickable="true"
+                    android:foreground="?attr/selectableItemBackgroundBorderless"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:src="@drawable/ic_baseline_edit_24"
+                    app:tint="@color/md_grey_600"
+                    android:focusable="true" />
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:textSize="18sp"
-                        android:textColor="@color/md_green_800"
-                        android:textStyle="bold"
-                        android:text="@string/account_info"
-                        android:layout_marginBottom="20dp"/>
-
-                    <ImageView
-                        android:id="@+id/editIcon"
-                        android:layout_height="32dp"
-                        android:layout_width="32dp"
-                        android:clickable="true"
-                        android:foreground="?attr/selectableItemBackgroundBorderless"
-                        android:layout_alignParentRight="true"
-                        android:src="@drawable/ic_baseline_edit_24"
-                        app:tint="@color/md_grey_600"/>
-
-                </RelativeLayout>
-
-                <View style="@style/profileDetailsView"
+                <View
+                    android:id="@+id/viewFirst"
+                    app:layout_constraintTop_toBottomOf="@id/tvHeadingAccInfo"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    style="@style/profileDetailsView"
                     android:layout_marginTop="20dp"/>
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp">
+                <ImageView
+                    android:id="@+id/nameImageView"
+                    android:layout_height="36dp"
+                    android:layout_width="36dp"
+                    app:layout_constraintTop_toBottomOf="@id/viewFirst"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:src="@drawable/ic_baseline_person_24"
+                    android:layout_marginTop="20dp"
+                    app:tint="@color/md_grey_600"/>
 
-                    <ImageView
-                        android:id="@+id/nameImageView"
-                        android:layout_height="36dp"
-                        android:layout_width="36dp"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/ic_baseline_person_24"
-                        app:tint="@color/md_grey_600"/>
+                <EditText
+                    android:id="@+id/Name"
+                    style="@style/profileDetailsTextMain"
+                    android:layout_width="0dp"
+                    android:layout_height="42dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/edit_text_back"
+                    android:focusable="false"
+                    android:gravity="center|left"
+                    android:paddingLeft="8dp"
+                    android:text="@string/name"
+                    app:layout_constraintBottom_toBottomOf="@+id/nameImageView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/nameImageView"
+                    app:layout_constraintTop_toBottomOf="@id/viewFirst" />
 
-                    <EditText
-                        android:id="@+id/Name"
-                        style="@style/profileDetailsTextMain"
-                        android:layout_width="match_parent"
-                        android:layout_height="42dp"
-                        android:layout_centerVertical="true"
-                        android:layout_toRightOf="@id/nameImageView"
-                        android:background="@drawable/edit_text_back"
-                        android:focusable="false"
-                        android:gravity="center|left"
-                        android:paddingLeft="8dp"
-                        android:text="@string/name" />
+                <ImageView
+                    android:id="@+id/mobileImageView"
+                    android:layout_height="36dp"
+                    android:layout_width="36dp"
+                    app:layout_constraintTop_toBottomOf="@id/nameImageView"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:src="@drawable/ic_phone"
+                    app:tint="@color/md_grey_600"/>
 
-                </RelativeLayout>
+                <EditText
+                    android:id="@+id/Mobile"
+                    style="@style/profileDetailsTextMain"
+                    android:layout_width="0dp"
+                    android:layout_height="42dp"
+                    android:background="@drawable/edit_text_back"
+                    android:focusable="false"
+                    android:gravity="center|left"
+                    app:layout_constraintBottom_toBottomOf="@+id/mobileImageView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/mobileImageView"
+                    app:layout_constraintTop_toBottomOf="@id/nameImageView"
+                    android:paddingLeft="8dp"
+                    android:text="@string/mobile" />
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp">
+                <ImageView
+                    android:id="@+id/emailImageView"
+                    android:layout_height="36dp"
+                    android:layout_width="36dp"
+                    app:layout_constraintTop_toBottomOf="@id/mobileImageView"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:src="@drawable/ic_email_green"
+                    app:tint="@color/md_grey_600" />
 
-                    <ImageView
-                        android:id="@+id/mobileImageView"
-                        android:layout_height="36dp"
-                        android:layout_width="36dp"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/ic_phone"
-                        app:tint="@color/md_grey_600"/>
+                <EditText
+                    android:id="@+id/Email"
+                    style="@style/profileDetailsTextMain"
+                    android:layout_width="0dp"
+                    android:layout_height="42dp"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/emailImageView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/emailImageView"
+                    app:layout_constraintTop_toBottomOf="@id/mobileImageView"
+                    android:background="@drawable/edit_text_back"
+                    android:focusable="false"
+                    android:gravity="center|left"
+                    android:paddingLeft="8dp"
+                    android:text="@string/email" />
 
-                    <EditText
-                        android:id="@+id/Mobile"
-                        style="@style/profileDetailsTextMain"
-                        android:layout_width="match_parent"
-                        android:layout_height="42dp"
-                        android:layout_centerVertical="true"
-                        android:layout_toRightOf="@id/mobileImageView"
-                        android:background="@drawable/edit_text_back"
-                        android:focusable="false"
-                        android:gravity="center|left"
-                        android:paddingLeft="8dp"
-                        android:text="@string/mobile" />
+                <ImageView
+                    android:id="@+id/addressImageView"
+                    android:layout_height="36dp"
+                    android:layout_width="36dp"
+                    app:layout_constraintTop_toBottomOf="@id/emailImageView"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:src="@drawable/ic_location"
+                    app:tint="@color/md_grey_600" />
 
-                </RelativeLayout>
+                <EditText
+                    android:id="@+id/Address"
+                    style="@style/profileDetailsTextMain"
+                    android:layout_width="0dp"
+                    android:layout_height="42dp"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/addressImageView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/addressImageView"
+                    app:layout_constraintTop_toBottomOf="@id/emailImageView"
+                    android:background="@drawable/edit_text_back"
+                    android:focusable="false"
+                    android:gravity="center|left"
+                    android:paddingLeft="8dp"
+                    android:text="@string/address" />
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp">
+                <ImageView
+                    android:id="@+id/dobImageView"
+                    android:layout_height="36dp"
+                    android:layout_width="36dp"
+                    app:layout_constraintTop_toBottomOf="@id/addressImageView"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:src="@drawable/ic_date_range"
+                    app:tint="@color/md_grey_600" />
 
-                    <ImageView
-                        android:id="@+id/emailImageView"
-                        android:layout_height="36dp"
-                        android:layout_width="36dp"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/ic_email_green"
-                        app:tint="@color/md_grey_600" />
+                <EditText
+                    android:id="@+id/DOB"
+                    style="@style/profileDetailsTextMain"
+                    android:layout_width="0dp"
+                    android:layout_height="42dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/edit_text_back"
+                    android:focusable="false"
+                    android:gravity="center|left"
+                    android:paddingLeft="8dp"
+                    android:text="@string/dob"
+                    app:layout_constraintBottom_toBottomOf="@+id/dobImageView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/dobImageView"
+                    app:layout_constraintTop_toBottomOf="@id/addressImageView" />
 
-                    <EditText
-                        android:id="@+id/Email"
-                        style="@style/profileDetailsTextMain"
-                        android:layout_width="match_parent"
-                        android:layout_height="42dp"
-                        android:layout_centerVertical="true"
-                        android:layout_toRightOf="@id/emailImageView"
-                        android:background="@drawable/edit_text_back"
-                        android:focusable="false"
-                        android:gravity="center|left"
-                        android:paddingLeft="8dp"
-                        android:text="@string/email" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp">
-
-                    <ImageView
-                        android:id="@+id/addressImageView"
-                        android:layout_height="36dp"
-                        android:layout_width="36dp"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/ic_location"
-                        app:tint="@color/md_grey_600" />
-
-                    <EditText
-                        android:id="@+id/Address"
-                        style="@style/profileDetailsTextMain"
-                        android:layout_width="match_parent"
-                        android:layout_height="42dp"
-                        android:layout_centerVertical="true"
-                        android:layout_toRightOf="@id/addressImageView"
-                        android:background="@drawable/edit_text_back"
-                        android:focusable="false"
-                        android:gravity="center|left"
-                        android:paddingLeft="8dp"
-                        android:text="@string/address" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp">
-
-                    <ImageView
-                        android:id="@+id/dobImageView"
-                        android:layout_height="36dp"
-                        android:layout_width="36dp"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/ic_date_range"
-                        app:tint="@color/md_grey_600" />
-
-                    <EditText
-                        android:id="@+id/DOB"
-                        style="@style/profileDetailsTextMain"
-                        android:layout_width="match_parent"
-                        android:layout_height="42dp"
-                        android:layout_centerVertical="true"
-                        android:layout_toRightOf="@id/dobImageView"
-                        android:background="@drawable/edit_text_back"
-                        android:focusable="false"
-                        android:gravity="center|left"
-                        android:paddingLeft="8dp"
-                        android:text="@string/dob" />
-
-                </RelativeLayout>
-
-                <View style="@style/profileDetailsView"
+                <View
+                    android:id="@+id/viewSecond"
+                    style="@style/profileDetailsView"
                     android:layout_marginBottom="20dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dobImageView"
+                    app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginTop="20dp"/>
 
                 <LinearLayout
                     android:id="@+id/saveCancelLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/viewSecond"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     android:visibility="gone"
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="16dp"
@@ -272,12 +259,16 @@
                     android:id="@+id/adView"
                     android:layout_width="match_parent"
                     android:layout_height="42dp"
+                    android:layout_marginTop="42dp"
+                    ads:layout_constraintStart_toStartOf="parent"
+                    ads:layout_constraintEnd_toEndOf="parent"
+                    ads:layout_constraintTop_toBottomOf="@id/saveCancelLayout"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     ads:adSize="BANNER"
                     ads:adUnitId="ca-app-pub-3017517613101119/5605971007" />
 
-            </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.core.widget.NestedScrollView>
 
