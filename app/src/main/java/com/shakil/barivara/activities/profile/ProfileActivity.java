@@ -13,6 +13,7 @@ import com.shakil.barivara.activities.onboard.MainActivity;
 import com.shakil.barivara.databinding.ActivityProfileBinding;
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.User;
+import com.shakil.barivara.utils.CustomAdManager;
 import com.shakil.barivara.utils.Validation;
 
 import java.util.HashMap;
@@ -24,6 +25,7 @@ public class ProfileActivity extends AppCompatActivity {
     private Validation validation;
     private final Map<String, String[]> hashMap = new HashMap();
     private FirebaseCrudHelper firebaseCrudHelper;
+    private CustomAdManager customAdManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +39,12 @@ public class ProfileActivity extends AppCompatActivity {
     private void initUI() {
         validation = new Validation(this, hashMap);
         firebaseCrudHelper = new FirebaseCrudHelper(this);
+        customAdManager = new CustomAdManager(this);
     }
 
     private void bindUiWithComponents() {
+        customAdManager.generateAd(activityBinding.adView);
+
         validation.setEditTextIsNotEmpty(new String[]{"Name", "Address", "DOB"},
                 new String[]{getString(R.string.validation_name), getString(R.string.validation_address)
                         ,getString(R.string.validation_dob)});
