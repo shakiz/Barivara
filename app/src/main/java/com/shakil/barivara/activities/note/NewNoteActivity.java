@@ -46,18 +46,17 @@ public class NewNoteActivity extends AppCompatActivity {
         activityNewNoteBinding = DataBindingUtil.setContentView(this, R.layout.activity_new_note);
 
         getIntentData();
-
         init();
-        setSupportActionBar(activityNewNoteBinding.toolBar);
 
+        setSupportActionBar(activityNewNoteBinding.toolBar);
         activityNewNoteBinding.toolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
             }
         });
-        bindUiWithComponents();
 
+        bindUiWithComponents();
         loadData();
     }
 

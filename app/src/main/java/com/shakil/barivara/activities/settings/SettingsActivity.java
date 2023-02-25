@@ -40,7 +40,6 @@ public class SettingsActivity extends AppCompatActivity {
         activitySettingsBinding = DataBindingUtil.setContentView(this, R.layout.activity_settings);
 
         setSupportActionBar(activitySettingsBinding.toolBar);
-
         activitySettingsBinding.toolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

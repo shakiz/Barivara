@@ -49,10 +49,9 @@ public class RoomActivity extends AppCompatActivity {
         activityAddNewRoomBinding = DataBindingUtil.setContentView(this, R.layout.activity_add_new_room);
 
         getIntentData();
-
         init();
-        setSupportActionBar(activityAddNewRoomBinding.toolBar);
 
+        setSupportActionBar(activityAddNewRoomBinding.toolBar);
         activityAddNewRoomBinding.toolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,7 +60,6 @@ public class RoomActivity extends AppCompatActivity {
         });
 
         bindUIWithComponents();
-
         loadData();
     }
 

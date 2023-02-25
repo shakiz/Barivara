@@ -57,10 +57,9 @@ public class NewTenantActivity extends AppCompatActivity {
         activityAddNewTenantBinding = DataBindingUtil.setContentView(this, R.layout.activity_add_new_tenant);
 
         getIntentData();
-
         init();
-        setSupportActionBar(activityAddNewTenantBinding.toolBar);
 
+        setSupportActionBar(activityAddNewTenantBinding.toolBar);
         activityAddNewTenantBinding.toolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,7 +68,6 @@ public class NewTenantActivity extends AppCompatActivity {
         });
 
         bindUiWithComponents();
-
         loadData();
     }
 

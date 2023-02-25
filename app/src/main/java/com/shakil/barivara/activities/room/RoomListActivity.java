@@ -47,8 +47,8 @@ public class RoomListActivity extends AppCompatActivity {
         activityRoomListBinding = DataBindingUtil.setContentView(this, R.layout.activity_room_list);
 
         init();
-        setSupportActionBar(activityRoomListBinding.toolBar);
 
+        setSupportActionBar(activityRoomListBinding.toolBar);
         activityRoomListBinding.toolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

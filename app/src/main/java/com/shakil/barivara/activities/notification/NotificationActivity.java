@@ -35,7 +35,6 @@ public class NotificationActivity extends AppCompatActivity {
         activityNotificationBinding = DataBindingUtil.setContentView(this, R.layout.activity_notification);
 
         setSupportActionBar(activityNotificationBinding.toolBar);
-
         activityNotificationBinding.toolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

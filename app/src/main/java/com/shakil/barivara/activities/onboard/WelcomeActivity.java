@@ -103,12 +103,9 @@ public class WelcomeActivity extends AppCompatActivity {
         @Override
         public void onPageSelected(int position) {
             addBottomDots(position);
-            // changing the next button text 'NEXT' / 'GOT IT'
             if (position == layouts.length - 1) {
-                // last page. make button text to GOT IT
                 activityWelcomeBinding.btnNext.setText(getString(R.string.finish));
             } else {
-                // still pages are left
                 activityWelcomeBinding.btnNext.setText(getString(R.string.next));
             }
         }

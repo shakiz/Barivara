@@ -49,7 +49,6 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
         activityMeterCostDetailsBinding = DataBindingUtil.setContentView(this, R.layout.activity_electricity_bill_details);
 
         getIntentData();
-
         init();
         setSupportActionBar(activityMeterCostDetailsBinding.toolBar);
 
@@ -59,8 +58,8 @@ public class ElectricityBillDetailsActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-        bindUiWithComponents();
 
+        bindUiWithComponents();
         loadData();
     }
 

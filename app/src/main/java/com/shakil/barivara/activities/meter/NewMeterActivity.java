@@ -44,11 +44,9 @@ public class NewMeterActivity extends AppCompatActivity {
         activityNewMeterBinding = DataBindingUtil.setContentView(this, R.layout.activity_new_meter);
 
         getIntentData();
-
         init();
 
         setSupportActionBar(activityNewMeterBinding.toolBar);
-
         activityNewMeterBinding.toolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,7 +55,6 @@ public class NewMeterActivity extends AppCompatActivity {
         });
 
         bindUIWithComponents();
-
         loadData();
     }
 

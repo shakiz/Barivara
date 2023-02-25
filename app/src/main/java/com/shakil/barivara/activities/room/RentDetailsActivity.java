@@ -44,18 +44,17 @@ public class RentDetailsActivity extends AppCompatActivity {
         activityNewRentDetailsBinding = DataBindingUtil.setContentView(this, R.layout.activity_new_rent_details);
 
         getIntentData();
-
         init();
-        setSupportActionBar(activityNewRentDetailsBinding.toolBar);
 
+        setSupportActionBar(activityNewRentDetailsBinding.toolBar);
         activityNewRentDetailsBinding.toolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
             }
         });
-        bindUiWithComponents();
 
+        bindUiWithComponents();
         loadData();
     }
 

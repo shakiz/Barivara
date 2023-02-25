@@ -40,7 +40,6 @@ public class RegistrationActivity extends AppCompatActivity {
         activityBinding = DataBindingUtil.setContentView(this, R.layout.activity_registration);
 
         initUI();
-
         bindUiWithComponents();
     }
 

@@ -49,7 +49,6 @@ public class TenantListActivity extends AppCompatActivity {
         init();
 
         setSupportActionBar(activityTenantListBinding.toolBar);
-
         activityTenantListBinding.toolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

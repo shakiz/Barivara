@@ -24,7 +24,6 @@ public class AboutUsActivity extends AppCompatActivity {
         activityBinding = DataBindingUtil.setContentView(this, R.layout.activity_about_us);
 
         setSupportActionBar(activityBinding.toolBar);
-
         activityBinding.toolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
