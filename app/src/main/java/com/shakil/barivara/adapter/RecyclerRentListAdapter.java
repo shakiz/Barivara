@@ -24,32 +24,19 @@ public class RecyclerRentListAdapter extends RecyclerView.Adapter<RecyclerRentLi
         this.arrayList = arrayList;
     }
 
-    //region click adapter
     public onItemClickListener onItemClickListener;
-    public interface onItemClickListener{
-        void onItemClick(Rent rent);
-    }
+    public onEditListener onEditListener;
+    public onDeleteListener onDeleteListener;
 
     public void setOnItemClickListener(onItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
-    public onEditListener onEditListener;
-    public interface onEditListener{
-        void onEdit(Rent rent);
-    }
-
     public void onEditListener(onEditListener onEditListener) {
         this.onEditListener = onEditListener;
     }
-    public onDeleteListener onDeleteListener;
-    public interface onDeleteListener{
-        void onDelete(Rent rent);
-    }
-
     public void onDeleteListener(onDeleteListener onDeleteListener) {
         this.onDeleteListener = onDeleteListener;
     }
-    //endregion
 
     @NonNull
     @Override
@@ -111,4 +98,8 @@ public class RecyclerRentListAdapter extends RecyclerView.Adapter<RecyclerRentLi
             item_card_view = itemView.findViewById(R.id.item_card_view);
         }
     }
+
+    public interface onItemClickListener{ void onItemClick(Rent rent);}
+    public interface onEditListener{ void onEdit(Rent rent);}
+    public interface onDeleteListener{ void onDelete(Rent rent);}
 }

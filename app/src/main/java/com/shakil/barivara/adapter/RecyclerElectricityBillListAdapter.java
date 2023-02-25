@@ -23,27 +23,16 @@ public class RecyclerElectricityBillListAdapter extends RecyclerView.Adapter<Rec
         this.arrayList = arrayList;
     }
 
-    //region click adapter
     public onItemClickListener onItemClickListener;
-    public interface onItemClickListener{
-        void onItemClick(ElectricityBill electricityBill);
-    }
+    private onRemoveClick onRemoveClick;
 
     public void setOnItemClickListener(onItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
-    }
-    //endregion
-
-    //region click listener
-    private onRemoveClick onRemoveClick;
-    public interface onRemoveClick {
-        void itemClick(ElectricityBill electricityBill);
     }
 
     public void setOnRemoveClick(onRemoveClick onRemoveClick) {
         this.onRemoveClick = onRemoveClick;
     }
-    //endregion
 
     @NonNull
     @Override
@@ -67,7 +56,6 @@ public class RecyclerElectricityBillListAdapter extends RecyclerView.Adapter<Rec
             }
         });
 
-        //remove product from cart
         if (onRemoveClick != null){
             holder.DeleteFromCart.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -76,7 +64,6 @@ public class RecyclerElectricityBillListAdapter extends RecyclerView.Adapter<Rec
                 }
             });
         }
-        //endregion
     }
 
     @Override
@@ -97,4 +84,7 @@ public class RecyclerElectricityBillListAdapter extends RecyclerView.Adapter<Rec
             DeleteFromCart = itemView.findViewById(R.id.DeleteFromCart);
         }
     }
+
+    public interface onItemClickListener{ void onItemClick(ElectricityBill electricityBill);}
+    public interface onRemoveClick { void itemClick(ElectricityBill electricityBill);}
 }

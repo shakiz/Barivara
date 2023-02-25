@@ -23,32 +23,20 @@ public class RecyclerRoomListAdapter extends RecyclerView.Adapter<RecyclerRoomLi
         this.arrayList = arrayList;
     }
 
-    //region edit, delete and item click interfaces
     public onItemClickListener onItemClickListener;
-    public interface onItemClickListener{
-        void onItemClick(Room room);
-    }
+    public onEditListener onEditListener;
+    public onDeleteListener onDeleteListener;
 
     public void setOnItemClickListener(onItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
-    public onEditListener onEditListener;
-    public interface onEditListener{
-        void onEdit(Room room);
-    }
-
     public void onEditListener(onEditListener onEditListener) {
         this.onEditListener = onEditListener;
-    }
-    public onDeleteListener onDeleteListener;
-    public interface onDeleteListener{
-        void onDelete(Room room);
     }
 
     public void onDeleteListener(onDeleteListener onDeleteListener) {
         this.onDeleteListener = onDeleteListener;
     }
-    //endregion
 
     @NonNull
     @Override
@@ -110,4 +98,8 @@ public class RecyclerRoomListAdapter extends RecyclerView.Adapter<RecyclerRoomLi
             item_card_view = itemView.findViewById(R.id.item_card_view);
         }
     }
+
+    public interface onItemClickListener{ void onItemClick(Room room);}
+    public interface onEditListener{ void onEdit(Room room);}
+    public interface onDeleteListener{ void onDelete(Room room);}
 }

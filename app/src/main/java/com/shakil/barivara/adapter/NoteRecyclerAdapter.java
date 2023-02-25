@@ -21,7 +21,6 @@ public class NoteRecyclerAdapter extends RecyclerView.Adapter<NoteRecyclerAdapte
         this.allNotes = allNotes;
     }
 
-    //region click adapter
     public onItemClickListener onItemClickListener;
     public interface onItemClickListener{
         void onItemClick(Note note);
@@ -30,7 +29,6 @@ public class NoteRecyclerAdapter extends RecyclerView.Adapter<NoteRecyclerAdapte
     public void setOnItemClickListener(onItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
-    //endregion
 
     @NonNull
     @Override

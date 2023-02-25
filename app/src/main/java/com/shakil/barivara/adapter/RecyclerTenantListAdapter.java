@@ -36,32 +36,20 @@ public class RecyclerTenantListAdapter extends RecyclerView.Adapter<RecyclerTena
         this.context = context;
     }
 
-    //region click adapter
     public onItemClickListener onItemClickListener;
-    public interface onItemClickListener{
-        void onItemClick(Tenant tenant);
-    }
+    public onEditListener onEditListener;
+    public onDeleteListener onDeleteListener;
 
     public void setOnItemClickListener(onItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
-    public onEditListener onEditListener;
-    public interface onEditListener{
-        void onEdit(Tenant tenant);
-    }
-
     public void onEditListener(onEditListener onEditListener) {
         this.onEditListener = onEditListener;
-    }
-    public onDeleteListener onDeleteListener;
-    public interface onDeleteListener{
-        void onDelete(Tenant tenant);
     }
 
     public void onDeleteListener(onDeleteListener onDeleteListener) {
         this.onDeleteListener = onDeleteListener;
     }
-    //endregion
 
     @NonNull
     @Override
@@ -85,7 +73,7 @@ public class RecyclerTenantListAdapter extends RecyclerView.Adapter<RecyclerTena
                 }
             }
         });
-        //region call and message listeners
+
         holder.callIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,9 +97,7 @@ public class RecyclerTenantListAdapter extends RecyclerView.Adapter<RecyclerTena
                 new Tools(context).sendMessage(tenant.getMobileNo());
             }
         });
-        //endregion
 
-        //region set tenant status
         if (tenant.getIsActiveValue() != null && !TextUtils.isEmpty(tenant.getIsActiveValue())) {
             if (tenant.getIsActiveValue().equals(context.getString(R.string.yes))){
                 holder.activeColorIndicator.setBackgroundColor(context.getResources().getColor(R.color.md_green_400));
@@ -120,9 +106,7 @@ public class RecyclerTenantListAdapter extends RecyclerView.Adapter<RecyclerTena
                 holder.activeColorIndicator.setBackgroundColor(context.getResources().getColor(R.color.md_red_400));
             }
         }
-        //endregion
 
-        //region edit and delete click listeners
         holder.editIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,7 +119,6 @@ public class RecyclerTenantListAdapter extends RecyclerView.Adapter<RecyclerTena
                 if (onDeleteListener != null) onDeleteListener.onDelete(tenant);
             }
         });
-        //endregion
     }
 
     @Override
@@ -162,4 +145,8 @@ public class RecyclerTenantListAdapter extends RecyclerView.Adapter<RecyclerTena
             item_card_view = itemView.findViewById(R.id.item_card_view);
         }
     }
+
+    public interface onDeleteListener{ void onDelete(Tenant tenant);}
+    public interface onEditListener{ void onEdit(Tenant tenant);}
+    public interface onItemClickListener{ void onItemClick(Tenant tenant);}
 }

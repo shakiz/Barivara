@@ -23,32 +23,20 @@ public class RecyclerMeterListAdapter extends RecyclerView.Adapter<RecyclerMeter
         this.arrayList = arrayList;
     }
 
-    //region click adapter
     public onItemClickListener onItemClickListener;
-    public interface onItemClickListener{
-        void onItemClick(Meter meter);
-    }
+    public onDeleteListener onDeleteListener;
+    public onEditListener onEditListener;
 
     public void setOnItemClickListener(onItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
-    public onEditListener onEditListener;
-    public interface onEditListener{
-        void onEdit(Meter meter);
-    }
-
     public void onEditListener(onEditListener onEditListener) {
         this.onEditListener = onEditListener;
-    }
-    public onDeleteListener onDeleteListener;
-    public interface onDeleteListener{
-        void onDelete(Meter meter);
     }
 
     public void onDeleteListener(onDeleteListener onDeleteListener) {
         this.onDeleteListener = onDeleteListener;
     }
-    //endregion
 
     @NonNull
     @Override
@@ -73,7 +61,6 @@ public class RecyclerMeterListAdapter extends RecyclerView.Adapter<RecyclerMeter
         });
         holder.listCount.setText(""+(position+1));
 
-        //region edit and delete click listeners
         holder.editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,7 +73,6 @@ public class RecyclerMeterListAdapter extends RecyclerView.Adapter<RecyclerMeter
                 if (onDeleteListener != null) onDeleteListener.onDelete(meter);
             }
         });
-        //endregion
     }
 
     @Override
@@ -110,4 +96,8 @@ public class RecyclerMeterListAdapter extends RecyclerView.Adapter<RecyclerMeter
             item_card_view = itemView.findViewById(R.id.item_card_view);
         }
     }
+
+    public interface onItemClickListener{ void onItemClick(Meter meter);}
+    public interface onEditListener{ void onEdit(Meter meter);}
+    public interface onDeleteListener{ void onDelete(Meter meter);}
 }
