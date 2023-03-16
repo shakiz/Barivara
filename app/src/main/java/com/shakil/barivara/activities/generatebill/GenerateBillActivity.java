@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -119,18 +120,22 @@ public class GenerateBillActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (validation.isValid()) {
                     if (tools.isValidMobile(activityBinding.MobileNo.getText().toString())) {
-                        GenerateBill generateBill = new GenerateBill(
-                                activityBinding.TenantName.getText().toString(),
-                                activityBinding.MobileNo.getText().toString(),
-                                MonthStr + " " + YearStr,
-                                activityBinding.AssociateRoom.getText().toString(),
-                                Integer.parseInt(activityBinding.RentAmount.getText().toString()),
-                                Integer.parseInt(activityBinding.GasBill.getText().toString()),
-                                Integer.parseInt(activityBinding.WaterBill.getText().toString()),
-                                Integer.parseInt(activityBinding.ElectricityBill.getText().toString()),
-                                Integer.parseInt(activityBinding.ServiceCharge.getText().toString())
-                        );
-                        doPopUpForBillDetails(generateBill);
+                        try {
+                            GenerateBill generateBill = new GenerateBill(
+                                    activityBinding.TenantName.getText().toString(),
+                                    activityBinding.MobileNo.getText().toString(),
+                                    MonthStr + " " + YearStr,
+                                    activityBinding.AssociateRoom.getText().toString(),
+                                    Integer.parseInt(activityBinding.RentAmount.getText().toString()),
+                                    Integer.parseInt(activityBinding.GasBill.getText().toString()),
+                                    Integer.parseInt(activityBinding.WaterBill.getText().toString()),
+                                    Integer.parseInt(activityBinding.ElectricityBill.getText().toString()),
+                                    Integer.parseInt(activityBinding.ServiceCharge.getText().toString())
+                            );
+                            doPopUpForBillDetails(generateBill);
+                        } catch (Exception e){
+                            Log.e("onClick: ", e.getMessage());
+                        }
                     } else {
                         Toast.makeText(GenerateBillActivity.this,
                                 getString(R.string.mobile_number_not_valid), Toast.LENGTH_SHORT).show();
