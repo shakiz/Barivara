@@ -162,7 +162,9 @@ public class NewTenantActivity extends AppCompatActivity {
                     setRoomSpinner();
 
                     if (tenant.getTenantId() != null) {
-                        activityAddNewTenantBinding.AssociateRoomId.setSelection(tenant.getAssociateRoomId(),true);
+                        if(tenant.getAssociateRoomId() > 0){
+                            activityAddNewTenantBinding.AssociateRoomId.setSelection(tenant.getAssociateRoomId(),true);
+                        }
                     }
                 }
             });
