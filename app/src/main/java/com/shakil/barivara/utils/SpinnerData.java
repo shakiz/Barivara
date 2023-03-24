@@ -3,6 +3,7 @@ package com.shakil.barivara.utils;
 import android.content.Context;
 import com.shakil.barivara.R;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class SpinnerData {
 
@@ -23,9 +24,7 @@ public class SpinnerData {
                 context.getString(R.string.twenty_twenty_two),
                 context.getString(R.string.twenty_twenty_three),
         };
-        for (int start = 0; start < yearArray.length; start++) {
-            spinnerValues.add(yearArray[start]);
-        }
+        Collections.addAll(spinnerValues, yearArray);
         return spinnerValues;
     }
 
@@ -37,9 +36,7 @@ public class SpinnerData {
                 context.getString(R.string.may), context.getString(R.string.june), context.getString(R.string.july),
                 context.getString(R.string.august), context.getString(R.string.september), context.getString(R.string.october),
                 context.getString(R.string.november), context.getString(R.string.december)};
-        for (int start = 0; start < monthArray.length; start++) {
-            spinnerValues.add(monthArray[start]);
-        }
+        Collections.addAll(spinnerValues, monthArray);
         return spinnerValues;
     }
 
@@ -48,27 +45,21 @@ public class SpinnerData {
         String[] tenantTypeArray = {context.getString(R.string.select_data_1),context.getString(R.string.bachelor),
                 context.getString(R.string.family), context.getString(R.string.small_family), context.getString(R.string.female_only),
                 context.getString(R.string.male_only)};
-        for (int start = 0; start < tenantTypeArray.length; start++) {
-            spinnerValues.add(tenantTypeArray[start]);
-        }
+        Collections.addAll(spinnerValues, tenantTypeArray);
         return spinnerValues;
     }
 
     public ArrayList<String> setMeterTypeData(){
         ArrayList<String> spinnerValues = new ArrayList<>();
         String[] meterTypeArray = {"Select Data","Main Meter","Sub Meter"};
-        for (int start = 0; start < meterTypeArray.length; start++) {
-            spinnerValues.add(meterTypeArray[start]);
-        }
+        Collections.addAll(spinnerValues, meterTypeArray);
         return spinnerValues;
     }
 
     public ArrayList<String> setSpinnerNoData(){
         ArrayList<String> spinnerValues = new ArrayList<>();
         String[] meterTypeArray = {"No Data"};
-        for (int start = 0; start < meterTypeArray.length; start++) {
-            spinnerValues.add(meterTypeArray[start]);
-        }
+        Collections.addAll(spinnerValues, meterTypeArray);
         return spinnerValues;
     }
 }
