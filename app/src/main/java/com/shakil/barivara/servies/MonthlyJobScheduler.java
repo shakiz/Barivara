@@ -27,6 +27,13 @@ public class MonthlyJobScheduler extends BroadcastReceiver {
                 .build();
         jobScheduler.schedule(jobInfo);
 
+        int result = jobScheduler.schedule(jobInfo);
+        if (result == JobScheduler.RESULT_SUCCESS) {
+            // The job has been scheduled successfully
+        } else {
+            // There was an error scheduling the job
+        }
+
         PendingIntent pendingIntent = PendingIntent.getActivity(
                 context,
                 1001,
