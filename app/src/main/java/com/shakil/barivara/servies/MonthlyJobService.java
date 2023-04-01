@@ -10,11 +10,12 @@ import androidx.annotation.RequiresApi;
 public class MonthlyJobService extends JobService {
     @Override
     public boolean onStartJob(JobParameters params) {
+        jobFinished(params, false);
         return false;
     }
 
     @Override
     public boolean onStopJob(JobParameters params) {
-        return false;
+        return true;
     }
 }

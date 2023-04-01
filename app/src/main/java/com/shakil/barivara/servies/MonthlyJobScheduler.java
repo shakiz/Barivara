@@ -16,7 +16,6 @@ import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
 import com.shakil.barivara.R;
-import com.shakil.barivara.model.notification.Notification;
 
 public class MonthlyJobScheduler extends BroadcastReceiver {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
