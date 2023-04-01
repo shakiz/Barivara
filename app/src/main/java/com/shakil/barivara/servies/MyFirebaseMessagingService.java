@@ -1,4 +1,4 @@
-package com.shakil.barivara.utils;
+package com.shakil.barivara.servies;
 
 import static com.shakil.barivara.utils.Constants.TAG;
 
@@ -11,6 +11,8 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
 import com.shakil.barivara.model.notification.Notification;
+import com.shakil.barivara.utils.Tools;
+import com.shakil.barivara.utils.UtilsForAll;
 
 import java.util.UUID;
 

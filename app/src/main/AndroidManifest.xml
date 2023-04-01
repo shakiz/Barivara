@@ -192,7 +192,7 @@
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
         <service
-            android:name=".utils.MyFirebaseMessagingService"
+            android:name=".servies.MyFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
