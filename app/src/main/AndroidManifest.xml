@@ -199,6 +199,15 @@
             </intent-filter>
         </service>
 
+        <receiver android:name=".servies.MonthlyJobScheduler"
+            android:enabled="true"
+            android:exported="false"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-3017517613101119~4596141661" />
