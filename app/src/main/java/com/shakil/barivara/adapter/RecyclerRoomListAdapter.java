@@ -23,19 +23,10 @@ public class RecyclerRoomListAdapter extends RecyclerView.Adapter<RecyclerRoomLi
         this.arrayList = arrayList;
     }
 
-    public onItemClickListener onItemClickListener;
-    public onEditListener onEditListener;
-    public onDeleteListener onDeleteListener;
+    public RoomCallBacks roomCallBacks;
 
-    public void setOnItemClickListener(onItemClickListener onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
-    }
-    public void onEditListener(onEditListener onEditListener) {
-        this.onEditListener = onEditListener;
-    }
-
-    public void onDeleteListener(onDeleteListener onDeleteListener) {
-        this.onDeleteListener = onDeleteListener;
+    public void setRoomCallBack(RoomCallBacks roomCallBacks) {
+        this.roomCallBacks = roomCallBacks;
     }
 
     @NonNull
@@ -54,8 +45,8 @@ public class RecyclerRoomListAdapter extends RecyclerView.Adapter<RecyclerRoomLi
         holder.item_card_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (onItemClickListener != null){
-                    onItemClickListener.onItemClick(room);
+                if (roomCallBacks != null){
+                    roomCallBacks.onItemClick(room);
                 }
             }
         });
@@ -65,13 +56,13 @@ public class RecyclerRoomListAdapter extends RecyclerView.Adapter<RecyclerRoomLi
         holder.editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (onEditListener != null) onEditListener.onEdit(room);
+                if (roomCallBacks != null) roomCallBacks.onEdit(room);
             }
         });
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (onDeleteListener != null) onDeleteListener.onDelete(room);
+                if (roomCallBacks != null) roomCallBacks.onDelete(room);
             }
         });
         //endregion
@@ -99,7 +90,11 @@ public class RecyclerRoomListAdapter extends RecyclerView.Adapter<RecyclerRoomLi
         }
     }
 
-    public interface onItemClickListener{ void onItemClick(Room room);}
-    public interface onEditListener{ void onEdit(Room room);}
-    public interface onDeleteListener{ void onDelete(Room room);}
+    public interface RoomCallBacks {
+        void onDelete(Room room);
+
+        void onEdit(Room room);
+
+        void onItemClick(Room room);
+    }
 }

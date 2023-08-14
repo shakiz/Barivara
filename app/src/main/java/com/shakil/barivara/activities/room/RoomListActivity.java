@@ -30,7 +30,7 @@ import com.shakil.barivara.utils.UX;
 
 import java.util.ArrayList;
 
-public class RoomListActivity extends AppCompatActivity {
+public class RoomListActivity extends AppCompatActivity implements RecyclerRoomListAdapter.RoomCallBacks {
     private ActivityRoomListBinding activityRoomListBinding;
     private ArrayList<Room> roomList;
     private FirebaseCrudHelper firebaseCrudHelper;
@@ -158,25 +158,7 @@ public class RoomListActivity extends AppCompatActivity {
         RecyclerRoomListAdapter recyclerRoomListAdapter = new RecyclerRoomListAdapter(roomList);
         activityRoomListBinding.mRecylerView.setLayoutManager(new LinearLayoutManager(this));
         activityRoomListBinding.mRecylerView.setAdapter(recyclerRoomListAdapter);
-        recyclerRoomListAdapter.notifyDataSetChanged();
-        recyclerRoomListAdapter.setOnItemClickListener(new RecyclerRoomListAdapter.onItemClickListener() {
-            @Override
-            public void onItemClick(Room room) {
-                startActivity(new Intent(RoomListActivity.this, RoomActivity.class).putExtra("room", room));
-            }
-        });
-        recyclerRoomListAdapter.onEditListener(new RecyclerRoomListAdapter.onEditListener() {
-            @Override
-            public void onEdit(Room room) {
-                startActivity(new Intent(RoomListActivity.this, RoomActivity.class).putExtra("room", room));
-            }
-        });
-        recyclerRoomListAdapter.onDeleteListener(new RecyclerRoomListAdapter.onDeleteListener() {
-            @Override
-            public void onDelete(Room room) {
-                doPopUpForDeleteConfirmation(room);
-            }
-        });
+        recyclerRoomListAdapter.setRoomCallBack(this);
     }
 
     private void doPopUpForDeleteConfirmation(Room room){
@@ -220,6 +202,21 @@ public class RoomListActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public void onDelete(Room room) {
+        doPopUpForDeleteConfirmation(room);
+    }
+
+    @Override
+    public void onEdit(Room room) {
+        startActivity(new Intent(RoomListActivity.this, RoomActivity.class).putExtra("room", room));
+    }
+
+    @Override
+    public void onItemClick(Room room) {
+        startActivity(new Intent(RoomListActivity.this, RoomActivity.class).putExtra("room", room));
     }
 }
 
