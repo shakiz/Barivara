@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.shakil.barivara.R;
 import com.shakil.barivara.model.room.Rent;
-import com.shakil.barivara.model.room.Room;
 
 import java.util.ArrayList;
 
@@ -24,18 +23,10 @@ public class RecyclerRentListAdapter extends RecyclerView.Adapter<RecyclerRentLi
         this.arrayList = arrayList;
     }
 
-    public onItemClickListener onItemClickListener;
-    public onEditListener onEditListener;
-    public onDeleteListener onDeleteListener;
+    public RentCallBacks rentCallBacks;
 
-    public void setOnItemClickListener(onItemClickListener onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
-    }
-    public void onEditListener(onEditListener onEditListener) {
-        this.onEditListener = onEditListener;
-    }
-    public void onDeleteListener(onDeleteListener onDeleteListener) {
-        this.onDeleteListener = onDeleteListener;
+    public void setRentCallBack(RentCallBacks rentCallBacks) {
+        this.rentCallBacks = rentCallBacks;
     }
 
     @NonNull
@@ -54,27 +45,25 @@ public class RecyclerRentListAdapter extends RecyclerView.Adapter<RecyclerRentLi
         holder.item_card_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (onItemClickListener != null){
-                    onItemClickListener.onItemClick(rent);
+                if (rentCallBacks != null){
+                    rentCallBacks.onItemClick(rent);
                 }
             }
         });
         holder.listCount.setText(""+(position+1));
 
-        //region edit and delete click listeners
         holder.editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (onEditListener != null) onEditListener.onEdit(rent);
+                if (rentCallBacks != null) rentCallBacks.onEdit(rent);
             }
         });
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (onDeleteListener != null) onDeleteListener.onDelete(rent);
+                if (rentCallBacks != null) rentCallBacks.onDelete(rent);
             }
         });
-        //endregion
     }
 
     @Override
@@ -99,7 +88,11 @@ public class RecyclerRentListAdapter extends RecyclerView.Adapter<RecyclerRentLi
         }
     }
 
-    public interface onItemClickListener{ void onItemClick(Rent rent);}
-    public interface onEditListener{ void onEdit(Rent rent);}
-    public interface onDeleteListener{ void onDelete(Rent rent);}
+    public interface RentCallBacks {
+        void onDelete(Rent rent);
+
+        void onEdit(Rent rent);
+
+        void onItemClick(Rent rent);
+    }
 }

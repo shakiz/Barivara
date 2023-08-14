@@ -30,7 +30,7 @@ import com.shakil.barivara.utils.UX;
 
 import java.util.ArrayList;
 
-public class RentListActivity extends AppCompatActivity {
+public class RentListActivity extends AppCompatActivity implements RecyclerRentListAdapter.RentCallBacks {
     private ActivityRentListBinding activityRentListBinding;
     private ArrayList<Rent> rentList;
     private FirebaseCrudHelper firebaseCrudHelper;
@@ -156,25 +156,7 @@ public class RentListActivity extends AppCompatActivity {
         RecyclerRentListAdapter recyclerMeterListAdapter = new RecyclerRentListAdapter(rentList);
         activityRentListBinding.mRecylerView.setLayoutManager(new LinearLayoutManager(this));
         activityRentListBinding.mRecylerView.setAdapter(recyclerMeterListAdapter);
-        recyclerMeterListAdapter.notifyDataSetChanged();
-        recyclerMeterListAdapter.setOnItemClickListener(new RecyclerRentListAdapter.onItemClickListener() {
-            @Override
-            public void onItemClick(Rent rent) {
-                startActivity(new Intent(RentListActivity.this, RentDetailsActivity.class).putExtra("rent", rent));
-            }
-        });
-        recyclerMeterListAdapter.onEditListener(new RecyclerRentListAdapter.onEditListener() {
-            @Override
-            public void onEdit(Rent rent) {
-                startActivity(new Intent(RentListActivity.this, RentDetailsActivity.class).putExtra("rent", rent));
-            }
-        });
-        recyclerMeterListAdapter.onDeleteListener(new RecyclerRentListAdapter.onDeleteListener() {
-            @Override
-            public void onDelete(Rent rent) {
-                doPopUpForDeleteConfirmation(rent);
-            }
-        });
+        recyclerMeterListAdapter.setRentCallBack(this);
     }
 
     private void doPopUpForDeleteConfirmation(Rent rent){
@@ -218,5 +200,20 @@ public class RentListActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public void onDelete(Rent rent) {
+        doPopUpForDeleteConfirmation(rent);
+    }
+
+    @Override
+    public void onEdit(Rent rent) {
+        startActivity(new Intent(RentListActivity.this, RentDetailsActivity.class).putExtra("rent", rent));
+    }
+
+    @Override
+    public void onItemClick(Rent rent) {
+        startActivity(new Intent(RentListActivity.this, RentDetailsActivity.class).putExtra("rent", rent));
     }
 }
