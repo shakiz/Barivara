@@ -29,7 +29,7 @@ import com.shakil.barivara.utils.UX;
 
 import java.util.ArrayList;
 
-public class ElectricityBillListActivity extends AppCompatActivity {
+public class ElectricityBillListActivity extends AppCompatActivity implements RecyclerElectricityBillListAdapter.ElectricityBillBacks {
     private ActivityElectricityBillListBinding activityMeterCostListBinding;
     private ArrayList<ElectricityBill> electricityBills;
     private FirebaseCrudHelper firebaseCrudHelper;
@@ -151,20 +151,7 @@ public class ElectricityBillListActivity extends AppCompatActivity {
         RecyclerElectricityBillListAdapter recyclerBillListAdapter = new RecyclerElectricityBillListAdapter(electricityBills);
         activityMeterCostListBinding.mRecylerView.setLayoutManager(new LinearLayoutManager(this));
         activityMeterCostListBinding.mRecylerView.setAdapter(recyclerBillListAdapter);
-        recyclerBillListAdapter.notifyDataSetChanged();
-        recyclerBillListAdapter.setOnItemClickListener(new RecyclerElectricityBillListAdapter.onItemClickListener() {
-            @Override
-            public void onItemClick(ElectricityBill electricityBill) {
-                startActivity(new Intent(ElectricityBillListActivity.this, ElectricityBillDetailsActivity.class).putExtra("electricityBill", electricityBill));
-            }
-        });
-
-        recyclerBillListAdapter.setOnRemoveClick(new RecyclerElectricityBillListAdapter.onRemoveClick() {
-            @Override
-            public void itemClick(ElectricityBill electricityBill) {
-                doPopUpForDeleteConfirmation(electricityBill);
-            }
-        });
+        recyclerBillListAdapter.setElectricityBillBack(this);
     }
 
     private void doPopUpForDeleteConfirmation(ElectricityBill electricityBill){
@@ -203,5 +190,15 @@ public class ElectricityBillListActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         startActivity(new Intent(ElectricityBillListActivity.this, MainActivity.class));
+    }
+
+    @Override
+    public void onDelete(ElectricityBill electricityBill) {
+        doPopUpForDeleteConfirmation(electricityBill);
+    }
+
+    @Override
+    public void onItemClick(ElectricityBill electricityBill) {
+        startActivity(new Intent(ElectricityBillListActivity.this, ElectricityBillDetailsActivity.class).putExtra("electricityBill", electricityBill));
     }
 }

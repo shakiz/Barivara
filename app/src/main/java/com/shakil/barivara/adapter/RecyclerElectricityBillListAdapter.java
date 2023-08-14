@@ -23,15 +23,10 @@ public class RecyclerElectricityBillListAdapter extends RecyclerView.Adapter<Rec
         this.arrayList = arrayList;
     }
 
-    public onItemClickListener onItemClickListener;
-    private onRemoveClick onRemoveClick;
+    private ElectricityBillBacks electricityBillBacks;
 
-    public void setOnItemClickListener(onItemClickListener onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
-    }
-
-    public void setOnRemoveClick(onRemoveClick onRemoveClick) {
-        this.onRemoveClick = onRemoveClick;
+    public void setElectricityBillBack(ElectricityBillBacks electricityBillBacks) {
+        this.electricityBillBacks = electricityBillBacks;
     }
 
     @NonNull
@@ -50,17 +45,17 @@ public class RecyclerElectricityBillListAdapter extends RecyclerView.Adapter<Rec
         holder.item_card_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (onItemClickListener != null){
-                    onItemClickListener.onItemClick(electricityBill);
+                if (electricityBillBacks != null){
+                    electricityBillBacks.onItemClick(electricityBill);
                 }
             }
         });
 
-        if (onRemoveClick != null){
+        if (electricityBillBacks != null){
             holder.DeleteFromCart.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onRemoveClick.itemClick(electricityBill);
+                    electricityBillBacks.onDelete(electricityBill);
                 }
             });
         }
@@ -85,6 +80,8 @@ public class RecyclerElectricityBillListAdapter extends RecyclerView.Adapter<Rec
         }
     }
 
-    public interface onItemClickListener{ void onItemClick(ElectricityBill electricityBill);}
-    public interface onRemoveClick { void itemClick(ElectricityBill electricityBill);}
+    public interface ElectricityBillBacks {
+        void onDelete(ElectricityBill electricityBill);
+        void onItemClick(ElectricityBill electricityBill);
+    }
 }
