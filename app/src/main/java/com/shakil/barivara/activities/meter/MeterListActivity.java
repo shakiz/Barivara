@@ -29,7 +29,7 @@ import com.shakil.barivara.utils.UX;
 
 import java.util.ArrayList;
 
-public class MeterListActivity extends AppCompatActivity {
+public class MeterListActivity extends AppCompatActivity implements RecyclerMeterListAdapter.MeterCallBacks {
     private ActivityMeterListBinding activityMeterListBinding;
     private ArrayList<Meter> meterList;
     private FirebaseCrudHelper firebaseCrudHelper;
@@ -126,26 +126,7 @@ public class MeterListActivity extends AppCompatActivity {
         RecyclerMeterListAdapter recyclerMeterListAdapter = new RecyclerMeterListAdapter(meterList);
         activityMeterListBinding.mRecylerView.setLayoutManager(new LinearLayoutManager(this));
         activityMeterListBinding.mRecylerView.setAdapter(recyclerMeterListAdapter);
-        recyclerMeterListAdapter.notifyDataSetChanged();
-        recyclerMeterListAdapter.setOnItemClickListener(new RecyclerMeterListAdapter.onItemClickListener() {
-            @Override
-            public void onItemClick(Meter meter) {
-                startActivity(new Intent(MeterListActivity.this, NewMeterActivity.class).putExtra("meter", meter));
-            }
-        });
-
-        recyclerMeterListAdapter.onEditListener(new RecyclerMeterListAdapter.onEditListener() {
-            @Override
-            public void onEdit(Meter meter) {
-                startActivity(new Intent(MeterListActivity.this, NewMeterActivity.class).putExtra("meter", meter));
-            }
-        });
-        recyclerMeterListAdapter.onDeleteListener(new RecyclerMeterListAdapter.onDeleteListener() {
-            @Override
-            public void onDelete(Meter meter) {
-                doPopUpForDeleteConfirmation(meter);
-            }
-        });
+        recyclerMeterListAdapter.setMeterCallBack(this);
     }
 
     private void setData() {
@@ -217,5 +198,20 @@ public class MeterListActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public void onDelete(Meter meter) {
+        doPopUpForDeleteConfirmation(meter);
+    }
+
+    @Override
+    public void onEdit(Meter meter) {
+        startActivity(new Intent(MeterListActivity.this, NewMeterActivity.class).putExtra("meter", meter));
+    }
+
+    @Override
+    public void onItemClick(Meter meter) {
+        startActivity(new Intent(MeterListActivity.this, NewMeterActivity.class).putExtra("meter", meter));
     }
 }

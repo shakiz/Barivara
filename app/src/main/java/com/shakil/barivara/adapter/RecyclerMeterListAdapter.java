@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.shakil.barivara.R;
 import com.shakil.barivara.model.meter.Meter;
+import com.shakil.barivara.model.room.Rent;
 
 import java.util.ArrayList;
 
@@ -23,19 +24,10 @@ public class RecyclerMeterListAdapter extends RecyclerView.Adapter<RecyclerMeter
         this.arrayList = arrayList;
     }
 
-    public onItemClickListener onItemClickListener;
-    public onDeleteListener onDeleteListener;
-    public onEditListener onEditListener;
+    public MeterCallBacks meterCallBacks;
 
-    public void setOnItemClickListener(onItemClickListener onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
-    }
-    public void onEditListener(onEditListener onEditListener) {
-        this.onEditListener = onEditListener;
-    }
-
-    public void onDeleteListener(onDeleteListener onDeleteListener) {
-        this.onDeleteListener = onDeleteListener;
+    public void setMeterCallBack(MeterCallBacks meterCallBacks) {
+        this.meterCallBacks = meterCallBacks;
     }
 
     @NonNull
@@ -54,8 +46,8 @@ public class RecyclerMeterListAdapter extends RecyclerView.Adapter<RecyclerMeter
         holder.item_card_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (onItemClickListener != null){
-                    onItemClickListener.onItemClick(meter);
+                if (meterCallBacks != null){
+                    meterCallBacks.onItemClick(meter);
                 }
             }
         });
@@ -64,13 +56,13 @@ public class RecyclerMeterListAdapter extends RecyclerView.Adapter<RecyclerMeter
         holder.editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (onEditListener != null) onEditListener.onEdit(meter);
+                if (meterCallBacks != null) meterCallBacks.onEdit(meter);
             }
         });
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (onDeleteListener != null) onDeleteListener.onDelete(meter);
+                if (meterCallBacks != null) meterCallBacks.onDelete(meter);
             }
         });
     }
@@ -97,7 +89,11 @@ public class RecyclerMeterListAdapter extends RecyclerView.Adapter<RecyclerMeter
         }
     }
 
-    public interface onItemClickListener{ void onItemClick(Meter meter);}
-    public interface onEditListener{ void onEdit(Meter meter);}
-    public interface onDeleteListener{ void onDelete(Meter meter);}
+    public interface MeterCallBacks {
+        void onDelete(Meter meter);
+
+        void onEdit(Meter meter);
+
+        void onItemClick(Meter meter);
+    }
 }
