@@ -1,7 +1,12 @@
 package com.shakil.barivara.activities.tenant;
 
+import static com.shakil.barivara.utils.Constants.REQUEST_CALL_CODE;
+
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -14,6 +19,8 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -30,7 +37,7 @@ import com.shakil.barivara.utils.UX;
 
 import java.util.ArrayList;
 
-public class TenantListActivity extends AppCompatActivity {
+public class TenantListActivity extends AppCompatActivity implements RecyclerTenantListAdapter.TenantCallBacks {
     private ActivityTenantListBinding activityTenantListBinding;
     private ArrayList<Tenant> tenantList;
     private FirebaseCrudHelper firebaseCrudHelper;
@@ -158,25 +165,7 @@ public class TenantListActivity extends AppCompatActivity {
         RecyclerTenantListAdapter recyclerTenantListAdapter = new RecyclerTenantListAdapter(tenantList, this);
         activityTenantListBinding.mRecylerView.setLayoutManager(new LinearLayoutManager(this));
         activityTenantListBinding.mRecylerView.setAdapter(recyclerTenantListAdapter);
-        recyclerTenantListAdapter.notifyDataSetChanged();
-        recyclerTenantListAdapter.setOnItemClickListener(new RecyclerTenantListAdapter.onItemClickListener() {
-            @Override
-            public void onItemClick(Tenant tenant) {
-                startActivity(new Intent(TenantListActivity.this, NewTenantActivity.class).putExtra("tenant", tenant));
-            }
-        });
-        recyclerTenantListAdapter.onEditListener(new RecyclerTenantListAdapter.onEditListener() {
-            @Override
-            public void onEdit(Tenant tenant) {
-                startActivity(new Intent(TenantListActivity.this, NewTenantActivity.class).putExtra("tenant", tenant));
-            }
-        });
-        recyclerTenantListAdapter.onDeleteListener(new RecyclerTenantListAdapter.onDeleteListener() {
-            @Override
-            public void onDelete(Tenant tenant) {
-                doPopUpForDeleteConfirmation(tenant);
-            }
-        });
+        recyclerTenantListAdapter.setOnTenantCallback(this);
     }
 
     private void doPopUpForDeleteConfirmation(Tenant tenant){
@@ -220,5 +209,42 @@ public class TenantListActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public void onCallClicked(String mobileNo, String tenantName) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+            String uri = "tel:"+mobileNo;
+            Intent callIntent = new Intent(Intent.ACTION_CALL);
+            callIntent.setData(Uri.parse(uri));
+            Toast.makeText(this, getString(R.string.calling)+" "+tenantName+"....", Toast.LENGTH_SHORT).show();
+            startActivity(callIntent);
+        } else {
+            Toast.makeText(this, getString(R.string.please_allow_call_permission), Toast.LENGTH_SHORT).show();
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE},REQUEST_CALL_CODE);
+            }
+        }
+    }
+
+    @Override
+    public void onMessageClicked(String mobileNo) {
+        Toast.makeText(this, getString(R.string.taking_into_message_section), Toast.LENGTH_SHORT).show();
+        new Tools(this).sendMessage(mobileNo);
+    }
+
+    @Override
+    public void onDelete(Tenant tenant) {
+        doPopUpForDeleteConfirmation(tenant);
+    }
+
+    @Override
+    public void onEdit(Tenant tenant) {
+        startActivity(new Intent(TenantListActivity.this, NewTenantActivity.class).putExtra("tenant", tenant));
+    }
+
+    @Override
+    public void onItemClick(Tenant tenant) {
+        startActivity(new Intent(TenantListActivity.this, NewTenantActivity.class).putExtra("tenant", tenant));
     }
 }

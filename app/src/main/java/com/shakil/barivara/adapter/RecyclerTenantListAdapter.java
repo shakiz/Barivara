@@ -1,11 +1,6 @@
 package com.shakil.barivara.adapter;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,16 +8,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.shakil.barivara.R;
 import com.shakil.barivara.model.tenant.Tenant;
-import com.shakil.barivara.utils.Tools;
 
 import java.util.ArrayList;
 
@@ -36,25 +28,16 @@ public class RecyclerTenantListAdapter extends RecyclerView.Adapter<RecyclerTena
         this.context = context;
     }
 
-    public onItemClickListener onItemClickListener;
-    public onEditListener onEditListener;
-    public onDeleteListener onDeleteListener;
+    public TenantCallBacks tenantCallback;
 
-    public void setOnItemClickListener(onItemClickListener onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
-    }
-    public void onEditListener(onEditListener onEditListener) {
-        this.onEditListener = onEditListener;
-    }
-
-    public void onDeleteListener(onDeleteListener onDeleteListener) {
-        this.onDeleteListener = onDeleteListener;
+    public void setOnTenantCallback(TenantCallBacks tenantCallback) {
+        this.tenantCallback = tenantCallback;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.adapter_layout_tenant_list,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.adapter_layout_tenant_list, parent, false);
         return new ViewHolder(view);
     }
 
@@ -68,8 +51,8 @@ public class RecyclerTenantListAdapter extends RecyclerView.Adapter<RecyclerTena
         holder.item_card_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (onItemClickListener != null){
-                    onItemClickListener.onItemClick(tenant);
+                if (tenantCallback != null) {
+                    tenantCallback.onItemClick(tenant);
                 }
             }
         });
@@ -77,15 +60,8 @@ public class RecyclerTenantListAdapter extends RecyclerView.Adapter<RecyclerTena
         holder.callIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
-                    String uri = "tel:"+tenant.getMobileNo();
-                    Intent callIntent = new Intent(Intent.ACTION_CALL);
-                    callIntent.setData(Uri.parse(uri));
-                    Toast.makeText(context, context.getString(R.string.calling)+" "+tenant.getTenantName()+"....", Toast.LENGTH_SHORT).show();
-                    context.startActivity(callIntent);
-                } else {
-                    Toast.makeText(context, context.getString(R.string.please_allow_call_permission), Toast.LENGTH_SHORT).show();
-                    new Tools(context).askCallPermission((Activity) context);
+                if (tenantCallback != null) {
+                    tenantCallback.onCallClicked(tenant.getMobileNo(), tenant.getTenantName());
                 }
             }
         });
@@ -93,16 +69,16 @@ public class RecyclerTenantListAdapter extends RecyclerView.Adapter<RecyclerTena
         holder.messageIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, context.getString(R.string.taking_into_message_section), Toast.LENGTH_SHORT).show();
-                new Tools(context).sendMessage(tenant.getMobileNo());
+                if (tenantCallback != null) {
+                    tenantCallback.onMessageClicked(tenant.getMobileNo());
+                }
             }
         });
 
         if (tenant.getIsActiveValue() != null && !TextUtils.isEmpty(tenant.getIsActiveValue())) {
-            if (tenant.getIsActiveValue().equals(context.getString(R.string.yes))){
+            if (tenant.getIsActiveValue().equals(context.getString(R.string.yes))) {
                 holder.activeColorIndicator.setBackgroundColor(context.getResources().getColor(R.color.md_green_400));
-            }
-            else{
+            } else {
                 holder.activeColorIndicator.setBackgroundColor(context.getResources().getColor(R.color.md_red_400));
             }
         }
@@ -110,13 +86,13 @@ public class RecyclerTenantListAdapter extends RecyclerView.Adapter<RecyclerTena
         holder.editIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (onEditListener != null) onEditListener.onEdit(tenant);
+                if (tenantCallback != null) tenantCallback.onEdit(tenant);
             }
         });
         holder.deleteIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (onDeleteListener != null) onDeleteListener.onDelete(tenant);
+                if (tenantCallback != null) tenantCallback.onDelete(tenant);
             }
         });
     }
@@ -131,6 +107,7 @@ public class RecyclerTenantListAdapter extends RecyclerView.Adapter<RecyclerTena
         CardView item_card_view;
         ImageView callIcon, messageIcon, editIcon, deleteIcon;
         RelativeLayout activeColorIndicator;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             TenantName = itemView.findViewById(R.id.TenantName);
@@ -146,7 +123,15 @@ public class RecyclerTenantListAdapter extends RecyclerView.Adapter<RecyclerTena
         }
     }
 
-    public interface onDeleteListener{ void onDelete(Tenant tenant);}
-    public interface onEditListener{ void onEdit(Tenant tenant);}
-    public interface onItemClickListener{ void onItemClick(Tenant tenant);}
+    public interface TenantCallBacks {
+        void onCallClicked(String mobileNo, String tenantName);
+
+        void onMessageClicked(String mobileNo);
+
+        void onDelete(Tenant tenant);
+
+        void onEdit(Tenant tenant);
+
+        void onItemClick(Tenant tenant);
+    }
 }
