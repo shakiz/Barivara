@@ -3,19 +3,16 @@ package com.shakil.barivara.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.shakil.barivara.R;
+import com.shakil.barivara.databinding.AdapterLayoutRoomListBinding;
 import com.shakil.barivara.model.room.Room;
 
 import java.util.ArrayList;
 
-public class RecyclerRoomListAdapter extends RecyclerView.Adapter<RecyclerRoomListAdapter.ViewHolder> {
+public class RecyclerRoomListAdapter extends RecyclerView.Adapter<RecyclerRoomListAdapter.RoomItemViewHolder> {
 
     private final ArrayList<Room> arrayList;
 
@@ -31,41 +28,15 @@ public class RecyclerRoomListAdapter extends RecyclerView.Adapter<RecyclerRoomLi
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_layout_room_list,parent,false);
-        return new ViewHolder(view);
+    public RoomItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        AdapterLayoutRoomListBinding binding = AdapterLayoutRoomListBinding.inflate(LayoutInflater.from(parent.getContext()), parent,false);
+        return new RoomItemViewHolder(binding, roomCallBacks);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RoomItemViewHolder holder, int position) {
         Room room = arrayList.get(position);
-        holder.roomName.setText(room.getRoomName());
-        holder.ownerName.setText(room.getTenantName());
-        holder.startDate.setText(room.getStartMonthName());
-        holder.item_card_view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (roomCallBacks != null){
-                    roomCallBacks.onItemClick(room);
-                }
-            }
-        });
-        holder.listCount.setText(""+(position+1));
-
-        //region edit and delete click listeners
-        holder.editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (roomCallBacks != null) roomCallBacks.onEdit(room);
-            }
-        });
-        holder.deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (roomCallBacks != null) roomCallBacks.onDelete(room);
-            }
-        });
-        //endregion
+        holder.bind(room);
     }
 
     @Override
@@ -73,28 +44,46 @@ public class RecyclerRoomListAdapter extends RecyclerView.Adapter<RecyclerRoomLi
         return arrayList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView roomName, ownerName, startDate;
-        CardView item_card_view;
-        TextView listCount;
-        Button editButton, deleteButton;
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            roomName = itemView.findViewById(R.id.roomName);
-            ownerName = itemView.findViewById(R.id.roomOwner);
-            startDate = itemView.findViewById(R.id.startMonth);
-            listCount = itemView.findViewById(R.id.listCount);
-            editButton = itemView.findViewById(R.id.editButton);
-            deleteButton = itemView.findViewById(R.id.deleteButton);
-            item_card_view = itemView.findViewById(R.id.item_card_view);
+    public static class RoomItemViewHolder extends RecyclerView.ViewHolder {
+        AdapterLayoutRoomListBinding binding;
+        RoomCallBacks roomCallBacks;
+        public RoomItemViewHolder(@NonNull AdapterLayoutRoomListBinding binding, RoomCallBacks roomCallBacks) {
+            super(binding.getRoot());
+            this.binding = binding;
+            this.roomCallBacks = roomCallBacks;
+        }
+
+        void bind(Room room){
+            binding.roomName.setText(room.getRoomName());
+            binding.roomOwner.setText(room.getTenantName());
+            binding.startMonth.setText(room.getStartMonthName());
+            binding.itemCardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (roomCallBacks != null){
+                        roomCallBacks.onItemClick(room);
+                    }
+                }
+            });
+
+            binding.editDeleteIncludeLayout.editButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (roomCallBacks != null) roomCallBacks.onEdit(room);
+                }
+            });
+            binding.editDeleteIncludeLayout.deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (roomCallBacks != null) roomCallBacks.onDelete(room);
+                }
+            });
         }
     }
 
     public interface RoomCallBacks {
         void onDelete(Room room);
-
         void onEdit(Room room);
-
         void onItemClick(Room room);
     }
 }
