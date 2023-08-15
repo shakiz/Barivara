@@ -5,27 +5,21 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.shakil.barivara.R;
+import com.shakil.barivara.databinding.AdapterLayoutTenantListBinding;
 import com.shakil.barivara.model.tenant.Tenant;
 
 import java.util.ArrayList;
 
-public class RecyclerTenantListAdapter extends RecyclerView.Adapter<RecyclerTenantListAdapter.ViewHolder> {
-
+public class RecyclerTenantListAdapter extends RecyclerView.Adapter<RecyclerTenantListAdapter.TenantItemViewHolder> {
     private final ArrayList<Tenant> arrayList;
-    private final Context context;
 
-    public RecyclerTenantListAdapter(ArrayList<Tenant> arrayList, Context context) {
+    public RecyclerTenantListAdapter(ArrayList<Tenant> arrayList) {
         this.arrayList = arrayList;
-        this.context = context;
     }
 
     public TenantCallBacks tenantCallback;
@@ -36,65 +30,15 @@ public class RecyclerTenantListAdapter extends RecyclerView.Adapter<RecyclerTena
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.adapter_layout_tenant_list, parent, false);
-        return new ViewHolder(view);
+    public TenantItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        AdapterLayoutTenantListBinding binding = AdapterLayoutTenantListBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new TenantItemViewHolder(binding, tenantCallback);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull TenantItemViewHolder holder, int position) {
         Tenant tenant = arrayList.get(position);
-        holder.TenantName.setText(tenant.getTenantName());
-        holder.StartingMonth.setText(tenant.getStartingMonth());
-        holder.AssociateRoom.setText(tenant.getAssociateRoom());
-        holder.TenantTypeStr.setText(tenant.getTenantTypeStr());
-        holder.item_card_view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (tenantCallback != null) {
-                    tenantCallback.onItemClick(tenant);
-                }
-            }
-        });
-
-        holder.callIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (tenantCallback != null) {
-                    tenantCallback.onCallClicked(tenant.getMobileNo(), tenant.getTenantName());
-                }
-            }
-        });
-
-        holder.messageIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (tenantCallback != null) {
-                    tenantCallback.onMessageClicked(tenant.getMobileNo());
-                }
-            }
-        });
-
-        if (tenant.getIsActiveValue() != null && !TextUtils.isEmpty(tenant.getIsActiveValue())) {
-            if (tenant.getIsActiveValue().equals(context.getString(R.string.yes))) {
-                holder.activeColorIndicator.setBackgroundColor(context.getResources().getColor(R.color.md_green_400));
-            } else {
-                holder.activeColorIndicator.setBackgroundColor(context.getResources().getColor(R.color.md_red_400));
-            }
-        }
-
-        holder.editIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (tenantCallback != null) tenantCallback.onEdit(tenant);
-            }
-        });
-        holder.deleteIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (tenantCallback != null) tenantCallback.onDelete(tenant);
-            }
-        });
+        holder.bind(tenant);
     }
 
     @Override
@@ -102,36 +46,76 @@ public class RecyclerTenantListAdapter extends RecyclerView.Adapter<RecyclerTena
         return arrayList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView TenantName, StartingMonth, AssociateRoom, TenantTypeStr;
-        CardView item_card_view;
-        ImageView callIcon, messageIcon, editIcon, deleteIcon;
-        RelativeLayout activeColorIndicator;
+    public static class TenantItemViewHolder extends RecyclerView.ViewHolder {
+        AdapterLayoutTenantListBinding binding;
+        TenantCallBacks tenantCallBack;
 
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            TenantName = itemView.findViewById(R.id.TenantName);
-            StartingMonth = itemView.findViewById(R.id.StartingMonth);
-            AssociateRoom = itemView.findViewById(R.id.AssociateRoom);
-            TenantTypeStr = itemView.findViewById(R.id.TenantTypeStr);
-            activeColorIndicator = itemView.findViewById(R.id.activeColorIndicator);
-            callIcon = itemView.findViewById(R.id.callIcon);
-            messageIcon = itemView.findViewById(R.id.messageIcon);
-            editIcon = itemView.findViewById(R.id.editIcon);
-            deleteIcon = itemView.findViewById(R.id.deleteIcon);
-            item_card_view = itemView.findViewById(R.id.item_card_view);
+        public TenantItemViewHolder(@NonNull AdapterLayoutTenantListBinding binding, TenantCallBacks tenantCallBacks) {
+            super(binding.getRoot());
+            this.binding = binding;
+            this.tenantCallBack = tenantCallBacks;
+        }
+
+        void bind(Tenant tenant){
+            binding.TenantName.setText(tenant.getTenantName());
+            binding.StartingMonth.setText(tenant.getStartingMonth());
+            binding.AssociateRoom.setText(tenant.getAssociateRoom());
+            binding.TenantTypeStr.setText(tenant.getTenantTypeStr());
+            binding.itemCardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (tenantCallBack != null) {
+                        tenantCallBack.onItemClick(tenant);
+                    }
+                }
+            });
+
+            binding.callIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (tenantCallBack != null) {
+                        tenantCallBack.onCallClicked(tenant.getMobileNo(), tenant.getTenantName());
+                    }
+                }
+            });
+
+            binding.messageIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (tenantCallBack != null) {
+                        tenantCallBack.onMessageClicked(tenant.getMobileNo());
+                    }
+                }
+            });
+
+            if (tenant.getIsActiveValue() != null && !TextUtils.isEmpty(tenant.getIsActiveValue())) {
+                if (tenant.getIsActiveValue().equals(binding.getRoot().getContext().getString(R.string.yes))) {
+                    binding.activeColorIndicator.setBackgroundColor(binding.getRoot().getContext().getResources().getColor(R.color.md_green_400));
+                } else {
+                    binding.activeColorIndicator.setBackgroundColor(binding.getRoot().getContext().getResources().getColor(R.color.md_red_400));
+                }
+            }
+
+            binding.editIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (tenantCallBack != null) tenantCallBack.onEdit(tenant);
+                }
+            });
+            binding.deleteIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (tenantCallBack != null) tenantCallBack.onDelete(tenant);
+                }
+            });
         }
     }
 
     public interface TenantCallBacks {
         void onCallClicked(String mobileNo, String tenantName);
-
         void onMessageClicked(String mobileNo);
-
         void onDelete(Tenant tenant);
-
         void onEdit(Tenant tenant);
-
         void onItemClick(Tenant tenant);
     }
 }

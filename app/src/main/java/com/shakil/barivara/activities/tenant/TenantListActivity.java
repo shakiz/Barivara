@@ -162,7 +162,7 @@ public class TenantListActivity extends AppCompatActivity implements RecyclerTen
     }
 
     private void setRecyclerAdapter(){
-        RecyclerTenantListAdapter recyclerTenantListAdapter = new RecyclerTenantListAdapter(tenantList, this);
+        RecyclerTenantListAdapter recyclerTenantListAdapter = new RecyclerTenantListAdapter(tenantList);
         activityTenantListBinding.mRecylerView.setLayoutManager(new LinearLayoutManager(this));
         activityTenantListBinding.mRecylerView.setAdapter(recyclerTenantListAdapter);
         recyclerTenantListAdapter.setOnTenantCallback(this);
