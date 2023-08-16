@@ -438,24 +438,58 @@
             android:layout_height="wrap_content"
             android:layout_above="@id/adView"
             android:layout_centerHorizontal="true"
-            android:background="@color/md_white_1000"
-            android:gravity="center"
+            android:weightSum="1"
             android:orientation="horizontal">
 
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@drawable/ic_invoice" />
-
-            <Button
-                android:id="@+id/generateBill"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight=".5"
                 android:layout_height="wrap_content"
-                android:clickable="true"
-                android:foreground="?attr/selectableItemBackgroundBorderless"
-                android:text="@string/generate_bill"
-                android:textColor="@color/md_white_1000"
-                app:backgroundTint="@color/md_blue_grey_400" />
+                android:background="@color/md_white_1000"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_invoice" />
+
+                <Button
+                    android:id="@+id/generateBill"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:foreground="?attr/selectableItemBackgroundBorderless"
+                    android:text="@string/generate_bill"
+                    android:textColor="@color/md_white_1000"
+                    app:backgroundTint="@color/md_blue_grey_400" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight=".5"
+                android:layout_height="wrap_content"
+                android:background="@color/md_white_1000"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_pdf" />
+
+                <Button
+                    android:id="@+id/generatePdf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:foreground="?attr/selectableItemBackgroundBorderless"
+                    android:text="@string/generate_pdf"
+                    android:textColor="@color/md_white_1000"
+                    app:backgroundTint="@color/md_blue_grey_400" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

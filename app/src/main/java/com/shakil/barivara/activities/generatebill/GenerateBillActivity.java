@@ -4,8 +4,14 @@ import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Typeface;
+import android.graphics.pdf.PdfDocument;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -31,6 +37,9 @@ import com.shakil.barivara.utils.SpinnerData;
 import com.shakil.barivara.utils.Tools;
 import com.shakil.barivara.utils.Validation;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -139,6 +148,17 @@ public class GenerateBillActivity extends AppCompatActivity {
                     } else {
                         Toast.makeText(GenerateBillActivity.this,
                                 getString(R.string.mobile_number_not_valid), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+
+        activityBinding.generatePdf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (validation.isValid()) {
+                    if (tools.isValidMobile(activityBinding.MobileNo.getText().toString())) {
+
                     }
                 }
             }

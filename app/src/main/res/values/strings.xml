@@ -413,4 +413,5 @@
     <string name="exit">Exit</string>
     <string name="delete_confirmation">Are you sure you want to delete the record?</string>
     <string name="delete_detail_text">The record you will delete, will no longer be available.</string>
+    <string name="generate_pdf">Generate PDF</string>
 </resources>
