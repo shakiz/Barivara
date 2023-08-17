@@ -37,7 +37,6 @@ public class RentListActivity extends AppCompatActivity implements RecyclerRentL
     private UX ux;
     private Tools tools;
     private FilterManager filterManager;
-    private ImageButton searchButton, refreshButton;
     private EditText searchName;
     private CustomAdManager customAdManager;
 
@@ -58,8 +57,6 @@ public class RentListActivity extends AppCompatActivity implements RecyclerRentL
     }
 
     private void init(){
-        searchButton = findViewById(R.id.searchButton);
-        refreshButton = findViewById(R.id.refreshButton);
         searchName = findViewById(R.id.SearchName);
         rentList = new ArrayList<>();
         firebaseCrudHelper = new FirebaseCrudHelper(this);
@@ -87,7 +84,7 @@ public class RentListActivity extends AppCompatActivity implements RecyclerRentL
             }
         });
 
-        searchButton.setOnClickListener(new View.OnClickListener() {
+        activityRentListBinding.searchLayout.searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (tools.hasConnection()) {
@@ -119,7 +116,7 @@ public class RentListActivity extends AppCompatActivity implements RecyclerRentL
             }
         });
 
-        refreshButton.setOnClickListener(new View.OnClickListener() {
+        activityRentListBinding.searchLayout.refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (tools.hasConnection()) {

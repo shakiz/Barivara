@@ -36,7 +36,6 @@ public class RoomListActivity extends AppCompatActivity implements RecyclerRoomL
     private FirebaseCrudHelper firebaseCrudHelper;
     private UX ux;
     private Tools tools;
-    private ImageButton searchButton, refreshButton;
     private EditText searchName;
     private FilterManager filterManager;
     private CustomAdManager customAdManager;
@@ -60,8 +59,6 @@ public class RoomListActivity extends AppCompatActivity implements RecyclerRoomL
     }
 
     private void init() {
-        searchButton = findViewById(R.id.searchButton);
-        refreshButton = findViewById(R.id.refreshButton);
         searchName = findViewById(R.id.SearchName);
         roomList = new ArrayList<>();
         ux = new UX(this);
@@ -89,7 +86,7 @@ public class RoomListActivity extends AppCompatActivity implements RecyclerRoomL
             }
         });
 
-        searchButton.setOnClickListener(new View.OnClickListener() {
+        activityRoomListBinding.searchLayout.searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (tools.hasConnection()) {
@@ -121,7 +118,7 @@ public class RoomListActivity extends AppCompatActivity implements RecyclerRoomL
             }
         });
 
-        refreshButton.setOnClickListener(new View.OnClickListener() {
+        activityRoomListBinding.searchLayout.refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (tools.hasConnection()) {

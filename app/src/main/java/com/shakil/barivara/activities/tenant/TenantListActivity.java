@@ -44,7 +44,6 @@ public class TenantListActivity extends AppCompatActivity implements RecyclerTen
     private UX ux;
     private Tools tools;
     private FilterManager filterManager;
-    private ImageButton searchButton, refreshButton;
     private EditText searchName;
     private CustomAdManager customAdManager;
 
@@ -67,8 +66,6 @@ public class TenantListActivity extends AppCompatActivity implements RecyclerTen
     }
 
     private void init() {
-        searchButton = findViewById(R.id.searchButton);
-        refreshButton = findViewById(R.id.refreshButton);
         searchName = findViewById(R.id.SearchName);
         filterManager = new FilterManager();
         tenantList = new ArrayList<>();
@@ -96,7 +93,7 @@ public class TenantListActivity extends AppCompatActivity implements RecyclerTen
             }
         });
 
-        searchButton.setOnClickListener(new View.OnClickListener() {
+        activityTenantListBinding.searchLayout.searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (tools.hasConnection()) {
@@ -128,7 +125,7 @@ public class TenantListActivity extends AppCompatActivity implements RecyclerTen
             }
         });
 
-        refreshButton.setOnClickListener(new View.OnClickListener() {
+        activityTenantListBinding.searchLayout.refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (tools.hasConnection()) {

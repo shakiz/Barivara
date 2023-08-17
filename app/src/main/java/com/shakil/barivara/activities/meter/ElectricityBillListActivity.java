@@ -36,7 +36,6 @@ public class ElectricityBillListActivity extends AppCompatActivity implements Re
     private UX ux;
     private Tools tools;
     private FilterManager filterManager;
-    private ImageButton searchButton, refreshButton;
     private EditText searchName;
 
     @Override
@@ -56,8 +55,6 @@ public class ElectricityBillListActivity extends AppCompatActivity implements Re
     }
 
     private void init(){
-        searchButton = findViewById(R.id.searchButton);
-        refreshButton = findViewById(R.id.refreshButton);
         searchName = findViewById(R.id.SearchName);
         electricityBills = new ArrayList<>();
         ux = new UX(this);
@@ -82,7 +79,7 @@ public class ElectricityBillListActivity extends AppCompatActivity implements Re
             }
         });
 
-        searchButton.setOnClickListener(new View.OnClickListener() {
+        activityMeterCostListBinding.searchLayout.searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (tools.hasConnection()) {
@@ -114,7 +111,7 @@ public class ElectricityBillListActivity extends AppCompatActivity implements Re
             }
         });
 
-        refreshButton.setOnClickListener(new View.OnClickListener() {
+        activityMeterCostListBinding.searchLayout.refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (tools.hasConnection()) {

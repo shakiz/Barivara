@@ -36,7 +36,6 @@ public class MeterListActivity extends AppCompatActivity implements RecyclerMete
     private UX ux;
     private Tools tools;
     private FilterManager filterManager;
-    private ImageButton searchButton, refreshButton;
     private EditText searchName;
 
     @Override
@@ -73,7 +72,7 @@ public class MeterListActivity extends AppCompatActivity implements RecyclerMete
             }
         });
 
-        searchButton.setOnClickListener(new View.OnClickListener() {
+        activityMeterListBinding.searchLayout.searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (tools.hasConnection()) {
@@ -105,7 +104,7 @@ public class MeterListActivity extends AppCompatActivity implements RecyclerMete
             }
         });
 
-        refreshButton.setOnClickListener(new View.OnClickListener() {
+        activityMeterListBinding.searchLayout.refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (tools.hasConnection()) {
@@ -147,8 +146,6 @@ public class MeterListActivity extends AppCompatActivity implements RecyclerMete
     }
 
     private void init() {
-        searchButton = findViewById(R.id.searchButton);
-        refreshButton = findViewById(R.id.refreshButton);
         searchName = findViewById(R.id.SearchName);
         meterList = new ArrayList<>();
         ux = new UX(this);
