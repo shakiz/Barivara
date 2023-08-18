@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.shakil.barivara"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 31
         versionCode 53
         versionName "1.2.2"
