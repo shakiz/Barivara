@@ -412,4 +412,6 @@
     <string name="exit">Exit</string>
     <string name="delete_confirmation">আপনি কি নিশ্চিত আপনি রেকর্ডটি মুছে ফেলতে চান?</string>
     <string name="delete_detail_text">আপনি যে রেকর্ডটি মুছে ফেলবেন তা আর উপলব্ধ হবে না।</string>
+    <string name="file_save_in_downloads">File has been saved in your download folder.</string>
+    <string name="please_try_again_something_went_wrong">Something went wrong: Please try again</string>
 </resources>

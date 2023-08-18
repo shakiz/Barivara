@@ -1,13 +1,14 @@
 package com.shakil.barivara.activities.generatebill;
 
+import static com.shakil.barivara.utils.Constants.REQUEST_CALL_CODE;
+
 import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Typeface;
 import android.graphics.pdf.PdfDocument;
 import android.net.Uri;
 import android.os.Bundle;
@@ -32,9 +33,11 @@ import com.shakil.barivara.activities.onboard.MainActivity;
 import com.shakil.barivara.databinding.ActivityGenerateBillBinding;
 import com.shakil.barivara.model.bill.GenerateBill;
 import com.shakil.barivara.utils.CustomAdManager;
+import com.shakil.barivara.utils.DroidFileManager;
 import com.shakil.barivara.utils.SpinnerAdapter;
 import com.shakil.barivara.utils.SpinnerData;
 import com.shakil.barivara.utils.Tools;
+import com.shakil.barivara.utils.UX;
 import com.shakil.barivara.utils.Validation;
 
 import java.io.File;
@@ -42,8 +45,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.shakil.barivara.utils.Constants.REQUEST_CALL_CODE;
 
 public class GenerateBillActivity extends AppCompatActivity {
     private ActivityGenerateBillBinding activityBinding;
@@ -55,6 +56,7 @@ public class GenerateBillActivity extends AppCompatActivity {
     private Tools tools;
     private Dialog dialogBill;
     private CustomAdManager customAdManager;
+    private UX ux;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +73,7 @@ public class GenerateBillActivity extends AppCompatActivity {
         spinnerData = new SpinnerData(this);
         spinnerAdapter = new SpinnerAdapter();
         tools = new Tools(this);
+        ux = new UX(this);
     }
 
     private void binUIWithComponents() {
@@ -78,8 +81,8 @@ public class GenerateBillActivity extends AppCompatActivity {
 
         if ((ContextCompat.checkSelfPermission(GenerateBillActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED)
-        || (ContextCompat.checkSelfPermission(GenerateBillActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED)){
+                || (ContextCompat.checkSelfPermission(GenerateBillActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED)) {
             ActivityCompat.requestPermissions(GenerateBillActivity.this,
                     new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     REQUEST_CALL_CODE);
@@ -142,7 +145,7 @@ public class GenerateBillActivity extends AppCompatActivity {
                                     Integer.parseInt(activityBinding.ServiceCharge.getText().toString())
                             );
                             doPopUpForBillDetails(generateBill);
-                        } catch (Exception e){
+                        } catch (Exception e) {
                             Log.e("onClick: ", e.getMessage());
                         }
                     } else {
@@ -158,11 +161,77 @@ public class GenerateBillActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (validation.isValid()) {
                     if (tools.isValidMobile(activityBinding.MobileNo.getText().toString())) {
-
+                        GenerateBill generateBill = new GenerateBill(
+                                activityBinding.TenantName.getText().toString(),
+                                activityBinding.MobileNo.getText().toString(),
+                                MonthStr + " " + YearStr,
+                                activityBinding.AssociateRoom.getText().toString(),
+                                Integer.parseInt(activityBinding.RentAmount.getText().toString()),
+                                Integer.parseInt(activityBinding.GasBill.getText().toString()),
+                                Integer.parseInt(activityBinding.WaterBill.getText().toString()),
+                                Integer.parseInt(activityBinding.ElectricityBill.getText().toString()),
+                                Integer.parseInt(activityBinding.ServiceCharge.getText().toString())
+                        );
+                        generatePdf(generateBill);
                     }
                 }
             }
         });
+    }
+
+    private void generatePdf(GenerateBill generateBill) {
+        ux.getLoadingView();
+        // create a new document
+        PdfDocument document = new PdfDocument();
+        // crate a page description
+        PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(300, 600, 1).create();
+        // start a page
+        PdfDocument.Page page = document.startPage(pageInfo);
+        Canvas canvas = page.getCanvas();
+        Paint paint = new Paint();
+        paint.setColor(Color.BLACK);
+
+        String name = getString(R.string.tenant_name) + ": " + generateBill.getTenantName();
+        String mobile = getString(R.string.mobile) + ": " + generateBill.getMobileNo();
+        String monthAndYear = getString(R.string.month_and_year) + ": " + generateBill.getMonthAndYear();
+        String roomName = getString(R.string.room_name) + ": " + generateBill.getAssociateRoom();
+        String rentAmount = getString(R.string.rent_amount) + ": " + generateBill.getRentAmount() + " " + getString(R.string.taka);
+        String gasBill = getString(R.string.gas_bill) + ": " + generateBill.getGasBill() + " " + getString(R.string.taka);
+        String waterBill = getString(R.string.water_bill) + ": " + generateBill.getWaterBill() + " " + getString(R.string.taka);
+        String electricityBill = getString(R.string.electricity_bill) + ": " + generateBill.getElectricityBill() + " " + getString(R.string.taka);
+        String serviceCharge = getString(R.string.service_charge) + ": " + generateBill.getServiceCharge() + " " + getString(R.string.taka);
+
+        canvas.drawText(name, 40, 50, paint);
+        canvas.drawText(mobile, 40, 70, paint);
+        canvas.drawText(monthAndYear, 40, 90, paint);
+        canvas.drawText(roomName, 40, 110, paint);
+        canvas.drawText(rentAmount, 40, 130, paint);
+        canvas.drawText(gasBill, 40, 150, paint);
+        canvas.drawText(waterBill, 40, 170, paint);
+        canvas.drawText(electricityBill, 40, 190, paint);
+        canvas.drawText(serviceCharge, 40, 2100, paint);
+        document.finishPage(page);
+
+        String directoryPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + "/Vara-Adai/";
+        String fileName = "Vara-Adai_" + generateBill.getMobileNo() + "-" + System.currentTimeMillis() + ".pdf";
+        String targetPdf = directoryPath + fileName;
+
+        new DroidFileManager().createFolder(directoryPath);
+        File file = new File(directoryPath);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        File filePath = new File(targetPdf);
+        try {
+            document.writeTo(new FileOutputStream(filePath));
+            ux.removeLoadingView();
+            Toast.makeText(this, getString(R.string.file_save_in_downloads), Toast.LENGTH_LONG).show();
+        } catch (IOException e) {
+            Log.e("main", "error " + e.toString());
+            ux.removeLoadingView();
+            Toast.makeText(this, getString(R.string.please_try_again_something_went_wrong), Toast.LENGTH_LONG).show();
+        }
+        document.close();
     }
 
     public void doPopUpForBillDetails(GenerateBill generateBill) {

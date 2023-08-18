@@ -414,4 +414,6 @@
     <string name="delete_confirmation">Are you sure you want to delete the record?</string>
     <string name="delete_detail_text">The record you will delete, will no longer be available.</string>
     <string name="generate_pdf">Generate PDF</string>
+    <string name="file_save_in_downloads">File has been saved in your download folder.</string>
+    <string name="please_try_again_something_went_wrong">Something went wrong: Please try again</string>
 </resources>
