@@ -13,7 +13,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 31
         versionCode 53
-        versionName "1.2.2"
+        versionName "1.3.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
@@ -46,7 +46,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:17.0.0'
 
     // Recommended: Add the Firebase SDK for Google Analytics.
-    implementation 'com.google.firebase:firebase-analytics:17.4.3'
+    implementation 'com.google.firebase:firebase-analytics:21.3.0'
 
     // Add the Firebase Crashlytics SDK.
     implementation 'com.google.firebase:firebase-crashlytics:17.1.0'
@@ -67,7 +67,7 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:28.2.1')
 
     //google admob
-    implementation 'com.google.android.gms:play-services-ads:19.3.0'
+    implementation 'com.google.android.gms:play-services-ads:22.2.0'
 
     //for reCaptcha verification browser
     implementation "androidx.browser:browser:1.2.0"

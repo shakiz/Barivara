@@ -40,19 +40,12 @@ public class CustomAdManager {
 
             @Override
             public void onAdOpened() {
-                // Code to be executed when an ad opens an overlay that
-                // covers the screen.
                 Log.i(Constants.TAG+"::onAdListener","AdOpened");
             }
 
             @Override
             public void onAdClicked() {
                 Log.i(Constants.TAG+"::onAdListener","AdClicked");
-            }
-
-            @Override
-            public void onAdLeftApplication() {
-                Log.i(Constants.TAG+"::onAdListener","AdLeftApplication");
             }
 
             @Override
