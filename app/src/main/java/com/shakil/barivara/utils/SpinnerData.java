@@ -23,6 +23,10 @@ public class SpinnerData {
                 context.getString(R.string.twenty_twenty_one),
                 context.getString(R.string.twenty_twenty_two),
                 context.getString(R.string.twenty_twenty_three),
+                context.getString(R.string.twenty_twenty_four),
+                context.getString(R.string.twenty_twenty_five),
+                context.getString(R.string.twenty_twenty_six),
+                context.getString(R.string.twenty_twenty_seven),
         };
         Collections.addAll(spinnerValues, yearArray);
         return spinnerValues;

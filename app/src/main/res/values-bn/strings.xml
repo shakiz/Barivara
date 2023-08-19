@@ -393,7 +393,7 @@
     <string name="sagor_konna">সাগরকন্যা</string>
     <string name="git_lib">Git Lib</string>
     <string name="redirecting_to_play_store">প্লে স্টোরে রিডাইরেক্ট করা হচ্ছে</string>
-    <string name="opening_facebook"></string>
+    <string name="opening_facebook">Opening Facebook</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="no_meter_found">No Meter Found</string>
@@ -412,6 +412,10 @@
     <string name="exit">Exit</string>
     <string name="delete_confirmation">আপনি কি নিশ্চিত আপনি রেকর্ডটি মুছে ফেলতে চান?</string>
     <string name="delete_detail_text">আপনি যে রেকর্ডটি মুছে ফেলবেন তা আর উপলব্ধ হবে না।</string>
-    <string name="file_save_in_downloads">File has been saved in your download folder.</string>
-    <string name="please_try_again_something_went_wrong">Something went wrong: Please try again</string>
+    <string name="file_save_in_downloads">ফাইল আপনার ডাউনলোড ফোল্ডারে সংরক্ষণ করা হয়েছে।</string>
+    <string name="please_try_again_something_went_wrong">কিছু ভুল হয়েছে, আবার চেষ্টা করুন।</string>
+    <string name="twenty_twenty_four">2024</string>
+    <string name="twenty_twenty_five">2025</string>
+    <string name="twenty_twenty_six">2026</string>
+    <string name="twenty_twenty_seven">2027</string>
 </resources>
