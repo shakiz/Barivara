@@ -41,7 +41,7 @@
                 android:id="@+id/mainLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/md_grey_100"
+                android:background="@color/window_background"
                 android:orientation="vertical">
 
                 <androidx.cardview.widget.CardView

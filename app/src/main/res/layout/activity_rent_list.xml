@@ -36,7 +36,7 @@
             android:layout_marginBottom="56dp"
             android:layout_below="@id/app_bar"
             android:id="@+id/mainLayout"
-            app:cardBackgroundColor="@color/md_grey_100"
+            app:cardBackgroundColor="@color/window_background"
             app:cardCornerRadius="0dp"
             app:cardElevation="0dp">
 

@@ -7,7 +7,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/md_white_1000"
+        android:background="@color/window_background"
         tools:context=".activities.settings.SettingsActivity">
 
         <com.google.android.material.appbar.AppBarLayout
@@ -139,6 +139,7 @@
                     android:foreground="?attr/selectableItemBackground"
                     app:cardCornerRadius="8dp"
                     app:cardUseCompatPadding="true"
+                    app:cardElevation="0dp"
                     app:elevation="16dp">
 
                     <LinearLayout
@@ -259,6 +260,7 @@
                     android:foreground="?attr/selectableItemBackground"
                     app:cardCornerRadius="8dp"
                     app:cardUseCompatPadding="true"
+                    app:cardElevation="0dp"
                     app:elevation="16dp">
 
                     <LinearLayout
