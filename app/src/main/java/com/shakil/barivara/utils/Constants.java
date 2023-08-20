@@ -20,4 +20,9 @@ public class Constants {
     public static final String mOldUser = "OldUser";
     public static final String mJobName = "JobName";
     public static final String IsStartOfMonth = "IsStartOfMonth";
+
+    public static final String GIT_LIB_PACKAGE_NAME = "app.com.gitlib";
+    public static final String SAGORKONNA_PACKAGE_NAME = "com.shakil.tourdekuakata";
+    public static final String VARA_ADAI_FB_PAGE_LINK = "https://www.facebook.com/varaadai";
+    public static final String MY_CONTACT_NO = "01688499299";
 }

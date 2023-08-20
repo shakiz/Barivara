@@ -1,5 +1,10 @@
 package com.shakil.barivara.activities.settings;
 
+import static com.shakil.barivara.utils.Constants.GIT_LIB_PACKAGE_NAME;
+import static com.shakil.barivara.utils.Constants.MY_CONTACT_NO;
+import static com.shakil.barivara.utils.Constants.SAGORKONNA_PACKAGE_NAME;
+import static com.shakil.barivara.utils.Constants.VARA_ADAI_FB_PAGE_LINK;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -43,13 +48,13 @@ public class AboutUsActivity extends AppCompatActivity {
         activityBinding.giLibApp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tools.launchAppByPackageName("app.com.gitlib");
+                tools.launchAppByPackageName(GIT_LIB_PACKAGE_NAME);
             }
         });
         activityBinding.sagorKonnyaApp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tools.launchAppByPackageName("com.shakil.tourdekuakata");
+                tools.launchAppByPackageName(SAGORKONNA_PACKAGE_NAME);
             }
         });
 
@@ -57,7 +62,7 @@ public class AboutUsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toasty.info(getApplicationContext(),getString(R.string.opening_facebook), Toasty.LENGTH_LONG).show();
-                tools.launchUrl("https://www.facebook.com/varaadai");
+                tools.launchUrl(VARA_ADAI_FB_PAGE_LINK);
             }
         });
         activityBinding.mailContactUs.setOnClickListener(new View.OnClickListener() {
@@ -69,7 +74,7 @@ public class AboutUsActivity extends AppCompatActivity {
         activityBinding.messageContactUs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tools.sendMessage("01688499299");
+                tools.sendMessage(MY_CONTACT_NO);
             }
         });
     }
