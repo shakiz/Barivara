@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
+    id 'org.jetbrains.kotlin.android'
 }
 
 android {
@@ -74,6 +75,7 @@ dependencies {
 
     //Android splash library
     implementation 'androidx.core:core-splashscreen:1.0.1'
+    implementation 'androidx.core:core-ktx:1.13.0'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
