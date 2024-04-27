@@ -128,7 +128,7 @@ public class Tools {
         dialog.show();
     }
 
-    public void doPopUpForExitApp(Context context){
+    public void doPopUpForExitApp(){
         Button cancel, exit;
         Dialog dialog = new Dialog(context, android.R.style.Theme_Dialog);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
