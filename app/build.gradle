@@ -61,9 +61,9 @@ dependencies {
     implementation 'com.github.javiersantos:AppUpdater:2.7'
 
     //Firebase messaging
-    implementation "com.google.firebase:firebase-messaging:21.0.0"
+    implementation "com.google.firebase:firebase-messaging:23.4.1"
     // Import the BoM for the Firebase platform
-    implementation platform('com.google.firebase:firebase-bom:28.2.1')
+    implementation platform('com.google.firebase:firebase-bom:31.2.2')
 
     //google admob
     implementation 'com.google.android.gms:play-services-ads:22.2.0'
