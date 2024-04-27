@@ -11,6 +11,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowManager
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -56,11 +57,19 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private var tools =  Tools(this)
     private var customAdManager = CustomAdManager(this)
     private var appAnalytics = AppAnalytics(this)
+
+    private val onBackPressedCallback = object : OnBackPressedCallback(true){
+        override fun handleOnBackPressed() {
+            tools.doPopUpForExitApp()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         //scheduleMonthlyAlarm();
+        onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
         activityMainBinding.toolBar.setTitleTextColor(
             ContextCompat.getColor(
                 this,
@@ -338,9 +347,5 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         activityMainBinding.myDrawerLayout.closeDrawer(GravityCompat.START)
         return true
-    }
-
-    override fun onBackPressed() {
-        tools.doPopUpForExitApp(this)
     }
 }
