@@ -101,14 +101,14 @@ public class DashboardActivity extends AppCompatActivity {
         firebaseCrudHelper.getAdditionalInfo("rent", "rentAmount", new FirebaseCrudHelper.onAdditionalInfoFetch() {
             @Override
             public void onFetched(double data) {
-                activityDashboardBinding.TotalRentAmount.animateText(data + " " + getString(R.string.taka));
+                activityDashboardBinding.TotalRentAmount.setText(data + " " + getString(R.string.taka));
             }
         });
 
         firebaseCrudHelper.getAdditionalInfo("electricityBill", "totalBill", new FirebaseCrudHelper.onAdditionalInfoFetch() {
             @Override
             public void onFetched(double data) {
-                activityDashboardBinding.TotalElectricityBill.animateText(data + " " + getString(R.string.taka));
+                activityDashboardBinding.TotalElectricityBill.setText(data + " " + getString(R.string.taka));
             }
 
         });
