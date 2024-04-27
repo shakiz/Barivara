@@ -55,7 +55,7 @@ dependencies {
     implementation "com.hanks:htextview-evaporate:$hTextView_version"
 
     //lottie animation loader
-    implementation 'com.airbnb.android:lottie:3.4.2'
+    implementation 'com.airbnb.android:lottie:6.1.0'
 
     //library for app update
     implementation 'com.github.javiersantos:AppUpdater:2.7'
