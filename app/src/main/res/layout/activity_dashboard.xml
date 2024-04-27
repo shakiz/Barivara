@@ -399,7 +399,7 @@
                             app:layout_constraintStart_toEndOf="@id/ivTaka"
                             app:layout_constraintTop_toTopOf="@id/ivTaka" />
 
-                        <com.hanks.htextview.evaporate.EvaporateTextView
+                        <TextView
                             android:id="@+id/TotalRentAmount"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -441,7 +441,7 @@
                             app:layout_constraintStart_toEndOf="@id/ivElectricityBill"
                             app:layout_constraintTop_toTopOf="@id/ivElectricityBill" />
 
-                        <com.hanks.htextview.evaporate.EvaporateTextView
+                        <TextView
                             android:id="@+id/TotalElectricityBill"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
