@@ -1,187 +1,172 @@
-package com.shakil.barivara.activities.room;
+package com.shakil.barivara.activities.room
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Toast;
+import android.content.Intent
+import android.os.Bundle
+import android.os.Parcelable
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import com.shakil.barivara.R
+import com.shakil.barivara.databinding.ActivityNewRentDetailsBinding
+import com.shakil.barivara.firebasedb.FirebaseCrudHelper
+import com.shakil.barivara.model.room.Rent
+import com.shakil.barivara.utils.SpinnerAdapter
+import com.shakil.barivara.utils.SpinnerData
+import com.shakil.barivara.utils.Tools
+import com.shakil.barivara.utils.Validation
+import java.util.UUID
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-
-import com.shakil.barivara.R;
-import com.shakil.barivara.databinding.ActivityNewRentDetailsBinding;
-import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
-import com.shakil.barivara.model.room.Rent;
-import com.shakil.barivara.utils.SpinnerAdapter;
-import com.shakil.barivara.utils.SpinnerData;
-import com.shakil.barivara.utils.Tools;
-import com.shakil.barivara.utils.Validation;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-
-public class RentDetailsActivity extends AppCompatActivity {
-    private ActivityNewRentDetailsBinding activityNewRentDetailsBinding;
-    private SpinnerData spinnerData;
-    private SpinnerAdapter spinnerAdapter;
-    private Rent rent = new Rent();
-    private String command = "add";
-    private int MonthId = 0, YearId = 0, AssociateRoomId = 0;
-    private String MonthStr = "", YearName = "", AssociateRoomStr = "";
-    private FirebaseCrudHelper firebaseCrudHelper;
-    private ArrayList<String> roomNames;
-    private Validation validation;
-    private Tools tools;
-    private final Map<String, String[]> hashMap = new HashMap();
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        activityNewRentDetailsBinding = DataBindingUtil.setContentView(this, R.layout.activity_new_rent_details);
-
-        getIntentData();
-        init();
-
-        setSupportActionBar(activityNewRentDetailsBinding.toolBar);
-        activityNewRentDetailsBinding.toolBar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-
-        bindUiWithComponents();
-        loadData();
+class RentDetailsActivity : AppCompatActivity() {
+    private lateinit var activityNewRentDetailsBinding: ActivityNewRentDetailsBinding
+    private var spinnerData = SpinnerData(this)
+    private var spinnerAdapter = SpinnerAdapter()
+    private var rent: Rent = Rent()
+    private var command = "add"
+    private var MonthId = 0
+    private var YearId = 0
+    private var AssociateRoomId = 0
+    private var MonthStr = ""
+    private var YearName = ""
+    private var AssociateRoomStr = ""
+    private var firebaseCrudHelper = FirebaseCrudHelper(this)
+    private var roomNames: ArrayList<String> = arrayListOf()
+    private var tools = Tools(this)
+    private val hashMap: Map<String?, Array<String>?> = HashMap()
+    private var validation = Validation(this, hashMap)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        activityNewRentDetailsBinding =
+            DataBindingUtil.setContentView(this, R.layout.activity_new_rent_details)
+        getIntentData()
+        setSupportActionBar(activityNewRentDetailsBinding.toolBar)
+        activityNewRentDetailsBinding.toolBar.setNavigationOnClickListener { onBackPressed() }
+        bindUiWithComponents()
+        loadData()
     }
 
-    private void getIntentData(){
-        if (getIntent().getExtras() != null) {
-            if (getIntent().getExtras().getParcelable("rent") != null){
-                rent = getIntent().getExtras().getParcelable("rent");
+    private fun getIntentData() {
+        if (intent.extras != null) {
+            if (intent.getParcelableExtra<Parcelable?>("rent") != null) {
+                rent = intent.getParcelableExtra("rent")!!
             }
         }
     }
 
-    private void loadData(){
-        if (rent.getRentId() != null) {
-            command = "update";
-            activityNewRentDetailsBinding.RentAmount.setText(String.valueOf(rent.getRentAmount()));
-            activityNewRentDetailsBinding.MonthId.setSelection(rent.getMonthId(), true);
-            activityNewRentDetailsBinding.YearId.setSelection(rent.getYearId(), true);
-            activityNewRentDetailsBinding.Note.setText(rent.getNote());
+    private fun loadData() {
+        if (rent.rentId != null) {
+            command = "update"
+            activityNewRentDetailsBinding.RentAmount.setText(rent.rentAmount.toString())
+            activityNewRentDetailsBinding.MonthId.setSelection(rent.monthId, true)
+            activityNewRentDetailsBinding.YearId.setSelection(rent.yearId, true)
+            activityNewRentDetailsBinding.Note.setText(rent.note)
         }
     }
 
-    private void bindUiWithComponents() {
-        validation.setEditTextIsNotEmpty(new String[]{"RentAmount"},
-                new String[]{getString(R.string.rent_amount_validation)});
-        validation.setSpinnerIsNotEmpty(new String[]{"YearId","MonthId"});
-
-        spinnerAdapter.setSpinnerAdapter(activityNewRentDetailsBinding.MonthId,this, spinnerData.setMonthData());
-        spinnerAdapter.setSpinnerAdapter(activityNewRentDetailsBinding.YearId,this, spinnerData.setYearData());
-
+    private fun bindUiWithComponents() {
+        validation.setEditTextIsNotEmpty(
+            arrayOf("RentAmount"),
+            arrayOf(getString(R.string.rent_amount_validation))
+        )
+        validation.setSpinnerIsNotEmpty(arrayOf("YearId", "MonthId"))
+        spinnerAdapter.setSpinnerAdapter(
+            activityNewRentDetailsBinding.MonthId,
+            this,
+            spinnerData.setMonthData()
+        )
+        spinnerAdapter.setSpinnerAdapter(
+            activityNewRentDetailsBinding.YearId,
+            this,
+            spinnerData.setYearData()
+        )
         if (tools.hasConnection()) {
-            firebaseCrudHelper.getAllName("room", "roomName", new FirebaseCrudHelper.onNameFetch() {
-                @Override
-                public void onFetched(ArrayList<String> nameList) {
-                    roomNames = nameList;
-                    setRoomSpinner();
-                }
-            });
+            firebaseCrudHelper.getAllName("room", "roomName") { nameList ->
+                roomNames = nameList
+                setRoomSpinner()
+            }
         } else {
-            roomNames = spinnerData.setSpinnerNoData();
-            setRoomSpinner();
+            roomNames = spinnerData.setSpinnerNoData()
+            setRoomSpinner()
         }
+        activityNewRentDetailsBinding.MonthId.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View,
+                    position: Int,
+                    id: Long
+                ) {
+                    MonthId = position
+                    MonthStr = parent.getItemAtPosition(position).toString()
+                }
 
-        activityNewRentDetailsBinding.MonthId.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                MonthId = position;
-                MonthStr = parent.getItemAtPosition(position).toString();
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
+        activityNewRentDetailsBinding.YearId.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View,
+                    position: Int,
+                    id: Long
+                ) {
+                    YearId = position
+                    YearName = parent.getItemAtPosition(position).toString()
+                }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
-        });
+        activityNewRentDetailsBinding.AssociateRoomId.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View,
+                    position: Int,
+                    id: Long
+                ) {
+                    AssociateRoomId = position
+                    AssociateRoomStr = parent.getItemAtPosition(position).toString()
+                }
 
-        activityNewRentDetailsBinding.YearId.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                YearId = position;
-                YearName = parent.getItemAtPosition(position).toString();
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        activityNewRentDetailsBinding.AssociateRoomId.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                AssociateRoomId = position;
-                AssociateRoomStr = parent.getItemAtPosition(position).toString();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        activityNewRentDetailsBinding.mAddRentMaster.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (validation.isValid()) {
-                    if (tools.hasConnection()) {
-                        rent.setMonthId(MonthId);
-                        rent.setMonthName(MonthStr);
-                        rent.setYearId(YearId);
-                        rent.setYearName(YearName);
-                        rent.setAssociateRoomId(AssociateRoomId);
-                        rent.setAssociateRoomName(AssociateRoomStr);
-                        rent.setNote(activityNewRentDetailsBinding.Note.getText().toString());
-                        rent.setRentAmount(Integer.parseInt(activityNewRentDetailsBinding.RentAmount.getText().toString()));
-                        if (command.equals("add")) {
-                            rent.setRentId(UUID.randomUUID().toString());
-                            firebaseCrudHelper.add(rent, "rent");
-                        } else {
-                            firebaseCrudHelper.update(rent, rent.getFireBaseKey(), "rent");
-                        }
-                        Toast.makeText(getApplicationContext(),R.string.success, Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(RentDetailsActivity.this, RentListActivity.class));
+        activityNewRentDetailsBinding.mAddRentMaster.setOnClickListener {
+            if (validation.isValid) {
+                if (tools.hasConnection()) {
+                    rent.monthId = MonthId
+                    rent.monthName = MonthStr
+                    rent.yearId = YearId
+                    rent.yearName = YearName
+                    rent.associateRoomId = AssociateRoomId
+                    rent.associateRoomName = AssociateRoomStr
+                    rent.note = activityNewRentDetailsBinding.Note.text.toString()
+                    rent.rentAmount =
+                        activityNewRentDetailsBinding.RentAmount.text.toString().toInt()
+                    if (command == "add") {
+                        rent.rentId = UUID.randomUUID().toString()
+                        firebaseCrudHelper.add(rent, "rent")
                     } else {
-                        Toast.makeText(RentDetailsActivity.this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT).show();
+                        firebaseCrudHelper.update(rent, rent.fireBaseKey, "rent")
                     }
+                    Toast.makeText(applicationContext, R.string.success, Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this@RentDetailsActivity, RentListActivity::class.java))
+                } else {
+                    Toast.makeText(
+                        this@RentDetailsActivity,
+                        getString(R.string.no_internet_title),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
-        });
+        }
     }
 
-    private void init() {
-        roomNames = new ArrayList<>();
-        spinnerData = new SpinnerData(this);
-        firebaseCrudHelper = new FirebaseCrudHelper(this);
-        spinnerAdapter = new SpinnerAdapter();
-        tools = new Tools(this);
-        validation = new Validation(this, hashMap);
-    }
-
-    private void setRoomSpinner(){
-        ArrayAdapter<String> roomNameSpinnerAdapter = new ArrayAdapter<>(RentDetailsActivity.this, R.layout.spinner_drop, roomNames);
-        roomNameSpinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
-        activityNewRentDetailsBinding.AssociateRoomId.setAdapter(roomNameSpinnerAdapter);
-    }
-
-    @Override
-    public void onBackPressed() {
-        startActivity(new Intent(RentDetailsActivity.this, RentListActivity.class));
+    private fun setRoomSpinner() {
+        val roomNameSpinnerAdapter =
+            ArrayAdapter(this@RentDetailsActivity, R.layout.spinner_drop, roomNames)
+        roomNameSpinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
+        activityNewRentDetailsBinding.AssociateRoomId.adapter = roomNameSpinnerAdapter
     }
 }
