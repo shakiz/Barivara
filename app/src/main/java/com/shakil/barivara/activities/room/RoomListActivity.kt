@@ -1,219 +1,201 @@
-package com.shakil.barivara.activities.room;
+package com.shakil.barivara.activities.room
 
-import android.app.Dialog;
-import android.content.Intent;
-import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
+import android.app.Dialog
+import android.content.Intent
+import android.os.Bundle
+import android.text.TextUtils
+import android.view.View
+import android.view.Window
+import android.view.WindowManager
+import android.widget.Button
+import android.widget.RelativeLayout
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.shakil.barivara.R
+import com.shakil.barivara.activities.onboard.MainActivity
+import com.shakil.barivara.adapter.RecyclerRoomListAdapter
+import com.shakil.barivara.adapter.RecyclerRoomListAdapter.RoomCallBacks
+import com.shakil.barivara.databinding.ActivityRoomListBinding
+import com.shakil.barivara.firebasedb.FirebaseCrudHelper
+import com.shakil.barivara.model.room.Room
+import com.shakil.barivara.utils.CustomAdManager
+import com.shakil.barivara.utils.FilterManager
+import com.shakil.barivara.utils.Tools
+import com.shakil.barivara.utils.UX
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
-import com.shakil.barivara.R;
-import com.shakil.barivara.activities.onboard.MainActivity;
-import com.shakil.barivara.adapter.RecyclerRoomListAdapter;
-import com.shakil.barivara.databinding.ActivityRoomListBinding;
-import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
-import com.shakil.barivara.model.room.Room;
-import com.shakil.barivara.utils.CustomAdManager;
-import com.shakil.barivara.utils.FilterManager;
-import com.shakil.barivara.utils.Tools;
-import com.shakil.barivara.utils.UX;
-
-import java.util.ArrayList;
-
-public class RoomListActivity extends AppCompatActivity implements RecyclerRoomListAdapter.RoomCallBacks {
-    private ActivityRoomListBinding activityRoomListBinding;
-    private ArrayList<Room> roomList;
-    private FirebaseCrudHelper firebaseCrudHelper;
-    private UX ux;
-    private Tools tools;
-    private EditText searchName;
-    private FilterManager filterManager;
-    private CustomAdManager customAdManager;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        activityRoomListBinding = DataBindingUtil.setContentView(this, R.layout.activity_room_list);
-
-        init();
-
-        setSupportActionBar(activityRoomListBinding.toolBar);
-        activityRoomListBinding.toolBar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(RoomListActivity.this, MainActivity.class));
-            }
-        });
-
-        binUiWIthComponents();
-    }
-
-    private void init() {
-        searchName = findViewById(R.id.SearchName);
-        roomList = new ArrayList<>();
-        ux = new UX(this);
-        tools = new Tools(this);
-        filterManager = new FilterManager();
-        firebaseCrudHelper = new FirebaseCrudHelper(this);
-        customAdManager = new CustomAdManager(this);
-    }
-
-    private void binUiWIthComponents() {
-        customAdManager.generateAd(activityRoomListBinding.adView);
-
-        searchName.setHint(getString(R.string.search_room_name));
-
-        if (tools.hasConnection()) {
-            setData();
-        } else {
-            Toast.makeText(this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT).show();
+class RoomListActivity : AppCompatActivity(), RoomCallBacks {
+    private lateinit var activityRoomListBinding: ActivityRoomListBinding
+    private var roomList: ArrayList<Room> = arrayListOf()
+    private var firebaseCrudHelper = FirebaseCrudHelper(this)
+    private var ux: UX? = null
+    private var tools = Tools(this)
+    private var filterManager = FilterManager()
+    private var customAdManager = CustomAdManager(this)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        activityRoomListBinding = DataBindingUtil.setContentView(this, R.layout.activity_room_list)
+        init()
+        setSupportActionBar(activityRoomListBinding.toolBar)
+        activityRoomListBinding.toolBar.setNavigationOnClickListener {
+            startActivity(
+                Intent(
+                    this@RoomListActivity,
+                    MainActivity::class.java
+                )
+            )
         }
+        binUiWIthComponents()
+    }
 
-        activityRoomListBinding.mAddRoomMaster.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(RoomListActivity.this, RoomActivity.class));
-            }
-        });
+    private fun init() {
+        ux = UX(this)
+    }
 
-        activityRoomListBinding.searchLayout.searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (tools.hasConnection()) {
-                    if (!TextUtils.isEmpty(searchName.getText().toString())){
-                        filterManager.onFilterClick(searchName.getText().toString(), roomList, new FilterManager.onFilterClick() {
-                            @Override
-                            public void onClick(ArrayList<Room> objects) {
-                                if (objects.size() > 0) {
-                                    roomList = objects;
-                                    setRecyclerAdapter();
-                                    Tools.hideKeyboard(RoomListActivity.this);
-                                    Toast.makeText(RoomListActivity.this, getString(R.string.filterd), Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Tools.hideKeyboard(RoomListActivity.this);
-                                    activityRoomListBinding.mNoDataMessage.setVisibility(View.VISIBLE);
-                                    activityRoomListBinding.mNoDataMessage.setText(R.string.no_data_message);
-                                    activityRoomListBinding.mRecylerView.setVisibility(View.GONE);
-                                    Toast.makeText(RoomListActivity.this, getString(R.string.no_data_message), Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
-                    }
-                    else{
-                        Toast.makeText(RoomListActivity.this, getString(R.string.enter_data_validation), Toast.LENGTH_SHORT).show();
+    private fun binUiWIthComponents() {
+        customAdManager.generateAd(activityRoomListBinding.adView)
+        activityRoomListBinding.searchLayout.SearchName.hint = getString(R.string.search_room_name)
+        if (tools.hasConnection()) {
+            setData()
+        } else {
+            Toast.makeText(this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT).show()
+        }
+        activityRoomListBinding.mAddRoomMaster.setOnClickListener {
+            startActivity(
+                Intent(
+                    this@RoomListActivity,
+                    RoomActivity::class.java
+                )
+            )
+        }
+        activityRoomListBinding.searchLayout.searchButton.setOnClickListener {
+            if (tools.hasConnection()) {
+                if (!TextUtils.isEmpty(activityRoomListBinding.searchLayout.SearchName.text.toString())) {
+                    filterManager.onFilterClick(
+                        activityRoomListBinding.searchLayout.SearchName.text.toString(),
+                        roomList
+                    ) { objects ->
+                        if (objects.size > 0) {
+                            roomList = objects
+                            setRecyclerAdapter()
+                            Tools.hideKeyboard(this@RoomListActivity)
+                            Toast.makeText(
+                                this@RoomListActivity,
+                                getString(R.string.filterd),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else {
+                            Tools.hideKeyboard(this@RoomListActivity)
+                            activityRoomListBinding.mNoDataMessage.visibility = View.VISIBLE
+                            activityRoomListBinding.mNoDataMessage.setText(R.string.no_data_message)
+                            activityRoomListBinding.mRecylerView.visibility = View.GONE
+                            Toast.makeText(
+                                this@RoomListActivity,
+                                getString(R.string.no_data_message),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
                 } else {
-                    Toast.makeText(RoomListActivity.this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(
+                        this@RoomListActivity,
+                        getString(R.string.enter_data_validation),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
+            } else {
+                Toast.makeText(
+                    this@RoomListActivity,
+                    getString(R.string.no_internet_title),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-        });
-
-        activityRoomListBinding.searchLayout.refreshButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (tools.hasConnection()) {
-                    activityRoomListBinding.mRecylerView.setVisibility(View.VISIBLE);
-                    searchName.setText("");
-                    activityRoomListBinding.mNoDataMessage.setVisibility(View.GONE);
-                    Tools.hideKeyboard(RoomListActivity.this);
-                    setData();
-                    Toast.makeText(RoomListActivity.this, getString(R.string.list_refreshed), Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(RoomListActivity.this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT).show();
-                }
+        }
+        activityRoomListBinding.searchLayout.refreshButton.setOnClickListener {
+            if (tools.hasConnection()) {
+                activityRoomListBinding.mRecylerView.visibility = View.VISIBLE
+                activityRoomListBinding.searchLayout.SearchName.setText("")
+                activityRoomListBinding.mNoDataMessage.visibility = View.GONE
+                Tools.hideKeyboard(this@RoomListActivity)
+                setData()
+                Toast.makeText(
+                    this@RoomListActivity,
+                    getString(R.string.list_refreshed),
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                Toast.makeText(
+                    this@RoomListActivity,
+                    getString(R.string.no_internet_title),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-        });
+        }
     }
 
-    private void setData() {
-        ux.getLoadingView();
-        firebaseCrudHelper.fetchAllRoom("room", new FirebaseCrudHelper.onRoomDataFetch() {
-            @Override
-            public void onFetch(ArrayList<Room> objects) {
-                roomList = objects;
-                if (roomList.size()<=0){
-                    activityRoomListBinding.mNoDataMessage.setVisibility(View.VISIBLE);
-                    activityRoomListBinding.mNoDataMessage.setText(R.string.no_data_message);
-                }
-                setRecyclerAdapter();
-                ux.removeLoadingView();
+    private fun setData() {
+        ux?.getLoadingView()
+        firebaseCrudHelper.fetchAllRoom("room") { objects ->
+            roomList = objects
+            if (roomList.size <= 0) {
+                activityRoomListBinding.mNoDataMessage.visibility = View.VISIBLE
+                activityRoomListBinding.mNoDataMessage.setText(R.string.no_data_message)
             }
-        });
+            setRecyclerAdapter()
+            ux?.removeLoadingView()
+        }
     }
 
-    private void setRecyclerAdapter(){
-        RecyclerRoomListAdapter recyclerRoomListAdapter = new RecyclerRoomListAdapter(roomList);
-        activityRoomListBinding.mRecylerView.setLayoutManager(new LinearLayoutManager(this));
-        activityRoomListBinding.mRecylerView.setAdapter(recyclerRoomListAdapter);
-        recyclerRoomListAdapter.setRoomCallBack(this);
+    private fun setRecyclerAdapter() {
+        val recyclerRoomListAdapter = RecyclerRoomListAdapter(roomList)
+        activityRoomListBinding.mRecylerView.layoutManager = LinearLayoutManager(this)
+        activityRoomListBinding.mRecylerView.adapter = recyclerRoomListAdapter
+        recyclerRoomListAdapter.setRoomCallBack(this)
     }
 
-    private void doPopUpForDeleteConfirmation(Room room){
-        Button cancel, delete;
-        Dialog dialog = new Dialog(RoomListActivity.this, android.R.style.Theme_Dialog);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.delete_confirmation_layout);
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        dialog.setCanceledOnTouchOutside(true);
-
-        cancel = dialog.findViewById(R.id.cancelButton);
-        delete = dialog.findViewById(R.id.deleteButton);
-
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-
-        delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                firebaseCrudHelper.deleteRecord("room",room.getFireBaseKey());
-                dialog.dismiss();
-                setData();
-            }
-        });
-
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        dialog.getWindow().setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        dialog.show();
+    private fun doPopUpForDeleteConfirmation(room: Room) {
+        val dialog = Dialog(this@RoomListActivity, android.R.style.Theme_Dialog)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.delete_confirmation_layout)
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.setCanceledOnTouchOutside(true)
+        val cancel: Button = dialog.findViewById(R.id.cancelButton)
+        val delete: Button = dialog.findViewById(R.id.deleteButton)
+        cancel.setOnClickListener { dialog.dismiss() }
+        delete.setOnClickListener {
+            firebaseCrudHelper.deleteRecord("room", room.fireBaseKey)
+            dialog.dismiss()
+            setData()
+        }
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
+        dialog.window?.setLayout(
+            RelativeLayout.LayoutParams.MATCH_PARENT,
+            RelativeLayout.LayoutParams.WRAP_CONTENT
+        )
+        dialog.show()
     }
 
-    @Override
-    public void onBackPressed() {
-        startActivity(new Intent(RoomListActivity.this,MainActivity.class));
+    override fun onDelete(room: Room) {
+        doPopUpForDeleteConfirmation(room)
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    override fun onEdit(room: Room) {
+        startActivity(
+            Intent(this@RoomListActivity, RoomActivity::class.java).putExtra(
+                "room",
+                room
+            )
+        )
     }
 
-    @Override
-    public void onDelete(Room room) {
-        doPopUpForDeleteConfirmation(room);
-    }
-
-    @Override
-    public void onEdit(Room room) {
-        startActivity(new Intent(RoomListActivity.this, RoomActivity.class).putExtra("room", room));
-    }
-
-    @Override
-    public void onItemClick(Room room) {
-        startActivity(new Intent(RoomListActivity.this, RoomActivity.class).putExtra("room", room));
+    override fun onItemClick(room: Room) {
+        startActivity(
+            Intent(this@RoomListActivity, RoomActivity::class.java).putExtra(
+                "room",
+                room
+            )
+        )
     }
 }
-
