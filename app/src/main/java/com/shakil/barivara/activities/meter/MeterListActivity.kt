@@ -1,214 +1,202 @@
-package com.shakil.barivara.activities.meter;
+package com.shakil.barivara.activities.meter
 
-import android.app.Dialog;
-import android.content.Intent;
-import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
+import android.app.Dialog
+import android.content.Intent
+import android.os.Bundle
+import android.text.TextUtils
+import android.view.View
+import android.view.Window
+import android.view.WindowManager
+import android.widget.Button
+import android.widget.RelativeLayout
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.shakil.barivara.R
+import com.shakil.barivara.activities.onboard.MainActivity
+import com.shakil.barivara.adapter.RecyclerMeterListAdapter
+import com.shakil.barivara.adapter.RecyclerMeterListAdapter.MeterCallBacks
+import com.shakil.barivara.databinding.ActivityMeterListBinding
+import com.shakil.barivara.firebasedb.FirebaseCrudHelper
+import com.shakil.barivara.model.meter.Meter
+import com.shakil.barivara.utils.FilterManager
+import com.shakil.barivara.utils.Tools
+import com.shakil.barivara.utils.UX
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
-import com.shakil.barivara.R;
-import com.shakil.barivara.activities.onboard.MainActivity;
-import com.shakil.barivara.adapter.RecyclerMeterListAdapter;
-import com.shakil.barivara.databinding.ActivityMeterListBinding;
-import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
-import com.shakil.barivara.model.meter.Meter;
-import com.shakil.barivara.utils.FilterManager;
-import com.shakil.barivara.utils.Tools;
-import com.shakil.barivara.utils.UX;
-
-import java.util.ArrayList;
-
-public class MeterListActivity extends AppCompatActivity implements RecyclerMeterListAdapter.MeterCallBacks {
-    private ActivityMeterListBinding activityMeterListBinding;
-    private ArrayList<Meter> meterList;
-    private FirebaseCrudHelper firebaseCrudHelper;
-    private UX ux;
-    private Tools tools;
-    private FilterManager filterManager;
-    private EditText searchName;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        activityMeterListBinding = DataBindingUtil.setContentView(this, R.layout.activity_meter_list);
-
-        init();
-        setSupportActionBar(activityMeterListBinding.toolBar);
-
-        activityMeterListBinding.toolBar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MeterListActivity.this, MainActivity.class));
-            }
-        });
-
-        binUiWIthComponents();
-    }
-
-    private void binUiWIthComponents() {
-        searchName.setHint(getString(R.string.search_meter_name));
-
-        if (tools.hasConnection()) {
-            setData();
-        } else {
-            Toast.makeText(this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT).show();
+class MeterListActivity : AppCompatActivity(), MeterCallBacks {
+    private lateinit var activityMeterListBinding: ActivityMeterListBinding
+    private var meterList: ArrayList<Meter>? = null
+    private var firebaseCrudHelper = FirebaseCrudHelper(this)
+    private var ux: UX? = null
+    private var tools = Tools(this)
+    private var filterManager = FilterManager()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        activityMeterListBinding =
+            DataBindingUtil.setContentView(this, R.layout.activity_meter_list)
+        init()
+        setSupportActionBar(activityMeterListBinding.toolBar)
+        activityMeterListBinding.toolBar.setNavigationOnClickListener {
+            startActivity(
+                Intent(
+                    this@MeterListActivity,
+                    MainActivity::class.java
+                )
+            )
         }
+        binUiWIthComponents()
+    }
 
-        activityMeterListBinding.mAddMeterMaster.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MeterListActivity.this, NewMeterActivity.class));
-            }
-        });
+    private fun init() {
+        meterList = ArrayList()
+        ux = UX(this)
+    }
 
-        activityMeterListBinding.searchLayout.searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (tools.hasConnection()) {
-                    if (!TextUtils.isEmpty(searchName.getText().toString())){
-                        filterManager.onFilterClick(searchName.getText().toString(), meterList, new FilterManager.onMeterFilterClick() {
-                            @Override
-                            public void onClick(ArrayList<Meter> objects) {
-                                if (objects.size() > 0) {
-                                    meterList = objects;
-                                    setRecyclerAdapter();
-                                    Tools.hideKeyboard(MeterListActivity.this);
-                                    Toast.makeText(MeterListActivity.this, getString(R.string.filterd), Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Tools.hideKeyboard(MeterListActivity.this);
-                                    activityMeterListBinding.mNoDataMessage.setVisibility(View.VISIBLE);
-                                    activityMeterListBinding.mNoDataMessage.setText(R.string.no_data_message);
-                                    activityMeterListBinding.mRecylerView.setVisibility(View.GONE);
-                                    Toast.makeText(MeterListActivity.this, getString(R.string.no_data_message), Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
-                    }
-                    else{
-                        Toast.makeText(MeterListActivity.this, getString(R.string.enter_data_validation), Toast.LENGTH_SHORT).show();
+
+    private fun binUiWIthComponents() {
+        activityMeterListBinding.searchLayout.SearchName.hint =
+            getString(R.string.search_meter_name)
+        if (tools.hasConnection()) {
+            setData()
+        } else {
+            Toast.makeText(this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT).show()
+        }
+        activityMeterListBinding.mAddMeterMaster.setOnClickListener {
+            startActivity(
+                Intent(
+                    this@MeterListActivity,
+                    NewMeterActivity::class.java
+                )
+            )
+        }
+        activityMeterListBinding.searchLayout.searchButton.setOnClickListener {
+            if (tools.hasConnection()) {
+                if (!TextUtils.isEmpty(activityMeterListBinding.searchLayout.SearchName.text.toString())) {
+                    filterManager.onFilterClick(
+                        activityMeterListBinding.searchLayout.SearchName.text.toString(),
+                        meterList
+                    ) { objects ->
+                        if (objects.size > 0) {
+                            meterList = objects
+                            setRecyclerAdapter()
+                            Tools.hideKeyboard(this@MeterListActivity)
+                            Toast.makeText(
+                                this@MeterListActivity,
+                                getString(R.string.filterd),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else {
+                            Tools.hideKeyboard(this@MeterListActivity)
+                            activityMeterListBinding.mNoDataMessage.visibility = View.VISIBLE
+                            activityMeterListBinding.mNoDataMessage.setText(R.string.no_data_message)
+                            activityMeterListBinding.mRecylerView.visibility = View.GONE
+                            Toast.makeText(
+                                this@MeterListActivity,
+                                getString(R.string.no_data_message),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
                 } else {
-                    Toast.makeText(MeterListActivity.this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(
+                        this@MeterListActivity,
+                        getString(R.string.enter_data_validation),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
+            } else {
+                Toast.makeText(
+                    this@MeterListActivity,
+                    getString(R.string.no_internet_title),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-        });
-
-        activityMeterListBinding.searchLayout.refreshButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (tools.hasConnection()) {
-                    activityMeterListBinding.mRecylerView.setVisibility(View.VISIBLE);
-                    searchName.setText("");
-                    activityMeterListBinding.mNoDataMessage.setVisibility(View.GONE);
-                    Tools.hideKeyboard(MeterListActivity.this);
-                    setData();
-                    Toast.makeText(MeterListActivity.this, getString(R.string.list_refreshed), Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(MeterListActivity.this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT).show();
-                }
+        }
+        activityMeterListBinding.searchLayout.refreshButton.setOnClickListener {
+            if (tools.hasConnection()) {
+                activityMeterListBinding.mRecylerView.visibility = View.VISIBLE
+                activityMeterListBinding.searchLayout.SearchName.setText("")
+                activityMeterListBinding.mNoDataMessage.visibility = View.GONE
+                Tools.hideKeyboard(this@MeterListActivity)
+                setData()
+                Toast.makeText(
+                    this@MeterListActivity,
+                    getString(R.string.list_refreshed),
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                Toast.makeText(
+                    this@MeterListActivity,
+                    getString(R.string.no_internet_title),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-        });
+        }
     }
 
-    private void setRecyclerAdapter(){
-        RecyclerMeterListAdapter recyclerMeterListAdapter = new RecyclerMeterListAdapter(meterList);
-        activityMeterListBinding.mRecylerView.setLayoutManager(new LinearLayoutManager(this));
-        activityMeterListBinding.mRecylerView.setAdapter(recyclerMeterListAdapter);
-        recyclerMeterListAdapter.setMeterCallBack(this);
+    private fun setRecyclerAdapter() {
+        val recyclerMeterListAdapter = RecyclerMeterListAdapter(meterList)
+        activityMeterListBinding.mRecylerView.layoutManager = LinearLayoutManager(this)
+        activityMeterListBinding.mRecylerView.adapter = recyclerMeterListAdapter
+        recyclerMeterListAdapter.setMeterCallBack(this)
     }
 
-    private void setData() {
-        ux.getLoadingView();
-        firebaseCrudHelper.fetchAllMeter("meter", new FirebaseCrudHelper.onDataFetch() {
-            @Override
-            public void onFetch(ArrayList<Meter> objects) {
-                meterList = objects;
-                setRecyclerAdapter();
-                ux.removeLoadingView();
-
-                if (meterList.size() <= 0){
-                    activityMeterListBinding.mNoDataMessage.setVisibility(View.VISIBLE);
-                    activityMeterListBinding.mNoDataMessage.setText(R.string.no_data_message);
-                }
+    private fun setData() {
+        ux?.getLoadingView()
+        firebaseCrudHelper.fetchAllMeter("meter") { objects ->
+            meterList = objects
+            setRecyclerAdapter()
+            ux?.removeLoadingView()
+            if ((meterList?.size ?: 0) <= 0) {
+                activityMeterListBinding.mNoDataMessage.visibility = View.VISIBLE
+                activityMeterListBinding.mNoDataMessage.setText(R.string.no_data_message)
             }
-        });
+        }
     }
 
-    private void init() {
-        searchName = findViewById(R.id.SearchName);
-        meterList = new ArrayList<>();
-        ux = new UX(this);
-        tools = new Tools(this);
-        filterManager = new FilterManager();
-        firebaseCrudHelper = new FirebaseCrudHelper(this);
+    private fun doPopUpForDeleteConfirmation(meter: Meter) {
+        val dialog = Dialog(this@MeterListActivity, android.R.style.Theme_Dialog)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.delete_confirmation_layout)
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.setCanceledOnTouchOutside(true)
+        val cancel: Button = dialog.findViewById(R.id.cancelButton)
+        val delete: Button = dialog.findViewById(R.id.deleteButton)
+        cancel.setOnClickListener { dialog.dismiss() }
+        delete.setOnClickListener {
+            firebaseCrudHelper.deleteRecord("meter", meter.fireBaseKey)
+            dialog.dismiss()
+            setData()
+        }
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
+        dialog.window?.setLayout(
+            RelativeLayout.LayoutParams.MATCH_PARENT,
+            RelativeLayout.LayoutParams.WRAP_CONTENT
+        )
+        dialog.show()
     }
 
-    private void doPopUpForDeleteConfirmation(Meter meter){
-        Button cancel, delete;
-        Dialog dialog = new Dialog(MeterListActivity.this, android.R.style.Theme_Dialog);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.delete_confirmation_layout);
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        dialog.setCanceledOnTouchOutside(true);
-
-        cancel = dialog.findViewById(R.id.cancelButton);
-        delete = dialog.findViewById(R.id.deleteButton);
-
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-
-        delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                firebaseCrudHelper.deleteRecord("meter",meter.getFireBaseKey());
-                dialog.dismiss();
-                setData();
-            }
-        });
-
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        dialog.getWindow().setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        dialog.show();
+    override fun onDelete(meter: Meter) {
+        doPopUpForDeleteConfirmation(meter)
     }
 
-    @Override
-    public void onBackPressed() {
-        startActivity(new Intent(MeterListActivity.this, MainActivity.class));
+    override fun onEdit(meter: Meter) {
+        startActivity(
+            Intent(this@MeterListActivity, NewMeterActivity::class.java).putExtra(
+                "meter",
+                meter
+            )
+        )
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    public void onDelete(Meter meter) {
-        doPopUpForDeleteConfirmation(meter);
-    }
-
-    @Override
-    public void onEdit(Meter meter) {
-        startActivity(new Intent(MeterListActivity.this, NewMeterActivity.class).putExtra("meter", meter));
-    }
-
-    @Override
-    public void onItemClick(Meter meter) {
-        startActivity(new Intent(MeterListActivity.this, NewMeterActivity.class).putExtra("meter", meter));
+    override fun onItemClick(meter: Meter) {
+        startActivity(
+            Intent(this@MeterListActivity, NewMeterActivity::class.java).putExtra(
+                "meter",
+                meter
+            )
+        )
     }
 }
