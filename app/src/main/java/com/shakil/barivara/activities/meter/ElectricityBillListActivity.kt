@@ -25,7 +25,7 @@ import com.shakil.barivara.utils.UX
 
 class ElectricityBillListActivity : AppCompatActivity(), ElectricityBillBacks {
     private lateinit var activityMeterCostListBinding: ActivityElectricityBillListBinding
-    private var electricityBills: ArrayList<ElectricityBill>? = null
+    private var electricityBills: ArrayList<ElectricityBill> = arrayListOf()
     private var firebaseCrudHelper = FirebaseCrudHelper(this)
     private var ux: UX? = null
     private var tools = Tools(this)
@@ -40,11 +40,7 @@ class ElectricityBillListActivity : AppCompatActivity(), ElectricityBillBacks {
     }
 
     private fun init() {
-        electricityBills = ArrayList()
         ux = UX(this)
-        tools = Tools(this)
-        filterManager = FilterManager()
-        firebaseCrudHelper = FirebaseCrudHelper(this)
     }
 
     private fun bindUIWithComponents() {
@@ -132,7 +128,7 @@ class ElectricityBillListActivity : AppCompatActivity(), ElectricityBillBacks {
         ux?.getLoadingView()
         firebaseCrudHelper.fetchAllElectricityBills("electricityBill") { objects ->
             electricityBills = objects
-            if ((electricityBills?.size ?: 0) <= 0) {
+            if (electricityBills.size <= 0) {
                 activityMeterCostListBinding.mNoDataMessage.visibility = View.VISIBLE
                 activityMeterCostListBinding.mNoDataMessage.setText(R.string.no_data_message)
             }
