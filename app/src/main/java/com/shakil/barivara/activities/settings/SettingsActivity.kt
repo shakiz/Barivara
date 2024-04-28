@@ -1,133 +1,101 @@
-package com.shakil.barivara.activities.settings;
+package com.shakil.barivara.activities.settings
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.View;
-import android.widget.Toast;
+import android.content.Intent
+import android.os.Bundle
+import android.text.TextUtils
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import com.shakil.barivara.R
+import com.shakil.barivara.activities.auth.LoginActivity
+import com.shakil.barivara.activities.onboard.MainActivity
+import com.shakil.barivara.databinding.ActivitySettingsBinding
+import com.shakil.barivara.utils.Constants
+import com.shakil.barivara.utils.CustomAdManager
+import com.shakil.barivara.utils.LanguageManager
+import com.shakil.barivara.utils.PrefManager
+import com.shakil.barivara.utils.Tools
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-
-import com.shakil.barivara.R;
-import com.shakil.barivara.activities.auth.LoginActivity;
-import com.shakil.barivara.activities.onboard.MainActivity;
-import com.shakil.barivara.databinding.ActivitySettingsBinding;
-import com.shakil.barivara.utils.CustomAdManager;
-import com.shakil.barivara.utils.LanguageManager;
-import com.shakil.barivara.utils.PrefManager;
-import com.shakil.barivara.utils.Tools;
-
-import java.util.HashMap;
-
-import static com.shakil.barivara.utils.Constants.mIsLoggedIn;
-import static com.shakil.barivara.utils.Constants.mLanguage;
-import static com.shakil.barivara.utils.Constants.mUserEmail;
-import static com.shakil.barivara.utils.Constants.mUserFullName;
-import static com.shakil.barivara.utils.Constants.mUserMobile;
-
-public class SettingsActivity extends AppCompatActivity {
-    private ActivitySettingsBinding activitySettingsBinding;
-    public HashMap<String, String> languageMap = new HashMap<String, String>();
-    private LanguageManager languageManager;
-    private PrefManager prefManager;
-    private Tools tools;
-    private CustomAdManager customAdManager;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        activitySettingsBinding = DataBindingUtil.setContentView(this, R.layout.activity_settings);
-
-        setSupportActionBar(activitySettingsBinding.toolBar);
-        activitySettingsBinding.toolBar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-
-        init();
-        bindUiWithComponents();
+class SettingsActivity : AppCompatActivity() {
+    private lateinit var activitySettingsBinding: ActivitySettingsBinding
+    private var languageMap = HashMap<String, String>()
+    private var languageManager = LanguageManager(this)
+    private var prefManager = PrefManager(this)
+    private var tools = Tools(this)
+    private var customAdManager = CustomAdManager(this)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        activitySettingsBinding = DataBindingUtil.setContentView(this, R.layout.activity_settings)
+        setSupportActionBar(activitySettingsBinding.toolBar)
+        activitySettingsBinding.toolBar.setNavigationOnClickListener { onBackPressed() }
+        setupLanguage()
+        bindUiWithComponents()
     }
 
-    private void init() {
-        languageManager = new LanguageManager(this);
-        prefManager = new PrefManager(this);
-        tools = new Tools(this);
-        customAdManager = new CustomAdManager(this);
-        setupLanguage();
+    private fun setupLanguage() {
+        languageMap.clear()
+        languageMap["bn"] = getString(R.string.bengali)
+        languageMap["en"] = getString(R.string.english)
     }
 
-    private void setupLanguage(){
-        languageMap.clear();
-        languageMap.put("bn", getString(R.string.bengali));
-        languageMap.put("en", getString(R.string.english));
-    }
-
-    private void bindUiWithComponents() {
-        customAdManager.generateAd(activitySettingsBinding.adView);
-
-        if (!TextUtils.isEmpty(prefManager.getString(mUserFullName))){
-            activitySettingsBinding.UserFullName.setText(getString(R.string.username)+":"+prefManager.getString(mUserFullName));
+    private fun bindUiWithComponents() {
+        customAdManager.generateAd(activitySettingsBinding.adView)
+        if (!TextUtils.isEmpty(prefManager.getString(Constants.mUserFullName))) {
+            activitySettingsBinding.UserFullName.text =
+                getString(R.string.username) + ":" + prefManager.getString(
+                    Constants.mUserFullName
+                )
+        } else {
+            activitySettingsBinding.UserFullName.text = getString(R.string.username_not_found)
         }
-        else{
-            activitySettingsBinding.UserFullName.setText(getString(R.string.username_not_found));
+        if (!TextUtils.isEmpty(prefManager.getString(Constants.mUserEmail))) {
+            activitySettingsBinding.Email.text =
+                getString(R.string.email) + ":" + prefManager.getString(
+                    Constants.mUserEmail
+                )
+        } else {
+            activitySettingsBinding.Email.text = getString(R.string.email_not_found)
         }
-        if (!TextUtils.isEmpty(prefManager.getString(mUserEmail))){
-            activitySettingsBinding.Email.setText(getString(R.string.email)+":"+prefManager.getString(mUserEmail));
+        if (!TextUtils.isEmpty(prefManager.getString(Constants.mUserMobile))) {
+            activitySettingsBinding.Mobile.text =
+                getString(R.string.mobile) + ":" + prefManager.getString(
+                    Constants.mUserMobile
+                )
+        } else {
+            activitySettingsBinding.Mobile.text = getString(R.string.mobile_not_found)
         }
-        else{
-            activitySettingsBinding.Email.setText(getString(R.string.email_not_found));
-        }
-        if (!TextUtils.isEmpty(prefManager.getString(mUserMobile))){
-            activitySettingsBinding.Mobile.setText(getString(R.string.mobile)+":"+prefManager.getString(mUserMobile));
-        }
-        else{
-            activitySettingsBinding.Mobile.setText(getString(R.string.mobile_not_found));
-        }
-
-        String language = prefManager.getString(mLanguage);
-        if(language != null){
-            if(!TextUtils.isEmpty(language)){
-                activitySettingsBinding.currentAppLanguage.setText(languageMap.get(language));
+        val language = prefManager.getString(Constants.mLanguage)
+        if (language != null) {
+            if (!TextUtils.isEmpty(language)) {
+                activitySettingsBinding.currentAppLanguage.text = languageMap[language]
             } else {
-                activitySettingsBinding.currentAppLanguage.setText(getString(R.string.english));
+                activitySettingsBinding.currentAppLanguage.text = getString(R.string.english)
             }
         } else {
-            activitySettingsBinding.currentAppLanguage.setText(getString(R.string.english));
+            activitySettingsBinding.currentAppLanguage.text = getString(R.string.english)
         }
-
-        activitySettingsBinding.logoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tools.doPopUpForLogout(LoginActivity.class);
+        activitySettingsBinding.logoutButton.setOnClickListener {
+            tools.doPopUpForLogout(
+                LoginActivity::class.java
+            )
+        }
+        activitySettingsBinding.language.setOnClickListener {
+            languageManager.setLanguage(
+                MainActivity::class.java
+            )
+        }
+        activitySettingsBinding.googleLoginLayout.setOnClickListener {
+            if (prefManager.getBoolean(Constants.mIsLoggedIn)) {
+                Toast.makeText(
+                    this@SettingsActivity,
+                    getString(R.string.already_logged_in),
+                    Toast.LENGTH_SHORT
+                ).show()
+                activitySettingsBinding.googleLoginLayout.isClickable = false
+                activitySettingsBinding.googleLoginLayout.isActivated = false
+            } else {
+                startActivity(Intent(this@SettingsActivity, LoginActivity::class.java))
             }
-        });
-
-        activitySettingsBinding.language.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                languageManager.setLanguage(MainActivity.class);
-            }
-        });
-
-        activitySettingsBinding.googleLoginLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (prefManager.getBoolean(mIsLoggedIn)) {
-                    Toast.makeText(SettingsActivity.this, getString(R.string.already_logged_in), Toast.LENGTH_SHORT).show();
-                    activitySettingsBinding.googleLoginLayout.setClickable(false);
-                    activitySettingsBinding.googleLoginLayout.setActivated(false);
-                } else {
-                    startActivity(new Intent(SettingsActivity.this, LoginActivity.class));
-                }
-            }
-        });
-    }
-
-    @Override
-    public void onBackPressed() {
-        startActivity(new Intent(SettingsActivity.this, MainActivity.class));
+        }
     }
 }
