@@ -1,193 +1,158 @@
-package com.shakil.barivara.activities.note;
+package com.shakil.barivara.activities.note
 
-import android.content.Intent;
-import android.os.Build;
-import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
-import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
+import android.content.Intent
+import android.os.Build
+import android.os.Bundle
+import android.os.Parcelable
+import android.speech.tts.TextToSpeech
+import android.util.Log
+import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import com.shakil.barivara.R
+import com.shakil.barivara.databinding.ActivityNewNoteBinding
+import com.shakil.barivara.firebasedb.FirebaseCrudHelper
+import com.shakil.barivara.model.note.Note
+import com.shakil.barivara.utils.AppAnalytics
+import com.shakil.barivara.utils.Constants
+import com.shakil.barivara.utils.Tools
+import com.shakil.barivara.utils.UtilsForAll
+import com.shakil.barivara.utils.Validation
+import java.util.Locale
+import java.util.UUID
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-
-import com.shakil.barivara.R;
-import com.shakil.barivara.databinding.ActivityNewNoteBinding;
-import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
-import com.shakil.barivara.model.note.Note;
-import com.shakil.barivara.utils.AppAnalytics;
-import com.shakil.barivara.utils.Tools;
-import com.shakil.barivara.utils.UtilsForAll;
-import com.shakil.barivara.utils.Validation;
-
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.UUID;
-
-import static com.shakil.barivara.utils.Constants.TAG;
-
-public class NewNoteActivity extends AppCompatActivity {
-    private ActivityNewNoteBinding activityNewNoteBinding;
-    private TextToSpeech textToSpeech;
-    private boolean isTextToSpeechOn = false;
-    private Note note = new Note();
-    private String command = "add";
-    private FirebaseCrudHelper firebaseCrudHelper;
-    private final Map<String, String[]> hashMap = new HashMap();
-    private Tools tools;
-    private Validation validation;
-    private AppAnalytics appAnalytics;
-    private UtilsForAll utilsForAll;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        activityNewNoteBinding = DataBindingUtil.setContentView(this, R.layout.activity_new_note);
-
-        getIntentData();
-        init();
-
-        setSupportActionBar(activityNewNoteBinding.toolBar);
-        activityNewNoteBinding.toolBar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-
-        bindUiWithComponents();
-        loadData();
+class NewNoteActivity : AppCompatActivity() {
+    private lateinit var activityNewNoteBinding: ActivityNewNoteBinding
+    private lateinit var textToSpeech: TextToSpeech
+    private var isTextToSpeechOn = false
+    private var note: Note? = Note()
+    private var command = "add"
+    private var firebaseCrudHelper = FirebaseCrudHelper(this)
+    private val hashMap: Map<String?, Array<String>?> = HashMap()
+    private var tools = Tools(this)
+    private var validation = Validation(this, hashMap)
+    private var appAnalytics = AppAnalytics(this)
+    private var utilsForAll = UtilsForAll(this)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        activityNewNoteBinding = DataBindingUtil.setContentView(this, R.layout.activity_new_note)
+        intentData()
+        setSupportActionBar(activityNewNoteBinding.toolBar)
+        activityNewNoteBinding.toolBar.setNavigationOnClickListener { onBackPressed() }
+        bindUiWithComponents()
+        loadData()
     }
 
-    private void getIntentData(){
-        if (getIntent().getExtras() != null) {
-            if (getIntent().getExtras().getParcelable("note") != null){
-                note = getIntent().getExtras().getParcelable("note");
+    private fun intentData(){
+        if (intent.extras != null) {
+            if (intent.getParcelableExtra<Parcelable?>("note") != null) {
+                note = intent.getParcelableExtra("note")
             }
         }
     }
 
-    private void loadData(){
-        if (note.getNoteId() != null) {
-            command = "update";
-            activityNewNoteBinding.Title.setText(note.getTitle());
-            activityNewNoteBinding.Description.setText(note.getDescription());
-            activityNewNoteBinding.listenHint.setVisibility(View.VISIBLE);
-            activityNewNoteBinding.listenIcon.setVisibility(View.VISIBLE);
+    private fun loadData() {
+        if (note?.noteId != null) {
+            command = "update"
+            activityNewNoteBinding.Title.setText(note?.title)
+            activityNewNoteBinding.Description.setText(note?.description)
+            activityNewNoteBinding.listenHint.visibility = View.VISIBLE
+            activityNewNoteBinding.listenIcon.visibility = View.VISIBLE
         }
     }
 
-    private void init() {
-        firebaseCrudHelper = new FirebaseCrudHelper(this);
-        validation = new Validation(this, hashMap);
-        tools = new Tools(this);
-        appAnalytics = new AppAnalytics(this);
-        utilsForAll = new UtilsForAll(this);
-    }
-
-    private void bindUiWithComponents() {
-        validation.setEditTextIsNotEmpty(new String[]{"Title", "Description"},
-                new String[]{getString(R.string.title_validation), getString(R.string.description_validation)});
-        validation.setSpinnerIsNotEmpty(new String[]{"TenantTypeId","StartingMonthId"});
-
-        activityNewNoteBinding.listenIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listenNote();
-            }
-        });
-
-        appAnalytics.registerEvent("newNote", appAnalytics.setData("newNoteActivity",""));
-
-        activityNewNoteBinding.save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveOrUpdateNote();
-            }
-        });
-
+    private fun bindUiWithComponents() {
+        validation.setEditTextIsNotEmpty(
+            arrayOf("Title", "Description"),
+            arrayOf(
+                getString(R.string.title_validation),
+                getString(R.string.description_validation)
+            )
+        )
+        validation.setSpinnerIsNotEmpty(arrayOf("TenantTypeId", "StartingMonthId"))
+        activityNewNoteBinding.listenIcon.setOnClickListener { listenNote() }
+        appAnalytics.registerEvent("newNote", appAnalytics.setData("newNoteActivity", ""))
+        activityNewNoteBinding.save.setOnClickListener { saveOrUpdateNote() }
         try {
-            textToSpeech = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
-                @Override
-                public void onInit(int status) {
-                    if (status == TextToSpeech.SUCCESS) {
-                        textToSpeech.setLanguage(Locale.US);
-                        textToSpeech.setSpeechRate(0.7f);
-                        textToSpeech.setPitch(1);
-                    }
-                    else{
-                        Log.v(TAG,"Text To Speech Init Failed");
-                    }
-                }
-            });
-        } catch (Exception e) {
-            Log.v(TAG,"::NewNoteActivity"+e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    private void saveOrUpdateNote() {
-        if (validation.isValid()){
-            if (tools.hasConnection()) {
-                note.setTitle(activityNewNoteBinding.Title.getText().toString());
-                note.setDescription(activityNewNoteBinding.Description.getText().toString());
-                note.setDate(utilsForAll.getDateTimeWithPM());
-                if (command.equals("add")) {
-                    note.setNoteId(UUID.randomUUID().toString());
-                    firebaseCrudHelper.add(note, "note");
+            textToSpeech = TextToSpeech(this) { status ->
+                if (status == TextToSpeech.SUCCESS) {
+                    textToSpeech.setLanguage(Locale.US)
+                    textToSpeech.setSpeechRate(0.7f)
+                    textToSpeech.setPitch(1f)
                 } else {
-                    firebaseCrudHelper.update(note, note.getFireBaseKey(), "note");
+                    Log.v(Constants.TAG, "Text To Speech Init Failed")
                 }
-                appAnalytics.registerEvent("newNote", appAnalytics.setData("newNoteActivity","Note Created or Updated."));
-                Toast.makeText(getApplicationContext(),R.string.success, Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(NewNoteActivity.this, NoteListActivity.class));
+            }
+        } catch (e: Exception) {
+            Log.v(Constants.TAG, "::NewNoteActivity" + e.message)
+            e.printStackTrace()
+        }
+    }
+
+    private fun saveOrUpdateNote() {
+        if (validation.isValid) {
+            if (tools.hasConnection()) {
+                note?.title = activityNewNoteBinding.Title.text.toString()
+                note?.description = activityNewNoteBinding.Description.text.toString()
+                note?.date = utilsForAll.dateTimeWithPM
+                if (command == "add") {
+                    note?.noteId = UUID.randomUUID().toString()
+                    firebaseCrudHelper.add(note, "note")
+                } else {
+                    firebaseCrudHelper.update(note, note?.fireBaseKey, "note")
+                }
+                appAnalytics.registerEvent(
+                    "newNote",
+                    appAnalytics.setData("newNoteActivity", "Note Created or Updated.")
+                )
+                Toast.makeText(applicationContext, R.string.success, Toast.LENGTH_SHORT).show()
+                startActivity(Intent(this@NewNoteActivity, NoteListActivity::class.java))
             } else {
-                Toast.makeText(NewNoteActivity.this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT).show();
+                Toast.makeText(
+                    this@NewNoteActivity,
+                    getString(R.string.no_internet_title),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
 
-    private void listenNote() {
+    private fun listenNote() {
         if (isTextToSpeechOn) {
-            textToSpeech.stop();
-            activityNewNoteBinding.listenIcon.setImageDrawable(getResources().getDrawable(R.drawable.ic_record_voice_over));
-            isTextToSpeechOn = false;
-            Toast.makeText(getApplicationContext(), "Text to Speech Stopped", Toast.LENGTH_SHORT).show();
-        }
-        else {
+            textToSpeech.stop()
+            activityNewNoteBinding.listenIcon.setImageDrawable(resources.getDrawable(R.drawable.ic_record_voice_over))
+            isTextToSpeechOn = false
+            Toast.makeText(applicationContext, "Text to Speech Stopped", Toast.LENGTH_SHORT).show()
+        } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                textToSpeech.speak("Dear user your note title is"+activityNewNoteBinding.Title
-                                .getText().toString() + "Now you will hear your note description"+
-                                activityNewNoteBinding.Description.getText().toString(),
-                        TextToSpeech.QUEUE_FLUSH, null, "onNote");
+                textToSpeech.speak(
+                    "Dear user your note title is" + activityNewNoteBinding.Title
+                        .text.toString() + "Now you will hear your note description" +
+                            activityNewNoteBinding.Description.text.toString(),
+                    TextToSpeech.QUEUE_FLUSH, null, "onNote"
+                )
+            } else {
+                textToSpeech.speak(
+                    "Dear user your note title is" + activityNewNoteBinding.Title
+                        .text.toString() + "Now you will hear your note description" +
+                            activityNewNoteBinding.Description.text.toString(),
+                    TextToSpeech.QUEUE_FLUSH, null
+                )
             }
-            else{
-                textToSpeech.speak("Dear user your note title is"+activityNewNoteBinding.Title
-                                .getText().toString() + "Now you will hear your note description"+
-                                activityNewNoteBinding.Description.getText().toString(),
-                        TextToSpeech.QUEUE_FLUSH, null);
-            }
-            activityNewNoteBinding.listenIcon.setImageDrawable(getResources().getDrawable(R.drawable.ic_stop_circle));
-            isTextToSpeechOn = true;
-            Toast.makeText(getApplicationContext(), "Text to Speech Started", Toast.LENGTH_SHORT).show();
+            activityNewNoteBinding.listenIcon.setImageDrawable(resources.getDrawable(R.drawable.ic_stop_circle))
+            isTextToSpeechOn = true
+            Toast.makeText(applicationContext, "Text to Speech Started", Toast.LENGTH_SHORT).show()
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        startActivity(new Intent(NewNoteActivity.this,NoteListActivity.class));
+    override fun onDestroy() {
+        super.onDestroy()
+        textToSpeech.shutdown()
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        textToSpeech.shutdown();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        textToSpeech.stop();
+    override fun onStop() {
+        super.onStop()
+        textToSpeech.stop()
     }
 }
