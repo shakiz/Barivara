@@ -1,283 +1,239 @@
-package com.shakil.barivara.activities.room;
+package com.shakil.barivara.activities.room
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Toast;
+import android.content.Intent
+import android.os.Bundle
+import android.os.Parcelable
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import com.shakil.barivara.R
+import com.shakil.barivara.databinding.ActivityAddNewRoomBinding
+import com.shakil.barivara.firebasedb.FirebaseCrudHelper
+import com.shakil.barivara.model.room.Room
+import com.shakil.barivara.utils.CustomAdManager
+import com.shakil.barivara.utils.SpinnerAdapter
+import com.shakil.barivara.utils.SpinnerData
+import com.shakil.barivara.utils.Tools
+import com.shakil.barivara.utils.Validation
+import java.util.HashMap
+import java.util.UUID
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-
-import com.shakil.barivara.R;
-import com.shakil.barivara.databinding.ActivityAddNewRoomBinding;
-import com.shakil.barivara.firebasedb.FirebaseCrudHelper;
-import com.shakil.barivara.model.room.Room;
-import com.shakil.barivara.utils.CustomAdManager;
-import com.shakil.barivara.utils.SpinnerAdapter;
-import com.shakil.barivara.utils.SpinnerData;
-import com.shakil.barivara.utils.Tools;
-import com.shakil.barivara.utils.Validation;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-
-import es.dmoral.toasty.Toasty;
-
-public class RoomActivity extends AppCompatActivity {
-    private ActivityAddNewRoomBinding activityAddNewRoomBinding;
-    private SpinnerData spinnerData;
-    private SpinnerAdapter spinnerAdapter;
-    private String roomNameStr, startMonthStr,associateMeterStr,tenantNameStr;
-    private int StartMonthId, AssociateMeterId, TenantId, NoOfRoom, NoOfBathroom, NoOfBalcony;
-    private Room room = new Room();
-    private String command = "add";
-    private FirebaseCrudHelper firebaseCrudHelper;
-    private ArrayList<String> meterNames, tenantNames;
-    private ArrayAdapter<String> meterNameSpinnerAdapter, tenantNameSpinnerAdapter;
-    private Validation validation;
-    private Tools tools;
-    private final Map<String, String[]> hashMap = new HashMap();
-    private CustomAdManager customAdManager;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        activityAddNewRoomBinding = DataBindingUtil.setContentView(this, R.layout.activity_add_new_room);
-
-        getIntentData();
-        init();
-
-        setSupportActionBar(activityAddNewRoomBinding.toolBar);
-        activityAddNewRoomBinding.toolBar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-
-        bindUIWithComponents();
-        loadData();
+class RoomActivity : AppCompatActivity() {
+    private lateinit var activityAddNewRoomBinding: ActivityAddNewRoomBinding
+    private var spinnerData = SpinnerData(this)
+    private var spinnerAdapter = SpinnerAdapter()
+    private var roomNameStr: String? = null
+    private var startMonthStr: String? = null
+    private var associateMeterStr: String? = null
+    private var tenantNameStr: String? = null
+    private var StartMonthId = 0
+    private var AssociateMeterId = 0
+    private var TenantId = 0
+    private var NoOfRoom = 0
+    private var NoOfBathroom = 0
+    private var NoOfBalcony = 0
+    private var room: Room = Room()
+    private var command = "add"
+    private var firebaseCrudHelper = FirebaseCrudHelper(this)
+    private var meterNames: ArrayList<String> = arrayListOf()
+    private var tenantNames: ArrayList<String> = arrayListOf()
+    private var meterNameSpinnerAdapter: ArrayAdapter<String>? = null
+    private var tenantNameSpinnerAdapter: ArrayAdapter<String>? = null
+    private var tools = Tools(this)
+    private val hashMap: Map<String?, Array<String>?> = HashMap()
+    private var validation = Validation(this, hashMap)
+    private var customAdManager = CustomAdManager(this)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        activityAddNewRoomBinding =
+            DataBindingUtil.setContentView(this, R.layout.activity_add_new_room)
+        getIntentData()
+        setSupportActionBar(activityAddNewRoomBinding.toolBar)
+        activityAddNewRoomBinding.toolBar.setNavigationOnClickListener { onBackPressed() }
+        bindUIWithComponents()
+        loadData()
     }
 
-    private void getIntentData(){
-        if (getIntent().getExtras() != null) {
-            if (getIntent().getExtras().getParcelable("room") != null){
-                room = getIntent().getExtras().getParcelable("room");
+    private fun getIntentData() {
+        if (intent.extras != null) {
+            if (intent.getParcelableExtra<Parcelable?>("room") != null) {
+                room = intent.getParcelableExtra("room")!!
             }
         }
     }
 
-    private void loadData(){
-        if (room.getRoomId() != null) {
-            command = "update";
-            activityAddNewRoomBinding.RoomName.setText(room.getRoomName());
-            NoOfRoom = room.getNoOfRoom();
-            NoOfBathroom = room.getNoOfBathroom();
-            NoOfBalcony = room.getNoOfBalcony();
-            activityAddNewRoomBinding.NoOfRoom.setText(""+NoOfRoom);
-            activityAddNewRoomBinding.NoOfBalcony.setText(""+NoOfBalcony);
-            activityAddNewRoomBinding.NoOfBathroom.setText(""+NoOfBathroom);
-            activityAddNewRoomBinding.StartMonthId.setSelection(room.getStartMonthId(), true);
+    private fun loadData() {
+        if (room.roomId != null) {
+            command = "update"
+            activityAddNewRoomBinding.RoomName.setText(room.roomName)
+            NoOfRoom = room.noOfRoom
+            NoOfBathroom = room.noOfBathroom
+            NoOfBalcony = room.noOfBalcony
+            activityAddNewRoomBinding.NoOfRoom.text = "" + NoOfRoom
+            activityAddNewRoomBinding.NoOfBalcony.text = "" + NoOfBalcony
+            activityAddNewRoomBinding.NoOfBathroom.text = "" + NoOfBathroom
+            activityAddNewRoomBinding.StartMonthId.setSelection(room.startMonthId, true)
         }
     }
 
-    private void bindUIWithComponents() {
-        customAdManager.generateAd(activityAddNewRoomBinding.adView);
-
-        spinnerAdapter.setSpinnerAdapter(activityAddNewRoomBinding.StartMonthId,this,spinnerData.setMonthData());
-
-        validation.setEditTextIsNotEmpty(new String[]{"RoomName"},
-                new String[]{getString(R.string.room_name_validation)});
-        validation.setSpinnerIsNotEmpty(new String[]{"StartMonthId"});
-
+    private fun bindUIWithComponents() {
+        customAdManager.generateAd(activityAddNewRoomBinding.adView)
+        spinnerAdapter.setSpinnerAdapter(
+            activityAddNewRoomBinding.StartMonthId,
+            this,
+            spinnerData.setMonthData()
+        )
+        validation.setEditTextIsNotEmpty(
+            arrayOf("RoomName"),
+            arrayOf(getString(R.string.room_name_validation))
+        )
+        validation.setSpinnerIsNotEmpty(arrayOf("StartMonthId"))
         if (tools.hasConnection()) {
-            firebaseCrudHelper.getAllName("meter", "meterName", new FirebaseCrudHelper.onNameFetch() {
-                @Override
-                public void onFetched(ArrayList<String> nameList) {
-                    meterNames = nameList;
-                    setMeterSpinner();
-
-                    if (room.getRoomId() != null) {
-                        activityAddNewRoomBinding.AssociateMeterId.setSelection(room.getAssociateMeterId(), true);
-                    }
+            firebaseCrudHelper.getAllName("meter", "meterName") { nameList ->
+                meterNames = nameList
+                setMeterSpinner()
+                if (room.roomId != null) {
+                    activityAddNewRoomBinding.AssociateMeterId.setSelection(
+                        room.associateMeterId,
+                        true
+                    )
                 }
-            });
+            }
         } else {
-            meterNames = spinnerData.setSpinnerNoData();
-            setMeterSpinner();
+            meterNames = spinnerData.setSpinnerNoData()
+            setMeterSpinner()
         }
-
         if (tools.hasConnection()) {
-            firebaseCrudHelper.getAllName("tenant", "tenantName", new FirebaseCrudHelper.onNameFetch() {
-                @Override
-                public void onFetched(ArrayList<String> nameList) {
-                    tenantNames = nameList;
-                    setTenantSpinner();
-                }
-            });
+            firebaseCrudHelper.getAllName("tenant", "tenantName") { nameList ->
+                tenantNames = nameList
+                setTenantSpinner()
+            }
         } else {
-            tenantNames = spinnerData.setSpinnerNoData();
-            setTenantSpinner();
+            tenantNames = spinnerData.setSpinnerNoData()
+            setTenantSpinner()
         }
+        activityAddNewRoomBinding.StartMonthId.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View,
+                    position: Int,
+                    id: Long
+                ) {
+                    startMonthStr = parent.getItemAtPosition(position).toString()
+                    StartMonthId = position
+                }
 
-        activityAddNewRoomBinding.StartMonthId.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                startMonthStr = parent.getItemAtPosition(position).toString();
-                StartMonthId = position;
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
+        activityAddNewRoomBinding.AssociateMeterId.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View,
+                    position: Int,
+                    id: Long
+                ) {
+                    associateMeterStr = parent.getItemAtPosition(position).toString()
+                    AssociateMeterId = position
+                }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
-        });
+        activityAddNewRoomBinding.TenantNameId.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View,
+                    position: Int,
+                    id: Long
+                ) {
+                    tenantNameStr = parent.getItemAtPosition(position).toString()
+                    TenantId = position
+                }
 
-        activityAddNewRoomBinding.AssociateMeterId.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                associateMeterStr = parent.getItemAtPosition(position).toString();
-                AssociateMeterId = position;
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
+        activityAddNewRoomBinding.AddNoOfRoom.setOnClickListener {
+            NoOfRoom++
+            activityAddNewRoomBinding.NoOfRoom.text = "" + NoOfRoom
+        }
+        activityAddNewRoomBinding.DeductNoOfRoom.setOnClickListener {
+            if (NoOfRoom > 0) {
+                NoOfRoom--
+                activityAddNewRoomBinding.NoOfRoom.text = "" + NoOfRoom
             }
-        });
-
-        activityAddNewRoomBinding.TenantNameId.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                tenantNameStr = parent.getItemAtPosition(position).toString();
-                TenantId = position;
+        }
+        activityAddNewRoomBinding.AddNoOfBalcony.setOnClickListener {
+            NoOfBalcony++
+            activityAddNewRoomBinding.NoOfBalcony.text = "" + NoOfBalcony
+        }
+        activityAddNewRoomBinding.DeductNoOfBalcony.setOnClickListener {
+            if (NoOfBalcony > 0) {
+                NoOfBalcony--
+                activityAddNewRoomBinding.NoOfRoom.text = "" + NoOfBalcony
             }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
+        }
+        activityAddNewRoomBinding.AddNoOfBathRoom.setOnClickListener {
+            NoOfBathroom++
+            activityAddNewRoomBinding.NoOfBathroom.text = "" + NoOfBathroom
+        }
+        activityAddNewRoomBinding.DeductNoOfBathroom.setOnClickListener {
+            if (NoOfBathroom > 0) {
+                NoOfBathroom--
+                activityAddNewRoomBinding.NoOfBathroom.text = "" + NoOfBathroom
             }
-        });
-
-        activityAddNewRoomBinding.AddNoOfRoom.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NoOfRoom++;
-                activityAddNewRoomBinding.NoOfRoom.setText(""+NoOfRoom);
-            }
-        });
-        activityAddNewRoomBinding.DeductNoOfRoom.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (NoOfRoom > 0){
-                    NoOfRoom--;
-                    activityAddNewRoomBinding.NoOfRoom.setText(""+NoOfRoom);
+        }
+        activityAddNewRoomBinding.mSaveRoomMaster.setOnClickListener {
+            if (validation.isValid) {
+                if (tools.hasConnection()) {
+                    saveOrUpdateData()
+                } else {
+                    Toast.makeText(
+                        this@RoomActivity,
+                        getString(R.string.no_internet_title),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
-        });
-
-        activityAddNewRoomBinding.AddNoOfBalcony.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NoOfBalcony++;
-                activityAddNewRoomBinding.NoOfBalcony.setText(""+NoOfBalcony);
-            }
-        });
-        activityAddNewRoomBinding.DeductNoOfBalcony.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (NoOfBalcony > 0){
-                    NoOfBalcony--;
-                    activityAddNewRoomBinding.NoOfRoom.setText(""+NoOfBalcony);
-                }
-            }
-        });
-
-        activityAddNewRoomBinding.AddNoOfBathRoom.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NoOfBathroom++;
-                activityAddNewRoomBinding.NoOfBathroom.setText(""+NoOfBathroom);
-            }
-        });
-        activityAddNewRoomBinding.DeductNoOfBathroom.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (NoOfBathroom > 0){
-                    NoOfBathroom--;
-                    activityAddNewRoomBinding.NoOfBathroom.setText(""+NoOfBathroom);
-                }
-            }
-        });
-
-        activityAddNewRoomBinding.mSaveRoomMaster.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (validation.isValid()){
-                    if (tools.hasConnection()) {
-                        saveOrUpdateData();
-                    } else {
-                        Toast.makeText(RoomActivity.this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-        });
+        }
     }
 
-    private void init() {
-        customAdManager = new CustomAdManager(this);
-        spinnerData = new SpinnerData(this);
-        spinnerAdapter = new SpinnerAdapter();
-        tools = new Tools(this);
-        firebaseCrudHelper = new FirebaseCrudHelper(this);
-        validation = new Validation(this, hashMap);
+    private fun setTenantSpinner() {
+        tenantNameSpinnerAdapter =
+            ArrayAdapter(this@RoomActivity, R.layout.spinner_drop, tenantNames)
+        tenantNameSpinnerAdapter?.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
+        activityAddNewRoomBinding.TenantNameId.adapter = tenantNameSpinnerAdapter
     }
 
-    private void setTenantSpinner(){
-        tenantNameSpinnerAdapter = new ArrayAdapter<>(RoomActivity.this, R.layout.spinner_drop, tenantNames);
-        tenantNameSpinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
-        activityAddNewRoomBinding.TenantNameId.setAdapter(tenantNameSpinnerAdapter);
+    private fun setMeterSpinner() {
+        meterNameSpinnerAdapter = ArrayAdapter(this@RoomActivity, R.layout.spinner_drop, meterNames)
+        meterNameSpinnerAdapter?.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
+        activityAddNewRoomBinding.AssociateMeterId.adapter = meterNameSpinnerAdapter
     }
 
-    private void setMeterSpinner(){
-        meterNameSpinnerAdapter = new ArrayAdapter<>(RoomActivity.this, R.layout.spinner_drop, meterNames);
-        meterNameSpinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
-        activityAddNewRoomBinding.AssociateMeterId.setAdapter(meterNameSpinnerAdapter);
-    }
-
-    private void saveOrUpdateData(){
-        roomNameStr = activityAddNewRoomBinding.RoomName.getText().toString();
-        room.setRoomName(roomNameStr);
-        room.setStartMonthName(startMonthStr);
-        room.setStartMonthId(StartMonthId);
-        room.setAssociateMeterName(associateMeterStr);
-        room.setAssociateMeterId(AssociateMeterId);
-        room.setTenantName(tenantNameStr);
-        room.setTenantNameId(TenantId);
-        room.setNoOfRoom(NoOfRoom);
-        room.setNoOfBathroom(NoOfBathroom);
-        room.setNoOfBalcony(NoOfBalcony);
-        if (command.equals("add")) {
-            room.setRoomId(UUID.randomUUID().toString());
-            firebaseCrudHelper.add(room, "room");
+    private fun saveOrUpdateData() {
+        roomNameStr = activityAddNewRoomBinding.RoomName.text.toString()
+        room.roomName = roomNameStr
+        room.startMonthName = startMonthStr
+        room.startMonthId = StartMonthId
+        room.associateMeterName = associateMeterStr
+        room.associateMeterId = AssociateMeterId
+        room.tenantName = tenantNameStr
+        room.tenantNameId = TenantId
+        room.noOfRoom = NoOfRoom
+        room.noOfBathroom = NoOfBathroom
+        room.noOfBalcony = NoOfBalcony
+        if (command == "add") {
+            room.roomId = UUID.randomUUID().toString()
+            firebaseCrudHelper.add(room, "room")
         } else {
-            firebaseCrudHelper.update(room, room.getFireBaseKey(), "room");
+            firebaseCrudHelper.update(room, room.fireBaseKey, "room")
         }
-        Toast.makeText(getApplicationContext(),R.string.success, Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(RoomActivity.this,RoomListActivity.class));
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
+        Toast.makeText(applicationContext, R.string.success, Toast.LENGTH_SHORT).show()
+        startActivity(Intent(this@RoomActivity, RoomListActivity::class.java))
     }
 }
