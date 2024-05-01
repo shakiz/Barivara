@@ -1,154 +1,157 @@
-package com.shakil.barivara.utils;
+package com.shakil.barivara.utils
 
-import android.app.Activity;
-import android.app.Dialog;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
-import androidx.appcompat.app.AlertDialog;
-import android.text.TextUtils;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.app.Activity
+import android.app.Dialog
+import android.content.ActivityNotFoundException
+import android.content.Context
+import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.net.Uri
+import android.text.TextUtils
+import android.view.View
+import android.view.Window
+import android.view.WindowManager
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import com.github.javiersantos.appupdater.AppUpdaterUtils
+import com.github.javiersantos.appupdater.AppUpdaterUtils.UpdateListener
+import com.github.javiersantos.appupdater.enums.AppUpdaterError
+import com.github.javiersantos.appupdater.enums.UpdateFrom
+import com.github.javiersantos.appupdater.objects.Update
+import com.shakil.barivara.R
 
-import com.github.javiersantos.appupdater.AppUpdaterUtils;
-import com.github.javiersantos.appupdater.enums.AppUpdaterError;
-import com.github.javiersantos.appupdater.enums.UpdateFrom;
-import com.github.javiersantos.appupdater.objects.Update;
-import com.shakil.barivara.R;
+class AppUpdate(private val context: Context) {
+    private val prefManager = PrefManager(context)
+    private val tools = Tools(context)
 
-public class AppUpdate {
-    private final Context context;
-    private final PrefManager prefManager;
-    private final Tools tools;
-
-    public AppUpdate(Context context) {
-        this.context = context;
-        prefManager = new PrefManager(context);
-        tools = new Tools(context);
+    interface onGetUpdate {
+        fun onResult(updated: Boolean)
     }
 
-    public interface onGetUpdate {
-        void onResult(boolean updated);
-    }
-
-    public void getUpdate(final onGetUpdate listener) {
-        AppUpdaterUtils appUpdater = new AppUpdaterUtils(context)
-                .setUpdateFrom(UpdateFrom.GOOGLE_PLAY)
-                .withListener(new AppUpdaterUtils.UpdateListener() {
-                    @Override
-                    public void onSuccess(Update update, Boolean isUpdateAvailable) {
-                        boolean updated = true;
-                        String latestVersion = update.getLatestVersion();
-                        String currentVersion = tools.getAppVersionName();
-                        prefManager.set("LatestVersion", latestVersion);
-                        prefManager.set("CurrentVersion", currentVersion);
-                        if ((!TextUtils.isEmpty(latestVersion)) && (!latestVersion.equals("0.0.0.0"))) {
-                            if (!latestVersion.equals(currentVersion)) {
-                                updated = false;
-                            }
+    fun getUpdate(listener: onGetUpdate?) {
+        val appUpdater = AppUpdaterUtils(context)
+            .setUpdateFrom(UpdateFrom.GOOGLE_PLAY)
+            .withListener(object : UpdateListener {
+                override fun onSuccess(update: Update, isUpdateAvailable: Boolean) {
+                    var updated = true
+                    val latestVersion = update.latestVersion
+                    val currentVersion = tools.appVersionName
+                    prefManager["LatestVersion"] = latestVersion
+                    prefManager["CurrentVersion"] = currentVersion
+                    if (!TextUtils.isEmpty(latestVersion) && latestVersion != "0.0.0.0") {
+                        if (latestVersion != currentVersion) {
+                            updated = false
                         }
-                        if (listener != null) listener.onResult(updated);
                     }
+                    listener?.onResult(updated)
+                }
 
-                    @Override
-                    public void onFailed(AppUpdaterError error) {
-                        Toast.makeText(context, "App Updater Error: Something went wrong!", Toast.LENGTH_SHORT).show();
-                        if (listener != null) listener.onResult(true);
-                    }
-                });
-        appUpdater.start();
+                override fun onFailed(error: AppUpdaterError) {
+                    Toast.makeText(
+                        context,
+                        "App Updater Error: Something went wrong!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    listener?.onResult(true)
+                }
+            })
+        appUpdater.start()
     }
 
-    public boolean checkUpdate(final boolean showUpdated, final boolean cancelable) {
-        boolean isUpdated = true;
-        String latestVersion = prefManager.getString("LatestVersion");
-        String currentVersion = prefManager.getString("CurrentVersion");
+    fun checkUpdate(showUpdated: Boolean, cancelable: Boolean): Boolean {
+        var isUpdated = true
+        val latestVersion = prefManager.getString("LatestVersion")
+        val currentVersion = prefManager.getString("CurrentVersion")
         if (latestVersion != null) {
-            if ((!TextUtils.isEmpty(latestVersion)) && (!latestVersion.equals("0.0.0.0"))) {
-                boolean shouldDisplay = true;
-                if (latestVersion.equals(currentVersion)) {
-                    shouldDisplay = showUpdated;
+            if (!TextUtils.isEmpty(latestVersion) && latestVersion != "0.0.0.0") {
+                var shouldDisplay = true
+                if (latestVersion == currentVersion) {
+                    shouldDisplay = showUpdated
                 } else {
-                    isUpdated = false;
+                    isUpdated = false
                 }
                 if (shouldDisplay) {
-                    View view = View.inflate(context, R.layout.dialog_popup_app_update, null);
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    val view = View.inflate(context, R.layout.dialog_popup_app_update, null)
+                    val builder = AlertDialog.Builder(
+                        context
+                    )
                     builder.setTitle("")
-                            .setView(view)
-                            .setCancelable(cancelable);
-                    final Dialog mPopupDialogNoTitle = builder.create();
-                    mPopupDialogNoTitle.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                    mPopupDialogNoTitle.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                    mPopupDialogNoTitle.show();
-                    mPopupDialogNoTitle.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-
-                    TextView btnCancel = view.findViewById(R.id.btnCancel);
-                    TextView btnOk = view.findViewById(R.id.btnOk);
-                    btnCancel.setText(context.getString(R.string.cancel));
-                    btnOk.setText(context.getString(R.string.update));
-
-                    TextView title = view.findViewById(R.id.title);
-                    TextView version = view.findViewById(R.id.version);
-                    TextView message = view.findViewById(R.id.message);
-
-                    btnCancel.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            mPopupDialogNoTitle.dismiss();
-                            Tools tools = new Tools(context);
-                            tools.checkLogin();
-                        }
-                    });
-                    btnOk.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            goToPlayStore(mPopupDialogNoTitle);
-                        }
-                    });
-                    if (latestVersion.equals(currentVersion)) {
-                        btnOk.setVisibility(View.GONE);
-                        btnCancel.setVisibility(View.VISIBLE);
-                        title.setText(context.getString(R.string.no_update_available));
-                        version.setText(context.getString(R.string.no_update_version) + " " + currentVersion);
-                        message.setText("");
+                        .setView(view)
+                        .setCancelable(cancelable)
+                    val mPopupDialogNoTitle: Dialog = builder.create()
+                    mPopupDialogNoTitle.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                    mPopupDialogNoTitle.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                    mPopupDialogNoTitle.show()
+                    mPopupDialogNoTitle.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
+                    val btnCancel = view.findViewById<TextView>(R.id.btnCancel)
+                    val btnOk = view.findViewById<TextView>(R.id.btnOk)
+                    btnCancel.text = context.getString(R.string.cancel)
+                    btnOk.text = context.getString(R.string.update)
+                    val title = view.findViewById<TextView>(R.id.title)
+                    val version = view.findViewById<TextView>(R.id.version)
+                    val message = view.findViewById<TextView>(R.id.message)
+                    btnCancel.setOnClickListener {
+                        mPopupDialogNoTitle.dismiss()
+                        val tools = Tools(context)
+                        tools.checkLogin()
+                    }
+                    btnOk.setOnClickListener { goToPlayStore(mPopupDialogNoTitle) }
+                    if (latestVersion == currentVersion) {
+                        btnOk.visibility = View.GONE
+                        btnCancel.visibility = View.VISIBLE
+                        title.text = context.getString(R.string.no_update_available)
+                        version.text =
+                            context.getString(R.string.no_update_version) + " " + currentVersion
+                        message.text = ""
                     } else {
-                        btnOk.setVisibility(View.VISIBLE);
+                        btnOk.visibility = View.VISIBLE
                         if (cancelable) {
-                            btnCancel.setVisibility(View.VISIBLE);
+                            btnCancel.visibility = View.VISIBLE
                         } else {
-                            btnCancel.setVisibility(View.GONE);
+                            btnCancel.visibility = View.GONE
                         }
-                        title.setText(context.getString(R.string.update_available));
-                        version.setText(context.getString(R.string.version) + " " + latestVersion + " " + context.getString(R.string.has_been_released_small));
-
-                        message.setText(context.getString(R.string.please_update_detail_text));
+                        title.text = context.getString(R.string.update_available)
+                        version.text =
+                            context.getString(R.string.version) + " " + latestVersion + " " + context.getString(
+                                R.string.has_been_released_small
+                            )
+                        message.text = context.getString(R.string.please_update_detail_text)
                     }
                 }
             }
         }
-        return isUpdated;
+        return isUpdated
     }
 
-    private void goToPlayStore(Dialog mPopupDialogNoTitle) {
-        final String appPackageName = context.getPackageName();
+    private fun goToPlayStore(mPopupDialogNoTitle: Dialog) {
+        val appPackageName = context.packageName
         if (tools.hasConnection()) {
-            mPopupDialogNoTitle.dismiss();
+            mPopupDialogNoTitle.dismiss()
             try {
-                ((Activity) context).finish();
-                context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
-            } catch (android.content.ActivityNotFoundException anfe) {
-                ((Activity) context).finish();
-                context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                (context as Activity).finish()
+                context.startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("market://details?id=$appPackageName")
+                    )
+                )
+            } catch (anfe: ActivityNotFoundException) {
+                (context as Activity).finish()
+                context.startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")
+                    )
+                )
             }
         } else {
-            Toast.makeText(context, context.getString(R.string.please_enable_internet_connection), Toast.LENGTH_SHORT).show();
+            Toast.makeText(
+                context,
+                context.getString(R.string.please_enable_internet_connection),
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
-
 }
