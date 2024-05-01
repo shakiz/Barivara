@@ -100,17 +100,20 @@ class RoomActivity : AppCompatActivity() {
             firebaseCrudHelper.getAllName(
                 "meter",
                 prefManager.getString(mUserId),
-                "meterName"
-            ) { nameList ->
-                meterNames = nameList
-                setMeterSpinner()
-                if (room.roomId != null) {
-                    activityAddNewRoomBinding.AssociateMeterId.setSelection(
-                        room.associateMeterId,
-                        true
-                    )
+                "meterName",
+                object : FirebaseCrudHelper.onNameFetch {
+                    override fun onFetched(nameList: ArrayList<String?>?) {
+                        meterNames = nameList.orEmpty() as ArrayList<String>
+                        setMeterSpinner()
+                        if (room.roomId != null) {
+                            activityAddNewRoomBinding.AssociateMeterId.setSelection(
+                                room.associateMeterId,
+                                true
+                            )
+                        }
+                    }
                 }
-            }
+            )
         } else {
             meterNames = spinnerData.setSpinnerNoData()
             setMeterSpinner()
@@ -119,11 +122,14 @@ class RoomActivity : AppCompatActivity() {
             firebaseCrudHelper.getAllName(
                 "tenant",
                 prefManager.getString(mUserId),
-                "tenantName"
-            ) { nameList ->
-                tenantNames = nameList
-                setTenantSpinner()
-            }
+                "tenantName",
+                object : FirebaseCrudHelper.onNameFetch {
+                    override fun onFetched(nameList: ArrayList<String?>?) {
+                        tenantNames = nameList.orEmpty() as ArrayList<String>
+                        setTenantSpinner()
+                    }
+                }
+            )
         } else {
             tenantNames = spinnerData.setSpinnerNoData()
             setTenantSpinner()

@@ -144,15 +144,20 @@ class RoomListActivity : AppCompatActivity(), RoomCallBacks {
 
     private fun setData() {
         ux?.getLoadingView()
-        firebaseCrudHelper.fetchAllRoom("room", prefManager.getString(mUserId)) { objects ->
-            roomList = objects
-            if (roomList.size <= 0) {
-                activityRoomListBinding.mNoDataMessage.visibility = View.VISIBLE
-                activityRoomListBinding.mNoDataMessage.setText(R.string.no_data_message)
-            }
-            setRecyclerAdapter()
-            ux?.removeLoadingView()
-        }
+        firebaseCrudHelper.fetchAllRoom(
+            "room",
+            prefManager.getString(mUserId),
+            object : FirebaseCrudHelper.onRoomDataFetch {
+                override fun onFetch(objects: ArrayList<Room?>?) {
+                    roomList = objects.orEmpty() as ArrayList<Room>
+                    if (roomList.size <= 0) {
+                        activityRoomListBinding.mNoDataMessage.visibility = View.VISIBLE
+                        activityRoomListBinding.mNoDataMessage.setText(R.string.no_data_message)
+                    }
+                    setRecyclerAdapter()
+                    ux?.removeLoadingView()
+                }
+            })
     }
 
     private fun setRecyclerAdapter() {
