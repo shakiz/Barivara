@@ -59,17 +59,20 @@ class NotificationActivity : AppCompatActivity() {
         ux.getLoadingView()
         firebaseCrudHelper.fetchAllNotification(
             "notification",
-            prefManager.getString(mUserId)
-        ) { objects ->
-            notificationList = objects
-            if ((notificationList?.size ?: 0) <= 0) {
-                activityNotificationBinding.mNoDataMessage.visibility = View.VISIBLE
-            } else {
-                activityNotificationBinding.mNoDataMessage.visibility = View.GONE
+            object : FirebaseCrudHelper.onNotificationDataFetch {
+                override fun onFetch(objects: ArrayList<Notification?>?) {
+                    notificationList = objects.orEmpty() as ArrayList<Notification>
+                    if (notificationList.size <= 0) {
+                        activityNotificationBinding.mNoDataMessage.visibility = View.VISIBLE
+                    } else {
+                        activityNotificationBinding.mNoDataMessage.visibility = View.GONE
+                    }
+                    setNotificationRecycler()
+                    ux.removeLoadingView()
+                }
+
             }
-            setNotificationRecycler()
-            ux.removeLoadingView()
-        }
+        )
     }
 
     private fun setNotificationRecycler() {

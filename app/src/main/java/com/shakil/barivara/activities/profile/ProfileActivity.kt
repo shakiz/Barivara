@@ -46,12 +46,21 @@ class ProfileActivity : AppCompatActivity() {
             )
         )
         activityBinding.toolBar.setNavigationOnClickListener { onBackPressed() }
-        firebaseCrudHelper.fetchProfile("user", prefManager.getString(mUserId)) { user ->
-            if (user != null) {
-                if (user.name != null && user.name.isNotEmpty()) activityBinding.Name.setText(user.name)
-                if (user.dob != null && user.dob.isNotEmpty()) activityBinding.DOB.setText(user.dob)
-            }
-        }
+        firebaseCrudHelper.fetchProfile(
+            "user",
+            prefManager.getString(mUserId),
+            object : FirebaseCrudHelper.onProfileFetch {
+                override fun onFetch(user: User?) {
+                    if (user != null) {
+                        if (user.name != null && user.name.isNotEmpty()) activityBinding.Name.setText(
+                            user.name
+                        )
+                        if (user.dob != null && user.dob.isNotEmpty()) activityBinding.DOB.setText(
+                            user.dob
+                        )
+                    }
+                }
+            })
         activityBinding.editIcon.setOnClickListener {
             changeVisibilityAndFocusable(true, View.GONE, View.VISIBLE, true)
             changeEditTextBack(
@@ -92,16 +101,21 @@ class ProfileActivity : AppCompatActivity() {
                         activityBinding.DOB
                     ), R.drawable.edit_text_back
                 )
-                firebaseCrudHelper.fetchProfile("user", prefManager.getString(mUserId)) { user ->
-                    if (user != null) {
-                        if (user.name != null && !user.name.isEmpty()) activityBinding.Name.setText(
-                            user.name
-                        )
-                        if (user.dob != null && !user.dob.isEmpty()) activityBinding.DOB.setText(
-                            user.dob
-                        )
-                    }
-                }
+                firebaseCrudHelper.fetchProfile(
+                    "user",
+                    prefManager.getString(mUserId),
+                    object : FirebaseCrudHelper.onProfileFetch {
+                        override fun onFetch(user: User?) {
+                            if (user != null) {
+                                if (user.name != null && user.name.isNotEmpty()) activityBinding.Name.setText(
+                                    user.name
+                                )
+                                if (user.dob != null && user.dob.isNotEmpty()) activityBinding.DOB.setText(
+                                    user.dob
+                                )
+                            }
+                        }
+                    })
             }
         }
     }
