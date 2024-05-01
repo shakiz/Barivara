@@ -1,365 +1,366 @@
-package com.shakil.barivara.utils;
+package com.shakil.barivara.utils
 
-import static com.shakil.barivara.utils.Constants.REQUEST_CALL_CODE;
-import static com.shakil.barivara.utils.Constants.TAG;
-import static com.shakil.barivara.utils.Constants.VALID_EMAIL_ADDRESS_REGEX;
-import static com.shakil.barivara.utils.Constants.mAppViewCount;
-import static com.shakil.barivara.utils.Constants.mIsLoggedIn;
-import static com.shakil.barivara.utils.Constants.mLanguage;
-import static com.shakil.barivara.utils.Constants.mOldUser;
-import static com.shakil.barivara.utils.Constants.mUserEmail;
-import static com.shakil.barivara.utils.Constants.mUserFullName;
-import static com.shakil.barivara.utils.Constants.mUserId;
-import static com.shakil.barivara.utils.Constants.mUserMobile;
+import android.Manifest
+import android.app.Activity
+import android.app.Dialog
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.ActivityNotFoundException
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
+import android.graphics.Paint
+import android.graphics.pdf.PdfDocument
+import android.graphics.pdf.PdfDocument.PageInfo
+import android.media.RingtoneManager
+import android.net.ConnectivityManager
+import android.net.Uri
+import android.os.Build
+import android.os.Environment
+import android.os.Handler
+import android.util.Log
+import android.view.View
+import android.view.Window
+import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
+import android.widget.Button
+import android.widget.RelativeLayout
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.AuthResult
+import com.shakil.barivara.R
+import com.shakil.barivara.activities.auth.LoginActivity
+import com.shakil.barivara.activities.onboard.MainActivity
+import com.shakil.barivara.activities.onboard.SplashActivity
+import com.shakil.barivara.activities.onboard.WelcomeActivity
+import com.shakil.barivara.utils.Constants.REQUEST_CALL_CODE
+import com.shakil.barivara.utils.Constants.TAG
+import com.shakil.barivara.utils.Constants.VALID_EMAIL_ADDRESS_REGEX
+import com.shakil.barivara.utils.Constants.mAppViewCount
+import com.shakil.barivara.utils.Constants.mIsLoggedIn
+import com.shakil.barivara.utils.Constants.mLanguage
+import com.shakil.barivara.utils.Constants.mOldUser
+import com.shakil.barivara.utils.Constants.mUserEmail
+import com.shakil.barivara.utils.Constants.mUserFullName
+import com.shakil.barivara.utils.Constants.mUserId
+import com.shakil.barivara.utils.Constants.mUserMobile
+import es.dmoral.toasty.Toasty
+import java.io.File
+import java.io.FileOutputStream
+import java.util.Calendar
+import java.util.regex.Matcher
 
-import android.Manifest;
-import android.app.Activity;
-import android.app.Dialog;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.ActivityNotFoundException;
-import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.graphics.Paint;
-import android.graphics.pdf.PdfDocument;
-import android.media.RingtoneManager;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Environment;
-import android.os.Handler;
-import android.util.Log;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationCompat;
-import androidx.core.content.ContextCompat;
-
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.shakil.barivara.R;
-import com.shakil.barivara.activities.auth.LoginActivity;
-import com.shakil.barivara.activities.onboard.MainActivity;
-import com.shakil.barivara.activities.onboard.SplashActivity;
-import com.shakil.barivara.activities.onboard.WelcomeActivity;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.regex.Matcher;
-
-import es.dmoral.toasty.Toasty;
-
-public class Tools {
-    private final Context context;
-    private final PrefManager prefManager;
-
-    public Tools(Context context) {
-        this.context = context;
-        prefManager = new PrefManager(context);
-    }
-
-    public void askCallPermission(Activity activity){
-        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.CALL_PHONE},REQUEST_CALL_CODE);
+class Tools(private val context: Context) {
+    fun askCallPermission(activity: Activity?) {
+        if (ContextCompat.checkSelfPermission(
+                activity!!,
+                Manifest.permission.CALL_PHONE
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                activity,
+                arrayOf(Manifest.permission.CALL_PHONE),
+                REQUEST_CALL_CODE
+            )
         }
     }
 
-    public static void hideKeyboard(Activity activity) {
-        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        View view = activity.getCurrentFocus();
-        if (view == null) {
-            view = new View(activity);
-        }
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
-
-    public void rateApp(){
-        Uri uri = Uri.parse("market://details?id=" + context.getPackageName());
-        Intent myAppLinkToMarket = new Intent(Intent.ACTION_VIEW, uri);
+    fun rateApp() {
+        val uri = Uri.parse("market://details?id=" + context.packageName)
+        val myAppLinkToMarket = Intent(Intent.ACTION_VIEW, uri)
         try {
-            context.startActivity(myAppLinkToMarket);
-        } catch (ActivityNotFoundException e) {
-            Toast.makeText(context, context.getString(R.string.unable_to_open_play_store), Toast.LENGTH_LONG).show();
+            context.startActivity(myAppLinkToMarket)
+        } catch (e: ActivityNotFoundException) {
+            Toast.makeText(
+                context,
+                context.getString(R.string.unable_to_open_play_store),
+                Toast.LENGTH_LONG
+            ).show()
         }
     }
 
-    public void doPopUpForLogout(Class to){
-        Button cancel, logout;
-        Dialog dialog = new Dialog(context, android.R.style.Theme_Dialog);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.logout_confirmation_layout);
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        dialog.setCanceledOnTouchOutside(true);
-
-        cancel = dialog.findViewById(R.id.cancelButton);
-        logout = dialog.findViewById(R.id.logoutButton);
-
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clearPrefForLogout(to);
-                dialog.dismiss();
-            }
-        });
-
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        dialog.getWindow().setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        dialog.show();
-    }
-
-    public void doPopUpForExitApp(){
-        Button cancel, exit;
-        Dialog dialog = new Dialog(context, android.R.style.Theme_Dialog);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.exit_app_confirmation_layout);
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        dialog.setCanceledOnTouchOutside(true);
-
-        cancel = dialog.findViewById(R.id.cancelButton);
-        exit = dialog.findViewById(R.id.exitButton);
-
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-
-        exit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                new UtilsForAll(context).exitApp();
-            }
-        });
-
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        dialog.getWindow().setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        dialog.show();
-    }
-
-    private void clearPrefForLogout(Class to){
-        prefManager.set(mAppViewCount, 0);
-        prefManager.set(mIsLoggedIn, false);
-        prefManager.set(mUserId, "");
-        prefManager.set(mLanguage, "en");
-        prefManager.set(mUserFullName, "");
-        prefManager.set(mUserEmail, "");
-        prefManager.set(mUserMobile, "");
-        context.startActivity(new Intent(context, to));
-        Toast.makeText(context, context.getString(R.string.logged_out_successfully), Toast.LENGTH_SHORT).show();
-    }
-
-    public boolean validateEmailAddress(String emailAddress){
-        boolean isValidEmail = false;
-        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailAddress);
-        isValidEmail = matcher.find();
-        return isValidEmail;
-    }
-
-    public String getAppVersionName() {
-        PackageManager manager = context.getPackageManager();
-        PackageInfo info = null;
-        try {
-            info = manager.getPackageInfo(context.getPackageName(), 0);
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
+    fun doPopUpForLogout(to: Class<*>, prefManager: PrefManager) {
+        val cancel: Button
+        val logout: Button
+        val dialog = Dialog(context, android.R.style.Theme_Dialog)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.logout_confirmation_layout)
+        dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.setCanceledOnTouchOutside(true)
+        cancel = dialog.findViewById(R.id.cancelButton)
+        logout = dialog.findViewById(R.id.logoutButton)
+        cancel.setOnClickListener { dialog.dismiss() }
+        logout.setOnClickListener {
+            clearPrefForLogout(to, prefManager)
+            dialog.dismiss()
         }
-        return String.valueOf(info.versionName);
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
+        dialog.window!!.setLayout(
+            RelativeLayout.LayoutParams.MATCH_PARENT,
+            RelativeLayout.LayoutParams.WRAP_CONTENT
+        )
+        dialog.show()
     }
 
-    public boolean hasConnection() {
-        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo wifiNetwork = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        if (wifiNetwork != null && wifiNetwork.isConnected()) {
-            return true;
+    fun doPopUpForExitApp() {
+        val cancel: Button
+        val exit: Button
+        val dialog = Dialog(context, android.R.style.Theme_Dialog)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.exit_app_confirmation_layout)
+        dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.setCanceledOnTouchOutside(true)
+        cancel = dialog.findViewById(R.id.cancelButton)
+        exit = dialog.findViewById(R.id.exitButton)
+        cancel.setOnClickListener { dialog.dismiss() }
+        exit.setOnClickListener {
+            dialog.dismiss()
+            UtilsForAll(context).exitApp()
         }
-        NetworkInfo mobileNetwork = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-        if (mobileNetwork != null && mobileNetwork.isConnected()) {
-            return true;
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
+        dialog.window!!.setLayout(
+            RelativeLayout.LayoutParams.MATCH_PARENT,
+            RelativeLayout.LayoutParams.WRAP_CONTENT
+        )
+        dialog.show()
+    }
+
+    private fun clearPrefForLogout(to: Class<*>, prefManager: PrefManager) {
+        prefManager[mAppViewCount] = 0
+        prefManager[mIsLoggedIn] = false
+        prefManager[mUserId] = ""
+        prefManager[mLanguage] = "en"
+        prefManager[mUserFullName] = ""
+        prefManager[mUserEmail] = ""
+        prefManager[mUserMobile] = ""
+        context.startActivity(Intent(context, to))
+        Toast.makeText(
+            context,
+            context.getString(R.string.logged_out_successfully),
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+
+    fun validateEmailAddress(emailAddress: String?): Boolean {
+        if (emailAddress.isNullOrEmpty()) {
+            return false
         }
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        return activeNetwork != null && activeNetwork.isConnected();
+        var isValidEmail = false
+        val matcher: Matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailAddress)
+        isValidEmail = matcher.find()
+        return isValidEmail
     }
 
-    public void sendMessage(String number){
-        Intent smsIntent = new Intent(Intent.ACTION_SENDTO);
-        smsIntent.addCategory(Intent.CATEGORY_DEFAULT);
-        smsIntent.setType("vnd.android-dir/mms-sms");
-        smsIntent.setData(Uri.parse("sms:" + number));
-        context.startActivity(smsIntent);
+    val appVersionName: String
+        get() {
+            val manager = context.packageManager
+            var info: PackageInfo? = null
+            try {
+                info = manager.getPackageInfo(context.packageName, 0)
+            } catch (e: PackageManager.NameNotFoundException) {
+                e.printStackTrace()
+            }
+            return info!!.versionName.toString()
+        }
+
+    fun hasConnection(): Boolean {
+        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val wifiNetwork = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI)
+        if (wifiNetwork != null && wifiNetwork.isConnected) {
+            return true
+        }
+        val mobileNetwork = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE)
+        if (mobileNetwork != null && mobileNetwork.isConnected) {
+            return true
+        }
+        val activeNetwork = cm.activeNetworkInfo
+        return activeNetwork != null && activeNetwork.isConnected
     }
 
-    public boolean isValidMobile(String mobileNumber) {
-        boolean valid = false;
+    fun sendMessage(number: String) {
+        val smsIntent = Intent(Intent.ACTION_SENDTO)
+        smsIntent.addCategory(Intent.CATEGORY_DEFAULT)
+        smsIntent.setType("vnd.android-dir/mms-sms")
+        smsIntent.setData(Uri.parse("sms:$number"))
+        context.startActivity(smsIntent)
+    }
+
+    fun isValidMobile(mobileNumber: String?): Boolean {
+        var valid = false
         if (mobileNumber != null) {
-            if (mobileNumber.length() == 11) {
-                String[] codes = {"011", "013", "014", "015", "016", "017", "018", "019"};
-                String userCode = mobileNumber.substring(0, 3);
-                for (String tempCode : codes) {
-                    if (tempCode.equals(userCode)) {
-                        valid = true;
-                        break;
+            if (mobileNumber.length == 11) {
+                val codes = arrayOf("011", "013", "014", "015", "016", "017", "018", "019")
+                val userCode = mobileNumber.substring(0, 3)
+                for (tempCode in codes) {
+                    if (tempCode == userCode) {
+                        valid = true
+                        break
                     }
                 }
             } else {
-                valid = false;
+                valid = false
             }
         }
-        return valid;
+        return valid
     }
 
-    public void checkLogin(){
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = null;
-                if (prefManager.getBoolean(mOldUser)){
-                    if (prefManager.getBoolean(mIsLoggedIn)) {
-                        intent = new Intent(context, MainActivity.class);
-                    } else {
-                        intent = new Intent(context, LoginActivity.class);
-                    }
+    fun checkLogin(prefManager: PrefManager) {
+        Handler().postDelayed({
+            var intent: Intent? = null
+            intent = if (prefManager.getBoolean(mOldUser)) {
+                if (prefManager.getBoolean(mIsLoggedIn)) {
+                    Intent(context, MainActivity::class.java)
+                } else {
+                    Intent(context, LoginActivity::class.java)
                 }
-                else{
-                    intent = new Intent(context, WelcomeActivity.class);
-                }
-                context.startActivity(intent);
+            } else {
+                Intent(context, WelcomeActivity::class.java)
             }
-        }, 1000);
+            context.startActivity(intent)
+        }, 1000)
     }
 
-    public void generatePDF(String content){
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-            PdfDocument myPdfDocument = new PdfDocument();
-            PdfDocument.PageInfo myPageInfo = new PdfDocument.PageInfo.Builder(300,600,1).create();
-            PdfDocument.Page myPage = myPdfDocument.startPage(myPageInfo);
-
-            Paint myPaint = new Paint();
-            String myString = content;
-            int x = 10, y=25;
-
-            for (String line:myString.split("\n")){
-                myPage.getCanvas().drawText(line, x, y, myPaint);
-                y+=myPaint.descent()-myPaint.ascent();
+    fun generatePDF(content: String) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            val myPdfDocument = PdfDocument()
+            val myPageInfo = PageInfo.Builder(300, 600, 1).create()
+            val myPage = myPdfDocument.startPage(myPageInfo)
+            val myPaint = Paint()
+            val x = 10
+            var y = 25
+            for (line in content.split("\n".toRegex()).dropLastWhile { it.isEmpty() }
+                .toTypedArray()) {
+                myPage.canvas.drawText(line, x.toFloat(), y.toFloat(), myPaint)
+                y = (y + (myPaint.descent() - myPaint.ascent())).toInt()
             }
-
-            myPdfDocument.finishPage(myPage);
-
-            String myFilePath = Environment.getExternalStorageDirectory().getPath() + "/myPDFFile.pdf";
-            File myFile = new File(myFilePath);
+            myPdfDocument.finishPage(myPage)
+            val myFilePath = Environment.getExternalStorageDirectory().path + "/myPDFFile.pdf"
+            val myFile = File(myFilePath)
             try {
-                myPdfDocument.writeTo(new FileOutputStream(myFile));
+                myPdfDocument.writeTo(FileOutputStream(myFile))
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Toast.makeText(context, "ERROR!!!!", Toast.LENGTH_SHORT).show()
             }
-            catch (Exception e){
-                e.printStackTrace();
-                Toast.makeText(context, "ERROR!!!!", Toast.LENGTH_SHORT).show();
-            }
-
-            myPdfDocument.close();
-        }
-        else{
-            Toast.makeText(context, context.getString(R.string.your_device_does_not_support_this_feature), Toast.LENGTH_LONG).show();
+            myPdfDocument.close()
+        } else {
+            Toast.makeText(
+                context,
+                context.getString(R.string.your_device_does_not_support_this_feature),
+                Toast.LENGTH_LONG
+            ).show()
         }
     }
 
-    public void setLoginPrefs(@NonNull Task<AuthResult> task){
-        prefManager.set(mIsLoggedIn, true);
-        if (task.getResult() != null){
-            prefManager.set(mUserId, task.getResult().getUser().getUid());
-            prefManager.set(mUserFullName, task.getResult().getUser().getDisplayName());
-            prefManager.set(mUserEmail, task.getResult().getUser().getEmail());
-            prefManager.set(mUserMobile, task.getResult().getUser().getPhoneNumber());
+    fun setLoginPrefs(task: Task<AuthResult?>, prefManager: PrefManager) {
+        prefManager[mIsLoggedIn] = true
+        if (task.result != null) {
+            prefManager[mUserId] = task.result!!.user!!.uid
+            prefManager[mUserFullName] = task.result!!.user!!.displayName
+            prefManager[mUserEmail] = task.result!!.user!!.email
+            prefManager[mUserMobile] = task.result!!.user!!.phoneNumber
         }
     }
 
-    public void launchAppByPackageName(String appPackageName){
+    fun launchAppByPackageName(appPackageName: String) {
         try {
-            Toasty.info(context,context.getString(R.string.redirecting_to_play_store), Toasty.LENGTH_LONG).show();
-            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
-        } catch (android.content.ActivityNotFoundException anfe) {
-            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+            Toasty.info(
+                context,
+                context.getString(R.string.redirecting_to_play_store),
+                Toasty.LENGTH_LONG
+            ).show()
+            context.startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("market://details?id=$appPackageName")
+                )
+            )
+        } catch (anfe: ActivityNotFoundException) {
+            context.startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")
+                )
+            )
         }
     }
 
-    public void launchUrl(String url){
-        if (!url.contains("https")){
-            url = "https://"+url;
+    fun launchUrl(url: String) {
+        var url = url
+        if (!url.contains("https")) {
+            url = "https://$url"
         }
-        Uri uri = Uri.parse(url);
-        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-        context.startActivity(intent);
+        val uri = Uri.parse(url)
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        context.startActivity(intent)
     }
 
-    public void launchGmail(){
-        Intent emailIntent = new Intent(Intent.ACTION_VIEW, Uri.fromParts(
-                "mailto", "shakil.play335@gmail.com", null));
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "This is my subject text");
-        context.startActivity(Intent.createChooser(emailIntent, null));
+    fun launchGmail() {
+        val emailIntent = Intent(
+            Intent.ACTION_VIEW, Uri.fromParts(
+                "mailto", "shakil.play335@gmail.com", null
+            )
+        )
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "This is my subject text")
+        context.startActivity(Intent.createChooser(emailIntent, null))
     }
 
-    public boolean isFirstDayOfMonth(Calendar calendar){
-        if (calendar == null) {
-            throw new IllegalArgumentException("Calendar cannot be null.");
-        }
-        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-        Log.i(TAG+"-Current Day","::"+dayOfMonth);
+    fun isFirstDayOfMonth(calendar: Calendar?): Boolean {
+        requireNotNull(calendar) { "Calendar cannot be null." }
+        val dayOfMonth = calendar[Calendar.DAY_OF_MONTH]
+        Log.i(TAG + "-Current Day", "::$dayOfMonth")
         //return dayOfMonth == 1;
-        return true;
+        return true
     }
 
-    public static void sendNotification(Context context, String title, String message) {
-        Intent intent = new Intent(context, SplashActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(
+    companion object {
+        fun hideKeyboard(activity: Activity) {
+            val imm = activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+            var view = activity.currentFocus
+            if (view == null) {
+                view = View(activity)
+            }
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
+        }
+
+        @JvmStatic
+        fun sendNotification(context: Context, title: String?, message: String?) {
+            val intent = Intent(context, SplashActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            val pendingIntent = PendingIntent.getActivity(
                 context,
                 1001,
                 intent,
-                PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT
-        );
+                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+            )
+            val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+            val notificationBuilder = NotificationCompat.Builder(context, "1001")
+                .setSmallIcon(R.drawable.ic_notifications_black_24dp)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setAutoCancel(true)
+                .setSound(defaultSoundUri)
+                .setContentIntent(pendingIntent)
+            val notificationManager =
+                context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder notificationBuilder =
-                new NotificationCompat.Builder(context, "1001")
-                        .setSmallIcon(R.drawable.ic_notifications_black_24dp)
-                        .setContentTitle(title)
-                        .setContentText(message)
-                        .setAutoCancel(true)
-                        .setSound(defaultSoundUri)
-                        .setContentIntent(pendingIntent);
-
-        NotificationManager notificationManager =
-                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-
-        // Since android Oreo notification channel is needed.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel("1001",
+            // Since android Oreo notification channel is needed.
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                val channel = NotificationChannel(
+                    "1001",
                     "Channel human readable title",
-                    NotificationManager.IMPORTANCE_DEFAULT);
-            notificationManager.createNotificationChannel(channel);
+                    NotificationManager.IMPORTANCE_DEFAULT
+                )
+                notificationManager.createNotificationChannel(channel)
+            }
+            notificationManager.notify(0 /* ID of notification */, notificationBuilder.build())
         }
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
     }
 }
