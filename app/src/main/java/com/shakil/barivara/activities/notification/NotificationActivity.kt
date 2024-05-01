@@ -20,7 +20,7 @@ import com.shakil.barivara.utils.UX
 
 class NotificationActivity : AppCompatActivity() {
     private lateinit var activityNotificationBinding: ActivityNotificationBinding
-    private var notificationList: ArrayList<Notification>? = null
+    private var notificationList: ArrayList<Notification> = arrayListOf()
     private var firebaseCrudHelper = FirebaseCrudHelper(this)
     private lateinit var ux : UX
     private var tools = Tools(this)
@@ -73,9 +73,9 @@ class NotificationActivity : AppCompatActivity() {
     }
 
     private fun setNotificationRecycler() {
-        if (notificationList != null) {
-            val iter = notificationList?.iterator()
-            while (iter?.hasNext() == true) {
+        if (notificationList.isNotEmpty()) {
+            val iter = notificationList.iterator()
+            while (iter.hasNext()) {
                 val value = iter.next()
                 if (value.title == null) iter.remove()
             }
