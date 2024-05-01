@@ -1,56 +1,41 @@
-package com.shakil.barivara.utils;
+package com.shakil.barivara.utils
 
-import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.Context
+import com.shakil.barivara.utils.Constants.PREF_NAME
 
-import static com.shakil.barivara.utils.Constants.PREF_NAME;
-
-public class PrefManager {
-    private final int PRIVATE_MODE = 0;
-    private SharedPreferences pref;
-    private SharedPreferences.Editor editor;
-    private final Context context;
-
-    public PrefManager(Context context) {
-        this.context = context;
+class PrefManager(context: Context) {
+    private val PRIVATE_MODE = 0
+    private val pref = context.getSharedPreferences(PREF_NAME, PRIVATE_MODE)
+    private val editor = context.getSharedPreferences(PREF_NAME, PRIVATE_MODE).edit()
+    operator fun set(key: String?, value: Boolean) {
+        editor.putBoolean(key, value)
+        editor.commit()
     }
 
-    public void set(String key, boolean value) {
-        editor = context.getSharedPreferences(PREF_NAME, PRIVATE_MODE).edit();
-        editor.putBoolean(key, value);
-        editor.commit();
+    operator fun set(key: String?, value: String?) {
+        editor.putString(key, value)
+        editor.commit()
     }
 
-    public void set(String key, String value) {
-        editor = context.getSharedPreferences(PREF_NAME, PRIVATE_MODE).edit();
-        editor.putString(key, value);
-        editor.commit();
+    operator fun set(key: String?, value: Int) {
+        editor.putInt(key, value)
+        editor.commit()
     }
 
-    public void set(String key, int value) {
-        editor = context.getSharedPreferences(PREF_NAME, PRIVATE_MODE).edit();
-        editor.putInt(key, value);
-        editor.commit();
+    fun getBoolean(key: String?): Boolean {
+        return pref.getBoolean(key, false)
     }
 
-    public boolean getBoolean(String key) {
-        pref = context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
-        return pref.getBoolean(key, false);
+    fun getString(key: String?): String? {
+        return pref.getString(key, "")
     }
 
-    public String getString(String key) {
-        pref = context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
-        return pref.getString(key, "");
+    fun getInt(key: String?): Int {
+        return pref.getInt(key, 0)
     }
 
-    public int getInt(String key) {
-        pref = context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
-        return pref.getInt(key, 0);
-    }
-
-    public void clear(){
-        editor = context.getSharedPreferences(PREF_NAME, PRIVATE_MODE).edit();
-        editor.clear();
-        editor.commit();
+    fun clear() {
+        editor.clear()
+        editor.commit()
     }
 }
