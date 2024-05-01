@@ -9,6 +9,9 @@ import androidx.databinding.DataBindingUtil
 import com.shakil.barivara.R
 import com.shakil.barivara.databinding.ActivityDashboardBinding
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper
+import com.shakil.barivara.model.meter.Meter
+import com.shakil.barivara.model.room.Room
+import com.shakil.barivara.model.tenant.Tenant
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.Constants.mUserId
 import com.shakil.barivara.utils.CustomAdManager
@@ -47,41 +50,68 @@ class DashboardActivity : AppCompatActivity() {
         )
         customAdManager.generateAd(activityDashboardBinding.adView)
         customAdManager.generateAd(activityDashboardBinding.adViewSecond)
-        firebaseCrudHelper.fetchAllTenant(prefManager.getString(mUserId), "tenant") { objects ->
-            for (tenant in objects) {
-                if (tenant.isActiveValue != null) {
-                    if (tenant.isActiveValue == getString(R.string.yes)) {
-                        totalTenantCurrent++
-                    } else if (tenant.isActiveValue == getString(R.string.no)) {
-                        totalTenantLeft++
+        firebaseCrudHelper.fetchAllTenant(
+            prefManager.getString(mUserId),
+            "tenant",
+            object : FirebaseCrudHelper.onTenantDataFetch {
+                override fun onFetch(objects: ArrayList<Tenant?>?) {
+                    if (objects != null) {
+                        for (tenant in objects) {
+                            if (tenant?.isActiveValue != null) {
+                                if (tenant.isActiveValue == getString(R.string.yes)) {
+                                    totalTenantCurrent++
+                                } else if (tenant.isActiveValue == getString(R.string.no)) {
+                                    totalTenantLeft++
+                                }
+                            }
+                        }
                     }
+                    activityDashboardBinding.TotalTenantsCurrent.text = "" + totalTenantCurrent
+                    activityDashboardBinding.TotalTenantLeft.text = "" + totalTenantLeft
                 }
-            }
-            activityDashboardBinding.TotalTenantsCurrent.text = "" + totalTenantCurrent
-            activityDashboardBinding.TotalTenantLeft.text = "" + totalTenantLeft
-        }
-        firebaseCrudHelper.fetchAllMeter(prefManager.getString(mUserId), "meter") { objects ->
-            activityDashboardBinding.TotalMeters.text = "" + objects.size
-        }
-        firebaseCrudHelper.fetchAllRoom("room", prefManager.getString(mUserId)) { objects ->
-            activityDashboardBinding.TotalRooms.text = "" + objects.size
-        }
+            })
+        firebaseCrudHelper.fetchAllMeter(
+            prefManager.getString(mUserId),
+            "meter",
+            object : FirebaseCrudHelper.onDataFetch {
+                override fun onFetch(objects: ArrayList<Meter?>?) {
+                    activityDashboardBinding.TotalMeters.text = "" + objects?.size
+                }
+            })
+
+        firebaseCrudHelper.fetchAllRoom(
+            "room",
+            prefManager.getString(mUserId),
+            object : FirebaseCrudHelper.onRoomDataFetch {
+                override fun onFetch(objects: ArrayList<Room?>?) {
+                    activityDashboardBinding.TotalRooms.text = "" + objects?.size
+                }
+            })
+
         firebaseCrudHelper.getAdditionalInfo(
             "rent",
             prefManager.getString(mUserId),
-            "rentAmount"
-        ) { data ->
-            activityDashboardBinding.TotalRentAmount.text =
-                data.toString() + " " + getString(R.string.taka)
-        }
+            "rentAmount",
+            object : FirebaseCrudHelper.onAdditionalInfoFetch {
+                override fun onFetched(data: Double) {
+                    activityDashboardBinding.TotalRentAmount.text =
+                        data.toString() + " " + getString(R.string.taka)
+                }
+            }
+        )
+
         firebaseCrudHelper.getAdditionalInfo(
             "electricityBill",
             prefManager.getString(mUserId),
-            "totalBill"
-        ) { data ->
-            activityDashboardBinding.TotalElectricityBill.text =
-                data.toString() + " " + getString(R.string.taka)
-        }
+            "totalBill",
+            object : FirebaseCrudHelper.onAdditionalInfoFetch {
+                override fun onFetched(data: Double) {
+                    activityDashboardBinding.TotalElectricityBill.text =
+                        data.toString() + " " + getString(R.string.taka)
+                }
+            }
+        )
+
         activityDashboardBinding.AppVisitCount.text =
             prefManager.getInt(Constants.mAppViewCount).toString()
         activityDashboardBinding.FilterYear.onItemSelectedListener =
@@ -96,11 +126,14 @@ class DashboardActivity : AppCompatActivity() {
                         "rent",
                         prefManager.getString(mUserId),
                         parent.getItemAtPosition(position).toString(),
-                        "RentAmount"
-                    ) { data ->
-                        activityDashboardBinding.TotalRentAmountYearly.text =
-                            data.toString() + " " + getString(R.string.taka)
-                    }
+                        "RentAmount",
+                        object : FirebaseCrudHelper.onDataQueryYearlyRent {
+                            override fun onQueryFinished(data: Int) {
+                                activityDashboardBinding.TotalRentAmountYearly.text =
+                                    data.toString() + " " + getString(R.string.taka)
+                            }
+                        }
+                    )
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -119,11 +152,14 @@ class DashboardActivity : AppCompatActivity() {
                         "rent",
                         prefManager.getString(mUserId),
                         parent.getItemAtPosition(position).toString(),
-                        "RentAmount"
-                    ) { data ->
-                        activityDashboardBinding.TotalRentAmountMonthly.text =
-                            data.toString() + " " + getString(R.string.taka)
-                    }
+                        "RentAmount",
+                        object : FirebaseCrudHelper.onDataQuery {
+                            override fun onQueryFinished(data: Int) {
+                                activityDashboardBinding.TotalRentAmountMonthly.text =
+                                    data.toString() + " " + getString(R.string.taka)
+                            }
+                        }
+                    )
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
