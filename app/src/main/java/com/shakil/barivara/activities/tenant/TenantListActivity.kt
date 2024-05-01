@@ -26,8 +26,10 @@ import com.shakil.barivara.databinding.ActivityTenantListBinding
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.model.tenant.Tenant
 import com.shakil.barivara.utils.Constants
+import com.shakil.barivara.utils.Constants.mUserId
 import com.shakil.barivara.utils.CustomAdManager
 import com.shakil.barivara.utils.FilterManager
+import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
 
@@ -39,6 +41,7 @@ class TenantListActivity : AppCompatActivity(), TenantCallBacks {
     private var tools = Tools(this)
     private var filterManager = FilterManager()
     private var customAdManager = CustomAdManager(this)
+    private lateinit var prefManager: PrefManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         init()
@@ -58,6 +61,7 @@ class TenantListActivity : AppCompatActivity(), TenantCallBacks {
 
     private fun init() {
         ux = UX(this)
+        prefManager = PrefManager(this)
     }
 
     private fun binUiWithComponents() {
@@ -148,7 +152,7 @@ class TenantListActivity : AppCompatActivity(), TenantCallBacks {
 
     private fun setData() {
         ux.getLoadingView()
-        firebaseCrudHelper.fetchAllTenant("tenant") { objects ->
+        firebaseCrudHelper.fetchAllTenant("tenant", prefManager.getString(mUserId)) { objects ->
             tenantList = objects
             if (tenantList.size <= 0) {
                 activityTenantListBinding.mNoDataMessage.visibility = View.VISIBLE
@@ -178,7 +182,11 @@ class TenantListActivity : AppCompatActivity(), TenantCallBacks {
         delete = dialog.findViewById(R.id.deleteButton)
         cancel.setOnClickListener { dialog.dismiss() }
         delete.setOnClickListener {
-            firebaseCrudHelper.deleteRecord("tenant", tenant.fireBaseKey)
+            firebaseCrudHelper.deleteRecord(
+                "tenant",
+                tenant.fireBaseKey,
+                prefManager.getString(mUserId)
+            )
             dialog.dismiss()
             setData()
         }

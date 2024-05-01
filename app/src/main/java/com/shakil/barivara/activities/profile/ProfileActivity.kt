@@ -9,7 +9,9 @@ import com.shakil.barivara.R
 import com.shakil.barivara.databinding.ActivityProfileBinding
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.model.User
+import com.shakil.barivara.utils.Constants.mUserId
 import com.shakil.barivara.utils.CustomAdManager
+import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Validation
 import java.util.UUID
 
@@ -19,6 +21,7 @@ class ProfileActivity : AppCompatActivity() {
     private var validation = Validation(this, hashMap)
     private var firebaseCrudHelper = FirebaseCrudHelper(this)
     private var customAdManager = CustomAdManager(this)
+    private lateinit var prefManager: PrefManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityBinding = DataBindingUtil.setContentView(this, R.layout.activity_profile)
@@ -30,6 +33,7 @@ class ProfileActivity : AppCompatActivity() {
         validation = Validation(this, hashMap)
         firebaseCrudHelper = FirebaseCrudHelper(this)
         customAdManager = CustomAdManager(this)
+        prefManager = PrefManager(this)
     }
 
     private fun bindUiWithComponents() {
@@ -42,7 +46,7 @@ class ProfileActivity : AppCompatActivity() {
             )
         )
         activityBinding.toolBar.setNavigationOnClickListener { onBackPressed() }
-        firebaseCrudHelper.fetchProfile("user") { user ->
+        firebaseCrudHelper.fetchProfile("user", prefManager.getString(mUserId)) { user ->
             if (user != null) {
                 if (user.name != null && user.name.isNotEmpty()) activityBinding.Name.setText(user.name)
                 if (user.dob != null && user.dob.isNotEmpty()) activityBinding.DOB.setText(user.dob)
@@ -79,7 +83,7 @@ class ProfileActivity : AppCompatActivity() {
                     activityBinding.Email.text.toString(),
                     activityBinding.DOB.text.toString()
                 )
-                firebaseCrudHelper.add(user, "user")
+                firebaseCrudHelper.add(user, "user", prefManager.getString(mUserId))
                 changeVisibilityAndFocusable(false, View.VISIBLE, View.GONE, false)
                 changeEditTextBack(
                     arrayOf(
@@ -88,7 +92,7 @@ class ProfileActivity : AppCompatActivity() {
                         activityBinding.DOB
                     ), R.drawable.edit_text_back
                 )
-                firebaseCrudHelper.fetchProfile("user") { user ->
+                firebaseCrudHelper.fetchProfile("user", prefManager.getString(mUserId)) { user ->
                     if (user != null) {
                         if (user.name != null && !user.name.isEmpty()) activityBinding.Name.setText(
                             user.name

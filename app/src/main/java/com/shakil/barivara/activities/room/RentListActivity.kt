@@ -19,8 +19,10 @@ import com.shakil.barivara.adapter.RecyclerRentListAdapter.RentCallBacks
 import com.shakil.barivara.databinding.ActivityRentListBinding
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.model.room.Rent
+import com.shakil.barivara.utils.Constants.mUserId
 import com.shakil.barivara.utils.CustomAdManager
 import com.shakil.barivara.utils.FilterManager
+import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
 
@@ -32,6 +34,8 @@ class RentListActivity : AppCompatActivity(), RentCallBacks {
     private var tools = Tools(this)
     private var filterManager = FilterManager()
     private var customAdManager = CustomAdManager(this)
+    private lateinit var prefManager: PrefManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityRentListBinding = DataBindingUtil.setContentView(this, R.layout.activity_rent_list)
@@ -42,6 +46,7 @@ class RentListActivity : AppCompatActivity(), RentCallBacks {
 
     private fun init() {
         ux = UX(this)
+        prefManager = PrefManager(this)
     }
 
     private fun bindUIWithComponents() {
@@ -131,7 +136,7 @@ class RentListActivity : AppCompatActivity(), RentCallBacks {
 
     private fun setData() {
         ux?.getLoadingView()
-        firebaseCrudHelper.fetchAllRent("rent") { objects ->
+        firebaseCrudHelper.fetchAllRent("rent", prefManager.getString(mUserId)) { objects ->
             rentList = objects
             if (rentList.size <= 0) {
                 activityRentListBinding.mNoDataMessage.visibility = View.VISIBLE
@@ -159,7 +164,11 @@ class RentListActivity : AppCompatActivity(), RentCallBacks {
         val delete: Button = dialog.findViewById(R.id.deleteButton)
         cancel.setOnClickListener { dialog.dismiss() }
         delete.setOnClickListener {
-            firebaseCrudHelper.deleteRecord("rent", rent.fireBaseKey)
+            firebaseCrudHelper.deleteRecord(
+                "rent",
+                rent.fireBaseKey,
+                prefManager.getString(mUserId)
+            )
             dialog.dismiss()
             setData()
         }

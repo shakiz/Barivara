@@ -18,7 +18,9 @@ import com.shakil.barivara.databinding.ActivityAddNewTenantBinding
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.model.tenant.Tenant
 import com.shakil.barivara.utils.Constants
+import com.shakil.barivara.utils.Constants.mUserId
 import com.shakil.barivara.utils.CustomAdManager
+import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.SpinnerAdapter
 import com.shakil.barivara.utils.SpinnerData
 import com.shakil.barivara.utils.Tools
@@ -51,10 +53,12 @@ class NewTenantActivity : AppCompatActivity() {
     private var utilsForAll = UtilsForAll(this)
     private var tools = Tools(this)
     private var customAdManager = CustomAdManager(this)
+    private lateinit var prefManager: PrefManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityAddNewTenantBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_add_new_tenant)
+        prefManager = PrefManager(this)
         intentData()
         setSupportActionBar(activityAddNewTenantBinding.toolBar)
         activityAddNewTenantBinding.toolBar.setNavigationOnClickListener { onBackPressed() }
@@ -135,7 +139,11 @@ class NewTenantActivity : AppCompatActivity() {
             }
         }
         if (tools.hasConnection()) {
-            firebaseCrudHelper.getAllName("room", "roomName") { nameList ->
+            firebaseCrudHelper.getAllName(
+                "room",
+                prefManager.getString(mUserId),
+                "roomName"
+            ) { nameList ->
                 roomNames = nameList
                 setRoomSpinner()
                 if (tenant.tenantId != null) {
@@ -270,9 +278,14 @@ class NewTenantActivity : AppCompatActivity() {
         tenant.isActiveValue = IsActiveValue
         if (command == "add") {
             tenant.tenantId = UUID.randomUUID().toString()
-            firebaseCrudHelper.add(tenant, "tenant")
+            firebaseCrudHelper.add(tenant, "tenant", prefManager.getString(mUserId))
         } else {
-            firebaseCrudHelper.update(tenant, tenant.fireBaseKey, "tenant")
+            firebaseCrudHelper.update(
+                tenant,
+                tenant.fireBaseKey,
+                "tenant",
+                prefManager.getString(mUserId)
+            )
         }
         Toast.makeText(applicationContext, R.string.success, Toast.LENGTH_SHORT).show()
         startActivity(Intent(this@NewTenantActivity, TenantListActivity::class.java))

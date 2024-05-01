@@ -19,6 +19,7 @@ import com.shakil.barivara.R;
 import com.shakil.barivara.activities.onboard.MainActivity;
 import com.shakil.barivara.databinding.ActivityLoginBinding;
 import com.shakil.barivara.utils.Constants;
+import com.shakil.barivara.utils.PrefManager;
 import com.shakil.barivara.utils.Tools;
 import com.shakil.barivara.utils.UX;
 import com.shakil.barivara.utils.UtilsForAll;
@@ -130,7 +131,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (task.isSuccessful()){
                     Log.i(Constants.TAG+":onComplete",getString(R.string.login_succcessful));
                     Toasty.success(LoginActivity.this, getString(R.string.login_succcessful), Toast.LENGTH_LONG, true).show();
-                    tools.setLoginPrefs(task);
+                    tools.setLoginPrefs(task, new PrefManager(LoginActivity.this));
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 }
                 else{

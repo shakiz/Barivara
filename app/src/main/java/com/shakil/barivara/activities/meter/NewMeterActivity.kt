@@ -13,6 +13,8 @@ import com.shakil.barivara.R
 import com.shakil.barivara.databinding.ActivityNewMeterBinding
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.model.meter.Meter
+import com.shakil.barivara.utils.Constants.mUserId
+import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.SpinnerAdapter
 import com.shakil.barivara.utils.SpinnerData
 import com.shakil.barivara.utils.Tools
@@ -34,11 +36,13 @@ class NewMeterActivity : AppCompatActivity() {
     private var firebaseCrudHelper = FirebaseCrudHelper(this)
     private var roomNames = arrayListOf<String>()
     private var tools = Tools(this)
+    private lateinit var prefManager: PrefManager
     private val hashMap: Map<String?, Array<String>?> = HashMap()
     private var validation = Validation(this, hashMap)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityNewMeterBinding = DataBindingUtil.setContentView(this, R.layout.activity_new_meter)
+        prefManager = PrefManager(this)
         getIntentData()
         setSupportActionBar(activityNewMeterBinding.toolBar)
         activityNewMeterBinding.toolBar.setNavigationOnClickListener { onBackPressed() }
@@ -69,7 +73,11 @@ class NewMeterActivity : AppCompatActivity() {
         )
         validation.setSpinnerIsNotEmpty(arrayOf("MeterTypeId"))
         if (tools.hasConnection()) {
-            firebaseCrudHelper.getAllName("room", "roomName") { nameList ->
+            firebaseCrudHelper.getAllName(
+                "room",
+                prefManager.getString(mUserId),
+                "roomName"
+            ) { nameList ->
                 roomNames = nameList
                 setRoomNameSpinner()
             }
@@ -121,9 +129,14 @@ class NewMeterActivity : AppCompatActivity() {
                     meter.meterTypeId = MeterTypeId
                     if (command == "add") {
                         meter.meterId = UUID.randomUUID().toString()
-                        firebaseCrudHelper.add(meter, "meter")
+                        firebaseCrudHelper.add(meter, "meter", prefManager.getString(mUserId))
                     } else {
-                        firebaseCrudHelper.update(meter, meter.fireBaseKey, "meter")
+                        firebaseCrudHelper.update(
+                            meter,
+                            meter.fireBaseKey,
+                            "meter",
+                            prefManager.getString(mUserId)
+                        )
                     }
                     Toast.makeText(applicationContext, R.string.success, Toast.LENGTH_SHORT).show()
                     startActivity(Intent(this@NewMeterActivity, MeterListActivity::class.java))

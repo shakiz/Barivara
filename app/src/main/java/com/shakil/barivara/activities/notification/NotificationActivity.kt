@@ -13,6 +13,8 @@ import com.shakil.barivara.adapter.NotificationRecyclerAdapter
 import com.shakil.barivara.databinding.ActivityNotificationBinding
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.model.notification.Notification
+import com.shakil.barivara.utils.Constants.mUserId
+import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
 
@@ -22,10 +24,12 @@ class NotificationActivity : AppCompatActivity() {
     private var firebaseCrudHelper = FirebaseCrudHelper(this)
     private lateinit var ux : UX
     private var tools = Tools(this)
+    private lateinit var prefManager: PrefManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityNotificationBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_notification)
+        prefManager = PrefManager(this)
         setSupportActionBar(activityNotificationBinding.toolBar)
         activityNotificationBinding.toolBar.setNavigationOnClickListener {
             startActivity(
@@ -53,7 +57,10 @@ class NotificationActivity : AppCompatActivity() {
 
     private fun setData() {
         ux.getLoadingView()
-        firebaseCrudHelper.fetchAllNotification("notification") { objects ->
+        firebaseCrudHelper.fetchAllNotification(
+            "notification",
+            prefManager.getString(mUserId)
+        ) { objects ->
             notificationList = objects
             if ((notificationList?.size ?: 0) <= 0) {
                 activityNotificationBinding.mNoDataMessage.visibility = View.VISIBLE

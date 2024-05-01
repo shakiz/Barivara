@@ -19,8 +19,9 @@ import com.shakil.barivara.adapter.RecyclerElectricityBillListAdapter.Electricit
 import com.shakil.barivara.databinding.ActivityElectricityBillListBinding
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.model.meter.ElectricityBill
-import com.shakil.barivara.model.meter.Meter
+import com.shakil.barivara.utils.Constants.mUserId
 import com.shakil.barivara.utils.FilterManager
+import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
 
@@ -31,6 +32,7 @@ class ElectricityBillListActivity : AppCompatActivity(), ElectricityBillBacks {
     private var ux: UX? = null
     private var tools = Tools(this)
     private var filterManager = FilterManager()
+    private lateinit var prefManager: PrefManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityMeterCostListBinding =
@@ -42,6 +44,7 @@ class ElectricityBillListActivity : AppCompatActivity(), ElectricityBillBacks {
 
     private fun init() {
         ux = UX(this)
+        prefManager = PrefManager(this)
     }
 
     private fun bindUIWithComponents() {
@@ -132,7 +135,10 @@ class ElectricityBillListActivity : AppCompatActivity(), ElectricityBillBacks {
 
     private fun setData() {
         ux?.getLoadingView()
-        firebaseCrudHelper.fetchAllElectricityBills("electricityBill") { objects ->
+        firebaseCrudHelper.fetchAllElectricityBills(
+            "electricityBill",
+            prefManager.getString(mUserId)
+        ) { objects ->
             electricityBills = objects
             if (electricityBills.size <= 0) {
                 activityMeterCostListBinding.mNoDataMessage.visibility = View.VISIBLE
@@ -160,7 +166,11 @@ class ElectricityBillListActivity : AppCompatActivity(), ElectricityBillBacks {
         val delete: Button = dialog.findViewById(R.id.deleteButton)
         cancel.setOnClickListener { dialog.dismiss() }
         delete.setOnClickListener {
-            firebaseCrudHelper.deleteRecord("electricityBill", electricityBill.fireBaseKey)
+            firebaseCrudHelper.deleteRecord(
+                "electricityBill",
+                electricityBill.fireBaseKey,
+                prefManager.getString(mUserId)
+            )
             dialog.dismiss()
             setData()
         }

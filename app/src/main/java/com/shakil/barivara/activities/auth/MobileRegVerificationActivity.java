@@ -25,6 +25,7 @@ import com.shakil.barivara.R;
 import com.shakil.barivara.activities.onboard.MainActivity;
 import com.shakil.barivara.databinding.ActivityMobileRegVerificationBinding;
 import com.shakil.barivara.utils.Constants;
+import com.shakil.barivara.utils.PrefManager;
 import com.shakil.barivara.utils.Tools;
 import com.shakil.barivara.utils.UX;
 
@@ -151,8 +152,8 @@ public class MobileRegVerificationActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Log.i(Constants.TAG+":loginWithMobile","Success");
-                            tools.setLoginPrefs(task);
+                            Log.i(Constants.TAG + ":loginWithMobile", "Success");
+                            tools.setLoginPrefs(task, new PrefManager(MobileRegVerificationActivity.this));
                             ux.removeLoadingView();
                             Toasty.success(MobileRegVerificationActivity.this, getString(R.string.login_succcessful), Toast.LENGTH_LONG, true).show();
                             Intent intent = new Intent(MobileRegVerificationActivity.this, MainActivity.class);

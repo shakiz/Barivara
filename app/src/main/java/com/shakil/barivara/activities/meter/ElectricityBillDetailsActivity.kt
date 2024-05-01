@@ -17,6 +17,8 @@ import com.shakil.barivara.databinding.ActivityElectricityBillDetailsBinding
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.model.meter.ElectricityBill
 import com.shakil.barivara.utils.Constants
+import com.shakil.barivara.utils.Constants.mUserId
+import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.SpinnerData
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UtilsForAll
@@ -41,6 +43,7 @@ class ElectricityBillDetailsActivity : AppCompatActivity() {
     private var roomNames: ArrayList<String> = arrayListOf()
     private var meterNames: ArrayList<String> = arrayListOf()
     private var tools = Tools(this)
+    private lateinit var prefManager: PrefManager
     private var spinnerData = SpinnerData(this)
     private val hashMap: Map<String?, Array<String>?> = HashMap()
     private var validation = Validation(this, hashMap)
@@ -48,6 +51,7 @@ class ElectricityBillDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         activityMeterCostDetailsBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_electricity_bill_details)
+        prefManager = PrefManager(this)
         getIntentData()
         setSupportActionBar(activityMeterCostDetailsBinding.toolBar)
         activityMeterCostDetailsBinding.toolBar.setNavigationOnClickListener { onBackPressed() }
@@ -113,7 +117,11 @@ class ElectricityBillDetailsActivity : AppCompatActivity() {
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
         if (tools.hasConnection()) {
-            firebaseCrudHelper.getAllName("meter", "meterName") { nameList ->
+            firebaseCrudHelper.getAllName(
+                "meter",
+                prefManager.getString(mUserId),
+                "meterName"
+            ) { nameList ->
                 meterNames = nameList
                 setMeterAdapter()
             }
@@ -122,7 +130,11 @@ class ElectricityBillDetailsActivity : AppCompatActivity() {
             setMeterAdapter()
         }
         if (tools.hasConnection()) {
-            firebaseCrudHelper.getAllName("room", "roomName") { nameList ->
+            firebaseCrudHelper.getAllName(
+                "room",
+                prefManager.getString(mUserId),
+                "roomName"
+            ) { nameList ->
                 roomNames = nameList
                 setRoomAdapter()
             }
@@ -159,12 +171,17 @@ class ElectricityBillDetailsActivity : AppCompatActivity() {
                             .toDouble()
                     if (command == "add") {
                         electricityBill.billId = UUID.randomUUID().toString()
-                        firebaseCrudHelper.add(electricityBill, "electricityBill")
+                        firebaseCrudHelper.add(
+                            electricityBill,
+                            "electricityBill",
+                            prefManager.getString(mUserId)
+                        )
                     } else {
                         firebaseCrudHelper.update(
                             electricityBill,
                             electricityBill.fireBaseKey,
-                            "electricityBill"
+                            "electricityBill",
+                            prefManager.getString(mUserId)
                         )
                     }
                     Toast.makeText(applicationContext, R.string.success, Toast.LENGTH_SHORT).show()

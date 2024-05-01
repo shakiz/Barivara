@@ -42,6 +42,7 @@ import com.shakil.barivara.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.servies.MonthlyJobScheduler
 import com.shakil.barivara.utils.AppAnalytics
 import com.shakil.barivara.utils.Constants
+import com.shakil.barivara.utils.Constants.mUserId
 import com.shakil.barivara.utils.CustomAdManager
 import com.shakil.barivara.utils.LanguageManager
 import com.shakil.barivara.utils.PrefManager
@@ -53,8 +54,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var activityMainBinding: ActivityMainBinding
     private var utilsForAll = UtilsForAll(this)
     private var firebaseCrudHelper = FirebaseCrudHelper(this)
-    private var prefManager = PrefManager(this)
-    private var tools =  Tools(this)
+    private lateinit var prefManager: PrefManager
+    private var tools = Tools(this)
     private var customAdManager = CustomAdManager(this)
     private var appAnalytics = AppAnalytics(this)
 
@@ -67,6 +68,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
+        prefManager = PrefManager(this)
 
         //scheduleMonthlyAlarm();
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
@@ -169,13 +172,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         activityMainBinding.GreetingsText.text = utilsForAll.setGreetings()
         activityMainBinding.DateTimeText.text = utilsForAll.dateTime
         activityMainBinding.DayText.text = utilsForAll.dayOfTheMonth
-        firebaseCrudHelper.fetchAllTenant("tenant") { objects ->
+        firebaseCrudHelper.fetchAllTenant("tenant", prefManager.getString(mUserId)) { objects ->
             activityMainBinding.totalTenants.text = "" + objects.size
         }
-        firebaseCrudHelper.fetchAllMeter("meter") { objects ->
+        firebaseCrudHelper.fetchAllMeter("meter", prefManager.getString(mUserId)) { objects ->
             activityMainBinding.totalMeters.text = "" + objects.size
         }
-        firebaseCrudHelper.fetchAllRoom("room") { objects ->
+        firebaseCrudHelper.fetchAllRoom("room", prefManager.getString(mUserId)) { objects ->
             activityMainBinding.totalRooms.text = "" + objects.size
         }
         activityMainBinding.moreDetails.setOnClickListener {
@@ -257,7 +260,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_logout -> {
-                tools.doPopUpForLogout(LoginActivity::class.java)
+                tools.doPopUpForLogout(LoginActivity::class.java, prefManager)
                 return true
             }
 
@@ -343,7 +346,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 tools.rateApp()
             }
 
-            R.id.menu_logout -> tools.doPopUpForLogout(LoginActivity::class.java)
+            R.id.menu_logout -> tools.doPopUpForLogout(LoginActivity::class.java, prefManager)
         }
         activityMainBinding.myDrawerLayout.closeDrawer(GravityCompat.START)
         return true

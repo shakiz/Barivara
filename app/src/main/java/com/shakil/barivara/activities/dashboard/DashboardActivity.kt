@@ -10,6 +10,7 @@ import com.shakil.barivara.R
 import com.shakil.barivara.databinding.ActivityDashboardBinding
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.utils.Constants
+import com.shakil.barivara.utils.Constants.mUserId
 import com.shakil.barivara.utils.CustomAdManager
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.SpinnerAdapter
@@ -18,7 +19,7 @@ import com.shakil.barivara.utils.SpinnerData
 class DashboardActivity : AppCompatActivity() {
     private lateinit var activityDashboardBinding: ActivityDashboardBinding
     private var firebaseCrudHelper = FirebaseCrudHelper(this)
-    private var prefManager = PrefManager(this)
+    private lateinit var prefManager: PrefManager
     private var spinnerAdapter = SpinnerAdapter()
     private var spinnerData = SpinnerData(this)
     private var customAdManager = CustomAdManager(this)
@@ -27,6 +28,7 @@ class DashboardActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityDashboardBinding = DataBindingUtil.setContentView(this, R.layout.activity_dashboard)
+        prefManager = PrefManager(this)
         bindUiWithComponents()
         setSupportActionBar(activityDashboardBinding.toolBar)
         activityDashboardBinding.toolBar.setNavigationOnClickListener { onBackPressed() }
@@ -45,7 +47,7 @@ class DashboardActivity : AppCompatActivity() {
         )
         customAdManager.generateAd(activityDashboardBinding.adView)
         customAdManager.generateAd(activityDashboardBinding.adViewSecond)
-        firebaseCrudHelper.fetchAllTenant("tenant") { objects ->
+        firebaseCrudHelper.fetchAllTenant(prefManager.getString(mUserId), "tenant") { objects ->
             for (tenant in objects) {
                 if (tenant.isActiveValue != null) {
                     if (tenant.isActiveValue == getString(R.string.yes)) {
@@ -58,14 +60,15 @@ class DashboardActivity : AppCompatActivity() {
             activityDashboardBinding.TotalTenantsCurrent.text = "" + totalTenantCurrent
             activityDashboardBinding.TotalTenantLeft.text = "" + totalTenantLeft
         }
-        firebaseCrudHelper.fetchAllMeter("meter") { objects ->
+        firebaseCrudHelper.fetchAllMeter(prefManager.getString(mUserId), "meter") { objects ->
             activityDashboardBinding.TotalMeters.text = "" + objects.size
         }
-        firebaseCrudHelper.fetchAllRoom("room") { objects ->
+        firebaseCrudHelper.fetchAllRoom("room", prefManager.getString(mUserId)) { objects ->
             activityDashboardBinding.TotalRooms.text = "" + objects.size
         }
         firebaseCrudHelper.getAdditionalInfo(
             "rent",
+            prefManager.getString(mUserId),
             "rentAmount"
         ) { data ->
             activityDashboardBinding.TotalRentAmount.text =
@@ -73,6 +76,7 @@ class DashboardActivity : AppCompatActivity() {
         }
         firebaseCrudHelper.getAdditionalInfo(
             "electricityBill",
+            prefManager.getString(mUserId),
             "totalBill"
         ) { data ->
             activityDashboardBinding.TotalElectricityBill.text =
@@ -90,6 +94,7 @@ class DashboardActivity : AppCompatActivity() {
                 ) {
                     firebaseCrudHelper.getRentDataByYear(
                         "rent",
+                        prefManager.getString(mUserId),
                         parent.getItemAtPosition(position).toString(),
                         "RentAmount"
                     ) { data ->
@@ -112,6 +117,7 @@ class DashboardActivity : AppCompatActivity() {
                 ) {
                     firebaseCrudHelper.getRentDataByMonth(
                         "rent",
+                        prefManager.getString(mUserId),
                         parent.getItemAtPosition(position).toString(),
                         "RentAmount"
                     ) { data ->

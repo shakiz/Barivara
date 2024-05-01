@@ -16,6 +16,8 @@ import com.shakil.barivara.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.model.note.Note
 import com.shakil.barivara.utils.AppAnalytics
 import com.shakil.barivara.utils.Constants
+import com.shakil.barivara.utils.Constants.mUserId
+import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UtilsForAll
 import com.shakil.barivara.utils.Validation
@@ -34,9 +36,11 @@ class NewNoteActivity : AppCompatActivity() {
     private var validation = Validation(this, hashMap)
     private var appAnalytics = AppAnalytics(this)
     private var utilsForAll = UtilsForAll(this)
+    private lateinit var prefManager: PrefManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityNewNoteBinding = DataBindingUtil.setContentView(this, R.layout.activity_new_note)
+        prefManager = PrefManager(this)
         intentData()
         setSupportActionBar(activityNewNoteBinding.toolBar)
         activityNewNoteBinding.toolBar.setNavigationOnClickListener { onBackPressed() }
@@ -98,9 +102,14 @@ class NewNoteActivity : AppCompatActivity() {
                 note?.date = utilsForAll.dateTimeWithPM
                 if (command == "add") {
                     note?.noteId = UUID.randomUUID().toString()
-                    firebaseCrudHelper.add(note, "note")
+                    firebaseCrudHelper.add(note, "note", prefManager.getString(mUserId))
                 } else {
-                    firebaseCrudHelper.update(note, note?.fireBaseKey, "note")
+                    firebaseCrudHelper.update(
+                        note,
+                        note?.fireBaseKey,
+                        "note",
+                        prefManager.getString(mUserId)
+                    )
                 }
                 appAnalytics.registerEvent(
                     "newNote",

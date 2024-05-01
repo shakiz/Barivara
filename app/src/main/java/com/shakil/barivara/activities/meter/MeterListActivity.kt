@@ -20,7 +20,9 @@ import com.shakil.barivara.adapter.RecyclerMeterListAdapter.MeterCallBacks
 import com.shakil.barivara.databinding.ActivityMeterListBinding
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.model.meter.Meter
+import com.shakil.barivara.utils.Constants.mUserId
 import com.shakil.barivara.utils.FilterManager
+import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
 
@@ -31,6 +33,7 @@ class MeterListActivity : AppCompatActivity(), MeterCallBacks {
     private var ux: UX? = null
     private var tools = Tools(this)
     private var filterManager = FilterManager()
+    private lateinit var prefManager: PrefManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityMeterListBinding =
@@ -51,6 +54,7 @@ class MeterListActivity : AppCompatActivity(), MeterCallBacks {
     private fun init() {
         meterList = ArrayList()
         ux = UX(this)
+        prefManager = PrefManager(this)
     }
 
 
@@ -149,7 +153,7 @@ class MeterListActivity : AppCompatActivity(), MeterCallBacks {
 
     private fun setData() {
         ux?.getLoadingView()
-        firebaseCrudHelper.fetchAllMeter("meter") { objects ->
+        firebaseCrudHelper.fetchAllMeter("meter", prefManager.getString(mUserId)) { objects ->
             meterList = objects
             setRecyclerAdapter()
             ux?.removeLoadingView()
@@ -170,7 +174,11 @@ class MeterListActivity : AppCompatActivity(), MeterCallBacks {
         val delete: Button = dialog.findViewById(R.id.deleteButton)
         cancel.setOnClickListener { dialog.dismiss() }
         delete.setOnClickListener {
-            firebaseCrudHelper.deleteRecord("meter", meter.fireBaseKey)
+            firebaseCrudHelper.deleteRecord(
+                "meter",
+                meter.fireBaseKey,
+                prefManager.getString(mUserId)
+            )
             dialog.dismiss()
             setData()
         }

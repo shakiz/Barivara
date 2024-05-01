@@ -13,6 +13,8 @@ import com.shakil.barivara.R
 import com.shakil.barivara.databinding.ActivityNewRentDetailsBinding
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.model.room.Rent
+import com.shakil.barivara.utils.Constants.mUserId
+import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.SpinnerAdapter
 import com.shakil.barivara.utils.SpinnerData
 import com.shakil.barivara.utils.Tools
@@ -34,12 +36,14 @@ class RentDetailsActivity : AppCompatActivity() {
     private var firebaseCrudHelper = FirebaseCrudHelper(this)
     private var roomNames: ArrayList<String> = arrayListOf()
     private var tools = Tools(this)
+    private lateinit var prefManager: PrefManager
     private val hashMap: Map<String?, Array<String>?> = HashMap()
     private var validation = Validation(this, hashMap)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityNewRentDetailsBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_new_rent_details)
+        prefManager = PrefManager(this)
         getIntentData()
         setSupportActionBar(activityNewRentDetailsBinding.toolBar)
         activityNewRentDetailsBinding.toolBar.setNavigationOnClickListener { onBackPressed() }
@@ -82,7 +86,11 @@ class RentDetailsActivity : AppCompatActivity() {
             spinnerData.setYearData()
         )
         if (tools.hasConnection()) {
-            firebaseCrudHelper.getAllName("room", "roomName") { nameList ->
+            firebaseCrudHelper.getAllName(
+                "room",
+                prefManager.getString(mUserId),
+                "roomName"
+            ) { nameList ->
                 roomNames = nameList
                 setRoomSpinner()
             }
@@ -146,9 +154,14 @@ class RentDetailsActivity : AppCompatActivity() {
                         activityNewRentDetailsBinding.RentAmount.text.toString().toInt()
                     if (command == "add") {
                         rent.rentId = UUID.randomUUID().toString()
-                        firebaseCrudHelper.add(rent, "rent")
+                        firebaseCrudHelper.add(rent, "rent", prefManager.getString(mUserId))
                     } else {
-                        firebaseCrudHelper.update(rent, rent.fireBaseKey, "rent")
+                        firebaseCrudHelper.update(
+                            rent,
+                            rent.fireBaseKey,
+                            "rent",
+                            prefManager.getString(mUserId)
+                        )
                     }
                     Toast.makeText(applicationContext, R.string.success, Toast.LENGTH_SHORT).show()
                     startActivity(Intent(this@RentDetailsActivity, RentListActivity::class.java))

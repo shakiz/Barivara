@@ -19,13 +19,17 @@ import com.shakil.barivara.utils.Tools
 class SettingsActivity : AppCompatActivity() {
     private lateinit var activitySettingsBinding: ActivitySettingsBinding
     private var languageMap = HashMap<String, String>()
-    private var languageManager = LanguageManager(this)
-    private var prefManager = PrefManager(this)
+    private lateinit var languageManager: LanguageManager
+    private lateinit var prefManager: PrefManager
     private var tools = Tools(this)
     private var customAdManager = CustomAdManager(this)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activitySettingsBinding = DataBindingUtil.setContentView(this, R.layout.activity_settings)
+
+        languageManager = LanguageManager(this)
+        prefManager = PrefManager(this)
+
         setSupportActionBar(activitySettingsBinding.toolBar)
         activitySettingsBinding.toolBar.setNavigationOnClickListener { onBackPressed() }
         setupLanguage()
@@ -76,7 +80,8 @@ class SettingsActivity : AppCompatActivity() {
         }
         activitySettingsBinding.logoutButton.setOnClickListener {
             tools.doPopUpForLogout(
-                LoginActivity::class.java
+                LoginActivity::class.java,
+                prefManager
             )
         }
         activitySettingsBinding.language.setOnClickListener {

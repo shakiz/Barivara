@@ -31,29 +31,27 @@ import static com.shakil.barivara.utils.Constants.mUserId;
 public class FirebaseCrudHelper {
     private final Context context;
     private DatabaseReference databaseReference;
-    private final PrefManager prefManager;
 
     public FirebaseCrudHelper(Context context) {
         this.context = context;
-        prefManager = new PrefManager(context);
     }
 
-    public void add(Object object, String path){
-        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(prefManager.getString(mUserId));
-        Log.i(Constants.TAG,""+databaseReference.getParent());
+    public void add(Object object, String path, String userId) {
+        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId);
+        Log.i(Constants.TAG, "" + databaseReference.getParent());
         String id = databaseReference.push().getKey();
         databaseReference.child(id).setValue(object);
     }
 
-    public void addNotification(Notification object, String path){
+    public void addNotification(Notification object, String path) {
         databaseReference = FirebaseDatabase.getInstance().getReference(path);
-        Log.i(Constants.TAG,""+databaseReference.getParent());
+        Log.i(Constants.TAG, "" + databaseReference.getParent());
         String id = databaseReference.push().getKey();
         databaseReference.child(id).setValue(object);
     }
 
-    public void update(Object object, String firebaseId, String path){
-        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(prefManager.getString(mUserId));
+    public void update(Object object, String firebaseId, String path, String userId) {
+        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId);
         Map<String, Object> postValues = new HashMap<>();
         switch (path) {
             case "tenant":
@@ -92,20 +90,20 @@ public class FirebaseCrudHelper {
         databaseReference.child(firebaseId).updateChildren(postValues);
     }
 
-    public void deleteRecord(String path, String firebaseId){
-        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(prefManager.getString(mUserId)).child(firebaseId);
+    public void deleteRecord(String path, String firebaseId, String userId) {
+        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId).child(firebaseId);
         databaseReference.removeValue();
     }
 
-    public void fetchProfile(String path, onProfileFetch onProfileFetch){
+    public void fetchProfile(String path, String userId, onProfileFetch onProfileFetch) {
         ArrayList<User> objects = new ArrayList<>();
-        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(prefManager.getString(mUserId));
-        Log.i(Constants.TAG,""+databaseReference.getParent());
+        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId);
+        Log.i(Constants.TAG, "" + databaseReference.getParent());
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getChildren() != null) {
-                    for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         User user = dataSnapshot.getValue(User.class);
                         user.setFirebaseKey(dataSnapshot.getKey());
                         objects.add(user);
@@ -126,15 +124,15 @@ public class FirebaseCrudHelper {
         });
     }
 
-    public void fetchAllMeter(String path, onDataFetch onDataFetch){
+    public void fetchAllMeter(String path, String userId, onDataFetch onDataFetch) {
         ArrayList<Meter> objects = new ArrayList<>();
-        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(prefManager.getString(mUserId));
-        Log.i(Constants.TAG,""+databaseReference.getParent());
+        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId);
+        Log.i(Constants.TAG, "" + databaseReference.getParent());
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getChildren() != null) {
-                    for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         Meter meter = dataSnapshot.getValue(Meter.class);
                         meter.setFireBaseKey(dataSnapshot.getKey());
                         objects.add(meter);
@@ -151,17 +149,17 @@ public class FirebaseCrudHelper {
         });
     }
 
-    public void fetchAllRoom(String path, onRoomDataFetch onRoomDataFetch){
+    public void fetchAllRoom(String path, String userId, onRoomDataFetch onRoomDataFetch) {
         ArrayList<Room> objects = new ArrayList<>();
-        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(prefManager.getString(mUserId));
+        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getChildren() != null) {
-                    for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         Room object = dataSnapshot.getValue(Room.class);
                         object.setFireBaseKey(dataSnapshot.getKey());
-                        Log.i(Constants.TAG+":fetchRoom",""+object.getRoomName());
+                        Log.i(Constants.TAG + ":fetchRoom", "" + object.getRoomName());
                         objects.add(object);
                     }
                     onRoomDataFetch.onFetch(objects);
@@ -175,17 +173,17 @@ public class FirebaseCrudHelper {
         });
     }
 
-    public void fetchAllRent(String path, onRentDataFetch onRentDataFetch){
+    public void fetchAllRent(String path, String userId, onRentDataFetch onRentDataFetch) {
         ArrayList<Rent> objects = new ArrayList<>();
-        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(prefManager.getString(mUserId));
+        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getChildren() != null) {
-                    for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         Rent object = dataSnapshot.getValue(Rent.class);
                         object.setFireBaseKey(dataSnapshot.getKey());
-                        Log.i(Constants.TAG+":fetchRent",""+object.getMonthName());
+                        Log.i(Constants.TAG + ":fetchRent", "" + object.getMonthName());
                         objects.add(object);
                     }
                     onRentDataFetch.onFetch(objects);
@@ -199,16 +197,16 @@ public class FirebaseCrudHelper {
         });
     }
 
-    public void fetchAllElectricityBills(String path, onElectricityBillDataFetch onElectricityBillDataFetch){
+    public void fetchAllElectricityBills(String path, String userId, onElectricityBillDataFetch onElectricityBillDataFetch) {
         ArrayList<ElectricityBill> objects = new ArrayList<>();
-        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(prefManager.getString(mUserId));
+        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getChildren() != null) {
-                    for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         ElectricityBill object = dataSnapshot.getValue(ElectricityBill.class);
-                        Log.i(Constants.TAG+":fetchBill",""+object.getMeterName());
+                        Log.i(Constants.TAG + ":fetchBill", "" + object.getMeterName());
                         object.setFireBaseKey(dataSnapshot.getKey());
                         objects.add(object);
                     }
@@ -223,17 +221,17 @@ public class FirebaseCrudHelper {
         });
     }
 
-    public void fetchAllTenant(String path, onTenantDataFetch onTenantDataFetch){
+    public void fetchAllTenant(String path, String userId, onTenantDataFetch onTenantDataFetch) {
         ArrayList<Tenant> objects = new ArrayList<>();
-        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(prefManager.getString(mUserId));
+        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getChildren() != null) {
-                    for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         Tenant object = dataSnapshot.getValue(Tenant.class);
                         object.setFireBaseKey(dataSnapshot.getKey());
-                        Log.i(Constants.TAG+":fetchTenant",""+object.getTenantName());
+                        Log.i(Constants.TAG + ":fetchTenant", "" + object.getTenantName());
                         objects.add(object);
                     }
                     onTenantDataFetch.onFetch(objects);
@@ -247,16 +245,16 @@ public class FirebaseCrudHelper {
         });
     }
 
-    public void fetchAllNotification(String path, onNotificationDataFetch onNotificationDataFetch){
+    public void fetchAllNotification(String path, String userId, onNotificationDataFetch onNotificationDataFetch) {
         ArrayList<Notification> objects = new ArrayList<>();
         databaseReference = FirebaseDatabase.getInstance().getReference(path);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getChildren() != null) {
-                    for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         Notification object = dataSnapshot.getValue(Notification.class);
-                        Log.i(Constants.TAG+":fetchAllNotification",""+object.getTitle());
+                        Log.i(Constants.TAG + ":fetchAllNotification", "" + object.getTitle());
                         objects.add(object);
                     }
                     onNotificationDataFetch.onFetch(objects);
@@ -270,17 +268,17 @@ public class FirebaseCrudHelper {
         });
     }
 
-    public void fetchAllNote(String path, onNoteDataFetch onNoteDataFetch){
+    public void fetchAllNote(String path, String userId, onNoteDataFetch onNoteDataFetch) {
         ArrayList<Note> objects = new ArrayList<>();
-        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(prefManager.getString(mUserId));
+        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getChildren() != null) {
-                    for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         Note object = dataSnapshot.getValue(Note.class);
                         object.setFireBaseKey(dataSnapshot.getKey());
-                        Log.i(Constants.TAG+":fetchNote",""+object.getTitle());
+                        Log.i(Constants.TAG + ":fetchNote", "" + object.getTitle());
                         objects.add(object);
                     }
                     onNoteDataFetch.onFetch(objects);
@@ -294,16 +292,16 @@ public class FirebaseCrudHelper {
         });
     }
 
-    public void getAllName(String path, String fieldName, onNameFetch onNameFetch){
+    public void getAllName(String path, String userId, String fieldName, onNameFetch onNameFetch) {
         ArrayList<String> roomNameList = new ArrayList<>();
-        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(prefManager.getString(mUserId));
+        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getChildren() != null){
+                if (snapshot.getChildren() != null) {
                     roomNameList.add(context.getString(R.string.select_data));
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        Log.i(Constants.TAG,fieldName+ ":" +dataSnapshot.child(fieldName).getValue(String.class));
+                        Log.i(Constants.TAG, fieldName + ":" + dataSnapshot.child(fieldName).getValue(String.class));
                         roomNameList.add(dataSnapshot.child(fieldName).getValue(String.class));
                     }
                 }
@@ -322,19 +320,19 @@ public class FirebaseCrudHelper {
         });
     }
 
-    public void getAdditionalInfo(String path, String fieldName, onAdditionalInfoFetch onAdditionalInfoFetch){
+    public void getAdditionalInfo(String path, String userId, String fieldName, onAdditionalInfoFetch onAdditionalInfoFetch) {
         final double[] data = {0};
-        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(prefManager.getString(mUserId));
+        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getChildren() != null){
+                if (snapshot.getChildren() != null) {
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        Log.i(Constants.TAG,fieldName+ ":" +dataSnapshot.child(fieldName).getValue(double.class));
+                        Log.i(Constants.TAG, fieldName + ":" + dataSnapshot.child(fieldName).getValue(double.class));
                         data[0] = data[0] + (dataSnapshot.child(fieldName).getValue(double.class));
                     }
                 }
-                if (onAdditionalInfoFetch != null){
+                if (onAdditionalInfoFetch != null) {
                     onAdditionalInfoFetch.onFetched(data[0]);
                 }
             }
@@ -348,16 +346,16 @@ public class FirebaseCrudHelper {
         });
     }
 
-    public void getSingleColumnValue(String path, String fieldName, onSingleDataFetch onSingleDataFetch){
+    public void getSingleColumnValue(String path, String userId, String fieldName, onSingleDataFetch onSingleDataFetch) {
         final Object[] object = {0};
-        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(prefManager.getString(mUserId));
+        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getChildren() != null){
+                if (snapshot.getChildren() != null) {
                     object[0] = (snapshot.child(fieldName).getValue(Integer.class));
                 }
-                if (onSingleDataFetch != null){
+                if (onSingleDataFetch != null) {
                     onSingleDataFetch.onFetched(object[0]);
                 }
             }
@@ -371,15 +369,15 @@ public class FirebaseCrudHelper {
         });
     }
 
-    public void getRentDataByMonth(String path, String queryValue, String fieldName, onDataQuery onDataQuery){
+    public void getRentDataByMonth(String path, String userId, String queryValue, String fieldName, onDataQuery onDataQuery) {
         final int[] object = {0};
 
-        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(prefManager.getString(mUserId));
+        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId);
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getChildren() != null){
+                if (snapshot.getChildren() != null) {
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         Rent rent = dataSnapshot.getValue(Rent.class);
                         if (rent.getMonthName().equals(queryValue) || rent.getMonthName().contains(queryValue) ){
@@ -404,15 +402,15 @@ public class FirebaseCrudHelper {
         });
     }
 
-    public void getRentDataByYear(String path, String queryValue, String fieldName, onDataQueryYearlyRent onDataQueryYearlyRent){
+    public void getRentDataByYear(String path, String userId, String queryValue, String fieldName, onDataQueryYearlyRent onDataQueryYearlyRent) {
         final int[] object = {0};
 
-        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(prefManager.getString(mUserId));
+        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId);
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getChildren() != null){
+                if (snapshot.getChildren() != null) {
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         Rent rent = dataSnapshot.getValue(Rent.class);
                         if (rent.getYearName().equals(queryValue) || rent.getYearName().contains(queryValue) ){

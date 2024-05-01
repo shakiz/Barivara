@@ -13,7 +13,9 @@ import com.shakil.barivara.R
 import com.shakil.barivara.databinding.ActivityAddNewRoomBinding
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.model.room.Room
+import com.shakil.barivara.utils.Constants.mUserId
 import com.shakil.barivara.utils.CustomAdManager
+import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.SpinnerAdapter
 import com.shakil.barivara.utils.SpinnerData
 import com.shakil.barivara.utils.Tools
@@ -46,10 +48,13 @@ class RoomActivity : AppCompatActivity() {
     private val hashMap: Map<String?, Array<String>?> = HashMap()
     private var validation = Validation(this, hashMap)
     private var customAdManager = CustomAdManager(this)
+    private lateinit var prefManager: PrefManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityAddNewRoomBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_add_new_room)
+        prefManager = PrefManager(this)
         getIntentData()
         setSupportActionBar(activityAddNewRoomBinding.toolBar)
         activityAddNewRoomBinding.toolBar.setNavigationOnClickListener { onBackPressed() }
@@ -92,7 +97,11 @@ class RoomActivity : AppCompatActivity() {
         )
         validation.setSpinnerIsNotEmpty(arrayOf("StartMonthId"))
         if (tools.hasConnection()) {
-            firebaseCrudHelper.getAllName("meter", "meterName") { nameList ->
+            firebaseCrudHelper.getAllName(
+                "meter",
+                prefManager.getString(mUserId),
+                "meterName"
+            ) { nameList ->
                 meterNames = nameList
                 setMeterSpinner()
                 if (room.roomId != null) {
@@ -107,7 +116,11 @@ class RoomActivity : AppCompatActivity() {
             setMeterSpinner()
         }
         if (tools.hasConnection()) {
-            firebaseCrudHelper.getAllName("tenant", "tenantName") { nameList ->
+            firebaseCrudHelper.getAllName(
+                "tenant",
+                prefManager.getString(mUserId),
+                "tenantName"
+            ) { nameList ->
                 tenantNames = nameList
                 setTenantSpinner()
             }
@@ -229,9 +242,14 @@ class RoomActivity : AppCompatActivity() {
         room.noOfBalcony = NoOfBalcony
         if (command == "add") {
             room.roomId = UUID.randomUUID().toString()
-            firebaseCrudHelper.add(room, "room")
+            firebaseCrudHelper.add(room, "room", prefManager.getString(mUserId))
         } else {
-            firebaseCrudHelper.update(room, room.fireBaseKey, "room")
+            firebaseCrudHelper.update(
+                room,
+                room.fireBaseKey,
+                "room",
+                prefManager.getString(mUserId)
+            )
         }
         Toast.makeText(applicationContext, R.string.success, Toast.LENGTH_SHORT).show()
         startActivity(Intent(this@RoomActivity, RoomListActivity::class.java))

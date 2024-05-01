@@ -20,8 +20,10 @@ import com.shakil.barivara.adapter.RecyclerRoomListAdapter.RoomCallBacks
 import com.shakil.barivara.databinding.ActivityRoomListBinding
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.model.room.Room
+import com.shakil.barivara.utils.Constants.mUserId
 import com.shakil.barivara.utils.CustomAdManager
 import com.shakil.barivara.utils.FilterManager
+import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
 
@@ -33,6 +35,8 @@ class RoomListActivity : AppCompatActivity(), RoomCallBacks {
     private var tools = Tools(this)
     private var filterManager = FilterManager()
     private var customAdManager = CustomAdManager(this)
+    private lateinit var prefManager: PrefManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityRoomListBinding = DataBindingUtil.setContentView(this, R.layout.activity_room_list)
@@ -51,6 +55,7 @@ class RoomListActivity : AppCompatActivity(), RoomCallBacks {
 
     private fun init() {
         ux = UX(this)
+        prefManager = PrefManager(this)
     }
 
     private fun binUiWIthComponents() {
@@ -139,7 +144,7 @@ class RoomListActivity : AppCompatActivity(), RoomCallBacks {
 
     private fun setData() {
         ux?.getLoadingView()
-        firebaseCrudHelper.fetchAllRoom("room") { objects ->
+        firebaseCrudHelper.fetchAllRoom("room", prefManager.getString(mUserId)) { objects ->
             roomList = objects
             if (roomList.size <= 0) {
                 activityRoomListBinding.mNoDataMessage.visibility = View.VISIBLE
@@ -167,7 +172,11 @@ class RoomListActivity : AppCompatActivity(), RoomCallBacks {
         val delete: Button = dialog.findViewById(R.id.deleteButton)
         cancel.setOnClickListener { dialog.dismiss() }
         delete.setOnClickListener {
-            firebaseCrudHelper.deleteRecord("room", room.fireBaseKey)
+            firebaseCrudHelper.deleteRecord(
+                "room",
+                room.fireBaseKey,
+                prefManager.getString(mUserId)
+            )
             dialog.dismiss()
             setData()
         }

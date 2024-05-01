@@ -14,6 +14,8 @@ import com.shakil.barivara.databinding.ActivityNoteListBinding
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.model.note.Note
 import com.shakil.barivara.utils.AppAnalytics
+import com.shakil.barivara.utils.Constants.mUserId
+import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
 
@@ -24,6 +26,7 @@ class NoteListActivity : AppCompatActivity() {
     private lateinit var ux: UX
     private var appAnalytics = AppAnalytics(this)
     private var tools = Tools(this)
+    private lateinit var prefManager: PrefManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityNoteListBinding = DataBindingUtil.setContentView(this, R.layout.activity_note_list)
@@ -42,6 +45,7 @@ class NoteListActivity : AppCompatActivity() {
 
     private fun init() {
         ux = UX(this)
+        prefManager = PrefManager(this)
     }
 
     private fun bindUiWithComponents() {
@@ -59,7 +63,7 @@ class NoteListActivity : AppCompatActivity() {
 
     private fun setData() {
         ux.getLoadingView()
-        firebaseCrudHelper.fetchAllNote("note") { objects ->
+        firebaseCrudHelper.fetchAllNote("note", prefManager.getString(mUserId)) { objects ->
             noteList = objects
             setRecyclerAdapter()
             ux.removeLoadingView()
