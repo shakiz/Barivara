@@ -39,6 +39,9 @@ import com.shakil.barivara.activities.tenant.TenantListActivity
 import com.shakil.barivara.activities.tutorial.TutorialActivity
 import com.shakil.barivara.databinding.ActivityMainBinding
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper
+import com.shakil.barivara.model.meter.Meter
+import com.shakil.barivara.model.room.Room
+import com.shakil.barivara.model.tenant.Tenant
 import com.shakil.barivara.servies.MonthlyJobScheduler
 import com.shakil.barivara.utils.AppAnalytics
 import com.shakil.barivara.utils.Constants
@@ -172,15 +175,32 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         activityMainBinding.GreetingsText.text = utilsForAll.setGreetings()
         activityMainBinding.DateTimeText.text = utilsForAll.dateTime
         activityMainBinding.DayText.text = utilsForAll.dayOfTheMonth
-        firebaseCrudHelper.fetchAllTenant("tenant", prefManager.getString(mUserId)) { objects ->
-            activityMainBinding.totalTenants.text = "" + objects.size
-        }
-        firebaseCrudHelper.fetchAllMeter("meter", prefManager.getString(mUserId)) { objects ->
-            activityMainBinding.totalMeters.text = "" + objects.size
-        }
-        firebaseCrudHelper.fetchAllRoom("room", prefManager.getString(mUserId)) { objects ->
-            activityMainBinding.totalRooms.text = "" + objects.size
-        }
+        firebaseCrudHelper.fetchAllTenant(
+            "tenant",
+            prefManager.getString(mUserId),
+            object : FirebaseCrudHelper.onTenantDataFetch {
+                override fun onFetch(objects: ArrayList<Tenant?>?) {
+                    activityMainBinding.totalTenants.text = "" + objects?.size
+                }
+            })
+
+        firebaseCrudHelper.fetchAllMeter(
+            "meter",
+            prefManager.getString(mUserId),
+            object : FirebaseCrudHelper.onDataFetch {
+                override fun onFetch(objects: ArrayList<Meter?>?) {
+                    activityMainBinding.totalMeters.text = "" + objects?.size
+                }
+            })
+
+        firebaseCrudHelper.fetchAllRoom(
+            "room",
+            prefManager.getString(mUserId),
+            object : FirebaseCrudHelper.onRoomDataFetch {
+                override fun onFetch(objects: ArrayList<Room?>?) {
+                    activityMainBinding.totalRooms.text = "" + objects?.size
+                }
+            })
         activityMainBinding.moreDetails.setOnClickListener {
             startActivity(
                 Intent(
@@ -243,7 +263,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
         val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-        alarmManager?.setInexactRepeating(
+        alarmManager.setInexactRepeating(
             AlarmManager.RTC_WAKEUP,
             calendar.timeInMillis,
             AlarmManager.INTERVAL_DAY * 30,  // 30 days for a month
