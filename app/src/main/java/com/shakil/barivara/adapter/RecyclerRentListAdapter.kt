@@ -1,88 +1,59 @@
-package com.shakil.barivara.adapter;
+package com.shakil.barivara.adapter
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.shakil.barivara.adapter.RecyclerRentListAdapter.RentItemViewHolder
+import com.shakil.barivara.databinding.AdapterLayoutRentListBinding
+import com.shakil.barivara.model.room.Rent
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.shakil.barivara.databinding.AdapterLayoutRentListBinding;
-import com.shakil.barivara.model.room.Rent;
-
-import java.util.ArrayList;
-
-public class RecyclerRentListAdapter extends RecyclerView.Adapter<RecyclerRentListAdapter.RentItemViewHolder> {
-
-    private final ArrayList<Rent> arrayList;
-
-    public RecyclerRentListAdapter(ArrayList<Rent> arrayList) {
-        this.arrayList = arrayList;
+class RecyclerRentListAdapter(private val arrayList: ArrayList<Rent>) :
+    RecyclerView.Adapter<RentItemViewHolder>() {
+    private var rentCallBacks: RentCallBacks? = null
+    fun setRentCallBack(rentCallBacks: RentCallBacks?) {
+        this.rentCallBacks = rentCallBacks
     }
 
-    public RentCallBacks rentCallBacks;
-
-    public void setRentCallBack(RentCallBacks rentCallBacks) {
-        this.rentCallBacks = rentCallBacks;
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RentItemViewHolder {
+        val binding =
+            AdapterLayoutRentListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return RentItemViewHolder(binding, rentCallBacks)
     }
 
-    @NonNull
-    @Override
-    public RentItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        AdapterLayoutRentListBinding binding = AdapterLayoutRentListBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        return new RentItemViewHolder(binding, rentCallBacks);
+    override fun onBindViewHolder(holder: RentItemViewHolder, position: Int) {
+        val rent = arrayList[position]
+        holder.bind(rent)
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull RentItemViewHolder holder, int position) {
-        Rent rent = arrayList.get(position);
-        holder.bind(rent);
+    override fun getItemCount(): Int {
+        return arrayList.size
     }
 
-    @Override
-    public int getItemCount() {
-        return arrayList.size();
-    }
-
-    public static class RentItemViewHolder extends RecyclerView.ViewHolder {
-        AdapterLayoutRentListBinding binding;
-        RentCallBacks rentCallBacks;
-        public RentItemViewHolder(@NonNull AdapterLayoutRentListBinding binding, RentCallBacks rentCallBacks) {
-            super(binding.getRoot());
-            this.binding = binding;
-            this.rentCallBacks = rentCallBacks;
-        }
-
-        void bind(Rent rent){
-            binding.MonthName.setText(rent.getMonthName());
-            binding.AssociateRoomName.setText(rent.getAssociateRoomName());
-            binding.RentAmount.setText(String.valueOf(rent.getRentAmount()));
-            binding.itemCardView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (rentCallBacks != null){
-                        rentCallBacks.onItemClick(rent);
-                    }
-                }
-            });
-            binding.editDeleteIncludeLayout.editButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (rentCallBacks != null) rentCallBacks.onEdit(rent);
-                }
-            });
-            binding.editDeleteIncludeLayout.deleteButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (rentCallBacks != null) rentCallBacks.onDelete(rent);
-                }
-            });
+    class RentItemViewHolder(
+        var binding: AdapterLayoutRentListBinding,
+        var rentCallBacks: RentCallBacks?
+    ) : RecyclerView.ViewHolder(
+        binding.root
+    ) {
+        fun bind(rent: Rent) {
+            binding.MonthName.text = rent.monthName
+            binding.AssociateRoomName.text = rent.associateRoomName
+            binding.RentAmount.text = rent.rentAmount.toString()
+            binding.itemCardView.setOnClickListener {
+                rentCallBacks?.onItemClick(rent)
+            }
+            binding.editDeleteIncludeLayout.editButton.setOnClickListener {
+                rentCallBacks?.onEdit(rent)
+            }
+            binding.editDeleteIncludeLayout.deleteButton.setOnClickListener {
+                rentCallBacks?.onDelete(rent)
+            }
         }
     }
 
-    public interface RentCallBacks {
-        void onDelete(Rent rent);
-        void onEdit(Rent rent);
-        void onItemClick(Rent rent);
+    interface RentCallBacks {
+        fun onDelete(rent: Rent)
+        fun onEdit(rent: Rent)
+        fun onItemClick(rent: Rent)
     }
 }
