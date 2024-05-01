@@ -137,16 +137,19 @@ class ElectricityBillListActivity : AppCompatActivity(), ElectricityBillBacks {
         ux?.getLoadingView()
         firebaseCrudHelper.fetchAllElectricityBills(
             "electricityBill",
-            prefManager.getString(mUserId)
-        ) { objects ->
-            electricityBills = objects
-            if (electricityBills.size <= 0) {
-                activityMeterCostListBinding.mNoDataMessage.visibility = View.VISIBLE
-                activityMeterCostListBinding.mNoDataMessage.setText(R.string.no_data_message)
+            prefManager.getString(mUserId),
+            object : FirebaseCrudHelper.onElectricityBillDataFetch {
+                override fun onFetch(objects: ArrayList<ElectricityBill?>?) {
+                    electricityBills = objects.orEmpty() as ArrayList<ElectricityBill>
+                    if (electricityBills.size <= 0) {
+                        activityMeterCostListBinding.mNoDataMessage.visibility = View.VISIBLE
+                        activityMeterCostListBinding.mNoDataMessage.setText(R.string.no_data_message)
+                    }
+                    setRecyclerAdapter()
+                    ux?.removeLoadingView()
+                }
             }
-            setRecyclerAdapter()
-            ux?.removeLoadingView()
-        }
+        )
     }
 
     private fun setRecyclerAdapter() {

@@ -120,11 +120,14 @@ class ElectricityBillDetailsActivity : AppCompatActivity() {
             firebaseCrudHelper.getAllName(
                 "meter",
                 prefManager.getString(mUserId),
-                "meterName"
-            ) { nameList ->
-                meterNames = nameList
-                setMeterAdapter()
-            }
+                "meterName",
+                object : FirebaseCrudHelper.onNameFetch {
+                    override fun onFetched(nameList: ArrayList<String?>?) {
+                        meterNames = nameList.orEmpty() as ArrayList<String>
+                        setMeterAdapter()
+                    }
+                }
+            )
         } else {
             meterNames = spinnerData.setSpinnerNoData()
             setMeterAdapter()
@@ -133,11 +136,14 @@ class ElectricityBillDetailsActivity : AppCompatActivity() {
             firebaseCrudHelper.getAllName(
                 "room",
                 prefManager.getString(mUserId),
-                "roomName"
-            ) { nameList ->
-                roomNames = nameList
-                setRoomAdapter()
-            }
+                "roomName",
+                object : FirebaseCrudHelper.onNameFetch {
+                    override fun onFetched(nameList: ArrayList<String?>?) {
+                        roomNames = nameList.orEmpty() as ArrayList<String>
+                        setRoomAdapter()
+                    }
+                }
+            )
         } else {
             roomNames = spinnerData.setSpinnerNoData()
             setRoomAdapter()
