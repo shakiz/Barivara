@@ -1,452 +1,454 @@
-package com.shakil.barivara.firebasedb;
+package com.shakil.barivara.firebasedb
 
-import android.content.Context;
-import android.util.Log;
+import android.content.Context
+import android.util.Log
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.getValue
+import com.shakil.barivara.R
+import com.shakil.barivara.model.User
+import com.shakil.barivara.model.meter.ElectricityBill
+import com.shakil.barivara.model.meter.Meter
+import com.shakil.barivara.model.note.Note
+import com.shakil.barivara.model.notification.Notification
+import com.shakil.barivara.model.room.Rent
+import com.shakil.barivara.model.room.Room
+import com.shakil.barivara.model.tenant.Tenant
+import com.shakil.barivara.utils.Constants
 
-import androidx.annotation.NonNull;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.shakil.barivara.R;
-import com.shakil.barivara.model.User;
-import com.shakil.barivara.model.meter.ElectricityBill;
-import com.shakil.barivara.model.meter.Meter;
-import com.shakil.barivara.model.note.Note;
-import com.shakil.barivara.model.notification.Notification;
-import com.shakil.barivara.model.room.Rent;
-import com.shakil.barivara.model.room.Room;
-import com.shakil.barivara.model.tenant.Tenant;
-import com.shakil.barivara.utils.Constants;
-import com.shakil.barivara.utils.PrefManager;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
-import static com.shakil.barivara.utils.Constants.mUserId;
-
-public class FirebaseCrudHelper {
-    private final Context context;
-    private DatabaseReference databaseReference;
-
-    public FirebaseCrudHelper(Context context) {
-        this.context = context;
+class FirebaseCrudHelper(private val context: Context) {
+    private var databaseReference: DatabaseReference? = null
+    fun add(dataSet: Any?, path: String, userId: String) {
+        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId)
+        Log.i(Constants.TAG, "" + databaseReference!!.parent)
+        val id = databaseReference?.push()?.key
+        id?.let { key -> databaseReference?.child(key)?.setValue(dataSet) }
     }
 
-    public void add(Object object, String path, String userId) {
-        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId);
-        Log.i(Constants.TAG, "" + databaseReference.getParent());
-        String id = databaseReference.push().getKey();
-        databaseReference.child(id).setValue(object);
+    fun addNotification(notification: Notification?, path: String) {
+        databaseReference = FirebaseDatabase.getInstance().getReference(path)
+        Log.i(Constants.TAG, "" + databaseReference!!.parent)
+        val id = databaseReference?.push()?.key
+        id?.let { key -> databaseReference?.child(key)?.setValue(notification) }
     }
 
-    public void addNotification(Notification object, String path) {
-        databaseReference = FirebaseDatabase.getInstance().getReference(path);
-        Log.i(Constants.TAG, "" + databaseReference.getParent());
-        String id = databaseReference.push().getKey();
-        databaseReference.child(id).setValue(object);
-    }
+    fun update(`object`: Any, firebaseId: String?, path: String?, userId: String?) {
+        databaseReference = FirebaseDatabase.getInstance().getReference(path!!).child(userId!!)
+        var postValues: Map<String?, Any?> = HashMap()
+        when (path) {
+            "tenant" -> {
+                val tenant = `object` as Tenant
+                postValues = tenant.toMap()
+            }
 
-    public void update(Object object, String firebaseId, String path, String userId) {
-        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId);
-        Map<String, Object> postValues = new HashMap<>();
-        switch (path) {
-            case "tenant":
-                Tenant tenant = (Tenant) object;
-                postValues = tenant.toMap();
-                break;
-            case "meter":
-                Meter meter = (Meter) object;
-                postValues = meter.toMap();
-                break;
-            case "rent":
-                Rent rent = (Rent) object;
-                postValues = rent.toMap();
-                break;
-            case "room":
-                Room room = (Room) object;
-                postValues = room.toMap();
-                break;
-            case "note":
-                Note note = (Note) object;
-                postValues = note.toMap();
-                break;
-            case "electricityBill":
-                ElectricityBill electricityBill = (ElectricityBill) object;
-                postValues = electricityBill.toMap();
-                break;
-            case "user":
-                User user = (User) object;
-                postValues = user.toMap();
-                break;
-            default:
-                //empty implementation
-                Log.i(Constants.TAG, "Update Failed:: Not Table Found");
-                break;
+            "meter" -> {
+                val meter = `object` as Meter
+                postValues = meter.toMap()
+            }
+
+            "rent" -> {
+                val rent = `object` as Rent
+                postValues = rent.toMap()
+            }
+
+            "room" -> {
+                val room = `object` as Room
+                postValues = room.toMap()
+            }
+
+            "note" -> {
+                val note = `object` as Note
+                postValues = note.toMap()
+            }
+
+            "electricityBill" -> {
+                val electricityBill = `object` as ElectricityBill
+                postValues = electricityBill.toMap()
+            }
+
+            "user" -> {
+                val user = `object` as User
+                postValues = user.toMap()
+            }
+
+            else ->                 //empty implementation
+                Log.i(Constants.TAG, "Update Failed:: Not Table Found")
         }
-        databaseReference.child(firebaseId).updateChildren(postValues);
+        databaseReference!!.child(firebaseId!!).updateChildren(postValues)
     }
 
-    public void deleteRecord(String path, String firebaseId, String userId) {
-        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId).child(firebaseId);
-        databaseReference.removeValue();
+    fun deleteRecord(path: String, firebaseId: String, userId: String) {
+        databaseReference =
+            FirebaseDatabase.getInstance().getReference(path).child(userId).child(firebaseId)
+        databaseReference?.removeValue()
     }
 
-    public void fetchProfile(String path, String userId, onProfileFetch onProfileFetch) {
-        ArrayList<User> objects = new ArrayList<>();
-        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId);
-        Log.i(Constants.TAG, "" + databaseReference.getParent());
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getChildren() != null) {
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        User user = dataSnapshot.getValue(User.class);
-                        user.setFirebaseKey(dataSnapshot.getKey());
-                        objects.add(user);
-                        Log.i(Constants.TAG+":fetchProfile",""+user.getFirebaseKey());
+    fun fetchProfile(path: String, userId: String, onProfileFetch: onProfileFetch) {
+        val objects = ArrayList<User?>()
+        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId)
+        Log.i(Constants.TAG, "" + databaseReference!!.parent)
+        databaseReference?.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (dataSnapshot in snapshot.children) {
+                    val user = dataSnapshot.getValue(
+                        User::class.java
+                    )
+                    user?.firebaseKey = dataSnapshot.key
+                    objects.add(user)
+                    Log.i(Constants.TAG + ":fetchProfile", "" + user?.firebaseKey)
+                }
+                if (objects.size > 0) {
+                    onProfileFetch.onFetch(objects[0])
+                } else {
+                    onProfileFetch.onFetch(null)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.i(Constants.TAG, "" + error.message)
+            }
+        })
+    }
+
+    fun fetchAllMeter(path: String, userId: String, onDataFetch: onDataFetch) {
+        val objects = ArrayList<Meter?>()
+        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId)
+        Log.i(Constants.TAG, "" + databaseReference!!.parent)
+        databaseReference?.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (dataSnapshot in snapshot.children) {
+                    val meter = dataSnapshot.getValue(Meter::class.java)
+                    meter?.fireBaseKey = dataSnapshot.key
+                    objects.add(meter)
+                    Log.i(Constants.TAG + ":fetchMeter", "" + meter?.meterName)
+                }
+                onDataFetch.onFetch(objects)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.i(Constants.TAG, "" + error.message)
+            }
+        })
+    }
+
+    fun fetchAllRoom(path: String, userId: String, onRoomDataFetch: onRoomDataFetch) {
+        val objects = ArrayList<Room?>()
+        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId)
+        databaseReference?.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (dataSnapshot in snapshot.children) {
+                    val room = dataSnapshot.getValue(Room::class.java)
+                    room?.fireBaseKey = dataSnapshot.key
+                    Log.i(Constants.TAG + ":fetchRoom", "" + room?.roomName)
+                    objects.add(room)
+                }
+                onRoomDataFetch.onFetch(objects)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.i(Constants.TAG, "" + error.message)
+            }
+        })
+    }
+
+    fun fetchAllRent(path: String, userId: String, onRentDataFetch: onRentDataFetch) {
+        val objects = ArrayList<Rent?>()
+        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId)
+        databaseReference?.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (dataSnapshot in snapshot.children) {
+                    val rent = dataSnapshot.getValue(Rent::class.java)
+                    rent?.fireBaseKey = dataSnapshot.key
+                    Log.i(Constants.TAG + ":fetchRent", "" + rent?.monthName)
+                    objects.add(rent)
+                }
+                onRentDataFetch.onFetch(objects)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.i(Constants.TAG, "" + error.message)
+            }
+        })
+    }
+
+    fun fetchAllElectricityBills(
+        path: String,
+        userId: String,
+        onElectricityBillDataFetch: onElectricityBillDataFetch
+    ) {
+        val objects = ArrayList<ElectricityBill?>()
+        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId)
+        databaseReference?.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (dataSnapshot in snapshot.children) {
+                    val electricityBill = dataSnapshot.getValue(
+                        ElectricityBill::class.java
+                    )
+                    Log.i(Constants.TAG + ":fetchBill", "" + electricityBill?.meterName)
+                    electricityBill?.fireBaseKey = dataSnapshot.key
+                    objects.add(electricityBill)
+                }
+                onElectricityBillDataFetch.onFetch(objects)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.i(Constants.TAG, "" + error.message)
+            }
+        })
+    }
+
+    fun fetchAllTenant(path: String, userId: String, onTenantDataFetch: onTenantDataFetch) {
+        val objects = ArrayList<Tenant?>()
+        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId)
+        databaseReference!!.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (dataSnapshot in snapshot.children) {
+                    val tenant = dataSnapshot.getValue(Tenant::class.java)
+                    tenant?.fireBaseKey = dataSnapshot.key
+                    Log.i(Constants.TAG + ":fetchTenant", "" + tenant?.tenantName)
+                    objects.add(tenant)
+                }
+                onTenantDataFetch.onFetch(objects)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.i(Constants.TAG, "" + error.message)
+            }
+        })
+    }
+
+    fun fetchAllNotification(
+        path: String,
+        onNotificationDataFetch: onNotificationDataFetch
+    ) {
+        val objects = ArrayList<Notification?>()
+        databaseReference = FirebaseDatabase.getInstance().getReference(path)
+        databaseReference!!.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (dataSnapshot in snapshot.children) {
+                    val notification = dataSnapshot.getValue(
+                        Notification::class.java
+                    )
+                    Log.i(Constants.TAG + ":fetchAllNotification", "" + notification?.title)
+                    objects.add(notification)
+                }
+                onNotificationDataFetch.onFetch(objects)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.i(Constants.TAG, "" + error.message)
+            }
+        })
+    }
+
+    fun fetchAllNote(path: String, userId: String, onNoteDataFetch: onNoteDataFetch) {
+        val objects = ArrayList<Note?>()
+        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId)
+        databaseReference?.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (dataSnapshot in snapshot.children) {
+                    val note = dataSnapshot.getValue(
+                        Note::class.java
+                    )
+                    note!!.fireBaseKey = dataSnapshot.key
+                    Log.i(Constants.TAG + ":fetchNote", "" + note.title)
+                    objects.add(note)
+                }
+                onNoteDataFetch.onFetch(objects)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.i(Constants.TAG, "" + error.message)
+            }
+        })
+    }
+
+    fun getAllName(path: String, userId: String, fieldName: String, onNameFetch: onNameFetch) {
+        val roomNameList = ArrayList<String?>()
+        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId)
+        databaseReference?.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                roomNameList.add(context.getString(R.string.select_data))
+                for (dataSnapshot in snapshot.children) {
+                    Log.i(
+                        Constants.TAG, "$fieldName:" + dataSnapshot.child(fieldName).getValue(
+                            String::class.java
+                        )
+                    )
+                    roomNameList.add(
+                        dataSnapshot.child(fieldName).getValue(
+                            String::class.java
+                        )
+                    )
+                }
+                onNameFetch.onFetched(roomNameList)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                roomNameList.add(context.getString(R.string.no_data_message))
+                onNameFetch.onFetched(roomNameList)
+                Log.i(Constants.TAG, "" + error.message)
+            }
+        })
+    }
+
+    fun getAdditionalInfo(
+        path: String,
+        userId: String,
+        fieldName: String,
+        onAdditionalInfoFetch: onAdditionalInfoFetch
+    ) {
+        var data = 0.0
+        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId)
+        databaseReference?.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (dataSnapshot in snapshot.children) {
+                    Log.i(
+                        Constants.TAG, "$fieldName:" + dataSnapshot.child(fieldName).value
+                    )
+                    data += (dataSnapshot.child(fieldName).getValue<Double>() ?: 0.0)
+                }
+                onAdditionalInfoFetch.onFetched(data)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                onAdditionalInfoFetch.onFetched(data)
+                Log.i(Constants.TAG, "" + error.message)
+            }
+        })
+    }
+
+    fun getSingleColumnValue(
+        path: String,
+        userId: String,
+        fieldName: String,
+        onSingleDataFetch: onSingleDataFetch
+    ) {
+        val singleColumnRetrieval = arrayOf<Any?>(0)
+        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId)
+        databaseReference?.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                singleColumnRetrieval[0] = snapshot.child(fieldName).value
+                onSingleDataFetch.onFetched(singleColumnRetrieval[0])
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                onSingleDataFetch.onFetched(singleColumnRetrieval[0])
+                Log.i(Constants.TAG, "" + error.message)
+            }
+        })
+    }
+
+    fun getRentDataByMonth(
+        path: String,
+        userId: String,
+        queryValue: String,
+        fieldName: String,
+        onDataQuery: onDataQuery
+    ) {
+        val rentDataSetMonthly = intArrayOf(0)
+        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId)
+        databaseReference?.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (dataSnapshot in snapshot.children) {
+                    val rent = dataSnapshot.getValue(Rent::class.java)
+                    if (rent?.monthName == queryValue || rent?.monthName?.contains(queryValue) == true) {
+                        Log.i(Constants.TAG, fieldName + ":" + rent.rentAmount)
+                        rentDataSetMonthly[0] = rentDataSetMonthly[0] + rent.rentAmount
                     }
-                    if (objects != null && objects.size() > 0) {
-                        onProfileFetch.onFetch(objects.get(0));
-                    } else {
-                        onProfileFetch.onFetch(null);
+                }
+                Log.i(Constants.TAG, "getDataByQuery: Monthly :" + rentDataSetMonthly[0])
+                onDataQuery.onQueryFinished(rentDataSetMonthly[0])
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                onDataQuery.onQueryFinished(rentDataSetMonthly[0])
+                Log.i(Constants.TAG, "getDataByQuery: Monthly :" + error.message)
+            }
+        })
+    }
+
+    fun getRentDataByYear(
+        path: String,
+        userId: String,
+        queryValue: String,
+        fieldName: String,
+        onDataQueryYearlyRent: onDataQueryYearlyRent
+    ) {
+        val rentDataSetYearly = intArrayOf(0)
+        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId)
+        databaseReference?.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (dataSnapshot in snapshot.children) {
+                    val rent = dataSnapshot.getValue(Rent::class.java)
+                    if (rent?.yearName == queryValue || rent?.yearName?.contains(queryValue) == true) {
+                        Log.i(Constants.TAG, fieldName + ":" + rent.rentAmount)
+                        rentDataSetYearly[0] = rentDataSetYearly[0] + rent.rentAmount
                     }
                 }
+                Log.i(Constants.TAG, "getDataByQuery: Yearly :" + rentDataSetYearly[0])
+                onDataQueryYearlyRent.onQueryFinished(rentDataSetYearly[0])
             }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.i(Constants.TAG,""+error.getMessage());
+            override fun onCancelled(error: DatabaseError) {
+                onDataQueryYearlyRent.onQueryFinished(rentDataSetYearly[0])
+                Log.i(Constants.TAG, "getDataByQuery: Yearly :" + error.message)
             }
-        });
+        })
     }
 
-    public void fetchAllMeter(String path, String userId, onDataFetch onDataFetch) {
-        ArrayList<Meter> objects = new ArrayList<>();
-        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId);
-        Log.i(Constants.TAG, "" + databaseReference.getParent());
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getChildren() != null) {
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        Meter meter = dataSnapshot.getValue(Meter.class);
-                        meter.setFireBaseKey(dataSnapshot.getKey());
-                        objects.add(meter);
-                        Log.i(Constants.TAG+":fetchMeter",""+meter.getMeterName());
-                    }
-                    onDataFetch.onFetch(objects);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.i(Constants.TAG,""+error.getMessage());
-            }
-        });
+    interface onProfileFetch {
+        fun onFetch(user: User?)
     }
 
-    public void fetchAllRoom(String path, String userId, onRoomDataFetch onRoomDataFetch) {
-        ArrayList<Room> objects = new ArrayList<>();
-        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId);
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getChildren() != null) {
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        Room object = dataSnapshot.getValue(Room.class);
-                        object.setFireBaseKey(dataSnapshot.getKey());
-                        Log.i(Constants.TAG + ":fetchRoom", "" + object.getRoomName());
-                        objects.add(object);
-                    }
-                    onRoomDataFetch.onFetch(objects);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.i(Constants.TAG,""+error.getMessage());
-            }
-        });
+    interface onDataFetch {
+        fun onFetch(objects: ArrayList<Meter?>?)
     }
 
-    public void fetchAllRent(String path, String userId, onRentDataFetch onRentDataFetch) {
-        ArrayList<Rent> objects = new ArrayList<>();
-        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId);
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getChildren() != null) {
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        Rent object = dataSnapshot.getValue(Rent.class);
-                        object.setFireBaseKey(dataSnapshot.getKey());
-                        Log.i(Constants.TAG + ":fetchRent", "" + object.getMonthName());
-                        objects.add(object);
-                    }
-                    onRentDataFetch.onFetch(objects);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.i(Constants.TAG,""+error.getMessage());
-            }
-        });
+    interface onRoomDataFetch {
+        fun onFetch(objects: ArrayList<Room?>?)
     }
 
-    public void fetchAllElectricityBills(String path, String userId, onElectricityBillDataFetch onElectricityBillDataFetch) {
-        ArrayList<ElectricityBill> objects = new ArrayList<>();
-        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId);
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getChildren() != null) {
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        ElectricityBill object = dataSnapshot.getValue(ElectricityBill.class);
-                        Log.i(Constants.TAG + ":fetchBill", "" + object.getMeterName());
-                        object.setFireBaseKey(dataSnapshot.getKey());
-                        objects.add(object);
-                    }
-                    onElectricityBillDataFetch.onFetch(objects);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.i(Constants.TAG,""+error.getMessage());
-            }
-        });
+    interface onRentDataFetch {
+        fun onFetch(objects: ArrayList<Rent?>?)
     }
 
-    public void fetchAllTenant(String path, String userId, onTenantDataFetch onTenantDataFetch) {
-        ArrayList<Tenant> objects = new ArrayList<>();
-        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId);
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getChildren() != null) {
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        Tenant object = dataSnapshot.getValue(Tenant.class);
-                        object.setFireBaseKey(dataSnapshot.getKey());
-                        Log.i(Constants.TAG + ":fetchTenant", "" + object.getTenantName());
-                        objects.add(object);
-                    }
-                    onTenantDataFetch.onFetch(objects);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.i(Constants.TAG,""+error.getMessage());
-            }
-        });
+    interface onTenantDataFetch {
+        fun onFetch(objects: ArrayList<Tenant?>?)
     }
 
-    public void fetchAllNotification(String path, String userId, onNotificationDataFetch onNotificationDataFetch) {
-        ArrayList<Notification> objects = new ArrayList<>();
-        databaseReference = FirebaseDatabase.getInstance().getReference(path);
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getChildren() != null) {
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        Notification object = dataSnapshot.getValue(Notification.class);
-                        Log.i(Constants.TAG + ":fetchAllNotification", "" + object.getTitle());
-                        objects.add(object);
-                    }
-                    onNotificationDataFetch.onFetch(objects);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.i(Constants.TAG,""+error.getMessage());
-            }
-        });
+    interface onElectricityBillDataFetch {
+        fun onFetch(objects: ArrayList<ElectricityBill?>?)
     }
 
-    public void fetchAllNote(String path, String userId, onNoteDataFetch onNoteDataFetch) {
-        ArrayList<Note> objects = new ArrayList<>();
-        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId);
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getChildren() != null) {
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        Note object = dataSnapshot.getValue(Note.class);
-                        object.setFireBaseKey(dataSnapshot.getKey());
-                        Log.i(Constants.TAG + ":fetchNote", "" + object.getTitle());
-                        objects.add(object);
-                    }
-                    onNoteDataFetch.onFetch(objects);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.i(Constants.TAG,""+error.getMessage());
-            }
-        });
+    interface onNotificationDataFetch {
+        fun onFetch(objects: ArrayList<Notification?>?)
     }
 
-    public void getAllName(String path, String userId, String fieldName, onNameFetch onNameFetch) {
-        ArrayList<String> roomNameList = new ArrayList<>();
-        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId);
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getChildren() != null) {
-                    roomNameList.add(context.getString(R.string.select_data));
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        Log.i(Constants.TAG, fieldName + ":" + dataSnapshot.child(fieldName).getValue(String.class));
-                        roomNameList.add(dataSnapshot.child(fieldName).getValue(String.class));
-                    }
-                }
-                if (onNameFetch != null){
-                    onNameFetch.onFetched(roomNameList);
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                roomNameList.add(context.getString(R.string.no_data_message));
-                if (onNameFetch != null){
-                    onNameFetch.onFetched(roomNameList);
-                }
-                Log.i(Constants.TAG,""+error.getMessage());
-            }
-        });
+    interface onNoteDataFetch {
+        fun onFetch(objects: ArrayList<Note?>?)
     }
 
-    public void getAdditionalInfo(String path, String userId, String fieldName, onAdditionalInfoFetch onAdditionalInfoFetch) {
-        final double[] data = {0};
-        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId);
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getChildren() != null) {
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        Log.i(Constants.TAG, fieldName + ":" + dataSnapshot.child(fieldName).getValue(double.class));
-                        data[0] = data[0] + (dataSnapshot.child(fieldName).getValue(double.class));
-                    }
-                }
-                if (onAdditionalInfoFetch != null) {
-                    onAdditionalInfoFetch.onFetched(data[0]);
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                if (onAdditionalInfoFetch != null){
-                    onAdditionalInfoFetch.onFetched(data[0]);
-                }
-                Log.i(Constants.TAG,""+error.getMessage());
-            }
-        });
+    interface onNameFetch {
+        fun onFetched(nameList: ArrayList<String?>?)
     }
 
-    public void getSingleColumnValue(String path, String userId, String fieldName, onSingleDataFetch onSingleDataFetch) {
-        final Object[] object = {0};
-        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId);
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getChildren() != null) {
-                    object[0] = (snapshot.child(fieldName).getValue(Integer.class));
-                }
-                if (onSingleDataFetch != null) {
-                    onSingleDataFetch.onFetched(object[0]);
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                if (onSingleDataFetch != null){
-                    onSingleDataFetch.onFetched(object[0]);
-                }
-                Log.i(Constants.TAG,""+error.getMessage());
-            }
-        });
+    interface onAdditionalInfoFetch {
+        fun onFetched(data: Double)
     }
 
-    public void getRentDataByMonth(String path, String userId, String queryValue, String fieldName, onDataQuery onDataQuery) {
-        final int[] object = {0};
-
-        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId);
-
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getChildren() != null) {
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        Rent rent = dataSnapshot.getValue(Rent.class);
-                        if (rent.getMonthName().equals(queryValue) || rent.getMonthName().contains(queryValue) ){
-                            Log.i(Constants.TAG,fieldName+ ":" +rent.getRentAmount());
-                            object[0] = object[0] + rent.getRentAmount();
-                        }
-                    }
-                    Log.i(Constants.TAG,"getDataByQuery: Monthly :"+object[0]);
-                }
-                if (onDataQuery != null){
-                    onDataQuery.onQueryFinished(object[0]);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                if (onDataQuery != null){
-                    onDataQuery.onQueryFinished(object[0]);
-                }
-                Log.i(Constants.TAG,"getDataByQuery: Monthly :"+error.getMessage());
-            }
-        });
+    interface onSingleDataFetch {
+        fun onFetched(data: Any?)
     }
 
-    public void getRentDataByYear(String path, String userId, String queryValue, String fieldName, onDataQueryYearlyRent onDataQueryYearlyRent) {
-        final int[] object = {0};
-
-        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId);
-
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getChildren() != null) {
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        Rent rent = dataSnapshot.getValue(Rent.class);
-                        if (rent.getYearName().equals(queryValue) || rent.getYearName().contains(queryValue) ){
-                            Log.i(Constants.TAG,fieldName+ ":" +rent.getRentAmount());
-                            object[0] = object[0] + rent.getRentAmount();
-                        }
-                    }
-                    Log.i(Constants.TAG,"getDataByQuery: Yearly :"+object[0]);
-                }
-                if (onDataQueryYearlyRent != null){
-                    onDataQueryYearlyRent.onQueryFinished(object[0]);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                if (onDataQueryYearlyRent != null){
-                    onDataQueryYearlyRent.onQueryFinished(object[0]);
-                }
-                Log.i(Constants.TAG,"getDataByQuery: Yearly :"+error.getMessage());
-            }
-        });
+    interface onDataQuery {
+        fun onQueryFinished(data: Int)
     }
 
-
-    public interface onProfileFetch{ void onFetch(User user);}
-    public interface onDataFetch{ void onFetch(ArrayList<Meter> objects);}
-    public interface onRoomDataFetch{ void onFetch(ArrayList<Room> objects);}
-    public interface onRentDataFetch{ void onFetch(ArrayList<Rent> objects);}
-    public interface onTenantDataFetch{ void onFetch(ArrayList<Tenant> objects);}
-    public interface onElectricityBillDataFetch{ void onFetch(ArrayList<ElectricityBill> objects);}
-    public interface onNotificationDataFetch{ void onFetch(ArrayList<Notification> objects);}
-    public interface onNoteDataFetch{ void onFetch(ArrayList<Note> objects);}
-    public interface onNameFetch{ void onFetched(ArrayList<String> nameList);}
-    public interface onAdditionalInfoFetch{ void onFetched(double data);}
-    public interface onSingleDataFetch{ void onFetched(Object data);}
-    public interface onDataQuery{ void onQueryFinished(int data);}
-    public interface onDataQueryYearlyRent{ void onQueryFinished(int data);}
+    interface onDataQueryYearlyRent {
+        fun onQueryFinished(data: Int)
+    }
 }
