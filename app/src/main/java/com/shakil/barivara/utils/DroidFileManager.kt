@@ -1,79 +1,61 @@
-package com.shakil.barivara.utils;
+package com.shakil.barivara.utils
 
-import android.content.ContentResolver;
-import android.content.Context;
-import android.net.Uri;
+import android.content.Context
+import android.net.Uri
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.OutputStream
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-
-public class DroidFileManager {
-
-    public boolean isFileExist(File backupDBPath){
-        if (backupDBPath.exists()){
-            return true;
-        }
-        return false;
+class DroidFileManager {
+    fun isFileExist(backupDBPath: File): Boolean {
+        return backupDBPath.exists()
     }
 
-    public File createFile(File environment, String path){
-        if (environment == null){
-            return new File(path);
-        }
-        else{
-            return new File(environment, path);
+    fun createFile(environment: File?, path: String): File {
+        return if (environment == null) {
+            File(path)
+        } else {
+            File(environment, path)
         }
     }
 
     //create an InputStream from the URI and then, from this, create an OutputStream by copying the contents of the input stream.
     //http://jtdz-solenoids.com/stackoverflow_/questions/57093479/get-real-path-from-uri-data-is-deprecated-in-android-q
-    public String getPath(Context context, Uri uri) {
-        final ContentResolver contentResolver = context.getContentResolver();
-        if (contentResolver == null)
-            return null;
-
-        String filePath = context.getApplicationInfo().dataDir + File.separator
-                + System.currentTimeMillis();
-
-        File file = new File(filePath);
+    fun getPath(context: Context, uri: Uri?): String? {
+        val contentResolver = context.contentResolver ?: return null
+        val filePath = (context.applicationInfo.dataDir + File.separator
+                + System.currentTimeMillis())
+        val file = File(filePath)
         try {
-            InputStream inputStream = contentResolver.openInputStream(uri);
-            if (inputStream == null)
-                return null;
-
-            OutputStream outputStream = new FileOutputStream(file);
-            byte[] buf = new byte[1024];
-            int len;
-            while ((len = inputStream.read(buf)) > 0)
-                outputStream.write(buf, 0, len);
-
-            outputStream.close();
-            inputStream.close();
-        } catch (IOException ignore) {
-            return null;
+            val inputStream = contentResolver.openInputStream(uri!!) ?: return null
+            val outputStream: OutputStream = FileOutputStream(file)
+            val buf = ByteArray(1024)
+            var len: Int
+            while (inputStream.read(buf).also { len = it } > 0) outputStream.write(buf, 0, len)
+            outputStream.close()
+            inputStream.close()
+        } catch (ignore: IOException) {
+            return null
         }
-
-        return file.getAbsolutePath();
+        return file.absolutePath
     }
 
-    public boolean createFolder(String path){
-        boolean isAlreadyCreated = false;
-        File dir = new File(path);
-        if (!dir.exists()){
-            if (dir.mkdir()){
-                isAlreadyCreated = true;
+    fun createFolder(path: String): Boolean {
+        var isAlreadyCreated = false
+        val dir = File(path)
+        if (!dir.exists()) {
+            if (dir.mkdir()) {
+                isAlreadyCreated = true
             }
         }
-        return isAlreadyCreated;
+        return isAlreadyCreated
     }
 
-    public boolean folderExists(String path){
-        boolean isFolderExists = false;
-        File dir = new File(path);
-        isFolderExists = !dir.exists();
-        return isFolderExists;
+    fun folderExists(path: String): Boolean {
+        var isFolderExists = false
+        val dir = File(path)
+        isFolderExists = !dir.exists()
+        return isFolderExists
     }
 }
