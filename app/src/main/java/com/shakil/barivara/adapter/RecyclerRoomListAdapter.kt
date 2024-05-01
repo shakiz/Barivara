@@ -1,89 +1,59 @@
-package com.shakil.barivara.adapter;
+package com.shakil.barivara.adapter
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.shakil.barivara.adapter.RecyclerRoomListAdapter.RoomItemViewHolder
+import com.shakil.barivara.databinding.AdapterLayoutRoomListBinding
+import com.shakil.barivara.model.room.Room
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.shakil.barivara.databinding.AdapterLayoutRoomListBinding;
-import com.shakil.barivara.model.room.Room;
-
-import java.util.ArrayList;
-
-public class RecyclerRoomListAdapter extends RecyclerView.Adapter<RecyclerRoomListAdapter.RoomItemViewHolder> {
-
-    private final ArrayList<Room> arrayList;
-
-    public RecyclerRoomListAdapter(ArrayList<Room> arrayList) {
-        this.arrayList = arrayList;
+class RecyclerRoomListAdapter(private val arrayList: ArrayList<Room>) :
+    RecyclerView.Adapter<RoomItemViewHolder>() {
+    private var roomCallBacks: RoomCallBacks? = null
+    fun setRoomCallBack(roomCallBacks: RoomCallBacks?) {
+        this.roomCallBacks = roomCallBacks
     }
 
-    public RoomCallBacks roomCallBacks;
-
-    public void setRoomCallBack(RoomCallBacks roomCallBacks) {
-        this.roomCallBacks = roomCallBacks;
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RoomItemViewHolder {
+        val binding =
+            AdapterLayoutRoomListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return RoomItemViewHolder(binding, roomCallBacks)
     }
 
-    @NonNull
-    @Override
-    public RoomItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        AdapterLayoutRoomListBinding binding = AdapterLayoutRoomListBinding.inflate(LayoutInflater.from(parent.getContext()), parent,false);
-        return new RoomItemViewHolder(binding, roomCallBacks);
+    override fun onBindViewHolder(holder: RoomItemViewHolder, position: Int) {
+        val room = arrayList[position]
+        holder.bind(room)
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull RoomItemViewHolder holder, int position) {
-        Room room = arrayList.get(position);
-        holder.bind(room);
+    override fun getItemCount(): Int {
+        return arrayList.size
     }
 
-    @Override
-    public int getItemCount() {
-        return arrayList.size();
-    }
-
-    public static class RoomItemViewHolder extends RecyclerView.ViewHolder {
-        AdapterLayoutRoomListBinding binding;
-        RoomCallBacks roomCallBacks;
-        public RoomItemViewHolder(@NonNull AdapterLayoutRoomListBinding binding, RoomCallBacks roomCallBacks) {
-            super(binding.getRoot());
-            this.binding = binding;
-            this.roomCallBacks = roomCallBacks;
-        }
-
-        void bind(Room room){
-            binding.roomName.setText(room.getRoomName());
-            binding.roomOwner.setText(room.getTenantName());
-            binding.startMonth.setText(room.getStartMonthName());
-            binding.itemCardView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (roomCallBacks != null){
-                        roomCallBacks.onItemClick(room);
-                    }
-                }
-            });
-
-            binding.editDeleteIncludeLayout.editButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (roomCallBacks != null) roomCallBacks.onEdit(room);
-                }
-            });
-            binding.editDeleteIncludeLayout.deleteButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (roomCallBacks != null) roomCallBacks.onDelete(room);
-                }
-            });
+    class RoomItemViewHolder(
+        var binding: AdapterLayoutRoomListBinding,
+        private var roomCallBacks: RoomCallBacks?
+    ) : RecyclerView.ViewHolder(
+        binding.root
+    ) {
+        fun bind(room: Room) {
+            binding.roomName.text = room.roomName
+            binding.roomOwner.text = room.tenantName
+            binding.startMonth.text = room.startMonthName
+            binding.itemCardView.setOnClickListener {
+                roomCallBacks?.onItemClick(room)
+            }
+            binding.editDeleteIncludeLayout.editButton.setOnClickListener {
+                roomCallBacks?.onEdit(room)
+            }
+            binding.editDeleteIncludeLayout.deleteButton.setOnClickListener {
+                roomCallBacks?.onDelete(room)
+            }
         }
     }
 
-    public interface RoomCallBacks {
-        void onDelete(Room room);
-        void onEdit(Room room);
-        void onItemClick(Room room);
+    interface RoomCallBacks {
+        fun onDelete(room: Room)
+        fun onEdit(room: Room)
+        fun onItemClick(room: Room)
     }
 }
