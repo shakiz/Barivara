@@ -153,15 +153,20 @@ class MeterListActivity : AppCompatActivity(), MeterCallBacks {
 
     private fun setData() {
         ux?.getLoadingView()
-        firebaseCrudHelper.fetchAllMeter("meter", prefManager.getString(mUserId)) { objects ->
-            meterList = objects
-            setRecyclerAdapter()
-            ux?.removeLoadingView()
-            if ((meterList?.size ?: 0) <= 0) {
-                activityMeterListBinding.mNoDataMessage.visibility = View.VISIBLE
-                activityMeterListBinding.mNoDataMessage.setText(R.string.no_data_message)
-            }
-        }
+        firebaseCrudHelper.fetchAllMeter(
+            "meter",
+            prefManager.getString(mUserId),
+            object : FirebaseCrudHelper.onDataFetch {
+                override fun onFetch(objects: ArrayList<Meter?>?) {
+                    meterList = objects.orEmpty() as ArrayList<Meter>
+                    setRecyclerAdapter()
+                    ux?.removeLoadingView()
+                    if (meterList.size <= 0) {
+                        activityMeterListBinding.mNoDataMessage.visibility = View.VISIBLE
+                        activityMeterListBinding.mNoDataMessage.setText(R.string.no_data_message)
+                    }
+                }
+            })
     }
 
     private fun doPopUpForDeleteConfirmation(meter: Meter) {
