@@ -23,14 +23,13 @@ import com.github.javiersantos.appupdater.objects.Update
 import com.shakil.barivara.R
 
 class AppUpdate(private val context: Context) {
-    private val prefManager = PrefManager(context)
     private val tools = Tools(context)
 
     interface onGetUpdate {
         fun onResult(updated: Boolean)
     }
 
-    fun getUpdate(listener: onGetUpdate?) {
+    fun getUpdate(listener: onGetUpdate?, prefManager: PrefManager) {
         val appUpdater = AppUpdaterUtils(context)
             .setUpdateFrom(UpdateFrom.GOOGLE_PLAY)
             .withListener(object : UpdateListener {
@@ -60,7 +59,7 @@ class AppUpdate(private val context: Context) {
         appUpdater.start()
     }
 
-    fun checkUpdate(showUpdated: Boolean, cancelable: Boolean): Boolean {
+    fun checkUpdate(showUpdated: Boolean, cancelable: Boolean, prefManager: PrefManager): Boolean {
         var isUpdated = true
         val latestVersion = prefManager.getString("LatestVersion")
         val currentVersion = prefManager.getString("CurrentVersion")
@@ -95,7 +94,7 @@ class AppUpdate(private val context: Context) {
                     btnCancel.setOnClickListener {
                         mPopupDialogNoTitle.dismiss()
                         val tools = Tools(context)
-                        tools.checkLogin()
+                        tools.checkLogin(prefManager)
                     }
                     btnOk.setOnClickListener { goToPlayStore(mPopupDialogNoTitle) }
                     if (latestVersion == currentVersion) {
