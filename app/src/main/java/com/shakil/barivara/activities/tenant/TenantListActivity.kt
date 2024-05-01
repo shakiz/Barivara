@@ -152,15 +152,20 @@ class TenantListActivity : AppCompatActivity(), TenantCallBacks {
 
     private fun setData() {
         ux.getLoadingView()
-        firebaseCrudHelper.fetchAllTenant("tenant", prefManager.getString(mUserId)) { objects ->
-            tenantList = objects
-            if (tenantList.size <= 0) {
-                activityTenantListBinding.mNoDataMessage.visibility = View.VISIBLE
-                activityTenantListBinding.mNoDataMessage.setText(R.string.no_data_message)
-            }
-            setRecyclerAdapter()
-            ux.removeLoadingView()
-        }
+        firebaseCrudHelper.fetchAllTenant(
+            "tenant",
+            prefManager.getString(mUserId),
+            object : FirebaseCrudHelper.onTenantDataFetch {
+                override fun onFetch(objects: ArrayList<Tenant?>?) {
+                    tenantList = objects.orEmpty() as ArrayList<Tenant>
+                    if (tenantList.size <= 0) {
+                        activityTenantListBinding.mNoDataMessage.visibility = View.VISIBLE
+                        activityTenantListBinding.mNoDataMessage.setText(R.string.no_data_message)
+                    }
+                    setRecyclerAdapter()
+                    ux.removeLoadingView()
+                }
+            })
     }
 
     private fun setRecyclerAdapter() {

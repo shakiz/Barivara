@@ -142,19 +142,22 @@ class NewTenantActivity : AppCompatActivity() {
             firebaseCrudHelper.getAllName(
                 "room",
                 prefManager.getString(mUserId),
-                "roomName"
-            ) { nameList ->
-                roomNames = nameList
-                setRoomSpinner()
-                if (tenant.tenantId != null) {
-                    if (tenant.associateRoomId > 0) {
-                        activityAddNewTenantBinding.AssociateRoomId.setSelection(
-                            tenant.associateRoomId,
-                            true
-                        )
+                "roomName",
+                object : FirebaseCrudHelper.onNameFetch {
+                    override fun onFetched(nameList: ArrayList<String?>?) {
+                        roomNames = nameList.orEmpty() as ArrayList<String>
+                        setRoomSpinner()
+                        if (tenant.tenantId != null) {
+                            if (tenant.associateRoomId > 0) {
+                                activityAddNewTenantBinding.AssociateRoomId.setSelection(
+                                    tenant.associateRoomId,
+                                    true
+                                )
+                            }
+                        }
                     }
                 }
-            }
+            )
         } else {
             roomNames = spinnerData.setSpinnerNoData()
             setRoomSpinner()
