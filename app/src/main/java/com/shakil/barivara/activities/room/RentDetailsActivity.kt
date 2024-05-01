@@ -89,11 +89,14 @@ class RentDetailsActivity : AppCompatActivity() {
             firebaseCrudHelper.getAllName(
                 "room",
                 prefManager.getString(mUserId),
-                "roomName"
-            ) { nameList ->
-                roomNames = nameList
-                setRoomSpinner()
-            }
+                "roomName",
+                object : FirebaseCrudHelper.onNameFetch {
+                    override fun onFetched(nameList: ArrayList<String?>?) {
+                        roomNames = nameList.orEmpty() as ArrayList<String>
+                        setRoomSpinner()
+                    }
+                }
+            )
         } else {
             roomNames = spinnerData.setSpinnerNoData()
             setRoomSpinner()

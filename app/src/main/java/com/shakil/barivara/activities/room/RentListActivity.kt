@@ -136,15 +136,20 @@ class RentListActivity : AppCompatActivity(), RentCallBacks {
 
     private fun setData() {
         ux?.getLoadingView()
-        firebaseCrudHelper.fetchAllRent("rent", prefManager.getString(mUserId)) { objects ->
-            rentList = objects
-            if (rentList.size <= 0) {
-                activityRentListBinding.mNoDataMessage.visibility = View.VISIBLE
-                activityRentListBinding.mNoDataMessage.setText(R.string.no_data_message)
-            }
-            setRecyclerAdapter()
-            ux?.removeLoadingView()
-        }
+        firebaseCrudHelper.fetchAllRent(
+            "rent",
+            prefManager.getString(mUserId),
+            object : FirebaseCrudHelper.onRentDataFetch {
+                override fun onFetch(objects: ArrayList<Rent?>?) {
+                    rentList = objects.orEmpty() as ArrayList<Rent>
+                    if (rentList.size <= 0) {
+                        activityRentListBinding.mNoDataMessage.visibility = View.VISIBLE
+                        activityRentListBinding.mNoDataMessage.setText(R.string.no_data_message)
+                    }
+                    setRecyclerAdapter()
+                    ux?.removeLoadingView()
+                }
+            })
     }
 
     private fun setRecyclerAdapter() {
