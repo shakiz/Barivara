@@ -55,7 +55,7 @@ class RecyclerElectricityBillListAdapter(private val arrayList: ArrayList<Electr
     }
 
     interface ElectricityBillBacks {
-        fun onDelete(electricityBill: ElectricityBill?)
-        fun onItemClick(electricityBill: ElectricityBill?)
+        fun onDelete(electricityBill: ElectricityBill)
+        fun onItemClick(electricityBill: ElectricityBill)
     }
 }

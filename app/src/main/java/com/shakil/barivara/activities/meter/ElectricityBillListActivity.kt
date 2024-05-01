@@ -183,13 +183,11 @@ class ElectricityBillListActivity : AppCompatActivity(), ElectricityBillBacks {
         dialog.show()
     }
 
-    override fun onDelete(electricityBill: ElectricityBill?) {
-        if (electricityBill != null) {
-            doPopUpForDeleteConfirmation(electricityBill)
-        }
+    override fun onDelete(electricityBill: ElectricityBill) {
+        doPopUpForDeleteConfirmation(electricityBill)
     }
 
-    override fun onItemClick(electricityBill: ElectricityBill?) {
+    override fun onItemClick(electricityBill: ElectricityBill) {
         startActivity(
             Intent(
                 this@ElectricityBillListActivity,
