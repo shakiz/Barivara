@@ -63,16 +63,21 @@ class NoteListActivity : AppCompatActivity() {
 
     private fun setData() {
         ux.getLoadingView()
-        firebaseCrudHelper.fetchAllNote("note", prefManager.getString(mUserId)) { objects ->
-            noteList = objects
-            setRecyclerAdapter()
-            ux.removeLoadingView()
-            if ((noteList?.size ?: 0) <= 0) {
-                activityNoteListBinding.noDataLayout.LayoutNoNotes.visibility = View.VISIBLE
-            } else {
-                activityNoteListBinding.noDataLayout.LayoutNoNotes.visibility = View.GONE
-            }
-        }
+        firebaseCrudHelper.fetchAllNote(
+            "note",
+            prefManager.getString(mUserId),
+            object : FirebaseCrudHelper.onNoteDataFetch {
+                override fun onFetch(objects: ArrayList<Note?>?) {
+                    noteList = objects.orEmpty() as ArrayList<Note>
+                    setRecyclerAdapter()
+                    ux.removeLoadingView()
+                    if (noteList.size <= 0) {
+                        activityNoteListBinding.noDataLayout.LayoutNoNotes.visibility = View.VISIBLE
+                    } else {
+                        activityNoteListBinding.noDataLayout.LayoutNoNotes.visibility = View.GONE
+                    }
+                }
+            })
     }
 
     private fun setRecyclerAdapter() {

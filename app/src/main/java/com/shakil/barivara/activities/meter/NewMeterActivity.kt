@@ -76,11 +76,14 @@ class NewMeterActivity : AppCompatActivity() {
             firebaseCrudHelper.getAllName(
                 "room",
                 prefManager.getString(mUserId),
-                "roomName"
-            ) { nameList ->
-                roomNames = nameList
-                setRoomNameSpinner()
-            }
+                "roomName",
+                object : FirebaseCrudHelper.onNameFetch {
+                    override fun onFetched(nameList: ArrayList<String?>?) {
+                        roomNames = nameList.orEmpty() as ArrayList<String>
+                        setRoomNameSpinner()
+                    }
+                }
+            )
         } else {
             roomNames = spinnerData.setSpinnerNoData()
             setRoomNameSpinner()

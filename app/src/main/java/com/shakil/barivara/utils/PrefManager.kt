@@ -26,8 +26,8 @@ class PrefManager(context: Context) {
         return pref.getBoolean(key, false)
     }
 
-    fun getString(key: String?): String? {
-        return pref.getString(key, "")
+    fun getString(key: String?): String {
+        return pref.getString(key, "") ?: ""
     }
 
     fun getInt(key: String?): Int {

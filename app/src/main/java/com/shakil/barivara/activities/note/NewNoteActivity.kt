@@ -28,7 +28,7 @@ class NewNoteActivity : AppCompatActivity() {
     private lateinit var activityNewNoteBinding: ActivityNewNoteBinding
     private lateinit var textToSpeech: TextToSpeech
     private var isTextToSpeechOn = false
-    private var note: Note? = Note()
+    private var note: Note = Note()
     private var command = "add"
     private var firebaseCrudHelper = FirebaseCrudHelper(this)
     private val hashMap: Map<String?, Array<String>?> = HashMap()
@@ -51,16 +51,16 @@ class NewNoteActivity : AppCompatActivity() {
     private fun intentData(){
         if (intent.extras != null) {
             if (intent.getParcelableExtra<Parcelable?>("note") != null) {
-                note = intent.getParcelableExtra("note")
+                note = intent.getParcelableExtra("note")!!
             }
         }
     }
 
     private fun loadData() {
-        if (note?.noteId != null) {
+        if (note.noteId != null) {
             command = "update"
-            activityNewNoteBinding.Title.setText(note?.title)
-            activityNewNoteBinding.Description.setText(note?.description)
+            activityNewNoteBinding.Title.setText(note.title)
+            activityNewNoteBinding.Description.setText(note.description)
             activityNewNoteBinding.listenHint.visibility = View.VISIBLE
             activityNewNoteBinding.listenIcon.visibility = View.VISIBLE
         }
@@ -97,16 +97,16 @@ class NewNoteActivity : AppCompatActivity() {
     private fun saveOrUpdateNote() {
         if (validation.isValid) {
             if (tools.hasConnection()) {
-                note?.title = activityNewNoteBinding.Title.text.toString()
-                note?.description = activityNewNoteBinding.Description.text.toString()
-                note?.date = utilsForAll.dateTimeWithPM
+                note.title = activityNewNoteBinding.Title.text.toString()
+                note.description = activityNewNoteBinding.Description.text.toString()
+                note.date = utilsForAll.dateTimeWithPM
                 if (command == "add") {
-                    note?.noteId = UUID.randomUUID().toString()
+                    note.noteId = UUID.randomUUID().toString()
                     firebaseCrudHelper.add(note, "note", prefManager.getString(mUserId))
                 } else {
                     firebaseCrudHelper.update(
                         note,
-                        note?.fireBaseKey,
+                        note.fireBaseKey,
                         "note",
                         prefManager.getString(mUserId)
                     )
