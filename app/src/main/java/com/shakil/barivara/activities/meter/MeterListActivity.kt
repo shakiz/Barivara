@@ -26,7 +26,7 @@ import com.shakil.barivara.utils.UX
 
 class MeterListActivity : AppCompatActivity(), MeterCallBacks {
     private lateinit var activityMeterListBinding: ActivityMeterListBinding
-    private var meterList: ArrayList<Meter>? = null
+    private var meterList: ArrayList<Meter> = arrayListOf()
     private var firebaseCrudHelper = FirebaseCrudHelper(this)
     private var ux: UX? = null
     private var tools = Tools(this)
@@ -75,29 +75,34 @@ class MeterListActivity : AppCompatActivity(), MeterCallBacks {
                 if (!TextUtils.isEmpty(activityMeterListBinding.searchLayout.SearchName.text.toString())) {
                     filterManager.onFilterClick(
                         activityMeterListBinding.searchLayout.SearchName.text.toString(),
-                        meterList
-                    ) { objects ->
-                        if (objects.size > 0) {
-                            meterList = objects
-                            setRecyclerAdapter()
-                            Tools.hideKeyboard(this@MeterListActivity)
-                            Toast.makeText(
-                                this@MeterListActivity,
-                                getString(R.string.filterd),
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        } else {
-                            Tools.hideKeyboard(this@MeterListActivity)
-                            activityMeterListBinding.mNoDataMessage.visibility = View.VISIBLE
-                            activityMeterListBinding.mNoDataMessage.setText(R.string.no_data_message)
-                            activityMeterListBinding.mRecylerView.visibility = View.GONE
-                            Toast.makeText(
-                                this@MeterListActivity,
-                                getString(R.string.no_data_message),
-                                Toast.LENGTH_SHORT
-                            ).show()
+                        meterList,
+                        object : FilterManager.onMeterFilterClick {
+                            override fun onClick(objects: ArrayList<Meter>) {
+                                if (objects.size > 0) {
+                                    meterList = objects
+                                    setRecyclerAdapter()
+                                    Tools.hideKeyboard(this@MeterListActivity)
+                                    Toast.makeText(
+                                        this@MeterListActivity,
+                                        getString(R.string.filterd),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                } else {
+                                    Tools.hideKeyboard(this@MeterListActivity)
+                                    activityMeterListBinding.mNoDataMessage.visibility =
+                                        View.VISIBLE
+                                    activityMeterListBinding.mNoDataMessage.setText(R.string.no_data_message)
+                                    activityMeterListBinding.mRecylerView.visibility = View.GONE
+                                    Toast.makeText(
+                                        this@MeterListActivity,
+                                        getString(R.string.no_data_message),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            }
+
                         }
-                    }
+                    )
                 } else {
                     Toast.makeText(
                         this@MeterListActivity,

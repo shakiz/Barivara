@@ -19,6 +19,7 @@ import com.shakil.barivara.adapter.RecyclerElectricityBillListAdapter.Electricit
 import com.shakil.barivara.databinding.ActivityElectricityBillListBinding
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.model.meter.ElectricityBill
+import com.shakil.barivara.model.meter.Meter
 import com.shakil.barivara.utils.FilterManager
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
@@ -64,29 +65,34 @@ class ElectricityBillListActivity : AppCompatActivity(), ElectricityBillBacks {
                 if (!TextUtils.isEmpty(activityMeterCostListBinding.searchLayout.SearchName.text.toString())) {
                     filterManager.onFilterClick(
                         activityMeterCostListBinding.searchLayout.SearchName.text.toString(),
-                        electricityBills
-                    ) { objects ->
-                        if (objects.size > 0) {
-                            electricityBills = objects
-                            setRecyclerAdapter()
-                            Tools.hideKeyboard(this@ElectricityBillListActivity)
-                            Toast.makeText(
-                                this@ElectricityBillListActivity,
-                                getString(R.string.filterd),
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        } else {
-                            Tools.hideKeyboard(this@ElectricityBillListActivity)
-                            activityMeterCostListBinding.mNoDataMessage.visibility = View.VISIBLE
-                            activityMeterCostListBinding.mNoDataMessage.setText(R.string.no_data_message)
-                            activityMeterCostListBinding.mRecylerView.visibility = View.GONE
-                            Toast.makeText(
-                                this@ElectricityBillListActivity,
-                                getString(R.string.no_data_message),
-                                Toast.LENGTH_SHORT
-                            ).show()
+                        electricityBills,
+                        object : FilterManager.onBillFilterClick {
+                            override fun onClick(objects: ArrayList<ElectricityBill>) {
+                                if (objects.size > 0) {
+                                    electricityBills = objects
+                                    setRecyclerAdapter()
+                                    Tools.hideKeyboard(this@ElectricityBillListActivity)
+                                    Toast.makeText(
+                                        this@ElectricityBillListActivity,
+                                        getString(R.string.filterd),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                } else {
+                                    Tools.hideKeyboard(this@ElectricityBillListActivity)
+                                    activityMeterCostListBinding.mNoDataMessage.visibility =
+                                        View.VISIBLE
+                                    activityMeterCostListBinding.mNoDataMessage.setText(R.string.no_data_message)
+                                    activityMeterCostListBinding.mRecylerView.visibility = View.GONE
+                                    Toast.makeText(
+                                        this@ElectricityBillListActivity,
+                                        getString(R.string.no_data_message),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            }
+
                         }
-                    }
+                    )
                 } else {
                     Toast.makeText(
                         this@ElectricityBillListActivity,

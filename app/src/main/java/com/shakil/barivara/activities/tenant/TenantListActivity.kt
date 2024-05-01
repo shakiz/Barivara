@@ -81,29 +81,34 @@ class TenantListActivity : AppCompatActivity(), TenantCallBacks {
                 if (!TextUtils.isEmpty(activityTenantListBinding.searchLayout.SearchName.text.toString())) {
                     filterManager.onFilterClick(
                         activityTenantListBinding.searchLayout.SearchName.text.toString(),
-                        tenantList
-                    ) { objects ->
-                        if (objects.size > 0) {
-                            tenantList = objects
-                            setRecyclerAdapter()
-                            Tools.hideKeyboard(this@TenantListActivity)
-                            Toast.makeText(
-                                this@TenantListActivity,
-                                getString(R.string.filterd),
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        } else {
-                            Tools.hideKeyboard(this@TenantListActivity)
-                            activityTenantListBinding.mNoDataMessage.visibility = View.VISIBLE
-                            activityTenantListBinding.mNoDataMessage.setText(R.string.no_data_message)
-                            activityTenantListBinding.mRecylerView.visibility = View.GONE
-                            Toast.makeText(
-                                this@TenantListActivity,
-                                getString(R.string.no_data_message),
-                                Toast.LENGTH_SHORT
-                            ).show()
+                        tenantList,
+                        object : FilterManager.onTenantFilterClick {
+                            override fun onClick(objects: ArrayList<Tenant>) {
+                                if (objects.size > 0) {
+                                    tenantList = objects
+                                    setRecyclerAdapter()
+                                    Tools.hideKeyboard(this@TenantListActivity)
+                                    Toast.makeText(
+                                        this@TenantListActivity,
+                                        getString(R.string.filterd),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                } else {
+                                    Tools.hideKeyboard(this@TenantListActivity)
+                                    activityTenantListBinding.mNoDataMessage.visibility =
+                                        View.VISIBLE
+                                    activityTenantListBinding.mNoDataMessage.setText(R.string.no_data_message)
+                                    activityTenantListBinding.mRecylerView.visibility = View.GONE
+                                    Toast.makeText(
+                                        this@TenantListActivity,
+                                        getString(R.string.no_data_message),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            }
+
                         }
-                    }
+                    )
                 } else {
                     Toast.makeText(
                         this@TenantListActivity,

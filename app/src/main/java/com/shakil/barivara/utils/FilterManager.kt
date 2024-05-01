@@ -1,78 +1,125 @@
-package com.shakil.barivara.utils;
+package com.shakil.barivara.utils
 
-import com.shakil.barivara.model.meter.ElectricityBill;
-import com.shakil.barivara.model.meter.Meter;
-import com.shakil.barivara.model.room.Rent;
-import com.shakil.barivara.model.room.Room;
-import com.shakil.barivara.model.tenant.Tenant;
-import java.util.ArrayList;
+import com.shakil.barivara.model.meter.ElectricityBill
+import com.shakil.barivara.model.meter.Meter
+import com.shakil.barivara.model.room.Rent
+import com.shakil.barivara.model.room.Room
+import com.shakil.barivara.model.tenant.Tenant
+import java.util.Locale
 
-public class FilterManager{
-
-    public void onFilterClick(String searchText, ArrayList<Room> sourceList, onFilterClick onFilterClick){
-        ArrayList<Room> roomList = new ArrayList<>();
-        for (int start = 0; start < sourceList.size(); start++) {
-            if (sourceList.get(start).getRoomName().toLowerCase().contains(searchText.toLowerCase())){
-                roomList.add(sourceList.get(start));
+class FilterManager {
+    fun onFilterClick(
+        searchText: String,
+        sourceList: ArrayList<Room>,
+        onFilterClick: onFilterClick
+    ) {
+        val roomList = ArrayList<Room>()
+        for (start in sourceList.indices) {
+            if (sourceList[start].roomName.lowercase(Locale.getDefault()).contains(
+                    searchText.lowercase(
+                        Locale.getDefault()
+                    )
+                )
+            ) {
+                roomList.add(sourceList[start])
             }
         }
-        if (onFilterClick != null){
-            onFilterClick.onClick(roomList);
-        }
+        onFilterClick.onClick(roomList)
     }
 
-    public void onFilterClick(String searchText, ArrayList<Rent> sourceList, onRentFilterClick onRentFilterClick){
-        ArrayList<Rent> rentList = new ArrayList<>();
-        for (int start = 0; start < sourceList.size(); start++) {
-            if (sourceList.get(start).getMonthName().toLowerCase().contains(searchText.toLowerCase())){
-                rentList.add(sourceList.get(start));
+    fun onFilterClick(
+        searchText: String,
+        sourceList: ArrayList<Rent>,
+        onRentFilterClick: onRentFilterClick
+    ) {
+        val rentList = ArrayList<Rent>()
+        for (start in sourceList.indices) {
+            if (sourceList[start].monthName.lowercase(Locale.getDefault()).contains(
+                    searchText.lowercase(
+                        Locale.getDefault()
+                    )
+                )
+            ) {
+                rentList.add(sourceList[start])
             }
         }
-        if (onRentFilterClick != null){
-            onRentFilterClick.onClick(rentList);
-        }
+        onRentFilterClick.onClick(rentList)
     }
 
-    public void onFilterClick(String searchText, ArrayList<Meter> sourceList, onMeterFilterClick onMeterFilterClick){
-        ArrayList<Meter> meterList = new ArrayList<>();
-        for (int start = 0; start < sourceList.size(); start++) {
-            if (sourceList.get(start).getMeterName().toLowerCase().contains(searchText.toLowerCase())){
-                meterList.add(sourceList.get(start));
+    fun onFilterClick(
+        searchText: String,
+        sourceList: ArrayList<Meter>,
+        onMeterFilterClick: onMeterFilterClick
+    ) {
+        val meterList = ArrayList<Meter>()
+        for (start in sourceList.indices) {
+            if (sourceList[start].meterName.lowercase(Locale.getDefault()).contains(
+                    searchText.lowercase(
+                        Locale.getDefault()
+                    )
+                )
+            ) {
+                meterList.add(sourceList[start])
             }
         }
-        if (onMeterFilterClick != null){
-            onMeterFilterClick.onClick(meterList);
-        }
+        onMeterFilterClick.onClick(meterList)
     }
 
-    public void onFilterClick(String searchText, ArrayList<ElectricityBill> sourceList, onBillFilterClick onBillFilterClick){
-        ArrayList<ElectricityBill> billList = new ArrayList<>();
-        for (int start = 0; start < sourceList.size(); start++) {
-            if (sourceList.get(start).getRoomName().toLowerCase().contains(searchText.toLowerCase())){
-                billList.add(sourceList.get(start));
+    fun onFilterClick(
+        searchText: String,
+        sourceList: ArrayList<ElectricityBill>,
+        onBillFilterClick: onBillFilterClick
+    ) {
+        val billList = ArrayList<ElectricityBill>()
+        for (start in sourceList.indices) {
+            if (sourceList[start].roomName.lowercase(Locale.getDefault()).contains(
+                    searchText.lowercase(
+                        Locale.getDefault()
+                    )
+                )
+            ) {
+                billList.add(sourceList[start])
             }
         }
-        if (onBillFilterClick != null){
-            onBillFilterClick.onClick(billList);
-        }
+        onBillFilterClick.onClick(billList)
     }
 
-    public void onFilterClick(String searchText, ArrayList<Tenant> sourceList, onTenantFilterClick onTenantFilterClick){
-        ArrayList<Tenant> billList = new ArrayList<>();
-        for (int start = 0; start < sourceList.size(); start++) {
-            if (sourceList.get(start).getTenantName().toLowerCase().contains(searchText.toLowerCase())){
-                billList.add(sourceList.get(start));
+    fun onFilterClick(
+        searchText: String,
+        sourceList: ArrayList<Tenant>,
+        onTenantFilterClick: onTenantFilterClick?
+    ) {
+        val billList = ArrayList<Tenant>()
+        for (start in sourceList.indices) {
+            if (sourceList[start].tenantName.lowercase(Locale.getDefault()).contains(
+                    searchText.lowercase(
+                        Locale.getDefault()
+                    )
+                )
+            ) {
+                billList.add(sourceList[start])
             }
         }
-        if (onTenantFilterClick != null){
-            onTenantFilterClick.onClick(billList);
-        }
+        onTenantFilterClick?.onClick(billList)
     }
 
-    public interface onRentFilterClick{ void onClick(ArrayList<Rent> objects);}
-    public interface onFilterClick{ void onClick(ArrayList<Room> objects);}
-    public interface onMeterFilterClick{ void onClick(ArrayList<Meter> objects);}
-    public interface onTenantFilterClick{ void onClick(ArrayList<Tenant> objects);}
-    public interface onBillFilterClick{ void onClick(ArrayList<ElectricityBill> objects);}
+    interface onRentFilterClick {
+        fun onClick(objects: ArrayList<Rent>)
+    }
 
+    interface onFilterClick {
+        fun onClick(objects: ArrayList<Room>)
+    }
+
+    interface onMeterFilterClick {
+        fun onClick(objects: ArrayList<Meter>)
+    }
+
+    interface onTenantFilterClick {
+        fun onClick(objects: ArrayList<Tenant>)
+    }
+
+    interface onBillFilterClick {
+        fun onClick(objects: ArrayList<ElectricityBill>)
+    }
 }

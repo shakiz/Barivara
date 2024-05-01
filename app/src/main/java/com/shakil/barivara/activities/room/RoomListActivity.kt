@@ -74,29 +74,32 @@ class RoomListActivity : AppCompatActivity(), RoomCallBacks {
                 if (!TextUtils.isEmpty(activityRoomListBinding.searchLayout.SearchName.text.toString())) {
                     filterManager.onFilterClick(
                         activityRoomListBinding.searchLayout.SearchName.text.toString(),
-                        roomList
-                    ) { objects ->
-                        if (objects.size > 0) {
-                            roomList = objects
-                            setRecyclerAdapter()
-                            Tools.hideKeyboard(this@RoomListActivity)
-                            Toast.makeText(
-                                this@RoomListActivity,
-                                getString(R.string.filterd),
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        } else {
-                            Tools.hideKeyboard(this@RoomListActivity)
-                            activityRoomListBinding.mNoDataMessage.visibility = View.VISIBLE
-                            activityRoomListBinding.mNoDataMessage.setText(R.string.no_data_message)
-                            activityRoomListBinding.mRecylerView.visibility = View.GONE
-                            Toast.makeText(
-                                this@RoomListActivity,
-                                getString(R.string.no_data_message),
-                                Toast.LENGTH_SHORT
-                            ).show()
+                        roomList,
+                        object : FilterManager.onFilterClick {
+                            override fun onClick(objects: ArrayList<Room>) {
+                                if (objects.size > 0) {
+                                    roomList = objects
+                                    setRecyclerAdapter()
+                                    Tools.hideKeyboard(this@RoomListActivity)
+                                    Toast.makeText(
+                                        this@RoomListActivity,
+                                        getString(R.string.filterd),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                } else {
+                                    Tools.hideKeyboard(this@RoomListActivity)
+                                    activityRoomListBinding.mNoDataMessage.visibility = View.VISIBLE
+                                    activityRoomListBinding.mNoDataMessage.setText(R.string.no_data_message)
+                                    activityRoomListBinding.mRecylerView.visibility = View.GONE
+                                    Toast.makeText(
+                                        this@RoomListActivity,
+                                        getString(R.string.no_data_message),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            }
                         }
-                    }
+                    )
                 } else {
                     Toast.makeText(
                         this@RoomListActivity,
