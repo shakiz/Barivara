@@ -42,7 +42,6 @@ import com.shakil.barivara.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.model.meter.Meter
 import com.shakil.barivara.model.room.Room
 import com.shakil.barivara.model.tenant.Tenant
-import com.shakil.barivara.servies.MonthlyJobScheduler
 import com.shakil.barivara.utils.AppAnalytics
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.Constants.mUserId
@@ -74,7 +73,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         prefManager = PrefManager(this)
 
-        //scheduleMonthlyAlarm();
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
         activityMainBinding.toolBar.setTitleTextColor(
             ContextCompat.getColor(
@@ -249,26 +247,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 )
             )
         }
-    }
-
-    private fun scheduleMonthlyAlarm() {
-        val calendar = Calendar.getInstance()
-        calendar.timeInMillis = System.currentTimeMillis()
-        calendar[Calendar.DAY_OF_MONTH] = 1
-        calendar[Calendar.HOUR_OF_DAY] = 0
-        calendar[Calendar.MINUTE] = 0
-        val intent = Intent(this, MonthlyJobScheduler::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(
-            this, 0,
-            intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
-        )
-        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-        alarmManager.setInexactRepeating(
-            AlarmManager.RTC_WAKEUP,
-            calendar.timeInMillis,
-            AlarmManager.INTERVAL_DAY * 30,  // 30 days for a month
-            pendingIntent
-        )
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
