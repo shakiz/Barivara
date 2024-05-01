@@ -19,13 +19,16 @@ class SplashActivity : AppCompatActivity() {
 
     private fun bindUIWithComponents() {
         if (tools.hasConnection()) {
-            appUpdate.getUpdate { updated ->
-                if (!updated) {
-                    appUpdate.checkUpdate(false, true)
-                } else {
-                    tools.checkLogin()
+            appUpdate.getUpdate(object : AppUpdate.onGetUpdate {
+                override fun onResult(updated: Boolean) {
+                    if (!updated) {
+                        appUpdate.checkUpdate(false, true)
+                    } else {
+                        tools.checkLogin()
+                    }
                 }
-            }
+
+            })
         } else {
             tools.checkLogin()
         }
