@@ -1,121 +1,89 @@
-package com.shakil.barivara.adapter;
+package com.shakil.barivara.adapter
 
-import android.content.Context;
-import android.text.TextUtils;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.text.TextUtils
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.shakil.barivara.R
+import com.shakil.barivara.adapter.RecyclerTenantListAdapter.TenantItemViewHolder
+import com.shakil.barivara.databinding.AdapterLayoutTenantListBinding
+import com.shakil.barivara.model.tenant.Tenant
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
+class RecyclerTenantListAdapter(private val arrayList: ArrayList<Tenant>) :
+    RecyclerView.Adapter<TenantItemViewHolder>() {
+    private var tenantCallback: TenantCallBacks? = null
 
-import com.shakil.barivara.R;
-import com.shakil.barivara.databinding.AdapterLayoutTenantListBinding;
-import com.shakil.barivara.model.tenant.Tenant;
-
-import java.util.ArrayList;
-
-public class RecyclerTenantListAdapter extends RecyclerView.Adapter<RecyclerTenantListAdapter.TenantItemViewHolder> {
-    private final ArrayList<Tenant> arrayList;
-
-    public RecyclerTenantListAdapter(ArrayList<Tenant> arrayList) {
-        this.arrayList = arrayList;
+    fun setOnTenantCallback(tenantCallback: TenantCallBacks?) {
+        this.tenantCallback = tenantCallback
     }
 
-    public TenantCallBacks tenantCallback;
-
-    public void setOnTenantCallback(TenantCallBacks tenantCallback) {
-        this.tenantCallback = tenantCallback;
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TenantItemViewHolder {
+        val binding = AdapterLayoutTenantListBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
+        return TenantItemViewHolder(binding, tenantCallback)
     }
 
-    @NonNull
-    @Override
-    public TenantItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        AdapterLayoutTenantListBinding binding = AdapterLayoutTenantListBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        return new TenantItemViewHolder(binding, tenantCallback);
+    override fun onBindViewHolder(holder: TenantItemViewHolder, position: Int) {
+        val tenant = arrayList[position]
+        holder.bind(tenant)
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull TenantItemViewHolder holder, int position) {
-        Tenant tenant = arrayList.get(position);
-        holder.bind(tenant);
+    override fun getItemCount(): Int {
+        return arrayList.size
     }
 
-    @Override
-    public int getItemCount() {
-        return arrayList.size();
-    }
-
-    public static class TenantItemViewHolder extends RecyclerView.ViewHolder {
-        AdapterLayoutTenantListBinding binding;
-        TenantCallBacks tenantCallBack;
-
-        public TenantItemViewHolder(@NonNull AdapterLayoutTenantListBinding binding, TenantCallBacks tenantCallBacks) {
-            super(binding.getRoot());
-            this.binding = binding;
-            this.tenantCallBack = tenantCallBacks;
-        }
-
-        void bind(Tenant tenant){
-            binding.TenantName.setText(tenant.getTenantName());
-            binding.StartingMonth.setText(tenant.getStartingMonth());
-            binding.AssociateRoom.setText(tenant.getAssociateRoom());
-            binding.TenantTypeStr.setText(tenant.getTenantTypeStr());
-            binding.itemCardView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (tenantCallBack != null) {
-                        tenantCallBack.onItemClick(tenant);
-                    }
-                }
-            });
-
-            binding.callIcon.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (tenantCallBack != null) {
-                        tenantCallBack.onCallClicked(tenant.getMobileNo(), tenant.getTenantName());
-                    }
-                }
-            });
-
-            binding.messageIcon.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (tenantCallBack != null) {
-                        tenantCallBack.onMessageClicked(tenant.getMobileNo());
-                    }
-                }
-            });
-
-            if (tenant.getIsActiveValue() != null && !TextUtils.isEmpty(tenant.getIsActiveValue())) {
-                if (tenant.getIsActiveValue().equals(binding.getRoot().getContext().getString(R.string.yes))) {
-                    binding.activeColorIndicator.setBackgroundColor(binding.getRoot().getContext().getResources().getColor(R.color.md_green_400));
+    class TenantItemViewHolder(
+        var binding: AdapterLayoutTenantListBinding,
+        private var tenantCallBack: TenantCallBacks?
+    ) : RecyclerView.ViewHolder(
+        binding.root
+    ) {
+        fun bind(tenant: Tenant) {
+            binding.TenantName.text = tenant.tenantName
+            binding.StartingMonth.text = tenant.startingMonth
+            binding.AssociateRoom.text = tenant.associateRoom
+            binding.TenantTypeStr.text = tenant.tenantTypeStr
+            binding.itemCardView.setOnClickListener {
+                tenantCallBack?.onItemClick(tenant)
+            }
+            binding.callIcon.setOnClickListener {
+                tenantCallBack?.onCallClicked(tenant.mobileNo, tenant.tenantName)
+            }
+            binding.messageIcon.setOnClickListener {
+                tenantCallBack?.onMessageClicked(tenant.mobileNo)
+            }
+            if (tenant.isActiveValue != null && !TextUtils.isEmpty(tenant.isActiveValue)) {
+                if (tenant.isActiveValue == binding.root.context.getString(R.string.yes)) {
+                    binding.activeColorIndicator.setBackgroundColor(
+                        binding.root.context.resources.getColor(
+                            R.color.md_green_400
+                        )
+                    )
                 } else {
-                    binding.activeColorIndicator.setBackgroundColor(binding.getRoot().getContext().getResources().getColor(R.color.md_red_400));
+                    binding.activeColorIndicator.setBackgroundColor(
+                        binding.root.context.resources.getColor(
+                            R.color.md_red_400
+                        )
+                    )
                 }
             }
-
-            binding.editIcon.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (tenantCallBack != null) tenantCallBack.onEdit(tenant);
-                }
-            });
-            binding.deleteIcon.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (tenantCallBack != null) tenantCallBack.onDelete(tenant);
-                }
-            });
+            binding.editIcon.setOnClickListener {
+                tenantCallBack?.onEdit(tenant)
+            }
+            binding.deleteIcon.setOnClickListener {
+                tenantCallBack?.onDelete(tenant)
+            }
         }
     }
 
-    public interface TenantCallBacks {
-        void onCallClicked(String mobileNo, String tenantName);
-        void onMessageClicked(String mobileNo);
-        void onDelete(Tenant tenant);
-        void onEdit(Tenant tenant);
-        void onItemClick(Tenant tenant);
+    interface TenantCallBacks {
+        fun onCallClicked(mobileNo: String, tenantName: String)
+        fun onMessageClicked(mobileNo: String)
+        fun onDelete(tenant: Tenant)
+        fun onEdit(tenant: Tenant)
+        fun onItemClick(tenant: Tenant)
     }
 }
