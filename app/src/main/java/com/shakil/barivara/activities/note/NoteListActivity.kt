@@ -21,7 +21,7 @@ import com.shakil.barivara.utils.UX
 
 class NoteListActivity : AppCompatActivity() {
     private lateinit var activityNoteListBinding: ActivityNoteListBinding
-    private var noteList: ArrayList<Note>? = null
+    private var noteList: ArrayList<Note> = arrayListOf()
     private var firebaseCrudHelper = FirebaseCrudHelper(this)
     private lateinit var ux: UX
     private var appAnalytics = AppAnalytics(this)
@@ -80,11 +80,14 @@ class NoteListActivity : AppCompatActivity() {
         activityNoteListBinding.mRecyclerViewNote.layoutManager = GridLayoutManager(this, 2)
         activityNoteListBinding.mRecyclerViewNote.adapter = noteRecyclerAdapter
         noteRecyclerAdapter.notifyDataSetChanged()
-        noteRecyclerAdapter.setOnItemClickListener { note ->
-            startActivity(
-                Intent(this@NoteListActivity, NewNoteActivity::class.java)
-                    .putExtra("note", note)
-            )
-        }
+        noteRecyclerAdapter.setOnItemClickListener(object :
+            NoteRecyclerAdapter.onItemClickListener {
+            override fun onItemClick(note: Note?) {
+                startActivity(
+                    Intent(this@NoteListActivity, NewNoteActivity::class.java)
+                        .putExtra("note", note)
+                )
+            }
+        })
     }
 }

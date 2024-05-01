@@ -1,71 +1,55 @@
-package com.shakil.barivara.adapter;
+package com.shakil.barivara.adapter
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.recyclerview.widget.RecyclerView
+import com.shakil.barivara.R
+import com.shakil.barivara.model.note.Note
 
-import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.RecyclerView;
+class NoteRecyclerAdapter(private val allNotes: ArrayList<Note>) :
+    RecyclerView.Adapter<NoteRecyclerAdapter.ViewHolder>() {
+    private var itemClickListener: onItemClickListener? = null
 
-import com.shakil.barivara.R;
-import com.shakil.barivara.model.note.Note;
-
-import java.util.ArrayList;
-
-public class NoteRecyclerAdapter extends RecyclerView.Adapter<NoteRecyclerAdapter.ViewHolder> {
-    private ArrayList<Note> allNotes;
-
-    public NoteRecyclerAdapter(ArrayList<Note> allNotes) {
-        this.allNotes = allNotes;
+    interface onItemClickListener {
+        fun onItemClick(note: Note?)
     }
 
-    public onItemClickListener onItemClickListener;
-    public interface onItemClickListener{
-        void onItemClick(Note note);
+    fun setOnItemClickListener(onItemClickListener: onItemClickListener?) {
+        this.itemClickListener = onItemClickListener
     }
 
-    public void setOnItemClickListener(onItemClickListener onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.adapter_layout_note_list, parent, false)
+        return ViewHolder(view)
     }
 
-    @NonNull
-    @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_layout_note_list,parent,false);
-        return new ViewHolder(view);
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val note = allNotes[position]
+        holder.Title.text = note.title
+        holder.Date.text = note.date
+        holder.Description.text = note.description
+        holder.cardItemLayout.setOnClickListener { itemClickListener?.onItemClick(note) }
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        final Note note = allNotes.get(position);
-        holder.Title.setText(note.getTitle());
-        holder.Date.setText(note.getDate());
-        holder.Description.setText(note.getDescription());
-        holder.cardItemLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onItemClickListener.onItemClick(note);
-            }
-        });
+    override fun getItemCount(): Int {
+        return if (allNotes.size > 0) allNotes.size else 0
     }
 
-    @Override
-    public int getItemCount() {
-        if (allNotes.size() > 0) return allNotes.size();
-        else return 0;
-    }
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var Title: TextView
+        var Date: TextView
+        var Description: TextView
+        var cardItemLayout: CardView
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView Title,Date,Description;
-        CardView cardItemLayout;
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            Title = itemView.findViewById(R.id.Title);
-            Date = itemView.findViewById(R.id.Date);
-            Description = itemView.findViewById(R.id.Description);
-            cardItemLayout = itemView.findViewById(R.id.cardItemLayout);
+        init {
+            Title = itemView.findViewById(R.id.Title)
+            Date = itemView.findViewById(R.id.Date)
+            Description = itemView.findViewById(R.id.Description)
+            cardItemLayout = itemView.findViewById(R.id.cardItemLayout)
         }
     }
 }
