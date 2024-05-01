@@ -1,84 +1,61 @@
-package com.shakil.barivara.adapter;
+package com.shakil.barivara.adapter
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.shakil.barivara.adapter.RecyclerElectricityBillListAdapter.ElectricityBillViewHolder
+import com.shakil.barivara.databinding.AdapterLayoutElectricityBillListBinding
+import com.shakil.barivara.model.meter.ElectricityBill
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.shakil.barivara.databinding.AdapterLayoutElectricityBillListBinding;
-import com.shakil.barivara.model.meter.ElectricityBill;
-
-import java.util.ArrayList;
-
-public class RecyclerElectricityBillListAdapter extends RecyclerView.Adapter<RecyclerElectricityBillListAdapter.ElectricityBillViewHolder> {
-
-    private final ArrayList<ElectricityBill> arrayList;
-
-    public RecyclerElectricityBillListAdapter(ArrayList<ElectricityBill> arrayList) {
-        this.arrayList = arrayList;
+class RecyclerElectricityBillListAdapter(private val arrayList: ArrayList<ElectricityBill>) :
+    RecyclerView.Adapter<ElectricityBillViewHolder>() {
+    private var electricityBillBacks: ElectricityBillBacks? = null
+    fun setElectricityBillBack(electricityBillBacks: ElectricityBillBacks?) {
+        this.electricityBillBacks = electricityBillBacks
     }
 
-    private ElectricityBillBacks electricityBillBacks;
-
-    public void setElectricityBillBack(ElectricityBillBacks electricityBillBacks) {
-        this.electricityBillBacks = electricityBillBacks;
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ElectricityBillViewHolder {
+        val binding = AdapterLayoutElectricityBillListBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
+        return ElectricityBillViewHolder(binding, electricityBillBacks)
     }
 
-    @NonNull
-    @Override
-    public ElectricityBillViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        AdapterLayoutElectricityBillListBinding binding = AdapterLayoutElectricityBillListBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        return new ElectricityBillViewHolder(binding, electricityBillBacks);
+    override fun onBindViewHolder(holder: ElectricityBillViewHolder, position: Int) {
+        val electricityBill = arrayList[position]
+        holder.bind(electricityBill)
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull ElectricityBillViewHolder holder, int position) {
-        ElectricityBill electricityBill = arrayList.get(position);
-        holder.bind(electricityBill);
+    override fun getItemCount(): Int {
+        return arrayList.size
     }
 
-    @Override
-    public int getItemCount() {
-        return arrayList.size();
-    }
-
-    public static class ElectricityBillViewHolder extends RecyclerView.ViewHolder {
-        AdapterLayoutElectricityBillListBinding binding;
-        ElectricityBillBacks electricityBillBacks;
-        public ElectricityBillViewHolder(@NonNull AdapterLayoutElectricityBillListBinding binding, ElectricityBillBacks electricityBillBacks) {
-            super(binding.getRoot());
-            this.binding = binding;
-            this.electricityBillBacks = electricityBillBacks;
-        }
-
-        void bind(ElectricityBill electricityBill){
-            binding.MeterId.setText(electricityBill.getMeterName());
-            binding.RoomId.setText(electricityBill.getRoomName());
-            binding.TotalBill.setText(String.valueOf(electricityBill.getTotalUnit() * electricityBill.getUnitPrice()));
-            binding.itemCardView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (electricityBillBacks != null){
-                        electricityBillBacks.onItemClick(electricityBill);
-                    }
-                }
-            });
-
-            if (electricityBillBacks != null){
-                binding.DeleteFromCart.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        electricityBillBacks.onDelete(electricityBill);
-                    }
-                });
+    class ElectricityBillViewHolder(
+        var binding: AdapterLayoutElectricityBillListBinding,
+        private var electricityBillBacks: ElectricityBillBacks?
+    ) : RecyclerView.ViewHolder(
+        binding.root
+    ) {
+        fun bind(electricityBill: ElectricityBill) {
+            binding.MeterId.text = electricityBill.meterName
+            binding.RoomId.text = electricityBill.roomName
+            binding.TotalBill.text =
+                (electricityBill.totalUnit * electricityBill.unitPrice).toString()
+            binding.itemCardView.setOnClickListener {
+                electricityBillBacks?.onItemClick(electricityBill)
+            }
+            binding.DeleteFromCart.setOnClickListener {
+                electricityBillBacks?.onDelete(
+                    electricityBill
+                )
             }
         }
     }
 
-    public interface ElectricityBillBacks {
-        void onDelete(ElectricityBill electricityBill);
-        void onItemClick(ElectricityBill electricityBill);
+    interface ElectricityBillBacks {
+        fun onDelete(electricityBill: ElectricityBill?)
+        fun onItemClick(electricityBill: ElectricityBill?)
     }
 }
