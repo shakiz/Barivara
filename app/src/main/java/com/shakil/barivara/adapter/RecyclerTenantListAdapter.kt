@@ -50,10 +50,10 @@ class RecyclerTenantListAdapter(private val arrayList: ArrayList<Tenant>) :
                 tenantCallBack?.onItemClick(tenant)
             }
             binding.callIcon.setOnClickListener {
-                tenantCallBack?.onCallClicked(tenant.mobileNo, tenant.tenantName)
+                tenantCallBack?.onCallClicked(tenant.mobileNo ?: "", tenant.tenantName ?: "")
             }
             binding.messageIcon.setOnClickListener {
-                tenantCallBack?.onMessageClicked(tenant.mobileNo)
+                tenantCallBack?.onMessageClicked(tenant.mobileNo ?: "")
             }
             if (tenant.isActiveValue != null && !TextUtils.isEmpty(tenant.isActiveValue)) {
                 if (tenant.isActiveValue == binding.root.context.getString(R.string.yes)) {
