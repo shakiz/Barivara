@@ -27,10 +27,10 @@ class RoomActivity : AppCompatActivity() {
     private lateinit var activityAddNewRoomBinding: ActivityAddNewRoomBinding
     private var spinnerData = SpinnerData(this)
     private var spinnerAdapter = SpinnerAdapter()
-    private var roomNameStr: String? = null
-    private var startMonthStr: String? = null
-    private var associateMeterStr: String? = null
-    private var tenantNameStr: String? = null
+    private var roomNameStr: String = ""
+    private var startMonthStr: String = ""
+    private var associateMeterStr: String = ""
+    private var tenantNameStr: String = ""
     private var StartMonthId = 0
     private var AssociateMeterId = 0
     private var TenantId = 0
