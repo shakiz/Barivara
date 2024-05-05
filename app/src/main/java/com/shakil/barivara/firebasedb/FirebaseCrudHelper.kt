@@ -35,42 +35,42 @@ class FirebaseCrudHelper(private val context: Context) {
         id?.let { key -> databaseReference?.child(key)?.setValue(notification) }
     }
 
-    fun update(`object`: Any, firebaseId: String?, path: String?, userId: String?) {
+    fun update(data: Any, firebaseId: String?, path: String?, userId: String?) {
         databaseReference = FirebaseDatabase.getInstance().getReference(path!!).child(userId!!)
-        var postValues: Map<String?, Any?> = HashMap()
+        var postValues: Map<String, Any> = HashMap()
         when (path) {
             "tenant" -> {
-                val tenant = `object` as Tenant
+                val tenant = data as Tenant
                 postValues = tenant.toMap()
             }
 
             "meter" -> {
-                val meter = `object` as Meter
+                val meter = data as Meter
                 postValues = meter.toMap()
             }
 
             "rent" -> {
-                val rent = `object` as Rent
+                val rent = data as Rent
                 postValues = rent.toMap()
             }
 
             "room" -> {
-                val room = `object` as Room
+                val room = data as Room
                 postValues = room.toMap()
             }
 
             "note" -> {
-                val note = `object` as Note
+                val note = data as Note
                 postValues = note.toMap()
             }
 
             "electricityBill" -> {
-                val electricityBill = `object` as ElectricityBill
+                val electricityBill = data as ElectricityBill
                 postValues = electricityBill.toMap()
             }
 
             "user" -> {
-                val user = `object` as User
+                val user = data as User
                 postValues = user.toMap()
             }
 
@@ -96,7 +96,7 @@ class FirebaseCrudHelper(private val context: Context) {
                     val user = dataSnapshot.getValue(
                         User::class.java
                     )
-                    user?.firebaseKey = dataSnapshot.key
+                    user?.firebaseKey = dataSnapshot.key ?: ""
                     objects.add(user)
                     Log.i(Constants.TAG + ":fetchProfile", "" + user?.firebaseKey)
                 }
@@ -121,7 +121,7 @@ class FirebaseCrudHelper(private val context: Context) {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (dataSnapshot in snapshot.children) {
                     val meter = dataSnapshot.getValue(Meter::class.java)
-                    meter?.fireBaseKey = dataSnapshot.key
+                    meter?.fireBaseKey = dataSnapshot.key ?: ""
                     objects.add(meter)
                     Log.i(Constants.TAG + ":fetchMeter", "" + meter?.meterName)
                 }
@@ -141,7 +141,7 @@ class FirebaseCrudHelper(private val context: Context) {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (dataSnapshot in snapshot.children) {
                     val room = dataSnapshot.getValue(Room::class.java)
-                    room?.fireBaseKey = dataSnapshot.key
+                    room?.fireBaseKey = dataSnapshot.key ?: ""
                     Log.i(Constants.TAG + ":fetchRoom", "" + room?.roomName)
                     objects.add(room)
                 }
@@ -161,7 +161,7 @@ class FirebaseCrudHelper(private val context: Context) {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (dataSnapshot in snapshot.children) {
                     val rent = dataSnapshot.getValue(Rent::class.java)
-                    rent?.fireBaseKey = dataSnapshot.key
+                    rent?.fireBaseKey = dataSnapshot.key ?: ""
                     Log.i(Constants.TAG + ":fetchRent", "" + rent?.monthName)
                     objects.add(rent)
                 }
@@ -188,7 +188,7 @@ class FirebaseCrudHelper(private val context: Context) {
                         ElectricityBill::class.java
                     )
                     Log.i(Constants.TAG + ":fetchBill", "" + electricityBill?.meterName)
-                    electricityBill?.fireBaseKey = dataSnapshot.key
+                    electricityBill?.fireBaseKey = dataSnapshot.key ?: ""
                     objects.add(electricityBill)
                 }
                 onElectricityBillDataFetch.onFetch(objects)
@@ -207,7 +207,7 @@ class FirebaseCrudHelper(private val context: Context) {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (dataSnapshot in snapshot.children) {
                     val tenant = dataSnapshot.getValue(Tenant::class.java)
-                    tenant?.fireBaseKey = dataSnapshot.key
+                    tenant?.fireBaseKey = dataSnapshot.key ?: ""
                     Log.i(Constants.TAG + ":fetchTenant", "" + tenant?.tenantName)
                     objects.add(tenant)
                 }
@@ -253,7 +253,7 @@ class FirebaseCrudHelper(private val context: Context) {
                     val note = dataSnapshot.getValue(
                         Note::class.java
                     )
-                    note!!.fireBaseKey = dataSnapshot.key
+                    note!!.fireBaseKey = dataSnapshot.key ?: ""
                     Log.i(Constants.TAG + ":fetchNote", "" + note.title)
                     objects.add(note)
                 }
