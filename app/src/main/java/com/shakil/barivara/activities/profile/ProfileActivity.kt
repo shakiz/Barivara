@@ -51,14 +51,12 @@ class ProfileActivity : AppCompatActivity() {
             prefManager.getString(mUserId),
             object : FirebaseCrudHelper.onProfileFetch {
                 override fun onFetch(user: User?) {
-                    if (user != null) {
-                        if (user.name != null && user.name.isNotEmpty()) activityBinding.Name.setText(
-                            user.name
-                        )
-                        if (user.dob != null && user.dob.isNotEmpty()) activityBinding.DOB.setText(
-                            user.dob
-                        )
-                    }
+                    if (user?.name != null && (user.name?.isNotEmpty() == true)) activityBinding.Name.setText(
+                        user.name
+                    )
+                    if (user?.dOB != null && (user.dOB?.isNotEmpty() == true)) activityBinding.DOB.setText(
+                        user.dOB
+                    )
                 }
             })
         activityBinding.editIcon.setOnClickListener {
@@ -106,14 +104,12 @@ class ProfileActivity : AppCompatActivity() {
                     prefManager.getString(mUserId),
                     object : FirebaseCrudHelper.onProfileFetch {
                         override fun onFetch(user: User?) {
-                            if (user != null) {
-                                if (user.name != null && user.name.isNotEmpty()) activityBinding.Name.setText(
-                                    user.name
-                                )
-                                if (user.dob != null && user.dob.isNotEmpty()) activityBinding.DOB.setText(
-                                    user.dob
-                                )
-                            }
+                            if (user?.name != null && (user.name?.isNotEmpty() == true)) activityBinding.Name.setText(
+                                user.name
+                            )
+                            if (user?.dOB != null && (user.dOB?.isNotEmpty() == true)) activityBinding.DOB.setText(
+                                user.dOB
+                            )
                         }
                     })
             }
