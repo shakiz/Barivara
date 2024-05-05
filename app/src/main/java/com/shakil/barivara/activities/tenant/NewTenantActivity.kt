@@ -35,12 +35,12 @@ class NewTenantActivity : AppCompatActivity() {
     private var AssociateRoomId = 0
     private var StartingMonthId = 0
     private var TenantTypeId = 0
-    private var tenantNameStr: String? = null
-    private var gender: String? = null
-    private var AssociateRoomStr: String? = null
-    private var StartingMonthStr: String? = null
-    private var TenantTypeStr: String? = null
-    private var IsActiveValue: String? = null
+    private var tenantNameStr: String = ""
+    private var gender: String = ""
+    private var AssociateRoomStr: String = ""
+    private var StartingMonthStr: String = ""
+    private var TenantTypeStr: String = ""
+    private var IsActiveValue: String = ""
     private var tenant = Tenant()
     private var command = "add"
     private var firebaseCrudHelper = FirebaseCrudHelper(this)
@@ -89,7 +89,7 @@ class NewTenantActivity : AppCompatActivity() {
                 true
             )
             activityAddNewTenantBinding.TenantTypeId.setSelection(tenant.tenantTypeId, true)
-            activityAddNewTenantBinding.NID.setText(tenant.nid)
+            activityAddNewTenantBinding.NID.setText(tenant.nID)
             activityAddNewTenantBinding.MobileNo.setText(tenant.mobileNo)
             activityAddNewTenantBinding.NumberOfPerson.setText("" + tenant.numberOfPerson)
             if (tenant.advancedAmount > 0) {
@@ -266,7 +266,7 @@ class NewTenantActivity : AppCompatActivity() {
         tenantNameStr = activityAddNewTenantBinding.TenantName.text.toString()
         tenant.tenantName = tenantNameStr
         tenant.gender = gender
-        tenant.nid = activityAddNewTenantBinding.NID.text.toString()
+        tenant.nID = activityAddNewTenantBinding.NID.text.toString()
         tenant.mobileNo = activityAddNewTenantBinding.MobileNo.text.toString()
         tenant.numberOfPerson =
             utilsForAll.toIntValue(activityAddNewTenantBinding.NumberOfPerson.text.toString())

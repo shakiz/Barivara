@@ -26,9 +26,9 @@ class NewMeterActivity : AppCompatActivity() {
     private lateinit var activityNewMeterBinding: ActivityNewMeterBinding
     private var spinnerAdapter = SpinnerAdapter()
     private var spinnerData = SpinnerData(this)
-    private var meterNameStr: String? = null
-    private var roomNameStr: String? = null
-    private var meterTypeStr: String? = null
+    private var meterNameStr: String = ""
+    private var roomNameStr: String = ""
+    private var meterTypeStr: String = ""
     private var AssociateRoomId = 0
     private var MeterTypeId = 0
     private var meter = Meter()
