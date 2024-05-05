@@ -27,8 +27,8 @@ import java.util.UUID
 
 class ElectricityBillDetailsActivity : AppCompatActivity() {
     private lateinit var activityMeterCostDetailsBinding: ActivityElectricityBillDetailsBinding
-    private var meterNameStr: String? = null
-    private var roomNameStr: String? = null
+    private var meterNameStr: String = ""
+    private var roomNameStr: String = ""
     private var totalUnitInt = 0
     private var previousMonthUnitInt = 0
     private var presentMonthUnitInt = 0
