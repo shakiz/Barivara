@@ -15,7 +15,7 @@ import androidx.databinding.DataBindingUtil
 import com.shakil.barivara.R
 import com.shakil.barivara.databinding.ActivityElectricityBillDetailsBinding
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper
-import com.shakil.barivara.model.meter.ElectricityBill
+import com.shakil.barivara.data.model.meter.ElectricityBill
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.Constants.mUserId
 import com.shakil.barivara.utils.PrefManager

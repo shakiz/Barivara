@@ -16,7 +16,7 @@ import androidx.databinding.DataBindingUtil
 import com.shakil.barivara.R
 import com.shakil.barivara.databinding.ActivityAddNewTenantBinding
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper
-import com.shakil.barivara.model.tenant.Tenant
+import com.shakil.barivara.data.model.tenant.Tenant
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.Constants.mUserId
 import com.shakil.barivara.utils.CustomAdManager

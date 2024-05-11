@@ -1,10 +1,10 @@
 package com.shakil.barivara.utils
 
-import com.shakil.barivara.model.meter.ElectricityBill
-import com.shakil.barivara.model.meter.Meter
-import com.shakil.barivara.model.room.Rent
-import com.shakil.barivara.model.room.Room
-import com.shakil.barivara.model.tenant.Tenant
+import com.shakil.barivara.data.model.meter.ElectricityBill
+import com.shakil.barivara.data.model.meter.Meter
+import com.shakil.barivara.data.model.room.Rent
+import com.shakil.barivara.data.model.room.Room
+import com.shakil.barivara.data.model.tenant.Tenant
 import java.util.Locale
 
 class FilterManager {

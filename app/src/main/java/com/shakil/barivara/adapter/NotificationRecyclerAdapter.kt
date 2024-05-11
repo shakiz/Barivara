@@ -8,7 +8,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.shakil.barivara.R
-import com.shakil.barivara.model.notification.Notification
+import com.shakil.barivara.data.model.notification.Notification
 
 class NotificationRecyclerAdapter(private val notifications: ArrayList<Notification>) :
     RecyclerView.Adapter<NotificationRecyclerAdapter.ViewHolder>() {

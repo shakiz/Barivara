@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.shakil.barivara.adapter.RecyclerMeterListAdapter.MeterItemViewHolder
 import com.shakil.barivara.databinding.AdapterLayoutMeterListBinding
-import com.shakil.barivara.model.meter.Meter
+import com.shakil.barivara.data.model.meter.Meter
 
 class RecyclerMeterListAdapter(private val arrayList: ArrayList<Meter>) :
     RecyclerView.Adapter<MeterItemViewHolder>() {

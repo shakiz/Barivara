@@ -26,7 +26,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.shakil.barivara.R
 import com.shakil.barivara.databinding.ActivityGenerateBillBinding
-import com.shakil.barivara.model.bill.GenerateBill
+import com.shakil.barivara.data.model.bill.GenerateBill
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.CustomAdManager
 import com.shakil.barivara.utils.DroidFileManager

@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.shakil.barivara.R
 import com.shakil.barivara.adapter.RecyclerTenantListAdapter.TenantItemViewHolder
 import com.shakil.barivara.databinding.AdapterLayoutTenantListBinding
-import com.shakil.barivara.model.tenant.Tenant
+import com.shakil.barivara.data.model.tenant.Tenant
 
 class RecyclerTenantListAdapter(private val arrayList: ArrayList<Tenant>) :
     RecyclerView.Adapter<TenantItemViewHolder>() {

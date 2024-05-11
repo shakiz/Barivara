@@ -1,4 +1,4 @@
-package com.shakil.barivara.model.tenant
+package com.shakil.barivara.data.model.tenant
 
 import android.os.Parcel
 import android.os.Parcelable

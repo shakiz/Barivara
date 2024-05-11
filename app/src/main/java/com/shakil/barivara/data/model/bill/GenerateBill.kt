@@ -1,4 +1,4 @@
-package com.shakil.barivara.model.bill
+package com.shakil.barivara.data.model.bill
 
 data class GenerateBill(
     var tenantName: String,

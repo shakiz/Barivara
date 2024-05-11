@@ -1,4 +1,4 @@
-package com.shakil.barivara.model.room
+package com.shakil.barivara.data.model.room
 
 import android.os.Parcel
 import android.os.Parcelable

@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.shakil.barivara.R
-import com.shakil.barivara.model.note.Note
+import com.shakil.barivara.data.model.note.Note
 
 class NoteRecyclerAdapter(private val allNotes: ArrayList<Note>) :
     RecyclerView.Adapter<NoteRecyclerAdapter.ViewHolder>() {

@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.shakil.barivara.adapter.RecyclerRoomListAdapter.RoomItemViewHolder
 import com.shakil.barivara.databinding.AdapterLayoutRoomListBinding
-import com.shakil.barivara.model.room.Room
+import com.shakil.barivara.data.model.room.Room
 
 class RecyclerRoomListAdapter(private val arrayList: ArrayList<Room>) :
     RecyclerView.Adapter<RoomItemViewHolder>() {

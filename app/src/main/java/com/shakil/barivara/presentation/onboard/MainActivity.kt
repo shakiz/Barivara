@@ -37,9 +37,9 @@ import com.shakil.barivara.presentation.tenant.TenantListActivity
 import com.shakil.barivara.presentation.tutorial.TutorialActivity
 import com.shakil.barivara.databinding.ActivityMainBinding
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper
-import com.shakil.barivara.model.meter.Meter
-import com.shakil.barivara.model.room.Room
-import com.shakil.barivara.model.tenant.Tenant
+import com.shakil.barivara.data.model.meter.Meter
+import com.shakil.barivara.data.model.room.Room
+import com.shakil.barivara.data.model.tenant.Tenant
 import com.shakil.barivara.utils.AppAnalytics
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.Constants.mUserId

@@ -12,7 +12,7 @@ import com.shakil.barivara.presentation.onboard.MainActivity
 import com.shakil.barivara.adapter.NotificationRecyclerAdapter
 import com.shakil.barivara.databinding.ActivityNotificationBinding
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper
-import com.shakil.barivara.model.notification.Notification
+import com.shakil.barivara.data.model.notification.Notification
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX

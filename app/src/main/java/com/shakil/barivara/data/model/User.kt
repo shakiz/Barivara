@@ -1,4 +1,4 @@
-package com.shakil.barivara.model
+package com.shakil.barivara.data.model
 
 import com.google.firebase.database.Exclude
 

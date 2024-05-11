@@ -1,4 +1,4 @@
-package com.shakil.barivara.model.note
+package com.shakil.barivara.data.model.note
 
 import android.os.Parcel
 import android.os.Parcelable

@@ -20,7 +20,7 @@ import com.shakil.barivara.adapter.RecyclerElectricityBillListAdapter
 import com.shakil.barivara.adapter.RecyclerElectricityBillListAdapter.ElectricityBillBacks
 import com.shakil.barivara.databinding.ActivityElectricityBillListBinding
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper
-import com.shakil.barivara.model.meter.ElectricityBill
+import com.shakil.barivara.data.model.meter.ElectricityBill
 import com.shakil.barivara.utils.Constants.mUserId
 import com.shakil.barivara.utils.FilterManager
 import com.shakil.barivara.utils.PrefManager

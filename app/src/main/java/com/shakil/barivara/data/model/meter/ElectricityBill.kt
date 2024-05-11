@@ -1,4 +1,4 @@
-package com.shakil.barivara.model.meter
+package com.shakil.barivara.data.model.meter
 
 import android.os.Parcel
 import android.os.Parcelable

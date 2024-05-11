@@ -1,4 +1,4 @@
-package com.shakil.barivara.model.notification
+package com.shakil.barivara.data.model.notification
 
 class Notification(
     NotificationId: String?,

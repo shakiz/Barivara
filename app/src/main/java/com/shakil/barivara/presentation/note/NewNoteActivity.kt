@@ -13,7 +13,7 @@ import androidx.databinding.DataBindingUtil
 import com.shakil.barivara.R
 import com.shakil.barivara.databinding.ActivityNewNoteBinding
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper
-import com.shakil.barivara.model.note.Note
+import com.shakil.barivara.data.model.note.Note
 import com.shakil.barivara.utils.AppAnalytics
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.Constants.mUserId

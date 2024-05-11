@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.shakil.barivara.adapter.RecyclerElectricityBillListAdapter.ElectricityBillViewHolder
 import com.shakil.barivara.databinding.AdapterLayoutElectricityBillListBinding
-import com.shakil.barivara.model.meter.ElectricityBill
+import com.shakil.barivara.data.model.meter.ElectricityBill
 
 class RecyclerElectricityBillListAdapter(private val arrayList: ArrayList<ElectricityBill>) :
     RecyclerView.Adapter<ElectricityBillViewHolder>() {

@@ -20,7 +20,7 @@ import com.shakil.barivara.adapter.RecyclerMeterListAdapter
 import com.shakil.barivara.adapter.RecyclerMeterListAdapter.MeterCallBacks
 import com.shakil.barivara.databinding.ActivityMeterListBinding
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper
-import com.shakil.barivara.model.meter.Meter
+import com.shakil.barivara.data.model.meter.Meter
 import com.shakil.barivara.utils.Constants.mUserId
 import com.shakil.barivara.utils.FilterManager
 import com.shakil.barivara.utils.PrefManager

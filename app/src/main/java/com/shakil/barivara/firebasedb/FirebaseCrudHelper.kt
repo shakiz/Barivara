@@ -9,14 +9,14 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.getValue
 import com.shakil.barivara.R
-import com.shakil.barivara.model.User
-import com.shakil.barivara.model.meter.ElectricityBill
-import com.shakil.barivara.model.meter.Meter
-import com.shakil.barivara.model.note.Note
-import com.shakil.barivara.model.notification.Notification
-import com.shakil.barivara.model.room.Rent
-import com.shakil.barivara.model.room.Room
-import com.shakil.barivara.model.tenant.Tenant
+import com.shakil.barivara.data.model.User
+import com.shakil.barivara.data.model.meter.ElectricityBill
+import com.shakil.barivara.data.model.meter.Meter
+import com.shakil.barivara.data.model.note.Note
+import com.shakil.barivara.data.model.notification.Notification
+import com.shakil.barivara.data.model.room.Rent
+import com.shakil.barivara.data.model.room.Room
+import com.shakil.barivara.data.model.tenant.Tenant
 import com.shakil.barivara.utils.Constants
 
 class FirebaseCrudHelper(private val context: Context) {
