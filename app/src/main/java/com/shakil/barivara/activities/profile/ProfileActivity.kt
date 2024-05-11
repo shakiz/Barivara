@@ -45,7 +45,7 @@ class ProfileActivity : AppCompatActivity() {
                 getString(R.string.validation_dob)
             )
         )
-        activityBinding.toolBar.setNavigationOnClickListener { onBackPressed() }
+        activityBinding.toolBar.setNavigationOnClickListener { finish() }
         firebaseCrudHelper.fetchProfile(
             "user",
             prefManager.getString(mUserId),
