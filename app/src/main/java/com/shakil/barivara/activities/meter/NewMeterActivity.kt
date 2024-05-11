@@ -45,7 +45,7 @@ class NewMeterActivity : AppCompatActivity() {
         prefManager = PrefManager(this)
         getIntentData()
         setSupportActionBar(activityNewMeterBinding.toolBar)
-        activityNewMeterBinding.toolBar.setNavigationOnClickListener { onBackPressed() }
+        activityNewMeterBinding.toolBar.setNavigationOnClickListener { finish() }
         bindUIWithComponents()
         loadData()
     }
