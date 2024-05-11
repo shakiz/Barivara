@@ -84,7 +84,7 @@ class GenerateBillActivity : AppCompatActivity() {
                 Constants.REQUEST_CALL_CODE
             )
         }
-        activityBinding.toolBar.setNavigationOnClickListener { onBackPressed() }
+        activityBinding.toolBar.setNavigationOnClickListener { finish() }
         validation.setEditTextIsNotEmpty(
             arrayOf("AssociateRoom", "TenantName", "MobileNo", "RentAmount"), arrayOf(
                 getString(R.string.room_name_validation),
