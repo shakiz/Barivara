@@ -1,7 +1,7 @@
 package com.shakil.barivara.data.repository
 
-import com.shakil.barivara.data.remote.webservice.WebService
-import com.shakil.barivara.domain.repository.DataRepo
+import com.shakil.barivara.data.remote.webservice.TenantService
+import com.shakil.barivara.domain.repository.TenantRepo
 import com.shakil.barivara.data.model.tenant.Tenant
 import com.shakil.barivara.utils.ErrorType
 import com.shakil.barivara.utils.Resource
@@ -9,11 +9,11 @@ import java.net.SocketTimeoutException
 import javax.inject.Inject
 
 class TenantRepoImpl @Inject constructor(
-    private val webService: WebService
-) : DataRepo {
-    override suspend fun getData(): Resource<Tenant> {
+    private val tenantService: TenantService
+) : TenantRepo {
+    override suspend fun getAllTenant(): Resource<List<Tenant>> {
         try {
-            val task = webService.getData()
+            val task = tenantService.getAllTenant()
             if (task.isSuccessful) {
                 task.body()?.let {
                     return Resource.Success(data = it)
