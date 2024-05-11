@@ -10,6 +10,7 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.RelativeLayout
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -37,11 +38,24 @@ class RoomListActivity : AppCompatActivity(), RoomCallBacks {
     private var customAdManager = CustomAdManager(this)
     private lateinit var prefManager: PrefManager
 
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            startActivity(
+                Intent(
+                    this@RoomListActivity,
+                    MainActivity::class.java
+                )
+            )
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityRoomListBinding = DataBindingUtil.setContentView(this, R.layout.activity_room_list)
         init()
         setSupportActionBar(activityRoomListBinding.toolBar)
+
+        onBackPressedDispatcher.addCallback(onBackPressedCallback)
         activityRoomListBinding.toolBar.setNavigationOnClickListener {
             startActivity(
                 Intent(

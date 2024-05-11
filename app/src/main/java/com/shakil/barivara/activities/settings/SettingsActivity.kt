@@ -31,7 +31,7 @@ class SettingsActivity : AppCompatActivity() {
         prefManager = PrefManager(this)
 
         setSupportActionBar(activitySettingsBinding.toolBar)
-        activitySettingsBinding.toolBar.setNavigationOnClickListener { onBackPressed() }
+        activitySettingsBinding.toolBar.setNavigationOnClickListener { finish() }
         setupLanguage()
         bindUiWithComponents()
     }

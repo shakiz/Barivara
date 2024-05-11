@@ -10,10 +10,12 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.RelativeLayout
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shakil.barivara.R
+import com.shakil.barivara.activities.onboard.MainActivity
 import com.shakil.barivara.adapter.RecyclerRentListAdapter
 import com.shakil.barivara.adapter.RecyclerRentListAdapter.RentCallBacks
 import com.shakil.barivara.databinding.ActivityRentListBinding
@@ -36,10 +38,30 @@ class RentListActivity : AppCompatActivity(), RentCallBacks {
     private var customAdManager = CustomAdManager(this)
     private lateinit var prefManager: PrefManager
 
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            startActivity(
+                Intent(
+                    this@RentListActivity,
+                    MainActivity::class.java
+                )
+            )
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityRentListBinding = DataBindingUtil.setContentView(this, R.layout.activity_rent_list)
-        activityRentListBinding.toolBar.setNavigationOnClickListener { onBackPressed() }
+
+        onBackPressedDispatcher.addCallback(onBackPressedCallback)
+        activityRentListBinding.toolBar.setNavigationOnClickListener {
+            startActivity(
+                Intent(
+                    this@RentListActivity,
+                    MainActivity::class.java
+                )
+            )
+        }
         init()
         bindUIWithComponents()
     }

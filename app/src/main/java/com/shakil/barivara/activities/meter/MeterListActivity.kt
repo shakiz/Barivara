@@ -10,6 +10,7 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.RelativeLayout
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -34,12 +35,25 @@ class MeterListActivity : AppCompatActivity(), MeterCallBacks {
     private var tools = Tools(this)
     private var filterManager = FilterManager()
     private lateinit var prefManager: PrefManager
+
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            startActivity(
+                Intent(
+                    this@MeterListActivity,
+                    MainActivity::class.java
+                )
+            )
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityMeterListBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_meter_list)
         init()
         setSupportActionBar(activityMeterListBinding.toolBar)
+        onBackPressedDispatcher.addCallback(onBackPressedCallback)
         activityMeterListBinding.toolBar.setNavigationOnClickListener {
             startActivity(
                 Intent(

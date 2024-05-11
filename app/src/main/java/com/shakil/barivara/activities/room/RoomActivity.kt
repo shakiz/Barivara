@@ -57,7 +57,7 @@ class RoomActivity : AppCompatActivity() {
         prefManager = PrefManager(this)
         getIntentData()
         setSupportActionBar(activityAddNewRoomBinding.toolBar)
-        activityAddNewRoomBinding.toolBar.setNavigationOnClickListener { onBackPressed() }
+        activityAddNewRoomBinding.toolBar.setNavigationOnClickListener { finish() }
         bindUIWithComponents()
         loadData()
     }

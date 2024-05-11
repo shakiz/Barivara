@@ -54,7 +54,7 @@ class ElectricityBillDetailsActivity : AppCompatActivity() {
         prefManager = PrefManager(this)
         getIntentData()
         setSupportActionBar(activityMeterCostDetailsBinding.toolBar)
-        activityMeterCostDetailsBinding.toolBar.setNavigationOnClickListener { onBackPressed() }
+        activityMeterCostDetailsBinding.toolBar.setNavigationOnClickListener { finish() }
         bindUiWithComponents()
         loadData()
     }

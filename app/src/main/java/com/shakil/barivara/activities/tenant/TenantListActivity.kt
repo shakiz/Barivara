@@ -13,6 +13,7 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.RelativeLayout
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -42,12 +43,26 @@ class TenantListActivity : AppCompatActivity(), TenantCallBacks {
     private var filterManager = FilterManager()
     private var customAdManager = CustomAdManager(this)
     private lateinit var prefManager: PrefManager
+
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            startActivity(
+                Intent(
+                    this@TenantListActivity,
+                    MainActivity::class.java
+                )
+            )
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         init()
         activityTenantListBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_tenant_list)
         setSupportActionBar(activityTenantListBinding.toolBar)
+
+        onBackPressedDispatcher.addCallback(onBackPressedCallback)
         activityTenantListBinding.toolBar.setNavigationOnClickListener {
             startActivity(
                 Intent(
