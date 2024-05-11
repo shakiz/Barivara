@@ -61,7 +61,7 @@ class NewTenantActivity : AppCompatActivity() {
         prefManager = PrefManager(this)
         intentData()
         setSupportActionBar(activityAddNewTenantBinding.toolBar)
-        activityAddNewTenantBinding.toolBar.setNavigationOnClickListener { onBackPressed() }
+        activityAddNewTenantBinding.toolBar.setNavigationOnClickListener { finish() }
         bindUiWithComponents()
         loadData()
     }
