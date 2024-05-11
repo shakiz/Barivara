@@ -21,8 +21,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shakil.barivara.R
 import com.shakil.barivara.presentation.onboard.MainActivity
-import com.shakil.barivara.adapter.RecyclerTenantListAdapter
-import com.shakil.barivara.adapter.RecyclerTenantListAdapter.TenantCallBacks
+import com.shakil.barivara.presentation.adapter.RecyclerTenantListAdapter
+import com.shakil.barivara.presentation.adapter.RecyclerTenantListAdapter.TenantCallBacks
 import com.shakil.barivara.databinding.ActivityTenantListBinding
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.data.model.tenant.Tenant

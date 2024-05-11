@@ -1,9 +1,9 @@
-package com.shakil.barivara.adapter
+package com.shakil.barivara.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.shakil.barivara.adapter.RecyclerRentListAdapter.RentItemViewHolder
+import com.shakil.barivara.presentation.adapter.RecyclerRentListAdapter.RentItemViewHolder
 import com.shakil.barivara.databinding.AdapterLayoutRentListBinding
 import com.shakil.barivara.data.model.room.Rent
 

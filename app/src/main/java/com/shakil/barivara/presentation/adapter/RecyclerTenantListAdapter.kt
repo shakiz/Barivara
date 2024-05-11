@@ -1,11 +1,11 @@
-package com.shakil.barivara.adapter
+package com.shakil.barivara.presentation.adapter
 
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.shakil.barivara.R
-import com.shakil.barivara.adapter.RecyclerTenantListAdapter.TenantItemViewHolder
+import com.shakil.barivara.presentation.adapter.RecyclerTenantListAdapter.TenantItemViewHolder
 import com.shakil.barivara.databinding.AdapterLayoutTenantListBinding
 import com.shakil.barivara.data.model.tenant.Tenant
 

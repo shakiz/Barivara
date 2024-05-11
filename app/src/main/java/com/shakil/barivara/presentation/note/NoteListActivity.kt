@@ -10,7 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import com.shakil.barivara.R
 import com.shakil.barivara.presentation.onboard.MainActivity
-import com.shakil.barivara.adapter.NoteRecyclerAdapter
+import com.shakil.barivara.presentation.adapter.NoteRecyclerAdapter
 import com.shakil.barivara.databinding.ActivityNoteListBinding
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.data.model.note.Note

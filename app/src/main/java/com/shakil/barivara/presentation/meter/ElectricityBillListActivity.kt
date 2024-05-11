@@ -16,8 +16,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shakil.barivara.R
 import com.shakil.barivara.presentation.onboard.MainActivity
-import com.shakil.barivara.adapter.RecyclerElectricityBillListAdapter
-import com.shakil.barivara.adapter.RecyclerElectricityBillListAdapter.ElectricityBillBacks
+import com.shakil.barivara.presentation.adapter.RecyclerElectricityBillListAdapter
+import com.shakil.barivara.presentation.adapter.RecyclerElectricityBillListAdapter.ElectricityBillBacks
 import com.shakil.barivara.databinding.ActivityElectricityBillListBinding
 import com.shakil.barivara.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.data.model.meter.ElectricityBill

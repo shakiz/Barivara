@@ -1,4 +1,4 @@
-package com.shakil.barivara.adapter
+package com.shakil.barivara.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.View
