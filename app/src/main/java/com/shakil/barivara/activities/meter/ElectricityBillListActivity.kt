@@ -10,10 +10,12 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.RelativeLayout
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shakil.barivara.R
+import com.shakil.barivara.activities.onboard.MainActivity
 import com.shakil.barivara.adapter.RecyclerElectricityBillListAdapter
 import com.shakil.barivara.adapter.RecyclerElectricityBillListAdapter.ElectricityBillBacks
 import com.shakil.barivara.databinding.ActivityElectricityBillListBinding
@@ -33,11 +35,32 @@ class ElectricityBillListActivity : AppCompatActivity(), ElectricityBillBacks {
     private var tools = Tools(this)
     private var filterManager = FilterManager()
     private lateinit var prefManager: PrefManager
+
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            startActivity(
+                Intent(
+                    this@ElectricityBillListActivity,
+                    MainActivity::class.java
+                )
+            )
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityMeterCostListBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_electricity_bill_list)
-        activityMeterCostListBinding.toolBar.setNavigationOnClickListener { onBackPressed() }
+
+        onBackPressedDispatcher.addCallback(onBackPressedCallback)
+        activityMeterCostListBinding.toolBar.setNavigationOnClickListener {
+            startActivity(
+                Intent(
+                    this@ElectricityBillListActivity,
+                    MainActivity::class.java
+                )
+            )
+        }
         init()
         bindUIWithComponents()
     }
