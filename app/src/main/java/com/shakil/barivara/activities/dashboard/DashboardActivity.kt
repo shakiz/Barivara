@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.shakil.barivara.R
@@ -28,13 +29,21 @@ class DashboardActivity : AppCompatActivity() {
     private var customAdManager = CustomAdManager(this)
     private var totalTenantCurrent = 0
     private var totalTenantLeft = 0
+
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            finish()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityDashboardBinding = DataBindingUtil.setContentView(this, R.layout.activity_dashboard)
         prefManager = PrefManager(this)
         bindUiWithComponents()
         setSupportActionBar(activityDashboardBinding.toolBar)
-        activityDashboardBinding.toolBar.setNavigationOnClickListener { onBackPressed() }
+        activityDashboardBinding.toolBar.setNavigationOnClickListener { finish() }
+        onBackPressedDispatcher.addCallback(onBackPressedCallback)
     }
 
     private fun bindUiWithComponents() {
