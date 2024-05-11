@@ -43,7 +43,7 @@ class NewNoteActivity : AppCompatActivity() {
         prefManager = PrefManager(this)
         intentData()
         setSupportActionBar(activityNewNoteBinding.toolBar)
-        activityNewNoteBinding.toolBar.setNavigationOnClickListener { onBackPressed() }
+        activityNewNoteBinding.toolBar.setNavigationOnClickListener { finish() }
         bindUiWithComponents()
         loadData()
     }

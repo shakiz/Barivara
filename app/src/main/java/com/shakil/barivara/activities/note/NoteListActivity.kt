@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
@@ -27,11 +28,25 @@ class NoteListActivity : AppCompatActivity() {
     private var appAnalytics = AppAnalytics(this)
     private var tools = Tools(this)
     private lateinit var prefManager: PrefManager
+
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            startActivity(
+                Intent(
+                    this@NoteListActivity,
+                    MainActivity::class.java
+                )
+            )
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityNoteListBinding = DataBindingUtil.setContentView(this, R.layout.activity_note_list)
         init()
         setSupportActionBar(activityNoteListBinding.toolBar)
+
+        onBackPressedDispatcher.addCallback(onBackPressedCallback)
         activityNoteListBinding.toolBar.setNavigationOnClickListener {
             startActivity(
                 Intent(
