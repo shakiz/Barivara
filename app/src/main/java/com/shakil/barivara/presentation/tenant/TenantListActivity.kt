@@ -24,7 +24,7 @@ import com.shakil.barivara.presentation.onboard.MainActivity
 import com.shakil.barivara.presentation.adapter.RecyclerTenantListAdapter
 import com.shakil.barivara.presentation.adapter.RecyclerTenantListAdapter.TenantCallBacks
 import com.shakil.barivara.databinding.ActivityTenantListBinding
-import com.shakil.barivara.firebasedb.FirebaseCrudHelper
+import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.data.model.tenant.Tenant
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.Constants.mUserId

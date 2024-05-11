@@ -12,7 +12,7 @@ import com.shakil.barivara.R
 import com.shakil.barivara.presentation.onboard.MainActivity
 import com.shakil.barivara.presentation.adapter.NoteRecyclerAdapter
 import com.shakil.barivara.databinding.ActivityNoteListBinding
-import com.shakil.barivara.firebasedb.FirebaseCrudHelper
+import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.data.model.note.Note
 import com.shakil.barivara.utils.AppAnalytics
 import com.shakil.barivara.utils.Constants.mUserId

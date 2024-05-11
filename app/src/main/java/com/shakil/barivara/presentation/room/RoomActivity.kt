@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.shakil.barivara.R
 import com.shakil.barivara.databinding.ActivityAddNewRoomBinding
-import com.shakil.barivara.firebasedb.FirebaseCrudHelper
+import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.data.model.room.Room
 import com.shakil.barivara.utils.Constants.mUserId
 import com.shakil.barivara.utils.CustomAdManager

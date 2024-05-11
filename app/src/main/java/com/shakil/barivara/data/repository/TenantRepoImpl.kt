@@ -8,7 +8,7 @@ import com.shakil.barivara.utils.Resource
 import java.net.SocketTimeoutException
 import javax.inject.Inject
 
-class DataRepoImpl @Inject constructor(
+class TenantRepoImpl @Inject constructor(
     private val webService: WebService
 ) : DataRepo {
     override suspend fun getData(): Resource<Tenant> {

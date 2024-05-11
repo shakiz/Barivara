@@ -1,4 +1,4 @@
-package com.shakil.barivara.firebasedb
+package com.shakil.barivara.data.remote.firebasedb
 
 import android.content.Context
 import android.util.Log

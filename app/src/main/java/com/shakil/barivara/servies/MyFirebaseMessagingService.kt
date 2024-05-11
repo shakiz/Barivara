@@ -4,7 +4,7 @@ import android.text.TextUtils
 import android.util.Log
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import com.shakil.barivara.firebasedb.FirebaseCrudHelper
+import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.data.model.notification.Notification
 import com.shakil.barivara.utils.Constants.TAG
 import com.shakil.barivara.utils.Tools.Companion.sendNotification

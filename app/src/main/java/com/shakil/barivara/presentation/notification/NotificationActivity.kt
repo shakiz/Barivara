@@ -11,7 +11,7 @@ import com.shakil.barivara.R
 import com.shakil.barivara.presentation.onboard.MainActivity
 import com.shakil.barivara.presentation.adapter.NotificationRecyclerAdapter
 import com.shakil.barivara.databinding.ActivityNotificationBinding
-import com.shakil.barivara.firebasedb.FirebaseCrudHelper
+import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.data.model.notification.Notification
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Tools
