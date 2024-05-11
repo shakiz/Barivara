@@ -46,7 +46,7 @@ class RentDetailsActivity : AppCompatActivity() {
         prefManager = PrefManager(this)
         getIntentData()
         setSupportActionBar(activityNewRentDetailsBinding.toolBar)
-        activityNewRentDetailsBinding.toolBar.setNavigationOnClickListener { onBackPressed() }
+        activityNewRentDetailsBinding.toolBar.setNavigationOnClickListener { finish() }
         bindUiWithComponents()
         loadData()
     }
