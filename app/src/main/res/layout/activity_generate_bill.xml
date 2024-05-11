@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        tools:context=".activities.room.RoomActivity">
+        tools:context=".presentation.room.RoomActivity">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"

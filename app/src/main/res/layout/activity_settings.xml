@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/window_background"
-        tools:context=".activities.settings.SettingsActivity">
+        tools:context=".presentation.settings.SettingsActivity">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"

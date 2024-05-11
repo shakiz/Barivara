@@ -34,10 +34,10 @@ import androidx.core.content.ContextCompat
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.shakil.barivara.R
-import com.shakil.barivara.activities.auth.LoginActivity
-import com.shakil.barivara.activities.onboard.MainActivity
-import com.shakil.barivara.activities.onboard.SplashActivity
-import com.shakil.barivara.activities.onboard.WelcomeActivity
+import com.shakil.barivara.presentation.auth.LoginActivity
+import com.shakil.barivara.presentation.onboard.MainActivity
+import com.shakil.barivara.presentation.onboard.SplashActivity
+import com.shakil.barivara.presentation.onboard.WelcomeActivity
 import com.shakil.barivara.utils.Constants.REQUEST_CALL_CODE
 import com.shakil.barivara.utils.Constants.TAG
 import com.shakil.barivara.utils.Constants.VALID_EMAIL_ADDRESS_REGEX
