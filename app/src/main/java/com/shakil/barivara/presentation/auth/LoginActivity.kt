@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -24,13 +25,22 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var activityBinding: ActivityLoginBinding
     private var firebaseAuth: FirebaseAuth? = null
     private var ux: UX? = null
+    private var utilsForAll: UtilsForAll? = null
     private var loginWithStr: String? = null
     private var tools = Tools(this)
     private val hashMap: Map<String?, Array<String>?> = HashMap()
     private var validation = Validation(this, hashMap)
+
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            utilsForAll?.exitApp()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityBinding = DataBindingUtil.setContentView(this, R.layout.activity_login)
+        onBackPressedDispatcher.addCallback(onBackPressedCallback)
         initUI()
         loginWithStr = getString(R.string.mobile)
         bindUiWithComponents()
@@ -38,6 +48,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun initUI() {
         ux = UX(this)
+        utilsForAll = UtilsForAll(this)
         firebaseAuth = FirebaseAuth.getInstance()
     }
 
@@ -215,10 +226,5 @@ class LoginActivity : AppCompatActivity() {
 
     private fun validation(resNames: Array<String>, validationMessages: Array<String>) {
         validation.setEditTextIsNotEmpty(resNames, validationMessages)
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        UtilsForAll(this).exitApp()
     }
 }
