@@ -47,7 +47,7 @@ object AppModule {
     fun provideAuthService(
         callFactory: okhttp3.Call.Factory
     ): AuthService = Retrofit.Builder()
-        .baseUrl("")
+        .baseUrl("https://google.com")
         .callFactory(callFactory)
         .addConverterFactory(GsonConverterFactory.create())
         .build()

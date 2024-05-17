@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -19,8 +20,10 @@ import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
 import com.shakil.barivara.utils.UtilsForAll
 import com.shakil.barivara.utils.Validation
+import dagger.hilt.android.AndroidEntryPoint
 import es.dmoral.toasty.Toasty
 
+@AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
     private lateinit var activityBinding: ActivityLoginBinding
     private var firebaseAuth: FirebaseAuth? = null
@@ -30,6 +33,8 @@ class LoginActivity : AppCompatActivity() {
     private var tools = Tools(this)
     private val hashMap: Map<String?, Array<String>?> = HashMap()
     private var validation = Validation(this, hashMap)
+
+    private val viewModel by viewModels<AuthViewModel>()
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
@@ -44,6 +49,8 @@ class LoginActivity : AppCompatActivity() {
         initUI()
         loginWithStr = getString(R.string.mobile)
         bindUiWithComponents()
+
+        viewModel.getData()
     }
 
     private fun initUI() {
