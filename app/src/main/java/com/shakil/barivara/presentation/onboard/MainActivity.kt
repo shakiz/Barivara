@@ -11,7 +11,6 @@ import android.view.MenuItem
 import android.view.WindowManager
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
@@ -19,6 +18,7 @@ import androidx.databinding.DataBindingUtil
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
+import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
 import com.shakil.barivara.presentation.auth.ForgotPasswordActivity
 import com.shakil.barivara.presentation.auth.LoginActivity
@@ -40,7 +40,6 @@ import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.data.model.meter.Meter
 import com.shakil.barivara.data.model.room.Room
 import com.shakil.barivara.data.model.tenant.Tenant
-import com.shakil.barivara.utils.AppAnalytics
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.Constants.mUserId
 import com.shakil.barivara.utils.CustomAdManager
@@ -49,20 +48,22 @@ import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UtilsForAll
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : BaseActivity<ActivityMainBinding>(),
+    NavigationView.OnNavigationItemSelectedListener {
     private lateinit var activityMainBinding: ActivityMainBinding
     private var utilsForAll = UtilsForAll(this)
     private var firebaseCrudHelper = FirebaseCrudHelper(this)
     private lateinit var prefManager: PrefManager
     private var tools = Tools(this)
     private var customAdManager = CustomAdManager(this)
-    private var appAnalytics = AppAnalytics(this)
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true){
         override fun handleOnBackPressed() {
             tools.doPopUpForExitApp()
         }
     }
+    override val layoutResourceId: Int
+        get() = R.layout.activity_main
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -122,6 +123,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
         }
         bindUIWithComponents()
+    }
+
+    override fun setVariables(dataBinding: ActivityMainBinding) {
+
     }
 
     private fun setupDrawerToggle() {
@@ -270,73 +275,73 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_generate_bill -> {
-                appAnalytics.registerEvent(
+                registerEvent(
                     "generate_bill",
-                    appAnalytics.setData("generate_bill", "Generate Bill Activity Launched")
+                    setData("generate_bill", "Generate Bill Activity Launched")
                 )
                 startActivity(Intent(this@MainActivity, GenerateBillActivity::class.java))
             }
 
             R.id.menu_profile -> {
-                appAnalytics.registerEvent(
+                registerEvent(
                     "profile",
-                    appAnalytics.setData("profile", "Profile Activity Launched")
+                    setData("profile", "Profile Activity Launched")
                 )
                 startActivity(Intent(this@MainActivity, ProfileActivity::class.java))
             }
 
             R.id.menu_settings -> {
-                appAnalytics.registerEvent(
+                registerEvent(
                     "settings",
-                    appAnalytics.setData("settings", "Settings Activity Launched")
+                    setData("settings", "Settings Activity Launched")
                 )
                 startActivity(Intent(this@MainActivity, SettingsActivity::class.java))
             }
 
             R.id.menu_change_password -> {
-                appAnalytics.registerEvent(
+                registerEvent(
                     "changePassword",
-                    appAnalytics.setData("changePassword", "Change Password Activity Launched")
+                    setData("changePassword", "Change Password Activity Launched")
                 )
                 startActivity(Intent(this@MainActivity, ForgotPasswordActivity::class.java))
             }
 
             R.id.menu_note -> {
-                appAnalytics.registerEvent(
+                registerEvent(
                     "note",
-                    appAnalytics.setData("note", "Note Activity Launched")
+                    setData("note", "Note Activity Launched")
                 )
                 startActivity(Intent(this@MainActivity, NoteListActivity::class.java))
             }
 
             R.id.menu_notification -> {
-                appAnalytics.registerEvent(
+                registerEvent(
                     "notification",
-                    appAnalytics.setData("notification", "Notification Activity Launched")
+                    setData("notification", "Notification Activity Launched")
                 )
                 startActivity(Intent(this@MainActivity, NotificationActivity::class.java))
             }
 
             R.id.menu_tutorial -> {
-                appAnalytics.registerEvent(
+                registerEvent(
                     "tutorial",
-                    appAnalytics.setData("tutorial", "Tutorial Activity Launched")
+                    setData("tutorial", "Tutorial Activity Launched")
                 )
                 startActivity(Intent(this@MainActivity, TutorialActivity::class.java))
             }
 
             R.id.menu_about_us -> {
-                appAnalytics.registerEvent(
+                registerEvent(
                     "about_us",
-                    appAnalytics.setData("about_us", "About Us Launched")
+                    setData("about_us", "About Us Launched")
                 )
                 startActivity(Intent(this@MainActivity, AboutUsActivity::class.java))
             }
 
             R.id.menu_rate_us -> {
-                appAnalytics.registerEvent(
+                registerEvent(
                     "rate_us",
-                    appAnalytics.setData("rate_us", "Rate Us Launched")
+                    setData("rate_us", "Rate Us Launched")
                 )
                 tools.rateApp()
             }
