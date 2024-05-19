@@ -1,4 +1,4 @@
-package com.shakil.barivara.presentation.auth
+package com.shakil.barivara.presentation.auth.login
 
 import android.content.Intent
 import android.os.Bundle
@@ -14,6 +14,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.shakil.barivara.R
 import com.shakil.barivara.presentation.onboard.MainActivity
 import com.shakil.barivara.databinding.ActivityLoginBinding
+import com.shakil.barivara.presentation.auth.AuthViewModel
+import com.shakil.barivara.presentation.auth.registration.MobileRegVerificationActivity
+import com.shakil.barivara.presentation.auth.registration.RegistrationActivity
+import com.shakil.barivara.presentation.auth.forgotpassword.ForgotPasswordActivity
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Tools

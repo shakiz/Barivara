@@ -20,8 +20,8 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
 import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
-import com.shakil.barivara.presentation.auth.ForgotPasswordActivity
-import com.shakil.barivara.presentation.auth.LoginActivity
+import com.shakil.barivara.presentation.auth.forgotpassword.ForgotPasswordActivity
+import com.shakil.barivara.presentation.auth.login.LoginActivity
 import com.shakil.barivara.presentation.dashboard.DashboardActivity
 import com.shakil.barivara.presentation.generatebill.GenerateBillActivity
 import com.shakil.barivara.presentation.meter.ElectricityBillListActivity

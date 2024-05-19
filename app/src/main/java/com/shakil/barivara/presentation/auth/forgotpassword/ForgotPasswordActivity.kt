@@ -1,4 +1,4 @@
-package com.shakil.barivara.presentation.auth
+package com.shakil.barivara.presentation.auth.forgotpassword
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import com.google.firebase.auth.FirebaseAuth
 import com.shakil.barivara.R
 import com.shakil.barivara.databinding.ActivityForgotPasswordBinding
+import com.shakil.barivara.presentation.auth.login.LoginActivity
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.UX
 import com.shakil.barivara.utils.Validation

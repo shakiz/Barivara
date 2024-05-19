@@ -1,4 +1,4 @@
-package com.shakil.barivara.presentation.auth
+package com.shakil.barivara.presentation.auth.registration
 
 import android.content.Intent
 import android.os.Bundle

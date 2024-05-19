@@ -7,7 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.shakil.barivara.R
-import com.shakil.barivara.presentation.auth.LoginActivity
+import com.shakil.barivara.presentation.auth.login.LoginActivity
 import com.shakil.barivara.presentation.onboard.MainActivity
 import com.shakil.barivara.databinding.ActivitySettingsBinding
 import com.shakil.barivara.utils.Constants

@@ -1,4 +1,4 @@
-package com.shakil.barivara.presentation.onboard
+package com.shakil.barivara.presentation.auth.onboard
 
 import android.content.Intent
 import android.os.Build
@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.shakil.barivara.R
-import com.shakil.barivara.presentation.auth.LoginActivity
+import com.shakil.barivara.presentation.auth.login.LoginActivity
 import com.shakil.barivara.databinding.ActivityWelcomeBinding
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.MyViewPagerAdapter
