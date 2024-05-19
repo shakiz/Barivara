@@ -5,9 +5,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import com.google.firebase.auth.FirebaseAuth
+import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
 import com.shakil.barivara.databinding.ActivityForgotPasswordBinding
 import com.shakil.barivara.presentation.auth.login.LoginActivity
@@ -16,18 +15,23 @@ import com.shakil.barivara.utils.UX
 import com.shakil.barivara.utils.Validation
 import es.dmoral.toasty.Toasty
 
-class ForgotPasswordActivity : AppCompatActivity() {
+class ForgotPasswordActivity : BaseActivity<ActivityForgotPasswordBinding>() {
     private lateinit var activityForgotPasswordBinding: ActivityForgotPasswordBinding
     private val hashMap: Map<String?, Array<String>?> = HashMap()
     private var validation = Validation(this, hashMap)
     private var firebaseAuth: FirebaseAuth? = null
     private lateinit var ux: UX
+    override val layoutResourceId: Int
+        get() = R.layout.activity_forgot_password
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityForgotPasswordBinding =
-            DataBindingUtil.setContentView(this, R.layout.activity_forgot_password)
         initUI()
         bindUiWithComponents()
+    }
+
+    override fun setVariables(dataBinding: ActivityForgotPasswordBinding) {
+        activityForgotPasswordBinding = dataBinding
     }
 
     private fun initUI() {
