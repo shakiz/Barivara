@@ -7,17 +7,16 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.databinding.DataBindingUtil
 import com.google.firebase.auth.FirebaseAuth
+import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
-import com.shakil.barivara.presentation.onboard.MainActivity
 import com.shakil.barivara.databinding.ActivityLoginBinding
 import com.shakil.barivara.presentation.auth.AuthViewModel
+import com.shakil.barivara.presentation.auth.forgotpassword.ForgotPasswordActivity
 import com.shakil.barivara.presentation.auth.registration.MobileRegVerificationActivity
 import com.shakil.barivara.presentation.auth.registration.RegistrationActivity
-import com.shakil.barivara.presentation.auth.forgotpassword.ForgotPasswordActivity
+import com.shakil.barivara.presentation.onboard.MainActivity
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Tools
@@ -28,7 +27,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import es.dmoral.toasty.Toasty
 
 @AndroidEntryPoint
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     private lateinit var activityBinding: ActivityLoginBinding
     private var firebaseAuth: FirebaseAuth? = null
     private var ux: UX? = null
@@ -45,10 +44,15 @@ class LoginActivity : AppCompatActivity() {
             utilsForAll?.exitApp()
         }
     }
+    override val layoutResourceId: Int
+        get() = R.layout.activity_login
+
+    override fun setVariables(dataBinding: ActivityLoginBinding) {
+        activityBinding = dataBinding
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityBinding = DataBindingUtil.setContentView(this, R.layout.activity_login)
         onBackPressedDispatcher.addCallback(onBackPressedCallback)
         initUI()
         loginWithStr = getString(R.string.mobile)
