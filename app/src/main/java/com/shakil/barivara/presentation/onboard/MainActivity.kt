@@ -14,12 +14,16 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
-import androidx.databinding.DataBindingUtil
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
 import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
+import com.shakil.barivara.data.model.meter.Meter
+import com.shakil.barivara.data.model.room.Room
+import com.shakil.barivara.data.model.tenant.Tenant
+import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
+import com.shakil.barivara.databinding.ActivityMainBinding
 import com.shakil.barivara.presentation.auth.forgotpassword.ForgotPasswordActivity
 import com.shakil.barivara.presentation.auth.login.LoginActivity
 import com.shakil.barivara.presentation.dashboard.DashboardActivity
@@ -35,11 +39,6 @@ import com.shakil.barivara.presentation.settings.AboutUsActivity
 import com.shakil.barivara.presentation.settings.SettingsActivity
 import com.shakil.barivara.presentation.tenant.TenantListActivity
 import com.shakil.barivara.presentation.tutorial.TutorialActivity
-import com.shakil.barivara.databinding.ActivityMainBinding
-import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
-import com.shakil.barivara.data.model.meter.Meter
-import com.shakil.barivara.data.model.room.Room
-import com.shakil.barivara.data.model.tenant.Tenant
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.Constants.mUserId
 import com.shakil.barivara.utils.CustomAdManager
@@ -65,10 +64,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
     override val layoutResourceId: Int
         get() = R.layout.activity_main
 
+    override fun setVariables(dataBinding: ActivityMainBinding) {
+        activityMainBinding = dataBinding
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-
         prefManager = PrefManager(this)
 
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
@@ -123,10 +124,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
             }
         }
         bindUIWithComponents()
-    }
-
-    override fun setVariables(dataBinding: ActivityMainBinding) {
-
     }
 
     private fun setupDrawerToggle() {
