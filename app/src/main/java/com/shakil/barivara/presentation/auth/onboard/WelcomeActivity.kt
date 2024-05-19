@@ -7,17 +7,16 @@ import android.text.Html
 import android.view.View
 import android.view.WindowManager
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
+import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
-import com.shakil.barivara.presentation.auth.login.LoginActivity
 import com.shakil.barivara.databinding.ActivityWelcomeBinding
+import com.shakil.barivara.presentation.auth.login.LoginActivity
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.MyViewPagerAdapter
 import com.shakil.barivara.utils.PrefManager
 
-class WelcomeActivity : AppCompatActivity() {
+class WelcomeActivity : BaseActivity<ActivityWelcomeBinding>() {
     private lateinit var activityWelcomeBinding: ActivityWelcomeBinding
     private var myViewPagerAdapter: MyViewPagerAdapter? = null
     private var prefManager = PrefManager(this)
@@ -29,13 +28,19 @@ class WelcomeActivity : AppCompatActivity() {
         R.layout.welcome_calculate_electricity_rent_amount,
         R.layout.welcome_overall_dashboard
     )
+    override val layoutResourceId: Int
+        get() = R.layout.activity_welcome
+
+    override fun setVariables(dataBinding: ActivityWelcomeBinding) {
+        activityWelcomeBinding = dataBinding
+    }
+
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (Build.VERSION.SDK_INT >= 21) {
             window.decorView.systemUiVisibility =
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
         }
-        activityWelcomeBinding = DataBindingUtil.setContentView(this, R.layout.activity_welcome)
         init()
         layouts = intArrayOf(
             R.layout.welcome_about_app,
