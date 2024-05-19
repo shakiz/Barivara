@@ -7,12 +7,11 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
+import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
-import com.shakil.barivara.databinding.ActivityAddNewRoomBinding
-import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.data.model.room.Room
+import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
+import com.shakil.barivara.databinding.ActivityAddNewRoomBinding
 import com.shakil.barivara.utils.Constants.mUserId
 import com.shakil.barivara.utils.CustomAdManager
 import com.shakil.barivara.utils.PrefManager
@@ -20,10 +19,9 @@ import com.shakil.barivara.utils.SpinnerAdapter
 import com.shakil.barivara.utils.SpinnerData
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.Validation
-import java.util.HashMap
 import java.util.UUID
 
-class RoomActivity : AppCompatActivity() {
+class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
     private lateinit var activityAddNewRoomBinding: ActivityAddNewRoomBinding
     private var spinnerData = SpinnerData(this)
     private var spinnerAdapter = SpinnerAdapter()
@@ -49,11 +47,15 @@ class RoomActivity : AppCompatActivity() {
     private var validation = Validation(this, hashMap)
     private var customAdManager = CustomAdManager(this)
     private lateinit var prefManager: PrefManager
+    override val layoutResourceId: Int
+        get() = R.layout.activity_add_new_room
+
+    override fun setVariables(dataBinding: ActivityAddNewRoomBinding) {
+        activityAddNewRoomBinding = dataBinding
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityAddNewRoomBinding =
-            DataBindingUtil.setContentView(this, R.layout.activity_add_new_room)
         prefManager = PrefManager(this)
         getIntentData()
         setSupportActionBar(activityAddNewRoomBinding.toolBar)
