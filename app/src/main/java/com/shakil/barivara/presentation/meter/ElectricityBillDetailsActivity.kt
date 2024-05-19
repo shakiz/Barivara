@@ -10,12 +10,11 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
+import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
-import com.shakil.barivara.databinding.ActivityElectricityBillDetailsBinding
-import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.data.model.meter.ElectricityBill
+import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
+import com.shakil.barivara.databinding.ActivityElectricityBillDetailsBinding
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.Constants.mUserId
 import com.shakil.barivara.utils.PrefManager
@@ -25,7 +24,7 @@ import com.shakil.barivara.utils.UtilsForAll
 import com.shakil.barivara.utils.Validation
 import java.util.UUID
 
-class ElectricityBillDetailsActivity : AppCompatActivity() {
+class ElectricityBillDetailsActivity : BaseActivity<ActivityElectricityBillDetailsBinding>() {
     private lateinit var activityMeterCostDetailsBinding: ActivityElectricityBillDetailsBinding
     private var meterNameStr: String = ""
     private var roomNameStr: String = ""
@@ -47,10 +46,15 @@ class ElectricityBillDetailsActivity : AppCompatActivity() {
     private var spinnerData = SpinnerData(this)
     private val hashMap: Map<String?, Array<String>?> = HashMap()
     private var validation = Validation(this, hashMap)
+    override val layoutResourceId: Int
+        get() = R.layout.activity_electricity_bill_details
+
+    override fun setVariables(dataBinding: ActivityElectricityBillDetailsBinding) {
+        activityMeterCostDetailsBinding = dataBinding
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityMeterCostDetailsBinding =
-            DataBindingUtil.setContentView(this, R.layout.activity_electricity_bill_details)
         prefManager = PrefManager(this)
         getIntentData()
         setSupportActionBar(activityMeterCostDetailsBinding.toolBar)
