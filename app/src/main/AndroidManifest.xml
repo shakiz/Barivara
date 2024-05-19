@@ -53,7 +53,7 @@
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".presentation.auth.MobileRegVerificationActivity"
+            android:name=".presentation.auth.registration.MobileRegVerificationActivity"
             android:screenOrientation="portrait"
             android:exported="false"
             android:theme="@style/AppThemeNoActionBar"
@@ -65,19 +65,19 @@
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".presentation.auth.LoginActivity"
+            android:name=".presentation.auth.login.LoginActivity"
             android:screenOrientation="portrait"
             android:exported="true"
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".presentation.auth.RegistrationActivity"
+            android:name=".presentation.auth.registration.RegistrationActivity"
             android:screenOrientation="portrait"
             android:exported="false"
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".presentation.auth.ForgotPasswordActivity"
+            android:name=".presentation.auth.forgotpassword.ForgotPasswordActivity"
             android:screenOrientation="portrait"
             android:exported="false"
             android:theme="@style/AppThemeNoActionBar"
@@ -173,7 +173,7 @@
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".presentation.onboard.WelcomeActivity"
+            android:name=".presentation.auth.onboard.WelcomeActivity"
             android:screenOrientation="unspecified"
             android:exported="false"
             android:theme="@style/AppThemeNoActionBar"

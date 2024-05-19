@@ -8,12 +8,11 @@ import android.speech.tts.TextToSpeech
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
+import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
-import com.shakil.barivara.databinding.ActivityNewNoteBinding
-import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.data.model.note.Note
+import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
+import com.shakil.barivara.databinding.ActivityNewNoteBinding
 import com.shakil.barivara.utils.AppAnalytics
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.Constants.mUserId
@@ -24,7 +23,7 @@ import com.shakil.barivara.utils.Validation
 import java.util.Locale
 import java.util.UUID
 
-class NewNoteActivity : AppCompatActivity() {
+class NewNoteActivity : BaseActivity<ActivityNewNoteBinding>() {
     private lateinit var activityNewNoteBinding: ActivityNewNoteBinding
     private lateinit var textToSpeech: TextToSpeech
     private var isTextToSpeechOn = false
@@ -37,9 +36,15 @@ class NewNoteActivity : AppCompatActivity() {
     private var appAnalytics = AppAnalytics(this)
     private var utilsForAll = UtilsForAll(this)
     private lateinit var prefManager: PrefManager
+    override val layoutResourceId: Int
+        get() = R.layout.activity_new_note
+
+    override fun setVariables(dataBinding: ActivityNewNoteBinding) {
+        activityNewNoteBinding = dataBinding
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityNewNoteBinding = DataBindingUtil.setContentView(this, R.layout.activity_new_note)
         prefManager = PrefManager(this)
         intentData()
         setSupportActionBar(activityNewNoteBinding.toolBar)

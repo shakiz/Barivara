@@ -20,13 +20,12 @@ import android.widget.Button
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.databinding.DataBindingUtil
+import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
-import com.shakil.barivara.databinding.ActivityGenerateBillBinding
 import com.shakil.barivara.data.model.bill.GenerateBill
+import com.shakil.barivara.databinding.ActivityGenerateBillBinding
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.CustomAdManager
 import com.shakil.barivara.utils.DroidFileManager
@@ -39,7 +38,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 
-class GenerateBillActivity : AppCompatActivity() {
+class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>() {
     private lateinit var activityBinding: ActivityGenerateBillBinding
     private val hashMap: Map<String?, Array<String>?> = HashMap()
     private var YearStr: String? = null
@@ -51,9 +50,15 @@ class GenerateBillActivity : AppCompatActivity() {
     private lateinit var dialogBill: Dialog
     private var customAdManager = CustomAdManager(this)
     private var ux: UX? = null
+    override val layoutResourceId: Int
+        get() = R.layout.activity_generate_bill
+
+    override fun setVariables(dataBinding: ActivityGenerateBillBinding) {
+        activityBinding = dataBinding
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityBinding = DataBindingUtil.setContentView(this, R.layout.activity_generate_bill)
         init()
         binUIWithComponents()
     }

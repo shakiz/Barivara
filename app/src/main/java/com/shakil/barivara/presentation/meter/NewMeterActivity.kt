@@ -7,22 +7,20 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
+import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
-import com.shakil.barivara.databinding.ActivityNewMeterBinding
-import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.data.model.meter.Meter
+import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
+import com.shakil.barivara.databinding.ActivityNewMeterBinding
 import com.shakil.barivara.utils.Constants.mUserId
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.SpinnerAdapter
 import com.shakil.barivara.utils.SpinnerData
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.Validation
-import java.util.HashMap
 import java.util.UUID
 
-class NewMeterActivity : AppCompatActivity() {
+class NewMeterActivity : BaseActivity<ActivityNewMeterBinding>() {
     private lateinit var activityNewMeterBinding: ActivityNewMeterBinding
     private var spinnerAdapter = SpinnerAdapter()
     private var spinnerData = SpinnerData(this)
@@ -39,9 +37,15 @@ class NewMeterActivity : AppCompatActivity() {
     private lateinit var prefManager: PrefManager
     private val hashMap: Map<String?, Array<String>?> = HashMap()
     private var validation = Validation(this, hashMap)
+    override val layoutResourceId: Int
+        get() = R.layout.activity_new_meter
+
+    override fun setVariables(dataBinding: ActivityNewMeterBinding) {
+        activityNewMeterBinding = dataBinding
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityNewMeterBinding = DataBindingUtil.setContentView(this, R.layout.activity_new_meter)
         prefManager = PrefManager(this)
         getIntentData()
         setSupportActionBar(activityNewMeterBinding.toolBar)

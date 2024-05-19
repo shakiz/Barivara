@@ -11,16 +11,15 @@ import android.widget.Button
 import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
-import com.shakil.barivara.presentation.onboard.MainActivity
+import com.shakil.barivara.data.model.room.Room
+import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
+import com.shakil.barivara.databinding.ActivityRoomListBinding
 import com.shakil.barivara.presentation.adapter.RecyclerRoomListAdapter
 import com.shakil.barivara.presentation.adapter.RecyclerRoomListAdapter.RoomCallBacks
-import com.shakil.barivara.databinding.ActivityRoomListBinding
-import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
-import com.shakil.barivara.data.model.room.Room
+import com.shakil.barivara.presentation.onboard.MainActivity
 import com.shakil.barivara.utils.Constants.mUserId
 import com.shakil.barivara.utils.CustomAdManager
 import com.shakil.barivara.utils.FilterManager
@@ -28,7 +27,7 @@ import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
 
-class RoomListActivity : AppCompatActivity(), RoomCallBacks {
+class RoomListActivity : BaseActivity<ActivityRoomListBinding>(), RoomCallBacks {
     private lateinit var activityRoomListBinding: ActivityRoomListBinding
     private var roomList: ArrayList<Room> = arrayListOf()
     private var firebaseCrudHelper = FirebaseCrudHelper(this)
@@ -48,10 +47,15 @@ class RoomListActivity : AppCompatActivity(), RoomCallBacks {
             )
         }
     }
+    override val layoutResourceId: Int
+        get() = R.layout.activity_room_list
+
+    override fun setVariables(dataBinding: ActivityRoomListBinding) {
+        activityRoomListBinding = dataBinding
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityRoomListBinding = DataBindingUtil.setContentView(this, R.layout.activity_room_list)
         init()
         setSupportActionBar(activityRoomListBinding.toolBar)
 

@@ -5,14 +5,13 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
+import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
-import com.shakil.barivara.databinding.ActivityDashboardBinding
-import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.data.model.meter.Meter
 import com.shakil.barivara.data.model.room.Room
 import com.shakil.barivara.data.model.tenant.Tenant
+import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
+import com.shakil.barivara.databinding.ActivityDashboardBinding
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.Constants.mUserId
 import com.shakil.barivara.utils.CustomAdManager
@@ -20,7 +19,7 @@ import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.SpinnerAdapter
 import com.shakil.barivara.utils.SpinnerData
 
-class DashboardActivity : AppCompatActivity() {
+class DashboardActivity : BaseActivity<ActivityDashboardBinding>() {
     private lateinit var activityDashboardBinding: ActivityDashboardBinding
     private var firebaseCrudHelper = FirebaseCrudHelper(this)
     private lateinit var prefManager: PrefManager
@@ -35,10 +34,15 @@ class DashboardActivity : AppCompatActivity() {
             finish()
         }
     }
+    override val layoutResourceId: Int
+        get() = R.layout.activity_dashboard
+
+    override fun setVariables(dataBinding: ActivityDashboardBinding) {
+        activityDashboardBinding = dataBinding
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityDashboardBinding = DataBindingUtil.setContentView(this, R.layout.activity_dashboard)
         prefManager = PrefManager(this)
         bindUiWithComponents()
         setSupportActionBar(activityDashboardBinding.toolBar)

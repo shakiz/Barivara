@@ -7,12 +7,11 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
+import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
-import com.shakil.barivara.databinding.ActivityNewRentDetailsBinding
-import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.data.model.room.Rent
+import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
+import com.shakil.barivara.databinding.ActivityNewRentDetailsBinding
 import com.shakil.barivara.utils.Constants.mUserId
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.SpinnerAdapter
@@ -21,7 +20,7 @@ import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.Validation
 import java.util.UUID
 
-class RentDetailsActivity : AppCompatActivity() {
+class RentDetailsActivity : BaseActivity<ActivityNewRentDetailsBinding>() {
     private lateinit var activityNewRentDetailsBinding: ActivityNewRentDetailsBinding
     private var spinnerData = SpinnerData(this)
     private var spinnerAdapter = SpinnerAdapter()
@@ -39,10 +38,15 @@ class RentDetailsActivity : AppCompatActivity() {
     private lateinit var prefManager: PrefManager
     private val hashMap: Map<String?, Array<String>?> = HashMap()
     private var validation = Validation(this, hashMap)
+    override val layoutResourceId: Int
+        get() = R.layout.activity_new_rent_details
+
+    override fun setVariables(dataBinding: ActivityNewRentDetailsBinding) {
+        activityNewRentDetailsBinding = dataBinding
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityNewRentDetailsBinding =
-            DataBindingUtil.setContentView(this, R.layout.activity_new_rent_details)
         prefManager = PrefManager(this)
         getIntentData()
         setSupportActionBar(activityNewRentDetailsBinding.toolBar)

@@ -5,15 +5,14 @@ import android.os.Bundle
 import android.text.Html
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
+import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
-import com.shakil.barivara.presentation.onboard.MainActivity
 import com.shakil.barivara.databinding.ActivityTutorialBinding
+import com.shakil.barivara.presentation.onboard.MainActivity
 import com.shakil.barivara.utils.MyViewPagerAdapter
 
-class TutorialActivity : AppCompatActivity() {
+class TutorialActivity : BaseActivity<ActivityTutorialBinding>() {
     private lateinit var activityTutorialBinding: ActivityTutorialBinding
     private var myViewPagerAdapter: MyViewPagerAdapter? = null
     private lateinit var dots: Array<TextView?>
@@ -23,10 +22,15 @@ class TutorialActivity : AppCompatActivity() {
         R.layout.welcome_calculate_electricity_rent_amount,
         R.layout.welcome_overall_dashboard
     )
+    override val layoutResourceId: Int
+        get() = R.layout.activity_tutorial
+
+    override fun setVariables(dataBinding: ActivityTutorialBinding) {
+        activityTutorialBinding = dataBinding
+    }
+
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityTutorialBinding = DataBindingUtil.setContentView(this, R.layout.activity_tutorial)
-        
         addBottomDots(0)
         myViewPagerAdapter = MyViewPagerAdapter(this, layouts)
         activityTutorialBinding.viewPager.adapter = myViewPagerAdapter
