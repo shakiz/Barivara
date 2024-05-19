@@ -16,6 +16,7 @@ import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.auth.PhoneAuthProvider.ForceResendingToken
 import com.google.firebase.auth.PhoneAuthProvider.OnVerificationStateChangedCallbacks
+import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
 import com.shakil.barivara.presentation.onboard.MainActivity
 import com.shakil.barivara.databinding.ActivityMobileRegVerificationBinding
@@ -26,13 +27,20 @@ import com.shakil.barivara.utils.UX
 import es.dmoral.toasty.Toasty
 import java.util.concurrent.TimeUnit
 
-class MobileRegVerificationActivity : AppCompatActivity() {
+class MobileRegVerificationActivity : BaseActivity<ActivityMobileRegVerificationBinding>() {
     private lateinit var activityBinding: ActivityMobileRegVerificationBinding
     private var mobileNumber: String? = ""
     private var mVerificationId = ""
     private var firebaseAuth = FirebaseAuth.getInstance()
     private var tools = Tools(this)
     private var ux: UX? = null
+    override val layoutResourceId: Int
+        get() = R.layout.activity_mobile_reg_verification
+
+    override fun setVariables(dataBinding: ActivityMobileRegVerificationBinding) {
+        activityBinding = dataBinding
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityBinding =
