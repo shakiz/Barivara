@@ -2,6 +2,10 @@ package com.shakil.barivara.utils
 
 import java.util.regex.Pattern
 
+object ApiConstants {
+    const val BASE_URL = "https://rent-collector-8cceae311431.herokuapp.com/api/v1/"
+}
+
 object Constants {
     @JvmField
     var TAG = "dev-shakil"

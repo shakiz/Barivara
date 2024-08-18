@@ -2,6 +2,7 @@ package com.shakil.barivara.di
 
 import com.shakil.barivara.data.remote.webservice.AuthInterceptor
 import com.shakil.barivara.data.remote.webservice.AuthService
+import com.shakil.barivara.utils.ApiConstants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -47,7 +48,7 @@ object AppModule {
     fun provideAuthService(
         callFactory: okhttp3.Call.Factory
     ): AuthService = Retrofit.Builder()
-        .baseUrl("https://google.com")
+        .baseUrl(ApiConstants.BASE_URL)
         .callFactory(callFactory)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
