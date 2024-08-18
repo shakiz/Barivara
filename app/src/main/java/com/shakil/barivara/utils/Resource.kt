@@ -27,7 +27,7 @@ enum class ErrorType(val errorMessage: String) {
         return try {
             ErrorType.valueOf(value.uppercase())
         } catch (e: IllegalArgumentException) {
-            ErrorType.UNKNOWN
+            UNKNOWN
         }
     }
 }

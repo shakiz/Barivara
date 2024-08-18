@@ -31,7 +31,6 @@
             android:theme="@style/SplashTheme"
             android:name=".presentation.onboard.SplashActivity"
             android:enabled="@bool/splash_enabled"
-            android:screenOrientation="portrait"
             android:exported="true"
             android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
@@ -42,145 +41,122 @@
         </activity>
         <activity
             android:name=".presentation.profile.ProfileActivity"
-            android:screenOrientation="portrait"
             android:exported="false"
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".presentation.settings.AboutUsActivity"
-            android:screenOrientation="portrait"
             android:exported="false"
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".presentation.auth.MobileRegVerificationActivity"
-            android:screenOrientation="portrait"
             android:exported="false"
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".presentation.generatebill.GenerateBillActivity"
-            android:screenOrientation="portrait"
             android:exported="false"
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".presentation.auth.LoginActivity"
-            android:screenOrientation="portrait"
             android:exported="true"
             android:theme="@style/AppThemeNoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".presentation.auth.RegistrationActivity"
-            android:screenOrientation="portrait"
             android:exported="false"
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".presentation.auth.ForgotPasswordActivity"
-            android:screenOrientation="portrait"
             android:exported="false"
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".presentation.notification.NotificationActivity"
-            android:screenOrientation="portrait"
             android:exported="false"
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".presentation.onboard.MainActivity"
-            android:screenOrientation="portrait"
             android:exported="true"
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".presentation.settings.SettingsActivity"
-            android:screenOrientation="portrait"
             android:exported="false"
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".presentation.dashboard.DashboardActivity"
-            android:screenOrientation="portrait"
             android:exported="false"
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".presentation.room.RentListActivity"
-            android:screenOrientation="portrait"
             android:exported="false"
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".presentation.meter.ElectricityBillListActivity"
-            android:screenOrientation="portrait"
             android:exported="false"
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".presentation.tenant.NewTenantActivity"
-            android:screenOrientation="portrait"
             android:exported="false"
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".presentation.tenant.TenantListActivity"
-            android:screenOrientation="portrait"
             android:exported="false"
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".presentation.room.RentDetailsActivity"
             android:label="@string/new_rent_details"
-            android:screenOrientation="portrait"
             android:exported="false"
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".presentation.meter.ElectricityBillDetailsActivity"
             android:label="@string/new_meter_details"
-            android:screenOrientation="portrait"
             android:exported="false"
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".presentation.room.RoomListActivity"
             android:label="@string/room_list"
-            android:screenOrientation="portrait"
             android:exported="false"
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".presentation.meter.MeterListActivity"
             android:label="@string/meter_list"
-            android:screenOrientation="portrait"
             android:exported="false"
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".presentation.meter.NewMeterActivity"
             android:label="@string/add_room"
-            android:screenOrientation="portrait"
             android:exported="false"
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".presentation.room.RoomActivity"
             android:label="@string/add_meter"
-            android:screenOrientation="portrait"
             android:exported="false"
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".presentation.onboard.WelcomeActivity"
-            android:screenOrientation="unspecified"
             android:exported="false"
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".presentation.tutorial.TutorialActivity"
-            android:screenOrientation="unspecified"
             android:exported="false"
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
