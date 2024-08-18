@@ -3,17 +3,15 @@ package com.shakil.barivara.presentation.auth
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.google.firebase.auth.FirebaseAuth
 import com.shakil.barivara.R
-import com.shakil.barivara.presentation.onboard.MainActivity
 import com.shakil.barivara.databinding.ActivityLoginBinding
+import com.shakil.barivara.presentation.onboard.MainActivity
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Tools
@@ -49,8 +47,7 @@ class LoginActivity : AppCompatActivity() {
         initUI()
         loginWithStr = getString(R.string.mobile)
         bindUiWithComponents()
-
-        viewModel.getData()
+        initObservers()
     }
 
     private fun initUI() {
@@ -59,24 +56,37 @@ class LoginActivity : AppCompatActivity() {
         firebaseAuth = FirebaseAuth.getInstance()
     }
 
+    private fun initObservers() {
+        viewModel.getSendOtpResponse().observe(this) { sendOtpResponse ->
+            if (!sendOtpResponse.sendOtpResponse.otpValidationTime.isNullOrEmpty()) {
+                // Move to otp entry screen
+                Log.i("devShakil", "initObservers: $sendOtpResponse")
+            }
+        }
+
+        viewModel.getSendOtpErrorResponse().observe(this) { sendOtpErrorResponse ->
+            Log.i("devShakil", "initObservers: $sendOtpErrorResponse")
+        }
+    }
+
     private fun bindUiWithComponents() {
         validation(arrayOf("mobileNumber"), arrayOf(getString(R.string.mobile_validation)))
-        activityBinding.emailIdLayout.setOnClickListener {
-            loginWithStr = getString(R.string.email)
-            loginWith(loginWithStr)
-            validation(
-                arrayOf("email", "password"),
-                arrayOf(
-                    getString(R.string.email_validation),
-                    getString(R.string.password_validation)
-                )
-            )
-        }
-        activityBinding.mobileLayout.setOnClickListener {
-            loginWithStr = getString(R.string.mobile)
-            loginWith(loginWithStr)
-            validation(arrayOf("mobileNumber"), arrayOf(getString(R.string.mobile_validation)))
-        }
+//        activityBinding.emailIdLayout.setOnClickListener {
+//            loginWithStr = getString(R.string.email)
+//            loginWith(loginWithStr)
+//            validation(
+//                arrayOf("email", "password"),
+//                arrayOf(
+//                    getString(R.string.email_validation),
+//                    getString(R.string.password_validation)
+//                )
+//            )
+//        }
+//        activityBinding.mobileLayout.setOnClickListener {
+//            loginWithStr = getString(R.string.mobile)
+//            loginWith(loginWithStr)
+//            validation(arrayOf("mobileNumber"), arrayOf(getString(R.string.mobile_validation)))
+//        }
         activityBinding.register.setOnClickListener {
             startActivity(
                 Intent(
@@ -86,39 +96,17 @@ class LoginActivity : AppCompatActivity() {
             )
         }
         activityBinding.login.setOnClickListener {
-            if (validation.isValid) {
-                if (tools.hasConnection()) {
-                    if (loginWithStr == getString(R.string.email)) {
-                        if (tools.validateEmailAddress(activityBinding.email.text.toString())) {
-                            loginWithEmail()
-                        } else {
-                            Toasty.warning(
-                                this@LoginActivity,
-                                getString(R.string.not_a_valid_email_address),
-                                Toast.LENGTH_LONG,
-                                true
-                            ).show()
-                        }
-                    } else if (loginWithStr == getString(R.string.mobile)) {
-                        if (tools.isValidMobile(activityBinding.mobileNumber.text.toString())) {
-                            loginWithMobile()
-                        } else {
-                            Toasty.warning(
-                                this@LoginActivity,
-                                getString(R.string.not_a_valid_mobile_number),
-                                Toast.LENGTH_LONG,
-                                true
-                            ).show()
-                        }
-                    }
-                } else {
-                    Toasty.warning(
-                        this@LoginActivity,
-                        getString(R.string.no_internet_title),
-                        Toast.LENGTH_LONG,
-                        true
-                    ).show()
-                }
+            if (!activityBinding.mobileNumber.text.isNullOrEmpty() && activityBinding.mobileNumber.text.length == 11) {
+                viewModel.sendOtp(
+                    activityBinding.mobileNumber.text.toString()
+                )
+            } else {
+                Toasty.warning(
+                    this@LoginActivity,
+                    getString(R.string.mobile_validation),
+                    Toast.LENGTH_LONG,
+                    true
+                ).show()
             }
         }
         activityBinding.forgotPassword.setOnClickListener {
@@ -188,47 +176,47 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun loginWith(registerWith: String?) {
-        if (registerWith == getString(R.string.email)) {
-            activityBinding.mainMobileRegistrationLayout.visibility = View.GONE
-            activityBinding.mainEmailRegistrationLayout.visibility = View.VISIBLE
-            activityBinding.emailIdLayout.background =
-                ContextCompat.getDrawable(this, R.drawable.rectangle_background_filled_gender)
-            activityBinding.EmailId.setTextColor(
-                ContextCompat.getColor(
-                    this,
-                    R.color.md_white_1000
-                )
-            )
-            activityBinding.mobileLayout.setBackgroundResource(0)
-            activityBinding.Mobile.setTextColor(
-                ContextCompat.getColor(
-                    this,
-                    R.color.md_green_800
-                )
-            )
-            activityBinding.MobileIcon.setImageResource(R.drawable.ic_call_green)
-            activityBinding.EmailIcon.setImageResource(R.drawable.ic_email_white)
-        } else {
-            activityBinding.mainEmailRegistrationLayout.visibility = View.GONE
-            activityBinding.mainMobileRegistrationLayout.visibility = View.VISIBLE
-            activityBinding.mobileLayout.background =
-                ContextCompat.getDrawable(this, R.drawable.rectangle_background_filled_gender)
-            activityBinding.emailIdLayout.setBackgroundResource(0)
-            activityBinding.EmailId.setTextColor(
-                ContextCompat.getColor(
-                    this,
-                    R.color.md_green_800
-                )
-            )
-            activityBinding.Mobile.setTextColor(
-                ContextCompat.getColor(
-                    this,
-                    R.color.md_white_1000
-                )
-            )
-            activityBinding.MobileIcon.setImageResource(R.drawable.ic_call_white)
-            activityBinding.EmailIcon.setImageResource(R.drawable.ic_email_green)
-        }
+//        if (registerWith == getString(R.string.email)) {
+//            activityBinding.mainMobileRegistrationLayout.visibility = View.GONE
+//            activityBinding.mainEmailRegistrationLayout.visibility = View.VISIBLE
+//            activityBinding.emailIdLayout.background =
+//                ContextCompat.getDrawable(this, R.drawable.rectangle_background_filled_gender)
+//            activityBinding.EmailId.setTextColor(
+//                ContextCompat.getColor(
+//                    this,
+//                    R.color.md_white_1000
+//                )
+//            )
+//            activityBinding.mobileLayout.setBackgroundResource(0)
+//            activityBinding.Mobile.setTextColor(
+//                ContextCompat.getColor(
+//                    this,
+//                    R.color.md_green_800
+//                )
+//            )
+//            activityBinding.MobileIcon.setImageResource(R.drawable.ic_call_green)
+//            activityBinding.EmailIcon.setImageResource(R.drawable.ic_email_white)
+//        } else {
+//            activityBinding.mainEmailRegistrationLayout.visibility = View.GONE
+//            activityBinding.mainMobileRegistrationLayout.visibility = View.VISIBLE
+//            activityBinding.mobileLayout.background =
+//                ContextCompat.getDrawable(this, R.drawable.rectangle_background_filled_gender)
+//            activityBinding.emailIdLayout.setBackgroundResource(0)
+//            activityBinding.EmailId.setTextColor(
+//                ContextCompat.getColor(
+//                    this,
+//                    R.color.md_green_800
+//                )
+//            )
+//            activityBinding.Mobile.setTextColor(
+//                ContextCompat.getColor(
+//                    this,
+//                    R.color.md_white_1000
+//                )
+//            )
+//            activityBinding.MobileIcon.setImageResource(R.drawable.ic_call_white)
+//            activityBinding.EmailIcon.setImageResource(R.drawable.ic_email_green)
+//        }
     }
 
     private fun validation(resNames: Array<String>, validationMessages: Array<String>) {
