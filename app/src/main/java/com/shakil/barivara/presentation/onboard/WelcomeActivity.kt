@@ -11,8 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.shakil.barivara.R
-import com.shakil.barivara.presentation.auth.LoginActivity
 import com.shakil.barivara.databinding.ActivityWelcomeBinding
+import com.shakil.barivara.presentation.auth.LoginActivity
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.MyViewPagerAdapter
 import com.shakil.barivara.utils.PrefManager
@@ -20,7 +20,7 @@ import com.shakil.barivara.utils.PrefManager
 class WelcomeActivity : AppCompatActivity() {
     private lateinit var activityWelcomeBinding: ActivityWelcomeBinding
     private var myViewPagerAdapter: MyViewPagerAdapter? = null
-    private var prefManager = PrefManager(this)
+    private lateinit var prefManager: PrefManager
     private lateinit var dots: Array<TextView?>
     private var layouts = intArrayOf(
         R.layout.welcome_about_app,
