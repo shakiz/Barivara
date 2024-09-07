@@ -353,4 +353,6 @@
     <color name="profileEditTextColor">#707070</color>
 
     <color name="window_background">#F0F3F6</color>
+
+    <color name="neutral_background_semi_transparent">#EFEEF9FC</color>
 </resources>
