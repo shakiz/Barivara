@@ -3,36 +3,30 @@ package com.shakil.barivara.presentation.auth
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.FirebaseException
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
-import com.google.firebase.auth.PhoneAuthCredential
-import com.google.firebase.auth.PhoneAuthOptions
-import com.google.firebase.auth.PhoneAuthProvider
-import com.google.firebase.auth.PhoneAuthProvider.ForceResendingToken
-import com.google.firebase.auth.PhoneAuthProvider.OnVerificationStateChangedCallbacks
 import com.shakil.barivara.R
-import com.shakil.barivara.presentation.onboard.MainActivity
 import com.shakil.barivara.databinding.ActivityMobileRegVerificationBinding
+import com.shakil.barivara.presentation.onboard.MainActivity
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
+import dagger.hilt.android.AndroidEntryPoint
 import es.dmoral.toasty.Toasty
-import java.util.concurrent.TimeUnit
 
+@AndroidEntryPoint
 class MobileRegVerificationActivity : AppCompatActivity() {
     private lateinit var activityBinding: ActivityMobileRegVerificationBinding
-    private var mobileNumber: String? = ""
-    private var mVerificationId = ""
-    private var firebaseAuth = FirebaseAuth.getInstance()
+    private lateinit var mobileNumber: String
     private var tools = Tools(this)
-    private var ux: UX? = null
+    private lateinit var ux: UX
+    private lateinit var prefManager: PrefManager
+    private val viewModel by viewModels<AuthViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityBinding =
@@ -40,15 +34,23 @@ class MobileRegVerificationActivity : AppCompatActivity() {
         initUI()
         getIntentData()
         bindUIWithComponents()
+        initObservers()
     }
 
     private fun initUI() {
         ux = UX(this)
+        prefManager = PrefManager(this)
+    }
+
+    private fun getIntentData() {
+        if (intent.getStringExtra(Constants.mUserMobile) != null) {
+            mobileNumber = intent.getStringExtra(Constants.mUserMobile) ?: ""
+        }
     }
 
     private fun bindUIWithComponents() {
         activityBinding.sentCodeHintText.text =
-            getString(R.string.sent_you_code_on_your_number) + "(" + mobileNumber + ")"
+            getString(R.string.sent_you_code_on_your_number, mobileNumber)
         activityBinding.verify.setOnClickListener {
             if (!TextUtils.isEmpty(activityBinding.verificationCode.text.toString())) {
                 if (activityBinding.verificationCode.text.toString().length < 6) {
@@ -70,127 +72,44 @@ class MobileRegVerificationActivity : AppCompatActivity() {
         }
     }
 
-    private fun getIntentData() {
-        if (intent.getStringExtra("mobile") != null) {
-            mobileNumber = intent.getStringExtra("mobile")
-            if (tools.hasConnection()) {
-                Toasty.info(
-                    this, """
-     ${getString(R.string.please_wait)}
-     ${getString(R.string.we_are_verifying_you)}
-     """.trimIndent(), Toast.LENGTH_LONG, true
-                ).show()
-                sendVerificationCode(mobileNumber)
-            } else {
-                Snackbar.make(
-                    findViewById(R.id.parent),
-                    getString(R.string.no_internet_title),
-                    Snackbar.LENGTH_LONG
-                ).show()
+    private fun initObservers() {
+        viewModel.getVerifyOtpResponse().observe(this) { verifyOtpBaseResponse ->
+            if (verifyOtpBaseResponse.verifyOtpResponse.accessToken != null) {
+                tools.setLoginPrefs(
+                    mobileNumber,
+                    "",
+                    verifyOtpBaseResponse.verifyOtpResponse.accessToken ?: "",
+                    prefManager = prefManager
+                )
+                val intent = Intent(
+                    this, MainActivity::class.java
+                )
+                startActivity(intent)
             }
         }
-    }
 
-    private fun sendVerificationCode(mobile: String?) {
-        val options = PhoneAuthOptions.newBuilder(firebaseAuth)
-            .setPhoneNumber("+88$mobile") // Phone number to verify
-            .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
-            .setActivity(this) // Activity (for callback binding)
-            .setCallbacks(object : OnVerificationStateChangedCallbacks() {
-                override fun onVerificationCompleted(phoneAuthCredential: PhoneAuthCredential) {
-                    val code = phoneAuthCredential.smsCode
-                    if (code != null) {
-                        Log.i(Constants.TAG + ":VerificationCompleted", "Code::$code")
-                        activityBinding.verificationCode.setText(code)
-                        verifyVerificationCode(code)
-                    }
-                }
+        viewModel.getVerifyOtpErrorResponse().observe(this) { verifyOtpErrorResponse ->
+            Toasty.warning(this, getString(R.string.please_try_again_something_went_wrong)).show()
+        }
 
-                override fun onVerificationFailed(e: FirebaseException) {
-                    Log.i(Constants.TAG + ":onVerificationFailed", "Error::" + e.message)
-                    Toasty.error(
-                        this@MobileRegVerificationActivity, """
-     ${getString(R.string.code_verification_failed)}
-     ${getString(R.string.try_again)}
-     """.trimIndent(), Toast.LENGTH_LONG, true
-                    ).show()
-                }
-
-                override fun onCodeSent(s: String, forceResendingToken: ForceResendingToken) {
-                    Log.i(Constants.TAG + ":onCodeSent", "Verification ID::$s")
-                    Toasty.info(
-                        this@MobileRegVerificationActivity,
-                        getString(R.string.code_sent_please_check),
-                        Toast.LENGTH_LONG,
-                        true
-                    ).show()
-                    super.onCodeSent(s, forceResendingToken)
-                    //storing the verification id that is sent to the user
-                    mVerificationId = s
-                }
-            }) // OnVerificationStateChangedCallbacks
-            .build()
-        PhoneAuthProvider.verifyPhoneNumber(
-            options
-        )
+        viewModel.isLoading.observe(this) { isLoading ->
+            if (isLoading) {
+                ux.getLoadingView()
+            } else {
+                ux.removeLoadingView()
+            }
+        }
     }
 
     private fun verifyVerificationCode(code: String) {
         if (tools.hasConnection()) {
-            Log.i(Constants.TAG + ":verifyVerificationCode", "Code:$code")
-            try {
-                val credential = PhoneAuthProvider.getCredential(mVerificationId, code)
-                loginWithMobile(credential)
-            } catch (e: Exception) {
-                Log.i(
-                    Constants.TAG + ":verifyVerificationCode",
-                    e.message ?: "verifyVerificationCode() error"
-                )
-            }
+            viewModel.verifyOtp(mobileNumber, code)
         } else {
-            val snackbar = Snackbar.make(
+            Snackbar.make(
                 findViewById(R.id.parent),
                 getString(R.string.no_internet_title),
                 Snackbar.LENGTH_LONG
-            )
-            snackbar.show()
+            ).show()
         }
-    }
-
-    private fun loginWithMobile(credential: PhoneAuthCredential) {
-        ux?.getLoadingView()
-        firebaseAuth?.signInWithCredential(credential)
-            ?.addOnCompleteListener(this@MobileRegVerificationActivity) { task ->
-                if (task.isSuccessful) {
-                    Log.i(Constants.TAG + ":loginWithMobile", "Success")
-                    tools.setLoginPrefs(task, PrefManager(this@MobileRegVerificationActivity))
-                    ux?.removeLoadingView()
-                    Toasty.success(
-                        this@MobileRegVerificationActivity,
-                        getString(R.string.login_succcessful),
-                        Toast.LENGTH_LONG,
-                        true
-                    ).show()
-                    val intent =
-                        Intent(this@MobileRegVerificationActivity, MainActivity::class.java)
-                    startActivity(intent)
-                } else {
-                    Log.i(Constants.TAG + ":loginWithMobile", "Failed")
-                    ux?.removeLoadingView()
-                    var message = getString(R.string.login_unsucccessful)
-                    if (task.exception is FirebaseAuthInvalidCredentialsException) {
-                        message = """
-                        
-                        ${getString(R.string.invalid_code_entered)}
-                        """.trimIndent()
-                    }
-                    Toasty.error(
-                        this@MobileRegVerificationActivity,
-                        message,
-                        Toast.LENGTH_LONG,
-                        true
-                    ).show()
-                }
-            }
     }
 }

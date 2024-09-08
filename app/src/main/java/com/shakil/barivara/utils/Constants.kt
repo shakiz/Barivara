@@ -12,6 +12,7 @@ object Constants {
     const val PREF_NAME = "vara-adai"
     const val mAppViewCount = "AppViewCount"
     const val mIsLoggedIn = "isLoggedIn"
+    const val mAccessToken = "accessToken"
     const val mLanguage = "Language"
     const val mUserId = "UserId"
     const val mUserFullName = "UserFullName"
