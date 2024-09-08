@@ -5,8 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shakil.barivara.data.model.auth.SendOtpBaseResponse
+import com.shakil.barivara.data.model.auth.VerifyOtpBaseResponse
 import com.shakil.barivara.data.repository.AuthRepoImpl
 import com.shakil.barivara.utils.ErrorType
+import com.shakil.barivara.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -16,23 +18,81 @@ import javax.inject.Inject
 class AuthViewModel @Inject constructor(private val authRepoImpl: AuthRepoImpl) : ViewModel() {
 
     private var sendOtpResponse = MutableLiveData<SendOtpBaseResponse>()
-    private var sendOtpResponseError = MutableLiveData<ErrorType>()
+    private var sendOtpResponseError = MutableLiveData<Resource.Error<ErrorType>>()
+
+    private var verifyOtpResponse = MutableLiveData<VerifyOtpBaseResponse>()
+    private var verifyOtpResponseError = MutableLiveData<Resource.Error<ErrorType>>()
+
+    var isLoading = MutableLiveData<Boolean>()
 
     fun getSendOtpResponse(): LiveData<SendOtpBaseResponse> {
         return sendOtpResponse
     }
 
-    fun getSendOtpErrorResponse(): LiveData<ErrorType> {
+    fun getSendOtpErrorResponse(): LiveData<Resource.Error<ErrorType>> {
         return sendOtpResponseError
+    }
+
+    fun getVerifyOtpResponse(): LiveData<VerifyOtpBaseResponse> {
+        return verifyOtpResponse
+    }
+
+    fun getVerifyOtpErrorResponse(): LiveData<Resource.Error<ErrorType>> {
+        return verifyOtpResponseError
     }
 
     fun sendOtp(mobileNo: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            val data = authRepoImpl.sendOtp(mobileNo)
-            if (data.response != null) {
-                sendOtpResponse.postValue(data.response)
-            } else {
-                sendOtpResponseError.postValue(data.errorType)
+            isLoading.postValue(true)
+            try {
+                val data = authRepoImpl.sendOtp(mobileNo)
+                if (data.response != null) {
+                    sendOtpResponse.postValue(data.response)
+                } else {
+                    sendOtpResponseError.postValue(
+                        Resource.Error(
+                            message = "Send otp error",
+                            errorType = data.errorType
+                        )
+                    )
+                }
+                isLoading.postValue(false)
+            } catch (e: Exception) {
+                sendOtpResponseError.postValue(
+                    Resource.Error(
+                        message = "Something went wrong, please try again",
+                        errorType = ErrorType.UNKNOWN
+                    )
+                )
+                isLoading.postValue(false)
+            }
+        }
+    }
+
+    fun verifyOtp(mobileNo: String, code: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            isLoading.postValue(true)
+            try {
+                val data = authRepoImpl.verifyOtp(mobileNo, code)
+                if (data.response != null) {
+                    verifyOtpResponse.postValue(data.response)
+                } else {
+                    sendOtpResponseError.postValue(
+                        Resource.Error(
+                            message = "Verify otp error",
+                            errorType = data.errorType
+                        )
+                    )
+                }
+                isLoading.postValue(false)
+            } catch (e: Exception) {
+                verifyOtpResponseError.postValue(
+                    Resource.Error(
+                        message = "Something went wrong, please try again",
+                        errorType = ErrorType.UNKNOWN
+                    )
+                )
+                isLoading.postValue(false)
             }
         }
     }
