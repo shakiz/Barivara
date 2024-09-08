@@ -3,5 +3,4 @@
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">rent-collector-8cceae311431.herokuapp.com</domain>
     </domain-config>
-
 </network-security-config>
