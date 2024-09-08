@@ -368,7 +368,7 @@
     <string name="register_with">Register With</string>
     <string name="not_a_valid_mobile_number">Not a valid mobile number</string>
     <string name="validation_registration_type">Please select registration type</string>
-    <string name="sent_you_code_on_your_number">Sent a code/otp to your number</string>
+    <string name="sent_you_code_on_your_number">Sent a code/otp to your number %s</string>
     <string name="verification_code">Verification Code</string>
     <string name="type_code_here">Type Code Here</string>
     <string name="verify">Verify</string>

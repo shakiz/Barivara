@@ -367,7 +367,7 @@
     <string name="register_with">Register With</string>
     <string name="not_a_valid_mobile_number">মোবাইল নম্বর টি বৈধ নয়</string>
     <string name="validation_registration_type">দয়া করে নিবন্ধনের ধরন নির্বাচন করুন</string>
-    <string name="sent_you_code_on_your_number">আপনার নম্বরে একটি কোড পাঠানো হয়েছে</string>
+    <string name="sent_you_code_on_your_number">আপনার নম্বরে একটি কোড পাঠানো হয়েছে %s</string>
     <string name="verification_code">যাচাইকরণ কোড</string>
     <string name="type_code_here">এখানে কোড টাইপ করুন</string>
     <string name="verify">যাচাই করুন</string>
