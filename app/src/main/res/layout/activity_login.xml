@@ -2,17 +2,16 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.core.widget.NestedScrollView
+    <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:paddingBottom="4dp">
+        android:fillViewport="true">
 
         <LinearLayout
             android:id="@+id/mainLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="@color/md_white_1000"
             android:padding="16dp"
             android:layout_gravity="center"
@@ -95,24 +94,8 @@
                 android:textSize="18sp"
                 android:background="@drawable/button_shape_round_corner" />
 
-            <TextView
-                android:id="@+id/forgotPassword"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/forgot_your_password"
-                android:layout_marginStart="5dp"
-                android:gravity="center"
-                android:layout_gravity="center"
-                android:visibility="gone"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:clickable="true"
-                android:textColor="@color/md_green_800"
-                android:focusable="true" />
-
         </LinearLayout>
 
-    </androidx.core.widget.NestedScrollView>
+    </ScrollView>
 
 </layout>
