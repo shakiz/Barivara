@@ -8,6 +8,7 @@ class VerifyOtpBaseResponse(@SerializedName("data") val verifyOtpResponse: Verif
 
 data class VerifyOtpResponse(
     @SerializedName("access_token") var accessToken: String? = null,
+    @SerializedName("user_id") var userId: Int,
     @SerializedName("token_type") var tokenType: String? = null,
     @SerializedName("expires_in") var expiresIn: Int? = null
 )

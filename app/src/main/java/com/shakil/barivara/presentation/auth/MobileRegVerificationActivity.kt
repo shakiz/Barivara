@@ -77,7 +77,7 @@ class MobileRegVerificationActivity : AppCompatActivity() {
             if (verifyOtpBaseResponse.verifyOtpResponse.accessToken != null) {
                 tools.setLoginPrefs(
                     mobileNumber,
-                    "",
+                    verifyOtpBaseResponse.verifyOtpResponse.userId,
                     verifyOtpBaseResponse.verifyOtpResponse.accessToken ?: "",
                     prefManager = prefManager
                 )
@@ -89,7 +89,7 @@ class MobileRegVerificationActivity : AppCompatActivity() {
         }
 
         viewModel.getVerifyOtpErrorResponse().observe(this) { verifyOtpErrorResponse ->
-            Toasty.warning(this, getString(R.string.please_try_again_something_went_wrong)).show()
+            Toasty.warning(this, verifyOtpErrorResponse.message).show()
         }
 
         viewModel.isLoading.observe(this) { isLoading ->

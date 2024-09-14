@@ -260,7 +260,7 @@ class Tools(private val context: Context) {
 
     fun setLoginPrefs(
         mobileNumber: String,
-        userId: String,
+        userId: Int,
         accessToken: String,
         prefManager: PrefManager
     ) {

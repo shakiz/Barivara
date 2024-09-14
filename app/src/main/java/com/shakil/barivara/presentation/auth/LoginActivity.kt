@@ -51,6 +51,7 @@ class LoginActivity : AppCompatActivity() {
     private fun initObservers() {
         viewModel.getSendOtpResponse().observe(this) { sendOtpResponse ->
             if (!sendOtpResponse.sendOtpResponse.otpValidationTime.isNullOrEmpty()) {
+                Toasty.success(this, sendOtpResponse.message).show()
                 val intent = Intent(
                     this, MobileRegVerificationActivity::class.java
                 )
@@ -60,7 +61,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         viewModel.getSendOtpErrorResponse().observe(this) { sendOtpErrorResponse ->
-            Toasty.warning(this, getString(R.string.please_try_again_something_went_wrong)).show()
+            Toasty.warning(this, sendOtpErrorResponse.message).show()
         }
 
         viewModel.isLoading.observe(this) { isLoading ->

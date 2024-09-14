@@ -51,7 +51,7 @@ class AuthViewModel @Inject constructor(private val authRepoImpl: AuthRepoImpl) 
                 } else {
                     sendOtpResponseError.postValue(
                         Resource.Error(
-                            message = "Send otp error",
+                            message = data.response?.message ?: "",
                             errorType = data.errorType
                         )
                     )
