@@ -3,25 +3,32 @@ package com.shakil.barivara.presentation.profile
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
-import com.shakil.barivara.databinding.ActivityProfileBinding
-import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.data.model.User
+import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
+import com.shakil.barivara.databinding.ActivityProfileBinding
 import com.shakil.barivara.utils.Constants.mUserId
 import com.shakil.barivara.utils.CustomAdManager
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Validation
 import java.util.UUID
 
-class ProfileActivity : AppCompatActivity() {
+class ProfileActivity : BaseActivity<ActivityProfileBinding>() {
     private lateinit var activityBinding: ActivityProfileBinding
     private val hashMap: Map<String?, Array<String>?> = HashMap()
     private var validation = Validation(this, hashMap)
     private var firebaseCrudHelper = FirebaseCrudHelper(this)
     private var customAdManager = CustomAdManager(this)
     private lateinit var prefManager: PrefManager
+    override val layoutResourceId: Int
+        get() = R.layout.activity_profile
+
+    override fun setVariables(dataBinding: ActivityProfileBinding) {
+        activityBinding = dataBinding
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityBinding = DataBindingUtil.setContentView(this, R.layout.activity_profile)

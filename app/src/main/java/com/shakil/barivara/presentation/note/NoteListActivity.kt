@@ -5,22 +5,21 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
+import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
-import com.shakil.barivara.presentation.onboard.MainActivity
-import com.shakil.barivara.presentation.adapter.NoteRecyclerAdapter
-import com.shakil.barivara.databinding.ActivityNoteListBinding
-import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.data.model.note.Note
+import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
+import com.shakil.barivara.databinding.ActivityNoteListBinding
+import com.shakil.barivara.presentation.adapter.NoteRecyclerAdapter
+import com.shakil.barivara.presentation.onboard.MainActivity
 import com.shakil.barivara.utils.AppAnalytics
 import com.shakil.barivara.utils.Constants.mUserId
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
 
-class NoteListActivity : AppCompatActivity() {
+class NoteListActivity : BaseActivity<ActivityNoteListBinding>() {
     private lateinit var activityNoteListBinding: ActivityNoteListBinding
     private var noteList: ArrayList<Note> = arrayListOf()
     private var firebaseCrudHelper = FirebaseCrudHelper(this)
@@ -39,10 +38,15 @@ class NoteListActivity : AppCompatActivity() {
             )
         }
     }
+    override val layoutResourceId: Int
+        get() = R.layout.activity_note_list
+
+    override fun setVariables(dataBinding: ActivityNoteListBinding) {
+        activityNoteListBinding = dataBinding
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityNoteListBinding = DataBindingUtil.setContentView(this, R.layout.activity_note_list)
         init()
         setSupportActionBar(activityNoteListBinding.toolBar)
 

@@ -4,29 +4,33 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
+import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
-import com.shakil.barivara.presentation.auth.LoginActivity
-import com.shakil.barivara.presentation.onboard.MainActivity
 import com.shakil.barivara.databinding.ActivitySettingsBinding
+import com.shakil.barivara.presentation.auth.login.LoginActivity
+import com.shakil.barivara.presentation.onboard.MainActivity
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.CustomAdManager
 import com.shakil.barivara.utils.LanguageManager
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Tools
 
-class SettingsActivity : AppCompatActivity() {
+class SettingsActivity : BaseActivity<ActivitySettingsBinding>() {
     private lateinit var activitySettingsBinding: ActivitySettingsBinding
     private var languageMap = HashMap<String, String>()
     private lateinit var languageManager: LanguageManager
     private lateinit var prefManager: PrefManager
     private var tools = Tools(this)
     private var customAdManager = CustomAdManager(this)
+    override val layoutResourceId: Int
+        get() = R.layout.activity_settings
+
+    override fun setVariables(dataBinding: ActivitySettingsBinding) {
+        activitySettingsBinding = dataBinding
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activitySettingsBinding = DataBindingUtil.setContentView(this, R.layout.activity_settings)
-
         languageManager = LanguageManager(this)
         prefManager = PrefManager(this)
 

@@ -11,23 +11,23 @@ import android.widget.Button
 import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
-import com.shakil.barivara.presentation.onboard.MainActivity
+import com.shakil.barivara.data.model.meter.ElectricityBill
+import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
+import com.shakil.barivara.databinding.ActivityElectricityBillListBinding
 import com.shakil.barivara.presentation.adapter.RecyclerElectricityBillListAdapter
 import com.shakil.barivara.presentation.adapter.RecyclerElectricityBillListAdapter.ElectricityBillBacks
-import com.shakil.barivara.databinding.ActivityElectricityBillListBinding
-import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
-import com.shakil.barivara.data.model.meter.ElectricityBill
+import com.shakil.barivara.presentation.onboard.MainActivity
 import com.shakil.barivara.utils.Constants.mUserId
 import com.shakil.barivara.utils.FilterManager
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
 
-class ElectricityBillListActivity : AppCompatActivity(), ElectricityBillBacks {
+class ElectricityBillListActivity : BaseActivity<ActivityElectricityBillListBinding>(),
+    ElectricityBillBacks {
     private lateinit var activityMeterCostListBinding: ActivityElectricityBillListBinding
     private var electricityBills: ArrayList<ElectricityBill> = arrayListOf()
     private var firebaseCrudHelper = FirebaseCrudHelper(this)
@@ -46,12 +46,15 @@ class ElectricityBillListActivity : AppCompatActivity(), ElectricityBillBacks {
             )
         }
     }
+    override val layoutResourceId: Int
+        get() = R.layout.activity_electricity_bill_list
+
+    override fun setVariables(dataBinding: ActivityElectricityBillListBinding) {
+        activityMeterCostListBinding = dataBinding
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityMeterCostListBinding =
-            DataBindingUtil.setContentView(this, R.layout.activity_electricity_bill_list)
-
         onBackPressedDispatcher.addCallback(onBackPressedCallback)
         activityMeterCostListBinding.toolBar.setNavigationOnClickListener {
             startActivity(

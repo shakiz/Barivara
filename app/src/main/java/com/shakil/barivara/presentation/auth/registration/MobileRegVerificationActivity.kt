@@ -1,4 +1,4 @@
-package com.shakil.barivara.presentation.auth
+package com.shakil.barivara.presentation.auth.registration
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,6 +8,15 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.FirebaseException
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.PhoneAuthCredential
+import com.google.firebase.auth.PhoneAuthOptions
+import com.google.firebase.auth.PhoneAuthProvider
+import com.google.firebase.auth.PhoneAuthProvider.ForceResendingToken
+import com.google.firebase.auth.PhoneAuthProvider.OnVerificationStateChangedCallbacks
+import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
 import com.shakil.barivara.databinding.ActivityMobileRegVerificationBinding
 import com.shakil.barivara.presentation.onboard.MainActivity
@@ -19,13 +28,20 @@ import dagger.hilt.android.AndroidEntryPoint
 import es.dmoral.toasty.Toasty
 
 @AndroidEntryPoint
-class MobileRegVerificationActivity : AppCompatActivity() {
+class MobileRegVerificationActivity : BaseActivity<ActivityMobileRegVerificationBinding>() {
     private lateinit var activityBinding: ActivityMobileRegVerificationBinding
     private lateinit var mobileNumber: String
     private var tools = Tools(this)
     private lateinit var ux: UX
     private lateinit var prefManager: PrefManager
     private val viewModel by viewModels<AuthViewModel>()
+
+    override val layoutResourceId: Int
+        get() = R.layout.activity_mobile_reg_verification
+
+    override fun setVariables(dataBinding: ActivityMobileRegVerificationBinding) {
+        activityBinding = dataBinding
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -1,4 +1,4 @@
-package com.shakil.barivara.presentation.auth
+package com.shakil.barivara.presentation.auth.registration
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,24 +7,32 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.google.firebase.auth.FirebaseAuth
+import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
 import com.shakil.barivara.databinding.ActivityRegistrationBinding
+import com.shakil.barivara.presentation.auth.login.LoginActivity
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
 import com.shakil.barivara.utils.Validation
 import es.dmoral.toasty.Toasty
 
-class RegistrationActivity : AppCompatActivity() {
+class RegistrationActivity : BaseActivity<ActivityRegistrationBinding>() {
     private lateinit var activityBinding: ActivityRegistrationBinding
     private val firebaseAuth = FirebaseAuth.getInstance()
     private var ux: UX? = null
     private val tools = Tools(this)
     private val hashMap: Map<String?, Array<String>?> = HashMap()
     private var validation = Validation(this, hashMap)
+    override val layoutResourceId: Int
+        get() = R.layout.activity_registration
+
+    override fun setVariables(dataBinding: ActivityRegistrationBinding) {
+        activityBinding = dataBinding
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityBinding = DataBindingUtil.setContentView(this, R.layout.activity_registration)
         initUI()
         bindUiWithComponents()
     }

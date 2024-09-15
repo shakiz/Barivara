@@ -1,14 +1,25 @@
-package com.shakil.barivara.presentation.auth
+package com.shakil.barivara.presentation.auth.login
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
+import com.google.firebase.auth.FirebaseAuth
+import com.shakil.barivara.BaseActivity
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.shakil.barivara.R
 import com.shakil.barivara.databinding.ActivityLoginBinding
+import com.shakil.barivara.presentation.auth.AuthViewModel
+import com.shakil.barivara.presentation.auth.forgotpassword.ForgotPasswordActivity
+import com.shakil.barivara.presentation.auth.registration.MobileRegVerificationActivity
+import com.shakil.barivara.presentation.auth.registration.RegistrationActivity
+import com.shakil.barivara.presentation.onboard.MainActivity
+import com.shakil.barivara.utils.Constants
+import com.shakil.barivara.utils.PrefManager
+import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.Constants.mUserMobile
 import com.shakil.barivara.utils.UX
 import com.shakil.barivara.utils.UtilsForAll
@@ -17,7 +28,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import es.dmoral.toasty.Toasty
 
 @AndroidEntryPoint
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     private lateinit var activityBinding: ActivityLoginBinding
     private lateinit var ux: UX
     private lateinit var utilsForAll: UtilsForAll
@@ -31,6 +42,13 @@ class LoginActivity : AppCompatActivity() {
         override fun handleOnBackPressed() {
             utilsForAll.exitApp()
         }
+    }
+
+    override val layoutResourceId: Int
+        get() = R.layout.activity_login
+
+    override fun setVariables(dataBinding: ActivityLoginBinding) {
+        activityBinding = dataBinding
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

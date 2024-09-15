@@ -11,23 +11,22 @@ import android.widget.Button
 import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
-import com.shakil.barivara.presentation.onboard.MainActivity
+import com.shakil.barivara.data.model.meter.Meter
+import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
+import com.shakil.barivara.databinding.ActivityMeterListBinding
 import com.shakil.barivara.presentation.adapter.RecyclerMeterListAdapter
 import com.shakil.barivara.presentation.adapter.RecyclerMeterListAdapter.MeterCallBacks
-import com.shakil.barivara.databinding.ActivityMeterListBinding
-import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
-import com.shakil.barivara.data.model.meter.Meter
+import com.shakil.barivara.presentation.onboard.MainActivity
 import com.shakil.barivara.utils.Constants.mUserId
 import com.shakil.barivara.utils.FilterManager
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
 
-class MeterListActivity : AppCompatActivity(), MeterCallBacks {
+class MeterListActivity : BaseActivity<ActivityMeterListBinding>(), MeterCallBacks {
     private lateinit var activityMeterListBinding: ActivityMeterListBinding
     private var meterList: ArrayList<Meter> = arrayListOf()
     private var firebaseCrudHelper = FirebaseCrudHelper(this)
@@ -46,11 +45,15 @@ class MeterListActivity : AppCompatActivity(), MeterCallBacks {
             )
         }
     }
+    override val layoutResourceId: Int
+        get() = R.layout.activity_meter_list
+
+    override fun setVariables(dataBinding: ActivityMeterListBinding) {
+        activityMeterListBinding = dataBinding
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityMeterListBinding =
-            DataBindingUtil.setContentView(this, R.layout.activity_meter_list)
         init()
         setSupportActionBar(activityMeterListBinding.toolBar)
         onBackPressedDispatcher.addCallback(onBackPressedCallback)

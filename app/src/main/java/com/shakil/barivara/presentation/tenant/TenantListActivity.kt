@@ -14,18 +14,17 @@ import android.widget.Button
 import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
-import com.shakil.barivara.presentation.onboard.MainActivity
+import com.shakil.barivara.data.model.tenant.Tenant
+import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
+import com.shakil.barivara.databinding.ActivityTenantListBinding
 import com.shakil.barivara.presentation.adapter.RecyclerTenantListAdapter
 import com.shakil.barivara.presentation.adapter.RecyclerTenantListAdapter.TenantCallBacks
-import com.shakil.barivara.databinding.ActivityTenantListBinding
-import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
-import com.shakil.barivara.data.model.tenant.Tenant
+import com.shakil.barivara.presentation.onboard.MainActivity
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.Constants.mUserId
 import com.shakil.barivara.utils.CustomAdManager
@@ -34,7 +33,7 @@ import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
 
-class TenantListActivity : AppCompatActivity(), TenantCallBacks {
+class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCallBacks {
     private lateinit var activityTenantListBinding: ActivityTenantListBinding
     private lateinit var tenantList: ArrayList<Tenant>
     private var firebaseCrudHelper = FirebaseCrudHelper(this)
@@ -54,12 +53,16 @@ class TenantListActivity : AppCompatActivity(), TenantCallBacks {
             )
         }
     }
+    override val layoutResourceId: Int
+        get() = R.layout.activity_tenant_list
+
+    override fun setVariables(dataBinding: ActivityTenantListBinding) {
+        activityTenantListBinding = dataBinding
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         init()
-        activityTenantListBinding =
-            DataBindingUtil.setContentView(this, R.layout.activity_tenant_list)
         setSupportActionBar(activityTenantListBinding.toolBar)
 
         onBackPressedDispatcher.addCallback(onBackPressedCallback)

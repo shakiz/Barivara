@@ -2,21 +2,26 @@ package com.shakil.barivara.presentation.settings
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
+import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
-import com.shakil.barivara.presentation.onboard.MainActivity
 import com.shakil.barivara.databinding.ActivityAboutUsBinding
+import com.shakil.barivara.presentation.onboard.MainActivity
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.Tools
 import es.dmoral.toasty.Toasty
 
-class AboutUsActivity : AppCompatActivity() {
+class AboutUsActivity : BaseActivity<ActivityAboutUsBinding>() {
     private lateinit var activityBinding: ActivityAboutUsBinding
     private var tools = Tools(this)
+    override val layoutResourceId: Int
+        get() = R.layout.activity_about_us
+
+    override fun setVariables(dataBinding: ActivityAboutUsBinding) {
+        activityBinding = dataBinding
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityBinding = DataBindingUtil.setContentView(this, R.layout.activity_about_us)
         setSupportActionBar(activityBinding.toolBar)
         activityBinding.toolBar.setNavigationOnClickListener {
             startActivity(
@@ -28,7 +33,7 @@ class AboutUsActivity : AppCompatActivity() {
         }
         bindUIWithComponents()
     }
-    
+
     private fun bindUIWithComponents() {
         activityBinding.giLibApp.setOnClickListener { tools.launchAppByPackageName(Constants.GIT_LIB_PACKAGE_NAME) }
         activityBinding.sagorKonnyaApp.setOnClickListener {

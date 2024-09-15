@@ -10,13 +10,12 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.RadioButton
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.databinding.DataBindingUtil
+import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
-import com.shakil.barivara.databinding.ActivityAddNewTenantBinding
-import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.data.model.tenant.Tenant
+import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
+import com.shakil.barivara.databinding.ActivityAddNewTenantBinding
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.Constants.mUserId
 import com.shakil.barivara.utils.CustomAdManager
@@ -28,7 +27,7 @@ import com.shakil.barivara.utils.UtilsForAll
 import com.shakil.barivara.utils.Validation
 import java.util.UUID
 
-class NewTenantActivity : AppCompatActivity() {
+class NewTenantActivity : BaseActivity<ActivityAddNewTenantBinding>() {
     private lateinit var activityAddNewTenantBinding: ActivityAddNewTenantBinding
     private var spinnerAdapter = SpinnerAdapter()
     private var spinnerData = SpinnerData(this);
@@ -54,10 +53,15 @@ class NewTenantActivity : AppCompatActivity() {
     private var tools = Tools(this)
     private var customAdManager = CustomAdManager(this)
     private lateinit var prefManager: PrefManager
+    override val layoutResourceId: Int
+        get() = R.layout.activity_add_new_tenant
+
+    override fun setVariables(dataBinding: ActivityAddNewTenantBinding) {
+        activityAddNewTenantBinding = dataBinding
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityAddNewTenantBinding =
-            DataBindingUtil.setContentView(this, R.layout.activity_add_new_tenant)
         prefManager = PrefManager(this)
         intentData()
         setSupportActionBar(activityAddNewTenantBinding.toolBar)

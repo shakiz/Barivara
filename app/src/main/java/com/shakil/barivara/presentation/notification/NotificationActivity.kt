@@ -4,30 +4,34 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
-import com.shakil.barivara.presentation.onboard.MainActivity
-import com.shakil.barivara.presentation.adapter.NotificationRecyclerAdapter
-import com.shakil.barivara.databinding.ActivityNotificationBinding
-import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.data.model.notification.Notification
+import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
+import com.shakil.barivara.databinding.ActivityNotificationBinding
+import com.shakil.barivara.presentation.adapter.NotificationRecyclerAdapter
+import com.shakil.barivara.presentation.onboard.MainActivity
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
 
-class NotificationActivity : AppCompatActivity() {
+class NotificationActivity : BaseActivity<ActivityNotificationBinding>() {
     private lateinit var activityNotificationBinding: ActivityNotificationBinding
     private var notificationList: ArrayList<Notification> = arrayListOf()
     private var firebaseCrudHelper = FirebaseCrudHelper(this)
     private lateinit var ux : UX
     private var tools = Tools(this)
     private lateinit var prefManager: PrefManager
+    override val layoutResourceId: Int
+        get() = R.layout.activity_notification
+
+    override fun setVariables(dataBinding: ActivityNotificationBinding) {
+        activityNotificationBinding = dataBinding
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityNotificationBinding =
-            DataBindingUtil.setContentView(this, R.layout.activity_notification)
         prefManager = PrefManager(this)
         setSupportActionBar(activityNotificationBinding.toolBar)
         activityNotificationBinding.toolBar.setNavigationOnClickListener {

@@ -11,16 +11,15 @@ import android.widget.Button
 import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
-import com.shakil.barivara.presentation.onboard.MainActivity
+import com.shakil.barivara.data.model.room.Rent
+import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
+import com.shakil.barivara.databinding.ActivityRentListBinding
 import com.shakil.barivara.presentation.adapter.RecyclerRentListAdapter
 import com.shakil.barivara.presentation.adapter.RecyclerRentListAdapter.RentCallBacks
-import com.shakil.barivara.databinding.ActivityRentListBinding
-import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
-import com.shakil.barivara.data.model.room.Rent
+import com.shakil.barivara.presentation.onboard.MainActivity
 import com.shakil.barivara.utils.Constants.mUserId
 import com.shakil.barivara.utils.CustomAdManager
 import com.shakil.barivara.utils.FilterManager
@@ -28,7 +27,7 @@ import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
 
-class RentListActivity : AppCompatActivity(), RentCallBacks {
+class RentListActivity : BaseActivity<ActivityRentListBinding>(), RentCallBacks {
     private lateinit var activityRentListBinding: ActivityRentListBinding
     private var rentList: ArrayList<Rent> = arrayListOf()
     private var firebaseCrudHelper = FirebaseCrudHelper(this)
@@ -48,11 +47,15 @@ class RentListActivity : AppCompatActivity(), RentCallBacks {
             )
         }
     }
+    override val layoutResourceId: Int
+        get() = R.layout.activity_rent_list
+
+    override fun setVariables(dataBinding: ActivityRentListBinding) {
+        activityRentListBinding = dataBinding
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityRentListBinding = DataBindingUtil.setContentView(this, R.layout.activity_rent_list)
-
         onBackPressedDispatcher.addCallback(onBackPressedCallback)
         activityRentListBinding.toolBar.setNavigationOnClickListener {
             startActivity(
