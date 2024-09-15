@@ -97,7 +97,8 @@ class NewTenantActivity : BaseActivity<ActivityAddNewTenantBinding>() {
             activityAddNewTenantBinding.MobileNo.setText(tenant.mobileNo)
             activityAddNewTenantBinding.NumberOfPerson.setText("" + tenant.numberOfPerson)
             if (tenant.advancedAmount > 0) {
-                activityAddNewTenantBinding.advanceAmountLayout.visibility = View.VISIBLE
+                activityAddNewTenantBinding.headingAdvanceAmount.visibility = View.VISIBLE
+                activityAddNewTenantBinding.AdvanceAmount.visibility = View.VISIBLE
                 activityAddNewTenantBinding.AdvanceCheckBox.isChecked = true
                 activityAddNewTenantBinding.AdvanceAmount.setText("" + tenant.advancedAmount)
                 activityAddNewTenantBinding.AdvanceCheckBox.isEnabled = false
@@ -136,10 +137,12 @@ class NewTenantActivity : BaseActivity<ActivityAddNewTenantBinding>() {
         }
         activityAddNewTenantBinding.AdvanceCheckBox.setOnCheckedChangeListener { compoundButton, visibilityValue ->
             if (visibilityValue) {
-                activityAddNewTenantBinding.advanceAmountLayout.visibility = View.VISIBLE
+                activityAddNewTenantBinding.headingAdvanceAmount.visibility = View.VISIBLE
+                activityAddNewTenantBinding.AdvanceAmount.visibility = View.VISIBLE
                 activityAddNewTenantBinding.AdvanceAmount.setText("")
             } else {
-                activityAddNewTenantBinding.advanceAmountLayout.visibility = View.GONE
+                activityAddNewTenantBinding.headingAdvanceAmount.visibility = View.GONE
+                activityAddNewTenantBinding.AdvanceAmount.visibility = View.GONE
             }
         }
         if (tools.hasConnection()) {
@@ -224,7 +227,7 @@ class NewTenantActivity : BaseActivity<ActivityAddNewTenantBinding>() {
             if (validation.isValid) {
                 if (tools.hasConnection()) {
                     if (utilsForAll.isValidMobileNo(activityAddNewTenantBinding.MobileNo.text.toString())) {
-                        if (activityAddNewTenantBinding.advanceAmountLayout.visibility == View.VISIBLE) {
+                        if (activityAddNewTenantBinding.headingAdvanceAmount.visibility == View.VISIBLE) {
                             if (!TextUtils.isEmpty(activityAddNewTenantBinding.AdvanceAmount.text.toString())) {
                                 advancedAmountInt =
                                     activityAddNewTenantBinding.AdvanceAmount.text.toString()
