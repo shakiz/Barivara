@@ -1,5 +1,6 @@
 package com.shakil.barivara.data.repository
 
+import com.shakil.barivara.data.model.tenant.Tenant
 import com.shakil.barivara.data.remote.webservice.TenantService
 import com.shakil.barivara.domain.tenant.TenantRepo
 import com.shakil.barivara.utils.ErrorType
@@ -15,7 +16,7 @@ class TenantRepoImpl @Inject constructor(
             val task = tenantService.getAllTenant()
             if (task.isSuccessful) {
                 task.body()?.let {
-                    return Resource.Success(data = it)
+                    return Resource.Success(response = it)
                 } ?: return Resource.Error(errorType = ErrorType.EMPTY_DATA)
             } else {
                 return Resource.Error()
