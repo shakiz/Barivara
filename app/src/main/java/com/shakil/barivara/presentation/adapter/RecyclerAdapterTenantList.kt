@@ -5,18 +5,18 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.shakil.barivara.data.model.tenant.NewTenant
 import com.shakil.barivara.databinding.AdapterLayoutTenantListBinding
-import com.shakil.barivara.presentation.adapter.RecyclerTenantListAdapter.TenantItemViewHolder
+import com.shakil.barivara.presentation.adapter.RecyclerAdapterTenantList.TenantItemViewHolder
 
-class RecyclerTenantListAdapter :
+class RecyclerAdapterTenantList :
     RecyclerView.Adapter<TenantItemViewHolder>() {
     private var tenantCallback: TenantCallBacks? = null
-    private var list: MutableList<NewTenant> = mutableListOf()
+    private var list: List<NewTenant> = mutableListOf()
 
     fun setOnTenantCallback(tenantCallback: TenantCallBacks?) {
         this.tenantCallback = tenantCallback
     }
 
-    fun setItems(list: MutableList<NewTenant>) {
+    fun setItems(list: List<NewTenant>) {
         this.list = list
         notifyDataSetChanged()
     }

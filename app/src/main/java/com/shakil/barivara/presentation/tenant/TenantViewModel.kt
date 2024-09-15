@@ -1,5 +1,6 @@
 package com.shakil.barivara.presentation.tenant
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,13 +19,21 @@ class TenantViewModel @Inject constructor(private val tenantRepoImpl: TenantRepo
     private var tenants = MutableLiveData<List<NewTenant>>()
     private var getTenantListErrorResponse = MutableLiveData<Resource.Error<ErrorType>>()
 
+    fun getTenants(): LiveData<List<NewTenant>> {
+        return tenants
+    }
+
+    fun getTenantsErrorResponse(): LiveData<Resource.Error<ErrorType>> {
+        return getTenantListErrorResponse
+    }
+
     fun getAllTenants() {
         viewModelScope.launch {
             isLoading.postValue(true)
             try {
                 val data = tenantRepoImpl.getAllTenant()
-                if (data.data != null) {
-                    tenants.postValue(data.data)
+                if (data.response != null) {
+                    tenants.postValue(data.response)
                 } else {
                     getTenantListErrorResponse.postValue(
                         Resource.Error(
