@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.shakil.barivara.data.model.tenant.NewTenant
+import com.shakil.barivara.data.model.tenant.Tenant
 import com.shakil.barivara.data.repository.TenantRepoImpl
 import com.shakil.barivara.utils.ErrorType
 import com.shakil.barivara.utils.Resource
@@ -16,7 +16,7 @@ import javax.inject.Inject
 class TenantViewModel @Inject constructor(private val tenantRepoImpl: TenantRepoImpl) :
     ViewModel() {
     var isLoading = MutableLiveData<Boolean>()
-    private var tenants = MutableLiveData<List<NewTenant>>()
+    private var tenants = MutableLiveData<List<Tenant>>()
     private var getTenantListErrorResponse = MutableLiveData<Resource.Error<ErrorType>>()
 
     private var addTenantResponse = MutableLiveData<String>()
@@ -25,7 +25,7 @@ class TenantViewModel @Inject constructor(private val tenantRepoImpl: TenantRepo
     private var updateTenantResponse = MutableLiveData<String>()
     private var updateTenantErrorResponse = MutableLiveData<Resource.Error<ErrorType>>()
 
-    fun getTenants(): LiveData<List<NewTenant>> {
+    fun getTenants(): LiveData<List<Tenant>> {
         return tenants
     }
 
@@ -77,7 +77,7 @@ class TenantViewModel @Inject constructor(private val tenantRepoImpl: TenantRepo
         }
     }
 
-    fun addTenant(token: String, tenant: NewTenant) {
+    fun addTenant(token: String, tenant: Tenant) {
         viewModelScope.launch {
             isLoading.postValue(true)
             try {
@@ -105,7 +105,7 @@ class TenantViewModel @Inject constructor(private val tenantRepoImpl: TenantRepo
         }
     }
 
-    fun updateTenant(token: String, tenant: NewTenant) {
+    fun updateTenant(token: String, tenant: Tenant) {
         viewModelScope.launch {
             isLoading.postValue(true)
             try {

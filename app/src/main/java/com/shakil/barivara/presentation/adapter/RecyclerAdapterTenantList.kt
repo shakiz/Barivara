@@ -3,20 +3,20 @@ package com.shakil.barivara.presentation.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.shakil.barivara.data.model.tenant.NewTenant
+import com.shakil.barivara.data.model.tenant.Tenant
 import com.shakil.barivara.databinding.AdapterLayoutTenantListBinding
 import com.shakil.barivara.presentation.adapter.RecyclerAdapterTenantList.TenantItemViewHolder
 
 class RecyclerAdapterTenantList :
     RecyclerView.Adapter<TenantItemViewHolder>() {
     private var tenantCallback: TenantCallBacks? = null
-    private var list: List<NewTenant> = mutableListOf()
+    private var list: List<Tenant> = mutableListOf()
 
     fun setOnTenantCallback(tenantCallback: TenantCallBacks?) {
         this.tenantCallback = tenantCallback
     }
 
-    fun setItems(list: List<NewTenant>) {
+    fun setItems(list: List<Tenant>) {
         this.list = list
         notifyDataSetChanged()
     }
@@ -45,7 +45,7 @@ class RecyclerAdapterTenantList :
     ) : RecyclerView.ViewHolder(
         binding.root
     ) {
-        fun bind(tenant: NewTenant) {
+        fun bind(tenant: Tenant) {
             binding.TenantName.text = tenant.name
             binding.itemCardView.setOnClickListener {
                 tenantCallBack?.onItemClick(tenant)
@@ -68,8 +68,8 @@ class RecyclerAdapterTenantList :
     interface TenantCallBacks {
         fun onCallClicked(mobileNo: String, tenantName: String)
         fun onMessageClicked(mobileNo: String)
-        fun onDelete(tenant: NewTenant)
-        fun onEdit(tenant: NewTenant)
-        fun onItemClick(tenant: NewTenant)
+        fun onDelete(tenant: Tenant)
+        fun onEdit(tenant: Tenant)
+        fun onItemClick(tenant: Tenant)
     }
 }

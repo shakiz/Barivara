@@ -2,7 +2,7 @@ package com.shakil.barivara.data.repository
 
 import com.google.gson.Gson
 import com.shakil.barivara.data.model.BaseApiResponse
-import com.shakil.barivara.data.model.tenant.NewTenant
+import com.shakil.barivara.data.model.tenant.Tenant
 import com.shakil.barivara.data.remote.webservice.TenantService
 import com.shakil.barivara.domain.tenant.TenantRepo
 import com.shakil.barivara.utils.Constants.ACCEPT
@@ -15,7 +15,7 @@ import javax.inject.Inject
 class TenantRepoImpl @Inject constructor(
     private val tenantService: TenantService
 ) : TenantRepo {
-    override suspend fun getAllTenant(token: String): Resource<List<NewTenant>> {
+    override suspend fun getAllTenant(token: String): Resource<List<Tenant>> {
         try {
             val task = tenantService.getAllTenant(
                 token = token,
@@ -51,7 +51,7 @@ class TenantRepoImpl @Inject constructor(
         }
     }
 
-    override suspend fun addTenant(token: String, tenant: NewTenant): Resource<BaseApiResponse> {
+    override suspend fun addTenant(token: String, tenant: Tenant): Resource<BaseApiResponse> {
         try {
             val task = tenantService.addTenant(
                 token = token,

@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
@@ -19,16 +20,13 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
-import com.shakil.barivara.data.model.tenant.NewTenant
 import com.shakil.barivara.data.model.tenant.Tenant
-import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.databinding.ActivityTenantListBinding
 import com.shakil.barivara.presentation.adapter.RecyclerAdapterTenantList
 import com.shakil.barivara.presentation.adapter.RecyclerAdapterTenantList.TenantCallBacks
 import com.shakil.barivara.presentation.onboard.MainActivity
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.Constants.mAccessToken
-import com.shakil.barivara.utils.Constants.mUserId
 import com.shakil.barivara.utils.CustomAdManager
 import com.shakil.barivara.utils.FilterManager
 import com.shakil.barivara.utils.PrefManager
@@ -39,7 +37,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCallBacks {
     private lateinit var activityTenantListBinding: ActivityTenantListBinding
-    private var firebaseCrudHelper = FirebaseCrudHelper(this)
     private lateinit var ux: UX
     private var tools = Tools(this)
     private var filterManager = FilterManager()
@@ -119,54 +116,53 @@ class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCall
             }
         }
 
-        //        activityTenantListBinding.searchLayout.searchButton.setOnClickListener {
-//            if (tools.hasConnection()) {
-//                if (!TextUtils.isEmpty(activityTenantListBinding.searchLayout.SearchName.text.toString())) {
-//                    filterManager.onFilterClick(
-//                        activityTenantListBinding.searchLayout.SearchName.text.toString(),
-//                        tenantList,
-//                        object : FilterManager.onTenantFilterClick {
-//                            override fun onClick(objects: ArrayList<Tenant>) {
-//                                if (objects.size > 0) {
-//                                    tenantList = objects
-//                                    setRecyclerAdapter()
-//                                    Tools.hideKeyboard(this@TenantListActivity)
-//                                    Toast.makeText(
-//                                        this@TenantListActivity,
-//                                        getString(R.string.filterd),
-//                                        Toast.LENGTH_SHORT
-//                                    ).show()
-//                                } else {
-//                                    Tools.hideKeyboard(this@TenantListActivity)
-//                                    activityTenantListBinding.mNoDataMessage.visibility =
-//                                        View.VISIBLE
-//                                    activityTenantListBinding.mNoDataMessage.setText(R.string.no_data_message)
-//                                    activityTenantListBinding.mRecylerView.visibility = View.GONE
-//                                    Toast.makeText(
-//                                        this@TenantListActivity,
-//                                        getString(R.string.no_data_message),
-//                                        Toast.LENGTH_SHORT
-//                                    ).show()
-//                                }
-//                            }
-//
-//                        }
-//                    )
-//                } else {
-//                    Toast.makeText(
-//                        this@TenantListActivity,
-//                        getString(R.string.enter_data_validation),
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-//                }
-//            } else {
-//                Toast.makeText(
-//                    this@TenantListActivity,
-//                    getString(R.string.no_internet_title),
-//                    Toast.LENGTH_SHORT
-//                ).show()
-//            }
-//        }
+        activityTenantListBinding.searchLayout.searchButton.setOnClickListener {
+            if (tools.hasConnection()) {
+                if (!TextUtils.isEmpty(activityTenantListBinding.searchLayout.SearchName.text.toString())) {
+                    filterManager.onFilterClick(
+                        activityTenantListBinding.searchLayout.SearchName.text.toString(),
+                        viewModel.getTenants().value.orEmpty(),
+                        object : FilterManager.onTenantFilterClick {
+                            override fun onClick(objects: ArrayList<Tenant>) {
+                                if (objects.size > 0) {
+                                    setRecyclerAdapter()
+                                    Tools.hideKeyboard(this@TenantListActivity)
+                                    Toast.makeText(
+                                        this@TenantListActivity,
+                                        getString(R.string.filterd),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                } else {
+                                    Tools.hideKeyboard(this@TenantListActivity)
+                                    activityTenantListBinding.mNoDataMessage.visibility =
+                                        View.VISIBLE
+                                    activityTenantListBinding.mNoDataMessage.setText(R.string.no_data_message)
+                                    activityTenantListBinding.mRecylerView.visibility = View.GONE
+                                    Toast.makeText(
+                                        this@TenantListActivity,
+                                        getString(R.string.no_data_message),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            }
+
+                        }
+                    )
+                } else {
+                    Toast.makeText(
+                        this@TenantListActivity,
+                        getString(R.string.enter_data_validation),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            } else {
+                Toast.makeText(
+                    this@TenantListActivity,
+                    getString(R.string.no_internet_title),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
     }
 
     private fun init() {
@@ -207,11 +203,7 @@ class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCall
         delete = dialog.findViewById(R.id.deleteButton)
         cancel.setOnClickListener { dialog.dismiss() }
         delete.setOnClickListener {
-            firebaseCrudHelper.deleteRecord(
-                "tenant",
-                tenant.fireBaseKey,
-                prefManager.getString(mUserId)
-            )
+            //TODO add delete action here
             dialog.dismiss()
         }
         dialog.setCanceledOnTouchOutside(false)
@@ -264,25 +256,25 @@ class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCall
         Tools(this).sendMessage(mobileNo)
     }
 
-    override fun onDelete(tenant: NewTenant) {
-        //doPopUpForDeleteConfirmation(tenant)
+    override fun onDelete(tenant: Tenant) {
+        doPopUpForDeleteConfirmation(tenant)
     }
 
-    override fun onEdit(tenant: NewTenant) {
-//        startActivity(
-//            Intent(
-//                this@TenantListActivity,
-//                NewTenantActivity::class.java
-//            ).putExtra("tenant", tenant)
-//        )
+    override fun onEdit(tenant: Tenant) {
+        startActivity(
+            Intent(
+                this@TenantListActivity,
+                NewTenantActivity::class.java
+            ).putExtra("tenant", tenant)
+        )
     }
 
-    override fun onItemClick(tenant: NewTenant) {
-//        startActivity(
-//            Intent(
-//                this@TenantListActivity,
-//                NewTenantActivity::class.java
-//            ).putExtra("tenant", tenant)
-//        )
+    override fun onItemClick(tenant: Tenant) {
+        startActivity(
+            Intent(
+                this@TenantListActivity,
+                NewTenantActivity::class.java
+            ).putExtra("tenant", tenant)
+        )
     }
 }

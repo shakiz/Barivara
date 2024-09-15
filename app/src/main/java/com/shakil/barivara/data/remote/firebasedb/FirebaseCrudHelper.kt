@@ -16,7 +16,6 @@ import com.shakil.barivara.data.model.note.Note
 import com.shakil.barivara.data.model.notification.Notification
 import com.shakil.barivara.data.model.room.Rent
 import com.shakil.barivara.data.model.room.Room
-import com.shakil.barivara.data.model.tenant.Tenant
 import com.shakil.barivara.utils.Constants
 
 class FirebaseCrudHelper(private val context: Context) {
@@ -39,11 +38,6 @@ class FirebaseCrudHelper(private val context: Context) {
         databaseReference = FirebaseDatabase.getInstance().getReference(path!!).child(userId!!)
         var postValues: Map<String, Any> = HashMap()
         when (path) {
-            "tenant" -> {
-                val tenant = data as Tenant
-                postValues = tenant.toMap()
-            }
-
             "meter" -> {
                 val meter = data as Meter
                 postValues = meter.toMap()
@@ -192,26 +186,6 @@ class FirebaseCrudHelper(private val context: Context) {
                     objects.add(electricityBill)
                 }
                 onElectricityBillDataFetch.onFetch(objects)
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.i(Constants.TAG, "" + error.message)
-            }
-        })
-    }
-
-    fun fetchAllTenant(path: String, userId: String, onTenantDataFetch: onTenantDataFetch) {
-        val objects = ArrayList<Tenant?>()
-        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId)
-        databaseReference!!.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                for (dataSnapshot in snapshot.children) {
-                    val tenant = dataSnapshot.getValue(Tenant::class.java)
-                    tenant?.fireBaseKey = dataSnapshot.key ?: ""
-                    Log.i(Constants.TAG + ":fetchTenant", "" + tenant?.tenantName)
-                    objects.add(tenant)
-                }
-                onTenantDataFetch.onFetch(objects)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -414,10 +388,6 @@ class FirebaseCrudHelper(private val context: Context) {
 
     interface onRentDataFetch {
         fun onFetch(objects: ArrayList<Rent?>?)
-    }
-
-    interface onTenantDataFetch {
-        fun onFetch(objects: ArrayList<Tenant?>?)
     }
 
     interface onElectricityBillDataFetch {

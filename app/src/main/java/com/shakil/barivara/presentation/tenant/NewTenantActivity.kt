@@ -10,7 +10,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
-import com.shakil.barivara.data.model.tenant.NewTenant
+import com.shakil.barivara.data.model.tenant.Tenant
 import com.shakil.barivara.databinding.ActivityAddNewTenantBinding
 import com.shakil.barivara.utils.Constants.mAccessToken
 import com.shakil.barivara.utils.CustomAdManager
@@ -31,7 +31,7 @@ class NewTenantActivity : BaseActivity<ActivityAddNewTenantBinding>() {
     private var spinnerData = SpinnerData(this)
     private var TenantTypeId = 0
     private var tenantNameStr: String = ""
-    private var tenant = NewTenant()
+    private var tenant = Tenant()
     private var command = "add"
     private val hashMap: Map<String?, Array<String>?> = HashMap()
     private var validation = Validation(this, hashMap)
