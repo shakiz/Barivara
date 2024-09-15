@@ -1,8 +1,11 @@
 package com.shakil.barivara.utils
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import com.shakil.barivara.R
 import com.shakil.barivara.utils.Constants.TAG
 import java.text.DateFormat
@@ -63,4 +66,12 @@ class UtilsForAll(private val context: Context) {
     fun isValidMobileNo(mobileNo: String): Boolean {
         return mobileNo.length == 11
     }
+
+    fun hideSoftKeyboard(activity: Activity) {
+        val inputMethodManager =
+            activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val view = activity.currentFocus ?: View(activity)
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
 }

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppThemeNoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/md_green_100</item>
+        <item name="colorPrimaryDark">@color/md_green_200</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <!-- Component styling -->
+        <item name="android:fitsSystemWindows">true</item>
+        <item name="android:windowDisablePreview">true</item>
+        <!-- Status bar -->
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:statusBarColor">@color/md_white_1000</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <!-- Navigation bar -->
+        <item name="android:windowTranslucentNavigation">false
+        </item>  <!-- It's not translucent (we don't draw behind navigation bar) -->
+        =
+    </style>
+</resources>
