@@ -27,6 +27,7 @@ import com.shakil.barivara.presentation.adapter.RecyclerAdapterTenantList
 import com.shakil.barivara.presentation.adapter.RecyclerAdapterTenantList.TenantCallBacks
 import com.shakil.barivara.presentation.onboard.MainActivity
 import com.shakil.barivara.utils.Constants
+import com.shakil.barivara.utils.Constants.mAccessToken
 import com.shakil.barivara.utils.Constants.mUserId
 import com.shakil.barivara.utils.CustomAdManager
 import com.shakil.barivara.utils.FilterManager
@@ -39,7 +40,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCallBacks {
     private lateinit var activityTenantListBinding: ActivityTenantListBinding
     private var firebaseCrudHelper = FirebaseCrudHelper(this)
-    private lateinit var ux : UX
+    private lateinit var ux: UX
     private var tools = Tools(this)
     private var filterManager = FilterManager()
     private var customAdManager = CustomAdManager(this)
@@ -74,7 +75,7 @@ class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCall
         setRecyclerAdapter()
         initListeners()
         initObservers()
-        viewModel.getAllTenants()
+        viewModel.getAllTenants(prefManager.getString(mAccessToken))
     }
 
     private fun initListeners() {
@@ -103,7 +104,7 @@ class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCall
                 activityTenantListBinding.searchLayout.SearchName.setText("")
                 activityTenantListBinding.mNoDataMessage.visibility = View.GONE
                 Tools.hideKeyboard(this@TenantListActivity)
-                viewModel.getAllTenants()
+                viewModel.getAllTenants(prefManager.getString(mAccessToken))
                 Toast.makeText(
                     this@TenantListActivity,
                     getString(R.string.list_refreshed),

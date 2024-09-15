@@ -19,6 +19,12 @@ class TenantViewModel @Inject constructor(private val tenantRepoImpl: TenantRepo
     private var tenants = MutableLiveData<List<NewTenant>>()
     private var getTenantListErrorResponse = MutableLiveData<Resource.Error<ErrorType>>()
 
+    private var addTenantResponse = MutableLiveData<String>()
+    private var addTenantErrorResponse = MutableLiveData<Resource.Error<ErrorType>>()
+
+    private var updateTenantResponse = MutableLiveData<String>()
+    private var updateTenantErrorResponse = MutableLiveData<Resource.Error<ErrorType>>()
+
     fun getTenants(): LiveData<List<NewTenant>> {
         return tenants
     }
@@ -27,11 +33,27 @@ class TenantViewModel @Inject constructor(private val tenantRepoImpl: TenantRepo
         return getTenantListErrorResponse
     }
 
-    fun getAllTenants() {
+    fun getAddTenantResponse(): LiveData<String> {
+        return addTenantResponse
+    }
+
+    fun getAddTenantErrorResponse(): LiveData<Resource.Error<ErrorType>> {
+        return addTenantErrorResponse
+    }
+
+    fun getUpdateTenantResponse(): LiveData<String> {
+        return updateTenantResponse
+    }
+
+    fun getUpdateTenantErrorResponse(): LiveData<Resource.Error<ErrorType>> {
+        return updateTenantErrorResponse
+    }
+
+    fun getAllTenants(token: String) {
         viewModelScope.launch {
             isLoading.postValue(true)
             try {
-                val data = tenantRepoImpl.getAllTenant()
+                val data = tenantRepoImpl.getAllTenant(token = token)
                 if (data.response != null) {
                     tenants.postValue(data.response)
                 } else {
@@ -50,6 +72,47 @@ class TenantViewModel @Inject constructor(private val tenantRepoImpl: TenantRepo
                         errorType = ErrorType.UNKNOWN
                     )
                 )
+                isLoading.postValue(false)
+            }
+        }
+    }
+
+    fun addTenant(token: String, tenant: NewTenant) {
+        viewModelScope.launch {
+            isLoading.postValue(true)
+            try {
+                val data = tenantRepoImpl.addTenant(token, tenant)
+                if (data.response != null) {
+                    addTenantResponse.postValue(data.response?.message)
+                } else {
+                    addTenantErrorResponse.postValue(
+                        Resource.Error(
+                            message = data.response?.message ?: "",
+                            errorType = data.errorType
+                        )
+                    )
+                }
+                isLoading.postValue(false)
+            } catch (e: Exception) {
+                addTenantErrorResponse.postValue(
+                    Resource.Error(
+                        message = "Something went wrong, please try again",
+                        errorType = ErrorType.UNKNOWN
+                    )
+                )
+                isLoading.postValue(false)
+            }
+        }
+    }
+
+    fun updateTenant(token: String, tenant: NewTenant) {
+        viewModelScope.launch {
+            isLoading.postValue(true)
+            try {
+
+                isLoading.postValue(false)
+            } catch (e: Exception) {
+
                 isLoading.postValue(false)
             }
         }
