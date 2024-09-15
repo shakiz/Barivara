@@ -6,7 +6,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
@@ -19,6 +18,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
+import com.shakil.barivara.data.model.tenant.NewTenant
 import com.shakil.barivara.data.model.tenant.Tenant
 import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.databinding.ActivityTenantListBinding
@@ -35,13 +35,14 @@ import com.shakil.barivara.utils.UX
 
 class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCallBacks {
     private lateinit var activityTenantListBinding: ActivityTenantListBinding
-    private lateinit var tenantList: ArrayList<Tenant>
+    private lateinit var tenantList: ArrayList<NewTenant>
     private var firebaseCrudHelper = FirebaseCrudHelper(this)
     private lateinit var ux : UX
     private var tools = Tools(this)
     private var filterManager = FilterManager()
     private var customAdManager = CustomAdManager(this)
     private lateinit var prefManager: PrefManager
+    private lateinit var recyclerTenantListAdapter: RecyclerTenantListAdapter
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
@@ -75,6 +76,7 @@ class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCall
             )
         }
         binUiWithComponents()
+        initObservers()
     }
 
     private fun init() {
@@ -82,14 +84,13 @@ class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCall
         prefManager = PrefManager(this)
     }
 
+    private fun initObservers() {
+
+    }
+
     private fun binUiWithComponents() {
         customAdManager.generateAd(activityTenantListBinding.adView)
         activityTenantListBinding.searchLayout.SearchName.hint = getString(R.string.search_tenant_name)
-        if (tools.hasConnection()) {
-            setData()
-        } else {
-            Toast.makeText(this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT).show()
-        }
         activityTenantListBinding.mAddTenantMaster.setOnClickListener {
             startActivity(
                 Intent(
@@ -98,61 +99,61 @@ class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCall
                 )
             )
         }
-        activityTenantListBinding.searchLayout.searchButton.setOnClickListener {
-            if (tools.hasConnection()) {
-                if (!TextUtils.isEmpty(activityTenantListBinding.searchLayout.SearchName.text.toString())) {
-                    filterManager.onFilterClick(
-                        activityTenantListBinding.searchLayout.SearchName.text.toString(),
-                        tenantList,
-                        object : FilterManager.onTenantFilterClick {
-                            override fun onClick(objects: ArrayList<Tenant>) {
-                                if (objects.size > 0) {
-                                    tenantList = objects
-                                    setRecyclerAdapter()
-                                    Tools.hideKeyboard(this@TenantListActivity)
-                                    Toast.makeText(
-                                        this@TenantListActivity,
-                                        getString(R.string.filterd),
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                } else {
-                                    Tools.hideKeyboard(this@TenantListActivity)
-                                    activityTenantListBinding.mNoDataMessage.visibility =
-                                        View.VISIBLE
-                                    activityTenantListBinding.mNoDataMessage.setText(R.string.no_data_message)
-                                    activityTenantListBinding.mRecylerView.visibility = View.GONE
-                                    Toast.makeText(
-                                        this@TenantListActivity,
-                                        getString(R.string.no_data_message),
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                            }
-
-                        }
-                    )
-                } else {
-                    Toast.makeText(
-                        this@TenantListActivity,
-                        getString(R.string.enter_data_validation),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            } else {
-                Toast.makeText(
-                    this@TenantListActivity,
-                    getString(R.string.no_internet_title),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
+//        activityTenantListBinding.searchLayout.searchButton.setOnClickListener {
+//            if (tools.hasConnection()) {
+//                if (!TextUtils.isEmpty(activityTenantListBinding.searchLayout.SearchName.text.toString())) {
+//                    filterManager.onFilterClick(
+//                        activityTenantListBinding.searchLayout.SearchName.text.toString(),
+//                        tenantList,
+//                        object : FilterManager.onTenantFilterClick {
+//                            override fun onClick(objects: ArrayList<Tenant>) {
+//                                if (objects.size > 0) {
+//                                    tenantList = objects
+//                                    setRecyclerAdapter()
+//                                    Tools.hideKeyboard(this@TenantListActivity)
+//                                    Toast.makeText(
+//                                        this@TenantListActivity,
+//                                        getString(R.string.filterd),
+//                                        Toast.LENGTH_SHORT
+//                                    ).show()
+//                                } else {
+//                                    Tools.hideKeyboard(this@TenantListActivity)
+//                                    activityTenantListBinding.mNoDataMessage.visibility =
+//                                        View.VISIBLE
+//                                    activityTenantListBinding.mNoDataMessage.setText(R.string.no_data_message)
+//                                    activityTenantListBinding.mRecylerView.visibility = View.GONE
+//                                    Toast.makeText(
+//                                        this@TenantListActivity,
+//                                        getString(R.string.no_data_message),
+//                                        Toast.LENGTH_SHORT
+//                                    ).show()
+//                                }
+//                            }
+//
+//                        }
+//                    )
+//                } else {
+//                    Toast.makeText(
+//                        this@TenantListActivity,
+//                        getString(R.string.enter_data_validation),
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//                }
+//            } else {
+//                Toast.makeText(
+//                    this@TenantListActivity,
+//                    getString(R.string.no_internet_title),
+//                    Toast.LENGTH_SHORT
+//                ).show()
+//            }
+//        }
         activityTenantListBinding.searchLayout.refreshButton.setOnClickListener {
             if (tools.hasConnection()) {
                 activityTenantListBinding.mRecylerView.visibility = View.VISIBLE
                 activityTenantListBinding.searchLayout.SearchName.setText("")
                 activityTenantListBinding.mNoDataMessage.visibility = View.GONE
                 Tools.hideKeyboard(this@TenantListActivity)
-                setData()
+                //Call viewModel api call here
                 Toast.makeText(
                     this@TenantListActivity,
                     getString(R.string.list_refreshed),
@@ -168,26 +169,8 @@ class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCall
         }
     }
 
-    private fun setData() {
-        ux.getLoadingView()
-        firebaseCrudHelper.fetchAllTenant(
-            "tenant",
-            prefManager.getString(mUserId),
-            object : FirebaseCrudHelper.onTenantDataFetch {
-                override fun onFetch(objects: ArrayList<Tenant?>?) {
-                    tenantList = objects.orEmpty() as ArrayList<Tenant>
-                    if (tenantList.size <= 0) {
-                        activityTenantListBinding.mNoDataMessage.visibility = View.VISIBLE
-                        activityTenantListBinding.mNoDataMessage.setText(R.string.no_data_message)
-                    }
-                    setRecyclerAdapter()
-                    ux.removeLoadingView()
-                }
-            })
-    }
-
     private fun setRecyclerAdapter() {
-        val recyclerTenantListAdapter = RecyclerTenantListAdapter(tenantList)
+        recyclerTenantListAdapter = RecyclerTenantListAdapter()
         activityTenantListBinding.mRecylerView.layoutManager = LinearLayoutManager(this)
         activityTenantListBinding.mRecylerView.adapter = recyclerTenantListAdapter
         recyclerTenantListAdapter.setOnTenantCallback(this)
@@ -211,7 +194,6 @@ class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCall
                 prefManager.getString(mUserId)
             )
             dialog.dismiss()
-            setData()
         }
         dialog.setCanceledOnTouchOutside(false)
         dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
@@ -263,25 +245,25 @@ class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCall
         Tools(this).sendMessage(mobileNo)
     }
 
-    override fun onDelete(tenant: Tenant) {
-        doPopUpForDeleteConfirmation(tenant)
+    override fun onDelete(tenant: NewTenant) {
+        //doPopUpForDeleteConfirmation(tenant)
     }
 
-    override fun onEdit(tenant: Tenant) {
-        startActivity(
-            Intent(
-                this@TenantListActivity,
-                NewTenantActivity::class.java
-            ).putExtra("tenant", tenant)
-        )
+    override fun onEdit(tenant: NewTenant) {
+//        startActivity(
+//            Intent(
+//                this@TenantListActivity,
+//                NewTenantActivity::class.java
+//            ).putExtra("tenant", tenant)
+//        )
     }
 
-    override fun onItemClick(tenant: Tenant) {
-        startActivity(
-            Intent(
-                this@TenantListActivity,
-                NewTenantActivity::class.java
-            ).putExtra("tenant", tenant)
-        )
+    override fun onItemClick(tenant: NewTenant) {
+//        startActivity(
+//            Intent(
+//                this@TenantListActivity,
+//                NewTenantActivity::class.java
+//            ).putExtra("tenant", tenant)
+//        )
     }
 }

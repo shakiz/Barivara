@@ -2,7 +2,6 @@ package com.shakil.barivara.data.repository
 
 import com.shakil.barivara.data.remote.webservice.TenantService
 import com.shakil.barivara.domain.tenant.TenantRepo
-import com.shakil.barivara.data.model.tenant.Tenant
 import com.shakil.barivara.utils.ErrorType
 import com.shakil.barivara.utils.Resource
 import java.net.SocketTimeoutException

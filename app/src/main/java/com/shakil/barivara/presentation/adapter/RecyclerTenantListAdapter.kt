@@ -1,20 +1,24 @@
 package com.shakil.barivara.presentation.adapter
 
-import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.shakil.barivara.R
-import com.shakil.barivara.presentation.adapter.RecyclerTenantListAdapter.TenantItemViewHolder
+import com.shakil.barivara.data.model.tenant.NewTenant
 import com.shakil.barivara.databinding.AdapterLayoutTenantListBinding
-import com.shakil.barivara.data.model.tenant.Tenant
+import com.shakil.barivara.presentation.adapter.RecyclerTenantListAdapter.TenantItemViewHolder
 
-class RecyclerTenantListAdapter(private val arrayList: ArrayList<Tenant>) :
+class RecyclerTenantListAdapter :
     RecyclerView.Adapter<TenantItemViewHolder>() {
     private var tenantCallback: TenantCallBacks? = null
+    private var list: MutableList<NewTenant> = mutableListOf()
 
     fun setOnTenantCallback(tenantCallback: TenantCallBacks?) {
         this.tenantCallback = tenantCallback
+    }
+
+    fun setItems(list: MutableList<NewTenant>) {
+        this.list = list
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TenantItemViewHolder {
@@ -27,12 +31,12 @@ class RecyclerTenantListAdapter(private val arrayList: ArrayList<Tenant>) :
     }
 
     override fun onBindViewHolder(holder: TenantItemViewHolder, position: Int) {
-        val tenant = arrayList[position]
+        val tenant = list[position]
         holder.bind(tenant)
     }
 
     override fun getItemCount(): Int {
-        return arrayList.size
+        return list.size
     }
 
     class TenantItemViewHolder(
@@ -41,34 +45,16 @@ class RecyclerTenantListAdapter(private val arrayList: ArrayList<Tenant>) :
     ) : RecyclerView.ViewHolder(
         binding.root
     ) {
-        fun bind(tenant: Tenant) {
-            binding.TenantName.text = tenant.tenantName
-            binding.StartingMonth.text = tenant.startingMonth
-            binding.AssociateRoom.text = tenant.associateRoom
-            binding.TenantTypeStr.text = tenant.tenantTypeStr
+        fun bind(tenant: NewTenant) {
+            binding.TenantName.text = tenant.name
             binding.itemCardView.setOnClickListener {
                 tenantCallBack?.onItemClick(tenant)
             }
             binding.callIcon.setOnClickListener {
-                tenantCallBack?.onCallClicked(tenant.mobileNo ?: "", tenant.tenantName ?: "")
+                tenantCallBack?.onCallClicked(tenant.phone ?: "", tenant.name ?: "")
             }
             binding.messageIcon.setOnClickListener {
-                tenantCallBack?.onMessageClicked(tenant.mobileNo ?: "")
-            }
-            if (tenant.isActiveValue != null && !TextUtils.isEmpty(tenant.isActiveValue)) {
-                if (tenant.isActiveValue == binding.root.context.getString(R.string.yes)) {
-                    binding.activeColorIndicator.setBackgroundColor(
-                        binding.root.context.resources.getColor(
-                            R.color.md_green_400
-                        )
-                    )
-                } else {
-                    binding.activeColorIndicator.setBackgroundColor(
-                        binding.root.context.resources.getColor(
-                            R.color.md_red_400
-                        )
-                    )
-                }
+                tenantCallBack?.onMessageClicked(tenant.phone ?: "")
             }
             binding.editIcon.setOnClickListener {
                 tenantCallBack?.onEdit(tenant)
@@ -82,8 +68,8 @@ class RecyclerTenantListAdapter(private val arrayList: ArrayList<Tenant>) :
     interface TenantCallBacks {
         fun onCallClicked(mobileNo: String, tenantName: String)
         fun onMessageClicked(mobileNo: String)
-        fun onDelete(tenant: Tenant)
-        fun onEdit(tenant: Tenant)
-        fun onItemClick(tenant: Tenant)
+        fun onDelete(tenant: NewTenant)
+        fun onEdit(tenant: NewTenant)
+        fun onItemClick(tenant: NewTenant)
     }
 }
