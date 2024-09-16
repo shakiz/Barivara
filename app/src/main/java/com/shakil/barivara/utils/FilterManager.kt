@@ -86,12 +86,12 @@ class FilterManager {
 
     fun onFilterClick(
         searchText: String,
-        sourceList: ArrayList<Tenant>,
+        sourceList: List<Tenant>,
         onTenantFilterClick: onTenantFilterClick?
     ) {
         val billList = ArrayList<Tenant>()
         for (start in sourceList.indices) {
-            if (sourceList[start].tenantName.lowercase(Locale.getDefault()).contains(
+            if (sourceList[start].name.lowercase(Locale.getDefault()).contains(
                     searchText.lowercase(
                         Locale.getDefault()
                     )

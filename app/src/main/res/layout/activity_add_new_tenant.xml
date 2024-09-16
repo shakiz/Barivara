@@ -37,28 +37,24 @@
             android:layout_marginBottom="56dp"
             android:fillViewport="true">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/mainLayout"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="12dp"
-                app:cardElevation="0dp"
-                app:cardCornerRadius="12dp">
+                android:orientation="vertical">
 
-                <LinearLayout
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/mainLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/back"
-                    android:orientation="vertical"
-                    android:paddingBottom="16dp">
+                    android:layout_height="wrap_content"
+                    android:layout_margin="12dp"
+                    app:cardElevation="0dp"
+                    app:cardCornerRadius="12dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginRight="12dp"
-                        android:orientation="vertical">
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:padding="16dp">
 
                         <TextView
                             android:layout_width="match_parent"
@@ -76,6 +72,8 @@
                             android:background="@drawable/edit_text_back"
                             android:ellipsize="end"
                             android:hint="@string/tenant_hint"
+                            android:drawableStart="@drawable/ic_person"
+                            android:drawablePadding="8dp"
                             android:inputType="text"
                             android:maxLines="1"
                             android:paddingLeft="10dp"
@@ -85,20 +83,10 @@
                             android:textColorHint="@color/md_grey_700"
                             android:textSize="14sp" />
 
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginRight="12dp"
-                        android:orientation="vertical">
-
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
+                            android:layout_marginTop="12dp"
                             android:text="@string/nid_number"
                             android:textColor="@color/md_grey_900"
                             android:textSize="16sp" />
@@ -112,6 +100,8 @@
                             android:ellipsize="end"
                             android:hint="@string/nid_number_hint"
                             android:inputType="text"
+                            android:drawableStart="@drawable/ic_id_no"
+                            android:drawablePadding="8dp"
                             android:maxLines="1"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
@@ -120,20 +110,10 @@
                             android:textColorHint="@color/md_grey_700"
                             android:textSize="14sp" />
 
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginRight="12dp"
-                        android:orientation="vertical">
-
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
+                            android:layout_marginTop="12dp"
                             android:text="@string/mobile_number"
                             android:textColor="@color/md_grey_900"
                             android:textSize="16sp" />
@@ -145,6 +125,8 @@
                             android:layout_marginTop="5dp"
                             android:background="@drawable/edit_text_back"
                             android:ellipsize="end"
+                            android:drawableStart="@drawable/ic_phone"
+                            android:drawablePadding="8dp"
                             android:hint="@string/mobile_number_hint"
                             android:inputType="numberSigned"
                             android:maxLines="1"
@@ -155,159 +137,152 @@
                             android:textColorHint="@color/md_grey_700"
                             android:textSize="14sp" />
 
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginRight="12dp"
-                        android:text="@string/gender"
-                        android:textColor="@color/md_grey_900"
-                        android:textSize="16sp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="12dp"
-                        android:background="@drawable/rectangle_background_filled_with_border"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-
-                        <RelativeLayout
-                            android:id="@+id/maleLayout"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="4dp"
-                            android:layout_marginTop="4dp"
-                            android:layout_marginBottom="4dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/rectangle_background_filled_gender"
-                            android:elevation="4dp"
-                            android:gravity="center"
-                            android:paddingTop="4dp"
-                            android:paddingBottom="4dp"
-                            android:translationZ="2dp">
-
-                            <ImageView
-                                android:id="@+id/MaleIcon"
-                                android:layout_width="18dp"
-                                android:layout_height="32dp"
-                                android:layout_centerHorizontal="true"
-                                android:layout_centerVertical="true"
-                                android:src="@drawable/ic_male_white" />
-
-                            <TextView
-                                android:id="@+id/Male"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerHorizontal="true"
-                                android:layout_centerVertical="true"
-                                android:layout_gravity="center"
-                                android:layout_marginLeft="4dp"
-                                android:layout_toRightOf="@id/MaleIcon"
-                                android:gravity="center"
-                                android:text="@string/male"
-                                android:textColor="@color/md_white_1000"
-                                android:textSize="16sp" />
-
-                        </RelativeLayout>
-
-                        <RelativeLayout
-                            android:id="@+id/femaleLayout"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="4dp"
-                            android:layout_marginTop="4dp"
-                            android:layout_marginRight="4dp"
-                            android:layout_marginBottom="4dp"
-                            android:layout_weight="1"
-                            android:elevation="4dp"
-                            android:gravity="center"
-                            android:paddingTop="4dp"
-                            android:paddingBottom="4dp"
-                            android:translationZ="2dp">
-
-                            <ImageView
-                                android:id="@+id/FemaleIcon"
-                                android:layout_width="18dp"
-                                android:layout_height="32dp"
-                                android:layout_centerHorizontal="true"
-                                android:layout_centerVertical="true"
-                                android:src="@drawable/ic_female_green" />
-
-                            <TextView
-                                android:id="@+id/Female"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerHorizontal="true"
-                                android:layout_centerVertical="true"
-                                android:layout_gravity="center"
-                                android:layout_marginLeft="4dp"
-                                android:layout_toRightOf="@id/FemaleIcon"
-                                android:gravity="center"
-                                android:text="@string/female"
-                                android:textColor="@color/md_green_600"
-                                android:textSize="16sp" />
-
-                        </RelativeLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginRight="12dp"
-                        android:orientation="vertical">
-
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="@string/number_of_family_member"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginRight="12dp"
+                            android:text="@string/gender"
+                            android:visibility="gone"
                             android:textColor="@color/md_grey_900"
                             android:textSize="16sp" />
 
-                        <EditText
-                            android:id="@+id/NumberOfPerson"
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="12dp"
                             android:layout_marginTop="5dp"
-                            android:background="@drawable/edit_text_back"
-                            android:ellipsize="end"
-                            android:hint="@string/number_of_family_member_hint"
-                            android:inputType="numberSigned"
-                            android:maxLines="1"
-                            android:paddingLeft="10dp"
-                            android:paddingRight="10dp"
-                            android:scrollHorizontally="true"
-                            android:textColor="@color/md_grey_800"
-                            android:textColorHint="@color/md_grey_700"
-                            android:textSize="14sp" />
+                            android:layout_marginRight="12dp"
+                            android:visibility="gone"
+                            android:background="@drawable/rectangle_background_filled_with_border"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
 
-                    </LinearLayout>
+                            <RelativeLayout
+                                android:id="@+id/maleLayout"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="4dp"
+                                android:layout_marginTop="4dp"
+                                android:layout_marginBottom="4dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/rectangle_background_filled_gender"
+                                android:elevation="4dp"
+                                android:gravity="center"
+                                android:paddingTop="4dp"
+                                android:paddingBottom="4dp"
+                                android:translationZ="2dp">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginRight="12dp"
-                        android:orientation="vertical">
+                                <ImageView
+                                    android:id="@+id/MaleIcon"
+                                    android:layout_width="18dp"
+                                    android:layout_height="32dp"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_centerVertical="true"
+                                    android:src="@drawable/ic_male_white" />
+
+                                <TextView
+                                    android:id="@+id/Male"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="4dp"
+                                    android:layout_toRightOf="@id/MaleIcon"
+                                    android:gravity="center"
+                                    android:text="@string/male"
+                                    android:textColor="@color/md_white_1000"
+                                    android:textSize="16sp" />
+
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:id="@+id/femaleLayout"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="4dp"
+                                android:layout_marginTop="4dp"
+                                android:layout_marginRight="4dp"
+                                android:layout_marginBottom="4dp"
+                                android:layout_weight="1"
+                                android:elevation="4dp"
+                                android:gravity="center"
+                                android:paddingTop="4dp"
+                                android:paddingBottom="4dp"
+                                android:translationZ="2dp">
+
+                                <ImageView
+                                    android:id="@+id/FemaleIcon"
+                                    android:layout_width="18dp"
+                                    android:layout_height="32dp"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_centerVertical="true"
+                                    android:src="@drawable/ic_female_green" />
+
+                                <TextView
+                                    android:id="@+id/Female"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="4dp"
+                                    android:layout_toRightOf="@id/FemaleIcon"
+                                    android:gravity="center"
+                                    android:text="@string/female"
+                                    android:textColor="@color/md_green_600"
+                                    android:textSize="16sp" />
+
+                            </RelativeLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginRight="12dp"
+                            android:visibility="gone"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="@string/number_of_family_member"
+                                android:textColor="@color/md_grey_900"
+                                android:textSize="16sp" />
+
+                            <EditText
+                                android:id="@+id/NumberOfPerson"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:layout_marginTop="5dp"
+                                android:background="@drawable/edit_text_back"
+                                android:ellipsize="end"
+                                android:hint="@string/number_of_family_member_hint"
+                                android:inputType="numberSigned"
+                                android:maxLines="1"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"
+                                android:scrollHorizontally="true"
+                                android:textColor="@color/md_grey_800"
+                                android:textColorHint="@color/md_grey_700"
+                                android:textSize="14sp" />
+
+                        </LinearLayout>
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
+                            android:layout_marginTop="12dp"
                             android:text="@string/tenant_type"
                             android:textColor="@color/md_grey_900"
                             android:textSize="16sp" />
@@ -321,141 +296,129 @@
                             android:background="@drawable/edit_text_back"
                             android:tag="@string/tenant_type" />
 
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginRight="12dp"
-                        android:orientation="vertical">
-
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
+                            android:layout_marginTop="12dp"
                             android:text="@string/select_month"
                             android:textColor="@color/md_grey_900"
                             android:textSize="16sp" />
 
-                        <Spinner
+                        <EditText
                             android:id="@+id/StartingMonthId"
-                            style="@style/Base.TextAppearance.AppCompat.Medium"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:layout_marginTop="5dp"
                             android:background="@drawable/edit_text_back"
-                            android:tag="@string/select_month" />
+                            android:ellipsize="end"
+                            android:drawableStart="@drawable/ic_calendar"
+                            android:drawablePadding="8dp"
+                            android:hint="@string/start_rent_month"
+                            android:inputType="none"
+                            android:maxLines="1"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:textColor="@color/md_grey_800"
+                            android:textColorHint="@color/md_grey_700"
+                            android:textSize="14sp" />
 
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginRight="12dp"
-                        android:orientation="vertical">
-
-                        <TextView
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="@string/select_room"
-                            android:textColor="@color/md_grey_900"
-                            android:textSize="16sp" />
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginRight="12dp"
+                            android:visibility="gone"
+                            android:orientation="vertical">
 
-                        <Spinner
-                            android:id="@+id/AssociateRoomId"
-                            style="@style/Base.TextAppearance.AppCompat.Medium"
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="@string/select_room"
+                                android:textColor="@color/md_grey_900"
+                                android:textSize="16sp" />
+
+                            <Spinner
+                                android:id="@+id/AssociateRoomId"
+                                style="@style/Base.TextAppearance.AppCompat.Medium"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:layout_marginTop="5dp"
+                                android:background="@drawable/edit_text_back"
+                                android:tag="@string/select_room" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/IsActiveLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginTop="14dp"
+                            android:layout_marginRight="12dp"
+                            android:background="@drawable/edit_text_back"
+                            android:orientation="vertical"
+                            android:paddingLeft="4dp"
+                            android:paddingTop="4dp"
+                            android:paddingRight="4dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center|start"
+                                android:padding="4dp"
+                                android:text="@string/is_tenant_active"
+                                android:textColor="@color/md_grey_900"
+                                android:textSize="16sp" />
+
+                            <RadioGroup
+                                android:id="@+id/IsActive"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="4dp"
+                                android:layout_marginBottom="4dp"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <RadioButton
+                                    android:id="@+id/IsActive_Yes"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="16dp"
+                                    android:tag="@string/yes"
+                                    android:text="@string/yes" />
+
+                                <RadioButton
+                                    android:id="@+id/IsActive_No"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="16dp"
+                                    android:tag="@string/no"
+                                    android:text="@string/no" />
+
+                            </RadioGroup>
+
+                        </LinearLayout>
+
+                        <CheckBox
+                            android:id="@+id/AdvanceCheckBox"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
-                            android:layout_marginTop="5dp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="12dp"
                             android:background="@drawable/edit_text_back"
-                            android:tag="@string/select_room" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/IsActiveLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginTop="14dp"
-                        android:layout_marginRight="12dp"
-                        android:background="@drawable/edit_text_back"
-                        android:orientation="vertical"
-                        android:paddingLeft="4dp"
-                        android:paddingTop="4dp"
-                        android:paddingRight="4dp">
+                            android:text="@string/advance_hint" />
 
                         <TextView
+                            android:id="@+id/headingAdvanceAmount"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="center|left"
-                            android:padding="4dp"
-                            android:text="@string/is_tenant_active"
-                            android:textColor="@color/md_grey_900"
-                            android:textSize="16sp" />
-
-                        <RadioGroup
-                            android:id="@+id/IsActive"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="4dp"
-                            android:layout_marginBottom="4dp"
-                            android:gravity="center"
-                            android:orientation="horizontal">
-
-                            <RadioButton
-                                android:id="@+id/IsActive_Yes"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginRight="16dp"
-                                android:tag="@string/yes"
-                                android:text="@string/yes" />
-
-                            <RadioButton
-                                android:id="@+id/IsActive_No"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="16dp"
-                                android:tag="@string/no"
-                                android:text="@string/no" />
-
-                        </RadioGroup>
-
-                    </LinearLayout>
-
-                    <CheckBox
-                        android:id="@+id/AdvanceCheckBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginTop="14dp"
-                        android:layout_marginRight="12dp"
-                        android:background="@drawable/edit_text_back"
-                        android:text="@string/advance_hint" />
-
-                    <LinearLayout
-                        android:id="@+id/advanceAmountLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginRight="12dp"
-                        android:layout_marginBottom="16dp"
-                        android:orientation="vertical"
-                        android:visibility="gone">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
+                            android:visibility="gone"
+                            android:layout_marginTop="12dp"
                             android:text="@string/amount"
                             android:textColor="@color/md_grey_900"
                             android:textSize="16sp" />
@@ -465,9 +428,12 @@
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:layout_marginTop="5dp"
+                            android:visibility="gone"
                             android:background="@drawable/edit_text_back"
                             android:ellipsize="end"
                             android:hint="@string/advance_hint2"
+                            android:drawableStart="@drawable/ic_currency_bdt"
+                            android:drawablePadding="8dp"
                             android:inputType="number"
                             android:maxLines="1"
                             android:paddingLeft="10dp"
@@ -479,25 +445,24 @@
 
                     </LinearLayout>
 
-                </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
-            </androidx.cardview.widget.CardView>
+                <Button
+                    android:id="@+id/mSaveTenantMaster"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginBottom="48dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:contentDescription="@string/action_button"
+                    android:text="@string/save"
+                    android:textAllCaps="false"
+                    style="@style/BariVara.Button.Primary"
+                    android:src="@drawable/ic_action_done" />
+            </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/mSaveTenantMaster"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="32dp"
-            android:src="@drawable/ic_action_done"
-            app:backgroundTint="@color/md_blue_grey_400"
-            app:fabSize="normal" />
 
         <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
             android:id="@+id/adView"

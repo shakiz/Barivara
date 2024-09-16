@@ -422,4 +422,5 @@
     <string name="twenty_twenty_seven">2027</string>
     <string name="email_coming_soon">Email registration is coming soon</string>
     <string name="login_header">Login Header Banner</string>
+    <string name="action_button">Action Button</string>
 </resources>
