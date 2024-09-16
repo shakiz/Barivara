@@ -26,7 +26,9 @@ import com.shakil.barivara.utils.FilterManager
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RoomListActivity : BaseActivity<ActivityRoomListBinding>(), RoomCallBacks {
     private lateinit var activityRoomListBinding: ActivityRoomListBinding
     private var roomList: ArrayList<Room> = arrayListOf()
