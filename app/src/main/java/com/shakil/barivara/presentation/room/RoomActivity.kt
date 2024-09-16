@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
+import com.shakil.barivara.data.model.room.NewRoom
 import com.shakil.barivara.data.model.room.Room
 import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.databinding.ActivityAddNewRoomBinding
@@ -37,7 +38,7 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
     private var NoOfRoom = 0
     private var NoOfBathroom = 0
     private var NoOfBalcony = 0
-    private var room: Room = Room()
+    private var room = NewRoom()
     private var command = "add"
     private var firebaseCrudHelper = FirebaseCrudHelper(this)
     private var meterNames: ArrayList<String> = arrayListOf()

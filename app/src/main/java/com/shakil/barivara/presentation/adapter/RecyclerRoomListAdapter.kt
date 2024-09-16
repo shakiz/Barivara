@@ -3,15 +3,22 @@ package com.shakil.barivara.presentation.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.shakil.barivara.presentation.adapter.RecyclerRoomListAdapter.RoomItemViewHolder
+import com.shakil.barivara.data.model.room.NewRoom
 import com.shakil.barivara.databinding.AdapterLayoutRoomListBinding
-import com.shakil.barivara.data.model.room.Room
+import com.shakil.barivara.presentation.adapter.RecyclerRoomListAdapter.RoomItemViewHolder
 
-class RecyclerRoomListAdapter(private val arrayList: ArrayList<Room>) :
+class RecyclerRoomListAdapter :
     RecyclerView.Adapter<RoomItemViewHolder>() {
     private var roomCallBacks: RoomCallBacks? = null
+    private var list: List<NewRoom> = mutableListOf()
+
     fun setRoomCallBack(roomCallBacks: RoomCallBacks?) {
         this.roomCallBacks = roomCallBacks
+    }
+
+    fun setItems(list: List<NewRoom>) {
+        this.list = list
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RoomItemViewHolder {
@@ -21,12 +28,12 @@ class RecyclerRoomListAdapter(private val arrayList: ArrayList<Room>) :
     }
 
     override fun onBindViewHolder(holder: RoomItemViewHolder, position: Int) {
-        val room = arrayList[position]
+        val room = list[position]
         holder.bind(room)
     }
 
     override fun getItemCount(): Int {
-        return arrayList.size
+        return list.size
     }
 
     class RoomItemViewHolder(
@@ -35,10 +42,8 @@ class RecyclerRoomListAdapter(private val arrayList: ArrayList<Room>) :
     ) : RecyclerView.ViewHolder(
         binding.root
     ) {
-        fun bind(room: Room) {
-            binding.roomName.text = room.roomName
-            binding.roomOwner.text = room.tenantName
-            binding.startMonth.text = room.startMonthName
+        fun bind(room: NewRoom) {
+            binding.roomName.text = room.name
             binding.itemCardView.setOnClickListener {
                 roomCallBacks?.onItemClick(room)
             }
@@ -52,8 +57,8 @@ class RecyclerRoomListAdapter(private val arrayList: ArrayList<Room>) :
     }
 
     interface RoomCallBacks {
-        fun onDelete(room: Room)
-        fun onEdit(room: Room)
-        fun onItemClick(room: Room)
+        fun onDelete(room: NewRoom)
+        fun onEdit(room: NewRoom)
+        fun onItemClick(room: NewRoom)
     }
 }

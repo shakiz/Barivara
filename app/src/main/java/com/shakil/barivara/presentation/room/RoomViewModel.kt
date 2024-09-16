@@ -50,7 +50,7 @@ class RoomViewModel @Inject constructor(private val roomRepoImpl: RoomRepoImpl) 
         return updateroomErrorResponse
     }
 
-    fun getAllTenants(token: String) {
+    fun getAllRooms(token: String) {
         viewModelScope.launch {
             isLoading.postValue(true)
             try {
