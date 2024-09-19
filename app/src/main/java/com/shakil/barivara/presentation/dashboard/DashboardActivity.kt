@@ -9,6 +9,7 @@ import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
 import com.shakil.barivara.data.model.meter.Meter
 import com.shakil.barivara.data.model.room.Room
+import com.shakil.barivara.data.model.tenant.Tenant
 import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.databinding.ActivityDashboardBinding
 import com.shakil.barivara.utils.Constants
@@ -62,6 +63,26 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>() {
         )
         customAdManager.generateAd(activityDashboardBinding.adView)
         customAdManager.generateAd(activityDashboardBinding.adViewSecond)
+        firebaseCrudHelper.fetchAllTenant(
+            prefManager.getString(mUserId),
+            "tenant",
+            object : FirebaseCrudHelper.onTenantDataFetch {
+                override fun onFetch(objects: ArrayList<Tenant?>?) {
+                    if (objects != null) {
+                        for (tenant in objects) {
+                            if (tenant?.isActiveValue != null) {
+                                if (tenant.isActiveValue == getString(R.string.yes)) {
+                                    totalTenantCurrent++
+                                } else if (tenant.isActiveValue == getString(R.string.no)) {
+                                    totalTenantLeft++
+                                }
+                            }
+                        }
+                    }
+                    activityDashboardBinding.TotalTenantsCurrent.text = "" + totalTenantCurrent
+                    activityDashboardBinding.TotalTenantLeft.text = "" + totalTenantLeft
+                }
+            })
         firebaseCrudHelper.fetchAllMeter(
             prefManager.getString(mUserId),
             "meter",

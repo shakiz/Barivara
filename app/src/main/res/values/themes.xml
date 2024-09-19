@@ -14,14 +14,6 @@
         <item name="colorPrimary">@color/md_green_100</item>
         <item name="colorPrimaryDark">@color/md_green_200</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <!-- Component styling -->
-        <item name="android:fitsSystemWindows">true</item>
-        <item name="android:windowDisablePreview">true</item>
-        <!-- Status bar -->
-        <item name="android:windowTranslucentStatus">false</item>
-        <!-- Navigation bar -->
-        <item name="android:windowTranslucentNavigation">false
-        </item>  <!-- It's not translucent (we don't draw behind navigation bar) -->
     </style>
 
     <style name="ToolBarStyle" parent="ToolBarStyle.Base"/>
@@ -101,25 +93,6 @@
         <item name="android:textColorSecondary">@color/md_black_1000</item>
         <item name="android:textViewStyle">@style/NormalTextStyle</item>
         <item name="android:windowBackground">@color/md_white_1000</item>
-    </style>
-
-    <!-- Primary button -->
-    <style name="BariVara.Button.Primary" parent="Widget.MaterialComponents.Button">
-        <item name="android:minHeight">56dp</item>
-        <item name="android:paddingBottom">5dp
-        </item> <!-- Bottom padding for primary buttons to offset the shadow -->
-        <item name="android:background">@drawable/background_button_primary_ripple</item>
-        <item name="android:textAllCaps">true</item>
-        <item name="android:textColor">@color/md_white_1000</item>
-        <item name="elevation">0dp</item>
-        <item name="iconGravity">textStart</item>
-        <item name="iconPadding">8dp</item>
-        <item name="iconTint">@color/md_white_1000</item>
-        <item name="shapeAppearance">@null</item>
-        <item name="android:textSize">16sp</item>
-        <item name="backgroundTint">@null</item>
-        <item name="rippleColor">@null</item>
-        <item name="android:stateListAnimator">@null</item>
     </style>
 
 </resources>
