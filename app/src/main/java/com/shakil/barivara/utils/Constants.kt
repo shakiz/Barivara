@@ -2,17 +2,12 @@ package com.shakil.barivara.utils
 
 import java.util.regex.Pattern
 
-object ApiConstants {
-    const val BASE_URL = "https://rent-collector-8cceae311431.herokuapp.com/api/v1/"
-}
-
 object Constants {
     @JvmField
     var TAG = "dev-shakil"
     const val PREF_NAME = "vara-adai"
     const val mAppViewCount = "AppViewCount"
     const val mIsLoggedIn = "isLoggedIn"
-    const val mAccessToken = "accessToken"
     const val mLanguage = "Language"
     const val mUserId = "UserId"
     const val mUserFullName = "UserFullName"
@@ -32,6 +27,4 @@ object Constants {
     const val SAGORKONNA_PACKAGE_NAME = "com.shakil.tourdekuakata"
     const val VARA_ADAI_FB_PAGE_LINK = "https://www.facebook.com/varaadai"
     const val MY_CONTACT_NO = "01688499299"
-    const val CONTENT_TYPE = "application/json"
-    const val ACCEPT = "application/json"
 }

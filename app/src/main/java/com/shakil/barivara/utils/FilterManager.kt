@@ -2,20 +2,20 @@ package com.shakil.barivara.utils
 
 import com.shakil.barivara.data.model.meter.ElectricityBill
 import com.shakil.barivara.data.model.meter.Meter
-import com.shakil.barivara.data.model.room.NewRoom
 import com.shakil.barivara.data.model.room.Rent
+import com.shakil.barivara.data.model.room.Room
 import com.shakil.barivara.data.model.tenant.Tenant
 import java.util.Locale
 
 class FilterManager {
     fun onFilterClick(
         searchText: String,
-        sourceList: List<NewRoom>,
+        sourceList: ArrayList<Room>,
         onFilterClick: onFilterClick
     ) {
-        val roomList = ArrayList<NewRoom>()
+        val roomList = ArrayList<Room>()
         for (start in sourceList.indices) {
-            if (sourceList[start].name.orEmpty().lowercase(Locale.getDefault()).contains(
+            if (sourceList[start].roomName.lowercase(Locale.getDefault()).contains(
                     searchText.lowercase(
                         Locale.getDefault()
                     )
@@ -86,12 +86,12 @@ class FilterManager {
 
     fun onFilterClick(
         searchText: String,
-        sourceList: List<Tenant>,
+        sourceList: ArrayList<Tenant>,
         onTenantFilterClick: onTenantFilterClick?
     ) {
         val billList = ArrayList<Tenant>()
         for (start in sourceList.indices) {
-            if (sourceList[start].name.lowercase(Locale.getDefault()).contains(
+            if (sourceList[start].tenantName.lowercase(Locale.getDefault()).contains(
                     searchText.lowercase(
                         Locale.getDefault()
                     )
@@ -108,7 +108,7 @@ class FilterManager {
     }
 
     interface onFilterClick {
-        fun onClick(objects: ArrayList<NewRoom>)
+        fun onClick(objects: ArrayList<Room>)
     }
 
     interface onMeterFilterClick {

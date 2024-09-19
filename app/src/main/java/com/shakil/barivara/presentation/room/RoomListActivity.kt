@@ -11,37 +11,31 @@ import android.widget.Button
 import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
-import com.shakil.barivara.data.model.room.NewRoom
 import com.shakil.barivara.data.model.room.Room
 import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.databinding.ActivityRoomListBinding
 import com.shakil.barivara.presentation.adapter.RecyclerRoomListAdapter
 import com.shakil.barivara.presentation.adapter.RecyclerRoomListAdapter.RoomCallBacks
 import com.shakil.barivara.presentation.onboard.MainActivity
-import com.shakil.barivara.presentation.tenant.TenantViewModel
-import com.shakil.barivara.utils.Constants.mAccessToken
 import com.shakil.barivara.utils.Constants.mUserId
 import com.shakil.barivara.utils.CustomAdManager
 import com.shakil.barivara.utils.FilterManager
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class RoomListActivity : BaseActivity<ActivityRoomListBinding>(), RoomCallBacks {
     private lateinit var activityRoomListBinding: ActivityRoomListBinding
-    private lateinit var ux: UX
+    private var roomList: ArrayList<Room> = arrayListOf()
+    private var firebaseCrudHelper = FirebaseCrudHelper(this)
+    private var ux: UX? = null
     private var tools = Tools(this)
     private var filterManager = FilterManager()
     private var customAdManager = CustomAdManager(this)
     private lateinit var prefManager: PrefManager
-    private val viewModel by viewModels<RoomViewModel>()
-    private lateinit var recyclerRoomListAdapter: RecyclerRoomListAdapter
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
@@ -62,22 +56,9 @@ class RoomListActivity : BaseActivity<ActivityRoomListBinding>(), RoomCallBacks 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setSupportActionBar(activityRoomListBinding.toolBar)
-        customAdManager.generateAd(activityRoomListBinding.adView)
-        activityRoomListBinding.searchLayout.SearchName.hint = getString(R.string.search_room_name)
-
         init()
-        initListeners()
-        initObservers()
-        setRecyclerAdapter()
-    }
+        setSupportActionBar(activityRoomListBinding.toolBar)
 
-    private fun init() {
-        ux = UX(this)
-        prefManager = PrefManager(this)
-    }
-
-    private fun initListeners() {
         onBackPressedDispatcher.addCallback(onBackPressedCallback)
         activityRoomListBinding.toolBar.setNavigationOnClickListener {
             startActivity(
@@ -87,7 +68,22 @@ class RoomListActivity : BaseActivity<ActivityRoomListBinding>(), RoomCallBacks 
                 )
             )
         }
+        binUiWIthComponents()
+    }
 
+    private fun init() {
+        ux = UX(this)
+        prefManager = PrefManager(this)
+    }
+
+    private fun binUiWIthComponents() {
+        customAdManager.generateAd(activityRoomListBinding.adView)
+        activityRoomListBinding.searchLayout.SearchName.hint = getString(R.string.search_room_name)
+        if (tools.hasConnection()) {
+            setData()
+        } else {
+            Toast.makeText(this, getString(R.string.no_internet_title), Toast.LENGTH_SHORT).show()
+        }
         activityRoomListBinding.mAddRoomMaster.setOnClickListener {
             startActivity(
                 Intent(
@@ -96,16 +92,17 @@ class RoomListActivity : BaseActivity<ActivityRoomListBinding>(), RoomCallBacks 
                 )
             )
         }
-
         activityRoomListBinding.searchLayout.searchButton.setOnClickListener {
             if (tools.hasConnection()) {
                 if (!TextUtils.isEmpty(activityRoomListBinding.searchLayout.SearchName.text.toString())) {
                     filterManager.onFilterClick(
                         activityRoomListBinding.searchLayout.SearchName.text.toString(),
-                        viewModel.getRooms().value.orEmpty(),
+                        roomList,
                         object : FilterManager.onFilterClick {
-                            override fun onClick(objects: ArrayList<NewRoom>) {
+                            override fun onClick(objects: ArrayList<Room>) {
                                 if (objects.size > 0) {
+                                    roomList = objects
+                                    setRecyclerAdapter()
                                     Tools.hideKeyboard(this@RoomListActivity)
                                     Toast.makeText(
                                         this@RoomListActivity,
@@ -147,7 +144,7 @@ class RoomListActivity : BaseActivity<ActivityRoomListBinding>(), RoomCallBacks 
                 activityRoomListBinding.searchLayout.SearchName.setText("")
                 activityRoomListBinding.mNoDataMessage.visibility = View.GONE
                 Tools.hideKeyboard(this@RoomListActivity)
-                viewModel.getAllRooms(prefManager.getString(mAccessToken))
+                setData()
                 Toast.makeText(
                     this@RoomListActivity,
                     getString(R.string.list_refreshed),
@@ -163,28 +160,32 @@ class RoomListActivity : BaseActivity<ActivityRoomListBinding>(), RoomCallBacks 
         }
     }
 
-    private fun initObservers() {
-        viewModel.getRooms().observe(this) { tenants ->
-            recyclerRoomListAdapter.setItems(tenants)
-        }
-
-        viewModel.isLoading.observe(this) { isLoading ->
-            if (isLoading) {
-                ux.getLoadingView()
-            } else {
-                ux.removeLoadingView()
-            }
-        }
+    private fun setData() {
+        ux?.getLoadingView()
+        firebaseCrudHelper.fetchAllRoom(
+            "room",
+            prefManager.getString(mUserId),
+            object : FirebaseCrudHelper.onRoomDataFetch {
+                override fun onFetch(objects: ArrayList<Room?>?) {
+                    roomList = objects.orEmpty() as ArrayList<Room>
+                    if (roomList.size <= 0) {
+                        activityRoomListBinding.mNoDataMessage.visibility = View.VISIBLE
+                        activityRoomListBinding.mNoDataMessage.setText(R.string.no_data_message)
+                    }
+                    setRecyclerAdapter()
+                    ux?.removeLoadingView()
+                }
+            })
     }
 
     private fun setRecyclerAdapter() {
-        recyclerRoomListAdapter = RecyclerRoomListAdapter()
+        val recyclerRoomListAdapter = RecyclerRoomListAdapter(roomList)
         activityRoomListBinding.mRecylerView.layoutManager = LinearLayoutManager(this)
         activityRoomListBinding.mRecylerView.adapter = recyclerRoomListAdapter
         recyclerRoomListAdapter.setRoomCallBack(this)
     }
 
-    private fun doPopUpForDeleteConfirmation(room: NewRoom) {
+    private fun doPopUpForDeleteConfirmation(room: Room) {
         val dialog = Dialog(this@RoomListActivity, android.R.style.Theme_Dialog)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.delete_confirmation_layout)
@@ -194,8 +195,13 @@ class RoomListActivity : BaseActivity<ActivityRoomListBinding>(), RoomCallBacks 
         val delete: Button = dialog.findViewById(R.id.deleteButton)
         cancel.setOnClickListener { dialog.dismiss() }
         delete.setOnClickListener {
-            //TODO add delete mechanism here
+            firebaseCrudHelper.deleteRecord(
+                "room",
+                room.fireBaseKey,
+                prefManager.getString(mUserId)
+            )
             dialog.dismiss()
+            setData()
         }
         dialog.setCanceledOnTouchOutside(false)
         dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
@@ -206,11 +212,11 @@ class RoomListActivity : BaseActivity<ActivityRoomListBinding>(), RoomCallBacks 
         dialog.show()
     }
 
-    override fun onDelete(room: NewRoom) {
+    override fun onDelete(room: Room) {
         doPopUpForDeleteConfirmation(room)
     }
 
-    override fun onEdit(room: NewRoom) {
+    override fun onEdit(room: Room) {
         startActivity(
             Intent(this@RoomListActivity, RoomActivity::class.java).putExtra(
                 "room",
@@ -219,7 +225,7 @@ class RoomListActivity : BaseActivity<ActivityRoomListBinding>(), RoomCallBacks 
         )
     }
 
-    override fun onItemClick(room: NewRoom) {
+    override fun onItemClick(room: Room) {
         startActivity(
             Intent(this@RoomListActivity, RoomActivity::class.java).putExtra(
                 "room",

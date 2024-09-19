@@ -3,22 +3,15 @@ package com.shakil.barivara.presentation.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.shakil.barivara.data.model.room.NewRoom
-import com.shakil.barivara.databinding.AdapterLayoutRoomListBinding
 import com.shakil.barivara.presentation.adapter.RecyclerRoomListAdapter.RoomItemViewHolder
+import com.shakil.barivara.databinding.AdapterLayoutRoomListBinding
+import com.shakil.barivara.data.model.room.Room
 
-class RecyclerRoomListAdapter :
+class RecyclerRoomListAdapter(private val arrayList: ArrayList<Room>) :
     RecyclerView.Adapter<RoomItemViewHolder>() {
     private var roomCallBacks: RoomCallBacks? = null
-    private var list: List<NewRoom> = mutableListOf()
-
     fun setRoomCallBack(roomCallBacks: RoomCallBacks?) {
         this.roomCallBacks = roomCallBacks
-    }
-
-    fun setItems(list: List<NewRoom>) {
-        this.list = list
-        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RoomItemViewHolder {
@@ -28,12 +21,12 @@ class RecyclerRoomListAdapter :
     }
 
     override fun onBindViewHolder(holder: RoomItemViewHolder, position: Int) {
-        val room = list[position]
+        val room = arrayList[position]
         holder.bind(room)
     }
 
     override fun getItemCount(): Int {
-        return list.size
+        return arrayList.size
     }
 
     class RoomItemViewHolder(
@@ -42,8 +35,10 @@ class RecyclerRoomListAdapter :
     ) : RecyclerView.ViewHolder(
         binding.root
     ) {
-        fun bind(room: NewRoom) {
-            binding.roomName.text = room.name
+        fun bind(room: Room) {
+            binding.roomName.text = room.roomName
+            binding.roomOwner.text = room.tenantName
+            binding.startMonth.text = room.startMonthName
             binding.itemCardView.setOnClickListener {
                 roomCallBacks?.onItemClick(room)
             }
@@ -57,8 +52,8 @@ class RecyclerRoomListAdapter :
     }
 
     interface RoomCallBacks {
-        fun onDelete(room: NewRoom)
-        fun onEdit(room: NewRoom)
-        fun onItemClick(room: NewRoom)
+        fun onDelete(room: Room)
+        fun onEdit(room: Room)
+        fun onItemClick(room: Room)
     }
 }
