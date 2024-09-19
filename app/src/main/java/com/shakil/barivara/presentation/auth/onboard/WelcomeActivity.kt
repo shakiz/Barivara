@@ -4,9 +4,9 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
-import android.view.View
 import android.view.WindowManager
 import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
@@ -19,7 +19,7 @@ import com.shakil.barivara.utils.PrefManager
 class WelcomeActivity : BaseActivity<ActivityWelcomeBinding>() {
     private lateinit var activityWelcomeBinding: ActivityWelcomeBinding
     private var myViewPagerAdapter: MyViewPagerAdapter? = null
-    private var prefManager = PrefManager(this)
+    private lateinit var prefManager: PrefManager
     private lateinit var dots: Array<TextView?>
     private var layouts = intArrayOf(
         R.layout.welcome_about_app,
@@ -37,10 +37,7 @@ class WelcomeActivity : BaseActivity<ActivityWelcomeBinding>() {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (Build.VERSION.SDK_INT >= 21) {
-            window.decorView.systemUiVisibility =
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-        }
+        activityWelcomeBinding = DataBindingUtil.setContentView(this, R.layout.activity_welcome)
         init()
         layouts = intArrayOf(
             R.layout.welcome_about_app,

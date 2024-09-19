@@ -367,7 +367,7 @@
     <string name="register_with">Register With</string>
     <string name="not_a_valid_mobile_number">মোবাইল নম্বর টি বৈধ নয়</string>
     <string name="validation_registration_type">দয়া করে নিবন্ধনের ধরন নির্বাচন করুন</string>
-    <string name="sent_you_code_on_your_number">আপনার নম্বরে একটি কোড পাঠানো হয়েছে</string>
+    <string name="sent_you_code_on_your_number">আপনার নম্বরে একটি কোড পাঠানো হয়েছে %s</string>
     <string name="verification_code">যাচাইকরণ কোড</string>
     <string name="type_code_here">এখানে কোড টাইপ করুন</string>
     <string name="verify">যাচাই করুন</string>
@@ -412,10 +412,14 @@
     <string name="exit">Exit</string>
     <string name="delete_confirmation">আপনি কি নিশ্চিত আপনি রেকর্ডটি মুছে ফেলতে চান?</string>
     <string name="delete_detail_text">আপনি যে রেকর্ডটি মুছে ফেলবেন তা আর উপলব্ধ হবে না।</string>
+    <string name="generate_pdf">Generate PDF</string>
     <string name="file_save_in_downloads">ফাইল আপনার ডাউনলোড ফোল্ডারে সংরক্ষণ করা হয়েছে।</string>
     <string name="please_try_again_something_went_wrong">কিছু ভুল হয়েছে, আবার চেষ্টা করুন।</string>
     <string name="twenty_twenty_four">2024</string>
     <string name="twenty_twenty_five">2025</string>
     <string name="twenty_twenty_six">2026</string>
     <string name="twenty_twenty_seven">2027</string>
+    <string name="email_coming_soon">Email registration is coming soon</string>
+    <string name="login_header">Login Header Banner</string>
+    <string name="action_button">Action Button</string>
 </resources>

@@ -353,4 +353,9 @@
     <color name="profileEditTextColor">#707070</color>
 
     <color name="window_background">#F0F3F6</color>
+
+    <color name="neutral_background_semi_transparent">#EFEEF9FC</color>
+
+    <color name="button_background_shadow_disabled">#AAA4BA</color>
+    <color name="button_background_disabled">#F4C5C1</color>
 </resources>

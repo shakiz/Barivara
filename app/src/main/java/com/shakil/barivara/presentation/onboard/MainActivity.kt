@@ -21,7 +21,6 @@ import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
 import com.shakil.barivara.data.model.meter.Meter
 import com.shakil.barivara.data.model.room.Room
-import com.shakil.barivara.data.model.tenant.Tenant
 import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.databinding.ActivityMainBinding
 import com.shakil.barivara.presentation.auth.forgotpassword.ForgotPasswordActivity
@@ -172,14 +171,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
         activityMainBinding.GreetingsText.text = utilsForAll.setGreetings()
         activityMainBinding.DateTimeText.text = utilsForAll.dateTime
         activityMainBinding.DayText.text = utilsForAll.dayOfTheMonth
-        firebaseCrudHelper.fetchAllTenant(
-            "tenant",
-            prefManager.getString(mUserId),
-            object : FirebaseCrudHelper.onTenantDataFetch {
-                override fun onFetch(objects: ArrayList<Tenant?>?) {
-                    activityMainBinding.totalTenants.text = "" + objects?.size
-                }
-            })
 
         firebaseCrudHelper.fetchAllMeter(
             "meter",

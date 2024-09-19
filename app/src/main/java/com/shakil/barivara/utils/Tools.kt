@@ -31,8 +31,6 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
-import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.AuthResult
 import com.shakil.barivara.R
 import com.shakil.barivara.presentation.auth.login.LoginActivity
 import com.shakil.barivara.presentation.onboard.MainActivity
@@ -41,6 +39,7 @@ import com.shakil.barivara.presentation.auth.onboard.WelcomeActivity
 import com.shakil.barivara.utils.Constants.REQUEST_CALL_CODE
 import com.shakil.barivara.utils.Constants.TAG
 import com.shakil.barivara.utils.Constants.VALID_EMAIL_ADDRESS_REGEX
+import com.shakil.barivara.utils.Constants.mAccessToken
 import com.shakil.barivara.utils.Constants.mAppViewCount
 import com.shakil.barivara.utils.Constants.mIsLoggedIn
 import com.shakil.barivara.utils.Constants.mLanguage
@@ -259,14 +258,16 @@ class Tools(private val context: Context) {
         }
     }
 
-    fun setLoginPrefs(task: Task<AuthResult?>, prefManager: PrefManager) {
+    fun setLoginPrefs(
+        mobileNumber: String,
+        userId: Int,
+        accessToken: String,
+        prefManager: PrefManager
+    ) {
         prefManager[mIsLoggedIn] = true
-        if (task.result != null) {
-            prefManager[mUserId] = task.result!!.user!!.uid
-            prefManager[mUserFullName] = task.result!!.user!!.displayName
-            prefManager[mUserEmail] = task.result!!.user!!.email
-            prefManager[mUserMobile] = task.result!!.user!!.phoneNumber
-        }
+        prefManager[mUserId] = userId
+        prefManager[mUserMobile] = mobileNumber
+        prefManager[mAccessToken] = accessToken
     }
 
     fun launchAppByPackageName(appPackageName: String) {
