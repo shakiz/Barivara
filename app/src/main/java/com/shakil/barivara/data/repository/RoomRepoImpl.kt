@@ -24,7 +24,7 @@ class RoomRepoImpl @Inject constructor(
             )
             if (task.isSuccessful) {
                 task.body()?.let {
-                    return Resource.Success(response = it)
+                    return Resource.Success(response = it.data)
                 } ?: return Resource.Error(errorType = ErrorType.EMPTY_DATA)
             } else if (task.errorBody() != null) {
                 val errorBodyStr = task.errorBody()?.string()

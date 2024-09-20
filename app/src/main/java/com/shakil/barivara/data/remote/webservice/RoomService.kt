@@ -1,6 +1,7 @@
 package com.shakil.barivara.data.remote.webservice
 
 import com.shakil.barivara.data.model.BaseApiResponse
+import com.shakil.barivara.data.model.room.BaseRoomResponse
 import com.shakil.barivara.data.model.room.NewRoom
 import retrofit2.Response
 import retrofit2.http.Body
@@ -16,7 +17,7 @@ interface RoomService {
         @Header("Authorization") token: String,
         @Header("Content-Type") contentType: String,
         @Header("Accept") accept: String,
-    ): Response<List<NewRoom>>
+    ): Response<BaseRoomResponse>
 
     @POST("rooms")
     suspend fun addRoom(
