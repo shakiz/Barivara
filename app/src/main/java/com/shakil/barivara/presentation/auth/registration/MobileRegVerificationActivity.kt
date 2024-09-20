@@ -111,7 +111,7 @@ class MobileRegVerificationActivity : BaseActivity<ActivityMobileRegVerification
 
     private fun verifyVerificationCode(code: String) {
         if (tools.hasConnection()) {
-            viewModel.verifyOtp(mobileNumber, code)
+            viewModel.verifyOtp(mobileNumber, code.trim().toInt())
         } else {
             Snackbar.make(
                 findViewById(R.id.parent),

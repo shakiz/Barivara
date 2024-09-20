@@ -19,8 +19,6 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
 import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
-import com.shakil.barivara.data.model.meter.Meter
-import com.shakil.barivara.data.model.room.Room
 import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.databinding.ActivityMainBinding
 import com.shakil.barivara.presentation.auth.forgotpassword.ForgotPasswordActivity
@@ -39,7 +37,6 @@ import com.shakil.barivara.presentation.settings.SettingsActivity
 import com.shakil.barivara.presentation.tenant.TenantListActivity
 import com.shakil.barivara.presentation.tutorial.TutorialActivity
 import com.shakil.barivara.utils.Constants
-import com.shakil.barivara.utils.Constants.mUserId
 import com.shakil.barivara.utils.CustomAdManager
 import com.shakil.barivara.utils.LanguageManager
 import com.shakil.barivara.utils.PrefManager
@@ -172,23 +169,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
         activityMainBinding.DateTimeText.text = utilsForAll.dateTime
         activityMainBinding.DayText.text = utilsForAll.dayOfTheMonth
 
-        firebaseCrudHelper.fetchAllMeter(
-            "meter",
-            prefManager.getString(mUserId),
-            object : FirebaseCrudHelper.onDataFetch {
-                override fun onFetch(objects: ArrayList<Meter?>?) {
-                    activityMainBinding.totalMeters.text = "" + objects?.size
-                }
-            })
-
-        firebaseCrudHelper.fetchAllRoom(
-            "room",
-            prefManager.getString(mUserId),
-            object : FirebaseCrudHelper.onRoomDataFetch {
-                override fun onFetch(objects: ArrayList<Room?>?) {
-                    activityMainBinding.totalRooms.text = "" + objects?.size
-                }
-            })
         activityMainBinding.moreDetails.setOnClickListener {
             startActivity(
                 Intent(
