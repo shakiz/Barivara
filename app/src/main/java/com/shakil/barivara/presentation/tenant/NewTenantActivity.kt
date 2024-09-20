@@ -2,7 +2,6 @@ package com.shakil.barivara.presentation.tenant
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Parcelable
 import android.text.TextUtils
 import android.view.View
 import android.widget.AdapterView
@@ -65,8 +64,11 @@ class NewTenantActivity : BaseActivity<ActivityAddNewTenantBinding>() {
 
     private fun intentData() {
         if (intent.extras != null) {
-            if (intent.getParcelableExtra<Parcelable?>("tenant") != null) {
-                tenant = intent.getParcelableExtra("tenant")!!
+            tenant =
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+                    intent.getParcelableExtra("tenant", Tenant::class.java)!!
+                } else {
+                    intent.getParcelableExtra("tenant")!!
             }
         }
     }
@@ -74,7 +76,6 @@ class NewTenantActivity : BaseActivity<ActivityAddNewTenantBinding>() {
     private fun loadData() {
         if (tenant.id != 0 && tenant.id != null) {
             command = "update"
-            activityAddNewTenantBinding.IsActiveLayout.visibility = View.VISIBLE
             activityAddNewTenantBinding.TenantName.setText(tenant.name)
             activityAddNewTenantBinding.AssociateRoomId.visibility = View.GONE
             activityAddNewTenantBinding.StartingMonthId.setText(tenant.startDate)

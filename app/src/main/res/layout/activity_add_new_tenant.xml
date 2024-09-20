@@ -37,10 +37,9 @@
             android:layout_marginBottom="56dp"
             android:fillViewport="true">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="match_parent">
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/mainLayout"
@@ -166,16 +165,14 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:layout_marginLeft="4dp"
+                                android:layout_marginStart="4dp"
                                 android:layout_marginTop="4dp"
                                 android:layout_marginBottom="4dp"
                                 android:layout_weight="1"
                                 android:background="@drawable/rectangle_background_filled_gender"
-                                android:elevation="4dp"
                                 android:gravity="center"
                                 android:paddingTop="4dp"
-                                android:paddingBottom="4dp"
-                                android:translationZ="2dp">
+                                android:paddingBottom="4dp">
 
                                 <ImageView
                                     android:id="@+id/MaleIcon"
@@ -192,8 +189,8 @@
                                     android:layout_centerHorizontal="true"
                                     android:layout_centerVertical="true"
                                     android:layout_gravity="center"
-                                    android:layout_marginLeft="4dp"
-                                    android:layout_toRightOf="@id/MaleIcon"
+                                    android:layout_marginStart="4dp"
+                                    android:layout_toEndOf="@id/MaleIcon"
                                     android:gravity="center"
                                     android:text="@string/male"
                                     android:textColor="@color/md_white_1000"
@@ -211,11 +208,9 @@
                                 android:layout_marginRight="4dp"
                                 android:layout_marginBottom="4dp"
                                 android:layout_weight="1"
-                                android:elevation="4dp"
                                 android:gravity="center"
                                 android:paddingTop="4dp"
-                                android:paddingBottom="4dp"
-                                android:translationZ="2dp">
+                                android:paddingBottom="4dp">
 
                                 <ImageView
                                     android:id="@+id/FemaleIcon"
@@ -232,8 +227,8 @@
                                     android:layout_centerHorizontal="true"
                                     android:layout_centerVertical="true"
                                     android:layout_gravity="center"
-                                    android:layout_marginLeft="4dp"
-                                    android:layout_toRightOf="@id/FemaleIcon"
+                                    android:layout_marginStart="4dp"
+                                    android:layout_toEndOf="@id/FemaleIcon"
                                     android:gravity="center"
                                     android:text="@string/female"
                                     android:textColor="@color/md_green_600"
@@ -350,60 +345,6 @@
 
                         </LinearLayout>
 
-                        <LinearLayout
-                            android:id="@+id/IsActiveLayout"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:visibility="gone"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginTop="14dp"
-                            android:layout_marginRight="12dp"
-                            android:background="@drawable/edit_text_back"
-                            android:orientation="vertical"
-                            android:paddingLeft="4dp"
-                            android:paddingTop="4dp"
-                            android:paddingRight="4dp">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:gravity="center|start"
-                                android:padding="4dp"
-                                android:text="@string/is_tenant_active"
-                                android:textColor="@color/md_grey_900"
-                                android:textSize="16sp" />
-
-                            <RadioGroup
-                                android:id="@+id/IsActive"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginTop="4dp"
-                                android:layout_marginBottom="4dp"
-                                android:gravity="center"
-                                android:orientation="horizontal">
-
-                                <RadioButton
-                                    android:id="@+id/IsActive_Yes"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginEnd="16dp"
-                                    android:tag="@string/yes"
-                                    android:text="@string/yes" />
-
-                                <RadioButton
-                                    android:id="@+id/IsActive_No"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="16dp"
-                                    android:tag="@string/no"
-                                    android:text="@string/no" />
-
-                            </RadioGroup>
-
-                        </LinearLayout>
-
                         <CheckBox
                             android:id="@+id/AdvanceCheckBox"
                             android:layout_width="match_parent"
@@ -452,15 +393,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
-                    android:layout_marginBottom="48dp"
+                    android:layout_marginBottom="32dp"
                     android:layout_marginStart="12dp"
                     android:layout_marginEnd="12dp"
+                    android:layout_alignBottom="@id/mainLayout"
                     android:contentDescription="@string/action_button"
+                    android:layout_alignParentBottom="true"
                     android:text="@string/save"
                     android:textAllCaps="false"
                     style="@style/BariVara.Button.Primary"
                     android:src="@drawable/ic_action_done" />
-            </LinearLayout>
+            </RelativeLayout>
 
         </androidx.core.widget.NestedScrollView>
 
