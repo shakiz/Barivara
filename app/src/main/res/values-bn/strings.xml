@@ -422,4 +422,6 @@
     <string name="email_coming_soon">Email registration is coming soon</string>
     <string name="login_header">Login Header Banner</string>
     <string name="action_button">Action Button</string>
+    <string name="electricity_meter_hint">Enter Electric Meter No</string>
+    <string name="meter_no">Meter No</string>
 </resources>
