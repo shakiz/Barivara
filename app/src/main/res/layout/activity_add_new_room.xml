@@ -365,6 +365,31 @@
                                 android:background="@drawable/edit_text_back"
                                 android:id="@+id/TenantNameId" />
 
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="@string/meter_no"
+                                android:textColor="@color/md_grey_900"
+                                android:textSize="16sp" />
+
+                            <EditText
+                                android:id="@+id/ElectricityMeterNo"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:layout_marginTop="5dp"
+                                android:background="@drawable/edit_text_back"
+                                android:inputType="text"
+                                android:ellipsize="end"
+                                android:scrollHorizontally="true"
+                                android:maxLines="1"
+                                android:textColorHint="@color/md_grey_700"
+                                android:hint="@string/electricity_meter_hint"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"
+                                android:textSize="14sp"
+                                android:textColor="@color/md_grey_800" />
+
                         </LinearLayout>
 
                     </LinearLayout>

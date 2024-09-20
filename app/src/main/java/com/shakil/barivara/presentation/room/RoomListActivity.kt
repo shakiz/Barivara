@@ -16,15 +16,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
 import com.shakil.barivara.data.model.room.NewRoom
-import com.shakil.barivara.data.model.room.Room
-import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.databinding.ActivityRoomListBinding
 import com.shakil.barivara.presentation.adapter.RecyclerRoomListAdapter
 import com.shakil.barivara.presentation.adapter.RecyclerRoomListAdapter.RoomCallBacks
 import com.shakil.barivara.presentation.onboard.MainActivity
-import com.shakil.barivara.presentation.tenant.TenantViewModel
 import com.shakil.barivara.utils.Constants.mAccessToken
-import com.shakil.barivara.utils.Constants.mUserId
 import com.shakil.barivara.utils.CustomAdManager
 import com.shakil.barivara.utils.FilterManager
 import com.shakil.barivara.utils.PrefManager
@@ -70,6 +66,7 @@ class RoomListActivity : BaseActivity<ActivityRoomListBinding>(), RoomCallBacks 
         initListeners()
         initObservers()
         setRecyclerAdapter()
+        viewModel.getAllRooms(prefManager.getString(mAccessToken))
     }
 
     private fun init() {
