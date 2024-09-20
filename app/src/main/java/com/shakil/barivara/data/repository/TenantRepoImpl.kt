@@ -18,7 +18,7 @@ class TenantRepoImpl @Inject constructor(
     override suspend fun getAllTenant(token: String): Resource<List<Tenant>> {
         try {
             val task = tenantService.getAllTenant(
-                token = token,
+                token = "Bearer $token",
                 accept = ACCEPT,
                 contentType = CONTENT_TYPE,
             )
@@ -54,7 +54,7 @@ class TenantRepoImpl @Inject constructor(
     override suspend fun addTenant(token: String, tenant: Tenant): Resource<BaseApiResponse> {
         try {
             val task = tenantService.addTenant(
-                token = token,
+                token = "Bearer $token",
                 accept = ACCEPT,
                 contentType = CONTENT_TYPE,
                 tenant = tenant
