@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -13,16 +12,16 @@
         tools:context=".presentation.room.RoomActivity">
 
         <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:id="@+id/app_bar">
+            android:layout_height="48dp">
 
             <androidx.appcompat.widget.Toolbar
+                android:id="@+id/tool_bar"
+                style="@style/TextAppearance.Widget.Event.Toolbar.Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/tool_bar"
                 app:navigationIcon="?attr/homeAsUpIndicator"
-                style="@style/TextAppearance.Widget.Event.Toolbar.Title"
                 app:title="@string/generate_bill"
                 app:titleTextColor="@color/md_grey_800">
 
@@ -33,9 +32,9 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_below="@id/app_bar"
             android:layout_marginBottom="112dp"
-            android:fillViewport="true"
-            android:layout_below="@id/app_bar">
+            android:fillViewport="true">
 
             <LinearLayout
                 android:id="@+id/mainLayout"
@@ -46,388 +45,222 @@
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
                     app:cardCornerRadius="12dp"
-                    app:cardElevation="1dp"
-                    android:layout_margin="16dp">
+                    app:cardElevation="0dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="12dp"
+                        android:layout_margin="12dp"
                         android:orientation="vertical">
 
-                        <LinearLayout
+                        <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginRight="12dp"
-                            android:layout_marginTop="8dp"
-                            android:orientation="vertical">
+                            android:text="@string/select_year"
+                            android:textColor="@color/md_grey_900"
+                            android:textSize="16sp" />
 
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:text="@string/room_name"
-                                android:textColor="@color/md_grey_900"
-                                android:textSize="16sp" />
+                        <Spinner
+                            android:id="@+id/YearId"
+                            style="@style/Base.TextAppearance.AppCompat.Medium"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/edit_text_back"
+                            android:tag="@string/select_year" />
 
-                            <EditText
-                                android:id="@+id/AssociateRoom"
-                                android:layout_width="match_parent"
-                                android:layout_height="40dp"
-                                android:layout_marginTop="5dp"
-                                android:background="@drawable/edit_text_back"
-                                android:inputType="text"
-                                android:ellipsize="end"
-                                android:scrollHorizontally="true"
-                                android:maxLines="1"
-                                android:textColorHint="@color/md_grey_700"
-                                android:hint="@string/room_hint"
-                                android:paddingLeft="10dp"
-                                android:paddingRight="10dp"
-                                android:textSize="14sp"
-                                android:textColor="@color/md_grey_800"/>
-
-                        </LinearLayout>
-
-                        <LinearLayout
+                        <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:weightSum="2">
+                            android:layout_marginTop="12dp"
+                            android:text="@string/select_month_2"
+                            android:textColor="@color/md_grey_900"
+                            android:textSize="16sp" />
 
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_weight="1"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="12dp"
-                                android:layout_marginRight="12dp"
-                                android:layout_marginTop="8dp"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="5dp"
-                                    android:text="@string/select_year"
-                                    android:textColor="@color/md_grey_900"
-                                    android:textSize="16sp" />
-
-                                <Spinner
-                                    style="@style/Base.TextAppearance.AppCompat.Medium"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="40dp"
-                                    android:layout_marginTop="5dp"
-                                    android:tag="@string/select_year"
-                                    android:background="@drawable/edit_text_back"
-                                    android:id="@+id/YearId"/>
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_weight="1"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="12dp"
-                                android:layout_marginRight="12dp"
-                                android:layout_marginTop="8dp"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="5dp"
-                                    android:text="@string/select_month_2"
-                                    android:textColor="@color/md_grey_900"
-                                    android:textSize="16sp" />
-
-                                <Spinner
-                                    style="@style/Base.TextAppearance.AppCompat.Medium"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="40dp"
-                                    android:layout_marginTop="5dp"
-                                    android:tag="@string/select_month"
-                                    android:background="@drawable/edit_text_back"
-                                    android:id="@+id/MonthId"/>
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                        <LinearLayout
+                        <Spinner
+                            android:id="@+id/MonthId"
+                            style="@style/Base.TextAppearance.AppCompat.Medium"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:weightSum="2">
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_weight="1"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="12dp"
-                                android:layout_marginRight="12dp"
-                                android:layout_marginTop="8dp"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="5dp"
-                                    android:text="@string/tenant_name"
-                                    android:textColor="@color/md_grey_900"
-                                    android:textSize="16sp" />
-
-                                <EditText
-                                    android:id="@+id/TenantName"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="40dp"
-                                    android:layout_marginTop="5dp"
-                                    android:background="@drawable/edit_text_back"
-                                    android:inputType="text"
-                                    android:ellipsize="end"
-                                    android:scrollHorizontally="true"
-                                    android:maxLines="1"
-                                    android:textColorHint="@color/md_grey_700"
-                                    android:hint="@string/tenant_hint"
-                                    android:paddingLeft="10dp"
-                                    android:paddingRight="10dp"
-                                    android:textSize="14sp"
-                                    android:textColor="@color/md_grey_800"/>
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_weight="1"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="12dp"
-                                android:layout_marginRight="12dp"
-                                android:layout_marginTop="8dp"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="5dp"
-                                    android:text="@string/tenant_mobile_number"
-                                    android:textColor="@color/md_grey_900"
-                                    android:textSize="16sp" />
-
-                                <EditText
-                                    android:id="@+id/MobileNo"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="40dp"
-                                    android:layout_marginTop="5dp"
-                                    android:background="@drawable/edit_text_back"
-                                    android:inputType="numberSigned"
-                                    android:ellipsize="end"
-                                    android:scrollHorizontally="true"
-                                    android:maxLines="1"
-                                    android:textColorHint="@color/md_grey_700"
-                                    android:hint="@string/mobile_number_hint"
-                                    android:paddingLeft="10dp"
-                                    android:paddingRight="10dp"
-                                    android:textSize="14sp"
-                                    android:textColor="@color/md_grey_800"/>
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginRight="12dp"
-                            android:layout_marginTop="8dp"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:text="@string/room_rent_amount"
-                                android:textColor="@color/md_grey_900"
-                                android:textSize="16sp" />
-
-                            <EditText
-                                android:id="@+id/RentAmount"
-                                android:layout_width="match_parent"
-                                android:layout_height="40dp"
-                                android:layout_marginTop="5dp"
-                                android:background="@drawable/edit_text_back"
-                                android:inputType="number"
-                                android:ellipsize="end"
-                                android:scrollHorizontally="true"
-                                android:maxLines="1"
-                                android:textColorHint="@color/md_grey_700"
-                                android:hint="@string/utility_bills_hint"
-                                android:paddingLeft="10dp"
-                                android:paddingRight="10dp"
-                                android:textSize="14sp"
-                                android:textColor="@color/md_grey_800"/>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:weightSum="2">
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_weight="1"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="12dp"
-                                android:layout_marginRight="12dp"
-                                android:layout_marginTop="8dp"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="5dp"
-                                    android:text="@string/gas_bill"
-                                    android:textColor="@color/md_grey_900"
-                                    android:textSize="16sp" />
-
-                                <EditText
-                                    android:id="@+id/GasBill"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="40dp"
-                                    android:layout_marginTop="5dp"
-                                    android:background="@drawable/edit_text_back"
-                                    android:inputType="number"
-                                    android:ellipsize="end"
-                                    android:text="0"
-                                    android:scrollHorizontally="true"
-                                    android:maxLines="1"
-                                    android:textColorHint="@color/md_grey_700"
-                                    android:hint="@string/gas_bill_hint"
-                                    android:paddingLeft="10dp"
-                                    android:paddingRight="10dp"
-                                    android:textSize="14sp"
-                                    android:textColor="@color/md_grey_800"/>
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_weight="1"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="12dp"
-                                android:layout_marginRight="12dp"
-                                android:layout_marginTop="8dp"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="5dp"
-                                    android:text="@string/water_bill"
-                                    android:textColor="@color/md_grey_900"
-                                    android:textSize="16sp" />
-
-                                <EditText
-                                    android:id="@+id/WaterBill"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="40dp"
-                                    android:layout_marginTop="5dp"
-                                    android:background="@drawable/edit_text_back"
-                                    android:inputType="number"
-                                    android:text="0"
-                                    android:ellipsize="end"
-                                    android:scrollHorizontally="true"
-                                    android:maxLines="1"
-                                    android:textColorHint="@color/md_grey_700"
-                                    android:hint="@string/water_bill_hint"
-                                    android:paddingLeft="10dp"
-                                    android:paddingRight="10dp"
-                                    android:textSize="14sp"
-                                    android:textColor="@color/md_grey_800"/>
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginRight="12dp"
-                            android:layout_marginTop="8dp"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:text="@string/service_charge"
-                                android:textColor="@color/md_grey_900"
-                                android:textSize="16sp" />
-
-                            <EditText
-                                android:id="@+id/ServiceCharge"
-                                android:layout_width="match_parent"
-                                android:layout_height="40dp"
-                                android:layout_marginTop="5dp"
-                                android:background="@drawable/edit_text_back"
-                                android:inputType="number"
-                                android:text="0"
-                                android:ellipsize="end"
-                                android:scrollHorizontally="true"
-                                android:maxLines="1"
-                                android:textColorHint="@color/md_grey_700"
-                                android:hint="@string/service_charge_hint"
-                                android:paddingLeft="10dp"
-                                android:paddingRight="10dp"
-                                android:textSize="14sp"
-                                android:textColor="@color/md_grey_800"/>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginRight="12dp"
-                            android:layout_marginTop="8dp"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:text="@string/electricity_bill"
-                                android:textColor="@color/md_grey_900"
-                                android:textSize="16sp" />
-
-                            <EditText
-                                android:id="@+id/ElectricityBill"
-                                android:layout_width="match_parent"
-                                android:layout_height="40dp"
-                                android:layout_marginTop="5dp"
-                                android:background="@drawable/edit_text_back"
-                                android:inputType="number"
-                                android:ellipsize="end"
-                                android:text="0"
-                                android:scrollHorizontally="true"
-                                android:maxLines="1"
-                                android:textColorHint="@color/md_grey_700"
-                                android:hint="@string/electricity_bill_hint"
-                                android:paddingLeft="10dp"
-                                android:paddingRight="10dp"
-                                android:textSize="14sp"
-                                android:textColor="@color/md_grey_800"/>
-
-                        </LinearLayout>
+                            android:layout_height="40dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/edit_text_back"
+                            android:tag="@string/select_month" />
 
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="12dp"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="8dp"
+                            android:layout_weight="1"
+                            app:cardBackgroundColor="@color/md_white_1000"
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="0dp"
+                            app:cardUseCompatPadding="false">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tvTotalDue"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="8dp"
+                                    android:layout_marginTop="8dp"
+                                    android:layout_marginRight="8dp"
+                                    android:ellipsize="end"
+                                    android:gravity="center|left"
+                                    android:maxLines="1"
+                                    android:paddingTop="4dp"
+                                    android:paddingBottom="4dp"
+                                    android:text="@string/total_due_bill"
+                                    android:textColor="@color/md_amber_900"
+                                    android:textSize="16sp"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <ImageView
+                                    android:id="@+id/ivTotalDue"
+                                    android:layout_width="42dp"
+                                    android:layout_height="42dp"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="8dp"
+                                    android:layout_marginBottom="8dp"
+                                    android:src="@drawable/ic_taka"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@id/tvTotalDue"
+                                    app:tint="@color/md_amber_900" />
+
+                                <TextView
+                                    android:id="@+id/TotalRooms"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginEnd="8dp"
+                                    android:gravity="center"
+                                    android:text="0"
+                                    android:textColor="@color/md_amber_900"
+                                    android:textSize="24sp"
+                                    android:textStyle="bold"
+                                    app:layout_constraintBottom_toBottomOf="@+id/ivTotalDue"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toEndOf="@id/ivTotalDue"
+                                    app:layout_constraintTop_toTopOf="@id/ivTotalDue" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="8dp"
+                            android:layout_weight="1"
+                            app:cardBackgroundColor="@color/md_white_1000"
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="0dp"
+                            app:cardUseCompatPadding="false">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center">
+
+                                <TextView
+                                    android:id="@+id/tvTotalPaidBill"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="8dp"
+                                    android:layout_marginTop="8dp"
+                                    android:layout_marginRight="8dp"
+                                    android:ellipsize="end"
+                                    android:gravity="center|left"
+                                    android:maxLines="1"
+                                    android:paddingTop="4dp"
+                                    android:paddingBottom="4dp"
+                                    android:text="@string/total_paid"
+                                    android:textColor="@color/md_purple_900"
+                                    android:textSize="16sp"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <ImageView
+                                    android:id="@+id/ivTotalPaidBill"
+                                    android:layout_width="42dp"
+                                    android:layout_height="42dp"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="8dp"
+                                    android:layout_marginBottom="8dp"
+                                    android:src="@drawable/ic_taka"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@id/tvTotalPaidBill"
+                                    app:tint="@color/md_purple_900" />
+
+                                <TextView
+                                    android:id="@+id/TotalMeters"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginEnd="8dp"
+                                    android:gravity="center"
+                                    android:text="@string/zero"
+                                    android:textColor="@color/md_purple_900"
+                                    android:textSize="24sp"
+                                    android:textStyle="bold"
+                                    app:layout_constraintBottom_toBottomOf="@id/ivTotalPaidBill"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toEndOf="@id/ivTotalPaidBill"
+                                    app:layout_constraintTop_toTopOf="@id/ivTotalPaidBill" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/mRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/md_white_1000"
+                    android:visibility="visible"
+                    app:reverseLayout="true"
+                    app:stackFromEnd="true"
+                    tools:listitem="@layout/adapter_layout_bil_list" />
 
             </LinearLayout>
 
@@ -438,70 +271,35 @@
             android:layout_height="wrap_content"
             android:layout_above="@id/adView"
             android:layout_centerHorizontal="true"
-            android:weightSum="1"
+            android:background="@color/md_white_1000"
+            android:gravity="center"
             android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight=".5"
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_invoice" />
+
+            <Button
+                android:id="@+id/generateBill"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/md_white_1000"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/ic_invoice" />
-
-                <Button
-                    android:id="@+id/generateBill"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:foreground="?attr/selectableItemBackgroundBorderless"
-                    android:text="@string/generate_bill"
-                    android:textColor="@color/md_white_1000"
-                    app:backgroundTint="@color/md_blue_grey_400" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight=".5"
-                android:layout_height="wrap_content"
-                android:background="@color/md_white_1000"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/ic_pdf" />
-
-                <Button
-                    android:id="@+id/generatePdf"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:foreground="?attr/selectableItemBackgroundBorderless"
-                    android:text="@string/generate_pdf"
-                    android:textColor="@color/md_white_1000"
-                    app:backgroundTint="@color/md_blue_grey_400" />
-
-            </LinearLayout>
+                android:clickable="true"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:text="@string/generate_bill"
+                android:textColor="@color/md_white_1000"
+                app:backgroundTint="@color/md_blue_grey_400" />
 
         </LinearLayout>
 
-        <com.google.android.gms.ads.AdView
-            xmlns:ads="http://schemas.android.com/apk/res-auto"
+        <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
             android:id="@+id/adView"
             android:layout_width="match_parent"
             android:layout_height="42dp"
-            android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
             ads:adSize="BANNER"
-            ads:adUnitId="ca-app-pub-3017517613101119/5605971007"/>
+            ads:adUnitId="ca-app-pub-3017517613101119/5605971007" />
 
     </RelativeLayout>
 

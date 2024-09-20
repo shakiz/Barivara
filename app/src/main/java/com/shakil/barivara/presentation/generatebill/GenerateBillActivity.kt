@@ -135,54 +135,6 @@ class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>() {
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
-        activityBinding.generateBill.setOnClickListener {
-            if (validation.isValid) {
-                if (tools.isValidMobile(activityBinding.MobileNo.text.toString())) {
-                    try {
-                        val generateBill = GenerateBill(
-                            activityBinding.TenantName.text.toString(),
-                            activityBinding.MobileNo.text.toString(),
-                            "$MonthStr $YearStr",
-                            activityBinding.AssociateRoom.text.toString(),
-                            activityBinding.RentAmount.text.toString().toInt(),
-                            activityBinding.GasBill.text.toString().toInt(),
-                            activityBinding.WaterBill.text.toString().toInt(),
-                            activityBinding.ElectricityBill.text.toString().toInt(),
-                            activityBinding.ServiceCharge.text.toString().toInt()
-                        )
-                        doPopUpForBillDetails(generateBill)
-                    } catch (e: Exception) {
-                        Log.e(
-                            "onClickError: ",
-                            e.message ?: " activityBinding.generateBill.setOnClickListener"
-                        )
-                    }
-                } else {
-                    Toast.makeText(
-                        this@GenerateBillActivity,
-                        getString(R.string.mobile_number_not_valid), Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-        }
-        activityBinding.generatePdf.setOnClickListener {
-            if (validation.isValid) {
-                if (tools.isValidMobile(activityBinding.MobileNo.text.toString())) {
-                    val generateBill = GenerateBill(
-                        activityBinding.TenantName.text.toString(),
-                        activityBinding.MobileNo.text.toString(),
-                        "$MonthStr $YearStr",
-                        activityBinding.AssociateRoom.text.toString(),
-                        activityBinding.RentAmount.text.toString().toInt(),
-                        activityBinding.GasBill.text.toString().toInt(),
-                        activityBinding.WaterBill.text.toString().toInt(),
-                        activityBinding.ElectricityBill.text.toString().toInt(),
-                        activityBinding.ServiceCharge.text.toString().toInt()
-                    )
-                    generatePdf(generateBill)
-                }
-            }
-        }
     }
 
     private fun generatePdf(generateBill: GenerateBill) {
