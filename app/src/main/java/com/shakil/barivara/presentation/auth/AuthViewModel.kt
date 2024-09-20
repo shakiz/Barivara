@@ -51,7 +51,7 @@ class AuthViewModel @Inject constructor(private val authRepoImpl: AuthRepoImpl) 
                 } else {
                     sendOtpResponseError.postValue(
                         Resource.Error(
-                            message = data.response?.message ?: "",
+                            message = data.message,
                             errorType = data.errorType
                         )
                     )
@@ -69,7 +69,7 @@ class AuthViewModel @Inject constructor(private val authRepoImpl: AuthRepoImpl) 
         }
     }
 
-    fun verifyOtp(mobileNo: String, code: String) {
+    fun verifyOtp(mobileNo: String, code: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             isLoading.postValue(true)
             try {
@@ -79,7 +79,7 @@ class AuthViewModel @Inject constructor(private val authRepoImpl: AuthRepoImpl) 
                 } else {
                     sendOtpResponseError.postValue(
                         Resource.Error(
-                            message = "Verify otp error",
+                            message = data.message,
                             errorType = data.errorType
                         )
                     )

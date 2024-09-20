@@ -8,6 +8,7 @@ import com.shakil.barivara.data.model.auth.VerifyOtpBaseResponse
 import com.shakil.barivara.data.model.auth.VerifyOtpRequest
 import com.shakil.barivara.data.remote.webservice.AuthService
 import com.shakil.barivara.domain.auth.AuthRepo
+import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.ErrorType
 import com.shakil.barivara.utils.Resource
 import java.net.SocketTimeoutException
@@ -18,7 +19,10 @@ class AuthRepoImpl @Inject constructor(
 ) : AuthRepo {
     override suspend fun sendOtp(mobileNo: String): Resource<SendOtpBaseResponse> {
         try {
-            val task = authService.sendOtp(sendOtpRequest = SendOtpRequest(phone = mobileNo))
+            val task = authService.sendOtp(
+                Constants.CONTENT_TYPE,
+                sendOtpRequest = SendOtpRequest(phone = mobileNo)
+            )
             if (task.isSuccessful) {
                 task.body()?.let {
                     return Resource.Success(response = it)
@@ -50,10 +54,11 @@ class AuthRepoImpl @Inject constructor(
 
     override suspend fun verifyOtp(
         mobileNo: String,
-        code: String
+        code: Int
     ): Resource<VerifyOtpBaseResponse> {
         try {
             val task = authService.verifyOtp(
+                Constants.CONTENT_TYPE,
                 verifyOtpRequest = VerifyOtpRequest(
                     phone = mobileNo,
                     otp = code
