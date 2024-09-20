@@ -18,13 +18,13 @@ class TenantRepoImpl @Inject constructor(
     override suspend fun getAllTenant(token: String): Resource<List<Tenant>> {
         try {
             val task = tenantService.getAllTenant(
-                token = token,
+                token = "Bearer $token",
                 accept = ACCEPT,
                 contentType = CONTENT_TYPE,
             )
             if (task.isSuccessful) {
                 task.body()?.let {
-                    return Resource.Success(response = it)
+                    return Resource.Success(response = it.data)
                 } ?: return Resource.Error(errorType = ErrorType.EMPTY_DATA)
             } else if (task.errorBody() != null) {
                 val errorBodyStr = task.errorBody()?.string()
@@ -54,7 +54,7 @@ class TenantRepoImpl @Inject constructor(
     override suspend fun addTenant(token: String, tenant: Tenant): Resource<BaseApiResponse> {
         try {
             val task = tenantService.addTenant(
-                token = token,
+                token = "Bearer $token",
                 accept = ACCEPT,
                 contentType = CONTENT_TYPE,
                 tenant = tenant

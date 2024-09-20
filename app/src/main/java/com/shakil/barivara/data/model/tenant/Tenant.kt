@@ -16,24 +16,24 @@ data class Tenant(
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
-        parcel.readString().toString(),
+        parcel.readString() ?: "",
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
-        parcel.readValue(Int::class.java.classLoader) as? Int
+        parcel.readInt()
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeValue(id)
+        parcel.writeInt(id)
         parcel.writeString(name)
         parcel.writeString(nidNumber)
         parcel.writeString(phone)
         parcel.writeString(type)
         parcel.writeString(startDate)
         parcel.writeString(endDate)
-        parcel.writeValue(advancedAmount)
+        parcel.writeInt(advancedAmount ?: 0)
     }
 
     override fun describeContents(): Int {
