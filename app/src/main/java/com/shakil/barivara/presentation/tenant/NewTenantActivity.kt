@@ -74,7 +74,7 @@ class NewTenantActivity : BaseActivity<ActivityAddNewTenantBinding>() {
     }
 
     private fun loadData() {
-        if (tenant.id != 0 && tenant.id != null) {
+        if (tenant.id != 0) {
             command = "update"
             activityAddNewTenantBinding.TenantName.setText(tenant.name)
             activityAddNewTenantBinding.AssociateRoomId.visibility = View.GONE

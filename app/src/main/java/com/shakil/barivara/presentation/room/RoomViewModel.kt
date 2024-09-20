@@ -18,36 +18,36 @@ class RoomViewModel @Inject constructor(private val roomRepoImpl: RoomRepoImpl) 
 
     var isLoading = MutableLiveData<Boolean>()
     private var rooms = MutableLiveData<List<NewRoom>>()
-    private var getroomListErrorResponse = MutableLiveData<Resource.Error<ErrorType>>()
+    private var getRoomListErrorResponse = MutableLiveData<Resource.Error<ErrorType>>()
 
-    private var addroomResponse = MutableLiveData<String>()
-    private var addroomErrorResponse = MutableLiveData<Resource.Error<ErrorType>>()
+    private var addRoomResponse = MutableLiveData<String>()
+    private var addRoomErrorResponse = MutableLiveData<Resource.Error<ErrorType>>()
 
-    private var updateroomResponse = MutableLiveData<String>()
-    private var updateroomErrorResponse = MutableLiveData<Resource.Error<ErrorType>>()
+    private var updateRoomResponse = MutableLiveData<String>()
+    private var updateRoomErrorResponse = MutableLiveData<Resource.Error<ErrorType>>()
 
     fun getRooms(): LiveData<List<NewRoom>> {
         return rooms
     }
 
     fun getRoomsErrorResponse(): LiveData<Resource.Error<ErrorType>> {
-        return getroomListErrorResponse
+        return getRoomListErrorResponse
     }
 
     fun getAddRoomResponse(): LiveData<String> {
-        return addroomResponse
+        return addRoomResponse
     }
 
     fun getAddRoomErrorResponse(): LiveData<Resource.Error<ErrorType>> {
-        return addroomErrorResponse
+        return addRoomErrorResponse
     }
 
     fun getUpdateRoomResponse(): LiveData<String> {
-        return updateroomResponse
+        return updateRoomResponse
     }
 
     fun getUpdateRoomErrorResponse(): LiveData<Resource.Error<ErrorType>> {
-        return updateroomErrorResponse
+        return updateRoomErrorResponse
     }
 
     fun getAllRooms(token: String) {
@@ -58,7 +58,7 @@ class RoomViewModel @Inject constructor(private val roomRepoImpl: RoomRepoImpl) 
                 if (data.response != null) {
                     rooms.postValue(data.response)
                 } else {
-                    getroomListErrorResponse.postValue(
+                    getRoomListErrorResponse.postValue(
                         Resource.Error(
                             message = data.message,
                             errorType = data.errorType
@@ -67,7 +67,7 @@ class RoomViewModel @Inject constructor(private val roomRepoImpl: RoomRepoImpl) 
                 }
                 isLoading.postValue(false)
             } catch (e: Exception) {
-                getroomListErrorResponse.postValue(
+                getRoomListErrorResponse.postValue(
                     Resource.Error(
                         message = "Something went wrong, please try again",
                         errorType = ErrorType.UNKNOWN
@@ -84,9 +84,9 @@ class RoomViewModel @Inject constructor(private val roomRepoImpl: RoomRepoImpl) 
             try {
                 val data = roomRepoImpl.addRoom(token, room = room)
                 if (data.response != null) {
-                    addroomResponse.postValue(data.response?.message)
+                    addRoomResponse.postValue(data.response?.message)
                 } else {
-                    addroomErrorResponse.postValue(
+                    addRoomErrorResponse.postValue(
                         Resource.Error(
                             message = data.response?.message ?: "",
                             errorType = data.errorType
@@ -95,7 +95,7 @@ class RoomViewModel @Inject constructor(private val roomRepoImpl: RoomRepoImpl) 
                 }
                 isLoading.postValue(false)
             } catch (e: Exception) {
-                addroomErrorResponse.postValue(
+                addRoomErrorResponse.postValue(
                     Resource.Error(
                         message = "Something went wrong, please try again",
                         errorType = ErrorType.UNKNOWN
@@ -106,14 +106,29 @@ class RoomViewModel @Inject constructor(private val roomRepoImpl: RoomRepoImpl) 
         }
     }
 
-    fun updateRoom(token: String, room: NewRoom) {
+    fun updateRoom(token: String, userId: Int, room: NewRoom) {
         viewModelScope.launch {
             isLoading.postValue(true)
             try {
-
+                val data = roomRepoImpl.updateRoom(token, userId, room = room)
+                if (data.response != null) {
+                    updateRoomResponse.postValue(data.response?.message)
+                } else {
+                    updateRoomErrorResponse.postValue(
+                        Resource.Error(
+                            message = data.message,
+                            errorType = data.errorType
+                        )
+                    )
+                }
                 isLoading.postValue(false)
             } catch (e: Exception) {
-
+                updateRoomErrorResponse.postValue(
+                    Resource.Error(
+                        message = "Something went wrong, please try again",
+                        errorType = ErrorType.UNKNOWN
+                    )
+                )
                 isLoading.postValue(false)
             }
         }

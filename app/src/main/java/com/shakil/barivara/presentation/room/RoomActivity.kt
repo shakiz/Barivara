@@ -2,7 +2,6 @@ package com.shakil.barivara.presentation.room
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Parcelable
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -32,6 +31,7 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
     private var NoOfRoom = 0
     private var NoOfBathroom = 0
     private var NoOfBalcony = 0
+    private var ElectricMeterNo = ""
     private var room = NewRoom()
     private var command = "add"
     private var tenantNames: ArrayList<String> = arrayListOf()
@@ -139,22 +139,27 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
 
     private fun getIntentData() {
         if (intent.extras != null) {
-            if (intent.getParcelableExtra<Parcelable?>("room") != null) {
-                room = intent.getParcelableExtra("room")!!
-            }
+            room =
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+                    intent.getParcelableExtra("room", NewRoom::class.java)!!
+                } else {
+                    intent.getParcelableExtra("room")!!
+                }
         }
     }
 
     private fun loadData() {
-        if (room.id != null) {
+        if (room.id != 0) {
             command = "update"
             activityAddNewRoomBinding.RoomName.setText(room.name)
-            NoOfRoom = room.noOfRoom ?: 0
-            NoOfBathroom = room.noOfBathroom ?: 0
-            NoOfBalcony = room.noOfBalcony ?: 0
+            NoOfRoom = room.noOfRoom
+            NoOfBathroom = room.noOfBathroom
+            NoOfBalcony = room.noOfBalcony
+            ElectricMeterNo = room.electricityMeterNo ?: ""
             activityAddNewRoomBinding.NoOfRoom.text = "$NoOfRoom"
             activityAddNewRoomBinding.NoOfBalcony.text = "$NoOfBalcony"
             activityAddNewRoomBinding.NoOfBathroom.text = "$NoOfBathroom"
+            activityAddNewRoomBinding.ElectricityMeterNo.setText(ElectricMeterNo)
         }
     }
 
@@ -174,10 +179,11 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
         room.noOfRoom = NoOfRoom
         room.noOfBathroom = NoOfBathroom
         room.noOfBalcony = NoOfBalcony
+        room.electricityMeterNo = activityAddNewRoomBinding.ElectricityMeterNo.text.toString()
         if (command == "add") {
             viewModel.addRoom(prefManager.getString(Constants.mAccessToken), room)
         } else {
-            viewModel.updateRoom(prefManager.getString(Constants.mAccessToken), room)
+            viewModel.updateRoom(prefManager.getString(Constants.mAccessToken), room.id, room)
         }
     }
 }
