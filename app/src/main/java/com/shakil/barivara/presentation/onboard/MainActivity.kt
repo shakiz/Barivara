@@ -185,6 +185,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
                 )
             )
         }
+
+        activityMainBinding.generateBill.setOnClickListener {
+            startActivity(
+                Intent(
+                    this@MainActivity,
+                    GenerateBillActivity::class.java
+                )
+            )
+        }
+
         activityMainBinding.billList.setOnClickListener {
             startActivity(
                 Intent(
