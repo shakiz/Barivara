@@ -7,6 +7,8 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.PUT
+import retrofit2.http.Path
 
 interface RoomService {
     @GET("rooms")
@@ -19,6 +21,15 @@ interface RoomService {
     @POST("rooms")
     suspend fun addRoom(
         @Header("Authorization") token: String,
+        @Header("Content-Type") contentType: String,
+        @Header("Accept") accept: String,
+        @Body room: NewRoom
+    ): Response<BaseApiResponse>
+
+    @PUT("rooms/{userId}")
+    suspend fun updateRoom(
+        @Header("Authorization") token: String,
+        @Path("userId") userId: Int,
         @Header("Content-Type") contentType: String,
         @Header("Accept") accept: String,
         @Body room: NewRoom
