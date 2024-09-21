@@ -2,6 +2,7 @@ package com.shakil.barivara.di
 
 import com.shakil.barivara.data.remote.webservice.AuthInterceptor
 import com.shakil.barivara.data.remote.webservice.AuthService
+import com.shakil.barivara.data.remote.webservice.GenerateBillService
 import com.shakil.barivara.data.remote.webservice.RoomService
 import com.shakil.barivara.data.remote.webservice.TenantService
 import com.shakil.barivara.utils.ApiConstants
@@ -99,4 +100,15 @@ object AppModule {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
         .create(RoomService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideGenerateBillService(
+        callFactory: okhttp3.Call.Factory
+    ): GenerateBillService = Retrofit.Builder()
+        .baseUrl(ApiConstants.BASE_URL)
+        .callFactory(callFactory)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+        .create(GenerateBillService::class.java)
 }

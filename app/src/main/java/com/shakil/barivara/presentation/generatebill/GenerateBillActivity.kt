@@ -20,36 +20,49 @@ import android.widget.Button
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
 import com.shakil.barivara.data.model.bill.GenerateBill
 import com.shakil.barivara.databinding.ActivityGenerateBillBinding
+import com.shakil.barivara.presentation.adapter.RecyclerBillInfoAdapter
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.CustomAdManager
 import com.shakil.barivara.utils.DroidFileManager
+import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.SpinnerAdapter
 import com.shakil.barivara.utils.SpinnerData
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
+import com.shakil.barivara.utils.UtilsForAll
 import com.shakil.barivara.utils.Validation
+import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 
+@AndroidEntryPoint
 class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>() {
     private lateinit var activityBinding: ActivityGenerateBillBinding
     private val hashMap: Map<String?, Array<String>?> = HashMap()
-    private var YearStr: String? = null
-    private var MonthStr: String? = null
+    private var year: Int = 0
+    private var month: Int = 0
     private var validation = Validation(this, hashMap)
     private var spinnerData = SpinnerData(this)
     private var spinnerAdapter = SpinnerAdapter()
+    private lateinit var utilsForAll: UtilsForAll
     private var tools = Tools(this)
     private lateinit var dialogBill: Dialog
     private var customAdManager = CustomAdManager(this)
-    private var ux: UX? = null
+    private lateinit var ux: UX
+    private lateinit var prefManager: PrefManager
+    private lateinit var recyclerBillInfoAdapter: RecyclerBillInfoAdapter
+
+    private val viewModel by viewModels<GenerateBillViewModel>()
+
     override val layoutResourceId: Int
         get() = R.layout.activity_generate_bill
 
@@ -61,10 +74,28 @@ class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>() {
         super.onCreate(savedInstanceState)
         init()
         binUIWithComponents()
+        initObservers()
+        setRecyclerAdapter()
     }
 
     private fun init() {
         ux = UX(this)
+        prefManager = PrefManager(this)
+        utilsForAll = UtilsForAll(this)
+    }
+
+    private fun initObservers() {
+        viewModel.getBills().observe(this) { tenants ->
+            recyclerBillInfoAdapter.setItems(tenants)
+        }
+
+        viewModel.isLoading.observe(this) { isLoading ->
+            if (isLoading) {
+                ux.getLoadingView()
+            } else {
+                ux.removeLoadingView()
+            }
+        }
     }
 
     private fun binUIWithComponents() {
@@ -90,14 +121,7 @@ class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>() {
             )
         }
         activityBinding.toolBar.setNavigationOnClickListener { finish() }
-        validation.setEditTextIsNotEmpty(
-            arrayOf("AssociateRoom", "TenantName", "MobileNo", "RentAmount"), arrayOf(
-                getString(R.string.room_name_validation),
-                getString(R.string.tenant_name_validation),
-                getString(R.string.rent_amount_validation),
-                getString(R.string.mobile_validation)
-            )
-        )
+
         validation.setSpinnerIsNotEmpty(arrayOf("YearId", "MonthId"))
         spinnerAdapter.setSpinnerAdapter(
             activityBinding.MonthId,
@@ -117,7 +141,11 @@ class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>() {
                     position: Int,
                     id: Long
                 ) {
-                    YearStr = parent.getItemAtPosition(position).toString()
+                    if (parent.getItemAtPosition(position)
+                            .toString() != getString(R.string.select_data)
+                    ) {
+                        year = parent.getItemAtPosition(position).toString().toInt()
+                    }
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -130,11 +158,28 @@ class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>() {
                     position: Int,
                     id: Long
                 ) {
-                    MonthStr = parent.getItemAtPosition(position).toString()
+                    if (parent.getItemAtPosition(position)
+                            .toString() != getString(R.string.select_data)
+                    ) {
+                        month = utilsForAll.getMonthFromMonthName(
+                            parent.getItemAtPosition(position).toString()
+                        )
+                        viewModel.generateBill(
+                            prefManager.getString(Constants.mAccessToken),
+                            year,
+                            month
+                        )
+                    }
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
+    }
+
+    private fun setRecyclerAdapter() {
+        recyclerBillInfoAdapter = RecyclerBillInfoAdapter()
+        activityBinding.mRecyclerView.layoutManager = LinearLayoutManager(this)
+        activityBinding.mRecyclerView.adapter = recyclerBillInfoAdapter
     }
 
     private fun generatePdf(generateBill: GenerateBill) {
