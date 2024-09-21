@@ -4,16 +4,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.shakil.barivara.data.model.generatebill.BillInfo
-import com.shakil.barivara.data.model.room.NewRoom
 import com.shakil.barivara.databinding.AdapterLayoutBilListBinding
 
 class RecyclerBillInfoAdapter :
     RecyclerView.Adapter<RecyclerBillInfoAdapter.BillItemViewHolder>() {
-    private var roomCallBacks: RoomCallBacks? = null
+    private var generateBillCallBacks: GenerateBillCallBacks? = null
     private var list: List<BillInfo> = mutableListOf()
 
-    fun setRoomCallBack(roomCallBacks: RoomCallBacks?) {
-        this.roomCallBacks = roomCallBacks
+    fun setGenerateBillCallBacks(generateBillCallBacks: GenerateBillCallBacks?) {
+        this.generateBillCallBacks = generateBillCallBacks
     }
 
     fun setItems(list: List<BillInfo>) {
@@ -24,7 +23,7 @@ class RecyclerBillInfoAdapter :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BillItemViewHolder {
         val binding =
             AdapterLayoutBilListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return BillItemViewHolder(binding, roomCallBacks)
+        return BillItemViewHolder(binding, generateBillCallBacks)
     }
 
     override fun onBindViewHolder(holder: BillItemViewHolder, position: Int) {
@@ -38,7 +37,7 @@ class RecyclerBillInfoAdapter :
 
     class BillItemViewHolder(
         var binding: AdapterLayoutBilListBinding,
-        private var roomCallBacks: RoomCallBacks?
+        private var generateBillCallBacks: GenerateBillCallBacks?
     ) : RecyclerView.ViewHolder(
         binding.root
     ) {
@@ -46,12 +45,19 @@ class RecyclerBillInfoAdapter :
             binding.RoomId.text = billInfo.room
             binding.TenantId.text = billInfo.tenant
             binding.TotalBill.text = billInfo.rent.toString()
+
+            binding.markAsPaid.setOnClickListener {
+                generateBillCallBacks?.onNotify(billInfo)
+            }
+
+            binding.notifyUser.setOnClickListener {
+                generateBillCallBacks?.onMarkAsPaid(billInfo)
+            }
         }
     }
 
-    interface RoomCallBacks {
-        fun onDelete(room: NewRoom)
-        fun onEdit(room: NewRoom)
-        fun onItemClick(room: NewRoom)
+    interface GenerateBillCallBacks {
+        fun onNotify(billInfo: BillInfo)
+        fun onMarkAsPaid(billInfo: BillInfo)
     }
 }

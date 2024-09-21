@@ -33,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/app_bar"
-            android:layout_marginBottom="112dp"
+            android:layout_marginBottom="60dp"
             android:fillViewport="true">
 
             <LinearLayout
@@ -255,9 +255,9 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/mRecyclerView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:background="@color/md_white_1000"
-                    android:visibility="visible"
+                    tools:itemCount="3"
                     app:reverseLayout="true"
                     app:stackFromEnd="true"
                     tools:listitem="@layout/adapter_layout_bil_list" />
@@ -265,32 +265,6 @@
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/adView"
-            android:layout_centerHorizontal="true"
-            android:background="@color/md_white_1000"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@drawable/ic_invoice" />
-
-            <Button
-                android:id="@+id/generateBill"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:foreground="?attr/selectableItemBackgroundBorderless"
-                android:text="@string/generate_bill"
-                android:textColor="@color/md_white_1000"
-                app:backgroundTint="@color/md_blue_grey_400" />
-
-        </LinearLayout>
 
         <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
             android:id="@+id/adView"

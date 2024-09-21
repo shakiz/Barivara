@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
 import com.shakil.barivara.data.model.bill.GenerateBill
+import com.shakil.barivara.data.model.generatebill.BillInfo
 import com.shakil.barivara.databinding.ActivityGenerateBillBinding
 import com.shakil.barivara.presentation.adapter.RecyclerBillInfoAdapter
 import com.shakil.barivara.utils.Constants
@@ -45,7 +46,8 @@ import java.io.FileOutputStream
 import java.io.IOException
 
 @AndroidEntryPoint
-class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>() {
+class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>(),
+    RecyclerBillInfoAdapter.GenerateBillCallBacks {
     private lateinit var activityBinding: ActivityGenerateBillBinding
     private val hashMap: Map<String?, Array<String>?> = HashMap()
     private var year: Int = 0
@@ -56,6 +58,7 @@ class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>() {
     private lateinit var utilsForAll: UtilsForAll
     private var tools = Tools(this)
     private lateinit var dialogBill: Dialog
+    private lateinit var markAsPaidDialog: Dialog
     private var customAdManager = CustomAdManager(this)
     private lateinit var ux: UX
     private lateinit var prefManager: PrefManager
@@ -180,6 +183,7 @@ class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>() {
         recyclerBillInfoAdapter = RecyclerBillInfoAdapter()
         activityBinding.mRecyclerView.layoutManager = LinearLayoutManager(this)
         activityBinding.mRecyclerView.adapter = recyclerBillInfoAdapter
+        recyclerBillInfoAdapter.setGenerateBillCallBacks(this)
     }
 
     private fun generatePdf(generateBill: GenerateBill) {
@@ -306,5 +310,28 @@ Service Charge : ${generateBill.serviceCharge} ${getString(R.string.taka)}"""
         startActivity(smsIntent)
         Toast.makeText(this, getString(R.string.please_wait), Toast.LENGTH_SHORT).show()
         dialogBill.dismiss()
+    }
+
+    override fun onNotify(billInfo: BillInfo) {
+        sendMessage(billInfo.remarks ?: "", "")
+    }
+
+    override fun onMarkAsPaid(billInfo: BillInfo) {
+        showMarkAsPaidDialog(billInfo)
+    }
+
+    private fun showMarkAsPaidDialog(billInfo: BillInfo) {
+        markAsPaidDialog = Dialog(this, android.R.style.Theme_Dialog)
+        markAsPaidDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        markAsPaidDialog.setContentView(R.layout.dialog_layout_bill_mark_as_paid)
+        markAsPaidDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        markAsPaidDialog.setCanceledOnTouchOutside(true)
+        markAsPaidDialog.setCanceledOnTouchOutside(false)
+        markAsPaidDialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
+        markAsPaidDialog.window?.setLayout(
+            RelativeLayout.LayoutParams.MATCH_PARENT,
+            RelativeLayout.LayoutParams.WRAP_CONTENT
+        )
+        markAsPaidDialog.show()
     }
 }
