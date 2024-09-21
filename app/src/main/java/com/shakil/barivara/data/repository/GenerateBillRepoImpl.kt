@@ -5,6 +5,7 @@ import com.shakil.barivara.data.model.BaseApiResponse
 import com.shakil.barivara.data.model.generatebill.GenerateBillResponse
 import com.shakil.barivara.data.remote.webservice.GenerateBillService
 import com.shakil.barivara.domain.generatebill.GenerateBillRepo
+import com.shakil.barivara.utils.Constants.ACCEPT
 import com.shakil.barivara.utils.ErrorType
 import com.shakil.barivara.utils.Resource
 import java.net.SocketTimeoutException
@@ -21,6 +22,7 @@ class GenerateBillRepoImpl @Inject constructor(
         try {
             val task = generateBillService.generateBill(
                 token = "Bearer $token",
+                accept = ACCEPT,
                 month = month,
                 year = year
             )

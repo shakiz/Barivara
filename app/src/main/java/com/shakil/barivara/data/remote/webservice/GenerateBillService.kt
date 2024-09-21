@@ -10,6 +10,7 @@ interface GenerateBillService {
     @GET("generated-rent")
     suspend fun generateBill(
         @Header("Authorization") token: String,
+        @Header("Accept") accept: String,
         @Query("year") year: Int,
         @Query("month") month: Int
     ): Response<BaseGenerateBillResponse>
