@@ -8,6 +8,7 @@ import androidx.activity.viewModels
 import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
 import com.shakil.barivara.data.model.room.NewRoom
+import com.shakil.barivara.data.model.room.RoomStatus
 import com.shakil.barivara.databinding.ActivityAddNewRoomBinding
 import com.shakil.barivara.presentation.tenant.TenantListActivity
 import com.shakil.barivara.utils.Constants
@@ -32,6 +33,7 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
     private var NoOfBathroom = 0
     private var NoOfBalcony = 0
     private var ElectricMeterNo = ""
+    private lateinit var selectedRoomStatus: RoomStatus
     private var room = NewRoom()
     private var command = "add"
     private var tenantNames: ArrayList<String> = arrayListOf()
@@ -107,6 +109,15 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
                 }
             }
         }
+
+        activityAddNewRoomBinding.radioGroupStatus.setOnCheckedChangeListener { group, checkedId ->
+            selectedRoomStatus = when (checkedId) {
+                R.id.radioOccupied -> RoomStatus.Occupied
+                R.id.radioVacant -> RoomStatus.Vacant
+                R.id.radioAbandoned -> RoomStatus.Abandoned
+                else -> RoomStatus.Unknown
+            }
+        }
     }
 
     private fun initObservers() {
@@ -179,6 +190,7 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
         room.noOfRoom = NoOfRoom
         room.noOfBathroom = NoOfBathroom
         room.noOfBalcony = NoOfBalcony
+        room.status = selectedRoomStatus.statusToString()
         room.electricityMeterNo = activityAddNewRoomBinding.ElectricityMeterNo.text.toString()
         if (command == "add") {
             viewModel.addRoom(prefManager.getString(Constants.mAccessToken), room)
