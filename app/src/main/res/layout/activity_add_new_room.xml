@@ -342,6 +342,42 @@
 
                         </LinearLayout>
 
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="@string/room_status"
+                            android:textColor="@color/md_grey_900"
+                            android:textSize="16sp" />
+
+                        <RadioGroup
+                            android:id="@+id/radioGroupStatus"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="8dp"
+                            android:background="@drawable/edit_text_back"
+                            android:orientation="vertical">
+
+                            <RadioButton
+                                android:id="@+id/radioOccupied"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Occupied" />
+
+                            <RadioButton
+                                android:id="@+id/radioVacant"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Vacant" />
+
+                            <RadioButton
+                                android:id="@+id/radioAbandoned"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Abandoned" />
+
+                        </RadioGroup>
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

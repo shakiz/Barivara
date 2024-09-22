@@ -417,6 +417,91 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:layout_marginEnd="16dp"
+                            android:layout_marginTop="16dp"
+                            android:textColor="@color/md_green_800"
+                            android:textStyle="bold"
+                            android:textSize="20sp"
+                            android:text="@string/generate_bill" />
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/generate_bill"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            app:cardElevation="0dp"
+                            android:clickable="true"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            app:cardBackgroundColor="@color/md_green_100"
+                            app:cardCornerRadius="10dp"
+                            app:cardUseCompatPadding="false"
+                            android:focusable="true">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:weightSum="8">
+
+                                <ImageView
+                                    android:id="@+id/ivGenerateBill"
+                                    android:layout_width="48dp"
+                                    android:layout_height="48dp"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="16dp"
+                                    android:layout_marginBottom="16dp"
+                                    android:layout_marginStart="16dp"
+                                    android:background="@drawable/rectangle_green"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    android:padding="8dp"
+                                    android:scaleType="centerInside"
+                                    android:src="@drawable/ic_owner" />
+
+                                <TextView
+                                    android:id="@+id/tvGenerateBillHeading"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    app:layout_constraintStart_toEndOf="@id/ivGenerateBill"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toTopOf="@id/ivGenerateBill"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginEnd="8dp"
+                                    android:ellipsize="end"
+                                    android:maxLines="2"
+                                    android:scrollHorizontally="true"
+                                    android:text="@string/generate_bill"
+                                    android:textColor="@color/md_grey_800"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/tvAllGenerateBillHeading"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginEnd="8dp"
+                                    android:ellipsize="end"
+                                    android:maxLines="1"
+                                    android:paddingBottom="2dp"
+                                    android:text="@string/all_tenants"
+                                    android:textColor="@color/md_grey_800"
+                                    android:textSize="14sp"
+                                    app:layout_constraintBottom_toBottomOf="@+id/ivGenerateBill"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toEndOf="@id/ivGenerateBill"
+                                    app:layout_constraintTop_toBottomOf="@id/tvGenerateBillHeading" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
                             android:layout_marginTop="10dp"
                             android:textColor="@color/md_green_800"
                             android:textStyle="bold"

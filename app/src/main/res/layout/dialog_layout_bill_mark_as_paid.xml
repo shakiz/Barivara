@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardUseCompatPadding="true"
+    app:cardElevation="1dp"
+    app:cardBackgroundColor="@color/window_background"
+    app:cardCornerRadius="12dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/heading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:text="@string/bill_details"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:textColor="@color/md_grey_800"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:id="@+id/roomNameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/heading"
+            android:orientation="horizontal"
+            android:layout_gravity="center|left"
+            android:gravity="center|left"
+            android:layout_marginTop="4dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:background="@drawable/rectangle_border_light_green">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:text="@string/room_name"
+                android:layout_gravity="center"
+                android:gravity="center|left"
+                android:scrollHorizontally="true"
+                android:textColor="@color/md_grey_800"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:text=":"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_gravity="center"
+                android:gravity="center|left"
+                android:scrollHorizontally="true"
+                android:textColor="@color/md_grey_800"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/RoomId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:text="@string/demo_room_name"
+                android:layout_gravity="center"
+                android:gravity="center|left"
+                android:scrollHorizontally="true"
+                android:textColor="@color/md_orange_800"
+                android:textStyle="bold"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tenantNameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/roomNameLayout"
+            android:orientation="horizontal"
+            android:layout_gravity="center|left"
+            android:gravity="center|left"
+            android:layout_marginTop="4dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:background="@drawable/rectangle_border_light_green">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:text="@string/tenant_name"
+                android:layout_gravity="center"
+                android:gravity="center|left"
+                android:scrollHorizontally="true"
+                android:textColor="@color/md_grey_800"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:text=":"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_gravity="center"
+                android:gravity="center|left"
+                android:scrollHorizontally="true"
+                android:textColor="@color/md_grey_800"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/TenantId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:text="@string/demo_tenant_name"
+                android:layout_gravity="center"
+                android:gravity="center|left"
+                android:scrollHorizontally="true"
+                android:textColor="@color/md_orange_800"
+                android:textStyle="bold"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/dueBillLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tenantNameLayout"
+            android:orientation="horizontal"
+            android:layout_gravity="center|left"
+            android:gravity="center|left"
+            android:layout_marginTop="4dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:background="@drawable/rectangle_border_light_green">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:text="@string/total_due_bill"
+                android:layout_gravity="center"
+                android:gravity="center|left"
+                android:scrollHorizontally="true"
+                android:textColor="@color/md_grey_800"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:text=":"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_gravity="center"
+                android:gravity="center|left"
+                android:scrollHorizontally="true"
+                android:textColor="@color/md_grey_800"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/TotalBill"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:text="0"
+                android:layout_gravity="center"
+                android:gravity="center|left"
+                android:scrollHorizontally="true"
+                android:textColor="@color/md_orange_800"
+                android:textStyle="bold"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/remarksHeading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dueBillLayout"
+            android:layout_marginTop="12dp"
+            android:text="@string/remarks"
+            android:textColor="@color/md_grey_900"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/remarks"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_below="@id/remarksHeading"
+            android:background="@drawable/edit_text_back"
+            android:inputType="text"
+            android:ellipsize="end"
+            android:scrollHorizontally="true"
+            android:maxLines="1"
+            android:textColorHint="@color/md_grey_700"
+            android:hint="@string/remarks_hint"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textSize="14sp"
+            android:textColor="@color/md_grey_800" />
+
+        <Button
+            android:id="@+id/sendMessage"
+            android:layout_width="wrap_content"
+            android:layout_below="@id/remarks"
+            android:layout_height="42dp"
+            android:padding="8dp"
+            android:text="@string/send_message"
+            android:textSize="12sp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:textAllCaps="true"
+            android:clickable="true"
+            android:textColor="@color/md_white_1000"
+            android:background="@drawable/rectangle_green_selected"
+            android:focusable="true" />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

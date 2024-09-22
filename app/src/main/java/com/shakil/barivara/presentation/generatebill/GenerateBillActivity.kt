@@ -20,36 +20,52 @@ import android.widget.Button
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
 import com.shakil.barivara.data.model.bill.GenerateBill
+import com.shakil.barivara.data.model.generatebill.BillInfo
 import com.shakil.barivara.databinding.ActivityGenerateBillBinding
+import com.shakil.barivara.presentation.adapter.RecyclerBillInfoAdapter
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.CustomAdManager
 import com.shakil.barivara.utils.DroidFileManager
+import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.SpinnerAdapter
 import com.shakil.barivara.utils.SpinnerData
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
+import com.shakil.barivara.utils.UtilsForAll
 import com.shakil.barivara.utils.Validation
+import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 
-class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>() {
+@AndroidEntryPoint
+class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>(),
+    RecyclerBillInfoAdapter.GenerateBillCallBacks {
     private lateinit var activityBinding: ActivityGenerateBillBinding
     private val hashMap: Map<String?, Array<String>?> = HashMap()
-    private var YearStr: String? = null
-    private var MonthStr: String? = null
+    private var year: Int = 0
+    private var month: Int = 0
     private var validation = Validation(this, hashMap)
     private var spinnerData = SpinnerData(this)
     private var spinnerAdapter = SpinnerAdapter()
+    private lateinit var utilsForAll: UtilsForAll
     private var tools = Tools(this)
     private lateinit var dialogBill: Dialog
+    private lateinit var markAsPaidDialog: Dialog
     private var customAdManager = CustomAdManager(this)
-    private var ux: UX? = null
+    private lateinit var ux: UX
+    private lateinit var prefManager: PrefManager
+    private lateinit var recyclerBillInfoAdapter: RecyclerBillInfoAdapter
+
+    private val viewModel by viewModels<GenerateBillViewModel>()
+
     override val layoutResourceId: Int
         get() = R.layout.activity_generate_bill
 
@@ -61,10 +77,28 @@ class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>() {
         super.onCreate(savedInstanceState)
         init()
         binUIWithComponents()
+        initObservers()
+        setRecyclerAdapter()
     }
 
     private fun init() {
         ux = UX(this)
+        prefManager = PrefManager(this)
+        utilsForAll = UtilsForAll(this)
+    }
+
+    private fun initObservers() {
+        viewModel.getBills().observe(this) { tenants ->
+            recyclerBillInfoAdapter.setItems(tenants)
+        }
+
+        viewModel.isLoading.observe(this) { isLoading ->
+            if (isLoading) {
+                ux.getLoadingView()
+            } else {
+                ux.removeLoadingView()
+            }
+        }
     }
 
     private fun binUIWithComponents() {
@@ -90,14 +124,7 @@ class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>() {
             )
         }
         activityBinding.toolBar.setNavigationOnClickListener { finish() }
-        validation.setEditTextIsNotEmpty(
-            arrayOf("AssociateRoom", "TenantName", "MobileNo", "RentAmount"), arrayOf(
-                getString(R.string.room_name_validation),
-                getString(R.string.tenant_name_validation),
-                getString(R.string.rent_amount_validation),
-                getString(R.string.mobile_validation)
-            )
-        )
+
         validation.setSpinnerIsNotEmpty(arrayOf("YearId", "MonthId"))
         spinnerAdapter.setSpinnerAdapter(
             activityBinding.MonthId,
@@ -117,7 +144,11 @@ class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>() {
                     position: Int,
                     id: Long
                 ) {
-                    YearStr = parent.getItemAtPosition(position).toString()
+                    if (parent.getItemAtPosition(position)
+                            .toString() != getString(R.string.select_data)
+                    ) {
+                        year = parent.getItemAtPosition(position).toString().toInt()
+                    }
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -130,59 +161,29 @@ class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>() {
                     position: Int,
                     id: Long
                 ) {
-                    MonthStr = parent.getItemAtPosition(position).toString()
+                    if (parent.getItemAtPosition(position)
+                            .toString() != getString(R.string.select_data)
+                    ) {
+                        month = utilsForAll.getMonthFromMonthName(
+                            parent.getItemAtPosition(position).toString()
+                        )
+                        viewModel.generateBill(
+                            prefManager.getString(Constants.mAccessToken),
+                            year,
+                            month
+                        )
+                    }
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
-        activityBinding.generateBill.setOnClickListener {
-            if (validation.isValid) {
-                if (tools.isValidMobile(activityBinding.MobileNo.text.toString())) {
-                    try {
-                        val generateBill = GenerateBill(
-                            activityBinding.TenantName.text.toString(),
-                            activityBinding.MobileNo.text.toString(),
-                            "$MonthStr $YearStr",
-                            activityBinding.AssociateRoom.text.toString(),
-                            activityBinding.RentAmount.text.toString().toInt(),
-                            activityBinding.GasBill.text.toString().toInt(),
-                            activityBinding.WaterBill.text.toString().toInt(),
-                            activityBinding.ElectricityBill.text.toString().toInt(),
-                            activityBinding.ServiceCharge.text.toString().toInt()
-                        )
-                        doPopUpForBillDetails(generateBill)
-                    } catch (e: Exception) {
-                        Log.e(
-                            "onClickError: ",
-                            e.message ?: " activityBinding.generateBill.setOnClickListener"
-                        )
-                    }
-                } else {
-                    Toast.makeText(
-                        this@GenerateBillActivity,
-                        getString(R.string.mobile_number_not_valid), Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-        }
-        activityBinding.generatePdf.setOnClickListener {
-            if (validation.isValid) {
-                if (tools.isValidMobile(activityBinding.MobileNo.text.toString())) {
-                    val generateBill = GenerateBill(
-                        activityBinding.TenantName.text.toString(),
-                        activityBinding.MobileNo.text.toString(),
-                        "$MonthStr $YearStr",
-                        activityBinding.AssociateRoom.text.toString(),
-                        activityBinding.RentAmount.text.toString().toInt(),
-                        activityBinding.GasBill.text.toString().toInt(),
-                        activityBinding.WaterBill.text.toString().toInt(),
-                        activityBinding.ElectricityBill.text.toString().toInt(),
-                        activityBinding.ServiceCharge.text.toString().toInt()
-                    )
-                    generatePdf(generateBill)
-                }
-            }
-        }
+    }
+
+    private fun setRecyclerAdapter() {
+        recyclerBillInfoAdapter = RecyclerBillInfoAdapter()
+        activityBinding.mRecyclerView.layoutManager = LinearLayoutManager(this)
+        activityBinding.mRecyclerView.adapter = recyclerBillInfoAdapter
+        recyclerBillInfoAdapter.setGenerateBillCallBacks(this)
     }
 
     private fun generatePdf(generateBill: GenerateBill) {
@@ -309,5 +310,27 @@ Service Charge : ${generateBill.serviceCharge} ${getString(R.string.taka)}"""
         startActivity(smsIntent)
         Toast.makeText(this, getString(R.string.please_wait), Toast.LENGTH_SHORT).show()
         dialogBill.dismiss()
+    }
+
+    override fun onNotify(billInfo: BillInfo) {
+        sendMessage(billInfo.remarks ?: "", "")
+    }
+
+    override fun onMarkAsPaid(billInfo: BillInfo) {
+        showMarkAsPaidDialog(billInfo)
+    }
+
+    private fun showMarkAsPaidDialog(billInfo: BillInfo) {
+        markAsPaidDialog = Dialog(this, android.R.style.Theme_Dialog)
+        markAsPaidDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        markAsPaidDialog.setContentView(R.layout.dialog_layout_bill_mark_as_paid)
+        markAsPaidDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        markAsPaidDialog.setCanceledOnTouchOutside(true)
+        markAsPaidDialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
+        markAsPaidDialog.window?.setLayout(
+            RelativeLayout.LayoutParams.MATCH_PARENT,
+            RelativeLayout.LayoutParams.WRAP_CONTENT
+        )
+        markAsPaidDialog.show()
     }
 }

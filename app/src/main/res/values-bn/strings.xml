@@ -424,4 +424,11 @@
     <string name="action_button">Action Button</string>
     <string name="electricity_meter_hint">Enter Electric Meter No</string>
     <string name="meter_no">Meter No</string>
+    <string name="total_due_bill">Due Bill</string>
+    <string name="total_paid">Total Paid</string>
+    <string name="notify_user">Notify User</string>
+    <string name="mark_as_paid">Mark As Paid</string>
+    <string name="remarks">Remarks</string>
+    <string name="remarks_hint">Enter Any Note/Remarks</string>
+    <string name="room_status">Room Status</string>
 </resources>
