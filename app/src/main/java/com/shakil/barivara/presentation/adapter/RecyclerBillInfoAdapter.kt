@@ -47,11 +47,11 @@ class RecyclerBillInfoAdapter :
             binding.TotalBill.text = billInfo.rent.toString()
 
             binding.markAsPaid.setOnClickListener {
-                generateBillCallBacks?.onNotify(billInfo)
+                generateBillCallBacks?.onMarkAsPaid(billInfo)
             }
 
             binding.notifyUser.setOnClickListener {
-                generateBillCallBacks?.onMarkAsPaid(billInfo)
+                generateBillCallBacks?.onNotify(billInfo)
             }
         }
     }

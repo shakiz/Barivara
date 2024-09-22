@@ -5,13 +5,14 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     app:cardUseCompatPadding="true"
-    app:cardElevation="0dp"
-    app:cardBackgroundColor="@color/md_white_1000"
+    app:cardElevation="1dp"
+    app:cardBackgroundColor="@color/window_background"
     app:cardCornerRadius="12dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/heading"

@@ -326,7 +326,6 @@ Service Charge : ${generateBill.serviceCharge} ${getString(R.string.taka)}"""
         markAsPaidDialog.setContentView(R.layout.dialog_layout_bill_mark_as_paid)
         markAsPaidDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         markAsPaidDialog.setCanceledOnTouchOutside(true)
-        markAsPaidDialog.setCanceledOnTouchOutside(false)
         markAsPaidDialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
         markAsPaidDialog.window?.setLayout(
             RelativeLayout.LayoutParams.MATCH_PARENT,
