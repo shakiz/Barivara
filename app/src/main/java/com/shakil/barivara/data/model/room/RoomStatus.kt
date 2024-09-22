@@ -2,10 +2,10 @@ package com.shakil.barivara.data.model.room
 
 
 enum class RoomStatus(val value: String) {
-    Unknown("Unknown"),
-    Occupied("Occupied"),
-    Vacant("Vacant"),
-    Abandoned("Abandoned");
+    Unknown("unknown"),
+    Occupied("occupied"),
+    Vacant("vacant"),
+    Abandoned("abandoned");
 
     companion object {
         fun from(value: String): RoomStatus? {

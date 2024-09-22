@@ -2,6 +2,8 @@ package com.shakil.barivara.presentation.room
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -12,10 +14,10 @@ import com.shakil.barivara.data.model.room.RoomStatus
 import com.shakil.barivara.databinding.ActivityAddNewRoomBinding
 import com.shakil.barivara.presentation.tenant.TenantListActivity
 import com.shakil.barivara.utils.Constants
+import com.shakil.barivara.utils.Constants.mAccessToken
 import com.shakil.barivara.utils.CustomAdManager
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.SpinnerAdapter
-import com.shakil.barivara.utils.SpinnerData
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
 import com.shakil.barivara.utils.Validation
@@ -25,7 +27,6 @@ import es.dmoral.toasty.Toasty
 @AndroidEntryPoint
 class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
     private lateinit var activityAddNewRoomBinding: ActivityAddNewRoomBinding
-    private var spinnerData = SpinnerData(this)
     private var spinnerAdapter = SpinnerAdapter()
     private var roomNameStr: String = ""
     private var TenantId = 0
@@ -47,7 +48,6 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
     private val viewModel by viewModels<RoomViewModel>()
     override val layoutResourceId: Int
         get() = R.layout.activity_add_new_room
-
     override fun setVariables(dataBinding: ActivityAddNewRoomBinding) {
         activityAddNewRoomBinding = dataBinding
     }
@@ -63,6 +63,7 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
         loadData()
         initListeners()
         initObservers()
+        viewModel.getAllTenants(prefManager.getString(mAccessToken))
     }
 
     private fun initListeners() {
@@ -146,6 +147,14 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
         viewModel.getUpdateRoomErrorResponse().observe(this) { errorResponse ->
             Toast.makeText(applicationContext, errorResponse.message, Toast.LENGTH_SHORT).show()
         }
+
+        viewModel.getTenants().observe(this) { tenants ->
+            spinnerAdapter.setSpinnerAdapter(
+                activityAddNewRoomBinding.TenantNameId,
+                this,
+                ArrayList(tenants.map { it.name })
+            )
+        }
     }
 
     private fun getIntentData() {
@@ -181,6 +190,22 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
             arrayOf(getString(R.string.room_name_validation))
         )
         validation.setSpinnerIsNotEmpty(arrayOf("StartMonthId"))
+
+        activityAddNewRoomBinding.TenantNameId.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View,
+                    position: Int,
+                    id: Long
+                ) {
+                    viewModel.getTenants().value?.let {
+                        TenantId = it[position].id
+                    }
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
     }
 
     private fun saveOrUpdateData() {
