@@ -109,7 +109,7 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>() {
                     name = activityBinding.Name.text.toString(),
                     email = activityBinding.Email.text.toString(),
                 )
-
+                viewModel.updateProfile(user, prefManager.getString(mAccessToken))
             }
         }
     }
