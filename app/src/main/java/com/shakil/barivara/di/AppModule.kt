@@ -5,6 +5,7 @@ import com.shakil.barivara.data.remote.webservice.AuthService
 import com.shakil.barivara.data.remote.webservice.GenerateBillService
 import com.shakil.barivara.data.remote.webservice.RoomService
 import com.shakil.barivara.data.remote.webservice.TenantService
+import com.shakil.barivara.data.remote.webservice.UserService
 import com.shakil.barivara.utils.ApiConstants
 import dagger.Module
 import dagger.Provides
@@ -111,4 +112,15 @@ object AppModule {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
         .create(GenerateBillService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideUserService(
+        callFactory: okhttp3.Call.Factory
+    ): UserService = Retrofit.Builder()
+        .baseUrl(ApiConstants.BASE_URL)
+        .callFactory(callFactory)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+        .create(UserService::class.java)
 }

@@ -3,25 +3,28 @@ package com.shakil.barivara.presentation.profile
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
+import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
-import com.shakil.barivara.data.model.User
-import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
+import com.shakil.barivara.data.model.user.UserInfo
 import com.shakil.barivara.databinding.ActivityProfileBinding
-import com.shakil.barivara.utils.Constants.mUserId
+import com.shakil.barivara.utils.Constants.mAccessToken
 import com.shakil.barivara.utils.CustomAdManager
 import com.shakil.barivara.utils.PrefManager
+import com.shakil.barivara.utils.UX
 import com.shakil.barivara.utils.Validation
-import java.util.UUID
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ProfileActivity : BaseActivity<ActivityProfileBinding>() {
     private lateinit var activityBinding: ActivityProfileBinding
     private val hashMap: Map<String?, Array<String>?> = HashMap()
     private var validation = Validation(this, hashMap)
-    private var firebaseCrudHelper = FirebaseCrudHelper(this)
     private var customAdManager = CustomAdManager(this)
     private lateinit var prefManager: PrefManager
+    private lateinit var ux: UX
+    private val viewModel by viewModels<UserViewModel>()
     override val layoutResourceId: Int
         get() = R.layout.activity_profile
 
@@ -34,13 +37,39 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>() {
         activityBinding = DataBindingUtil.setContentView(this, R.layout.activity_profile)
         initUI()
         bindUiWithComponents()
+        initObservers()
+        viewModel.getProfile(prefManager.getString(mAccessToken))
     }
 
     private fun initUI() {
         validation = Validation(this, hashMap)
-        firebaseCrudHelper = FirebaseCrudHelper(this)
         customAdManager = CustomAdManager(this)
         prefManager = PrefManager(this)
+        ux = UX(this)
+    }
+
+    private fun initObservers() {
+        viewModel.getUserInfo().observe(this) { userInfo ->
+            userInfo?.let {
+                activityBinding.Name.setText(
+                    userInfo.name
+                )
+                activityBinding.Mobile.setText(
+                    userInfo.phone
+                )
+                activityBinding.Email.setText(
+                    userInfo.email
+                )
+            }
+        }
+
+        viewModel.isLoading.observe(this) { isLoading ->
+            if (isLoading) {
+                ux.getLoadingView()
+            } else {
+                ux.removeLoadingView()
+            }
+        }
     }
 
     private fun bindUiWithComponents() {
@@ -53,19 +82,7 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>() {
             )
         )
         activityBinding.toolBar.setNavigationOnClickListener { finish() }
-        firebaseCrudHelper.fetchProfile(
-            "user",
-            prefManager.getString(mUserId),
-            object : FirebaseCrudHelper.onProfileFetch {
-                override fun onFetch(user: User?) {
-                    if (user?.name != null && (user.name?.isNotEmpty() == true)) activityBinding.Name.setText(
-                        user.name
-                    )
-                    if (user?.dOB != null && (user.dOB?.isNotEmpty() == true)) activityBinding.DOB.setText(
-                        user.dOB
-                    )
-                }
-            })
+
         activityBinding.editIcon.setOnClickListener {
             changeVisibilityAndFocusable(true, View.GONE, View.VISIBLE, true)
             changeEditTextBack(
@@ -88,37 +105,11 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>() {
         }
         activityBinding.saveOrUpdate.setOnClickListener {
             if (validation.isValid) {
-                val user = User(
-                    UUID.randomUUID().toString(),
-                    "",
-                    activityBinding.Name.text.toString(),
-                    "",
-                    activityBinding.Mobile.text.toString(),
-                    activityBinding.Email.text.toString(),
-                    activityBinding.DOB.text.toString()
+                val user = UserInfo(
+                    name = activityBinding.Name.text.toString(),
+                    email = activityBinding.Email.text.toString(),
                 )
-                firebaseCrudHelper.add(user, "user", prefManager.getString(mUserId))
-                changeVisibilityAndFocusable(false, View.VISIBLE, View.GONE, false)
-                changeEditTextBack(
-                    arrayOf(
-                        activityBinding.Name,
-                        activityBinding.Address,
-                        activityBinding.DOB
-                    ), R.drawable.edit_text_back
-                )
-                firebaseCrudHelper.fetchProfile(
-                    "user",
-                    prefManager.getString(mUserId),
-                    object : FirebaseCrudHelper.onProfileFetch {
-                        override fun onFetch(user: User?) {
-                            if (user?.name != null && (user.name?.isNotEmpty() == true)) activityBinding.Name.setText(
-                                user.name
-                            )
-                            if (user?.dOB != null && (user.dOB?.isNotEmpty() == true)) activityBinding.DOB.setText(
-                                user.dOB
-                            )
-                        }
-                    })
+
             }
         }
     }
