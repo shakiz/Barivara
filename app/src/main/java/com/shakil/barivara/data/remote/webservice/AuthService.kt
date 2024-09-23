@@ -1,5 +1,6 @@
 package com.shakil.barivara.data.remote.webservice
 
+import com.shakil.barivara.data.model.BaseApiResponse
 import com.shakil.barivara.data.model.auth.SendOtpBaseResponse
 import com.shakil.barivara.data.model.auth.SendOtpRequest
 import com.shakil.barivara.data.model.auth.VerifyOtpBaseResponse
@@ -21,4 +22,12 @@ interface AuthService {
         @Header("Content-Type") contentType: String,
         @Body verifyOtpRequest: VerifyOtpRequest
     ): Response<VerifyOtpBaseResponse>
+
+    @POST("logout")
+    suspend fun logout(
+        @Header("Authorization") token: String,
+        @Header("Content-Type") contentType: String,
+        @Header("Accept") accept: String,
+        @Body mobileNo: String
+    ): Response<BaseApiResponse>
 }

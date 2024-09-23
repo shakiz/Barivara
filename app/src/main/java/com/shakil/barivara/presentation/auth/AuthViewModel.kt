@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.shakil.barivara.data.model.BaseApiResponse
 import com.shakil.barivara.data.model.auth.SendOtpBaseResponse
 import com.shakil.barivara.data.model.auth.VerifyOtpBaseResponse
 import com.shakil.barivara.data.repository.AuthRepoImpl
@@ -23,6 +24,8 @@ class AuthViewModel @Inject constructor(private val authRepoImpl: AuthRepoImpl) 
     private var verifyOtpResponse = MutableLiveData<VerifyOtpBaseResponse>()
     private var verifyOtpResponseError = MutableLiveData<Resource.Error<ErrorType>>()
 
+    private var logoutResponse = MutableLiveData<BaseApiResponse>()
+
     var isLoading = MutableLiveData<Boolean>()
 
     fun getSendOtpResponse(): LiveData<SendOtpBaseResponse> {
@@ -39,6 +42,10 @@ class AuthViewModel @Inject constructor(private val authRepoImpl: AuthRepoImpl) 
 
     fun getVerifyOtpErrorResponse(): LiveData<Resource.Error<ErrorType>> {
         return verifyOtpResponseError
+    }
+
+    fun getLogoutResponse(): LiveData<BaseApiResponse> {
+        return logoutResponse
     }
 
     fun sendOtp(mobileNo: String) {
@@ -76,6 +83,34 @@ class AuthViewModel @Inject constructor(private val authRepoImpl: AuthRepoImpl) 
                 val data = authRepoImpl.verifyOtp(mobileNo, code)
                 if (data.response != null) {
                     verifyOtpResponse.postValue(data.response)
+                } else {
+                    sendOtpResponseError.postValue(
+                        Resource.Error(
+                            message = data.message,
+                            errorType = data.errorType
+                        )
+                    )
+                }
+                isLoading.postValue(false)
+            } catch (e: Exception) {
+                verifyOtpResponseError.postValue(
+                    Resource.Error(
+                        message = "Something went wrong, please try again",
+                        errorType = ErrorType.UNKNOWN
+                    )
+                )
+                isLoading.postValue(false)
+            }
+        }
+    }
+
+    fun logout(mobileNo: String, token: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            isLoading.postValue(true)
+            try {
+                val data = authRepoImpl.logout(mobileNo, token)
+                if (data.response != null) {
+                    logoutResponse.postValue(data.response)
                 } else {
                     sendOtpResponseError.postValue(
                         Resource.Error(
