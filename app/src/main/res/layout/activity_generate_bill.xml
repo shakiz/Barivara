@@ -159,7 +159,7 @@
                                     app:tint="@color/md_amber_900" />
 
                                 <TextView
-                                    android:id="@+id/TotalRooms"
+                                    android:id="@+id/TotalDue"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="8dp"
@@ -229,7 +229,7 @@
                                     app:tint="@color/md_purple_900" />
 
                                 <TextView
-                                    android:id="@+id/TotalMeters"
+                                    android:id="@+id/TotalPaid"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="8dp"

@@ -92,6 +92,11 @@ class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>(),
             recyclerBillInfoAdapter.setItems(tenants)
         }
 
+        viewModel.getGenerateBillResponse().observe(this) { generateBill ->
+            activityBinding.TotalDue.text = "${generateBill.totalDue}"
+            activityBinding.TotalPaid.text = "${generateBill.totalPaid}"
+        }
+
         viewModel.isLoading.observe(this) { isLoading ->
             if (isLoading) {
                 ux.getLoadingView()
