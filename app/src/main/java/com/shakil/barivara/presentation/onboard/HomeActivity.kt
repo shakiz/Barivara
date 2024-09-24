@@ -25,7 +25,6 @@ import com.shakil.barivara.presentation.auth.forgotpassword.ForgotPasswordActivi
 import com.shakil.barivara.presentation.auth.login.LoginActivity
 import com.shakil.barivara.presentation.dashboard.DashboardActivity
 import com.shakil.barivara.presentation.generatebill.GenerateBillActivity
-import com.shakil.barivara.presentation.meter.MeterListActivity
 import com.shakil.barivara.presentation.note.NoteListActivity
 import com.shakil.barivara.presentation.notification.NotificationActivity
 import com.shakil.barivara.presentation.profile.ProfileActivity
@@ -156,14 +155,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
                 )
             )
         }
-        activityMainBinding.totalMeterLayout.setOnClickListener {
-            startActivity(
-                Intent(
-                    this@HomeActivity,
-                    MeterListActivity::class.java
-                )
-            )
-        }
         activityMainBinding.totalTenantLayout.setOnClickListener {
             startActivity(
                 Intent(
@@ -234,9 +225,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
             prefManager[Constants.mAppViewCount] =
                 prefManager.getInt(Constants.mAppViewCount) + 1
         } else prefManager[Constants.mAppViewCount] = 1
-        activityMainBinding.GreetingsText.text = utilsForAll.setGreetings()
-        activityMainBinding.DateTimeText.text = utilsForAll.dateTime
-        activityMainBinding.DayText.text = utilsForAll.dayOfTheMonth
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
