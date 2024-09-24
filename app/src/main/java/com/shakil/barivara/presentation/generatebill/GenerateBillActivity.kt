@@ -349,6 +349,7 @@ Service Charge : ${generateBill.serviceCharge} ${getString(R.string.taka)}"""
         markAsPaidDialog.show()
         dialogBill.findViewById<Button>(R.id.submitBill).setOnClickListener {
             viewModel.updateBillStatus(prefManager.getString(mAccessToken), billId = billInfo.id)
+            dialogBill.dismiss()
         }
     }
 }
