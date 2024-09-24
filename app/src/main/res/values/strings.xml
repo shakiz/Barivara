@@ -432,4 +432,5 @@
     <string name="remarks">Remarks</string>
     <string name="remarks_hint">Enter Any Note/Remarks</string>
     <string name="room_status">Room Status</string>
+    <string name="validation_email">Enter your email</string>
 </resources>

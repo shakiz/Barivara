@@ -1,8 +1,6 @@
 package com.shakil.barivara.presentation.profile
 
 import android.os.Bundle
-import android.view.View
-import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import com.shakil.barivara.BaseActivity
@@ -75,34 +73,13 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>() {
     private fun bindUiWithComponents() {
         customAdManager.generateAd(activityBinding.adView)
         validation.setEditTextIsNotEmpty(
-            arrayOf("Name", "Address", "DOB"), arrayOf(
+            arrayOf("Name", "Email"), arrayOf(
                 getString(R.string.validation_name),
-                getString(R.string.validation_address),
-                getString(R.string.validation_dob)
+                getString(R.string.validation_email),
             )
         )
         activityBinding.toolBar.setNavigationOnClickListener { finish() }
 
-        activityBinding.editIcon.setOnClickListener {
-            changeVisibilityAndFocusable(true, View.GONE, View.VISIBLE, true)
-            changeEditTextBack(
-                arrayOf(
-                    activityBinding.Name,
-                    activityBinding.Address,
-                    activityBinding.DOB
-                ), R.drawable.edit_text_back_green
-            )
-        }
-        activityBinding.cancelEdit.setOnClickListener {
-            changeVisibilityAndFocusable(false, View.VISIBLE, View.GONE, false)
-            changeEditTextBack(
-                arrayOf(
-                    activityBinding.Name,
-                    activityBinding.Address,
-                    activityBinding.DOB
-                ), R.drawable.edit_text_back
-            )
-        }
         activityBinding.saveOrUpdate.setOnClickListener {
             if (validation.isValid) {
                 val user = UserInfo(
@@ -111,28 +88,6 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>() {
                 )
                 viewModel.updateProfile(user, prefManager.getString(mAccessToken))
             }
-        }
-    }
-
-    private fun changeVisibilityAndFocusable(
-        editTextVisibility: Boolean,
-        editIconVisibility: Int,
-        saveCancelLayoutVisibility: Int,
-        isFocusable: Boolean
-    ) {
-        activityBinding.editIcon.visibility = editIconVisibility
-        activityBinding.saveCancelLayout.visibility = saveCancelLayoutVisibility
-        activityBinding.Name.isFocusable = editTextVisibility
-        activityBinding.Address.isFocusable = editTextVisibility
-        activityBinding.DOB.isFocusable = editTextVisibility
-        activityBinding.Name.isFocusableInTouchMode = isFocusable
-        activityBinding.Address.isFocusableInTouchMode = isFocusable
-        activityBinding.DOB.isFocusableInTouchMode = isFocusable
-    }
-
-    private fun changeEditTextBack(editTexts: Array<EditText>, backDrawable: Int) {
-        for (editText in editTexts) {
-            editText.setBackgroundResource(backDrawable)
         }
     }
 }
