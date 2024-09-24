@@ -105,10 +105,8 @@
 
     <!-- Primary button -->
     <style name="BariVara.Button.Primary" parent="Widget.MaterialComponents.Button">
-        <item name="android:minHeight">56dp</item>
-        <item name="android:paddingBottom">5dp
-        </item> <!-- Bottom padding for primary buttons to offset the shadow -->
-        <item name="android:background">@drawable/background_button_primary_ripple</item>
+        <item name="android:minHeight">52dp</item>
+        <item name="android:background">@drawable/background_button_primary</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textColor">@color/md_white_1000</item>
         <item name="elevation">0dp</item>
@@ -119,7 +117,22 @@
         <item name="android:textSize">16sp</item>
         <item name="backgroundTint">@null</item>
         <item name="rippleColor">@null</item>
-        <item name="android:stateListAnimator">@null</item>
+    </style>
+
+    <!-- Primary button -->
+    <style name="BariVara.Button.Secondary" parent="Widget.MaterialComponents.Button">
+        <item name="android:minHeight">52dp</item>
+        <item name="android:background">@drawable/background_button_secondary</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/md_green_800</item>
+        <item name="elevation">0dp</item>
+        <item name="iconGravity">textStart</item>
+        <item name="iconPadding">8dp</item>
+        <item name="iconTint">@color/md_white_1000</item>
+        <item name="shapeAppearance">@null</item>
+        <item name="android:textSize">16sp</item>
+        <item name="backgroundTint">@null</item>
+        <item name="rippleColor">@null</item>
     </style>
 
 </resources>
