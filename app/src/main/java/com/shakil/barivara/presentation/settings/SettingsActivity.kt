@@ -8,7 +8,7 @@ import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
 import com.shakil.barivara.databinding.ActivitySettingsBinding
 import com.shakil.barivara.presentation.auth.login.LoginActivity
-import com.shakil.barivara.presentation.onboard.MainActivity
+import com.shakil.barivara.presentation.onboard.HomeActivity
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.CustomAdManager
 import com.shakil.barivara.utils.LanguageManager
@@ -90,7 +90,7 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding>() {
         }
         activitySettingsBinding.language.setOnClickListener {
             languageManager.setLanguage(
-                MainActivity::class.java
+                HomeActivity::class.java
             )
         }
         activitySettingsBinding.googleLoginLayout.setOnClickListener {

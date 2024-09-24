@@ -91,7 +91,7 @@
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".presentation.onboard.MainActivity"
+            android:name=".presentation.onboard.HomeActivity"
             android:exported="true"
             android:fitsSystemWindows="true"
             android:theme="@style/AppThemeNoActionBar"

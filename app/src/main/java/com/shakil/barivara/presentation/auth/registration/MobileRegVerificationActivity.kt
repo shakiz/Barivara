@@ -11,7 +11,7 @@ import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
 import com.shakil.barivara.databinding.ActivityMobileRegVerificationBinding
 import com.shakil.barivara.presentation.auth.AuthViewModel
-import com.shakil.barivara.presentation.onboard.MainActivity
+import com.shakil.barivara.presentation.onboard.HomeActivity
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Tools
@@ -90,7 +90,7 @@ class MobileRegVerificationActivity : BaseActivity<ActivityMobileRegVerification
                     prefManager = prefManager
                 )
                 val intent = Intent(
-                    this, MainActivity::class.java
+                    this, HomeActivity::class.java
                 )
                 startActivity(intent)
             }

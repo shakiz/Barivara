@@ -9,7 +9,7 @@ import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
 import com.shakil.barivara.databinding.ActivityTutorialBinding
-import com.shakil.barivara.presentation.onboard.MainActivity
+import com.shakil.barivara.presentation.onboard.HomeActivity
 import com.shakil.barivara.utils.MyViewPagerAdapter
 
 class TutorialActivity : BaseActivity<ActivityTutorialBinding>() {
@@ -45,7 +45,7 @@ class TutorialActivity : BaseActivity<ActivityTutorialBinding>() {
                     getString(R.string.finish),
                     Toast.LENGTH_SHORT
                 ).show()
-                startActivity(Intent(this@TutorialActivity, MainActivity::class.java))
+                startActivity(Intent(this@TutorialActivity, HomeActivity::class.java))
             }
         }
     }

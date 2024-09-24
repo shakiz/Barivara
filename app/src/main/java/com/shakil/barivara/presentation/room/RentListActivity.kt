@@ -19,7 +19,7 @@ import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.databinding.ActivityRentListBinding
 import com.shakil.barivara.presentation.adapter.RecyclerRentListAdapter
 import com.shakil.barivara.presentation.adapter.RecyclerRentListAdapter.RentCallBacks
-import com.shakil.barivara.presentation.onboard.MainActivity
+import com.shakil.barivara.presentation.onboard.HomeActivity
 import com.shakil.barivara.utils.Constants.mUserId
 import com.shakil.barivara.utils.CustomAdManager
 import com.shakil.barivara.utils.FilterManager
@@ -42,7 +42,7 @@ class RentListActivity : BaseActivity<ActivityRentListBinding>(), RentCallBacks 
             startActivity(
                 Intent(
                     this@RentListActivity,
-                    MainActivity::class.java
+                    HomeActivity::class.java
                 )
             )
         }
@@ -61,7 +61,7 @@ class RentListActivity : BaseActivity<ActivityRentListBinding>(), RentCallBacks 
             startActivity(
                 Intent(
                     this@RentListActivity,
-                    MainActivity::class.java
+                    HomeActivity::class.java
                 )
             )
         }

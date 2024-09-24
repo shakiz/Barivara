@@ -19,7 +19,7 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
 import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
-import com.shakil.barivara.databinding.ActivityMainBinding
+import com.shakil.barivara.databinding.ActivityHomeBinding
 import com.shakil.barivara.presentation.auth.forgotpassword.ForgotPasswordActivity
 import com.shakil.barivara.presentation.auth.login.LoginActivity
 import com.shakil.barivara.presentation.dashboard.DashboardActivity
@@ -40,9 +40,9 @@ import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UtilsForAll
 
-class MainActivity : BaseActivity<ActivityMainBinding>(),
+class HomeActivity : BaseActivity<ActivityHomeBinding>(),
     NavigationView.OnNavigationItemSelectedListener {
-    private lateinit var activityMainBinding: ActivityMainBinding
+    private lateinit var activityMainBinding: ActivityHomeBinding
     private var utilsForAll = UtilsForAll(this)
     private lateinit var prefManager: PrefManager
     private var tools = Tools(this)
@@ -54,9 +54,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
         }
     }
     override val layoutResourceId: Int
-        get() = R.layout.activity_main
+        get() = R.layout.activity_home
 
-    override fun setVariables(dataBinding: ActivityMainBinding) {
+    override fun setVariables(dataBinding: ActivityHomeBinding) {
         activityMainBinding = dataBinding
     }
 
@@ -89,27 +89,27 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
         LanguageManager(this).configLanguage()
         if (Build.VERSION.SDK_INT > 32) {
             if (ContextCompat.checkSelfPermission(
-                    this@MainActivity,
+                    this@HomeActivity,
                     Manifest.permission.CALL_PHONE
                 ) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
-                    this@MainActivity,
+                    this@HomeActivity,
                     Manifest.permission.POST_NOTIFICATIONS
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
                 ActivityCompat.requestPermissions(
-                    this@MainActivity,
+                    this@HomeActivity,
                     arrayOf(Manifest.permission.CALL_PHONE, Manifest.permission.POST_NOTIFICATIONS),
                     Constants.REQUEST_CALL_CODE
                 )
             }
         } else {
             if (ContextCompat.checkSelfPermission(
-                    this@MainActivity,
+                    this@HomeActivity,
                     Manifest.permission.CALL_PHONE
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
                 ActivityCompat.requestPermissions(
-                    this@MainActivity,
+                    this@HomeActivity,
                     arrayOf(Manifest.permission.CALL_PHONE),
                     Constants.REQUEST_CALL_CODE
                 )
@@ -136,7 +136,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
         activityMainBinding.totalRoomFlatLayout.setOnClickListener {
             startActivity(
                 Intent(
-                    this@MainActivity,
+                    this@HomeActivity,
                     RoomListActivity::class.java
                 )
             )
@@ -144,7 +144,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
         activityMainBinding.totalMeterLayout.setOnClickListener {
             startActivity(
                 Intent(
-                    this@MainActivity,
+                    this@HomeActivity,
                     MeterListActivity::class.java
                 )
             )
@@ -152,7 +152,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
         activityMainBinding.totalTenantLayout.setOnClickListener {
             startActivity(
                 Intent(
-                    this@MainActivity,
+                    this@HomeActivity,
                     TenantListActivity::class.java
                 )
             )
@@ -168,7 +168,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
         activityMainBinding.moreDetails.setOnClickListener {
             startActivity(
                 Intent(
-                    this@MainActivity,
+                    this@HomeActivity,
                     DashboardActivity::class.java
                 )
             )
@@ -177,7 +177,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
         activityMainBinding.generateBill.setOnClickListener {
             startActivity(
                 Intent(
-                    this@MainActivity,
+                    this@HomeActivity,
                     GenerateBillActivity::class.java
                 )
             )
@@ -186,7 +186,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
         activityMainBinding.roomList.setOnClickListener {
             startActivity(
                 Intent(
-                    this@MainActivity,
+                    this@HomeActivity,
                     RoomListActivity::class.java
                 )
             )
@@ -194,7 +194,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
         activityMainBinding.tenantList.setOnClickListener {
             startActivity(
                 Intent(
-                    this@MainActivity,
+                    this@HomeActivity,
                     TenantListActivity::class.java
                 )
             )
@@ -215,7 +215,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
             }
 
             R.id.menu_notification -> {
-                startActivity(Intent(this@MainActivity, NotificationActivity::class.java))
+                startActivity(Intent(this@HomeActivity, NotificationActivity::class.java))
                 return true
             }
         }
@@ -229,7 +229,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
                     "generate_bill",
                     setData("generate_bill", "Generate Bill Activity Launched")
                 )
-                startActivity(Intent(this@MainActivity, GenerateBillActivity::class.java))
+                startActivity(Intent(this@HomeActivity, GenerateBillActivity::class.java))
             }
 
             R.id.menu_profile -> {
@@ -237,7 +237,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
                     "profile",
                     setData("profile", "Profile Activity Launched")
                 )
-                startActivity(Intent(this@MainActivity, ProfileActivity::class.java))
+                startActivity(Intent(this@HomeActivity, ProfileActivity::class.java))
             }
 
             R.id.menu_settings -> {
@@ -245,7 +245,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
                     "settings",
                     setData("settings", "Settings Activity Launched")
                 )
-                startActivity(Intent(this@MainActivity, SettingsActivity::class.java))
+                startActivity(Intent(this@HomeActivity, SettingsActivity::class.java))
             }
 
             R.id.menu_change_password -> {
@@ -253,7 +253,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
                     "changePassword",
                     setData("changePassword", "Change Password Activity Launched")
                 )
-                startActivity(Intent(this@MainActivity, ForgotPasswordActivity::class.java))
+                startActivity(Intent(this@HomeActivity, ForgotPasswordActivity::class.java))
             }
 
             R.id.menu_note -> {
@@ -261,7 +261,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
                     "note",
                     setData("note", "Note Activity Launched")
                 )
-                startActivity(Intent(this@MainActivity, NoteListActivity::class.java))
+                startActivity(Intent(this@HomeActivity, NoteListActivity::class.java))
             }
 
             R.id.menu_notification -> {
@@ -269,7 +269,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
                     "notification",
                     setData("notification", "Notification Activity Launched")
                 )
-                startActivity(Intent(this@MainActivity, NotificationActivity::class.java))
+                startActivity(Intent(this@HomeActivity, NotificationActivity::class.java))
             }
 
             R.id.menu_tutorial -> {
@@ -277,7 +277,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
                     "tutorial",
                     setData("tutorial", "Tutorial Activity Launched")
                 )
-                startActivity(Intent(this@MainActivity, TutorialActivity::class.java))
+                startActivity(Intent(this@HomeActivity, TutorialActivity::class.java))
             }
 
             R.id.menu_about_us -> {
@@ -285,7 +285,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
                     "about_us",
                     setData("about_us", "About Us Launched")
                 )
-                startActivity(Intent(this@MainActivity, AboutUsActivity::class.java))
+                startActivity(Intent(this@HomeActivity, AboutUsActivity::class.java))
             }
 
             R.id.menu_rate_us -> {

@@ -19,7 +19,7 @@ import com.shakil.barivara.data.model.room.NewRoom
 import com.shakil.barivara.databinding.ActivityRoomListBinding
 import com.shakil.barivara.presentation.adapter.RecyclerRoomListAdapter
 import com.shakil.barivara.presentation.adapter.RecyclerRoomListAdapter.RoomCallBacks
-import com.shakil.barivara.presentation.onboard.MainActivity
+import com.shakil.barivara.presentation.onboard.HomeActivity
 import com.shakil.barivara.utils.Constants.mAccessToken
 import com.shakil.barivara.utils.CustomAdManager
 import com.shakil.barivara.utils.FilterManager
@@ -44,7 +44,7 @@ class RoomListActivity : BaseActivity<ActivityRoomListBinding>(), RoomCallBacks 
             startActivity(
                 Intent(
                     this@RoomListActivity,
-                    MainActivity::class.java
+                    HomeActivity::class.java
                 )
             )
         }
@@ -80,7 +80,7 @@ class RoomListActivity : BaseActivity<ActivityRoomListBinding>(), RoomCallBacks 
             startActivity(
                 Intent(
                     this@RoomListActivity,
-                    MainActivity::class.java
+                    HomeActivity::class.java
                 )
             )
         }

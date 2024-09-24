@@ -12,7 +12,7 @@ import com.shakil.barivara.data.model.note.Note
 import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.databinding.ActivityNoteListBinding
 import com.shakil.barivara.presentation.adapter.NoteRecyclerAdapter
-import com.shakil.barivara.presentation.onboard.MainActivity
+import com.shakil.barivara.presentation.onboard.HomeActivity
 import com.shakil.barivara.utils.AppAnalytics
 import com.shakil.barivara.utils.Constants.mUserId
 import com.shakil.barivara.utils.PrefManager
@@ -33,7 +33,7 @@ class NoteListActivity : BaseActivity<ActivityNoteListBinding>() {
             startActivity(
                 Intent(
                     this@NoteListActivity,
-                    MainActivity::class.java
+                    HomeActivity::class.java
                 )
             )
         }
@@ -55,7 +55,7 @@ class NoteListActivity : BaseActivity<ActivityNoteListBinding>() {
             startActivity(
                 Intent(
                     this@NoteListActivity,
-                    MainActivity::class.java
+                    HomeActivity::class.java
                 )
             )
         }

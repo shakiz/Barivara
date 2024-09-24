@@ -24,7 +24,7 @@ import com.shakil.barivara.data.model.tenant.Tenant
 import com.shakil.barivara.databinding.ActivityTenantListBinding
 import com.shakil.barivara.presentation.adapter.RecyclerAdapterTenantList
 import com.shakil.barivara.presentation.adapter.RecyclerAdapterTenantList.TenantCallBacks
-import com.shakil.barivara.presentation.onboard.MainActivity
+import com.shakil.barivara.presentation.onboard.HomeActivity
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.Constants.mAccessToken
 import com.shakil.barivara.utils.CustomAdManager
@@ -50,7 +50,7 @@ class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCall
             startActivity(
                 Intent(
                     this@TenantListActivity,
-                    MainActivity::class.java
+                    HomeActivity::class.java
                 )
             )
         }
@@ -81,7 +81,7 @@ class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCall
             startActivity(
                 Intent(
                     this@TenantListActivity,
-                    MainActivity::class.java
+                    HomeActivity::class.java
                 )
             )
         }

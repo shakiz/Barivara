@@ -33,7 +33,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.shakil.barivara.R
 import com.shakil.barivara.presentation.auth.login.LoginActivity
-import com.shakil.barivara.presentation.onboard.MainActivity
+import com.shakil.barivara.presentation.onboard.HomeActivity
 import com.shakil.barivara.presentation.onboard.SplashActivity
 import com.shakil.barivara.presentation.auth.onboard.WelcomeActivity
 import com.shakil.barivara.utils.Constants.REQUEST_CALL_CODE
@@ -215,7 +215,7 @@ class Tools(private val context: Context) {
             var intent: Intent? = null
             intent = if (prefManager.getBoolean(mOldUser)) {
                 if (prefManager.getBoolean(mIsLoggedIn)) {
-                    Intent(context, MainActivity::class.java)
+                    Intent(context, HomeActivity::class.java)
                 } else {
                     Intent(context, LoginActivity::class.java)
                 }

@@ -5,7 +5,7 @@ import android.os.Bundle
 import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
 import com.shakil.barivara.databinding.ActivityAboutUsBinding
-import com.shakil.barivara.presentation.onboard.MainActivity
+import com.shakil.barivara.presentation.onboard.HomeActivity
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.Tools
 import es.dmoral.toasty.Toasty
@@ -27,7 +27,7 @@ class AboutUsActivity : BaseActivity<ActivityAboutUsBinding>() {
             startActivity(
                 Intent(
                     this@AboutUsActivity,
-                    MainActivity::class.java
+                    HomeActivity::class.java
                 )
             )
         }

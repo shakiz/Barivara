@@ -19,7 +19,7 @@ import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.databinding.ActivityMeterListBinding
 import com.shakil.barivara.presentation.adapter.RecyclerMeterListAdapter
 import com.shakil.barivara.presentation.adapter.RecyclerMeterListAdapter.MeterCallBacks
-import com.shakil.barivara.presentation.onboard.MainActivity
+import com.shakil.barivara.presentation.onboard.HomeActivity
 import com.shakil.barivara.utils.Constants.mUserId
 import com.shakil.barivara.utils.FilterManager
 import com.shakil.barivara.utils.PrefManager
@@ -40,7 +40,7 @@ class MeterListActivity : BaseActivity<ActivityMeterListBinding>(), MeterCallBac
             startActivity(
                 Intent(
                     this@MeterListActivity,
-                    MainActivity::class.java
+                    HomeActivity::class.java
                 )
             )
         }
@@ -61,7 +61,7 @@ class MeterListActivity : BaseActivity<ActivityMeterListBinding>(), MeterCallBac
             startActivity(
                 Intent(
                     this@MeterListActivity,
-                    MainActivity::class.java
+                    HomeActivity::class.java
                 )
             )
         }

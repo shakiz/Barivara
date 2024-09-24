@@ -11,7 +11,7 @@ import com.shakil.barivara.data.model.notification.Notification
 import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.databinding.ActivityNotificationBinding
 import com.shakil.barivara.presentation.adapter.NotificationRecyclerAdapter
-import com.shakil.barivara.presentation.onboard.MainActivity
+import com.shakil.barivara.presentation.onboard.HomeActivity
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
@@ -38,7 +38,7 @@ class NotificationActivity : BaseActivity<ActivityNotificationBinding>() {
             startActivity(
                 Intent(
                     this@NotificationActivity,
-                    MainActivity::class.java
+                    HomeActivity::class.java
                 )
             )
         }
