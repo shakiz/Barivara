@@ -28,7 +28,6 @@ import com.shakil.barivara.presentation.generatebill.GenerateBillActivity
 import com.shakil.barivara.presentation.notification.NotificationActivity
 import com.shakil.barivara.presentation.profile.ProfileActivity
 import com.shakil.barivara.presentation.room.RoomListActivity
-import com.shakil.barivara.presentation.settings.AboutUsActivity
 import com.shakil.barivara.presentation.tenant.TenantListActivity
 import com.shakil.barivara.presentation.tutorial.TutorialActivity
 import com.shakil.barivara.utils.Constants
@@ -278,14 +277,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
                     setData("tutorial", "Tutorial Activity Launched")
                 )
                 startActivity(Intent(this@HomeActivity, TutorialActivity::class.java))
-            }
-
-            R.id.menu_about_us -> {
-                registerEvent(
-                    "about_us",
-                    setData("about_us", "About Us Launched")
-                )
-                startActivity(Intent(this@HomeActivity, AboutUsActivity::class.java))
             }
 
             R.id.menu_rate_us -> {

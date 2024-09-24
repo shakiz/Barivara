@@ -1,61 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:background="@color/md_white_1000"
         android:orientation="vertical"
-        android:weightSum="1"
-        android:layout_height="match_parent">
+        android:weightSum="1">
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/view_pager"
-            android:layout_marginTop="8dp"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight=".9"/>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toTopOf="@id/view_pager_bottom" />
 
         <LinearLayout
             android:id="@+id/view_pager_bottom"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight=".1"
-            android:weightSum="1"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginLeft="4dp"
             android:layout_marginRight="4dp"
-            android:layout_gravity="center"
+            android:layout_marginBottom="16dp"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="1"
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <LinearLayout
                 android:id="@+id/layoutDots"
                 android:layout_width="0dp"
-                android:layout_weight=".6"
                 android:layout_height="36dp"
-                android:gravity="center"
-                android:layout_marginRight="4dp"
                 android:layout_gravity="center"
-                android:orientation="horizontal">
-            </LinearLayout>
+                android:layout_marginEnd="4dp"
+                android:layout_weight=".6"
+                android:gravity="center"
+                android:orientation="horizontal" />
 
             <Button
                 android:id="@+id/btn_next"
+                style="@style/BariVara.Button.Secondary"
                 android:layout_width="0dp"
-                android:layout_weight=".4"
-                android:layout_height="36dp"
+                android:layout_height="42dp"
                 android:layout_gravity="center"
+                android:layout_marginStart="4dp"
+                android:layout_weight=".4"
                 android:gravity="center"
-                android:layout_marginLeft="4dp"
                 android:text="@string/next"
-                android:textSize="14sp"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:textAllCaps="true"
-                android:background="@color/transparent"
-                android:textColor="@color/md_green_800" />
+                android:textAllCaps="true" />
 
         </LinearLayout>
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
