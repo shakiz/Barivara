@@ -51,7 +51,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:layout_gravity="center"
-                    android:drawableLeft="@drawable/ic_check"
+                    app:drawableStart="@drawable/ic_check"
                     android:drawablePadding="8dp"
                     android:gravity="center"
                     android:textSize="16sp"
@@ -71,7 +71,6 @@
                     android:textColor="@color/md_white_1000"
                     android:textAllCaps="false"
                     android:textSize="18sp"
-                    android:foreground="?attr/selectableItemBackgroundBorderless"
                     android:background="@drawable/button_shape_round_corner"
                     android:focusable="true" />
 
@@ -131,7 +130,7 @@
                             android:layout_gravity="center_vertical"
                             android:gravity="center_vertical"
                             android:background="@null"
-                            android:layout_marginLeft="16dp"
+                            android:layout_marginStart="16dp"
                             android:inputType="numberSigned"
                             android:hint="@string/type_code_here"
                             android:padding="4dp"
@@ -146,7 +145,7 @@
                         android:id="@+id/verificationCodeText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="32dp"
+                        android:layout_marginStart="32dp"
                         android:layout_marginBottom="-10dp"
                         android:layout_alignParentTop="true"
                         android:paddingLeft="8dp"
@@ -160,20 +159,14 @@
 
                 <Button
                     android:id="@+id/verify"
-                    android:layout_width="140dp"
-                    android:layout_height="42dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_margin="16dp"
                     android:text="@string/verify"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    app:backgroundTint="@null"
-                    android:clickable="true"
-                    android:textColor="@color/md_white_1000"
                     android:textAllCaps="false"
-                    android:textSize="18sp"
-                    android:foreground="?attr/selectableItemBackgroundBorderless"
-                    android:background="@drawable/button_shape_round_corner"
-                    android:focusable="true" />
+                    style="@style/BariVara.Button.Primary" />
 
             </LinearLayout>
 

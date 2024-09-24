@@ -88,11 +88,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@string/login_without_underline"
-                app:backgroundTint="@null"
-                android:textColor="@color/md_white_1000"
                 android:textAllCaps="false"
-                android:textSize="18sp"
-                android:background="@drawable/button_shape_round_corner" />
+                style="@style/BariVara.Button.Primary" />
 
         </LinearLayout>
 
