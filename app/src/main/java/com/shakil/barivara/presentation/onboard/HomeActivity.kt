@@ -10,6 +10,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowManager
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -34,12 +35,16 @@ import com.shakil.barivara.presentation.settings.SettingsActivity
 import com.shakil.barivara.presentation.tenant.TenantListActivity
 import com.shakil.barivara.presentation.tutorial.TutorialActivity
 import com.shakil.barivara.utils.Constants
+import com.shakil.barivara.utils.Constants.mAccessToken
 import com.shakil.barivara.utils.CustomAdManager
 import com.shakil.barivara.utils.LanguageManager
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Tools
+import com.shakil.barivara.utils.UX
 import com.shakil.barivara.utils.UtilsForAll
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeActivity : BaseActivity<ActivityHomeBinding>(),
     NavigationView.OnNavigationItemSelectedListener {
     private lateinit var activityMainBinding: ActivityHomeBinding
@@ -47,6 +52,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
     private lateinit var prefManager: PrefManager
     private var tools = Tools(this)
     private var customAdManager = CustomAdManager(this)
+    private lateinit var ux: UX
+    private val viewModel by viewModels<HomeViewModel>()
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true){
         override fun handleOnBackPressed() {
@@ -62,20 +69,13 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        prefManager = PrefManager(this)
-
-        onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
+        init()
         activityMainBinding.toolBar.setTitleTextColor(
             ContextCompat.getColor(
                 this,
                 R.color.md_green_800
             )
         )
-        setSupportActionBar(activityMainBinding.toolBar)
-        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
-        supportActionBar?.setHomeButtonEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_icon_menu)
         setupDrawerToggle()
         FirebaseApp.initializeApp(this)
         FirebaseMessaging.getInstance().subscribeToTopic("general")
@@ -116,9 +116,24 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
             }
         }
         bindUIWithComponents()
+        initListeners()
+        initObservers()
+        viewModel.getAllTenants(prefManager.getString(mAccessToken))
+        viewModel.getAllRooms(prefManager.getString(mAccessToken))
+    }
+
+    private fun init() {
+        prefManager = PrefManager(this)
+        ux = UX(this)
     }
 
     private fun setupDrawerToggle() {
+        setSupportActionBar(activityMainBinding.toolBar)
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
+        supportActionBar?.setHomeButtonEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_icon_menu)
+
         val actionBarDrawerToggle = ActionBarDrawerToggle(
             this,
             activityMainBinding.myDrawerLayout,
@@ -130,9 +145,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
         actionBarDrawerToggle.syncState()
     }
 
-    private fun bindUIWithComponents() {
-        activityMainBinding.navigationView.setNavigationItemSelectedListener(this)
-        customAdManager.generateAd(activityMainBinding.adView)
+    private fun initListeners() {
+        onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
+
         activityMainBinding.totalRoomFlatLayout.setOnClickListener {
             startActivity(
                 Intent(
@@ -157,13 +172,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
                 )
             )
         }
-        if (prefManager.getInt(Constants.mAppViewCount) > 0) {
-            prefManager[Constants.mAppViewCount] =
-                prefManager.getInt(Constants.mAppViewCount) + 1
-        } else prefManager[Constants.mAppViewCount] = 1
-        activityMainBinding.GreetingsText.text = utilsForAll.setGreetings()
-        activityMainBinding.DateTimeText.text = utilsForAll.dateTime
-        activityMainBinding.DayText.text = utilsForAll.dayOfTheMonth
 
         activityMainBinding.moreDetails.setOnClickListener {
             startActivity(
@@ -199,6 +207,32 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
                 )
             )
         }
+    }
+
+    private fun initObservers() {
+        viewModel.getTenants().observe(this) { tenants ->
+            activityMainBinding.totalRooms.text = "${tenants.size}"
+        }
+
+        viewModel.isLoading.observe(this) { isLoading ->
+            if (isLoading) {
+                ux.getLoadingView()
+            } else {
+                ux.removeLoadingView()
+            }
+        }
+    }
+
+    private fun bindUIWithComponents() {
+        activityMainBinding.navigationView.setNavigationItemSelectedListener(this)
+        customAdManager.generateAd(activityMainBinding.adView)
+        if (prefManager.getInt(Constants.mAppViewCount) > 0) {
+            prefManager[Constants.mAppViewCount] =
+                prefManager.getInt(Constants.mAppViewCount) + 1
+        } else prefManager[Constants.mAppViewCount] = 1
+        activityMainBinding.GreetingsText.text = utilsForAll.setGreetings()
+        activityMainBinding.DateTimeText.text = utilsForAll.dateTime
+        activityMainBinding.DayText.text = utilsForAll.dayOfTheMonth
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
