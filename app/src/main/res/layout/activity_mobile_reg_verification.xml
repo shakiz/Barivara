@@ -51,7 +51,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:layout_gravity="center"
-                    app:drawableStart="@drawable/ic_check"
+                    android:drawableStart="@drawable/ic_check"
                     android:drawablePadding="8dp"
                     android:gravity="center"
                     android:textSize="16sp"
@@ -117,8 +117,6 @@
                         android:layout_below="@+id/verificationCodeText"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
                         android:padding="4dp"
                         android:background="@drawable/profile_text_bg"
                         android:orientation="horizontal">
