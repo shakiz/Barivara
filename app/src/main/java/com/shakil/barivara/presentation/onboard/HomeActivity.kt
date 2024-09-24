@@ -25,12 +25,10 @@ import com.shakil.barivara.presentation.auth.forgotpassword.ForgotPasswordActivi
 import com.shakil.barivara.presentation.auth.login.LoginActivity
 import com.shakil.barivara.presentation.dashboard.DashboardActivity
 import com.shakil.barivara.presentation.generatebill.GenerateBillActivity
-import com.shakil.barivara.presentation.note.NoteListActivity
 import com.shakil.barivara.presentation.notification.NotificationActivity
 import com.shakil.barivara.presentation.profile.ProfileActivity
 import com.shakil.barivara.presentation.room.RoomListActivity
 import com.shakil.barivara.presentation.settings.AboutUsActivity
-import com.shakil.barivara.presentation.settings.SettingsActivity
 import com.shakil.barivara.presentation.tenant.TenantListActivity
 import com.shakil.barivara.presentation.tutorial.TutorialActivity
 import com.shakil.barivara.utils.Constants
@@ -250,14 +248,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menu_generate_bill -> {
-                registerEvent(
-                    "generate_bill",
-                    setData("generate_bill", "Generate Bill Activity Launched")
-                )
-                startActivity(Intent(this@HomeActivity, GenerateBillActivity::class.java))
-            }
-
             R.id.menu_profile -> {
                 registerEvent(
                     "profile",
@@ -266,28 +256,12 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
                 startActivity(Intent(this@HomeActivity, ProfileActivity::class.java))
             }
 
-            R.id.menu_settings -> {
-                registerEvent(
-                    "settings",
-                    setData("settings", "Settings Activity Launched")
-                )
-                startActivity(Intent(this@HomeActivity, SettingsActivity::class.java))
-            }
-
             R.id.menu_change_password -> {
                 registerEvent(
                     "changePassword",
                     setData("changePassword", "Change Password Activity Launched")
                 )
                 startActivity(Intent(this@HomeActivity, ForgotPasswordActivity::class.java))
-            }
-
-            R.id.menu_note -> {
-                registerEvent(
-                    "note",
-                    setData("note", "Note Activity Launched")
-                )
-                startActivity(Intent(this@HomeActivity, NoteListActivity::class.java))
             }
 
             R.id.menu_notification -> {

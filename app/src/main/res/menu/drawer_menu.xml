@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:id="@+id/menu_generate_bill"
-        android:title="@string/generate_bill"
-        android:icon="@drawable/ic_invoice"/>
 
     <item
         android:id="@+id/menu_profile"
@@ -16,15 +12,6 @@
         android:title="@string/change_password"
         android:icon="@drawable/ic_key"/>
 
-    <item
-        android:id="@+id/menu_settings"
-        android:title="@string/settings"
-        android:icon="@drawable/ic_settings_black_24dp"/>
-
-    <item
-        android:id="@+id/menu_note"
-        android:title="@string/your_notes"
-        android:icon="@drawable/ic_note_add"/>
 
     <item
         android:id="@+id/menu_notification"
