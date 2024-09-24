@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.shakil.barivara.data.model.BaseApiResponse
 import com.shakil.barivara.data.model.generatebill.BillInfo
 import com.shakil.barivara.data.model.generatebill.GenerateBillResponse
 import com.shakil.barivara.data.repository.GenerateBillRepoImpl
@@ -22,6 +23,9 @@ class GenerateBillViewModel @Inject constructor(private val generalBillRepoImpl:
     private var generateBillResponse = MutableLiveData<GenerateBillResponse>()
     private var generateBillErrorResponse = MutableLiveData<Resource.Error<ErrorType>>()
 
+    private var updateRentStatusResponse = MutableLiveData<BaseApiResponse>()
+    private var updateRentStatusErrorResponse = MutableLiveData<Resource.Error<ErrorType>>()
+
     fun getBills(): LiveData<List<BillInfo>> {
         return bills
     }
@@ -32,6 +36,14 @@ class GenerateBillViewModel @Inject constructor(private val generalBillRepoImpl:
 
     fun getGenerateBillErrorResponse(): LiveData<Resource.Error<ErrorType>> {
         return generateBillErrorResponse
+    }
+
+    fun getUpdateRentStatusResponse(): LiveData<BaseApiResponse> {
+        return updateRentStatusResponse
+    }
+
+    fun getUpdateRentStatusErrorResponse(): LiveData<Resource.Error<ErrorType>> {
+        return updateRentStatusErrorResponse
     }
 
     fun generateBill(token: String, year: Int, month: Int) {
@@ -71,10 +83,9 @@ class GenerateBillViewModel @Inject constructor(private val generalBillRepoImpl:
                 val data =
                     generalBillRepoImpl.updateBillStatus(token = token, billId = billId)
                 if (data.response != null) {
-                    bills.postValue(data.response?.billInfo)
-                    generateBillResponse.postValue(data.response)
+                    updateRentStatusResponse.postValue(data.response)
                 } else {
-                    generateBillErrorResponse.postValue(
+                    updateRentStatusErrorResponse.postValue(
                         Resource.Error(
                             message = data.message,
                             errorType = data.errorType
@@ -83,7 +94,7 @@ class GenerateBillViewModel @Inject constructor(private val generalBillRepoImpl:
                 }
                 isLoading.postValue(false)
             } catch (e: Exception) {
-                generateBillErrorResponse.postValue(
+                updateRentStatusErrorResponse.postValue(
                     Resource.Error(
                         message = "Something went wrong, please try again",
                         errorType = ErrorType.UNKNOWN

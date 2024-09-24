@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class BillInfo(
 
+    @SerializedName("id") var id: Int = 0,
     @SerializedName("room") var room: String? = null,
     @SerializedName("tenant") var tenant: String? = null,
     @SerializedName("rent") var rent: Int? = null,

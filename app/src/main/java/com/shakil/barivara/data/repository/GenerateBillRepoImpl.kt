@@ -58,7 +58,7 @@ class GenerateBillRepoImpl @Inject constructor(
     override suspend fun updateBillStatus(
         token: String,
         billId: Int
-    ): Resource<GenerateBillResponse> {
+    ): Resource<BaseApiResponse> {
         try {
             val task = generateBillService.updateBillStatus(
                 token = "Bearer $token",
@@ -67,7 +67,7 @@ class GenerateBillRepoImpl @Inject constructor(
             )
             if (task.isSuccessful) {
                 task.body()?.let {
-                    return Resource.Success(response = it.data)
+                    return Resource.Success(response = it)
                 } ?: return Resource.Error(errorType = ErrorType.EMPTY_DATA)
             } else if (task.errorBody() != null) {
                 val errorBodyStr = task.errorBody()?.string()

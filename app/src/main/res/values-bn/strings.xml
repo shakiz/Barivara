@@ -432,4 +432,5 @@
     <string name="remarks_hint">Enter Any Note/Remarks</string>
     <string name="room_status">Room Status</string>
     <string name="validation_email">Enter your email</string>
+    <string name="rent_status_updated_successfully">Rent Status Updated Successfully</string>
 </resources>

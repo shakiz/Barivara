@@ -41,6 +41,7 @@ import com.shakil.barivara.utils.UX
 import com.shakil.barivara.utils.UtilsForAll
 import com.shakil.barivara.utils.Validation
 import dagger.hilt.android.AndroidEntryPoint
+import es.dmoral.toasty.Toasty
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -94,6 +95,16 @@ class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>(),
         viewModel.getGenerateBillResponse().observe(this) { generateBill ->
             activityBinding.TotalDue.text = "${generateBill.totalDue}"
             activityBinding.TotalPaid.text = "${generateBill.totalPaid}"
+        }
+
+        viewModel.getUpdateRentStatusResponse().observe(this) { rentStatusUpdate ->
+            if (rentStatusUpdate.statusCode == 200) {
+                Toasty.success(
+                    this,
+                    getString(R.string.rent_status_updated_successfully),
+                    Toast.LENGTH_LONG
+                ).show()
+            }
         }
 
         viewModel.isLoading.observe(this) { isLoading ->
@@ -242,12 +253,12 @@ class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>(),
         val filePath = File(targetPdf)
         try {
             document.writeTo(FileOutputStream(filePath))
-            ux?.removeLoadingView()
+            ux.removeLoadingView()
             Toast.makeText(this, getString(R.string.file_save_in_downloads), Toast.LENGTH_LONG)
                 .show()
         } catch (e: IOException) {
             Log.e("main", "error $e")
-            ux?.removeLoadingView()
+            ux.removeLoadingView()
             Toast.makeText(
                 this,
                 getString(R.string.please_try_again_something_went_wrong),
@@ -337,7 +348,7 @@ Service Charge : ${generateBill.serviceCharge} ${getString(R.string.taka)}"""
         )
         markAsPaidDialog.show()
         dialogBill.findViewById<Button>(R.id.submitBill).setOnClickListener {
-            viewModel.updateBillStatus(prefManager.getString(mAccessToken), 1)
+            viewModel.updateBillStatus(prefManager.getString(mAccessToken), billId = billInfo.id)
         }
     }
 }
