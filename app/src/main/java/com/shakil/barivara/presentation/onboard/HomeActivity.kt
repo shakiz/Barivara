@@ -214,6 +214,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
             activityMainBinding.totalRooms.text = "${tenants.size}"
         }
 
+        viewModel.getRooms().observe(this) { tenants ->
+            activityMainBinding.totalRooms.text = "${tenants.size}"
+        }
+
         viewModel.isLoading.observe(this) { isLoading ->
             if (isLoading) {
                 ux.getLoadingView()

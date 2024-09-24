@@ -306,7 +306,7 @@
                                 android:maxLines="1"
                                 android:paddingTop="4dp"
                                 android:paddingBottom="4dp"
-                                android:text="@string/total_tenants_left"
+                                android:text="@string/rent_amount"
                                 android:textColor="@color/md_red_400"
                                 android:textSize="16sp" />
 
@@ -317,7 +317,7 @@
                                 android:layout_gravity="center"
                                 android:layout_marginLeft="8dp"
                                 android:layout_marginBottom="8dp"
-                                android:src="@drawable/ic_tenant"
+                                android:src="@drawable/ic_taka"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@id/tvTotalTenantLeftHeading"

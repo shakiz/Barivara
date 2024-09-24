@@ -2,6 +2,7 @@ package com.shakil.barivara.di
 
 import com.shakil.barivara.data.remote.webservice.AuthInterceptor
 import com.shakil.barivara.data.remote.webservice.AuthService
+import com.shakil.barivara.data.remote.webservice.DashboardService
 import com.shakil.barivara.data.remote.webservice.GenerateBillService
 import com.shakil.barivara.data.remote.webservice.RoomService
 import com.shakil.barivara.data.remote.webservice.TenantService
@@ -123,4 +124,15 @@ object AppModule {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
         .create(UserService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideDashboardService(
+        callFactory: okhttp3.Call.Factory
+    ): DashboardService = Retrofit.Builder()
+        .baseUrl(ApiConstants.BASE_URL)
+        .callFactory(callFactory)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+        .create(DashboardService::class.java)
 }
