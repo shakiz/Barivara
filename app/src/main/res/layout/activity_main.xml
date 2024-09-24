@@ -508,342 +508,83 @@
                             android:textSize="20sp"
                             android:text="@string/room_information"/>
 
-                        <LinearLayout
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/room_list"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:layout_marginStart="16dp"
                             android:layout_marginEnd="16dp"
-                            android:weightSum="2"
-                            android:orientation="horizontal">
+                            android:clickable="true"
+                            app:cardElevation="0dp"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            app:cardBackgroundColor="@color/md_green_100"
+                            app:cardCornerRadius="10dp"
+                            app:cardUseCompatPadding="false"
+                            android:focusable="true">
 
-                            <androidx.cardview.widget.CardView
-                                android:id="@+id/room_list"
-                                android:layout_width="0dp"
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginRight="4dp"
-                                android:layout_weight="1"
-                                android:clickable="true"
-                                app:cardElevation="0dp"
-                                android:foreground="?android:attr/selectableItemBackground"
-                                app:cardBackgroundColor="@color/md_green_100"
-                                app:cardCornerRadius="10dp"
-                                app:cardUseCompatPadding="false"
-                                android:focusable="true">
+                                android:orientation="horizontal"
+                                android:weightSum="8">
 
-                                <androidx.constraintlayout.widget.ConstraintLayout
-                                    android:layout_width="match_parent"
+                                <ImageView
+                                    android:id="@+id/ivRoom"
+                                    android:layout_width="48dp"
+                                    android:layout_height="48dp"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="16dp"
+                                    android:layout_marginBottom="16dp"
+                                    android:layout_marginStart="16dp"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    android:background="@drawable/rectangle_green"
+                                    android:padding="8dp"
+                                    android:scaleType="centerInside"
+                                    android:src="@drawable/ic_rooms" />
+
+                                <TextView
+                                    android:id="@+id/tvRoomListHeading"
+                                    android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:orientation="horizontal"
-                                    android:weightSum="8">
+                                    android:ellipsize="end"
+                                    android:maxLines="2"
+                                    android:scrollHorizontally="true"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginEnd="8dp"
+                                    app:layout_constraintTop_toTopOf="@id/ivRoom"
+                                    app:layout_constraintStart_toEndOf="@id/ivRoom"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    android:gravity="center|start"
+                                    android:text="@string/room_list"
+                                    android:textColor="@color/md_grey_800"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold" />
 
-                                    <ImageView
-                                        android:id="@+id/ivRoom"
-                                        android:layout_width="48dp"
-                                        android:layout_height="48dp"
-                                        android:layout_gravity="center"
-                                        android:layout_marginTop="16dp"
-                                        android:layout_marginBottom="16dp"
-                                        android:layout_marginStart="16dp"
-                                        app:layout_constraintStart_toStartOf="parent"
-                                        app:layout_constraintTop_toTopOf="parent"
-                                        app:layout_constraintBottom_toBottomOf="parent"
-                                        android:background="@drawable/rectangle_green"
-                                        android:padding="8dp"
-                                        android:scaleType="centerInside"
-                                        android:src="@drawable/ic_rooms"/>
+                                <TextView
+                                    android:id="@+id/tvAllRoomHeading"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginEnd="8dp"
+                                    app:layout_constraintBottom_toBottomOf="@id/ivRoom"
+                                    app:layout_constraintTop_toBottomOf="@id/tvRoomListHeading"
+                                    app:layout_constraintStart_toEndOf="@id/ivRoom"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    android:layout_marginTop="4dp"
+                                    android:gravity="center|start"
+                                    android:ellipsize="end"
+                                    android:maxLines="1"
+                                    android:paddingBottom="2dp"
+                                    android:text="@string/all_rooms"
+                                    android:textColor="@color/md_grey_800"
+                                    android:textSize="14sp" />
 
-                                    <TextView
-                                        android:id="@+id/tvRoomListHeading"
-                                        android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
-                                        android:ellipsize="end"
-                                        android:maxLines="2"
-                                        android:scrollHorizontally="true"
-                                        android:layout_marginStart="8dp"
-                                        android:layout_marginEnd="8dp"
-                                        app:layout_constraintTop_toTopOf="@id/ivRoom"
-                                        app:layout_constraintStart_toEndOf="@id/ivRoom"
-                                        app:layout_constraintEnd_toEndOf="parent"
-                                        android:gravity="center|start"
-                                        android:text="@string/room_list"
-                                        android:textColor="@color/md_grey_800"
-                                        android:textSize="16sp"
-                                        android:textStyle="bold" />
+                            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                                    <TextView
-                                        android:id="@+id/tvAllRoomHeading"
-                                        android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginStart="8dp"
-                                        android:layout_marginEnd="8dp"
-                                        app:layout_constraintBottom_toBottomOf="@id/ivRoom"
-                                        app:layout_constraintTop_toBottomOf="@id/tvRoomListHeading"
-                                        app:layout_constraintStart_toEndOf="@id/ivRoom"
-                                        app:layout_constraintEnd_toEndOf="parent"
-                                        android:layout_marginTop="4dp"
-                                        android:gravity="center|start"
-                                        android:ellipsize="end"
-                                        android:maxLines="1"
-                                        android:paddingBottom="2dp"
-                                        android:text="@string/all_rooms"
-                                        android:textColor="@color/md_grey_800"
-                                        android:textSize="14sp" />
-
-                                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                            </androidx.cardview.widget.CardView>
-
-                            <androidx.cardview.widget.CardView
-                                android:id="@+id/rent_list"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="4dp"
-                                app:cardElevation="0dp"
-                                android:layout_weight="1"
-                                android:clickable="true"
-                                android:foreground="?android:attr/selectableItemBackground"
-                                app:cardBackgroundColor="@color/md_green_100"
-                                app:cardCornerRadius="10dp"
-                                app:cardUseCompatPadding="false"
-                                android:focusable="true">
-
-                                <androidx.constraintlayout.widget.ConstraintLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content">
-
-                                    <ImageView
-                                        android:id="@+id/ivRent"
-                                        android:layout_width="48dp"
-                                        android:layout_height="48dp"
-                                        android:layout_gravity="center"
-                                        android:layout_marginTop="16dp"
-                                        android:layout_marginBottom="16dp"
-                                        android:layout_marginStart="16dp"
-                                        app:layout_constraintTop_toTopOf="parent"
-                                        app:layout_constraintStart_toStartOf="parent"
-                                        app:layout_constraintBottom_toBottomOf="parent"
-                                        android:background="@drawable/rectangle_green"
-                                        android:padding="8dp"
-                                        android:scaleType="centerInside"
-                                        android:src="@drawable/ic_tenant"/>
-
-                                    <TextView
-                                        android:id="@+id/tvRentListHeading"
-                                        android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
-                                        app:layout_constraintTop_toTopOf="@id/ivRent"
-                                        app:layout_constraintStart_toEndOf="@id/ivRent"
-                                        app:layout_constraintEnd_toEndOf="parent"
-                                        android:gravity="center|start"
-                                        android:layout_marginStart="8dp"
-                                        android:layout_marginEnd="8dp"
-                                        android:ellipsize="end"
-                                        android:maxLines="2"
-                                        android:scrollHorizontally="true"
-                                        android:text="@string/rent_list"
-                                        android:textColor="@color/md_grey_800"
-                                        android:textSize="16sp"
-                                        android:textStyle="bold" />
-
-                                    <TextView
-                                        android:id="@+id/tvAllRentHeading"
-                                        android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
-                                        app:layout_constraintTop_toBottomOf="@id/tvRentListHeading"
-                                        app:layout_constraintBottom_toBottomOf="@id/ivRent"
-                                        app:layout_constraintStart_toEndOf="@id/ivRent"
-                                        app:layout_constraintEnd_toEndOf="parent"
-                                        android:gravity="center|start"
-                                        android:layout_marginStart="8dp"
-                                        android:layout_marginEnd="8dp"
-                                        android:layout_marginTop="4dp"
-                                        android:ellipsize="end"
-                                        android:maxLines="1"
-                                        android:paddingBottom="2dp"
-                                        android:text="@string/all_rents"
-                                        android:textColor="@color/md_grey_800"
-                                        android:textSize="14sp" />
-
-                                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                            </androidx.cardview.widget.CardView>
-
-                        </LinearLayout>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginTop="10dp"
-                            android:textColor="@color/md_green_800"
-                            android:textStyle="bold"
-                            android:textSize="20sp"
-                            android:text="@string/meter_information"/>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginBottom="16dp"
-                            android:weightSum="2"
-                            android:orientation="horizontal">
-
-                            <androidx.cardview.widget.CardView
-                                android:id="@+id/meter_list"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginRight="4dp"
-                                android:layout_marginTop="4dp"
-                                app:cardElevation="0dp"
-                                android:layout_weight="1"
-                                android:clickable="true"
-                                android:foreground="?android:attr/selectableItemBackground"
-                                app:cardBackgroundColor="@color/md_green_100"
-                                app:cardCornerRadius="10dp"
-                                app:cardUseCompatPadding="false"
-                                android:focusable="true">
-
-                                <androidx.constraintlayout.widget.ConstraintLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content">
-
-                                    <ImageView
-                                        android:id="@+id/ivMeter"
-                                        android:layout_width="48dp"
-                                        android:layout_height="48dp"
-                                        android:layout_gravity="center"
-                                        android:layout_marginTop="16dp"
-                                        android:layout_marginBottom="16dp"
-                                        android:layout_marginStart="16dp"
-                                        app:layout_constraintStart_toStartOf="parent"
-                                        app:layout_constraintTop_toTopOf="parent"
-                                        app:layout_constraintBottom_toBottomOf="parent"
-                                        android:background="@drawable/rectangle_green"
-                                        android:padding="8dp"
-                                        android:scaleType="centerInside"
-                                        android:src="@drawable/ic_electric_meter"/>
-
-                                    <TextView
-                                        android:id="@+id/tvMeterListHeading"
-                                        android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
-                                        app:layout_constraintTop_toTopOf="@id/ivMeter"
-                                        app:layout_constraintStart_toEndOf="@id/ivMeter"
-                                        app:layout_constraintEnd_toEndOf="parent"
-                                        android:gravity="center|start"
-                                        android:layout_marginStart="8dp"
-                                        android:layout_marginEnd="8dp"
-                                        android:ellipsize="end"
-                                        android:maxLines="2"
-                                        android:scrollHorizontally="true"
-                                        android:text="@string/meter_list"
-                                        android:textColor="@color/md_grey_800"
-                                        android:textSize="16sp"
-                                        android:textStyle="bold" />
-
-                                    <TextView
-                                        android:id="@+id/tvAllMeterHeading"
-                                        android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
-                                        app:layout_constraintTop_toBottomOf="@id/tvMeterListHeading"
-                                        app:layout_constraintBottom_toBottomOf="@id/ivMeter"
-                                        app:layout_constraintStart_toEndOf="@id/ivMeter"
-                                        app:layout_constraintEnd_toEndOf="parent"
-                                        android:gravity="center|start"
-                                        android:layout_marginStart="8dp"
-                                        android:layout_marginEnd="8dp"
-                                        android:layout_marginTop="4dp"
-                                        android:ellipsize="end"
-                                        android:maxLines="1"
-                                        android:paddingBottom="2dp"
-                                        android:text="@string/all_meters"
-                                        android:textColor="@color/md_grey_800"
-                                        android:textSize="14sp" />
-
-                                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                            </androidx.cardview.widget.CardView>
-
-                            <androidx.cardview.widget.CardView
-                                android:id="@+id/bill_list"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="4dp"
-                                android:layout_marginTop="4dp"
-                                android:layout_weight="1"
-                                android:clickable="true"
-                                app:cardElevation="0dp"
-                                android:foreground="?android:attr/selectableItemBackground"
-                                app:cardBackgroundColor="@color/md_green_100"
-                                app:cardCornerRadius="10dp"
-                                app:cardUseCompatPadding="false"
-                                android:focusable="true">
-
-                                <androidx.constraintlayout.widget.ConstraintLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content">
-
-                                    <ImageView
-                                        android:id="@+id/ivElectricityBill"
-                                        android:layout_width="48dp"
-                                        android:layout_height="48dp"
-                                        android:layout_gravity="center"
-                                        android:layout_marginTop="16dp"
-                                        android:layout_marginBottom="16dp"
-                                        android:layout_marginStart="16dp"
-                                        app:layout_constraintStart_toStartOf="parent"
-                                        app:layout_constraintTop_toTopOf="parent"
-                                        app:layout_constraintBottom_toBottomOf="parent"
-                                        android:background="@drawable/rectangle_green"
-                                        android:padding="8dp"
-                                        android:scaleType="centerInside"
-                                        android:src="@drawable/ic_electricity_bill"/>
-
-                                    <TextView
-                                        android:id="@+id/tvElectricityBillHeading"
-                                        android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
-                                        app:layout_constraintTop_toTopOf="@id/ivElectricityBill"
-                                        app:layout_constraintStart_toEndOf="@id/ivElectricityBill"
-                                        app:layout_constraintEnd_toEndOf="parent"
-                                        android:gravity="center|start"
-                                        android:layout_marginStart="8dp"
-                                        android:layout_marginEnd="8dp"
-                                        android:ellipsize="end"
-                                        android:maxLines="2"
-                                        android:scrollHorizontally="true"
-                                        android:text="@string/electricity_bill"
-                                        android:textColor="@color/md_grey_800"
-                                        android:textSize="16sp"
-                                        android:textStyle="bold" />
-
-                                    <TextView
-                                        android:id="@+id/tvAllElectricityBillHeading"
-                                        android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
-                                        app:layout_constraintBottom_toBottomOf="@id/ivElectricityBill"
-                                        app:layout_constraintStart_toEndOf="@id/ivElectricityBill"
-                                        app:layout_constraintTop_toBottomOf="@id/tvElectricityBillHeading"
-                                        app:layout_constraintEnd_toEndOf="parent"
-                                        android:gravity="center|start"
-                                        android:layout_marginStart="8dp"
-                                        android:layout_marginEnd="8dp"
-                                        android:layout_marginTop="4dp"
-                                        android:ellipsize="end"
-                                        android:maxLines="1"
-                                        android:paddingBottom="2dp"
-                                        android:text="@string/all_bills"
-                                        android:textColor="@color/md_grey_800"
-                                        android:textSize="14sp" />
-
-                                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                            </androidx.cardview.widget.CardView>
-
-                        </LinearLayout>
+                        </androidx.cardview.widget.CardView>
 
                     </LinearLayout>
 

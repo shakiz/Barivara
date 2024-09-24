@@ -19,18 +19,15 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
 import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
-import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.databinding.ActivityMainBinding
 import com.shakil.barivara.presentation.auth.forgotpassword.ForgotPasswordActivity
 import com.shakil.barivara.presentation.auth.login.LoginActivity
 import com.shakil.barivara.presentation.dashboard.DashboardActivity
 import com.shakil.barivara.presentation.generatebill.GenerateBillActivity
-import com.shakil.barivara.presentation.meter.ElectricityBillListActivity
 import com.shakil.barivara.presentation.meter.MeterListActivity
 import com.shakil.barivara.presentation.note.NoteListActivity
 import com.shakil.barivara.presentation.notification.NotificationActivity
 import com.shakil.barivara.presentation.profile.ProfileActivity
-import com.shakil.barivara.presentation.room.RentListActivity
 import com.shakil.barivara.presentation.room.RoomListActivity
 import com.shakil.barivara.presentation.settings.AboutUsActivity
 import com.shakil.barivara.presentation.settings.SettingsActivity
@@ -47,7 +44,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
     NavigationView.OnNavigationItemSelectedListener {
     private lateinit var activityMainBinding: ActivityMainBinding
     private var utilsForAll = UtilsForAll(this)
-    private var firebaseCrudHelper = FirebaseCrudHelper(this)
     private lateinit var prefManager: PrefManager
     private var tools = Tools(this)
     private var customAdManager = CustomAdManager(this)
@@ -177,14 +173,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
                 )
             )
         }
-        activityMainBinding.rentList.setOnClickListener {
-            startActivity(
-                Intent(
-                    this@MainActivity,
-                    RentListActivity::class.java
-                )
-            )
-        }
 
         activityMainBinding.generateBill.setOnClickListener {
             startActivity(
@@ -195,22 +183,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
             )
         }
 
-        activityMainBinding.billList.setOnClickListener {
-            startActivity(
-                Intent(
-                    this@MainActivity,
-                    ElectricityBillListActivity::class.java
-                )
-            )
-        }
-        activityMainBinding.meterList.setOnClickListener {
-            startActivity(
-                Intent(
-                    this@MainActivity,
-                    MeterListActivity::class.java
-                )
-            )
-        }
         activityMainBinding.roomList.setOnClickListener {
             startActivity(
                 Intent(

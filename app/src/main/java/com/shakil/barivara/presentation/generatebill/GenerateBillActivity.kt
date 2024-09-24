@@ -36,7 +36,6 @@ import com.shakil.barivara.utils.DroidFileManager
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.SpinnerAdapter
 import com.shakil.barivara.utils.SpinnerData
-import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
 import com.shakil.barivara.utils.UtilsForAll
 import com.shakil.barivara.utils.Validation
@@ -56,7 +55,6 @@ class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>(),
     private var spinnerData = SpinnerData(this)
     private var spinnerAdapter = SpinnerAdapter()
     private lateinit var utilsForAll: UtilsForAll
-    private var tools = Tools(this)
     private lateinit var dialogBill: Dialog
     private lateinit var markAsPaidDialog: Dialog
     private var customAdManager = CustomAdManager(this)
