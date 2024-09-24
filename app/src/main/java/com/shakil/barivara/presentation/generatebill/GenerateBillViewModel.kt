@@ -63,4 +63,34 @@ class GenerateBillViewModel @Inject constructor(private val generalBillRepoImpl:
             }
         }
     }
+
+    fun updateBillStatus(token: String, billId: Int) {
+        viewModelScope.launch {
+            isLoading.postValue(true)
+            try {
+                val data =
+                    generalBillRepoImpl.updateBillStatus(token = token, billId = billId)
+                if (data.response != null) {
+                    bills.postValue(data.response?.billInfo)
+                    generateBillResponse.postValue(data.response)
+                } else {
+                    generateBillErrorResponse.postValue(
+                        Resource.Error(
+                            message = data.message,
+                            errorType = data.errorType
+                        )
+                    )
+                }
+                isLoading.postValue(false)
+            } catch (e: Exception) {
+                generateBillErrorResponse.postValue(
+                    Resource.Error(
+                        message = "Something went wrong, please try again",
+                        errorType = ErrorType.UNKNOWN
+                    )
+                )
+                isLoading.postValue(false)
+            }
+        }
+    }
 }

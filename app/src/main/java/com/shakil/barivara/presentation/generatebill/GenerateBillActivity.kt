@@ -31,6 +31,7 @@ import com.shakil.barivara.data.model.generatebill.BillInfo
 import com.shakil.barivara.databinding.ActivityGenerateBillBinding
 import com.shakil.barivara.presentation.adapter.RecyclerBillInfoAdapter
 import com.shakil.barivara.utils.Constants
+import com.shakil.barivara.utils.Constants.mAccessToken
 import com.shakil.barivara.utils.CustomAdManager
 import com.shakil.barivara.utils.DroidFileManager
 import com.shakil.barivara.utils.PrefManager
@@ -335,5 +336,8 @@ Service Charge : ${generateBill.serviceCharge} ${getString(R.string.taka)}"""
             RelativeLayout.LayoutParams.WRAP_CONTENT
         )
         markAsPaidDialog.show()
+        dialogBill.findViewById<Button>(R.id.submitBill).setOnClickListener {
+            viewModel.updateBillStatus(prefManager.getString(mAccessToken), 1)
+        }
     }
 }

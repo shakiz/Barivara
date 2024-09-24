@@ -220,7 +220,7 @@
             android:textColor="@color/md_grey_800" />
 
         <Button
-            android:id="@+id/sendMessage"
+            android:id="@+id/submitBill"
             android:layout_width="wrap_content"
             android:layout_below="@id/remarks"
             android:layout_height="42dp"
