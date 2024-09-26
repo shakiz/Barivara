@@ -1,7 +1,6 @@
 package com.shakil.barivara.presentation.onboard
 
 import android.Manifest
-import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
@@ -9,10 +8,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.Window
+import android.view.View
 import android.view.WindowManager
-import android.widget.Button
-import android.widget.RelativeLayout
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -25,6 +22,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
 import com.shakil.barivara.databinding.ActivityHomeBinding
+import com.shakil.barivara.presentation.GenericBottomSheet
 import com.shakil.barivara.presentation.auth.forgotpassword.ForgotPasswordActivity
 import com.shakil.barivara.presentation.auth.login.LoginActivity
 import com.shakil.barivara.presentation.dashboard.DashboardActivity
@@ -238,7 +236,25 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_logout -> {
-                tools.doPopUpForLogout(LoginActivity::class.java, prefManager)
+                val bottomSheet = GenericBottomSheet<View>(
+                    context = this,
+                    layoutResId = R.layout.logout_confirmation_layout,
+                    onClose = {
+
+                    },
+                    onPrimaryAction = {
+
+                    },
+                    onSecondaryAction = {
+                        tools.clearPrefForLogout(LoginActivity::class.java, prefManager)
+                        viewModel.logout(
+                            prefManager.getString(mUserMobile), prefManager.getString(
+                                mAccessToken
+                            )
+                        )
+                    }
+                )
+                bottomSheet.show()
                 return true
             }
 
@@ -293,32 +309,42 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
             }
 
             R.id.menu_logout -> {
-                val cancel: Button
-                val logout: Button
-                val dialog = Dialog(this, android.R.style.Theme_Dialog)
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-                dialog.setContentView(R.layout.logout_confirmation_layout)
-                dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
-                dialog.setCanceledOnTouchOutside(true)
-                cancel = dialog.findViewById(R.id.cancelButton)
-                logout = dialog.findViewById(R.id.logoutButton)
-                cancel.setOnClickListener { dialog.dismiss() }
-                logout.setOnClickListener {
-                    tools.clearPrefForLogout(LoginActivity::class.java, prefManager)
-                    viewModel.logout(
-                        prefManager.getString(mUserMobile), prefManager.getString(
-                            mAccessToken
-                        )
-                    )
-                    dialog.dismiss()
-                }
-                dialog.setCanceledOnTouchOutside(false)
-                dialog.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
-                dialog.window!!.setLayout(
-                    RelativeLayout.LayoutParams.MATCH_PARENT,
-                    RelativeLayout.LayoutParams.WRAP_CONTENT
+//                val cancel: Button
+//                val logout: Button
+//                val dialog = Dialog(this, android.R.style.Theme_Dialog)
+//                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+//                dialog.setContentView(R.layout.logout_confirmation_layout)
+//                dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+//                dialog.setCanceledOnTouchOutside(true)
+//                cancel = dialog.findViewById(R.id.cancelButton)
+//                logout = dialog.findViewById(R.id.logoutButton)
+//                cancel.setOnClickListener { dialog.dismiss() }
+//                logout.setOnClickListener {
+//                    tools.clearPrefForLogout(LoginActivity::class.java, prefManager)
+//                    viewModel.logout(
+//                        prefManager.getString(mUserMobile), prefManager.getString(
+//                            mAccessToken
+//                        )
+//                    )
+//                    dialog.dismiss()
+//                }
+//                dialog.setCanceledOnTouchOutside(false)
+//                dialog.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
+//                dialog.window!!.setLayout(
+//                    RelativeLayout.LayoutParams.MATCH_PARENT,
+//                    RelativeLayout.LayoutParams.WRAP_CONTENT
+//                )
+//                dialog.show()
+
+                val bottomSheet = GenericBottomSheet<View>(
+                    context = this,
+                    layoutResId = R.layout.logout_confirmation_layout, // Your custom layout
+                    onClose = {
+                        // Action when bottom sheet is closed (optional)
+                        println("Bottom sheet closed")
+                    }
                 )
-                dialog.show()
+                bottomSheet.show()
             }
         }
         activityMainBinding.myDrawerLayout.closeDrawer(GravityCompat.START)
