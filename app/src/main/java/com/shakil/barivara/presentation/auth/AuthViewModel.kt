@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shakil.barivara.data.model.BaseApiResponse
+import com.shakil.barivara.data.model.auth.LogoutRequest
 import com.shakil.barivara.data.model.auth.SendOtpBaseResponse
 import com.shakil.barivara.data.model.auth.VerifyOtpBaseResponse
 import com.shakil.barivara.data.repository.AuthRepoImpl
@@ -105,10 +106,11 @@ class AuthViewModel @Inject constructor(private val authRepoImpl: AuthRepoImpl) 
     }
 
     fun logout(mobileNo: String, token: String) {
+        val logoutRequest = LogoutRequest(phone = mobileNo)
         viewModelScope.launch(Dispatchers.IO) {
             isLoading.postValue(true)
             try {
-                val data = authRepoImpl.logout(mobileNo, token)
+                val data = authRepoImpl.logout(logoutRequest, token)
                 if (data.response != null) {
                     logoutResponse.postValue(data.response)
                 } else {

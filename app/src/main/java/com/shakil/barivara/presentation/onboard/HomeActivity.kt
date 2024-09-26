@@ -1,6 +1,7 @@
 package com.shakil.barivara.presentation.onboard
 
 import android.Manifest
+import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
@@ -8,7 +9,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.Window
 import android.view.WindowManager
+import android.widget.Button
+import android.widget.RelativeLayout
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -32,6 +36,7 @@ import com.shakil.barivara.presentation.tenant.TenantListActivity
 import com.shakil.barivara.presentation.tutorial.TutorialActivity
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.Constants.mAccessToken
+import com.shakil.barivara.utils.Constants.mUserMobile
 import com.shakil.barivara.utils.CustomAdManager
 import com.shakil.barivara.utils.LanguageManager
 import com.shakil.barivara.utils.PrefManager
@@ -51,7 +56,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
     private lateinit var ux: UX
     private val viewModel by viewModels<HomeViewModel>()
 
-    private val onBackPressedCallback = object : OnBackPressedCallback(true){
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
             tools.doPopUpForExitApp()
         }
@@ -287,7 +292,34 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
                 tools.rateApp()
             }
 
-            R.id.menu_logout -> tools.doPopUpForLogout(LoginActivity::class.java, prefManager)
+            R.id.menu_logout -> {
+                val cancel: Button
+                val logout: Button
+                val dialog = Dialog(this, android.R.style.Theme_Dialog)
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                dialog.setContentView(R.layout.logout_confirmation_layout)
+                dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+                dialog.setCanceledOnTouchOutside(true)
+                cancel = dialog.findViewById(R.id.cancelButton)
+                logout = dialog.findViewById(R.id.logoutButton)
+                cancel.setOnClickListener { dialog.dismiss() }
+                logout.setOnClickListener {
+                    tools.clearPrefForLogout(LoginActivity::class.java, prefManager)
+                    viewModel.logout(
+                        prefManager.getString(mUserMobile), prefManager.getString(
+                            mAccessToken
+                        )
+                    )
+                    dialog.dismiss()
+                }
+                dialog.setCanceledOnTouchOutside(false)
+                dialog.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
+                dialog.window!!.setLayout(
+                    RelativeLayout.LayoutParams.MATCH_PARENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT
+                )
+                dialog.show()
+            }
         }
         activityMainBinding.myDrawerLayout.closeDrawer(GravityCompat.START)
         return true

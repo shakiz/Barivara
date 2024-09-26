@@ -4,8 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.shakil.barivara.data.model.auth.LogoutRequest
 import com.shakil.barivara.data.model.room.NewRoom
 import com.shakil.barivara.data.model.tenant.Tenant
+import com.shakil.barivara.data.repository.AuthRepoImpl
 import com.shakil.barivara.data.repository.RoomRepoImpl
 import com.shakil.barivara.data.repository.TenantRepoImpl
 import com.shakil.barivara.utils.ErrorType
@@ -18,6 +20,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val tenantRepoImpl: TenantRepoImpl,
     private val roomRepoImpl: RoomRepoImpl,
+    private val authRepoImpl: AuthRepoImpl
 ) : ViewModel() {
     var isLoading = MutableLiveData<Boolean>()
     private var tenants = MutableLiveData<List<Tenant>>()
@@ -81,6 +84,13 @@ class HomeViewModel @Inject constructor(
                     )
                 )
             }
+        }
+    }
+
+    fun logout(mobile: String, token: String) {
+        val logoutRequest = LogoutRequest(phone = mobile)
+        viewModelScope.launch {
+            authRepoImpl.logout(logoutRequest, token)
         }
     }
 }

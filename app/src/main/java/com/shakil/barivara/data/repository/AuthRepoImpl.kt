@@ -2,6 +2,7 @@ package com.shakil.barivara.data.repository
 
 import com.google.gson.Gson
 import com.shakil.barivara.data.model.BaseApiResponse
+import com.shakil.barivara.data.model.auth.LogoutRequest
 import com.shakil.barivara.data.model.auth.SendOtpBaseResponse
 import com.shakil.barivara.data.model.auth.SendOtpRequest
 import com.shakil.barivara.data.model.auth.VerifyOtpBaseResponse
@@ -93,13 +94,16 @@ class AuthRepoImpl @Inject constructor(
         }
     }
 
-    override suspend fun logout(mobileNo: String, token: String): Resource<BaseApiResponse> {
+    override suspend fun logout(
+        logoutRequest: LogoutRequest,
+        token: String
+    ): Resource<BaseApiResponse> {
         try {
             val task = authService.logout(
                 token = token,
                 accept = Constants.ACCEPT,
                 contentType = Constants.CONTENT_TYPE,
-                mobileNo = mobileNo
+                logoutRequest = logoutRequest
             )
             if (task.isSuccessful) {
                 task.body()?.let {

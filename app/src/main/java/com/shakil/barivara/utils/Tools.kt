@@ -33,9 +33,9 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.shakil.barivara.R
 import com.shakil.barivara.presentation.auth.login.LoginActivity
+import com.shakil.barivara.presentation.auth.onboard.WelcomeActivity
 import com.shakil.barivara.presentation.onboard.HomeActivity
 import com.shakil.barivara.presentation.onboard.SplashActivity
-import com.shakil.barivara.presentation.auth.onboard.WelcomeActivity
 import com.shakil.barivara.utils.Constants.REQUEST_CALL_CODE
 import com.shakil.barivara.utils.Constants.TAG
 import com.shakil.barivara.utils.Constants.VALID_EMAIL_ADDRESS_REGEX
@@ -131,7 +131,7 @@ class Tools(private val context: Context) {
         dialog.show()
     }
 
-    private fun clearPrefForLogout(to: Class<*>, prefManager: PrefManager) {
+    fun clearPrefForLogout(to: Class<*>, prefManager: PrefManager) {
         prefManager[mAppViewCount] = 0
         prefManager[mIsLoggedIn] = false
         prefManager[mUserId] = ""
