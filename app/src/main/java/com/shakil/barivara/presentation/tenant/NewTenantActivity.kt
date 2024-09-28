@@ -13,6 +13,8 @@ import com.shakil.barivara.data.model.tenant.Tenant
 import com.shakil.barivara.databinding.ActivityAddNewTenantBinding
 import com.shakil.barivara.utils.Constants.mAccessToken
 import com.shakil.barivara.utils.CustomAdManager
+import com.shakil.barivara.utils.DatePickerCallback
+import com.shakil.barivara.utils.DatePickerManager
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.SpinnerAdapter
 import com.shakil.barivara.utils.SpinnerData
@@ -58,6 +60,7 @@ class NewTenantActivity : BaseActivity<ActivityAddNewTenantBinding>() {
         setSupportActionBar(activityAddNewTenantBinding.toolBar)
         activityAddNewTenantBinding.toolBar.setNavigationOnClickListener { finish() }
         bindUiWithComponents()
+        initListeners()
         loadData()
         initObservers()
     }
@@ -69,7 +72,17 @@ class NewTenantActivity : BaseActivity<ActivityAddNewTenantBinding>() {
                     intent.getParcelableExtra("tenant", Tenant::class.java)!!
                 } else {
                     intent.getParcelableExtra("tenant")!!
-            }
+                }
+        }
+    }
+
+    private fun initListeners() {
+        activityAddNewTenantBinding.StartingMonthId.setOnClickListener {
+            DatePickerManager().showDatePicker(this, object : DatePickerCallback {
+                override fun onDateSelected(date: String) {
+                    activityAddNewTenantBinding.StartingMonthId.setText(date)
+                }
+            })
         }
     }
 
