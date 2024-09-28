@@ -5,11 +5,6 @@ import android.content.Context
 import android.widget.DatePicker
 import java.util.Calendar
 
-
-interface DatePickerCallback {
-    fun onDateSelected(date: String)
-}
-
 class DatePickerManager {
     fun showDatePicker(context: Context, callback: DatePickerCallback) {
         val calendar: Calendar = Calendar.getInstance()
@@ -25,5 +20,9 @@ class DatePickerManager {
                 callback.onDateSelected(selectedDate)
             }, year, month, day
         ).show()
+    }
+
+    interface DatePickerCallback {
+        fun onDateSelected(date: String)
     }
 }

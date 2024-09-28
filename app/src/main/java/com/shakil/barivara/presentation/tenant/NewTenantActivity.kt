@@ -12,8 +12,6 @@ import com.shakil.barivara.R
 import com.shakil.barivara.data.model.tenant.Tenant
 import com.shakil.barivara.databinding.ActivityAddNewTenantBinding
 import com.shakil.barivara.utils.Constants.mAccessToken
-import com.shakil.barivara.utils.CustomAdManager
-import com.shakil.barivara.utils.DatePickerCallback
 import com.shakil.barivara.utils.DatePickerManager
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.SpinnerAdapter
@@ -39,7 +37,6 @@ class NewTenantActivity : BaseActivity<ActivityAddNewTenantBinding>() {
     private var advancedAmountInt = 0
     private var utilsForAll = UtilsForAll(this)
     private var tools = Tools(this)
-    private var customAdManager = CustomAdManager(this)
     private lateinit var prefManager: PrefManager
     private lateinit var ux: UX
 
@@ -78,9 +75,17 @@ class NewTenantActivity : BaseActivity<ActivityAddNewTenantBinding>() {
 
     private fun initListeners() {
         activityAddNewTenantBinding.StartingMonthId.setOnClickListener {
-            DatePickerManager().showDatePicker(this, object : DatePickerCallback {
+            DatePickerManager().showDatePicker(this, object : DatePickerManager.DatePickerCallback {
                 override fun onDateSelected(date: String) {
                     activityAddNewTenantBinding.StartingMonthId.setText(date)
+                }
+            })
+        }
+
+        activityAddNewTenantBinding.EndMonthId.setOnClickListener {
+            DatePickerManager().showDatePicker(this, object : DatePickerManager.DatePickerCallback {
+                override fun onDateSelected(date: String) {
+                    activityAddNewTenantBinding.EndMonthId.setText(date)
                 }
             })
         }
@@ -106,7 +111,6 @@ class NewTenantActivity : BaseActivity<ActivityAddNewTenantBinding>() {
     }
 
     private fun bindUiWithComponents() {
-        customAdManager.generateAd(activityAddNewTenantBinding.adView)
         validation.setEditTextIsNotEmpty(
             arrayOf("TenantName", "NID", "MobileNo"), arrayOf(
                 getString(R.string.tenant_amount_validation),
