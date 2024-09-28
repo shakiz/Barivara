@@ -21,7 +21,6 @@ import com.shakil.barivara.presentation.adapter.RecyclerRoomListAdapter
 import com.shakil.barivara.presentation.adapter.RecyclerRoomListAdapter.RoomCallBacks
 import com.shakil.barivara.presentation.onboard.HomeActivity
 import com.shakil.barivara.utils.Constants.mAccessToken
-import com.shakil.barivara.utils.CustomAdManager
 import com.shakil.barivara.utils.FilterManager
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Tools
@@ -34,7 +33,6 @@ class RoomListActivity : BaseActivity<ActivityRoomListBinding>(), RoomCallBacks 
     private lateinit var ux: UX
     private var tools = Tools(this)
     private var filterManager = FilterManager()
-    private var customAdManager = CustomAdManager(this)
     private lateinit var prefManager: PrefManager
     private val viewModel by viewModels<RoomViewModel>()
     private lateinit var recyclerRoomListAdapter: RecyclerRoomListAdapter
@@ -59,7 +57,6 @@ class RoomListActivity : BaseActivity<ActivityRoomListBinding>(), RoomCallBacks 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setSupportActionBar(activityRoomListBinding.toolBar)
-        customAdManager.generateAd(activityRoomListBinding.adView)
         activityRoomListBinding.searchLayout.SearchName.hint = getString(R.string.search_room_name)
 
         init()

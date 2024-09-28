@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -8,24 +7,21 @@
         android:id="@+id/parent_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/window_background"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        tools:context=".presentation.activities.meter.MeterListActivity">
+        android:background="@color/window_background">
 
         <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@color/md_white_1000"
-            app:elevation="0dp"
-            android:id="@+id/app_bar">
+            app:elevation="0dp">
 
             <androidx.appcompat.widget.Toolbar
+                android:id="@+id/tool_bar"
+                style="@style/TextAppearance.Widget.Event.Toolbar.Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/tool_bar"
                 app:navigationIcon="?attr/homeAsUpIndicator"
-                style="@style/TextAppearance.Widget.Event.Toolbar.Title"
                 app:title="@string/room_list"
                 app:titleTextColor="@color/md_grey_800">
 
@@ -34,11 +30,10 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/mainLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="42dp"
             android:layout_below="@id/app_bar"
-            android:id="@+id/mainLayout"
             app:cardBackgroundColor="@color/md_grey_100"
             app:cardCornerRadius="0dp"
             app:cardElevation="0dp">
@@ -50,32 +45,32 @@
 
                 <include
                     android:id="@+id/search_layout"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginRight="12dp"
-                    android:layout_marginLeft="12dp"
                     layout="@layout/custom_search_panel_name"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="12dp" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginRight="8dp"
                     android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/mNoDataMessage"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
                         android:gravity="center"
                         android:text="@string/no_data_message"
-                        android:layout_centerInParent="true"
-                        android:textSize="24sp"
                         android:textColor="@color/colorRed"
+                        android:textSize="24sp"
                         android:textStyle="bold"
-                        android:visibility="gone"/>
+                        android:visibility="gone" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/mRecylerView"
@@ -102,53 +97,38 @@
             android:id="@+id/mAddRoomMaster"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:clickable="true"
-            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:background="@drawable/button_shape_round_corner_gradient_light"
-            android:layout_marginBottom="56dp"
-            android:layout_marginRight="16dp"
-            android:gravity="center"
-            android:layout_alignParentRight="true"
-            android:orientation="horizontal"
-            android:focusable="true"
             android:layout_marginEnd="16dp"
-            android:layout_alignParentEnd="true">
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/button_shape_round_corner_gradient_light"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="42dp"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 android:clickable="false"
                 android:padding="8dp"
-                android:src="@drawable/ic_action_add"
-                android:layout_marginStart="8dp" />
+                android:src="@drawable/ic_action_add" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_gravity="center|left"
-                android:gravity="center|left"
-                android:clickable="false"
-                android:text="@string/add_room"
-                android:textSize="14sp"
-                android:layout_marginRight="20dp"
+                android:layout_gravity="center|start"
+                android:layout_marginEnd="20dp"
                 android:background="@color/transparent"
+                android:clickable="false"
+                android:gravity="center|start"
+                android:text="@string/add_room"
                 android:textAllCaps="true"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:textSize="14sp" />
 
         </LinearLayout>
-
-        <com.google.android.gms.ads.AdView
-            xmlns:ads="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/adView"
-            android:layout_width="match_parent"
-            android:layout_height="42dp"
-            android:background="@color/transparent"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            ads:adSize="BANNER"
-            ads:adUnitId="ca-app-pub-3017517613101119/5605971007"/>
 
     </RelativeLayout>
 
