@@ -8,10 +8,7 @@
         android:id="@+id/parent_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/window_background"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        tools:context=".presentation.activities.meter.MeterListActivity">
+        android:background="@color/window_background">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
@@ -36,7 +33,6 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="56dp"
             android:layout_below="@id/app_bar"
             android:id="@+id/mainLayout"
             app:cardBackgroundColor="@color/md_grey_100"
@@ -102,13 +98,10 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:clickable="true"
-            android:foreground="?attr/selectableItemBackgroundBorderless"
             android:layout_alignParentBottom="true"
             android:background="@drawable/button_shape_round_corner_gradient_light"
-            android:layout_marginBottom="56dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginBottom="20dp"
             android:gravity="center"
-            android:layout_alignParentRight="true"
             android:orientation="horizontal"
             android:focusable="true"
             android:layout_marginEnd="16dp"
@@ -117,7 +110,6 @@
             <ImageView
                 android:layout_width="42dp"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="8dp"
                 android:clickable="false"
                 android:padding="8dp"
                 android:src="@drawable/ic_action_add"
@@ -126,8 +118,8 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_gravity="center|left"
-                android:gravity="center|left"
+                android:layout_gravity="center|start"
+                android:gravity="center|start"
                 android:clickable="false"
                 android:text="@string/add_tenant"
                 android:textSize="14sp"
@@ -137,16 +129,6 @@
                 android:textColor="@android:color/white" />
 
         </LinearLayout>
-
-        <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/adView"
-            android:layout_width="match_parent"
-            android:layout_height="42dp"
-            android:background="@color/transparent"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            ads:adSize="BANNER"
-            ads:adUnitId="ca-app-pub-3017517613101119/5605971007" />
 
     </RelativeLayout>
 

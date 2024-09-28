@@ -27,7 +27,6 @@ import com.shakil.barivara.presentation.adapter.RecyclerAdapterTenantList.Tenant
 import com.shakil.barivara.presentation.onboard.HomeActivity
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.Constants.mAccessToken
-import com.shakil.barivara.utils.CustomAdManager
 import com.shakil.barivara.utils.FilterManager
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Tools
@@ -40,7 +39,6 @@ class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCall
     private lateinit var ux: UX
     private var tools = Tools(this)
     private var filterManager = FilterManager()
-    private var customAdManager = CustomAdManager(this)
     private lateinit var prefManager: PrefManager
     private lateinit var recyclerAdapterTenantList: RecyclerAdapterTenantList
     private val viewModel by viewModels<TenantViewModel>()
@@ -65,7 +63,6 @@ class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCall
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setSupportActionBar(activityTenantListBinding.toolBar)
-        customAdManager.generateAd(activityTenantListBinding.adView)
         activityTenantListBinding.searchLayout.SearchName.hint =
             getString(R.string.search_tenant_name)
         init()

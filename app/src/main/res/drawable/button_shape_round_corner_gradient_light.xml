@@ -4,11 +4,7 @@
     android:color="@color/md_cyan_600"
     android:shape="rectangle">
 
-    <gradient
-        android:angle="90"
-        android:endColor="@color/md_green_400"
-        android:startColor="@color/md_cyan_600"
-        android:type="linear" />
+    <solid android:color="@color/md_green_800" />
     <corners android:radius="20dp" />
 
 </shape>
