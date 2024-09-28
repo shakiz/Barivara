@@ -16,6 +16,8 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSnapHelper
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
@@ -23,6 +25,7 @@ import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
 import com.shakil.barivara.databinding.ActivityHomeBinding
 import com.shakil.barivara.presentation.GenericBottomSheet
+import com.shakil.barivara.presentation.adapter.ImageSliderAdapter
 import com.shakil.barivara.presentation.auth.forgotpassword.ForgotPasswordActivity
 import com.shakil.barivara.presentation.auth.login.LoginActivity
 import com.shakil.barivara.presentation.dashboard.DashboardActivity
@@ -42,6 +45,7 @@ import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
 import com.shakil.barivara.utils.UtilsForAll
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class HomeActivity : BaseActivity<ActivityHomeBinding>(),
@@ -69,6 +73,15 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Set up the adapter
+        val adapter = ImageSliderAdapter(this, viewModel.getSliderData())
+        val snapHelper = LinearSnapHelper()
+        snapHelper.attachToRecyclerView(activityMainBinding.imageSlider)
+        activityMainBinding.imageSlider.adapter = adapter
+        activityMainBinding.imageSlider.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+
         init()
         activityMainBinding.toolBar.setTitleTextColor(
             ContextCompat.getColor(
@@ -334,4 +347,5 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
         activityMainBinding.myDrawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
+
 }
