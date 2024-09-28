@@ -433,4 +433,7 @@
     <string name="room_status">Room Status</string>
     <string name="validation_email">Enter your email</string>
     <string name="rent_status_updated_successfully">Rent Status Updated Successfully</string>
+    <string name="occupied">Occupied</string>
+    <string name="vacant">Vacant</string>
+    <string name="abandoned">Abandoned</string>
 </resources>

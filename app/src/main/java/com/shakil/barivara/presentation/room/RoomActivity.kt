@@ -13,7 +13,6 @@ import com.shakil.barivara.data.model.room.Room
 import com.shakil.barivara.data.model.room.RoomStatus
 import com.shakil.barivara.databinding.ActivityAddNewRoomBinding
 import com.shakil.barivara.presentation.tenant.TenantListActivity
-import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.Constants.mAccessToken
 import com.shakil.barivara.utils.CustomAdManager
 import com.shakil.barivara.utils.PrefManager
@@ -48,6 +47,7 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
     private val viewModel by viewModels<RoomViewModel>()
     override val layoutResourceId: Int
         get() = R.layout.activity_add_new_room
+
     override fun setVariables(dataBinding: ActivityAddNewRoomBinding) {
         activityAddNewRoomBinding = dataBinding
     }
@@ -218,9 +218,9 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
         room.status = selectedRoomStatus.statusToString()
         room.electricityMeterNo = activityAddNewRoomBinding.ElectricityMeterNo.text.toString()
         if (command == "add") {
-            viewModel.addRoom(prefManager.getString(Constants.mAccessToken), room)
+            viewModel.addRoom(prefManager.getString(mAccessToken), room)
         } else {
-            viewModel.updateRoom(prefManager.getString(Constants.mAccessToken), room.id, room)
+            viewModel.updateRoom(prefManager.getString(mAccessToken), room.id, room)
         }
     }
 }
