@@ -10,7 +10,7 @@ import androidx.activity.viewModels
 import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
 import com.shakil.barivara.data.model.tenant.Tenant
-import com.shakil.barivara.databinding.ActivityAddNewTenantBinding
+import com.shakil.barivara.databinding.ActivityTenantBinding
 import com.shakil.barivara.utils.Constants.mAccessToken
 import com.shakil.barivara.utils.DatePickerManager
 import com.shakil.barivara.utils.PrefManager
@@ -24,17 +24,17 @@ import dagger.hilt.android.AndroidEntryPoint
 import es.dmoral.toasty.Toasty
 
 @AndroidEntryPoint
-class NewTenantActivity : BaseActivity<ActivityAddNewTenantBinding>() {
-    private lateinit var activityAddNewTenantBinding: ActivityAddNewTenantBinding
+class TenantActivity : BaseActivity<ActivityTenantBinding>() {
+    private lateinit var activityAddNewTenantBinding: ActivityTenantBinding
     private var spinnerAdapter = SpinnerAdapter()
     private var spinnerData = SpinnerData(this)
-    private var TenantTypeId = 0
+    private var tenantTypeId: Int = 0
     private var tenantNameStr: String = ""
     private var tenant = Tenant()
     private var command = "add"
     private val hashMap: Map<String?, Array<String>?> = HashMap()
     private var validation = Validation(this, hashMap)
-    private var advancedAmountInt = 0
+    private var advancedAmountInt: Int = 0
     private var utilsForAll = UtilsForAll(this)
     private var tools = Tools(this)
     private lateinit var prefManager: PrefManager
@@ -43,9 +43,9 @@ class NewTenantActivity : BaseActivity<ActivityAddNewTenantBinding>() {
     private val viewModel by viewModels<TenantViewModel>()
 
     override val layoutResourceId: Int
-        get() = R.layout.activity_add_new_tenant
+        get() = R.layout.activity_tenant
 
-    override fun setVariables(dataBinding: ActivityAddNewTenantBinding) {
+    override fun setVariables(dataBinding: ActivityTenantBinding) {
         activityAddNewTenantBinding = dataBinding
     }
 
@@ -74,18 +74,18 @@ class NewTenantActivity : BaseActivity<ActivityAddNewTenantBinding>() {
     }
 
     private fun initListeners() {
-        activityAddNewTenantBinding.StartingMonthId.setOnClickListener {
+        activityAddNewTenantBinding.startingMonthId.setOnClickListener {
             DatePickerManager().showDatePicker(this, object : DatePickerManager.DatePickerCallback {
                 override fun onDateSelected(date: String) {
-                    activityAddNewTenantBinding.StartingMonthId.setText(date)
+                    activityAddNewTenantBinding.startingMonthId.setText(date)
                 }
             })
         }
 
-        activityAddNewTenantBinding.EndMonthId.setOnClickListener {
+        activityAddNewTenantBinding.endMonthId.setOnClickListener {
             DatePickerManager().showDatePicker(this, object : DatePickerManager.DatePickerCallback {
                 override fun onDateSelected(date: String) {
-                    activityAddNewTenantBinding.EndMonthId.setText(date)
+                    activityAddNewTenantBinding.endMonthId.setText(date)
                 }
             })
         }
@@ -96,16 +96,16 @@ class NewTenantActivity : BaseActivity<ActivityAddNewTenantBinding>() {
             command = "update"
             activityAddNewTenantBinding.TenantName.setText(tenant.name)
             activityAddNewTenantBinding.AssociateRoomId.visibility = View.GONE
-            activityAddNewTenantBinding.StartingMonthId.setText(tenant.startDate)
-            activityAddNewTenantBinding.NID.setText(tenant.nidNumber)
-            activityAddNewTenantBinding.MobileNo.setText(tenant.phone)
+            activityAddNewTenantBinding.startingMonthId.setText(tenant.startDate)
+            activityAddNewTenantBinding.nid.setText(tenant.nidNumber)
+            activityAddNewTenantBinding.mobileNo.setText(tenant.phone)
             if ((tenant.advancedAmount ?: 0) > 0) {
                 activityAddNewTenantBinding.headingAdvanceAmount.visibility = View.VISIBLE
-                activityAddNewTenantBinding.AdvanceAmount.visibility = View.VISIBLE
-                activityAddNewTenantBinding.AdvanceCheckBox.isChecked = true
-                activityAddNewTenantBinding.AdvanceAmount.setText("${tenant.advancedAmount}")
-                activityAddNewTenantBinding.AdvanceCheckBox.isEnabled = false
-                activityAddNewTenantBinding.AdvanceAmount.isEnabled = false
+                activityAddNewTenantBinding.advanceAmount.visibility = View.VISIBLE
+                activityAddNewTenantBinding.advanceCheckBox.isChecked = true
+                activityAddNewTenantBinding.advanceAmount.setText("${tenant.advancedAmount}")
+                activityAddNewTenantBinding.advanceCheckBox.isEnabled = false
+                activityAddNewTenantBinding.advanceAmount.isEnabled = false
             }
         }
     }
@@ -120,21 +120,21 @@ class NewTenantActivity : BaseActivity<ActivityAddNewTenantBinding>() {
         )
         validation.setSpinnerIsNotEmpty(arrayOf("TenantTypeId"))
         spinnerAdapter.setSpinnerAdapter(
-            activityAddNewTenantBinding.TenantTypeId,
+            activityAddNewTenantBinding.tenantTypeId,
             this,
             spinnerData.setTenantTypeData()
         )
-        activityAddNewTenantBinding.AdvanceCheckBox.setOnCheckedChangeListener { compoundButton, visibilityValue ->
+        activityAddNewTenantBinding.advanceCheckBox.setOnCheckedChangeListener { compoundButton, visibilityValue ->
             if (visibilityValue) {
                 activityAddNewTenantBinding.headingAdvanceAmount.visibility = View.VISIBLE
-                activityAddNewTenantBinding.AdvanceAmount.visibility = View.VISIBLE
-                activityAddNewTenantBinding.AdvanceAmount.setText("")
+                activityAddNewTenantBinding.advanceAmount.visibility = View.VISIBLE
+                activityAddNewTenantBinding.advanceAmount.setText("")
             } else {
                 activityAddNewTenantBinding.headingAdvanceAmount.visibility = View.GONE
-                activityAddNewTenantBinding.AdvanceAmount.visibility = View.GONE
+                activityAddNewTenantBinding.advanceAmount.visibility = View.GONE
             }
         }
-        activityAddNewTenantBinding.TenantTypeId.onItemSelectedListener =
+        activityAddNewTenantBinding.tenantTypeId.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>,
@@ -142,7 +142,7 @@ class NewTenantActivity : BaseActivity<ActivityAddNewTenantBinding>() {
                     position: Int,
                     id: Long
                 ) {
-                    TenantTypeId = position
+                    tenantTypeId = position
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -151,17 +151,17 @@ class NewTenantActivity : BaseActivity<ActivityAddNewTenantBinding>() {
         activityAddNewTenantBinding.mSaveTenantMaster.setOnClickListener {
             if (validation.isValid) {
                 if (tools.hasConnection()) {
-                    if (utilsForAll.isValidMobileNo(activityAddNewTenantBinding.MobileNo.text.toString())) {
+                    if (utilsForAll.isValidMobileNo(activityAddNewTenantBinding.mobileNo.text.toString())) {
                         if (activityAddNewTenantBinding.headingAdvanceAmount.visibility == View.VISIBLE) {
-                            if (!TextUtils.isEmpty(activityAddNewTenantBinding.AdvanceAmount.text.toString())) {
+                            if (!TextUtils.isEmpty(activityAddNewTenantBinding.advanceAmount.text.toString())) {
                                 advancedAmountInt =
-                                    activityAddNewTenantBinding.AdvanceAmount.text.toString()
+                                    activityAddNewTenantBinding.advanceAmount.text.toString()
                                         .toInt()
                                 tenant.advancedAmount = advancedAmountInt
                                 saveOrUpdateData()
                             } else {
                                 Toast.makeText(
-                                    this@NewTenantActivity,
+                                    this@TenantActivity,
                                     getString(R.string.advance_amount_validation),
                                     Toast.LENGTH_SHORT
                                 ).show()
@@ -171,14 +171,14 @@ class NewTenantActivity : BaseActivity<ActivityAddNewTenantBinding>() {
                         }
                     } else {
                         Toast.makeText(
-                            this@NewTenantActivity,
+                            this@TenantActivity,
                             getString(R.string.validation_mobile_number_length),
                             Toast.LENGTH_SHORT
                         ).show()
                     }
                 } else {
                     Toast.makeText(
-                        this@NewTenantActivity,
+                        this@TenantActivity,
                         getString(R.string.no_internet_title),
                         Toast.LENGTH_SHORT
                     ).show()
@@ -198,7 +198,7 @@ class NewTenantActivity : BaseActivity<ActivityAddNewTenantBinding>() {
 
         viewModel.getAddTenantResponse().observe(this) { response ->
             Toasty.success(applicationContext, response, Toast.LENGTH_SHORT).show()
-            startActivity(Intent(this@NewTenantActivity, TenantListActivity::class.java))
+            startActivity(Intent(this@TenantActivity, TenantListActivity::class.java))
         }
 
         viewModel.getAddTenantErrorResponse().observe(this) { errorResponse ->
@@ -207,7 +207,7 @@ class NewTenantActivity : BaseActivity<ActivityAddNewTenantBinding>() {
 
         viewModel.getUpdateTenantResponse().observe(this) { response ->
             Toasty.success(applicationContext, response, Toast.LENGTH_SHORT).show()
-            startActivity(Intent(this@NewTenantActivity, TenantListActivity::class.java))
+            startActivity(Intent(this@TenantActivity, TenantListActivity::class.java))
         }
 
         viewModel.getUpdateTenantErrorResponse().observe(this) { errorResponse ->
@@ -218,9 +218,9 @@ class NewTenantActivity : BaseActivity<ActivityAddNewTenantBinding>() {
     private fun saveOrUpdateData() {
         tenantNameStr = activityAddNewTenantBinding.TenantName.text.toString()
         tenant.name = tenantNameStr
-        tenant.nidNumber = activityAddNewTenantBinding.NID.text.toString()
-        tenant.phone = activityAddNewTenantBinding.MobileNo.text.toString()
-        tenant.startDate = activityAddNewTenantBinding.StartingMonthId.text.toString()
+        tenant.nidNumber = activityAddNewTenantBinding.nid.text.toString()
+        tenant.phone = activityAddNewTenantBinding.mobileNo.text.toString()
+        tenant.startDate = activityAddNewTenantBinding.startingMonthId.text.toString()
         if (command == "add") {
             viewModel.addTenant(prefManager.getString(mAccessToken), tenant)
         } else {

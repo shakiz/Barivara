@@ -90,7 +90,7 @@ class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCall
             startActivity(
                 Intent(
                     this@TenantListActivity,
-                    NewTenantActivity::class.java
+                    TenantActivity::class.java
                 )
             )
         }
@@ -264,7 +264,7 @@ class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCall
         startActivity(
             Intent(
                 this@TenantListActivity,
-                NewTenantActivity::class.java
+                TenantActivity::class.java
             ).putExtra("tenant", tenant)
         )
     }
@@ -273,7 +273,7 @@ class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCall
         startActivity(
             Intent(
                 this@TenantListActivity,
-                NewTenantActivity::class.java
+                TenantActivity::class.java
             ).putExtra("tenant", tenant)
         )
     }
