@@ -8,7 +8,6 @@ import com.shakil.barivara.R
 import com.shakil.barivara.data.model.user.UserInfo
 import com.shakil.barivara.databinding.ActivityProfileBinding
 import com.shakil.barivara.utils.Constants.mAccessToken
-import com.shakil.barivara.utils.CustomAdManager
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.UX
 import com.shakil.barivara.utils.Validation
@@ -19,7 +18,6 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>() {
     private lateinit var activityBinding: ActivityProfileBinding
     private val hashMap: Map<String?, Array<String>?> = HashMap()
     private var validation = Validation(this, hashMap)
-    private var customAdManager = CustomAdManager(this)
     private lateinit var prefManager: PrefManager
     private lateinit var ux: UX
     private val viewModel by viewModels<UserViewModel>()
@@ -41,7 +39,6 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>() {
 
     private fun initUI() {
         validation = Validation(this, hashMap)
-        customAdManager = CustomAdManager(this)
         prefManager = PrefManager(this)
         ux = UX(this)
     }
@@ -49,13 +46,13 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>() {
     private fun initObservers() {
         viewModel.getUserInfo().observe(this) { userInfo ->
             userInfo?.let {
-                activityBinding.Name.setText(
+                activityBinding.name.setText(
                     userInfo.name
                 )
-                activityBinding.Mobile.setText(
+                activityBinding.mobile.setText(
                     userInfo.phone
                 )
-                activityBinding.Email.setText(
+                activityBinding.email.setText(
                     userInfo.email
                 )
             }
@@ -71,7 +68,6 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>() {
     }
 
     private fun bindUiWithComponents() {
-        customAdManager.generateAd(activityBinding.adView)
         validation.setEditTextIsNotEmpty(
             arrayOf("Name", "Email"), arrayOf(
                 getString(R.string.validation_name),
@@ -83,8 +79,8 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>() {
         activityBinding.saveOrUpdate.setOnClickListener {
             if (validation.isValid) {
                 val user = UserInfo(
-                    name = activityBinding.Name.text.toString(),
-                    email = activityBinding.Email.text.toString(),
+                    name = activityBinding.name.text.toString(),
+                    email = activityBinding.email.text.toString(),
                 )
                 viewModel.updateProfile(user, prefManager.getString(mAccessToken))
             }
