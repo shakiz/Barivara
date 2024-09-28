@@ -30,12 +30,20 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/app_bar"
             android:layout_margin="16dp"
             android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="@string/name"
+                android:textColor="@color/md_grey_900"
+                android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/name"
@@ -44,21 +52,30 @@
                 android:layout_height="48dp"
                 android:drawableStart="@drawable/ic_person"
                 android:drawablePadding="8dp"
+                android:layout_marginTop="6dp"
                 android:background="@drawable/edit_text_back"
                 android:focusable="false"
                 android:gravity="center|start"
                 android:inputType="text"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
-                android:text="@string/name"
+                android:hint="@string/name_hint"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/mobile"
+                android:textColor="@color/md_grey_900"
+                android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/mobile"
                 style="@style/profileDetailsTextMain"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="6dp"
                 android:drawableStart="@drawable/ic_phone"
                 android:drawablePadding="8dp"
                 android:background="@drawable/edit_text_back"
@@ -68,8 +85,16 @@
                 android:maxLength="11"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
-                android:text="@string/mobile"
+                android:hint="@string/mobile_number_hint"
                 app:layout_constraintTop_toBottomOf="@id/name" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/email"
+                android:textColor="@color/md_grey_900"
+                android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/email"
@@ -79,13 +104,13 @@
                 android:drawableStart="@drawable/ic_email_white"
                 android:drawableTint="@color/md_grey_700"
                 android:drawablePadding="8dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="6dp"
                 android:background="@drawable/edit_text_back"
                 android:gravity="center|start"
                 android:inputType="textEmailAddress"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
-                android:text="@string/email"
+                android:hint="@string/email_hint"
                 app:layout_constraintTop_toBottomOf="@id/mobile" />
 
             <Button
@@ -99,7 +124,7 @@
                 android:textAllCaps="false"
                 app:layout_constraintTop_toBottomOf="@id/email" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
     </RelativeLayout>
 
