@@ -2,7 +2,7 @@ package com.shakil.barivara.utils
 
 import com.shakil.barivara.data.model.meter.ElectricityBill
 import com.shakil.barivara.data.model.meter.Meter
-import com.shakil.barivara.data.model.room.NewRoom
+import com.shakil.barivara.data.model.room.Room
 import com.shakil.barivara.data.model.room.Rent
 import com.shakil.barivara.data.model.tenant.Tenant
 import java.util.Locale
@@ -10,10 +10,10 @@ import java.util.Locale
 class FilterManager {
     fun onFilterClick(
         searchText: String,
-        sourceList: List<NewRoom>,
+        sourceList: List<Room>,
         onFilterClick: onFilterClick
     ) {
-        val roomList = ArrayList<NewRoom>()
+        val roomList = ArrayList<Room>()
         for (start in sourceList.indices) {
             if (sourceList[start].name.orEmpty().lowercase(Locale.getDefault()).contains(
                     searchText.lowercase(
@@ -108,7 +108,7 @@ class FilterManager {
     }
 
     interface onFilterClick {
-        fun onClick(objects: ArrayList<NewRoom>)
+        fun onClick(objects: ArrayList<Room>)
     }
 
     interface onMeterFilterClick {

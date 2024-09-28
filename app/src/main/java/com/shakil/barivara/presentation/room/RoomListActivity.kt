@@ -15,7 +15,7 @@ import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
-import com.shakil.barivara.data.model.room.NewRoom
+import com.shakil.barivara.data.model.room.Room
 import com.shakil.barivara.databinding.ActivityRoomListBinding
 import com.shakil.barivara.presentation.adapter.RecyclerRoomListAdapter
 import com.shakil.barivara.presentation.adapter.RecyclerRoomListAdapter.RoomCallBacks
@@ -101,7 +101,7 @@ class RoomListActivity : BaseActivity<ActivityRoomListBinding>(), RoomCallBacks 
                         activityRoomListBinding.searchLayout.SearchName.text.toString(),
                         viewModel.getRooms().value.orEmpty(),
                         object : FilterManager.onFilterClick {
-                            override fun onClick(objects: ArrayList<NewRoom>) {
+                            override fun onClick(objects: ArrayList<Room>) {
                                 if (objects.size > 0) {
                                     Tools.hideKeyboard(this@RoomListActivity)
                                     Toast.makeText(
@@ -181,7 +181,7 @@ class RoomListActivity : BaseActivity<ActivityRoomListBinding>(), RoomCallBacks 
         recyclerRoomListAdapter.setRoomCallBack(this)
     }
 
-    private fun doPopUpForDeleteConfirmation(room: NewRoom) {
+    private fun doPopUpForDeleteConfirmation(room: Room) {
         val dialog = Dialog(this@RoomListActivity, android.R.style.Theme_Dialog)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.delete_confirmation_layout)
@@ -203,11 +203,11 @@ class RoomListActivity : BaseActivity<ActivityRoomListBinding>(), RoomCallBacks 
         dialog.show()
     }
 
-    override fun onDelete(room: NewRoom) {
+    override fun onDelete(room: Room) {
         doPopUpForDeleteConfirmation(room)
     }
 
-    override fun onEdit(room: NewRoom) {
+    override fun onEdit(room: Room) {
         startActivity(
             Intent(this@RoomListActivity, RoomActivity::class.java).putExtra(
                 "room",
@@ -216,7 +216,7 @@ class RoomListActivity : BaseActivity<ActivityRoomListBinding>(), RoomCallBacks 
         )
     }
 
-    override fun onItemClick(room: NewRoom) {
+    override fun onItemClick(room: Room) {
         startActivity(
             Intent(this@RoomListActivity, RoomActivity::class.java).putExtra(
                 "room",

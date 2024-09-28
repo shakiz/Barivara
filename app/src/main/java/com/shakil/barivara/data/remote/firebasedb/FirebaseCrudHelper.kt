@@ -47,11 +47,6 @@ class FirebaseCrudHelper(private val context: Context) {
                 postValues = rent.toMap()
             }
 
-            "room" -> {
-                val room = data as Room
-                postValues = room.toMap()
-            }
-
             "note" -> {
                 val note = data as Note
                 postValues = note.toMap()
@@ -88,26 +83,6 @@ class FirebaseCrudHelper(private val context: Context) {
                     Log.i(Constants.TAG + ":fetchMeter", "" + meter?.meterName)
                 }
                 onDataFetch.onFetch(objects)
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.i(Constants.TAG, "" + error.message)
-            }
-        })
-    }
-
-    fun fetchAllRoom(path: String, userId: String, onRoomDataFetch: onRoomDataFetch) {
-        val objects = ArrayList<Room?>()
-        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId)
-        databaseReference?.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                for (dataSnapshot in snapshot.children) {
-                    val room = dataSnapshot.getValue(Room::class.java)
-                    room?.fireBaseKey = dataSnapshot.key ?: ""
-                    Log.i(Constants.TAG + ":fetchRoom", "" + room?.roomName)
-                    objects.add(room)
-                }
-                onRoomDataFetch.onFetch(objects)
             }
 
             override fun onCancelled(error: DatabaseError) {

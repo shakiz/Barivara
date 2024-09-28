@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.shakil.barivara.R
 import com.shakil.barivara.data.model.SliderItem
 import com.shakil.barivara.data.model.auth.LogoutRequest
-import com.shakil.barivara.data.model.room.NewRoom
+import com.shakil.barivara.data.model.room.Room
 import com.shakil.barivara.data.model.tenant.Tenant
 import com.shakil.barivara.data.repository.AuthRepoImpl
 import com.shakil.barivara.data.repository.RoomRepoImpl
@@ -28,14 +28,14 @@ class HomeViewModel @Inject constructor(
     private var tenants = MutableLiveData<List<Tenant>>()
     private var getTenantListErrorResponse = MutableLiveData<Resource.Error<ErrorType>>()
 
-    private var rooms = MutableLiveData<List<NewRoom>>()
+    private var rooms = MutableLiveData<List<Room>>()
     private var getRoomListErrorResponse = MutableLiveData<Resource.Error<ErrorType>>()
 
     fun getTenants(): LiveData<List<Tenant>> {
         return tenants
     }
 
-    fun getRooms(): LiveData<List<NewRoom>> {
+    fun getRooms(): LiveData<List<Room>> {
         return rooms
     }
 

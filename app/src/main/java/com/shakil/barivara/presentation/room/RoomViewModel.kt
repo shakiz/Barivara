@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.shakil.barivara.data.model.room.NewRoom
+import com.shakil.barivara.data.model.room.Room
 import com.shakil.barivara.data.model.tenant.Tenant
 import com.shakil.barivara.data.repository.RoomRepoImpl
 import com.shakil.barivara.data.repository.TenantRepoImpl
@@ -22,7 +22,7 @@ class RoomViewModel @Inject constructor(
     ViewModel() {
 
     var isLoading = MutableLiveData<Boolean>()
-    private var rooms = MutableLiveData<List<NewRoom>>()
+    private var rooms = MutableLiveData<List<Room>>()
     private var getRoomListErrorResponse = MutableLiveData<Resource.Error<ErrorType>>()
 
     private var addRoomResponse = MutableLiveData<String>()
@@ -34,7 +34,7 @@ class RoomViewModel @Inject constructor(
     private var tenants = MutableLiveData<List<Tenant>>()
     private var getTenantListErrorResponse = MutableLiveData<Resource.Error<ErrorType>>()
 
-    fun getRooms(): LiveData<List<NewRoom>> {
+    fun getRooms(): LiveData<List<Room>> {
         return rooms
     }
 
@@ -90,7 +90,7 @@ class RoomViewModel @Inject constructor(
         }
     }
 
-    fun addRoom(token: String, room: NewRoom) {
+    fun addRoom(token: String, room: Room) {
         viewModelScope.launch {
             isLoading.postValue(true)
             try {
@@ -118,7 +118,7 @@ class RoomViewModel @Inject constructor(
         }
     }
 
-    fun updateRoom(token: String, userId: Int, room: NewRoom) {
+    fun updateRoom(token: String, userId: Int, room: Room) {
         viewModelScope.launch {
             isLoading.postValue(true)
             try {

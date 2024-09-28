@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
-import com.shakil.barivara.data.model.room.NewRoom
+import com.shakil.barivara.data.model.room.Room
 import com.shakil.barivara.data.model.room.RoomStatus
 import com.shakil.barivara.databinding.ActivityAddNewRoomBinding
 import com.shakil.barivara.presentation.tenant.TenantListActivity
@@ -35,7 +35,7 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
     private var NoOfBalcony = 0
     private var ElectricMeterNo = ""
     private lateinit var selectedRoomStatus: RoomStatus
-    private var room = NewRoom()
+    private var room = Room()
     private var command = "add"
     private var tenantNames: ArrayList<String> = arrayListOf()
     private var tenantNameSpinnerAdapter: ArrayAdapter<String>? = null
@@ -161,7 +161,7 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
         if (intent.extras != null) {
             room =
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
-                    intent.getParcelableExtra("room", NewRoom::class.java)!!
+                    intent.getParcelableExtra("room", Room::class.java)!!
                 } else {
                     intent.getParcelableExtra("room")!!
                 }

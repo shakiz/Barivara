@@ -2,7 +2,7 @@ package com.shakil.barivara.data.repository
 
 import com.google.gson.Gson
 import com.shakil.barivara.data.model.BaseApiResponse
-import com.shakil.barivara.data.model.room.NewRoom
+import com.shakil.barivara.data.model.room.Room
 import com.shakil.barivara.data.remote.webservice.RoomService
 import com.shakil.barivara.domain.room.RoomRepo
 import com.shakil.barivara.utils.Constants.ACCEPT
@@ -15,7 +15,7 @@ import javax.inject.Inject
 class RoomRepoImpl @Inject constructor(
     private val tenantService: RoomService
 ) : RoomRepo {
-    override suspend fun getAllRoom(token: String): Resource<List<NewRoom>> {
+    override suspend fun getAllRoom(token: String): Resource<List<Room>> {
         try {
             val task = tenantService.getAllRoom(
                 token = "Bearer $token",
@@ -51,7 +51,7 @@ class RoomRepoImpl @Inject constructor(
         }
     }
 
-    override suspend fun addRoom(token: String, room: NewRoom): Resource<BaseApiResponse> {
+    override suspend fun addRoom(token: String, room: Room): Resource<BaseApiResponse> {
         try {
             val task = tenantService.addRoom(
                 token = "Bearer $token",
@@ -91,7 +91,7 @@ class RoomRepoImpl @Inject constructor(
     override suspend fun updateRoom(
         token: String,
         userId: Int,
-        room: NewRoom
+        room: Room
     ): Resource<BaseApiResponse> {
         try {
             val task = tenantService.updateRoom(

@@ -2,7 +2,7 @@ package com.shakil.barivara.data.remote.webservice
 
 import com.shakil.barivara.data.model.BaseApiResponse
 import com.shakil.barivara.data.model.room.BaseRoomResponse
-import com.shakil.barivara.data.model.room.NewRoom
+import com.shakil.barivara.data.model.room.Room
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -24,7 +24,7 @@ interface RoomService {
         @Header("Authorization") token: String,
         @Header("Content-Type") contentType: String,
         @Header("Accept") accept: String,
-        @Body room: NewRoom
+        @Body room: Room
     ): Response<BaseApiResponse>
 
     @PUT("rooms/{userId}")
@@ -33,6 +33,6 @@ interface RoomService {
         @Path("userId") userId: Int,
         @Header("Content-Type") contentType: String,
         @Header("Accept") accept: String,
-        @Body room: NewRoom
+        @Body room: Room
     ): Response<BaseApiResponse>
 }

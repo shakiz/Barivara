@@ -3,20 +3,20 @@ package com.shakil.barivara.presentation.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.shakil.barivara.data.model.room.NewRoom
+import com.shakil.barivara.data.model.room.Room
 import com.shakil.barivara.databinding.AdapterLayoutRoomListBinding
 import com.shakil.barivara.presentation.adapter.RecyclerRoomListAdapter.RoomItemViewHolder
 
 class RecyclerRoomListAdapter :
     RecyclerView.Adapter<RoomItemViewHolder>() {
     private var roomCallBacks: RoomCallBacks? = null
-    private var list: List<NewRoom> = mutableListOf()
+    private var list: List<Room> = mutableListOf()
 
     fun setRoomCallBack(roomCallBacks: RoomCallBacks?) {
         this.roomCallBacks = roomCallBacks
     }
 
-    fun setItems(list: List<NewRoom>) {
+    fun setItems(list: List<Room>) {
         this.list = list
         notifyDataSetChanged()
     }
@@ -42,7 +42,7 @@ class RecyclerRoomListAdapter :
     ) : RecyclerView.ViewHolder(
         binding.root
     ) {
-        fun bind(room: NewRoom) {
+        fun bind(room: Room) {
             binding.roomName.text = room.name
             binding.itemCardView.setOnClickListener {
                 roomCallBacks?.onItemClick(room)
@@ -57,8 +57,8 @@ class RecyclerRoomListAdapter :
     }
 
     interface RoomCallBacks {
-        fun onDelete(room: NewRoom)
-        fun onEdit(room: NewRoom)
-        fun onItemClick(room: NewRoom)
+        fun onDelete(room: Room)
+        fun onEdit(room: Room)
+        fun onItemClick(room: Room)
     }
 }

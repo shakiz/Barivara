@@ -2,72 +2,47 @@ package com.shakil.barivara.data.model.room
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.google.firebase.database.Exclude
+import com.google.gson.annotations.SerializedName
 
-class Room : Parcelable {
-    var roomId: String = ""
-    var roomName: String = ""
-    var tenantName: String = ""
-    var tenantNameId = 0
-    var noOfRoom = 0
-    var noOfBathroom = 0
-    var noOfBalcony = 0
-    var startMonthName: String = ""
-    var startMonthId = 0
-    var associateMeterName: String = ""
-    var associateMeterId = 0
-    var advancedAmount = 0
-    var fireBaseKey: String = ""
+data class Room(
+    @SerializedName("id") var id: Int = 0,
+    @SerializedName("tenant_id") var tenantId: Int = 0,
+    @SerializedName("name") var name: String? = null,
+    @SerializedName("rent") var rent: Int = 0,
+    @SerializedName("no_of_room") var noOfRoom: Int = 0,
+    @SerializedName("no_of_bathroom") var noOfBathroom: Int = 0,
+    @SerializedName("no_of_balcony") var noOfBalcony: Int = 0,
+    @SerializedName("status") var status: String? = null,
+    @SerializedName("electricity_meter_no") var electricityMeterNo: String? = null,
+    @SerializedName("gas_meter_no") var gasMeterNo: String? = null,
+    @SerializedName("gas_source") var gasSource: String? = null
+) : Parcelable {
+    constructor(parcel: Parcel) : this(
+        parcel.readInt(),
+        parcel.readInt(),
+        parcel.readString(),
+        parcel.readInt(),
+        parcel.readInt(),
+        parcel.readInt(),
+        parcel.readInt(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString()
+    )
 
-    constructor()
-    constructor(room: Parcel) {
-        roomId = room.readString() ?: ""
-        roomName = room.readString() ?: ""
-        tenantName = room.readString() ?: ""
-        tenantNameId = room.readInt()
-        noOfRoom = room.readInt()
-        noOfBathroom = room.readInt()
-        noOfBalcony = room.readInt()
-        startMonthName = room.readString() ?: ""
-        startMonthId = room.readInt()
-        associateMeterName = room.readString() ?: ""
-        associateMeterId = room.readInt()
-        advancedAmount = room.readInt()
-        fireBaseKey = room.readString() ?: ""
-    }
-
-    override fun writeToParcel(dest: Parcel, flags: Int) {
-        dest.writeString(roomId)
-        dest.writeString(roomName)
-        dest.writeString(tenantName)
-        dest.writeInt(tenantNameId)
-        dest.writeInt(noOfRoom)
-        dest.writeInt(noOfBathroom)
-        dest.writeInt(noOfBalcony)
-        dest.writeString(startMonthName)
-        dest.writeInt(startMonthId)
-        dest.writeString(associateMeterName)
-        dest.writeInt(associateMeterId)
-        dest.writeInt(advancedAmount)
-        dest.writeString(fireBaseKey)
-    }
-
-    @Exclude
-    fun toMap(): Map<String, Any> {
-        val result = HashMap<String, Any>()
-        result["roomId"] = roomId
-        result["roomName"] = roomName
-        result["tenantName"] = tenantName
-        result["tenantNameId"] = tenantNameId
-        result["startMonthName"] = startMonthName
-        result["startMonthId"] = startMonthId
-        result["associateMeterName"] = associateMeterName
-        result["associateMeterId"] = associateMeterId
-        result["advancedAmount"] = advancedAmount
-        result["noOfRoom"] = noOfRoom
-        result["noOfBathroom"] = noOfBathroom
-        result["noOfBalcony"] = noOfBalcony
-        return result
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeInt(id)
+        parcel.writeInt(tenantId)
+        parcel.writeString(name)
+        parcel.writeInt(rent)
+        parcel.writeInt(noOfRoom)
+        parcel.writeInt(noOfBathroom)
+        parcel.writeInt(noOfBalcony)
+        parcel.writeString(status)
+        parcel.writeString(electricityMeterNo)
+        parcel.writeString(gasMeterNo)
+        parcel.writeString(gasSource)
     }
 
     override fun describeContents(): Int {
