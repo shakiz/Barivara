@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.shakil.barivara.BaseActivity
@@ -14,7 +13,6 @@ import com.shakil.barivara.data.model.room.RoomStatus
 import com.shakil.barivara.databinding.ActivityAddNewRoomBinding
 import com.shakil.barivara.presentation.tenant.TenantListActivity
 import com.shakil.barivara.utils.Constants.mAccessToken
-import com.shakil.barivara.utils.CustomAdManager
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.SpinnerAdapter
 import com.shakil.barivara.utils.Tools
@@ -28,20 +26,17 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
     private lateinit var activityAddNewRoomBinding: ActivityAddNewRoomBinding
     private var spinnerAdapter = SpinnerAdapter()
     private var roomNameStr: String = ""
-    private var TenantId = 0
-    private var NoOfRoom = 0
-    private var NoOfBathroom = 0
-    private var NoOfBalcony = 0
-    private var ElectricMeterNo = ""
+    private var tenantId: Int = 0
+    private var noOfRoom: Int = 0
+    private var noOfBathroom: Int = 0
+    private var noOfBalcony: Int = 0
+    private var electricMeterNo: String = ""
     private lateinit var selectedRoomStatus: RoomStatus
     private var room = Room()
     private var command = "add"
-    private var tenantNames: ArrayList<String> = arrayListOf()
-    private var tenantNameSpinnerAdapter: ArrayAdapter<String>? = null
     private var tools = Tools(this)
     private val hashMap: Map<String?, Array<String>?> = HashMap()
     private var validation = Validation(this, hashMap)
-    private var customAdManager = CustomAdManager(this)
     private lateinit var prefManager: PrefManager
     private lateinit var ux: UX
     private val viewModel by viewModels<RoomViewModel>()
@@ -67,34 +62,34 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
     }
 
     private fun initListeners() {
-        activityAddNewRoomBinding.AddNoOfRoom.setOnClickListener {
-            NoOfRoom++
-            activityAddNewRoomBinding.NoOfRoom.text = "$NoOfRoom"
+        activityAddNewRoomBinding.addNoOfRoom.setOnClickListener {
+            noOfRoom++
+            activityAddNewRoomBinding.noOfRoom.text = "$noOfRoom"
         }
-        activityAddNewRoomBinding.DeductNoOfRoom.setOnClickListener {
-            if (NoOfRoom > 0) {
-                NoOfRoom--
-                activityAddNewRoomBinding.NoOfRoom.text = "$NoOfRoom"
+        activityAddNewRoomBinding.deductNoOfRoom.setOnClickListener {
+            if (noOfRoom > 0) {
+                noOfRoom--
+                activityAddNewRoomBinding.noOfRoom.text = "$noOfRoom"
             }
         }
-        activityAddNewRoomBinding.AddNoOfBalcony.setOnClickListener {
-            NoOfBalcony++
-            activityAddNewRoomBinding.NoOfBalcony.text = "$NoOfBalcony"
+        activityAddNewRoomBinding.addNoOfBalcony.setOnClickListener {
+            noOfBalcony++
+            activityAddNewRoomBinding.noOfBalcony.text = "$noOfBalcony"
         }
-        activityAddNewRoomBinding.DeductNoOfBalcony.setOnClickListener {
-            if (NoOfBalcony > 0) {
-                NoOfBalcony--
-                activityAddNewRoomBinding.NoOfRoom.text = "$NoOfBalcony"
+        activityAddNewRoomBinding.deductNoOfBalcony.setOnClickListener {
+            if (noOfBalcony > 0) {
+                noOfBalcony--
+                activityAddNewRoomBinding.noOfBalcony.text = "$noOfBalcony"
             }
         }
-        activityAddNewRoomBinding.AddNoOfBathRoom.setOnClickListener {
-            NoOfBathroom++
-            activityAddNewRoomBinding.NoOfBathroom.text = "$NoOfBathroom"
+        activityAddNewRoomBinding.addNoOfBathRoom.setOnClickListener {
+            noOfBathroom++
+            activityAddNewRoomBinding.noOfBathroom.text = "$noOfBathroom"
         }
-        activityAddNewRoomBinding.DeductNoOfBathroom.setOnClickListener {
-            if (NoOfBathroom > 0) {
-                NoOfBathroom--
-                activityAddNewRoomBinding.NoOfBathroom.text = "$NoOfBathroom"
+        activityAddNewRoomBinding.deductNoOfBathroom.setOnClickListener {
+            if (noOfBathroom > 0) {
+                noOfBathroom--
+                activityAddNewRoomBinding.noOfBathroom.text = "$noOfBathroom"
             }
         }
         activityAddNewRoomBinding.mSaveRoomMaster.setOnClickListener {
@@ -150,7 +145,7 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
 
         viewModel.getTenants().observe(this) { tenants ->
             spinnerAdapter.setSpinnerAdapter(
-                activityAddNewRoomBinding.TenantNameId,
+                activityAddNewRoomBinding.tenantNameId,
                 this,
                 ArrayList(tenants.map { it.name })
             )
@@ -171,27 +166,26 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
     private fun loadData() {
         if (room.id != 0) {
             command = "update"
-            activityAddNewRoomBinding.RoomName.setText(room.name)
-            NoOfRoom = room.noOfRoom
-            NoOfBathroom = room.noOfBathroom
-            NoOfBalcony = room.noOfBalcony
-            ElectricMeterNo = room.electricityMeterNo ?: ""
-            activityAddNewRoomBinding.NoOfRoom.text = "$NoOfRoom"
-            activityAddNewRoomBinding.NoOfBalcony.text = "$NoOfBalcony"
-            activityAddNewRoomBinding.NoOfBathroom.text = "$NoOfBathroom"
-            activityAddNewRoomBinding.ElectricityMeterNo.setText(ElectricMeterNo)
+            activityAddNewRoomBinding.roomName.setText(room.name)
+            noOfRoom = room.noOfRoom
+            noOfBathroom = room.noOfBathroom
+            noOfBalcony = room.noOfBalcony
+            electricMeterNo = room.electricityMeterNo ?: ""
+            activityAddNewRoomBinding.noOfRoom.text = "$noOfRoom"
+            activityAddNewRoomBinding.noOfBalcony.text = "$noOfBalcony"
+            activityAddNewRoomBinding.noOfBathroom.text = "$noOfBathroom"
+            activityAddNewRoomBinding.electricityMeterNo.setText(electricMeterNo)
         }
     }
 
     private fun bindUIWithComponents() {
-        customAdManager.generateAd(activityAddNewRoomBinding.adView)
         validation.setEditTextIsNotEmpty(
             arrayOf("RoomName"),
             arrayOf(getString(R.string.room_name_validation))
         )
         validation.setSpinnerIsNotEmpty(arrayOf("StartMonthId"))
 
-        activityAddNewRoomBinding.TenantNameId.onItemSelectedListener =
+        activityAddNewRoomBinding.tenantNameId.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>,
@@ -200,7 +194,7 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
                     id: Long
                 ) {
                     viewModel.getTenants().value?.let {
-                        TenantId = it[position].id
+                        tenantId = it[position].id
                     }
                 }
 
@@ -209,14 +203,14 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
     }
 
     private fun saveOrUpdateData() {
-        roomNameStr = activityAddNewRoomBinding.RoomName.text.toString()
+        roomNameStr = activityAddNewRoomBinding.roomName.text.toString()
         room.name = roomNameStr
-        room.tenantId = TenantId
-        room.noOfRoom = NoOfRoom
-        room.noOfBathroom = NoOfBathroom
-        room.noOfBalcony = NoOfBalcony
+        room.tenantId = tenantId
+        room.noOfRoom = noOfRoom
+        room.noOfBathroom = noOfBathroom
+        room.noOfBalcony = noOfBalcony
         room.status = selectedRoomStatus.statusToString()
-        room.electricityMeterNo = activityAddNewRoomBinding.ElectricityMeterNo.text.toString()
+        room.electricityMeterNo = activityAddNewRoomBinding.electricityMeterNo.text.toString()
         if (command == "add") {
             viewModel.addRoom(prefManager.getString(mAccessToken), room)
         } else {
