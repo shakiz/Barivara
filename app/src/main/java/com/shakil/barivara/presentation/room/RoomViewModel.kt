@@ -100,7 +100,7 @@ class RoomViewModel @Inject constructor(
                 } else {
                     addRoomErrorResponse.postValue(
                         Resource.Error(
-                            message = data.response?.message ?: "",
+                            message = data.message,
                             errorType = data.errorType
                         )
                     )
