@@ -214,11 +214,11 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
 
     private fun initObservers() {
         viewModel.getTenants().observe(this) { tenants ->
-            activityMainBinding.totalRooms.text = "${tenants.size}"
+            activityMainBinding.totalTenants.text = "${tenants.size}"
         }
 
-        viewModel.getRooms().observe(this) { tenants ->
-            activityMainBinding.totalRooms.text = "${tenants.size}"
+        viewModel.getRooms().observe(this) { rooms ->
+            activityMainBinding.totalRooms.text = "${rooms.size}"
         }
 
         viewModel.isLoading.observe(this) { isLoading ->

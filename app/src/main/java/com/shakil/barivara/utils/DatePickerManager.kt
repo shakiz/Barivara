@@ -16,7 +16,7 @@ class DatePickerManager {
             context,
             { _: DatePicker?, selectedYear: Int, selectedMonth: Int, selectedDay: Int ->
                 val selectedDate =
-                    selectedDay.toString() + "/" + (selectedMonth + 1) + "/" + selectedYear
+                    selectedDay.toString() + "-" + (selectedMonth + 1) + "-" + selectedYear
                 callback.onDateSelected(selectedDate)
             }, year, month, day
         ).show()
