@@ -43,7 +43,6 @@ import com.shakil.barivara.utils.LanguageManager
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
-import com.shakil.barivara.utils.UtilsForAll
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -51,7 +50,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class HomeActivity : BaseActivity<ActivityHomeBinding>(),
     NavigationView.OnNavigationItemSelectedListener {
     private lateinit var activityMainBinding: ActivityHomeBinding
-    private var utilsForAll = UtilsForAll(this)
     private lateinit var prefManager: PrefManager
     private var tools = Tools(this)
     private var customAdManager = CustomAdManager(this)
@@ -269,11 +267,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
                     }
                 )
                 bottomSheet.show()
-                return true
-            }
-
-            R.id.menu_notification -> {
-                startActivity(Intent(this@HomeActivity, NotificationActivity::class.java))
                 return true
             }
         }

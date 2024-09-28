@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_alignParentTop="true"
-            android:background="@android:color/transparent"
+            android:background="@color/md_white_1000"
             app:elevation="0dp">
 
             <androidx.appcompat.widget.Toolbar
@@ -61,15 +61,18 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:layout_constraintTop_toTopOf="parent"
+                        android:background="@android:color/transparent"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
+                        android:layout_marginTop="16dp"
                         app:cardCornerRadius="8dp"
                         app:cardElevation="0dp">
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/imageSlider"
                             android:layout_width="match_parent"
-                            android:layout_height="222dp" />
+                            android:layout_height="222dp"
+                            tools:listitem="@layout/adaptter_layout_slider" />
 
                     </androidx.cardview.widget.CardView>
 
