@@ -20,8 +20,7 @@
         <!-- Status bar -->
         <item name="android:windowTranslucentStatus">false</item>
         <!-- Navigation bar -->
-        <item name="android:windowTranslucentNavigation">false
-        </item>  <!-- It's not translucent (we don't draw behind navigation bar) -->
+        <item name="android:windowTranslucentNavigation">false</item>
     </style>
 
     <style name="ToolBarStyle" parent="ToolBarStyle.Base"/>
@@ -151,9 +150,29 @@
 
     <style name="TransparentBottomSheetDialog" parent="Theme.Design.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/TransparentBottomSheet</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.5</item>
     </style>
 
     <style name="TransparentBottomSheet" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="CustomDialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowBackground">@drawable/rectangle_white</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.5</item>
+    </style>
+
+    <style name="BottomSheetWithTopHandleStyle" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/Widget.Test.BottomSheet.Modal</item>
+    </style>
+
+    <style name="Widget.Test.BottomSheet.Modal" parent="Widget.MaterialComponents.BottomSheet.Modal">
+        <item name="backgroundTint">@android:color/transparent</item>
         <item name="android:background">@android:color/transparent</item>
     </style>
 

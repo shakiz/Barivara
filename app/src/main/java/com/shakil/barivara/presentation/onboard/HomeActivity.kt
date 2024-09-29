@@ -24,7 +24,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
 import com.shakil.barivara.databinding.ActivityHomeBinding
-import com.shakil.barivara.presentation.GenericBottomSheet
+import com.shakil.barivara.presentation.GenericDialog
 import com.shakil.barivara.presentation.adapter.ImageSliderAdapter
 import com.shakil.barivara.presentation.auth.forgotpassword.ForgotPasswordActivity
 import com.shakil.barivara.presentation.auth.login.LoginActivity
@@ -248,7 +248,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_logout -> {
-                val bottomSheet = GenericBottomSheet<View>(
+                val bottomSheet = GenericDialog<View>(
                     context = this,
                     layoutResId = R.layout.logout_confirmation_layout,
                     onClose = {
@@ -316,7 +316,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
             }
 
             R.id.menu_logout -> {
-                val bottomSheet = GenericBottomSheet<View>(
+                val bottomSheet = GenericDialog<View>(
                     context = this,
                     layoutResId = R.layout.logout_confirmation_layout,
                     onClose = {
