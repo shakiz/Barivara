@@ -183,7 +183,7 @@ class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>(),
                             parent.getItemAtPosition(position).toString()
                         )
                         viewModel.generateBill(
-                            prefManager.getString(Constants.mAccessToken),
+                            prefManager.getString(mAccessToken),
                             year,
                             month
                         )
@@ -347,7 +347,7 @@ Service Charge : ${generateBill.serviceCharge} ${getString(R.string.taka)}"""
             RelativeLayout.LayoutParams.WRAP_CONTENT
         )
         markAsPaidDialog.show()
-        dialogBill.findViewById<Button>(R.id.submitBill).setOnClickListener {
+        markAsPaidDialog.findViewById<Button>(R.id.submitBill).setOnClickListener {
             viewModel.updateBillStatus(prefManager.getString(mAccessToken), billId = billInfo.id)
             dialogBill.dismiss()
         }

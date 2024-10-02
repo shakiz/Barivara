@@ -442,4 +442,5 @@
     <string name="start_date">Start Date</string>
     <string name="end_date">End Date</string>
     <string name="name_hint">Type Your Name</string>
+    <string name="others">Others</string>
 </resources>

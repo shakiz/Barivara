@@ -58,7 +58,7 @@
                         android:textSize="16sp" />
 
                     <EditText
-                        android:id="@+id/TenantName"
+                        android:id="@+id/tenantName"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginTop="5dp"
@@ -339,34 +339,6 @@
                         android:textColor="@color/md_grey_800"
                         android:textColorHint="@color/md_grey_700"
                         android:textSize="14sp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginRight="12dp"
-                        android:orientation="vertical"
-                        android:visibility="gone">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="@string/select_room"
-                            android:textColor="@color/md_grey_900"
-                            android:textSize="16sp" />
-
-                        <Spinner
-                            android:id="@+id/AssociateRoomId"
-                            style="@style/Base.TextAppearance.AppCompat.Medium"
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:layout_marginTop="5dp"
-                            android:background="@drawable/edit_text_back"
-                            android:tag="@string/select_room" />
-
-                    </LinearLayout>
 
                     <CheckBox
                         android:id="@+id/advanceCheckBox"

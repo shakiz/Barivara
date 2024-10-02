@@ -54,7 +54,8 @@ class SpinnerData(private val context: Context) {
             context.getString(R.string.family),
             context.getString(R.string.small_family),
             context.getString(R.string.female_only),
-            context.getString(R.string.male_only)
+            context.getString(R.string.male_only),
+            context.getString(R.string.others)
         )
         Collections.addAll(spinnerValues, *tenantTypeArray)
         return spinnerValues
