@@ -10,6 +10,7 @@ import androidx.activity.viewModels
 import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
 import com.shakil.barivara.data.model.tenant.Tenant
+import com.shakil.barivara.data.model.tenant.TenantType
 import com.shakil.barivara.databinding.ActivityTenantBinding
 import com.shakil.barivara.utils.Constants.mAccessToken
 import com.shakil.barivara.utils.DatePickerManager
@@ -28,8 +29,8 @@ class TenantActivity : BaseActivity<ActivityTenantBinding>() {
     private lateinit var activityAddNewTenantBinding: ActivityTenantBinding
     private var spinnerAdapter = SpinnerAdapter()
     private var spinnerData = SpinnerData(this)
-    private var tenantTypeId: Int = 0
     private var tenantNameStr: String = ""
+    private var tenantType: TenantType = TenantType.OTHERS
     private var tenant = Tenant()
     private var command = "add"
     private val hashMap: Map<String?, Array<String>?> = HashMap()
@@ -94,9 +95,9 @@ class TenantActivity : BaseActivity<ActivityTenantBinding>() {
     private fun loadData() {
         if (tenant.id != 0) {
             command = "update"
-            activityAddNewTenantBinding.TenantName.setText(tenant.name)
-            activityAddNewTenantBinding.AssociateRoomId.visibility = View.GONE
+            activityAddNewTenantBinding.tenantName.setText(tenant.name)
             activityAddNewTenantBinding.startingMonthId.setText(tenant.startDate)
+            activityAddNewTenantBinding.endMonthId.setText(tenant.endDate)
             activityAddNewTenantBinding.nid.setText(tenant.nidNumber)
             activityAddNewTenantBinding.mobileNo.setText(tenant.phone)
             if ((tenant.advancedAmount ?: 0) > 0) {
@@ -142,7 +143,9 @@ class TenantActivity : BaseActivity<ActivityTenantBinding>() {
                     position: Int,
                     id: Long
                 ) {
-                    tenantTypeId = position
+                    tenantType =
+                        TenantType.from(parent.getItemAtPosition(position).toString().lowercase())
+                            ?: TenantType.OTHERS
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -216,11 +219,13 @@ class TenantActivity : BaseActivity<ActivityTenantBinding>() {
     }
 
     private fun saveOrUpdateData() {
-        tenantNameStr = activityAddNewTenantBinding.TenantName.text.toString()
+        tenantNameStr = activityAddNewTenantBinding.tenantName.text.toString()
         tenant.name = tenantNameStr
+        tenant.type = tenantType.value
         tenant.nidNumber = activityAddNewTenantBinding.nid.text.toString()
         tenant.phone = activityAddNewTenantBinding.mobileNo.text.toString()
         tenant.startDate = activityAddNewTenantBinding.startingMonthId.text.toString()
+        tenant.endDate = activityAddNewTenantBinding.endMonthId.text.toString()
         if (command == "add") {
             viewModel.addTenant(prefManager.getString(mAccessToken), tenant)
         } else {
