@@ -7,7 +7,9 @@ import androidx.lifecycle.viewModelScope
 import com.shakil.barivara.data.model.BaseApiResponse
 import com.shakil.barivara.data.model.auth.LogoutRequest
 import com.shakil.barivara.data.model.auth.SendOtpBaseResponse
+import com.shakil.barivara.data.model.auth.SendOtpRequest
 import com.shakil.barivara.data.model.auth.VerifyOtpBaseResponse
+import com.shakil.barivara.data.model.auth.VerifyOtpRequest
 import com.shakil.barivara.data.repository.AuthRepoImpl
 import com.shakil.barivara.utils.ErrorType
 import com.shakil.barivara.utils.Resource
@@ -49,11 +51,16 @@ class AuthViewModel @Inject constructor(private val authRepoImpl: AuthRepoImpl) 
         return logoutResponse
     }
 
-    fun sendOtp(mobileNo: String) {
+    fun sendOtp(mobileNo: String, type: String) {
         viewModelScope.launch(Dispatchers.IO) {
             isLoading.postValue(true)
             try {
-                val data = authRepoImpl.sendOtp(mobileNo)
+                val data = authRepoImpl.sendOtp(
+                    SendOtpRequest(
+                        phone = mobileNo,
+                        type = type
+                    )
+                )
                 if (data.response != null) {
                     sendOtpResponse.postValue(data.response)
                 } else {
@@ -77,11 +84,17 @@ class AuthViewModel @Inject constructor(private val authRepoImpl: AuthRepoImpl) 
         }
     }
 
-    fun verifyOtp(mobileNo: String, code: Int) {
+    fun verifyOtp(mobileNo: String, code: Int, type: String) {
         viewModelScope.launch(Dispatchers.IO) {
             isLoading.postValue(true)
             try {
-                val data = authRepoImpl.verifyOtp(mobileNo, code)
+                val data = authRepoImpl.verifyOtp(
+                    VerifyOtpRequest(
+                        phone = mobileNo,
+                        otp = code,
+                        type = type
+                    )
+                )
                 if (data.response != null) {
                     verifyOtpResponse.postValue(data.response)
                 } else {

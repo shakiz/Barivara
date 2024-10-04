@@ -15,12 +15,14 @@ interface AuthService {
     @POST("send-otp")
     suspend fun sendOtp(
         @Header("Content-Type") contentType: String,
+        @Header("Accept") accept: String,
         @Body sendOtpRequest: SendOtpRequest
     ): Response<SendOtpBaseResponse>
 
     @POST("verify-otp")
     suspend fun verifyOtp(
         @Header("Content-Type") contentType: String,
+        @Header("Accept") accept: String,
         @Body verifyOtpRequest: VerifyOtpRequest
     ): Response<VerifyOtpBaseResponse>
 

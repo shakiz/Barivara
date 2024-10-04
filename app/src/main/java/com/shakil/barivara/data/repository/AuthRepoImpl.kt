@@ -18,11 +18,12 @@ import javax.inject.Inject
 class AuthRepoImpl @Inject constructor(
     private val authService: AuthService
 ) : AuthRepo {
-    override suspend fun sendOtp(mobileNo: String): Resource<SendOtpBaseResponse> {
+    override suspend fun sendOtp(sendOtpRequest: SendOtpRequest): Resource<SendOtpBaseResponse> {
         try {
             val task = authService.sendOtp(
-                Constants.CONTENT_TYPE,
-                sendOtpRequest = SendOtpRequest(phone = mobileNo)
+                contentType = Constants.CONTENT_TYPE,
+                accept = Constants.ACCEPT,
+                sendOtpRequest = sendOtpRequest
             )
             if (task.isSuccessful) {
                 task.body()?.let {
@@ -54,16 +55,13 @@ class AuthRepoImpl @Inject constructor(
     }
 
     override suspend fun verifyOtp(
-        mobileNo: String,
-        code: Int
+        verifyOtpRequest: VerifyOtpRequest
     ): Resource<VerifyOtpBaseResponse> {
         try {
             val task = authService.verifyOtp(
-                Constants.CONTENT_TYPE,
-                verifyOtpRequest = VerifyOtpRequest(
-                    phone = mobileNo,
-                    otp = code
-                )
+                accept = Constants.ACCEPT,
+                contentType = Constants.CONTENT_TYPE,
+                verifyOtpRequest = verifyOtpRequest
             )
             if (task.isSuccessful) {
                 task.body()?.let {

@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import com.google.android.material.snackbar.Snackbar
 import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
+import com.shakil.barivara.data.model.auth.OtpType
 import com.shakil.barivara.databinding.ActivityMobileRegVerificationBinding
 import com.shakil.barivara.presentation.auth.AuthViewModel
 import com.shakil.barivara.presentation.onboard.HomeActivity
@@ -111,7 +112,7 @@ class MobileRegVerificationActivity : BaseActivity<ActivityMobileRegVerification
 
     private fun verifyVerificationCode(code: String) {
         if (tools.hasConnection()) {
-            viewModel.verifyOtp(mobileNumber, code.trim().toInt())
+            viewModel.verifyOtp(mobileNumber, code.trim().toInt(), OtpType.OTP.value)
         } else {
             Snackbar.make(
                 findViewById(R.id.parent),

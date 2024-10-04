@@ -5,9 +5,10 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
-import com.shakil.barivara.BaseActivity
 import androidx.databinding.DataBindingUtil
+import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
+import com.shakil.barivara.data.model.auth.OtpType
 import com.shakil.barivara.databinding.ActivityLoginBinding
 import com.shakil.barivara.presentation.auth.AuthViewModel
 import com.shakil.barivara.presentation.auth.registration.MobileRegVerificationActivity
@@ -88,7 +89,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
             if (!activityBinding.mobileNumber.text.isNullOrEmpty() && activityBinding.mobileNumber.text.length == 11) {
                 utilsForAll.hideSoftKeyboard(this)
                 viewModel.sendOtp(
-                    activityBinding.mobileNumber.text.toString()
+                    activityBinding.mobileNumber.text.toString(),
+                    OtpType.OTP.value
                 )
             } else {
                 Toasty.warning(
