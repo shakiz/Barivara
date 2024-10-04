@@ -98,7 +98,7 @@ class AuthRepoImpl @Inject constructor(
     ): Resource<BaseApiResponse> {
         try {
             val task = authService.logout(
-                token = token,
+                token = "Bearer $token",
                 accept = Constants.ACCEPT,
                 contentType = Constants.CONTENT_TYPE,
                 logoutRequest = logoutRequest
