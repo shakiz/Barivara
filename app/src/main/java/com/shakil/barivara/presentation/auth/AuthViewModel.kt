@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shakil.barivara.data.model.BaseApiResponse
 import com.shakil.barivara.data.model.auth.LogoutRequest
+import com.shakil.barivara.data.model.auth.OtpType
+import com.shakil.barivara.data.model.auth.OtpUIState
 import com.shakil.barivara.data.model.auth.SendOtpBaseResponse
 import com.shakil.barivara.data.model.auth.SendOtpRequest
 import com.shakil.barivara.data.model.auth.VerifyOtpBaseResponse
@@ -32,7 +34,7 @@ class AuthViewModel @Inject constructor(private val authRepoImpl: AuthRepoImpl) 
     var isLoading = MutableLiveData<Boolean>()
 
     //Password setup
-    var isOtpVerified = MutableLiveData<Boolean>()
+    var otpUiState = MutableLiveData<OtpUIState>()
 
     fun getSendOtpResponse(): LiveData<SendOtpBaseResponse> {
         return sendOtpResponse
@@ -56,6 +58,9 @@ class AuthViewModel @Inject constructor(private val authRepoImpl: AuthRepoImpl) 
 
     fun sendOtp(mobileNo: String, type: String) {
         viewModelScope.launch(Dispatchers.IO) {
+            if (type == OtpType.SET_PASS.value) {
+                otpUiState.postValue(OtpUIState.SEND_OTP)
+            }
             isLoading.postValue(true)
             try {
                 val data = authRepoImpl.sendOtp(
@@ -99,6 +104,9 @@ class AuthViewModel @Inject constructor(private val authRepoImpl: AuthRepoImpl) 
                     )
                 )
                 if (data.response != null) {
+                    if (type == OtpType.SET_PASS.value) {
+                        otpUiState.postValue(OtpUIState.VERIFY_OTP)
+                    }
                     verifyOtpResponse.postValue(data.response)
                 } else {
                     sendOtpResponseError.postValue(
