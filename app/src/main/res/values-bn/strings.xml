@@ -445,4 +445,8 @@
     <string name="login_with_otp">Login with OTP</string>
     <string name="login_with_password">Login with Password</string>
     <string name="or">Or</string>
+    <string name="manage_house_rent">Manage your house rent with us!</string>
+    <string name="why_us_one">Effortless Property Management at Your Fingertips</string>
+    <string name="why_you_should_choose_us">Why us?</string>
+    <string name="why_us_two">Streamlined Rent Collection and Maintenance Requests</string>
 </resources>
