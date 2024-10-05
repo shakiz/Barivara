@@ -5,11 +5,10 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
-import androidx.databinding.DataBindingUtil
 import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
 import com.shakil.barivara.data.model.auth.OtpType
-import com.shakil.barivara.databinding.ActivityLoginBinding
+import com.shakil.barivara.databinding.ActivityOtpLoginBinding
 import com.shakil.barivara.presentation.auth.AuthViewModel
 import com.shakil.barivara.presentation.auth.registration.MobileRegVerificationActivity
 import com.shakil.barivara.utils.Constants.mUserMobile
@@ -20,8 +19,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import es.dmoral.toasty.Toasty
 
 @AndroidEntryPoint
-class LoginActivity : BaseActivity<ActivityLoginBinding>() {
-    private lateinit var activityBinding: ActivityLoginBinding
+class OTPLoginActivity : BaseActivity<ActivityOtpLoginBinding>() {
+    private lateinit var activityBinding: ActivityOtpLoginBinding
     private lateinit var ux: UX
     private lateinit var utilsForAll: UtilsForAll
     private var loginWithStr: String? = null
@@ -37,15 +36,14 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     }
 
     override val layoutResourceId: Int
-        get() = R.layout.activity_login
+        get() = R.layout.activity_otp_login
 
-    override fun setVariables(dataBinding: ActivityLoginBinding) {
+    override fun setVariables(dataBinding: ActivityOtpLoginBinding) {
         activityBinding = dataBinding
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityBinding = DataBindingUtil.setContentView(this, R.layout.activity_login)
         onBackPressedDispatcher.addCallback(onBackPressedCallback)
         initUI()
         loginWithStr = getString(R.string.mobile)
@@ -94,7 +92,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                 )
             } else {
                 Toasty.warning(
-                    this@LoginActivity,
+                    this@OTPLoginActivity,
                     getString(R.string.mobile_validation),
                     Toast.LENGTH_LONG,
                     true

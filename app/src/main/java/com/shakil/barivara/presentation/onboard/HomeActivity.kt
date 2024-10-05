@@ -27,7 +27,7 @@ import com.shakil.barivara.databinding.ActivityHomeBinding
 import com.shakil.barivara.presentation.GenericDialog
 import com.shakil.barivara.presentation.adapter.ImageSliderAdapter
 import com.shakil.barivara.presentation.auth.forgotpassword.ForgotPasswordActivity
-import com.shakil.barivara.presentation.auth.login.LoginActivity
+import com.shakil.barivara.presentation.auth.login.LoginSelectionActivity
 import com.shakil.barivara.presentation.dashboard.DashboardActivity
 import com.shakil.barivara.presentation.generatebill.GenerateBillActivity
 import com.shakil.barivara.presentation.notification.NotificationActivity
@@ -263,7 +263,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
                                 mAccessToken
                             )
                         )
-                        tools.clearPrefForLogout(LoginActivity::class.java, prefManager)
+                        tools.clearPrefForLogout(LoginSelectionActivity::class.java, prefManager)
                     }
                 )
                 bottomSheet.show()
@@ -331,7 +331,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
                                 mAccessToken
                             )
                         )
-                        tools.clearPrefForLogout(LoginActivity::class.java, prefManager)
+                        tools.clearPrefForLogout(LoginSelectionActivity::class.java, prefManager)
                     }
                 )
                 bottomSheet.show()

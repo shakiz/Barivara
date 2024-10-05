@@ -67,7 +67,7 @@
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".presentation.auth.login.LoginActivity"
+            android:name=".presentation.auth.login.LoginSelectionActivity"
             android:exported="true"
             android:fitsSystemWindows="true"
             android:theme="@style/AppThemeNoActionBar"

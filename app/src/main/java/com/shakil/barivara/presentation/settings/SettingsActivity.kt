@@ -7,7 +7,7 @@ import android.widget.Toast
 import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
 import com.shakil.barivara.databinding.ActivitySettingsBinding
-import com.shakil.barivara.presentation.auth.login.LoginActivity
+import com.shakil.barivara.presentation.auth.login.LoginSelectionActivity
 import com.shakil.barivara.presentation.onboard.HomeActivity
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.CustomAdManager
@@ -84,7 +84,7 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding>() {
         }
         activitySettingsBinding.logoutButton.setOnClickListener {
             tools.doPopUpForLogout(
-                LoginActivity::class.java,
+                LoginSelectionActivity::class.java,
                 prefManager
             )
         }
@@ -103,7 +103,7 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding>() {
                 activitySettingsBinding.googleLoginLayout.isClickable = false
                 activitySettingsBinding.googleLoginLayout.isActivated = false
             } else {
-                startActivity(Intent(this@SettingsActivity, LoginActivity::class.java))
+                startActivity(Intent(this@SettingsActivity, LoginSelectionActivity::class.java))
             }
         }
     }

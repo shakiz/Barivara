@@ -32,7 +32,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.shakil.barivara.R
-import com.shakil.barivara.presentation.auth.login.LoginActivity
+import com.shakil.barivara.presentation.auth.login.LoginSelectionActivity
 import com.shakil.barivara.presentation.auth.onboard.WelcomeActivity
 import com.shakil.barivara.presentation.onboard.HomeActivity
 import com.shakil.barivara.presentation.onboard.SplashActivity
@@ -217,7 +217,7 @@ class Tools(private val context: Context) {
                 if (prefManager.getBoolean(mIsLoggedIn)) {
                     Intent(context, HomeActivity::class.java)
                 } else {
-                    Intent(context, LoginActivity::class.java)
+                    Intent(context, LoginSelectionActivity::class.java)
                 }
             } else {
                 Intent(context, WelcomeActivity::class.java)

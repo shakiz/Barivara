@@ -11,7 +11,7 @@ import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
 import com.shakil.barivara.databinding.ActivityWelcomeBinding
-import com.shakil.barivara.presentation.auth.login.LoginActivity
+import com.shakil.barivara.presentation.auth.login.LoginSelectionActivity
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.MyViewPagerAdapter
 import com.shakil.barivara.utils.PrefManager
@@ -67,7 +67,7 @@ class WelcomeActivity : BaseActivity<ActivityWelcomeBinding>() {
 
     private fun goLogin() {
         prefManager[Constants.mOldUser] = true
-        startActivity(Intent(this@WelcomeActivity, LoginActivity::class.java))
+        startActivity(Intent(this@WelcomeActivity, LoginSelectionActivity::class.java))
     }
 
     private fun addBottomDots(currentPage: Int) {

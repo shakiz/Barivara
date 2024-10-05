@@ -442,4 +442,7 @@
     <string name="end_date">End Date</string>
     <string name="name_hint">Type Your Name</string>
     <string name="others">Others</string>
+    <string name="login_with_otp">Login with OTP</string>
+    <string name="login_with_password">Login with Password</string>
+    <string name="or">Or</string>
 </resources>

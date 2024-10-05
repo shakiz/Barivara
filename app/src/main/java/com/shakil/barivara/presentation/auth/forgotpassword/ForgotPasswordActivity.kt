@@ -9,7 +9,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
 import com.shakil.barivara.databinding.ActivityForgotPasswordBinding
-import com.shakil.barivara.presentation.auth.login.LoginActivity
+import com.shakil.barivara.presentation.auth.login.LoginSelectionActivity
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.UX
 import com.shakil.barivara.utils.Validation
@@ -91,7 +91,7 @@ class ForgotPasswordActivity : BaseActivity<ActivityForgotPasswordBinding>() {
             startActivity(
                 Intent(
                     this@ForgotPasswordActivity,
-                    LoginActivity::class.java
+                    LoginSelectionActivity::class.java
                 )
             )
         }
