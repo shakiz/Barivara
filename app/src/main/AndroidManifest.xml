@@ -73,6 +73,18 @@
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
+            android:name=".presentation.auth.login.OTPLoginActivity"
+            android:exported="true"
+            android:fitsSystemWindows="true"
+            android:theme="@style/AppThemeNoActionBar"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".presentation.auth.login.PasswordLoginActivity"
+            android:exported="true"
+            android:fitsSystemWindows="true"
+            android:theme="@style/AppThemeNoActionBar"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
             android:name=".presentation.auth.registration.RegistrationActivity"
             android:exported="false"
             android:fitsSystemWindows="true"

@@ -1,5 +1,6 @@
 package com.shakil.barivara.presentation.auth.login
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
 import com.shakil.barivara.BaseActivity
@@ -41,7 +42,11 @@ class LoginSelectionActivity : BaseActivity<ActivityLoginSelectionBinding>() {
     }
 
     private fun initListeners() {
-        activityBinding.loginWithOtpLayout.setOnClickListener { }
-        activityBinding.loginWithPasswordLayout.setOnClickListener { }
+        activityBinding.loginWithOtpLayout.setOnClickListener {
+            startActivity(Intent(this, OTPLoginActivity::class.java))
+        }
+        activityBinding.loginWithPasswordLayout.setOnClickListener {
+            startActivity(Intent(this, PasswordLoginActivity::class.java))
+        }
     }
 }
