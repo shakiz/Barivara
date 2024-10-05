@@ -451,4 +451,6 @@
     <string name="why_you_should_choose_us">Why us?</string>
     <string name="why_us_two">Streamlined Rent Collection and Maintenance Requests</string>
     <string name="setup_password">Setup Password</string>
+    <string name="password_re_enter_hint">Re-enter Password</string>
+    <string name="re_enter_password_validation">Re-enter password</string>
 </resources>

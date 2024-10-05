@@ -31,6 +31,9 @@ class AuthViewModel @Inject constructor(private val authRepoImpl: AuthRepoImpl) 
 
     var isLoading = MutableLiveData<Boolean>()
 
+    //Password setup
+    var isOtpVerified = MutableLiveData<Boolean>()
+
     fun getSendOtpResponse(): LiveData<SendOtpBaseResponse> {
         return sendOtpResponse
     }
