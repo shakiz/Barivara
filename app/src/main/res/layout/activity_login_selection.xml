@@ -33,7 +33,7 @@
                 android:id="@+id/tvWhyUs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="4dp"
                 android:textStyle="bold"
                 android:gravity="start"
                 android:text="@string/why_you_should_choose_us"
@@ -45,7 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                app:cardBackgroundColor="@color/md_green_100"
+                app:cardBackgroundColor="@color/md_green_50"
                 app:cardCornerRadius="16dp"
                 app:cardUseCompatPadding="false"
                 app:cardElevation="0dp">
@@ -84,8 +84,8 @@
                 android:id="@+id/whyUsCardTwo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:cardBackgroundColor="@color/md_green_100"
+                android:layout_marginTop="12dp"
+                app:cardBackgroundColor="@color/md_green_50"
                 app:cardCornerRadius="16dp"
                 app:cardUseCompatPadding="false"
                 app:cardElevation="0dp">

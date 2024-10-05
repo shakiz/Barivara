@@ -23,7 +23,6 @@ class PasswordLoginActivity : BaseActivity<ActivityPasswordLoginBinding>() {
     private lateinit var activityBinding: ActivityPasswordLoginBinding
     private lateinit var ux: UX
     private lateinit var utilsForAll: UtilsForAll
-    private var loginWithStr: String? = null
     private val hashMap: Map<String?, Array<String>?> = HashMap()
     private var validation = Validation(this, hashMap)
 
@@ -46,9 +45,9 @@ class PasswordLoginActivity : BaseActivity<ActivityPasswordLoginBinding>() {
         super.onCreate(savedInstanceState)
         onBackPressedDispatcher.addCallback(onBackPressedCallback)
         initUI()
-        loginWithStr = getString(R.string.mobile)
         bindUiWithComponents()
         initObservers()
+        initListeners()
     }
 
     private fun initUI() {
@@ -81,24 +80,36 @@ class PasswordLoginActivity : BaseActivity<ActivityPasswordLoginBinding>() {
         }
     }
 
-    private fun bindUiWithComponents() {
-        validation(arrayOf("mobileNumber"), arrayOf(getString(R.string.mobile_validation)))
+    private fun initListeners() {
+        activityBinding.tvSetupPassword.setOnClickListener {
+
+        }
+
         activityBinding.login.setOnClickListener {
-            if (!activityBinding.mobileNumber.text.isNullOrEmpty() && activityBinding.mobileNumber.text.length == 11) {
-                utilsForAll.hideSoftKeyboard(this)
-                viewModel.sendOtp(
-                    activityBinding.mobileNumber.text.toString(),
-                    OtpType.OTP.value
-                )
-            } else {
-                Toasty.warning(
-                    this@PasswordLoginActivity,
-                    getString(R.string.mobile_validation),
-                    Toast.LENGTH_LONG,
-                    true
-                ).show()
+            if (validation.isValid) {
+                if (!activityBinding.mobileNumber.text.isNullOrEmpty() && activityBinding.mobileNumber.text.length == 11) {
+                    utilsForAll.hideSoftKeyboard(this)
+                    viewModel.sendOtp(
+                        activityBinding.mobileNumber.text.toString(),
+                        OtpType.SET_PASS.value
+                    )
+                } else {
+                    Toasty.warning(
+                        this@PasswordLoginActivity,
+                        getString(R.string.mobile_validation),
+                        Toast.LENGTH_LONG,
+                        true
+                    ).show()
+                }
             }
         }
+    }
+
+    private fun bindUiWithComponents() {
+        validation(
+            arrayOf("mobileNumber", "password"),
+            arrayOf(getString(R.string.mobile_validation), getString(R.string.password_validation))
+        )
     }
 
     private fun validation(resNames: Array<String>, validationMessages: Array<String>) {

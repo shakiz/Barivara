@@ -23,7 +23,6 @@ class OTPLoginActivity : BaseActivity<ActivityOtpLoginBinding>() {
     private lateinit var activityBinding: ActivityOtpLoginBinding
     private lateinit var ux: UX
     private lateinit var utilsForAll: UtilsForAll
-    private var loginWithStr: String? = null
     private val hashMap: Map<String?, Array<String>?> = HashMap()
     private var validation = Validation(this, hashMap)
 
@@ -46,7 +45,6 @@ class OTPLoginActivity : BaseActivity<ActivityOtpLoginBinding>() {
         super.onCreate(savedInstanceState)
         onBackPressedDispatcher.addCallback(onBackPressedCallback)
         initUI()
-        loginWithStr = getString(R.string.mobile)
         bindUiWithComponents()
         initObservers()
     }
