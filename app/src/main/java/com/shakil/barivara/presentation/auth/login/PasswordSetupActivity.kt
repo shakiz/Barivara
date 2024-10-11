@@ -7,6 +7,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
+import com.shakil.barivara.data.model.auth.OtpType
 import com.shakil.barivara.data.model.auth.OtpUIState
 import com.shakil.barivara.databinding.ActivityPasswordSetupBinding
 import com.shakil.barivara.presentation.auth.AuthViewModel
@@ -86,7 +87,31 @@ class PasswordSetupActivity : BaseActivity<ActivityPasswordSetupBinding>() {
 
     private fun initListeners() {
         activityBinding.buttonAction.setOnClickListener {
+            when (viewModel.otpUiState.value) {
+                OtpUIState.SEND_OTP -> {
+                    viewModel.sendOtp(
+                        activityBinding.layoutSendOtp.mobileNumber.text.toString(),
+                        OtpType.SET_PASS.value
+                    )
+                }
 
+                OtpUIState.VERIFY_OTP -> {
+                    viewModel.verifyOtp(
+                        activityBinding.layoutSendOtp.mobileNumber.text.toString(),
+                        activityBinding.layoutVerifyOtp.verificationCode.text.toString().toInt(),
+                        OtpType.SET_PASS.value
+                    )
+                }
+
+                else -> {
+                    viewModel.setupPassword(
+                        viewModel.getVerifyOtpResponse().value?.verifyOtpResponse?.accessToken
+                            ?: "",
+                        activityBinding.layoutSetupPassword.password.text.toString(),
+                        activityBinding.layoutSetupPassword.reEnterPassword.text.toString(),
+                    )
+                }
+            }
         }
     }
 }
