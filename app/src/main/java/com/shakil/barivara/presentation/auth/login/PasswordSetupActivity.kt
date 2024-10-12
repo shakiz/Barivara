@@ -47,13 +47,14 @@ class PasswordSetupActivity : BaseActivity<ActivityPasswordSetupBinding>() {
     private fun initUI() {
         ux = UX(this)
         utilsForAll = UtilsForAll(this)
+        //Default UI state
+        viewModel.otpUiState.postValue(OtpUIState.SEND_OTP)
     }
 
     private fun initObservers() {
         viewModel.otpUiState.observe(this) { otpUiState ->
             when (otpUiState) {
                 OtpUIState.SEND_OTP -> {
-                    activityBinding.buttonAction.text = getString(R.string.send_otp)
                     activityBinding.buttonAction.text = getString(R.string.send_otp)
                     activityBinding.layoutSendOtp.root.visibility = View.VISIBLE
                     activityBinding.layoutVerifyOtp.root.visibility = View.GONE
@@ -105,6 +106,7 @@ class PasswordSetupActivity : BaseActivity<ActivityPasswordSetupBinding>() {
 
                 else -> {
                     viewModel.setupPassword(
+                        OtpType.SET_PASS.value,
                         viewModel.getVerifyOtpResponse().value?.verifyOtpResponse?.accessToken
                             ?: "",
                         activityBinding.layoutSetupPassword.password.text.toString(),

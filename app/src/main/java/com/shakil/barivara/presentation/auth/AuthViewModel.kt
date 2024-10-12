@@ -8,6 +8,7 @@ import com.shakil.barivara.data.model.BaseApiResponse
 import com.shakil.barivara.data.model.auth.LogoutRequest
 import com.shakil.barivara.data.model.auth.OtpType
 import com.shakil.barivara.data.model.auth.OtpUIState
+import com.shakil.barivara.data.model.auth.PasswordSetupRequest
 import com.shakil.barivara.data.model.auth.SendOtpBaseResponse
 import com.shakil.barivara.data.model.auth.SendOtpRequest
 import com.shakil.barivara.data.model.auth.VerifyOtpBaseResponse
@@ -94,6 +95,9 @@ class AuthViewModel @Inject constructor(private val authRepoImpl: AuthRepoImpl) 
 
     fun verifyOtp(mobileNo: String, code: Int, type: String) {
         viewModelScope.launch(Dispatchers.IO) {
+            if (type == OtpType.SET_PASS.value) {
+                otpUiState.postValue(OtpUIState.VERIFY_OTP)
+            }
             isLoading.postValue(true)
             try {
                 val data = authRepoImpl.verifyOtp(
@@ -104,9 +108,6 @@ class AuthViewModel @Inject constructor(private val authRepoImpl: AuthRepoImpl) 
                     )
                 )
                 if (data.response != null) {
-                    if (type == OtpType.SET_PASS.value) {
-                        otpUiState.postValue(OtpUIState.VERIFY_OTP)
-                    }
                     verifyOtpResponse.postValue(data.response)
                 } else {
                     sendOtpResponseError.postValue(
@@ -135,6 +136,28 @@ class AuthViewModel @Inject constructor(private val authRepoImpl: AuthRepoImpl) 
             isLoading.postValue(true)
             try {
                 val data = authRepoImpl.logout(logoutRequest, token)
+                if (data.response != null) {
+                    logoutResponse.postValue(data.response)
+                }
+                isLoading.postValue(false)
+            } catch (e: Exception) {
+                isLoading.postValue(false)
+            }
+        }
+    }
+
+    fun setupPassword(type: String, token: String, password: String, reEnterPassword: String) {
+        val passwordSetupRequest = PasswordSetupRequest(
+            password = password,
+            passwordConfirmation = reEnterPassword
+        )
+        viewModelScope.launch(Dispatchers.IO) {
+            if (type == OtpType.SET_PASS.value) {
+                otpUiState.postValue(OtpUIState.SETUP_PASS)
+            }
+            isLoading.postValue(true)
+            try {
+                val data = authRepoImpl.setPassword(passwordSetupRequest, token)
                 if (data.response != null) {
                     logoutResponse.postValue(data.response)
                 } else {

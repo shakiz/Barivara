@@ -2,6 +2,7 @@ package com.shakil.barivara.data.remote.webservice
 
 import com.shakil.barivara.data.model.BaseApiResponse
 import com.shakil.barivara.data.model.auth.LogoutRequest
+import com.shakil.barivara.data.model.auth.PasswordSetupRequest
 import com.shakil.barivara.data.model.auth.SendOtpBaseResponse
 import com.shakil.barivara.data.model.auth.SendOtpRequest
 import com.shakil.barivara.data.model.auth.VerifyOtpBaseResponse
@@ -32,5 +33,13 @@ interface AuthService {
         @Header("Content-Type") contentType: String,
         @Header("Accept") accept: String,
         @Body logoutRequest: LogoutRequest
+    ): Response<BaseApiResponse>
+
+    @POST("set-password")
+    suspend fun setPassword(
+        @Header("Authorization") token: String,
+        @Header("Content-Type") contentType: String,
+        @Header("Accept") accept: String,
+        @Body passwordSetupRequest: PasswordSetupRequest
     ): Response<BaseApiResponse>
 }
