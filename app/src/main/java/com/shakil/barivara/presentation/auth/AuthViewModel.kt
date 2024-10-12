@@ -8,6 +8,7 @@ import com.shakil.barivara.data.model.BaseApiResponse
 import com.shakil.barivara.data.model.auth.LogoutRequest
 import com.shakil.barivara.data.model.auth.OtpType
 import com.shakil.barivara.data.model.auth.OtpUIState
+import com.shakil.barivara.data.model.auth.PasswordLoginRequest
 import com.shakil.barivara.data.model.auth.PasswordSetupRequest
 import com.shakil.barivara.data.model.auth.SendOtpBaseResponse
 import com.shakil.barivara.data.model.auth.SendOtpRequest
@@ -32,6 +33,9 @@ class AuthViewModel @Inject constructor(private val authRepoImpl: AuthRepoImpl) 
 
     private var logoutResponse = MutableLiveData<BaseApiResponse>()
 
+    private var passwordLoginResponse = MutableLiveData<BaseApiResponse>()
+    private var passwordLoginResponseError = MutableLiveData<Resource.Error<ErrorType>>()
+
     var isLoading = MutableLiveData<Boolean>()
 
     //Password setup
@@ -55,6 +59,14 @@ class AuthViewModel @Inject constructor(private val authRepoImpl: AuthRepoImpl) 
 
     fun getLogoutResponse(): LiveData<BaseApiResponse> {
         return logoutResponse
+    }
+
+    fun getPasswordLoginResponse(): LiveData<BaseApiResponse> {
+        return passwordLoginResponse
+    }
+
+    fun getPasswordLoginResponseError(): LiveData<Resource.Error<ErrorType>> {
+        return passwordLoginResponseError
     }
 
     fun sendOtp(mobileNo: String, type: String) {
@@ -171,6 +183,38 @@ class AuthViewModel @Inject constructor(private val authRepoImpl: AuthRepoImpl) 
                 isLoading.postValue(false)
             } catch (e: Exception) {
                 verifyOtpResponseError.postValue(
+                    Resource.Error(
+                        message = "Something went wrong, please try again",
+                        errorType = ErrorType.UNKNOWN
+                    )
+                )
+                isLoading.postValue(false)
+            }
+        }
+    }
+
+    fun passwordLogin(token: String, mobile: String, password: String) {
+        val passwordLoginRequest = PasswordLoginRequest(
+            phone = mobile,
+            password = password
+        )
+        viewModelScope.launch(Dispatchers.IO) {
+            isLoading.postValue(true)
+            try {
+                val data = authRepoImpl.passwordLogin(passwordLoginRequest, token)
+                if (data.response != null) {
+                    passwordLoginResponse.postValue(data.response)
+                } else {
+                    passwordLoginResponseError.postValue(
+                        Resource.Error(
+                            message = data.message,
+                            errorType = data.errorType
+                        )
+                    )
+                }
+                isLoading.postValue(false)
+            } catch (e: Exception) {
+                passwordLoginResponseError.postValue(
                     Resource.Error(
                         message = "Something went wrong, please try again",
                         errorType = ErrorType.UNKNOWN
