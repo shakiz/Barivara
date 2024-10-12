@@ -7,11 +7,10 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
-import com.shakil.barivara.data.model.auth.OtpType
 import com.shakil.barivara.databinding.ActivityPasswordLoginBinding
 import com.shakil.barivara.presentation.auth.AuthViewModel
-import com.shakil.barivara.presentation.auth.registration.MobileRegVerificationActivity
-import com.shakil.barivara.utils.Constants.mUserMobile
+import com.shakil.barivara.utils.Constants.mAccessToken
+import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.UX
 import com.shakil.barivara.utils.UtilsForAll
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,6 +21,7 @@ class PasswordLoginActivity : BaseActivity<ActivityPasswordLoginBinding>() {
     private lateinit var activityBinding: ActivityPasswordLoginBinding
     private lateinit var ux: UX
     private lateinit var utilsForAll: UtilsForAll
+    private lateinit var prefManager: PrefManager
 
     private val viewModel by viewModels<AuthViewModel>()
 
@@ -49,18 +49,12 @@ class PasswordLoginActivity : BaseActivity<ActivityPasswordLoginBinding>() {
     private fun initUI() {
         ux = UX(this)
         utilsForAll = UtilsForAll(this)
+        prefManager = PrefManager(this)
     }
 
     private fun initObservers() {
-        viewModel.getSendOtpResponse().observe(this) { sendOtpResponse ->
-            if (!sendOtpResponse.sendOtpResponse.otpValidationTime.isNullOrEmpty()) {
-                Toasty.success(this, sendOtpResponse.message).show()
-                val intent = Intent(
-                    this, MobileRegVerificationActivity::class.java
-                )
-                intent.putExtra(mUserMobile, activityBinding.mobileNumber.text.toString())
-                startActivity(intent)
-            }
+        viewModel.getPasswordLoginResponse().observe(this) { passwordLoginResponse ->
+
         }
 
         viewModel.getSendOtpErrorResponse().observe(this) { sendOtpErrorResponse ->
@@ -85,9 +79,10 @@ class PasswordLoginActivity : BaseActivity<ActivityPasswordLoginBinding>() {
             if (validation()) {
                 if (!activityBinding.mobileNumber.text.isNullOrEmpty() && activityBinding.mobileNumber.text.length == 11) {
                     utilsForAll.hideSoftKeyboard(this)
-                    viewModel.sendOtp(
+                    viewModel.passwordLogin(
+                        prefManager.getString(mAccessToken),
                         activityBinding.mobileNumber.text.toString(),
-                        OtpType.SET_PASS.value
+                        activityBinding.password.text.toString(),
                     )
                 } else {
                     Toasty.warning(
