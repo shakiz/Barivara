@@ -456,4 +456,5 @@
     <string name="verify_otp">Verify OTP</string>
     <string name="verify_with_your_mobile_number">Verify with you mobile no</string>
     <string name="setup_your_password">Setup your Password</string>
+    <string name="otp_input_hint">-</string>
 </resources>

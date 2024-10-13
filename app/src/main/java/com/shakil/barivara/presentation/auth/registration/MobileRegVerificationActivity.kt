@@ -2,7 +2,10 @@ package com.shakil.barivara.presentation.auth.registration
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
 import android.text.TextUtils
+import android.text.TextWatcher
+import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
@@ -61,8 +64,14 @@ class MobileRegVerificationActivity : BaseActivity<ActivityMobileRegVerification
         activityBinding.sentCodeHintText.text =
             getString(R.string.sent_you_code_on_your_number, mobileNumber)
         activityBinding.verify.setOnClickListener {
-            if (!TextUtils.isEmpty(activityBinding.verificationCode.text.toString())) {
-                if (activityBinding.verificationCode.text.toString().length < 6) {
+            if (!TextUtils.isEmpty(
+                    "${activityBinding.verificationCode1.text}${activityBinding.verificationCode2.text}${activityBinding.verificationCode3.text}" +
+                            "${activityBinding.verificationCode4.text}${activityBinding.verificationCode5.text}${activityBinding.verificationCode6.text}"
+                )
+            ) {
+                if (("${activityBinding.verificationCode1.text}${activityBinding.verificationCode2.text}${activityBinding.verificationCode3.text}" +
+                            "${activityBinding.verificationCode4.text}${activityBinding.verificationCode5.text}${activityBinding.verificationCode6.text}").length < 6
+                ) {
                     Toasty.error(
                         this@MobileRegVerificationActivity,
                         getString(R.string.not_valid_otp_or_code),
@@ -70,15 +79,42 @@ class MobileRegVerificationActivity : BaseActivity<ActivityMobileRegVerification
                         true
                     ).show()
                 } else {
-                    //verifying the code entered manually
-                    verifyVerificationCode(activityBinding.verificationCode.text.toString())
+                    verifyVerificationCode()
                 }
             } else {
-                activityBinding.verificationCode.requestFocus()
-                activityBinding.verificationCode.error =
-                    getString(R.string.otp_or_code_can_not_be_empty)
+                Toasty.warning(
+                    this,
+                    getString(R.string.otp_or_code_can_not_be_empty),
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
+
+        // Set up focus change for each EditText
+        moveToNextEditText(
+            activityBinding.verificationCode1,
+            activityBinding.verificationCode2,
+        )
+        moveToNextEditText(
+            activityBinding.verificationCode2,
+            activityBinding.verificationCode3,
+        )
+        moveToNextEditText(
+            activityBinding.verificationCode3,
+            activityBinding.verificationCode4,
+        )
+        moveToNextEditText(
+            activityBinding.verificationCode4,
+            activityBinding.verificationCode5,
+        )
+        moveToNextEditText(
+            activityBinding.verificationCode5,
+            activityBinding.verificationCode6,
+        )
+        moveToNextEditText(
+            activityBinding.verificationCode6,
+            activityBinding.verificationCode6,
+        )
     }
 
     private fun initObservers() {
@@ -110,9 +146,15 @@ class MobileRegVerificationActivity : BaseActivity<ActivityMobileRegVerification
         }
     }
 
-    private fun verifyVerificationCode(code: String) {
+    private fun verifyVerificationCode() {
         if (tools.hasConnection()) {
-            viewModel.verifyOtp(mobileNumber, code.trim().toInt(), OtpType.OTP.value)
+            viewModel.verifyOtp(
+                mobileNumber,
+                ("${activityBinding.verificationCode1.text}${activityBinding.verificationCode2.text}${activityBinding.verificationCode3.text}" +
+                        "${activityBinding.verificationCode4.text}${activityBinding.verificationCode5.text}${activityBinding.verificationCode6.text}").trim()
+                    .toInt(),
+                OtpType.OTP.value
+            )
         } else {
             Snackbar.make(
                 findViewById(R.id.parent),
@@ -120,5 +162,22 @@ class MobileRegVerificationActivity : BaseActivity<ActivityMobileRegVerification
                 Snackbar.LENGTH_LONG
             ).show()
         }
+    }
+
+    // Helper function to move focus
+    private fun moveToNextEditText(
+        currentEditText: EditText,
+        nextEditText: EditText,
+    ) {
+        currentEditText.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                if (s?.length == 1) {
+                    nextEditText.requestFocus()
+                }
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
     }
 }

@@ -276,7 +276,7 @@
     <string name="we_have_sent_password_reset_mail">We have sent a mail to your email to reset password</string>
     <string name="go_back_login">Go back Login</string>
     <string name="check_your_email">Check your email</string>
-    <string name="welcome_back_login">Welcome back, Login Here</string>
+    <string name="welcome_back_login">Login to your account</string>
     <string name="email_sent">Email sent!!</string>
     <string name="failed_to_sent_reset_email">Failed to send reset email!</string>
     <string name="please_enter_your_valid_email">Please enter your valid email</string>
@@ -457,4 +457,5 @@
     <string name="verify_otp">Verify OTP</string>
     <string name="verify_with_your_mobile_number">Verify with you mobile no</string>
     <string name="setup_your_password">Setup your Password</string>
+    <string name="otp_input_hint">-</string>
 </resources>

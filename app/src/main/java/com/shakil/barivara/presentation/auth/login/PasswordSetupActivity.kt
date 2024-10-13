@@ -2,7 +2,10 @@ package com.shakil.barivara.presentation.auth.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
+import android.widget.EditText
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import com.shakil.barivara.BaseActivity
@@ -99,7 +102,8 @@ class PasswordSetupActivity : BaseActivity<ActivityPasswordSetupBinding>() {
                 OtpUIState.VERIFY_OTP -> {
                     viewModel.verifyOtp(
                         activityBinding.layoutSendOtp.mobileNumber.text.toString(),
-                        activityBinding.layoutVerifyOtp.verificationCode.text.toString().toInt(),
+                        ("${activityBinding.layoutVerifyOtp.verificationCode1.text}${activityBinding.layoutVerifyOtp.verificationCode2.text}${activityBinding.layoutVerifyOtp.verificationCode3.text}" +
+                                "${activityBinding.layoutVerifyOtp.verificationCode4.text}${activityBinding.layoutVerifyOtp.verificationCode5.text}${activityBinding.layoutVerifyOtp.verificationCode6.text}").toInt(),
                         OtpType.SET_PASS.value
                     )
                 }
@@ -115,5 +119,41 @@ class PasswordSetupActivity : BaseActivity<ActivityPasswordSetupBinding>() {
                 }
             }
         }
+
+        // Set up focus change for each EditText
+        moveToNextEditText(
+            activityBinding.layoutVerifyOtp.verificationCode1,
+            activityBinding.layoutVerifyOtp.verificationCode2
+        )
+        moveToNextEditText(
+            activityBinding.layoutVerifyOtp.verificationCode2,
+            activityBinding.layoutVerifyOtp.verificationCode3
+        )
+        moveToNextEditText(
+            activityBinding.layoutVerifyOtp.verificationCode3,
+            activityBinding.layoutVerifyOtp.verificationCode4
+        )
+        moveToNextEditText(
+            activityBinding.layoutVerifyOtp.verificationCode4,
+            activityBinding.layoutVerifyOtp.verificationCode5
+        )
+        moveToNextEditText(
+            activityBinding.layoutVerifyOtp.verificationCode5,
+            activityBinding.layoutVerifyOtp.verificationCode6
+        )
+    }
+
+    // Helper function to move focus
+    private fun moveToNextEditText(currentEditText: EditText, nextEditText: EditText) {
+        currentEditText.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                if (s?.length == 1) {
+                    nextEditText.requestFocus()
+                }
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
     }
 }

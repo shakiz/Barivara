@@ -13,6 +13,7 @@ import com.shakil.barivara.utils.Constants.mAccessToken
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.UX
 import com.shakil.barivara.utils.UtilsForAll
+import com.shakil.barivara.utils.Validation
 import dagger.hilt.android.AndroidEntryPoint
 import es.dmoral.toasty.Toasty
 
@@ -22,6 +23,8 @@ class PasswordLoginActivity : BaseActivity<ActivityPasswordLoginBinding>() {
     private lateinit var ux: UX
     private lateinit var utilsForAll: UtilsForAll
     private lateinit var prefManager: PrefManager
+    private val hashMap: Map<String?, Array<String>?> = HashMap()
+    private var validation = Validation(this, hashMap)
 
     private val viewModel by viewModels<AuthViewModel>()
 
@@ -50,6 +53,13 @@ class PasswordLoginActivity : BaseActivity<ActivityPasswordLoginBinding>() {
         ux = UX(this)
         utilsForAll = UtilsForAll(this)
         prefManager = PrefManager(this)
+
+        validation.setEditTextIsNotEmpty(
+            arrayOf("mobileNumber", "password"), arrayOf(
+                getString(R.string.mobile_validation),
+                getString(R.string.password_validation)
+            )
+        )
     }
 
     private fun initObservers() {
@@ -76,8 +86,8 @@ class PasswordLoginActivity : BaseActivity<ActivityPasswordLoginBinding>() {
         }
 
         activityBinding.login.setOnClickListener {
-            if (validation()) {
-                if (!activityBinding.mobileNumber.text.isNullOrEmpty() && activityBinding.mobileNumber.text.length == 11) {
+            if (validation.isValid) {
+                if (activityBinding.mobileNumber.text.length == 11) {
                     utilsForAll.hideSoftKeyboard(this)
                     viewModel.passwordLogin(
                         prefManager.getString(mAccessToken),
@@ -94,28 +104,5 @@ class PasswordLoginActivity : BaseActivity<ActivityPasswordLoginBinding>() {
                 }
             }
         }
-    }
-
-    private fun validation(): Boolean {
-        if (!activityBinding.mobileNumber.text.isNullOrEmpty()) {
-            Toasty.warning(
-                this@PasswordLoginActivity,
-                getString(R.string.mobile_validation),
-                Toast.LENGTH_LONG,
-                true
-            ).show()
-            return true
-        }
-
-        if (!activityBinding.password.text.isNullOrEmpty()) {
-            Toasty.warning(
-                this@PasswordLoginActivity,
-                getString(R.string.password_validation),
-                Toast.LENGTH_LONG,
-                true
-            ).show()
-            return true
-        }
-        return false
     }
 }
