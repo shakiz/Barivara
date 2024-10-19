@@ -460,4 +460,5 @@
     <string name="otp_input_hint">-</string>
     <string name="create_bill_text">Create bill info</string>
     <string name="otp_verified">OTP verified successfully</string>
+    <string name="password_setup_completed">Password setup completed</string>
 </resources>

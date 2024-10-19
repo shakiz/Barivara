@@ -8,6 +8,8 @@ import com.shakil.barivara.R
 import com.shakil.barivara.data.model.user.UserInfo
 import com.shakil.barivara.databinding.ActivityProfileBinding
 import com.shakil.barivara.utils.Constants.mAccessToken
+import com.shakil.barivara.utils.Constants.mUserId
+import com.shakil.barivara.utils.Constants.mUserMobile
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.UX
 import com.shakil.barivara.utils.Validation
@@ -79,8 +81,10 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>() {
         activityBinding.saveOrUpdate.setOnClickListener {
             if (validation.isValid) {
                 val user = UserInfo(
+                    userId = prefManager.getInt(mUserId),
                     name = activityBinding.name.text.toString(),
                     email = activityBinding.email.text.toString(),
+                    phone = prefManager.getString(mUserMobile)
                 )
                 viewModel.updateProfile(user, prefManager.getString(mAccessToken))
             }

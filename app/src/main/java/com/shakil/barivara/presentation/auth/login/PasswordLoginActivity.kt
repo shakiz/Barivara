@@ -9,8 +9,10 @@ import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
 import com.shakil.barivara.databinding.ActivityPasswordLoginBinding
 import com.shakil.barivara.presentation.auth.AuthViewModel
+import com.shakil.barivara.presentation.onboard.HomeActivity
 import com.shakil.barivara.utils.Constants.mAccessToken
 import com.shakil.barivara.utils.PrefManager
+import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
 import com.shakil.barivara.utils.UtilsForAll
 import com.shakil.barivara.utils.Validation
@@ -23,6 +25,7 @@ class PasswordLoginActivity : BaseActivity<ActivityPasswordLoginBinding>() {
     private lateinit var ux: UX
     private lateinit var utilsForAll: UtilsForAll
     private lateinit var prefManager: PrefManager
+    private lateinit var tools: Tools
     private val hashMap: Map<String?, Array<String>?> = HashMap()
     private var validation = Validation(this, hashMap)
 
@@ -53,6 +56,7 @@ class PasswordLoginActivity : BaseActivity<ActivityPasswordLoginBinding>() {
         ux = UX(this)
         utilsForAll = UtilsForAll(this)
         prefManager = PrefManager(this)
+        tools = Tools(this)
 
         validation.setEditTextIsNotEmpty(
             arrayOf("mobileNumber", "password"), arrayOf(
@@ -63,8 +67,19 @@ class PasswordLoginActivity : BaseActivity<ActivityPasswordLoginBinding>() {
     }
 
     private fun initObservers() {
-        viewModel.getPasswordLoginResponse().observe(this) { passwordLoginResponse ->
-
+        viewModel.getVerifyOtpResponse().observe(this) { passwordLoginResponse ->
+            if (passwordLoginResponse.accessToken != null) {
+                tools.setLoginPrefs(
+                    activityBinding.mobileNumber.text.toString(),
+                    passwordLoginResponse.userInfo,
+                    passwordLoginResponse.accessToken ?: "",
+                    prefManager = prefManager
+                )
+                val intent = Intent(
+                    this, HomeActivity::class.java
+                )
+                startActivity(intent)
+            }
         }
 
         viewModel.getSendOtpErrorResponse().observe(this) { sendOtpErrorResponse ->

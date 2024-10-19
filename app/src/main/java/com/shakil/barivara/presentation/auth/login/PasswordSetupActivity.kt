@@ -107,6 +107,17 @@ class PasswordSetupActivity : BaseActivity<ActivityPasswordSetupBinding>() {
             Toasty.warning(this, verifyOtpErrorResponse.message).show()
         }
 
+        viewModel.getPasswordSetupResponse().observe(this) { passwordSetupResponse ->
+            if (passwordSetupResponse.statusCode == 200) {
+                Toasty.success(this, getString(R.string.password_setup_completed)).show()
+                startActivity(Intent(this, PasswordLoginActivity::class.java))
+            }
+        }
+
+        viewModel.getVerifyOtpErrorResponse().observe(this) { verifyOtpErrorResponse ->
+            Toasty.warning(this, verifyOtpErrorResponse.message).show()
+        }
+
         viewModel.isLoading.observe(this) { isLoading ->
             if (isLoading) {
                 ux.getLoadingView()

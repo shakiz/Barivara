@@ -30,10 +30,10 @@ class AuthViewModel @Inject constructor(private val authRepoImpl: AuthRepoImpl) 
     private var verifyOtpResponse = MutableLiveData<LoginResponse>()
     private var verifyOtpResponseError = MutableLiveData<Resource.Error<ErrorType>>()
 
-    private var logoutResponse = MutableLiveData<BaseApiResponse>()
+    private var passwordSetupResponse = MutableLiveData<BaseApiResponse>()
+    private var passwordSetupResponseError = MutableLiveData<Resource.Error<ErrorType>>()
 
-    private var passwordLoginResponse = MutableLiveData<BaseApiResponse>()
-    private var passwordLoginResponseError = MutableLiveData<Resource.Error<ErrorType>>()
+    private var logoutResponse = MutableLiveData<BaseApiResponse>()
 
     var isLoading = MutableLiveData<Boolean>()
 
@@ -56,16 +56,16 @@ class AuthViewModel @Inject constructor(private val authRepoImpl: AuthRepoImpl) 
         return verifyOtpResponseError
     }
 
+    fun getPasswordSetupResponse(): LiveData<BaseApiResponse> {
+        return passwordSetupResponse
+    }
+
+    fun getPasswordSetupErrorResponse(): LiveData<Resource.Error<ErrorType>> {
+        return passwordSetupResponseError
+    }
+
     fun getLogoutResponse(): LiveData<BaseApiResponse> {
         return logoutResponse
-    }
-
-    fun getPasswordLoginResponse(): LiveData<BaseApiResponse> {
-        return passwordLoginResponse
-    }
-
-    fun getPasswordLoginResponseError(): LiveData<Resource.Error<ErrorType>> {
-        return passwordLoginResponseError
     }
 
     fun sendOtp(mobileNo: String, type: String) {
@@ -161,9 +161,9 @@ class AuthViewModel @Inject constructor(private val authRepoImpl: AuthRepoImpl) 
             try {
                 val data = authRepoImpl.setPassword(passwordSetupRequest, token)
                 if (data.response != null) {
-                    logoutResponse.postValue(data.response)
+                    passwordSetupResponse.postValue(data.response)
                 } else {
-                    sendOtpResponseError.postValue(
+                    passwordSetupResponseError.postValue(
                         Resource.Error(
                             message = data.message,
                             errorType = data.errorType
@@ -172,7 +172,7 @@ class AuthViewModel @Inject constructor(private val authRepoImpl: AuthRepoImpl) 
                 }
                 isLoading.postValue(false)
             } catch (e: Exception) {
-                verifyOtpResponseError.postValue(
+                passwordSetupResponseError.postValue(
                     Resource.Error(
                         message = "Something went wrong, please try again",
                         errorType = ErrorType.UNKNOWN
