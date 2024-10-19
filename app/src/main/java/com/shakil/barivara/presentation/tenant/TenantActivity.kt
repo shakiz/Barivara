@@ -104,9 +104,12 @@ class TenantActivity : BaseActivity<ActivityTenantBinding>() {
                 activityAddNewTenantBinding.headingAdvanceAmount.visibility = View.VISIBLE
                 activityAddNewTenantBinding.advanceAmount.visibility = View.VISIBLE
                 activityAddNewTenantBinding.advanceCheckBox.isChecked = true
-                activityAddNewTenantBinding.advanceAmount.setText("${tenant.advancedAmount}")
-                activityAddNewTenantBinding.advanceCheckBox.isEnabled = false
-                activityAddNewTenantBinding.advanceAmount.isEnabled = false
+            }
+
+            if (!tenant.endDate.isNullOrEmpty()) {
+                activityAddNewTenantBinding.tvEndDate.visibility = View.VISIBLE
+                activityAddNewTenantBinding.endMonthId.visibility = View.VISIBLE
+                activityAddNewTenantBinding.stillHasRoomCb.isChecked = true
             }
         }
     }
@@ -125,7 +128,7 @@ class TenantActivity : BaseActivity<ActivityTenantBinding>() {
             this,
             spinnerData.setTenantTypeData()
         )
-        activityAddNewTenantBinding.advanceCheckBox.setOnCheckedChangeListener { compoundButton, visibilityValue ->
+        activityAddNewTenantBinding.advanceCheckBox.setOnCheckedChangeListener { _, visibilityValue ->
             if (visibilityValue) {
                 activityAddNewTenantBinding.headingAdvanceAmount.visibility = View.VISIBLE
                 activityAddNewTenantBinding.advanceAmount.visibility = View.VISIBLE
@@ -133,6 +136,15 @@ class TenantActivity : BaseActivity<ActivityTenantBinding>() {
             } else {
                 activityAddNewTenantBinding.headingAdvanceAmount.visibility = View.GONE
                 activityAddNewTenantBinding.advanceAmount.visibility = View.GONE
+            }
+        }
+        activityAddNewTenantBinding.stillHasRoomCb.setOnCheckedChangeListener { _, visibilityValue ->
+            if (!visibilityValue) {
+                activityAddNewTenantBinding.tvEndDate.visibility = View.VISIBLE
+                activityAddNewTenantBinding.endMonthId.visibility = View.VISIBLE
+            } else {
+                activityAddNewTenantBinding.tvEndDate.visibility = View.GONE
+                activityAddNewTenantBinding.endMonthId.visibility = View.GONE
             }
         }
         activityAddNewTenantBinding.tenantTypeId.onItemSelectedListener =
