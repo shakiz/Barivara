@@ -1,12 +1,12 @@
 package com.shakil.barivara.data.remote.webservice
 
 import com.shakil.barivara.data.model.BaseApiResponse
+import com.shakil.barivara.data.model.auth.LoginBaseResponse
 import com.shakil.barivara.data.model.auth.LogoutRequest
 import com.shakil.barivara.data.model.auth.PasswordLoginRequest
 import com.shakil.barivara.data.model.auth.PasswordSetupRequest
 import com.shakil.barivara.data.model.auth.SendOtpBaseResponse
 import com.shakil.barivara.data.model.auth.SendOtpRequest
-import com.shakil.barivara.data.model.auth.VerifyOtpBaseResponse
 import com.shakil.barivara.data.model.auth.VerifyOtpRequest
 import retrofit2.Response
 import retrofit2.http.Body
@@ -26,7 +26,7 @@ interface AuthService {
         @Header("Content-Type") contentType: String,
         @Header("Accept") accept: String,
         @Body verifyOtpRequest: VerifyOtpRequest
-    ): Response<VerifyOtpBaseResponse>
+    ): Response<LoginBaseResponse>
 
     @POST("logout")
     suspend fun logout(
@@ -50,5 +50,5 @@ interface AuthService {
         @Header("Content-Type") contentType: String,
         @Header("Accept") accept: String,
         @Body passwordLoginRequest: PasswordLoginRequest
-    ): Response<BaseApiResponse>
+    ): Response<LoginBaseResponse>
 }

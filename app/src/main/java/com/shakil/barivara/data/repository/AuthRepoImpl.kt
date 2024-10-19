@@ -2,12 +2,13 @@ package com.shakil.barivara.data.repository
 
 import com.google.gson.Gson
 import com.shakil.barivara.data.model.BaseApiResponse
+import com.shakil.barivara.data.model.auth.LoginBaseResponse
+import com.shakil.barivara.data.model.auth.LoginResponse
 import com.shakil.barivara.data.model.auth.LogoutRequest
 import com.shakil.barivara.data.model.auth.PasswordLoginRequest
 import com.shakil.barivara.data.model.auth.PasswordSetupRequest
 import com.shakil.barivara.data.model.auth.SendOtpBaseResponse
 import com.shakil.barivara.data.model.auth.SendOtpRequest
-import com.shakil.barivara.data.model.auth.VerifyOtpBaseResponse
 import com.shakil.barivara.data.model.auth.VerifyOtpRequest
 import com.shakil.barivara.data.remote.webservice.AuthService
 import com.shakil.barivara.domain.auth.AuthRepo
@@ -58,7 +59,7 @@ class AuthRepoImpl @Inject constructor(
 
     override suspend fun verifyOtp(
         verifyOtpRequest: VerifyOtpRequest
-    ): Resource<VerifyOtpBaseResponse> {
+    ): Resource<LoginBaseResponse> {
         try {
             val task = authService.verifyOtp(
                 accept = Constants.ACCEPT,
@@ -177,7 +178,7 @@ class AuthRepoImpl @Inject constructor(
     override suspend fun passwordLogin(
         passwordLoginRequest: PasswordLoginRequest,
         token: String
-    ): Resource<BaseApiResponse> {
+    ): Resource<LoginBaseResponse> {
         try {
             val task = authService.passwordLogin(
                 token = "Bearer $token",

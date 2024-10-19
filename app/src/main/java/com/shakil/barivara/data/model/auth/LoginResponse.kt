@@ -4,10 +4,10 @@ import com.google.gson.annotations.SerializedName
 import com.shakil.barivara.data.model.BaseApiResponse
 import com.shakil.barivara.data.model.user.UserInfo
 
-class VerifyOtpBaseResponse(@SerializedName("data") val verifyOtpResponse: VerifyOtpResponse) :
+class LoginBaseResponse(@SerializedName("data") val loginResponse: LoginResponse) :
     BaseApiResponse()
 
-data class VerifyOtpResponse(
+data class LoginResponse(
     @SerializedName("access_token") var accessToken: String? = null,
     @SerializedName("token_type") var tokenType: String? = null,
     @SerializedName("expires_at") var expiresAt: Int? = null,

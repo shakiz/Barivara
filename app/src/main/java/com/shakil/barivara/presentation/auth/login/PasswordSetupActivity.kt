@@ -17,6 +17,7 @@ import com.shakil.barivara.presentation.auth.AuthViewModel
 import com.shakil.barivara.utils.UX
 import com.shakil.barivara.utils.UtilsForAll
 import dagger.hilt.android.AndroidEntryPoint
+import es.dmoral.toasty.Toasty
 
 @AndroidEntryPoint
 class PasswordSetupActivity : BaseActivity<ActivityPasswordSetupBinding>() {
@@ -80,6 +81,32 @@ class PasswordSetupActivity : BaseActivity<ActivityPasswordSetupBinding>() {
             }
         }
 
+        viewModel.getSendOtpResponse().observe(this) { sendOtpResponse ->
+            if (!sendOtpResponse.sendOtpResponse.otpValidationTime.isNullOrEmpty()) {
+                viewModel.otpUiState.postValue(OtpUIState.VERIFY_OTP)
+                Toasty.success(this, sendOtpResponse.message).show()
+                activityBinding.layoutVerifyOtp.sentCodeHintText.text = getString(
+                    R.string.sent_you_code_on_your_number,
+                    activityBinding.layoutSendOtp.mobileNumber.text
+                )
+            }
+        }
+
+        viewModel.getSendOtpErrorResponse().observe(this) { sendOtpErrorResponse ->
+            Toasty.warning(this, sendOtpErrorResponse.message).show()
+        }
+
+        viewModel.getVerifyOtpResponse().observe(this) { loginBaseResponse ->
+            if (loginBaseResponse.accessToken != null) {
+                viewModel.otpUiState.postValue(OtpUIState.SETUP_PASS)
+                Toasty.success(this, getString(R.string.otp_verified)).show()
+            }
+        }
+
+        viewModel.getVerifyOtpErrorResponse().observe(this) { verifyOtpErrorResponse ->
+            Toasty.warning(this, verifyOtpErrorResponse.message).show()
+        }
+
         viewModel.isLoading.observe(this) { isLoading ->
             if (isLoading) {
                 ux.getLoadingView()
@@ -110,8 +137,7 @@ class PasswordSetupActivity : BaseActivity<ActivityPasswordSetupBinding>() {
 
                 else -> {
                     viewModel.setupPassword(
-                        OtpType.SET_PASS.value,
-                        viewModel.getVerifyOtpResponse().value?.verifyOtpResponse?.accessToken
+                        viewModel.getVerifyOtpResponse().value?.accessToken
                             ?: "",
                         activityBinding.layoutSetupPassword.password.text.toString(),
                         activityBinding.layoutSetupPassword.reEnterPassword.text.toString(),
@@ -140,6 +166,10 @@ class PasswordSetupActivity : BaseActivity<ActivityPasswordSetupBinding>() {
         moveToNextEditText(
             activityBinding.layoutVerifyOtp.verificationCode5,
             activityBinding.layoutVerifyOtp.verificationCode6
+        )
+        moveToNextEditText(
+            activityBinding.layoutVerifyOtp.verificationCode6,
+            activityBinding.layoutVerifyOtp.verificationCode6,
         )
     }
 
