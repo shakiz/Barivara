@@ -3,7 +3,7 @@ package com.shakil.barivara.data.model.user
 import com.google.gson.annotations.SerializedName
 
 data class UserInfo(
-    @SerializedName("user_id") var userId: Int? = null,
-    @SerializedName("name") var name: String? = null,
-    @SerializedName("email") var email: String? = null
+    @SerializedName("user_id") var userId: Int,
+    @SerializedName("name") var name: String,
+    @SerializedName("email") var email: String
 )

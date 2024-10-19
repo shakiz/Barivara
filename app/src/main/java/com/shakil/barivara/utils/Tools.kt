@@ -32,6 +32,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.shakil.barivara.R
+import com.shakil.barivara.data.model.user.UserInfo
 import com.shakil.barivara.presentation.auth.login.LoginSelectionActivity
 import com.shakil.barivara.presentation.auth.onboard.WelcomeActivity
 import com.shakil.barivara.presentation.onboard.HomeActivity
@@ -260,14 +261,16 @@ class Tools(private val context: Context) {
 
     fun setLoginPrefs(
         mobileNumber: String,
-        userId: Int,
+        userInfo: UserInfo,
         accessToken: String,
         prefManager: PrefManager
     ) {
         prefManager[mIsLoggedIn] = true
-        prefManager[mUserId] = userId
-        prefManager[mUserMobile] = mobileNumber
         prefManager[mAccessToken] = accessToken
+        prefManager[mUserId] = userInfo.userId
+        prefManager[mUserMobile] = mobileNumber
+        prefManager[mUserEmail] = userInfo.email
+        prefManager[mUserFullName] = userInfo.name
     }
 
     fun launchAppByPackageName(appPackageName: String) {

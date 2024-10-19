@@ -119,11 +119,11 @@ class MobileRegVerificationActivity : BaseActivity<ActivityMobileRegVerification
 
     private fun initObservers() {
         viewModel.getVerifyOtpResponse().observe(this) { verifyOtpBaseResponse ->
-            if (verifyOtpBaseResponse.verifyOtpResponse.accessToken != null) {
+            if (verifyOtpBaseResponse.accessToken != null) {
                 tools.setLoginPrefs(
                     mobileNumber,
-                    verifyOtpBaseResponse.verifyOtpResponse.userId,
-                    verifyOtpBaseResponse.verifyOtpResponse.accessToken ?: "",
+                    verifyOtpBaseResponse.userInfo,
+                    verifyOtpBaseResponse.accessToken ?: "",
                     prefManager = prefManager
                 )
                 val intent = Intent(
