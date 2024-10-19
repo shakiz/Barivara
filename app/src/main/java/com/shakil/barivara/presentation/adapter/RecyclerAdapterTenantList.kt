@@ -1,8 +1,10 @@
 package com.shakil.barivara.presentation.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.shakil.barivara.R
 import com.shakil.barivara.data.model.tenant.Tenant
 import com.shakil.barivara.databinding.AdapterLayoutTenantListBinding
 import com.shakil.barivara.presentation.adapter.RecyclerAdapterTenantList.TenantItemViewHolder
@@ -46,7 +48,10 @@ class RecyclerAdapterTenantList :
         binding.root
     ) {
         fun bind(tenant: Tenant) {
-            binding.TenantName.text = tenant.name
+            val context: Context = binding.root.context
+            binding.TenantName.text = context.getString(R.string.tenant_name_x, tenant.name)
+            binding.MobileNo.text = context.getString(R.string.phone_no_x, tenant.phone?.toInt())
+            binding.StartDate.text = context.getString(R.string.start_date_x, tenant.startDate)
             binding.itemCardView.setOnClickListener {
                 tenantCallBack?.onItemClick(tenant)
             }
@@ -58,9 +63,6 @@ class RecyclerAdapterTenantList :
             }
             binding.editIcon.setOnClickListener {
                 tenantCallBack?.onEdit(tenant)
-            }
-            binding.deleteIcon.setOnClickListener {
-                tenantCallBack?.onDelete(tenant)
             }
         }
     }

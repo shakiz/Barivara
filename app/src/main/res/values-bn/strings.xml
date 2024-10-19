@@ -461,4 +461,7 @@
     <string name="otp_verified">OTP verified successfully</string>
     <string name="password_setup_completed">Password setup completed</string>
     <string name="still_has_room">Still has room?</string>
+    <string name="tenant_name_x">Tenant Name: %s</string>
+    <string name="phone_no_x">Mobile No: %d</string>
+    <string name="start_date_x">Start Date: %s</string>
 </resources>
