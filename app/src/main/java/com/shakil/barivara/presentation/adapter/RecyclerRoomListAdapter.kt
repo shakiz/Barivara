@@ -1,8 +1,10 @@
 package com.shakil.barivara.presentation.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.shakil.barivara.R
 import com.shakil.barivara.data.model.room.Room
 import com.shakil.barivara.databinding.AdapterLayoutRoomListBinding
 import com.shakil.barivara.presentation.adapter.RecyclerRoomListAdapter.RoomItemViewHolder
@@ -43,14 +45,17 @@ class RecyclerRoomListAdapter :
         binding.root
     ) {
         fun bind(room: Room) {
-            binding.roomName.text = room.name
+            val context: Context = binding.root.context
+            binding.roomName.text = context.getString(R.string.tenant_name_x, room.name)
+            binding.roomStatus.text = context.getString(R.string.room_status_x, room.status)
+            binding.roomRent.text = context.getString(R.string.rent_amount_x, room.rent)
             binding.itemCardView.setOnClickListener {
                 roomCallBacks?.onItemClick(room)
             }
-            binding.editDeleteIncludeLayout.editButton.setOnClickListener {
+            binding.editButton.setOnClickListener {
                 roomCallBacks?.onEdit(room)
             }
-            binding.editDeleteIncludeLayout.deleteButton.setOnClickListener {
+            binding.deleteButton.setOnClickListener {
                 roomCallBacks?.onDelete(room)
             }
         }
