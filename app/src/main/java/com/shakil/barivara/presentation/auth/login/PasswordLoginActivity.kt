@@ -71,8 +71,7 @@ class PasswordLoginActivity : BaseActivity<ActivityPasswordLoginBinding>() {
             if (passwordLoginResponse.accessToken != null) {
                 tools.setLoginPrefs(
                     activityBinding.mobileNumber.text.toString(),
-                    passwordLoginResponse.userInfo,
-                    passwordLoginResponse.accessToken ?: "",
+                    passwordLoginResponse,
                     prefManager = prefManager
                 )
                 val intent = Intent(

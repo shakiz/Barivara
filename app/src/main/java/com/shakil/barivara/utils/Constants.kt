@@ -13,6 +13,8 @@ object Constants {
     const val mAppViewCount = "AppViewCount"
     const val mIsLoggedIn = "isLoggedIn"
     const val mAccessToken = "accessToken"
+    const val mRefreshToken = "refreshToken"
+    const val mRefreshTokenValidity = "refreshTokenValidity"
     const val mLanguage = "Language"
     const val mUserId = "UserId"
     const val mUserFullName = "UserFullName"

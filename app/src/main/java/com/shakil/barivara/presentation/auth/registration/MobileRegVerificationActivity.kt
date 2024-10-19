@@ -122,8 +122,7 @@ class MobileRegVerificationActivity : BaseActivity<ActivityMobileRegVerification
             if (verifyOtpBaseResponse.accessToken != null) {
                 tools.setLoginPrefs(
                     mobileNumber,
-                    verifyOtpBaseResponse.userInfo,
-                    verifyOtpBaseResponse.accessToken ?: "",
+                    verifyOtpBaseResponse,
                     prefManager = prefManager
                 )
                 val intent = Intent(
