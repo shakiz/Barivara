@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shakil.barivara.data.model.BaseApiResponse
+import com.shakil.barivara.data.model.auth.ChangePasswordRequest
 import com.shakil.barivara.data.model.auth.LoginResponse
 import com.shakil.barivara.data.model.auth.LogoutRequest
 import com.shakil.barivara.data.model.auth.OtpUIState
@@ -33,6 +34,9 @@ class AuthViewModel @Inject constructor(private val authRepoImpl: AuthRepoImpl) 
     private var passwordSetupResponse = MutableLiveData<BaseApiResponse>()
     private var passwordSetupResponseError = MutableLiveData<Resource.Error<ErrorType>>()
 
+    private var changePasswordResponse = MutableLiveData<BaseApiResponse>()
+    private var changePasswordResponseError = MutableLiveData<Resource.Error<ErrorType>>()
+
     private var logoutResponse = MutableLiveData<BaseApiResponse>()
 
     var isLoading = MutableLiveData<Boolean>()
@@ -58,6 +62,14 @@ class AuthViewModel @Inject constructor(private val authRepoImpl: AuthRepoImpl) 
 
     fun getPasswordSetupResponse(): LiveData<BaseApiResponse> {
         return passwordSetupResponse
+    }
+
+    fun getChangePasswordErrorResponse(): LiveData<Resource.Error<ErrorType>> {
+        return changePasswordResponseError
+    }
+
+    fun getChangePasswordResponse(): LiveData<BaseApiResponse> {
+        return changePasswordResponse
     }
 
     fun getPasswordSetupErrorResponse(): LiveData<Resource.Error<ErrorType>> {
@@ -205,6 +217,40 @@ class AuthViewModel @Inject constructor(private val authRepoImpl: AuthRepoImpl) 
                 isLoading.postValue(false)
             } catch (e: Exception) {
                 verifyOtpResponseError.postValue(
+                    Resource.Error(
+                        message = "Something went wrong, please try again",
+                        errorType = ErrorType.UNKNOWN
+                    )
+                )
+                isLoading.postValue(false)
+            }
+        }
+    }
+
+    fun changePassword(token: String, oldPass: String, newPass: String, reEnterNewPass: String) {
+        val changePasswordRequest = ChangePasswordRequest(
+            oldPassword = oldPass,
+            password = newPass,
+            passwordConfirmation = reEnterNewPass
+        )
+
+        viewModelScope.launch(Dispatchers.IO) {
+            isLoading.postValue(true)
+            try {
+                val data = authRepoImpl.changePassword(changePasswordRequest, token)
+                if (data.response != null) {
+                    changePasswordResponse.postValue(data.response)
+                } else {
+                    changePasswordResponseError.postValue(
+                        Resource.Error(
+                            message = data.message,
+                            errorType = data.errorType
+                        )
+                    )
+                }
+                isLoading.postValue(false)
+            } catch (e: Exception) {
+                changePasswordResponseError.postValue(
                     Resource.Error(
                         message = "Something went wrong, please try again",
                         errorType = ErrorType.UNKNOWN

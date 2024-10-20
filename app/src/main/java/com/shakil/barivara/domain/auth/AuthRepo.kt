@@ -1,6 +1,7 @@
 package com.shakil.barivara.domain.auth
 
 import com.shakil.barivara.data.model.BaseApiResponse
+import com.shakil.barivara.data.model.auth.ChangePasswordRequest
 import com.shakil.barivara.data.model.auth.LoginBaseResponse
 import com.shakil.barivara.data.model.auth.LogoutRequest
 import com.shakil.barivara.data.model.auth.PasswordLoginRequest
@@ -22,4 +23,8 @@ interface AuthRepo {
         passwordLoginRequest: PasswordLoginRequest,
         token: String
     ): Resource<LoginBaseResponse>
+    suspend fun changePassword(
+        changePasswordRequest: ChangePasswordRequest,
+        token: String
+    ): Resource<BaseApiResponse>
 }
