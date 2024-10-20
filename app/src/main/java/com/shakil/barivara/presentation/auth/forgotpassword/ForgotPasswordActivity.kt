@@ -1,16 +1,14 @@
 package com.shakil.barivara.presentation.auth.forgotpassword
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.View
-import android.widget.Toast
+import androidx.activity.viewModels
 import com.google.firebase.auth.FirebaseAuth
 import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
 import com.shakil.barivara.databinding.ActivityForgotPasswordBinding
-import com.shakil.barivara.presentation.auth.login.LoginSelectionActivity
+import com.shakil.barivara.presentation.auth.AuthViewModel
 import com.shakil.barivara.utils.Constants
+import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.UX
 import com.shakil.barivara.utils.Validation
 import es.dmoral.toasty.Toasty
@@ -21,6 +19,9 @@ class ForgotPasswordActivity : BaseActivity<ActivityForgotPasswordBinding>() {
     private var validation = Validation(this, hashMap)
     private var firebaseAuth: FirebaseAuth? = null
     private lateinit var ux: UX
+    private lateinit var prefManager: PrefManager
+    private val viewModel by viewModels<AuthViewModel>()
+
     override val layoutResourceId: Int
         get() = R.layout.activity_forgot_password
 
@@ -28,6 +29,8 @@ class ForgotPasswordActivity : BaseActivity<ActivityForgotPasswordBinding>() {
         super.onCreate(savedInstanceState)
         initUI()
         bindUiWithComponents()
+        initListeners()
+        initObservers()
     }
 
     override fun setVariables(dataBinding: ActivityForgotPasswordBinding) {
@@ -36,64 +39,51 @@ class ForgotPasswordActivity : BaseActivity<ActivityForgotPasswordBinding>() {
 
     private fun initUI() {
         ux = UX(this)
+        prefManager = PrefManager(this)
         firebaseAuth = FirebaseAuth.getInstance()
     }
 
     private fun bindUiWithComponents() {
         validation.setEditTextIsNotEmpty(
-            arrayOf("email"),
-            arrayOf(getString(R.string.email_validation))
+            arrayOf("oldPassword", "newPassword", "reEnterNewPassword"),
+            arrayOf(
+                getString(R.string.old_password_validation),
+                getString(R.string.new_password_validation),
+                getString(R.string.re_enter_password_validation)
+            )
         )
+    }
+
+    private fun initListeners() {
         activityForgotPasswordBinding.changePassword.setOnClickListener {
             if (validation.isValid) {
-                ux.getLoadingView()
-                firebaseAuth?.sendPasswordResetEmail(activityForgotPasswordBinding.email.text.toString())
-                    ?.addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            Log.i(Constants.TAG, "Reset pass mail sent.")
-                            Toasty.info(
-                                this@ForgotPasswordActivity,
-                                getString(R.string.email_sent),
-                                Toast.LENGTH_LONG,
-                                true
-                            ).show()
-                            activityForgotPasswordBinding.changePasswordLayout.visibility =
-                                View.GONE
-                            activityForgotPasswordBinding.afterChangePasswordLayout.visibility =
-                                View.VISIBLE
-                        } else {
-                            Log.i(Constants.TAG, "Reset pass error : " + task.isSuccessful)
-                            if (task.exception?.message == getString(R.string.firebase_no_user_exception)) {
-                                Toasty.error(
-                                    this@ForgotPasswordActivity,
-                                    getString(R.string.email_was_not_found_in_our_database),
-                                    Toast.LENGTH_LONG,
-                                    true
-                                ).show()
-                            } else {
-                                Toasty.error(
-                                    this@ForgotPasswordActivity,
-                                    getString(R.string.failed_to_sent_reset_email),
-                                    Toast.LENGTH_LONG,
-                                    true
-                                ).show()
-                            }
-                            activityForgotPasswordBinding.changePasswordLayout.visibility =
-                                View.VISIBLE
-                            activityForgotPasswordBinding.afterChangePasswordLayout.visibility =
-                                View.GONE
-                        }
-                        ux.removeLoadingView()
-                    }
+                viewModel.changePassword(
+                    prefManager.getString(Constants.mAccessToken),
+                    activityForgotPasswordBinding.oldPassword.text.toString(),
+                    activityForgotPasswordBinding.newPassword.text.toString(),
+                    activityForgotPasswordBinding.reEnterNewPassword.text.toString()
+                )
             }
         }
-        activityForgotPasswordBinding.login.setOnClickListener {
-            startActivity(
-                Intent(
-                    this@ForgotPasswordActivity,
-                    LoginSelectionActivity::class.java
-                )
-            )
+    }
+
+    private fun initObservers() {
+        viewModel.isLoading.observe(this) { isLoading ->
+            if (isLoading) {
+                ux.getLoadingView()
+            } else {
+                ux.removeLoadingView()
+            }
+        }
+
+        viewModel.getChangePasswordResponse().observe(this) {
+            if (it.statusCode == 200) {
+
+            }
+        }
+
+        viewModel.getChangePasswordErrorResponse().observe(this) {
+            Toasty.error(this, getString(R.string.password_changed_successfully)).show()
         }
     }
 }

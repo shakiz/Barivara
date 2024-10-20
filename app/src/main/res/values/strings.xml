@@ -452,7 +452,7 @@
     <string name="why_us_two">Streamlined Rent Collection and Maintenance Requests</string>
     <string name="setup_password">Setup Password</string>
     <string name="password_re_enter_hint">Re-enter Password</string>
-    <string name="re_enter_password_validation">Re-enter password</string>
+    <string name="re_enter_password_validation">Please Re-enter your password</string>
     <string name="send_otp">Send OTP</string>
     <string name="verify_otp">Verify OTP</string>
     <string name="verify_with_your_mobile_number">Verify with you mobile no</string>
@@ -468,4 +468,10 @@
     <string name="room_name_x">Room Name: %s</string>
     <string name="room_status_x">Room Status: %s</string>
     <string name="rent_amount_x">Rent Amount: %d</string>
+    <string name="old_password_hint">Enter your old password</string>
+    <string name="new_password_hint">Enter your new password</string>
+    <string name="re_enter_new_password_validation">Re-enter your new password</string>
+    <string name="old_password_validation">Please enter your old password</string>
+    <string name="new_password_validation">Please enter your new password</string>
+    <string name="password_changed_successfully">Password changed successfully</string>
 </resources>
