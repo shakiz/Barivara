@@ -11,8 +11,10 @@ import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.UX
 import com.shakil.barivara.utils.Validation
+import dagger.hilt.android.AndroidEntryPoint
 import es.dmoral.toasty.Toasty
 
+@AndroidEntryPoint
 class ForgotPasswordActivity : BaseActivity<ActivityForgotPasswordBinding>() {
     private lateinit var activityForgotPasswordBinding: ActivityForgotPasswordBinding
     private val hashMap: Map<String?, Array<String>?> = HashMap()
@@ -78,12 +80,12 @@ class ForgotPasswordActivity : BaseActivity<ActivityForgotPasswordBinding>() {
 
         viewModel.getChangePasswordResponse().observe(this) {
             if (it.statusCode == 200) {
-
+                Toasty.error(this, getString(R.string.password_changed_successfully)).show()
             }
         }
 
         viewModel.getChangePasswordErrorResponse().observe(this) {
-            Toasty.error(this, getString(R.string.password_changed_successfully)).show()
+            Toasty.error(this, it.message).show()
         }
     }
 }
