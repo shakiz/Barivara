@@ -6,6 +6,11 @@ object ApiConstants {
     const val BASE_URL = "https://rent-collector-8cceae311431.herokuapp.com/api/v1/"
 }
 
+object DateTimeConstants {
+    const val API_DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss"
+    const val APP_DATETIME_FORMAT = "MMM dd, yyyy"
+}
+
 object Constants {
     @JvmField
     var TAG = "dev-shakil"
