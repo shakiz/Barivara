@@ -32,6 +32,8 @@ import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 
 @AndroidEntryPoint
 class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCallBacks {
@@ -42,6 +44,7 @@ class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCall
     private lateinit var prefManager: PrefManager
     private lateinit var recyclerAdapterTenantList: RecyclerAdapterTenantList
     private val viewModel by viewModels<TenantViewModel>()
+    private val coroutineScope = CoroutineScope(Dispatchers.Main)
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
@@ -93,24 +96,7 @@ class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCall
         }
 
         activityTenantListBinding.searchLayout.refreshButton.setOnClickListener {
-            if (tools.hasConnection()) {
-                activityTenantListBinding.mRecylerView.visibility = View.VISIBLE
-                activityTenantListBinding.searchLayout.SearchName.setText("")
-                activityTenantListBinding.mNoDataMessage.visibility = View.GONE
-                Tools.hideKeyboard(this@TenantListActivity)
-                viewModel.getAllTenants(prefManager.getString(mAccessToken))
-                Toast.makeText(
-                    this@TenantListActivity,
-                    getString(R.string.list_refreshed),
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else {
-                Toast.makeText(
-                    this@TenantListActivity,
-                    getString(R.string.no_internet_title),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+            refreshListData()
         }
 
         activityTenantListBinding.searchLayout.searchButton.setOnClickListener {
@@ -122,7 +108,9 @@ class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCall
                         object : FilterManager.onTenantFilterClick {
                             override fun onClick(objects: ArrayList<Tenant>) {
                                 if (objects.size > 0) {
-                                    setRecyclerAdapter()
+                                    activityTenantListBinding.mRecylerView.visibility = View.VISIBLE
+                                    activityTenantListBinding.noDataLayout.root.visibility =
+                                        View.GONE
                                     Tools.hideKeyboard(this@TenantListActivity)
                                     Toast.makeText(
                                         this@TenantListActivity,
@@ -131,10 +119,9 @@ class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCall
                                     ).show()
                                 } else {
                                     Tools.hideKeyboard(this@TenantListActivity)
-                                    activityTenantListBinding.mNoDataMessage.visibility =
-                                        View.VISIBLE
-                                    activityTenantListBinding.mNoDataMessage.setText(R.string.no_data_message)
                                     activityTenantListBinding.mRecylerView.visibility = View.GONE
+                                    activityTenantListBinding.noDataLayout.root.visibility =
+                                        View.VISIBLE
                                     Toast.makeText(
                                         this@TenantListActivity,
                                         getString(R.string.no_data_message),
@@ -167,9 +154,37 @@ class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCall
         prefManager = PrefManager(this)
     }
 
+    private fun refreshListData() {
+        if (tools.hasConnection()) {
+            activityTenantListBinding.mRecylerView.visibility = View.VISIBLE
+            activityTenantListBinding.searchLayout.SearchName.setText("")
+            activityTenantListBinding.noDataLayout.root.visibility = View.GONE
+            Tools.hideKeyboard(this@TenantListActivity)
+            viewModel.getAllTenants(prefManager.getString(mAccessToken))
+            Toast.makeText(
+                this@TenantListActivity,
+                getString(R.string.list_refreshed),
+                Toast.LENGTH_SHORT
+            ).show()
+        } else {
+            Toast.makeText(
+                this@TenantListActivity,
+                getString(R.string.no_internet_title),
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+
     private fun initObservers() {
         viewModel.getTenants().observe(this) { tenants ->
-            recyclerAdapterTenantList.setItems(tenants)
+            if (tenants.isEmpty()) {
+                activityTenantListBinding.noDataLayout.root.visibility = View.VISIBLE
+                activityTenantListBinding.mRecylerView.visibility = View.GONE
+            } else {
+                recyclerAdapterTenantList.setItems(tenants)
+                activityTenantListBinding.mRecylerView.visibility = View.VISIBLE
+                activityTenantListBinding.noDataLayout.root.visibility = View.GONE
+            }
         }
 
         viewModel.isLoading.observe(this) { isLoading ->

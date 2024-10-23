@@ -205,7 +205,7 @@
     <string name="advance_amount_validation">Please enter advance amount</string>
     <string name="rent_amount_validation">Please enter rent amount</string>
     <string name="tenant_amount_validation">Please enter tenant name</string>
-    <string name="meter_name_validation">Please enter meter name</string>
+    <string name="meter_name_validation">Please enter meter no</string>
     <string name="past_unit_validation">Please enter past unit</string>
     <string name="present_unit_validation">Please enter present month unit</string>
     <string name="unit_price_validation">Please enter unit price</string>

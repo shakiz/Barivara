@@ -11,6 +11,8 @@ import com.shakil.barivara.utils.Constants.mAccessToken
 import com.shakil.barivara.utils.Constants.mUserId
 import com.shakil.barivara.utils.Constants.mUserMobile
 import com.shakil.barivara.utils.PrefManager
+import com.shakil.barivara.utils.Tools
+import com.shakil.barivara.utils.Tools.Companion.hideKeyboard
 import com.shakil.barivara.utils.UX
 import com.shakil.barivara.utils.Validation
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,6 +24,7 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>() {
     private var validation = Validation(this, hashMap)
     private lateinit var prefManager: PrefManager
     private lateinit var ux: UX
+    private lateinit var tools: Tools
     private val viewModel by viewModels<UserViewModel>()
     override val layoutResourceId: Int
         get() = R.layout.activity_profile
@@ -43,6 +46,7 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>() {
         validation = Validation(this, hashMap)
         prefManager = PrefManager(this)
         ux = UX(this)
+        tools = Tools(this)
     }
 
     private fun initObservers() {
@@ -80,6 +84,7 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>() {
 
         activityBinding.saveOrUpdate.setOnClickListener {
             if (validation.isValid) {
+                hideKeyboard(this)
                 val user = UserInfo(
                     userId = prefManager.getInt(mUserId),
                     name = activityBinding.name.text.toString(),

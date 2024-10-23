@@ -29,69 +29,46 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/mainLayout"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/app_bar"
-            app:cardBackgroundColor="@color/md_grey_100"
-            app:cardCornerRadius="0dp"
-            app:cardElevation="0dp">
+            android:background="@color/md_grey_100"
+            android:orientation="vertical">
 
-            <LinearLayout
+            <include
+                android:id="@+id/search_layout"
+                layout="@layout/custom_search_panel_name"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="12dp" />
 
-                <include
-                    android:id="@+id/search_layout"
-                    layout="@layout/custom_search_panel_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginRight="12dp" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/mRecylerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="4dp"
+                android:layout_below="@id/search_layout"
+                app:reverseLayout="true"
+                app:stackFromEnd="true"
+                tools:listitem="@layout/adapter_layout_room_list" />
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginRight="8dp"
-                    android:orientation="vertical">
+            <include
+                android:id="@+id/no_data_layout"
+                layout="@layout/no_data_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:visibility="gone"
+                android:layout_gravity="center"
+                android:layout_margin="48dp" />
 
-                    <TextView
-                        android:id="@+id/mNoDataMessage"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:gravity="center"
-                        android:text="@string/no_data_message"
-                        android:textColor="@color/colorRed"
-                        android:textSize="24sp"
-                        android:textStyle="bold"
-                        android:visibility="gone" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/mRecylerView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginEnd="4dp"
-                        android:layout_marginRight="4dp"
-                        android:layout_marginBottom="4dp"
-                        android:visibility="visible"
-                        app:reverseLayout="true"
-                        app:stackFromEnd="true"
-                        tools:listitem="@layout/adapter_layout_room_list" />
-
-                </RelativeLayout>
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
+        </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/mAddRoomMaster"

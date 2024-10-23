@@ -8,6 +8,7 @@ data class BillInfo(
     @SerializedName("id") var id: Int = 0,
     @SerializedName("room") var room: String? = null,
     @SerializedName("tenant") var tenant: String? = null,
+    @SerializedName("tenant_phone") var tenantPhone: String? = null,
     @SerializedName("rent") var rent: Int? = null,
     @SerializedName("status") var status: String? = null,
     @SerializedName("is_notified") var isNotified: Int? = null,

@@ -328,7 +328,7 @@ Service Charge : ${generateBill.serviceCharge} ${getString(R.string.taka)}"""
     }
 
     override fun onNotify(billInfo: BillInfo) {
-        sendMessage(billInfo.remarks ?: "", "")
+        sendMessage(billInfo.remarks ?: "", billInfo.tenantPhone ?: "")
     }
 
     override fun onMarkAsPaid(billInfo: BillInfo) {

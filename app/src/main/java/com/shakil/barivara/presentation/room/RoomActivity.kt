@@ -180,10 +180,13 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
 
     private fun bindUIWithComponents() {
         validation.setEditTextIsNotEmpty(
-            arrayOf("RoomName"),
-            arrayOf(getString(R.string.room_name_validation))
+            arrayOf("roomName", "electricityMeterNo"),
+            arrayOf(
+                getString(R.string.room_name_validation),
+                getString(R.string.meter_name_validation)
+            )
         )
-        validation.setSpinnerIsNotEmpty(arrayOf("StartMonthId"))
+        validation.setSpinnerIsNotEmpty(arrayOf("tenantNameId"))
 
         activityAddNewRoomBinding.tenantNameId.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {

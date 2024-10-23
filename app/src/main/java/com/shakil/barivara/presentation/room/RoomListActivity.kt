@@ -100,6 +100,8 @@ class RoomListActivity : BaseActivity<ActivityRoomListBinding>(), RoomCallBacks 
                         object : FilterManager.onFilterClick {
                             override fun onClick(objects: ArrayList<Room>) {
                                 if (objects.size > 0) {
+                                    activityRoomListBinding.mRecylerView.visibility = View.VISIBLE
+                                    activityRoomListBinding.noDataLayout.root.visibility = View.GONE
                                     Tools.hideKeyboard(this@RoomListActivity)
                                     Toast.makeText(
                                         this@RoomListActivity,
@@ -108,9 +110,9 @@ class RoomListActivity : BaseActivity<ActivityRoomListBinding>(), RoomCallBacks 
                                     ).show()
                                 } else {
                                     Tools.hideKeyboard(this@RoomListActivity)
-                                    activityRoomListBinding.mNoDataMessage.visibility = View.VISIBLE
-                                    activityRoomListBinding.mNoDataMessage.setText(R.string.no_data_message)
                                     activityRoomListBinding.mRecylerView.visibility = View.GONE
+                                    activityRoomListBinding.noDataLayout.root.visibility =
+                                        View.VISIBLE
                                     Toast.makeText(
                                         this@RoomListActivity,
                                         getString(R.string.no_data_message),
@@ -139,7 +141,7 @@ class RoomListActivity : BaseActivity<ActivityRoomListBinding>(), RoomCallBacks 
             if (tools.hasConnection()) {
                 activityRoomListBinding.mRecylerView.visibility = View.VISIBLE
                 activityRoomListBinding.searchLayout.SearchName.setText("")
-                activityRoomListBinding.mNoDataMessage.visibility = View.GONE
+                activityRoomListBinding.noDataLayout.root.visibility = View.GONE
                 Tools.hideKeyboard(this@RoomListActivity)
                 viewModel.getAllRooms(prefManager.getString(mAccessToken))
                 Toast.makeText(
@@ -158,8 +160,15 @@ class RoomListActivity : BaseActivity<ActivityRoomListBinding>(), RoomCallBacks 
     }
 
     private fun initObservers() {
-        viewModel.getRooms().observe(this) { tenants ->
-            recyclerRoomListAdapter.setItems(tenants)
+        viewModel.getRooms().observe(this) { rooms ->
+            if (rooms.isEmpty()) {
+                activityRoomListBinding.noDataLayout.root.visibility = View.VISIBLE
+                activityRoomListBinding.mRecylerView.visibility = View.GONE
+            } else {
+                recyclerRoomListAdapter.setItems(rooms)
+                activityRoomListBinding.mRecylerView.visibility = View.VISIBLE
+                activityRoomListBinding.noDataLayout.root.visibility = View.GONE
+            }
         }
 
         viewModel.isLoading.observe(this) { isLoading ->

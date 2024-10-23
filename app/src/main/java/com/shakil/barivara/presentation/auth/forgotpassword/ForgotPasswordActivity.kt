@@ -80,7 +80,7 @@ class ForgotPasswordActivity : BaseActivity<ActivityForgotPasswordBinding>() {
 
         viewModel.getChangePasswordResponse().observe(this) {
             if (it.statusCode == 200) {
-                Toasty.error(this, getString(R.string.password_changed_successfully)).show()
+                Toasty.success(this, getString(R.string.password_changed_successfully)).show()
             }
         }
 
