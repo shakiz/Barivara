@@ -8,6 +8,7 @@ import com.shakil.barivara.R
 import com.shakil.barivara.data.model.room.Room
 import com.shakil.barivara.databinding.AdapterLayoutRoomListBinding
 import com.shakil.barivara.presentation.adapter.RecyclerRoomListAdapter.RoomItemViewHolder
+import com.shakil.barivara.utils.boldAfterColon
 
 class RecyclerRoomListAdapter :
     RecyclerView.Adapter<RoomItemViewHolder>() {
@@ -46,9 +47,16 @@ class RecyclerRoomListAdapter :
     ) {
         fun bind(room: Room) {
             val context: Context = binding.root.context
-            binding.roomName.text = context.getString(R.string.tenant_name_x, room.name)
-            binding.roomStatus.text = context.getString(R.string.room_status_x, room.status)
-            binding.roomRent.text = context.getString(R.string.rent_amount_x, room.rent)
+            binding.roomName.text =
+                context.getString(R.string.room_name_x, room.name).boldAfterColon()
+            val roomStatus = room.status?.split(" ")?.mapIndexed { index, word ->
+                if (index == 0) word.replaceFirstChar { it.uppercase() } else word
+            }?.joinToString(" ")
+            binding.roomStatus.text =
+                context.getString(R.string.room_status_x, roomStatus).boldAfterColon()
+            binding.roomRent.text =
+                context.getString(R.string.rent_amount_x, room.rent).boldAfterColon()
+
             binding.itemCardView.setOnClickListener {
                 roomCallBacks?.onItemClick(room)
             }
