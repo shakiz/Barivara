@@ -6,7 +6,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
@@ -27,20 +26,23 @@ import com.shakil.barivara.presentation.adapter.RecyclerAdapterTenantList.Tenant
 import com.shakil.barivara.presentation.onboard.HomeActivity
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.Constants.mAccessToken
-import com.shakil.barivara.utils.FilterManager
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
+import com.shakil.barivara.utils.filterList
+import com.shakil.barivara.utils.textChanges
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
 class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCallBacks {
     private lateinit var activityTenantListBinding: ActivityTenantListBinding
     private lateinit var ux: UX
     private var tools = Tools(this)
-    private var filterManager = FilterManager()
     private lateinit var prefManager: PrefManager
     private lateinit var recyclerAdapterTenantList: RecyclerAdapterTenantList
     private val viewModel by viewModels<TenantViewModel>()
@@ -98,61 +100,51 @@ class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCall
         activityTenantListBinding.searchLayout.refreshButton.setOnClickListener {
             refreshListData()
         }
-
-        activityTenantListBinding.searchLayout.searchButton.setOnClickListener {
-            if (tools.hasConnection()) {
-                if (!TextUtils.isEmpty(activityTenantListBinding.searchLayout.SearchName.text.toString())) {
-                    filterManager.onFilterClick(
-                        activityTenantListBinding.searchLayout.SearchName.text.toString(),
-                        viewModel.getTenants().value.orEmpty(),
-                        object : FilterManager.onTenantFilterClick {
-                            override fun onClick(objects: ArrayList<Tenant>) {
-                                if (objects.size > 0) {
-                                    activityTenantListBinding.mRecylerView.visibility = View.VISIBLE
-                                    activityTenantListBinding.noDataLayout.root.visibility =
-                                        View.GONE
-                                    Tools.hideKeyboard(this@TenantListActivity)
-                                    Toast.makeText(
-                                        this@TenantListActivity,
-                                        getString(R.string.filterd),
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                } else {
-                                    Tools.hideKeyboard(this@TenantListActivity)
-                                    activityTenantListBinding.mRecylerView.visibility = View.GONE
-                                    activityTenantListBinding.noDataLayout.root.visibility =
-                                        View.VISIBLE
-                                    Toast.makeText(
-                                        this@TenantListActivity,
-                                        getString(R.string.no_data_message),
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                            }
-
-                        }
-                    )
-                } else {
-                    Toast.makeText(
-                        this@TenantListActivity,
-                        getString(R.string.enter_data_validation),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            } else {
-                Toast.makeText(
-                    this@TenantListActivity,
-                    getString(R.string.no_internet_title),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
     }
 
     private fun init() {
         ux = UX(this)
         prefManager = PrefManager(this)
+        setupDebouncedSearch()
     }
+
+    private fun setupDebouncedSearch() {
+        activityTenantListBinding.searchLayout.SearchName.textChanges()
+            .debounce(100)
+            .onEach { query ->
+                val originalList = viewModel.getTenants().value ?: emptyList()
+                // Use the common filter function
+                val filteredList =
+                    filterList(query.toString().lowercase(), originalList) { tenant, q ->
+                        tenant.name.lowercase().contains(q, ignoreCase = true)
+                    }
+
+                if (filteredList.isNotEmpty()) {
+                    activityTenantListBinding.mRecylerView.visibility = View.VISIBLE
+                    activityTenantListBinding.noDataLayout.root.visibility =
+                        View.GONE
+                    recyclerAdapterTenantList.setItems(filteredList)
+                    Tools.hideKeyboard(this@TenantListActivity)
+                    Toast.makeText(
+                        this@TenantListActivity,
+                        getString(R.string.filterd),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    Tools.hideKeyboard(this@TenantListActivity)
+                    activityTenantListBinding.mRecylerView.visibility = View.GONE
+                    activityTenantListBinding.noDataLayout.root.visibility =
+                        View.VISIBLE
+                    Toast.makeText(
+                        this@TenantListActivity,
+                        getString(R.string.no_data_message),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+            .launchIn(coroutineScope) // Launch in the Coroutine scope
+    }
+
 
     private fun refreshListData() {
         if (tools.hasConnection()) {

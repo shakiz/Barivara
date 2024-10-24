@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
 data class Room(
     @SerializedName("id") var id: Int = 0,
     @SerializedName("tenant_id") var tenantId: Int = 0,
-    @SerializedName("name") var name: String? = null,
+    @SerializedName("name") var name: String = "",
     @SerializedName("rent") var rent: Int = 0,
     @SerializedName("no_of_room") var noOfRoom: Int = 0,
     @SerializedName("no_of_bathroom") var noOfBathroom: Int = 0,
@@ -20,7 +20,7 @@ data class Room(
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
         parcel.readInt(),
-        parcel.readString(),
+        parcel.readString() ?: "",
         parcel.readInt(),
         parcel.readInt(),
         parcel.readInt(),

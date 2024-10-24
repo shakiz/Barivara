@@ -3,7 +3,6 @@ package com.shakil.barivara.presentation.meter
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
@@ -88,54 +87,6 @@ class ElectricityBillListActivity : BaseActivity<ActivityElectricityBillListBind
                     ElectricityBillDetailsActivity::class.java
                 )
             )
-        }
-        activityMeterCostListBinding.searchLayout.searchButton.setOnClickListener {
-            if (tools.hasConnection()) {
-                if (!TextUtils.isEmpty(activityMeterCostListBinding.searchLayout.SearchName.text.toString())) {
-                    filterManager.onFilterClick(
-                        activityMeterCostListBinding.searchLayout.SearchName.text.toString(),
-                        electricityBills,
-                        object : FilterManager.onBillFilterClick {
-                            override fun onClick(objects: ArrayList<ElectricityBill>) {
-                                if (objects.size > 0) {
-                                    electricityBills = objects
-                                    setRecyclerAdapter()
-                                    Tools.hideKeyboard(this@ElectricityBillListActivity)
-                                    Toast.makeText(
-                                        this@ElectricityBillListActivity,
-                                        getString(R.string.filterd),
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                } else {
-                                    Tools.hideKeyboard(this@ElectricityBillListActivity)
-                                    activityMeterCostListBinding.mNoDataMessage.visibility =
-                                        View.VISIBLE
-                                    activityMeterCostListBinding.mNoDataMessage.setText(R.string.no_data_message)
-                                    activityMeterCostListBinding.mRecylerView.visibility = View.GONE
-                                    Toast.makeText(
-                                        this@ElectricityBillListActivity,
-                                        getString(R.string.no_data_message),
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                            }
-
-                        }
-                    )
-                } else {
-                    Toast.makeText(
-                        this@ElectricityBillListActivity,
-                        getString(R.string.enter_data_validation),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            } else {
-                Toast.makeText(
-                    this@ElectricityBillListActivity,
-                    getString(R.string.no_internet_title),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
         }
         activityMeterCostListBinding.searchLayout.refreshButton.setOnClickListener {
             if (tools.hasConnection()) {
