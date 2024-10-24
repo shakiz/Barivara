@@ -29,6 +29,7 @@ import com.shakil.barivara.R
 import com.shakil.barivara.data.model.bill.GenerateBill
 import com.shakil.barivara.data.model.generatebill.BillInfo
 import com.shakil.barivara.databinding.ActivityGenerateBillBinding
+import com.shakil.barivara.presentation.GenericBottomSheet
 import com.shakil.barivara.presentation.adapter.RecyclerBillInfoAdapter
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.Constants.mAccessToken
@@ -332,24 +333,26 @@ Service Charge : ${generateBill.serviceCharge} ${getString(R.string.taka)}"""
     }
 
     override fun onMarkAsPaid(billInfo: BillInfo) {
-        showMarkAsPaidDialog(billInfo)
+        showMarkAsPaidBottomSheet(billInfo)
     }
 
-    private fun showMarkAsPaidDialog(billInfo: BillInfo) {
-        markAsPaidDialog = Dialog(this, android.R.style.Theme_Dialog)
-        markAsPaidDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        markAsPaidDialog.setContentView(R.layout.dialog_layout_bill_mark_as_paid)
-        markAsPaidDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-        markAsPaidDialog.setCanceledOnTouchOutside(true)
-        markAsPaidDialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
-        markAsPaidDialog.window?.setLayout(
-            RelativeLayout.LayoutParams.MATCH_PARENT,
-            RelativeLayout.LayoutParams.WRAP_CONTENT
+    private fun showMarkAsPaidBottomSheet(billInfo: BillInfo) {
+        val bottomSheet = GenericBottomSheet<View>(
+            context = this,
+            layoutResId = R.layout.dialog_layout_bill_mark_as_paid,
+            onClose = {
+
+            },
+            onPrimaryAction = {
+
+            },
+            onSecondaryAction = {
+                viewModel.updateBillStatus(
+                    prefManager.getString(mAccessToken),
+                    billId = billInfo.id
+                )
+            }
         )
-        markAsPaidDialog.show()
-        markAsPaidDialog.findViewById<Button>(R.id.submitBill).setOnClickListener {
-            viewModel.updateBillStatus(prefManager.getString(mAccessToken), billId = billInfo.id)
-            dialogBill.dismiss()
-        }
+        bottomSheet.show()
     }
 }
