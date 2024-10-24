@@ -87,4 +87,78 @@ class TenantRepoImpl @Inject constructor(
             return Resource.Error(message = e.localizedMessage ?: "")
         }
     }
+
+    override suspend fun deleteTenant(token: String, tenantId: Int): Resource<BaseApiResponse> {
+        try {
+            val task = tenantService.deleteTenant(
+                token = "Bearer $token",
+                accept = ACCEPT,
+                tenantId = tenantId
+            )
+            if (task.isSuccessful) {
+                task.body()?.let {
+                    return Resource.Success(response = it)
+                } ?: return Resource.Error(errorType = ErrorType.EMPTY_DATA)
+            } else if (task.errorBody() != null) {
+                val errorBodyStr = task.errorBody()?.string()
+                val baseApiResponse: BaseApiResponse =
+                    Gson().fromJson(errorBodyStr, BaseApiResponse::class.java)
+                return if (baseApiResponse.statusCode == 500) {
+                    Resource.Error(
+                        errorType = ErrorType.INTERNAL_SERVER_ERROR,
+                        message = baseApiResponse.message
+                    )
+                } else {
+                    Resource.Error(
+                        errorType = ErrorType.UNKNOWN,
+                        message = baseApiResponse.message
+                    )
+                }
+            } else {
+                return Resource.Error(errorType = ErrorType.UNKNOWN)
+            }
+        } catch (e: SocketTimeoutException) {
+            return Resource.Error(errorType = ErrorType.TIME_OUT)
+        } catch (e: Exception) {
+            return Resource.Error(message = e.localizedMessage ?: "")
+        }
+    }
+
+    override suspend fun updateTenant(token: String, tenant: Tenant): Resource<BaseApiResponse> {
+        try {
+            val task = tenantService.updateTenant(
+                token = "Bearer $token",
+                contentType = CONTENT_TYPE,
+                accept = ACCEPT,
+                tenant = tenant,
+                tenantId = tenant.id
+            )
+            if (task.isSuccessful) {
+                task.body()?.let {
+                    return Resource.Success(response = it)
+                } ?: return Resource.Error(errorType = ErrorType.EMPTY_DATA)
+            } else if (task.errorBody() != null) {
+                val errorBodyStr = task.errorBody()?.string()
+                val baseApiResponse: BaseApiResponse =
+                    Gson().fromJson(errorBodyStr, BaseApiResponse::class.java)
+                return if (baseApiResponse.statusCode == 500) {
+                    Resource.Error(
+                        errorType = ErrorType.INTERNAL_SERVER_ERROR,
+                        message = baseApiResponse.message
+                    )
+                } else {
+                    Resource.Error(
+                        errorType = ErrorType.UNKNOWN,
+                        message = baseApiResponse.message
+                    )
+                }
+            } else {
+                return Resource.Error(errorType = ErrorType.UNKNOWN)
+            }
+        } catch (e: SocketTimeoutException) {
+            return Resource.Error(errorType = ErrorType.TIME_OUT)
+        } catch (e: Exception) {
+            return Resource.Error(message = e.localizedMessage ?: "")
+        }
+    }
 }

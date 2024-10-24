@@ -68,8 +68,8 @@ class RecyclerAdapterTenantList :
             binding.messageIcon.setOnClickListener {
                 tenantCallBack?.onMessageClicked(tenant.phone ?: "")
             }
-            binding.editIcon.setOnClickListener {
-                tenantCallBack?.onEdit(tenant)
+            binding.deleteIcon.setOnClickListener {
+                tenantCallBack?.onDelete(tenant)
             }
         }
     }

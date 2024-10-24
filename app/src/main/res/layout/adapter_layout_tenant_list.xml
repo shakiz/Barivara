@@ -78,8 +78,8 @@
             android:text="@string/start_date_x"
             android:textColor="@color/md_grey_800"
             android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="@+id/editIcon"
-            app:layout_constraintEnd_toStartOf="@id/editIcon"
+            app:layout_constraintBottom_toBottomOf="@+id/deleteIcon"
+            app:layout_constraintEnd_toStartOf="@id/deleteIcon"
             app:layout_constraintStart_toEndOf="@id/ivIcon"
             app:layout_constraintTop_toBottomOf="@+id/messageIcon" />
 
@@ -104,14 +104,14 @@
             app:tint="@color/md_green_800" />
 
         <ImageView
-            android:id="@+id/editIcon"
+            android:id="@+id/deleteIcon"
             android:layout_width="40dp"
             android:layout_height="28dp"
             android:padding="2dp"
-            android:src="@drawable/ic_baseline_edit_24"
+            android:src="@drawable/ic_delete_circle_black_24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/messageIcon"
-            app:tint="@color/md_green_800" />
+            app:tint="@color/colorRed" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

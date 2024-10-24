@@ -32,6 +32,7 @@ import com.shakil.barivara.utils.UX
 import com.shakil.barivara.utils.filterList
 import com.shakil.barivara.utils.textChanges
 import dagger.hilt.android.AndroidEntryPoint
+import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.debounce
@@ -179,6 +180,22 @@ class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCall
             }
         }
 
+        viewModel.getUpdateTenantResponse().observe(this) { updateResponse ->
+            if (updateResponse.statusCode == 200) {
+                viewModel.getAllTenants(prefManager.getString(mAccessToken))
+            } else {
+                Toasty.warning(this, updateResponse.message, Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        viewModel.getDeleteTenantResponse().observe(this) { deleteResponse ->
+            if (deleteResponse.statusCode == 200) {
+                viewModel.getAllTenants(prefManager.getString(mAccessToken))
+            } else {
+                Toasty.warning(this, deleteResponse.message, Toast.LENGTH_SHORT).show()
+            }
+        }
+
         viewModel.isLoading.observe(this) { isLoading ->
             if (isLoading) {
                 ux.getLoadingView()
@@ -207,7 +224,7 @@ class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCall
         delete = dialog.findViewById(R.id.deleteButton)
         cancel.setOnClickListener { dialog.dismiss() }
         delete.setOnClickListener {
-            //TODO add delete action here
+            viewModel.deleteTenant(prefManager.getString(mAccessToken), tenant.id)
             dialog.dismiss()
         }
         dialog.setCanceledOnTouchOutside(false)

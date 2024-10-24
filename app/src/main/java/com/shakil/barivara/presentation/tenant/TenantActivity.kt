@@ -217,11 +217,11 @@ class TenantActivity : BaseActivity<ActivityTenantBinding>() {
         }
 
         viewModel.getAddTenantErrorResponse().observe(this) { errorResponse ->
-            Toast.makeText(applicationContext, errorResponse.message, Toast.LENGTH_SHORT).show()
+            Toasty.error(applicationContext, errorResponse.message, Toast.LENGTH_SHORT).show()
         }
 
         viewModel.getUpdateTenantResponse().observe(this) { response ->
-            Toasty.success(applicationContext, response, Toast.LENGTH_SHORT).show()
+            Toasty.success(applicationContext, response.message, Toast.LENGTH_SHORT).show()
             startActivity(Intent(this@TenantActivity, TenantListActivity::class.java))
         }
 
@@ -238,6 +238,12 @@ class TenantActivity : BaseActivity<ActivityTenantBinding>() {
         tenant.phone = activityAddNewTenantBinding.mobileNo.text.toString()
         tenant.startDate = activityAddNewTenantBinding.startingMonthId.text.toString()
         tenant.endDate = activityAddNewTenantBinding.endMonthId.text.toString()
+        tenant.advancedAmount =
+            if (activityAddNewTenantBinding.advanceAmount.text.isNullOrEmpty()) {
+                0
+            } else {
+                activityAddNewTenantBinding.advanceAmount.text.toString().toInt()
+            }
         if (command == "add") {
             viewModel.addTenant(prefManager.getString(mAccessToken), tenant)
         } else {
