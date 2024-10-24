@@ -26,7 +26,7 @@ class RoomViewModel @Inject constructor(
     private var rooms = MutableLiveData<List<Room>>()
     private var getRoomListErrorResponse = MutableLiveData<Resource.Error<ErrorType>>()
 
-    private var addRoomResponse = MutableLiveData<String>()
+    private var addRoomResponse = MutableLiveData<BaseApiResponse>()
     private var addRoomErrorResponse = MutableLiveData<Resource.Error<ErrorType>>()
 
     private var updateRoomResponse = MutableLiveData<BaseApiResponse>()
@@ -46,7 +46,7 @@ class RoomViewModel @Inject constructor(
         return getRoomListErrorResponse
     }
 
-    fun getAddRoomResponse(): LiveData<String> {
+    fun getAddRoomResponse(): LiveData<BaseApiResponse> {
         return addRoomResponse
     }
 
@@ -108,7 +108,7 @@ class RoomViewModel @Inject constructor(
             try {
                 val data = roomRepoImpl.addRoom(token, room = room)
                 if (data.response != null) {
-                    addRoomResponse.postValue(data.response?.message)
+                    addRoomResponse.postValue(data.response)
                 } else {
                     addRoomErrorResponse.postValue(
                         Resource.Error(

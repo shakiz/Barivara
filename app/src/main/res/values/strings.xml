@@ -477,4 +477,5 @@
     <string name="updated_successfully">Update Successfully</string>
     <string name="submit">Submit</string>
     <string name="rent_has_been_paid_already">Rent has been paid already</string>
+    <string name="added_successfully">Added successfully</string>
 </resources>

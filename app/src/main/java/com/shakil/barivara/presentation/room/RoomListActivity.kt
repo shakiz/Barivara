@@ -127,8 +127,8 @@ class RoomListActivity : BaseActivity<ActivityRoomListBinding>(), RoomCallBacks 
                 val originalList = viewModel.getRooms().value ?: emptyList()
                 // Use the common filter function
                 val filteredList =
-                    filterList(query.toString().lowercase(), originalList) { tenant, q ->
-                        tenant.name.lowercase().contains(q, ignoreCase = true)
+                    filterList(query.toString().lowercase(), originalList) { room, q ->
+                        room.name.lowercase().contains(q, ignoreCase = true)
                     }
 
                 if (filteredList.isNotEmpty()) {

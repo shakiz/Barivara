@@ -11,7 +11,6 @@ import com.shakil.barivara.R
 import com.shakil.barivara.data.model.room.Room
 import com.shakil.barivara.data.model.room.RoomStatus
 import com.shakil.barivara.databinding.ActivityAddNewRoomBinding
-import com.shakil.barivara.presentation.tenant.TenantListActivity
 import com.shakil.barivara.utils.Constants.mAccessToken
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.SpinnerAdapter
@@ -126,8 +125,16 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
         }
 
         viewModel.getAddRoomResponse().observe(this) { response ->
-            Toast.makeText(applicationContext, R.string.success, Toast.LENGTH_SHORT).show()
-            startActivity(Intent(this@RoomActivity, RoomListActivity::class.java))
+            if (response.statusCode == 200) {
+                Toasty.success(
+                    applicationContext,
+                    getString(R.string.added_successfully),
+                    Toast.LENGTH_SHORT
+                ).show()
+                startActivity(Intent(this@RoomActivity, RoomListActivity::class.java))
+            } else {
+                Toasty.warning(applicationContext, response.message, Toast.LENGTH_SHORT).show()
+            }
         }
 
         viewModel.getAddRoomErrorResponse().observe(this) { errorResponse ->
@@ -141,7 +148,7 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
                     getString(R.string.updated_successfully),
                     Toast.LENGTH_SHORT
                 ).show()
-                startActivity(Intent(this@RoomActivity, TenantListActivity::class.java))
+                startActivity(Intent(this@RoomActivity, RoomListActivity::class.java))
             } else {
                 Toasty.warning(applicationContext, response.message, Toast.LENGTH_SHORT).show()
             }
@@ -179,10 +186,23 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
             noOfBathroom = room.noOfBathroom
             noOfBalcony = room.noOfBalcony
             electricMeterNo = room.electricityMeterNo ?: ""
+            selectedRoomStatus =
+                RoomStatus.from(room.status ?: RoomStatus.Unknown.value) ?: RoomStatus.Unknown
+            setRoomStatusRadioSelection()
             activityAddNewRoomBinding.noOfRoom.text = "$noOfRoom"
             activityAddNewRoomBinding.noOfBalcony.text = "$noOfBalcony"
             activityAddNewRoomBinding.noOfBathroom.text = "$noOfBathroom"
             activityAddNewRoomBinding.electricityMeterNo.setText(electricMeterNo)
+            activityAddNewRoomBinding.radioGroupStatus.isSelected = true
+        }
+    }
+
+    private fun setRoomStatusRadioSelection() {
+        when (selectedRoomStatus) {
+            RoomStatus.Occupied -> activityAddNewRoomBinding.radioOccupied.isChecked = true
+            RoomStatus.Vacant -> activityAddNewRoomBinding.radioVacant.isChecked = true
+            RoomStatus.Abandoned -> activityAddNewRoomBinding.radioAbandoned.isChecked = true
+            else -> activityAddNewRoomBinding.radioGroupStatus.clearCheck()
         }
     }
 
