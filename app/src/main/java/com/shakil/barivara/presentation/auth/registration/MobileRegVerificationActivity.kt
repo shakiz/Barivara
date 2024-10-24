@@ -20,6 +20,8 @@ import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
+import com.shakil.barivara.utils.moveToNextEditText
+import com.shakil.barivara.utils.moveToPreviousEditText
 import dagger.hilt.android.AndroidEntryPoint
 import es.dmoral.toasty.Toasty
 
@@ -90,31 +92,20 @@ class MobileRegVerificationActivity : BaseActivity<ActivityMobileRegVerification
             }
         }
 
-        // Set up focus change for each EditText
-        moveToNextEditText(
-            activityBinding.verificationCode1,
-            activityBinding.verificationCode2,
-        )
-        moveToNextEditText(
-            activityBinding.verificationCode2,
-            activityBinding.verificationCode3,
-        )
-        moveToNextEditText(
-            activityBinding.verificationCode3,
-            activityBinding.verificationCode4,
-        )
-        moveToNextEditText(
-            activityBinding.verificationCode4,
-            activityBinding.verificationCode5,
-        )
-        moveToNextEditText(
-            activityBinding.verificationCode5,
-            activityBinding.verificationCode6,
-        )
-        moveToNextEditText(
-            activityBinding.verificationCode6,
-            activityBinding.verificationCode6,
-        )
+        // Set up focus change for each EditText to next EditText
+        activityBinding.verificationCode1.moveToNextEditText(activityBinding.verificationCode2)
+        activityBinding.verificationCode2.moveToNextEditText(activityBinding.verificationCode3)
+        activityBinding.verificationCode3.moveToNextEditText(activityBinding.verificationCode4)
+        activityBinding.verificationCode4.moveToNextEditText(activityBinding.verificationCode5)
+        activityBinding.verificationCode5.moveToNextEditText(activityBinding.verificationCode6)
+        activityBinding.verificationCode6.moveToNextEditText(activityBinding.verificationCode6)
+
+        // Set up focus change for each EditText to previous EditText
+        activityBinding.verificationCode2.moveToPreviousEditText(activityBinding.verificationCode1)
+        activityBinding.verificationCode3.moveToPreviousEditText(activityBinding.verificationCode2)
+        activityBinding.verificationCode4.moveToPreviousEditText(activityBinding.verificationCode3)
+        activityBinding.verificationCode5.moveToPreviousEditText(activityBinding.verificationCode4)
+        activityBinding.verificationCode6.moveToPreviousEditText(activityBinding.verificationCode5)
     }
 
     private fun initObservers() {
