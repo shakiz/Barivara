@@ -1,6 +1,7 @@
 package com.shakil.barivara.presentation.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.shakil.barivara.data.model.generatebill.BillInfo
@@ -45,6 +46,14 @@ class RecyclerBillInfoAdapter :
             binding.RoomId.text = billInfo.room
             binding.TenantId.text = billInfo.tenant
             binding.TotalBill.text = billInfo.rent.toString()
+
+            if (billInfo.status == "paid") {
+                binding.actionButtonLayout.visibility = View.GONE
+                binding.rentPaidText.visibility = View.VISIBLE
+            } else {
+                binding.actionButtonLayout.visibility = View.VISIBLE
+                binding.rentPaidText.visibility = View.GONE
+            }
 
             binding.markAsPaid.setOnClickListener {
                 generateBillCallBacks?.onMarkAsPaid(billInfo)

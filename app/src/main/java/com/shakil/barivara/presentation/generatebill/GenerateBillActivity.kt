@@ -105,6 +105,11 @@ class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>(),
                     getString(R.string.rent_status_updated_successfully),
                     Toast.LENGTH_LONG
                 ).show()
+                viewModel.generateBill(
+                    prefManager.getString(mAccessToken),
+                    year,
+                    month
+                )
             }
         }
 
@@ -344,13 +349,13 @@ Service Charge : ${generateBill.serviceCharge} ${getString(R.string.taka)}"""
 
             },
             onPrimaryAction = {
-
-            },
-            onSecondaryAction = {
                 viewModel.updateBillStatus(
                     prefManager.getString(mAccessToken),
                     billId = billInfo.id
                 )
+            },
+            onSecondaryAction = {
+
             }
         )
         bottomSheet.show()
