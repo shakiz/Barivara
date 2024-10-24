@@ -164,6 +164,9 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
                 this,
                 ArrayList(tenants.map { it.name })
             )
+            if (tenantId > 0) {
+                activityAddNewRoomBinding.tenantNameId.setSelection(tenants.indexOfFirst { it.id == tenantId })
+            }
         }
     }
 
@@ -186,9 +189,12 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
             noOfBathroom = room.noOfBathroom
             noOfBalcony = room.noOfBalcony
             electricMeterNo = room.electricityMeterNo ?: ""
+            tenantId = room.tenantId
+
             selectedRoomStatus =
                 RoomStatus.from(room.status ?: RoomStatus.Unknown.value) ?: RoomStatus.Unknown
             setRoomStatusRadioSelection()
+
             activityAddNewRoomBinding.noOfRoom.text = "$noOfRoom"
             activityAddNewRoomBinding.noOfBalcony.text = "$noOfBalcony"
             activityAddNewRoomBinding.noOfBathroom.text = "$noOfBathroom"
