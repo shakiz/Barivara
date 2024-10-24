@@ -474,4 +474,5 @@
     <string name="old_password_validation">Please enter your old password</string>
     <string name="new_password_validation">Please enter your new password</string>
     <string name="password_changed_successfully">Password changed successfully</string>
+    <string name="updated_successfully">Update Successfully</string>
 </resources>

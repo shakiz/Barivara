@@ -90,13 +90,12 @@ class RoomRepoImpl @Inject constructor(
 
     override suspend fun updateRoom(
         token: String,
-        userId: Int,
         room: Room
     ): Resource<BaseApiResponse> {
         try {
             val task = tenantService.updateRoom(
                 token = "Bearer $token",
-                userId = userId,
+                id = room.id,
                 accept = ACCEPT,
                 contentType = CONTENT_TYPE,
                 room = room

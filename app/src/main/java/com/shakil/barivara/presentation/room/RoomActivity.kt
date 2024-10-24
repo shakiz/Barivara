@@ -135,8 +135,16 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
         }
 
         viewModel.getUpdateRoomResponse().observe(this) { response ->
-            Toasty.success(applicationContext, response, Toast.LENGTH_SHORT).show()
-            startActivity(Intent(this@RoomActivity, TenantListActivity::class.java))
+            if (response.statusCode == 200) {
+                Toasty.success(
+                    applicationContext,
+                    getString(R.string.updated_successfully),
+                    Toast.LENGTH_SHORT
+                ).show()
+                startActivity(Intent(this@RoomActivity, TenantListActivity::class.java))
+            } else {
+                Toasty.warning(applicationContext, response.message, Toast.LENGTH_SHORT).show()
+            }
         }
 
         viewModel.getUpdateRoomErrorResponse().observe(this) { errorResponse ->
@@ -217,7 +225,7 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
         if (command == "add") {
             viewModel.addRoom(prefManager.getString(mAccessToken), room)
         } else {
-            viewModel.updateRoom(prefManager.getString(mAccessToken), room.id, room)
+            viewModel.updateRoom(prefManager.getString(mAccessToken), room)
         }
     }
 }

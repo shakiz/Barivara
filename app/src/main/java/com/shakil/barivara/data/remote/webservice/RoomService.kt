@@ -27,10 +27,10 @@ interface RoomService {
         @Body room: Room
     ): Response<BaseApiResponse>
 
-    @PUT("rooms/{userId}")
+    @PUT("rooms/{id}")
     suspend fun updateRoom(
         @Header("Authorization") token: String,
-        @Path("userId") userId: Int,
+        @Path("id") id: Int,
         @Header("Content-Type") contentType: String,
         @Header("Accept") accept: String,
         @Body room: Room

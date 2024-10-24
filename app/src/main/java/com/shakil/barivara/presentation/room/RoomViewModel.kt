@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.shakil.barivara.data.model.BaseApiResponse
 import com.shakil.barivara.data.model.room.Room
 import com.shakil.barivara.data.model.tenant.Tenant
 import com.shakil.barivara.data.repository.RoomRepoImpl
@@ -28,7 +29,7 @@ class RoomViewModel @Inject constructor(
     private var addRoomResponse = MutableLiveData<String>()
     private var addRoomErrorResponse = MutableLiveData<Resource.Error<ErrorType>>()
 
-    private var updateRoomResponse = MutableLiveData<String>()
+    private var updateRoomResponse = MutableLiveData<BaseApiResponse>()
     private var updateRoomErrorResponse = MutableLiveData<Resource.Error<ErrorType>>()
 
     private var tenants = MutableLiveData<List<Tenant>>()
@@ -50,7 +51,7 @@ class RoomViewModel @Inject constructor(
         return addRoomErrorResponse
     }
 
-    fun getUpdateRoomResponse(): LiveData<String> {
+    fun getUpdateRoomResponse(): LiveData<BaseApiResponse> {
         return updateRoomResponse
     }
 
@@ -118,13 +119,13 @@ class RoomViewModel @Inject constructor(
         }
     }
 
-    fun updateRoom(token: String, userId: Int, room: Room) {
+    fun updateRoom(token: String, room: Room) {
         viewModelScope.launch {
             isLoading.postValue(true)
             try {
-                val data = roomRepoImpl.updateRoom(token, userId, room = room)
+                val data = roomRepoImpl.updateRoom(token, room = room)
                 if (data.response != null) {
-                    updateRoomResponse.postValue(data.response?.message)
+                    updateRoomResponse.postValue(data.response)
                 } else {
                     updateRoomErrorResponse.postValue(
                         Resource.Error(
