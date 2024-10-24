@@ -5,6 +5,7 @@ import com.shakil.barivara.data.model.room.BaseRoomResponse
 import com.shakil.barivara.data.model.room.Room
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
@@ -34,5 +35,12 @@ interface RoomService {
         @Header("Content-Type") contentType: String,
         @Header("Accept") accept: String,
         @Body room: Room
+    ): Response<BaseApiResponse>
+
+    @DELETE("rooms/{id}")
+    suspend fun deleteRoom(
+        @Header("Authorization") token: String,
+        @Header("Accept") accept: String,
+        @Path("id") id: Int,
     ): Response<BaseApiResponse>
 }

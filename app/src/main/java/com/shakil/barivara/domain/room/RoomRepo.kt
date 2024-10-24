@@ -8,4 +8,5 @@ interface RoomRepo {
     suspend fun getAllRoom(token: String): Resource<List<Room>>
     suspend fun addRoom(token: String, room: Room): Resource<BaseApiResponse>
     suspend fun updateRoom(token: String, room: Room): Resource<BaseApiResponse>
+    suspend fun deleteRoom(token: String, roomId: Int): Resource<BaseApiResponse>
 }

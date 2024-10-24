@@ -32,6 +32,9 @@ class RoomViewModel @Inject constructor(
     private var updateRoomResponse = MutableLiveData<BaseApiResponse>()
     private var updateRoomErrorResponse = MutableLiveData<Resource.Error<ErrorType>>()
 
+    private var deleteRoomResponse = MutableLiveData<BaseApiResponse>()
+    private var deleteRoomErrorResponse = MutableLiveData<Resource.Error<ErrorType>>()
+
     private var tenants = MutableLiveData<List<Tenant>>()
     private var getTenantListErrorResponse = MutableLiveData<Resource.Error<ErrorType>>()
 
@@ -57,6 +60,14 @@ class RoomViewModel @Inject constructor(
 
     fun getUpdateRoomErrorResponse(): LiveData<Resource.Error<ErrorType>> {
         return updateRoomErrorResponse
+    }
+
+    fun getDeleteRoomResponse(): LiveData<BaseApiResponse> {
+        return deleteRoomResponse
+    }
+
+    fun getDeleteRoomErrorResponse(): LiveData<Resource.Error<ErrorType>> {
+        return deleteRoomErrorResponse
     }
 
     fun getTenants(): LiveData<List<Tenant>> {
@@ -165,6 +176,34 @@ class RoomViewModel @Inject constructor(
                 isLoading.postValue(false)
             } catch (e: Exception) {
                 getTenantListErrorResponse.postValue(
+                    Resource.Error(
+                        message = "Something went wrong, please try again",
+                        errorType = ErrorType.UNKNOWN
+                    )
+                )
+                isLoading.postValue(false)
+            }
+        }
+    }
+
+    fun deleteRoom(token: String, roomId: Int) {
+        viewModelScope.launch {
+            isLoading.postValue(true)
+            try {
+                val data = roomRepoImpl.deleteRoom(token, roomId = roomId)
+                if (data.response != null) {
+                    deleteRoomResponse.postValue(data.response)
+                } else {
+                    deleteRoomErrorResponse.postValue(
+                        Resource.Error(
+                            message = data.message,
+                            errorType = data.errorType
+                        )
+                    )
+                }
+                isLoading.postValue(false)
+            } catch (e: Exception) {
+                deleteRoomErrorResponse.postValue(
                     Resource.Error(
                         message = "Something went wrong, please try again",
                         errorType = ErrorType.UNKNOWN
