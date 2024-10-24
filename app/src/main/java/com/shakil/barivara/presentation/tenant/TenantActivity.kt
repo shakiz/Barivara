@@ -100,7 +100,9 @@ class TenantActivity : BaseActivity<ActivityTenantBinding>() {
             activityAddNewTenantBinding.endMonthId.setText(tenant.endDate)
             activityAddNewTenantBinding.nid.setText(tenant.nidNumber)
             activityAddNewTenantBinding.mobileNo.setText(tenant.phone)
+
             if ((tenant.advancedAmount ?: 0) > 0) {
+                activityAddNewTenantBinding.advanceAmount.setText(tenant.advancedAmount ?: 0)
                 activityAddNewTenantBinding.headingAdvanceAmount.visibility = View.VISIBLE
                 activityAddNewTenantBinding.advanceAmount.visibility = View.VISIBLE
                 activityAddNewTenantBinding.advanceCheckBox.isChecked = true

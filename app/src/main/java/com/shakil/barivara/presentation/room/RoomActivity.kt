@@ -24,12 +24,10 @@ import es.dmoral.toasty.Toasty
 class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
     private lateinit var activityAddNewRoomBinding: ActivityAddNewRoomBinding
     private var spinnerAdapter = SpinnerAdapter()
-    private var roomNameStr: String = ""
     private var tenantId: Int = 0
     private var noOfRoom: Int = 0
     private var noOfBathroom: Int = 0
     private var noOfBalcony: Int = 0
-    private var electricMeterNo: String = ""
     private lateinit var selectedRoomStatus: RoomStatus
     private var room = Room()
     private var command = "add"
@@ -188,7 +186,6 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
             noOfRoom = room.noOfRoom
             noOfBathroom = room.noOfBathroom
             noOfBalcony = room.noOfBalcony
-            electricMeterNo = room.electricityMeterNo ?: ""
             tenantId = room.tenantId
 
             selectedRoomStatus =
@@ -198,7 +195,7 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
             activityAddNewRoomBinding.noOfRoom.text = "$noOfRoom"
             activityAddNewRoomBinding.noOfBalcony.text = "$noOfBalcony"
             activityAddNewRoomBinding.noOfBathroom.text = "$noOfBathroom"
-            activityAddNewRoomBinding.electricityMeterNo.setText(electricMeterNo)
+            activityAddNewRoomBinding.electricityMeterNo.setText(room.electricityMeterNo ?: "")
             activityAddNewRoomBinding.radioGroupStatus.isSelected = true
         }
     }
@@ -240,8 +237,7 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
     }
 
     private fun saveOrUpdateData() {
-        roomNameStr = activityAddNewRoomBinding.roomName.text.toString()
-        room.name = roomNameStr
+        room.name = activityAddNewRoomBinding.roomName.text.toString()
         room.tenantId = tenantId
         room.noOfRoom = noOfRoom
         room.noOfBathroom = noOfBathroom
