@@ -17,6 +17,8 @@ object ScreenNameConstants {
     const val appSreenTutorial = "app_screen_tutorial"
     const val appSreenDashboard = "app_screen_dashboard"
     const val appSreenGenerateBill = "app_screen_generate_bill"
+    const val appScreenGenerateBillMarkAsPaidBottomSheet =
+        "app_screen_generate_bill_mark_as_paid_dialog"
 }
 
 object ButtonActionConstants {
@@ -30,17 +32,24 @@ object ButtonActionConstants {
     const val actionHomeMenuItemRateUs = "action_home_menu_item_rate_us"
     const val actionHomeMenuItemLogout = "action_home_menu_item_logout"
 
-    //Tenant List Action
+    //Tenant List and Details Actions
     const val actionTenantListClose = "action_tenant_list_close"
     const val actionTenantDelete = "action_tenant_list_delete"
     const val actionTenantUpdate = "action_tenant_list_update"
     const val actionTenantMakeCall = "action_tenant_list_make_call"
     const val actionTenantSendMessage = "action_tenant_list_send_message"
     const val actionAddNewTenant = "action_tenant_add"
+    const val actionTenantDetailsClose = "action_tenant_details_close"
 
-    //Room List Action
+    //Room List and Details Actions
     const val actionRoomListClose = "action_room_list_close"
     const val actionRoomDelete = "action_room_list_delete"
     const val actionRoomUpdate = "action_room_list_update"
     const val actionAddNewRoom = "action_room_add"
+    const val actionRoomDetailsClose = "action_room_details_close"
+
+
+    //Generate Bill Actions
+    const val actionGenerateBillNotifyUser = "action_generate_bill_notify_user"
+    const val actionGenerateBillMarkAsPaid = "action_generate_bill_mark_as_paid"
 }

@@ -11,6 +11,7 @@ import com.shakil.barivara.R
 import com.shakil.barivara.data.model.room.Room
 import com.shakil.barivara.data.model.room.RoomStatus
 import com.shakil.barivara.databinding.ActivityAddNewRoomBinding
+import com.shakil.barivara.utils.ButtonActionConstants
 import com.shakil.barivara.utils.Constants.mAccessToken
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.SpinnerAdapter
@@ -50,7 +51,10 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
         ux = UX(this)
         getIntentData()
         setSupportActionBar(activityAddNewRoomBinding.toolBar)
-        activityAddNewRoomBinding.toolBar.setNavigationOnClickListener { finish() }
+        activityAddNewRoomBinding.toolBar.setNavigationOnClickListener {
+            buttonAction(ButtonActionConstants.actionRoomDetailsClose)
+            finish()
+        }
         bindUIWithComponents()
         loadData()
         initListeners()
@@ -245,8 +249,10 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
         room.status = selectedRoomStatus.statusToString()
         room.electricityMeterNo = activityAddNewRoomBinding.electricityMeterNo.text.toString()
         if (command == "add") {
+            buttonAction(ButtonActionConstants.actionAddNewRoom)
             viewModel.addRoom(prefManager.getString(mAccessToken), room)
         } else {
+            buttonAction(ButtonActionConstants.actionRoomUpdate)
             viewModel.updateRoom(prefManager.getString(mAccessToken), room)
         }
     }

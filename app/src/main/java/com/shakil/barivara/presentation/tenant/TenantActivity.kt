@@ -12,6 +12,7 @@ import com.shakil.barivara.R
 import com.shakil.barivara.data.model.tenant.Tenant
 import com.shakil.barivara.data.model.tenant.TenantType
 import com.shakil.barivara.databinding.ActivityTenantBinding
+import com.shakil.barivara.utils.ButtonActionConstants
 import com.shakil.barivara.utils.Constants.mAccessToken
 import com.shakil.barivara.utils.DatePickerManager
 import com.shakil.barivara.utils.PrefManager
@@ -58,7 +59,10 @@ class TenantActivity : BaseActivity<ActivityTenantBinding>() {
         ux = UX(this)
         intentData()
         setSupportActionBar(activityAddNewTenantBinding.toolBar)
-        activityAddNewTenantBinding.toolBar.setNavigationOnClickListener { finish() }
+        activityAddNewTenantBinding.toolBar.setNavigationOnClickListener {
+            buttonAction(ButtonActionConstants.actionTenantDetailsClose)
+            finish()
+        }
         bindUiWithComponents()
         initListeners()
         loadData()
@@ -249,8 +253,10 @@ class TenantActivity : BaseActivity<ActivityTenantBinding>() {
                 activityAddNewTenantBinding.advanceAmount.text.toString().toInt()
             }
         if (command == "add") {
+            buttonAction(ButtonActionConstants.actionAddNewTenant)
             viewModel.addTenant(prefManager.getString(mAccessToken), tenant)
         } else {
+            buttonAction(ButtonActionConstants.actionTenantUpdate)
             viewModel.updateTenant(prefManager.getString(mAccessToken), tenant)
         }
     }

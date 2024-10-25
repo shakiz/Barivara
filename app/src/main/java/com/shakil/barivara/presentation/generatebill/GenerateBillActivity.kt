@@ -31,11 +31,13 @@ import com.shakil.barivara.data.model.generatebill.BillInfo
 import com.shakil.barivara.databinding.ActivityGenerateBillBinding
 import com.shakil.barivara.presentation.GenericBottomSheet
 import com.shakil.barivara.presentation.adapter.RecyclerBillInfoAdapter
+import com.shakil.barivara.utils.ButtonActionConstants
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.Constants.mAccessToken
 import com.shakil.barivara.utils.CustomAdManager
 import com.shakil.barivara.utils.DroidFileManager
 import com.shakil.barivara.utils.PrefManager
+import com.shakil.barivara.utils.ScreenNameConstants
 import com.shakil.barivara.utils.SpinnerAdapter
 import com.shakil.barivara.utils.SpinnerData
 import com.shakil.barivara.utils.UX
@@ -75,6 +77,7 @@ class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        screenViewed(ScreenNameConstants.appSreenGenerateBill)
         init()
         binUIWithComponents()
         initObservers()
@@ -333,10 +336,22 @@ Service Charge : ${generateBill.serviceCharge} ${getString(R.string.taka)}"""
     }
 
     override fun onNotify(billInfo: BillInfo) {
+        buttonAction(
+            ButtonActionConstants.actionGenerateBillNotifyUser, mapOf(
+                "user_mobile" to (billInfo.tenantPhone ?: ""),
+                "message" to (billInfo.remarks ?: ""),
+            )
+        )
         sendMessage(billInfo.remarks ?: "", billInfo.tenantPhone ?: "")
     }
 
     override fun onMarkAsPaid(billInfo: BillInfo) {
+        buttonAction(
+            ButtonActionConstants.actionGenerateBillMarkAsPaid, mapOf(
+                "user_mobile" to (billInfo.tenantPhone ?: ""),
+                "message" to (billInfo.remarks ?: ""),
+            )
+        )
         showMarkAsPaidBottomSheet(billInfo)
     }
 
@@ -357,6 +372,7 @@ Service Charge : ${generateBill.serviceCharge} ${getString(R.string.taka)}"""
 
             }
         )
+        screenViewed(ScreenNameConstants.appScreenGenerateBillMarkAsPaidBottomSheet)
         bottomSheet.show()
     }
 }
