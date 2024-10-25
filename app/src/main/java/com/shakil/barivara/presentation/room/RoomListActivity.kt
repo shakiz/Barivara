@@ -19,8 +19,10 @@ import com.shakil.barivara.databinding.ActivityRoomListBinding
 import com.shakil.barivara.presentation.adapter.RecyclerRoomListAdapter
 import com.shakil.barivara.presentation.adapter.RecyclerRoomListAdapter.RoomCallBacks
 import com.shakil.barivara.presentation.onboard.HomeActivity
+import com.shakil.barivara.utils.ButtonActionConstants
 import com.shakil.barivara.utils.Constants.mAccessToken
 import com.shakil.barivara.utils.PrefManager
+import com.shakil.barivara.utils.ScreenNameConstants
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
 import com.shakil.barivara.utils.filterList
@@ -45,6 +47,9 @@ class RoomListActivity : BaseActivity<ActivityRoomListBinding>(), RoomCallBacks 
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
+            buttonAction(
+                ButtonActionConstants.actionRoomListClose
+            )
             startActivity(
                 Intent(
                     this@RoomListActivity,
@@ -62,6 +67,7 @@ class RoomListActivity : BaseActivity<ActivityRoomListBinding>(), RoomCallBacks 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        screenViewed(ScreenNameConstants.appSreenRoomList)
         setSupportActionBar(activityRoomListBinding.toolBar)
         activityRoomListBinding.searchLayout.SearchName.hint = getString(R.string.search_room_name)
 
@@ -81,6 +87,9 @@ class RoomListActivity : BaseActivity<ActivityRoomListBinding>(), RoomCallBacks 
     private fun initListeners() {
         onBackPressedDispatcher.addCallback(onBackPressedCallback)
         activityRoomListBinding.toolBar.setNavigationOnClickListener {
+            buttonAction(
+                ButtonActionConstants.actionRoomListClose
+            )
             startActivity(
                 Intent(
                     this@RoomListActivity,
@@ -90,6 +99,9 @@ class RoomListActivity : BaseActivity<ActivityRoomListBinding>(), RoomCallBacks 
         }
 
         activityRoomListBinding.mAddRoomMaster.setOnClickListener {
+            buttonAction(
+                ButtonActionConstants.actionAddNewRoom
+            )
             startActivity(
                 Intent(
                     this@RoomListActivity,
@@ -216,10 +228,16 @@ class RoomListActivity : BaseActivity<ActivityRoomListBinding>(), RoomCallBacks 
     }
 
     override fun onDelete(room: Room) {
+        buttonAction(
+            ButtonActionConstants.actionRoomDelete
+        )
         doPopUpForDeleteConfirmation(room)
     }
 
     override fun onEdit(room: Room) {
+        buttonAction(
+            ButtonActionConstants.actionRoomUpdate
+        )
         startActivity(
             Intent(this@RoomListActivity, RoomActivity::class.java).putExtra(
                 "room",
@@ -229,6 +247,9 @@ class RoomListActivity : BaseActivity<ActivityRoomListBinding>(), RoomCallBacks 
     }
 
     override fun onItemClick(room: Room) {
+        buttonAction(
+            ButtonActionConstants.actionRoomUpdate
+        )
         startActivity(
             Intent(this@RoomListActivity, RoomActivity::class.java).putExtra(
                 "room",

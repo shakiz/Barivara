@@ -29,4 +29,18 @@ object ButtonActionConstants {
     const val actionHomeMenuItemChangePassword = "action_home_menu_item_change_password"
     const val actionHomeMenuItemRateUs = "action_home_menu_item_rate_us"
     const val actionHomeMenuItemLogout = "action_home_menu_item_logout"
+
+    //Tenant List Action
+    const val actionTenantListClose = "action_tenant_list_close"
+    const val actionTenantDelete = "action_tenant_list_delete"
+    const val actionTenantUpdate = "action_tenant_list_update"
+    const val actionTenantMakeCall = "action_tenant_list_make_call"
+    const val actionTenantSendMessage = "action_tenant_list_send_message"
+    const val actionAddNewTenant = "action_tenant_add"
+
+    //Room List Action
+    const val actionRoomListClose = "action_room_list_close"
+    const val actionRoomDelete = "action_room_list_delete"
+    const val actionRoomUpdate = "action_room_list_update"
+    const val actionAddNewRoom = "action_room_add"
 }

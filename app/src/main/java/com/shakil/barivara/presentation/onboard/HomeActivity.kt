@@ -307,21 +307,21 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
 
             R.id.menu_change_password -> {
                 buttonAction(
-                    ButtonActionConstants.actionHomeMenuItemMyProfile,
+                    ButtonActionConstants.actionHomeMenuItemChangePassword,
                 )
                 startActivity(Intent(this@HomeActivity, ForgotPasswordActivity::class.java))
             }
 
             R.id.menu_tutorial -> {
                 buttonAction(
-                    ButtonActionConstants.actionHomeMenuItemMyProfile,
+                    ButtonActionConstants.actionHomeMenuItemTutorial,
                 )
                 startActivity(Intent(this@HomeActivity, TutorialActivity::class.java))
             }
 
             R.id.menu_rate_us -> {
                 buttonAction(
-                    ButtonActionConstants.actionHomeMenuItemMyProfile,
+                    ButtonActionConstants.actionHomeMenuItemRateUs,
                 )
                 tools.rateApp()
             }

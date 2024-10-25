@@ -24,9 +24,11 @@ import com.shakil.barivara.databinding.ActivityTenantListBinding
 import com.shakil.barivara.presentation.adapter.RecyclerAdapterTenantList
 import com.shakil.barivara.presentation.adapter.RecyclerAdapterTenantList.TenantCallBacks
 import com.shakil.barivara.presentation.onboard.HomeActivity
+import com.shakil.barivara.utils.ButtonActionConstants
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.Constants.mAccessToken
 import com.shakil.barivara.utils.PrefManager
+import com.shakil.barivara.utils.ScreenNameConstants
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
 import com.shakil.barivara.utils.filterList
@@ -51,6 +53,9 @@ class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCall
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
+            buttonAction(
+                ButtonActionConstants.actionTenantListClose
+            )
             startActivity(
                 Intent(
                     this@TenantListActivity,
@@ -68,6 +73,7 @@ class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCall
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        screenViewed(ScreenNameConstants.appSreenTenantList)
         setSupportActionBar(activityTenantListBinding.toolBar)
         activityTenantListBinding.searchLayout.SearchName.hint =
             getString(R.string.search_tenant_name)
@@ -81,6 +87,9 @@ class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCall
     private fun initListeners() {
         onBackPressedDispatcher.addCallback(onBackPressedCallback)
         activityTenantListBinding.toolBar.setNavigationOnClickListener {
+            buttonAction(
+                ButtonActionConstants.actionTenantListClose
+            )
             startActivity(
                 Intent(
                     this@TenantListActivity,
@@ -90,6 +99,9 @@ class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCall
         }
 
         activityTenantListBinding.mAddTenantMaster.setOnClickListener {
+            buttonAction(
+                ButtonActionConstants.actionAddNewTenant
+            )
             startActivity(
                 Intent(
                     this@TenantListActivity,
@@ -237,6 +249,9 @@ class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCall
     }
 
     override fun onCallClicked(mobileNo: String, tenantName: String) {
+        buttonAction(
+            ButtonActionConstants.actionTenantMakeCall
+        )
         if (ContextCompat.checkSelfPermission(
                 this,
                 Manifest.permission.CALL_PHONE
@@ -272,16 +287,25 @@ class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCall
     }
 
     override fun onMessageClicked(mobileNo: String) {
+        buttonAction(
+            ButtonActionConstants.actionTenantSendMessage
+        )
         Toast.makeText(this, getString(R.string.taking_into_message_section), Toast.LENGTH_SHORT)
             .show()
         Tools(this).sendMessage(mobileNo)
     }
 
     override fun onDelete(tenant: Tenant) {
+        buttonAction(
+            ButtonActionConstants.actionTenantDelete
+        )
         doPopUpForDeleteConfirmation(tenant)
     }
 
     override fun onEdit(tenant: Tenant) {
+        buttonAction(
+            ButtonActionConstants.actionTenantUpdate
+        )
         startActivity(
             Intent(
                 this@TenantListActivity,
@@ -291,6 +315,9 @@ class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCall
     }
 
     override fun onItemClick(tenant: Tenant) {
+        buttonAction(
+            ButtonActionConstants.actionTenantUpdate
+        )
         startActivity(
             Intent(
                 this@TenantListActivity,

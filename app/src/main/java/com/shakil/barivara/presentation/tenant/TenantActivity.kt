@@ -15,6 +15,7 @@ import com.shakil.barivara.databinding.ActivityTenantBinding
 import com.shakil.barivara.utils.Constants.mAccessToken
 import com.shakil.barivara.utils.DatePickerManager
 import com.shakil.barivara.utils.PrefManager
+import com.shakil.barivara.utils.ScreenNameConstants
 import com.shakil.barivara.utils.SpinnerAdapter
 import com.shakil.barivara.utils.SpinnerData
 import com.shakil.barivara.utils.Tools
@@ -52,6 +53,7 @@ class TenantActivity : BaseActivity<ActivityTenantBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        screenViewed(ScreenNameConstants.appSreenTenantDetails)
         prefManager = PrefManager(this)
         ux = UX(this)
         intentData()
