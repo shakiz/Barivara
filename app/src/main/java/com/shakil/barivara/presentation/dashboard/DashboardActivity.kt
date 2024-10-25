@@ -60,7 +60,6 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>() {
         viewModel.getDashboardInfo().observe(this) { dashboardInfo ->
             activityDashboardBinding.TotalRooms.text = "${dashboardInfo.totalActiveRoom}"
             activityDashboardBinding.TotalTenantsCurrent.text = "${dashboardInfo.totalActiveTenant}"
-            activityDashboardBinding.TotalTenantLeft.text = "${dashboardInfo.totalCollectedRent}"
         }
     }
 
@@ -75,11 +74,7 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>() {
             this,
             spinnerData.setMonthData()
         )
-        customAdManager.generateAd(activityDashboardBinding.adView)
-        customAdManager.generateAd(activityDashboardBinding.adViewSecond)
 
-        activityDashboardBinding.AppVisitCount.text =
-            prefManager.getInt(Constants.mAppViewCount).toString()
         activityDashboardBinding.FilterYear.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(

@@ -12,12 +12,6 @@
         android:title="@string/change_password"
         android:icon="@drawable/ic_key"/>
 
-
-    <item
-        android:id="@+id/menu_notification"
-        android:title="@string/notifications"
-        android:icon="@drawable/ic_notifications_black_24dp"/>
-
     <item
         android:id="@+id/menu_tutorial"
         android:title="@string/tutorial"

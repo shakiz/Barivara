@@ -30,17 +30,18 @@ import com.shakil.barivara.presentation.auth.forgotpassword.ForgotPasswordActivi
 import com.shakil.barivara.presentation.auth.login.LoginSelectionActivity
 import com.shakil.barivara.presentation.dashboard.DashboardActivity
 import com.shakil.barivara.presentation.generatebill.GenerateBillActivity
-import com.shakil.barivara.presentation.notification.NotificationActivity
 import com.shakil.barivara.presentation.profile.ProfileActivity
 import com.shakil.barivara.presentation.room.RoomListActivity
 import com.shakil.barivara.presentation.tenant.TenantListActivity
 import com.shakil.barivara.presentation.tutorial.TutorialActivity
+import com.shakil.barivara.utils.ButtonActionConstants
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.Constants.mAccessToken
 import com.shakil.barivara.utils.Constants.mUserMobile
 import com.shakil.barivara.utils.CustomAdManager
 import com.shakil.barivara.utils.LanguageManager
 import com.shakil.barivara.utils.PrefManager
+import com.shakil.barivara.utils.ScreenNameConstants
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
 import dagger.hilt.android.AndroidEntryPoint
@@ -71,6 +72,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        screenViewed(ScreenNameConstants.appSreenHome)
 
         // Set up the adapter
         val adapter = ImageSliderAdapter(this, viewModel.getSliderData())
@@ -160,6 +162,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
 
         activityMainBinding.totalRoomFlatLayout.setOnClickListener {
+            buttonAction(
+                ButtonActionConstants.actionHomeRoom
+            )
             startActivity(
                 Intent(
                     this@HomeActivity,
@@ -168,6 +173,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
             )
         }
         activityMainBinding.totalTenantLayout.setOnClickListener {
+            buttonAction(
+                ButtonActionConstants.actionHomeTenant
+            )
             startActivity(
                 Intent(
                     this@HomeActivity,
@@ -177,6 +185,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
         }
 
         activityMainBinding.moreDetails.setOnClickListener {
+            buttonAction(
+                ButtonActionConstants.actionHomeDashboard
+            )
             startActivity(
                 Intent(
                     this@HomeActivity,
@@ -186,6 +197,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
         }
 
         activityMainBinding.generateBill.setOnClickListener {
+            buttonAction(
+                ButtonActionConstants.actionHomeGenerateBill
+            )
             startActivity(
                 Intent(
                     this@HomeActivity,
@@ -195,6 +209,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
         }
 
         activityMainBinding.roomList.setOnClickListener {
+            buttonAction(
+                ButtonActionConstants.actionHomeRoom
+            )
             startActivity(
                 Intent(
                     this@HomeActivity,
@@ -203,6 +220,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
             )
         }
         activityMainBinding.tenantList.setOnClickListener {
+            buttonAction(
+                ButtonActionConstants.actionHomeTenant
+            )
             startActivity(
                 Intent(
                     this@HomeActivity,
@@ -248,6 +268,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_logout -> {
+                buttonAction(
+                    ButtonActionConstants.actionHomeMenuItemLogout
+                )
                 val bottomSheet = GenericDialog<View>(
                     context = this,
                     layoutResId = R.layout.logout_confirmation_layout,
@@ -276,46 +299,37 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_profile -> {
-                registerEvent(
-                    "profile",
-                    setData("profile", "Profile Activity Launched")
+                buttonAction(
+                    ButtonActionConstants.actionHomeMenuItemMyProfile
                 )
                 startActivity(Intent(this@HomeActivity, ProfileActivity::class.java))
             }
 
             R.id.menu_change_password -> {
-                registerEvent(
-                    "changePassword",
-                    setData("changePassword", "Change Password Activity Launched")
+                buttonAction(
+                    ButtonActionConstants.actionHomeMenuItemMyProfile,
                 )
                 startActivity(Intent(this@HomeActivity, ForgotPasswordActivity::class.java))
             }
 
-            R.id.menu_notification -> {
-                registerEvent(
-                    "notification",
-                    setData("notification", "Notification Activity Launched")
-                )
-                startActivity(Intent(this@HomeActivity, NotificationActivity::class.java))
-            }
-
             R.id.menu_tutorial -> {
-                registerEvent(
-                    "tutorial",
-                    setData("tutorial", "Tutorial Activity Launched")
+                buttonAction(
+                    ButtonActionConstants.actionHomeMenuItemMyProfile,
                 )
                 startActivity(Intent(this@HomeActivity, TutorialActivity::class.java))
             }
 
             R.id.menu_rate_us -> {
-                registerEvent(
-                    "rate_us",
-                    setData("rate_us", "Rate Us Launched")
+                buttonAction(
+                    ButtonActionConstants.actionHomeMenuItemMyProfile,
                 )
                 tools.rateApp()
             }
 
             R.id.menu_logout -> {
+                buttonAction(
+                    ButtonActionConstants.actionHomeMenuItemMyProfile,
+                )
                 val bottomSheet = GenericDialog<View>(
                     context = this,
                     layoutResId = R.layout.logout_confirmation_layout,
