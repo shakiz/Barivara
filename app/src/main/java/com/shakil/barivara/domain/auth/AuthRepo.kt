@@ -27,4 +27,5 @@ interface AuthRepo {
         changePasswordRequest: ChangePasswordRequest,
         token: String
     ): Resource<BaseApiResponse>
+    suspend fun refreshToken(refreshToken: String): Resource<LoginBaseResponse>
 }

@@ -15,14 +15,12 @@ import retrofit2.http.Path
 interface RoomService {
     @GET("rooms")
     suspend fun getAllRoom(
-        @Header("Authorization") token: String,
         @Header("Content-Type") contentType: String,
         @Header("Accept") accept: String,
     ): Response<BaseRoomResponse>
 
     @POST("rooms")
     suspend fun addRoom(
-        @Header("Authorization") token: String,
         @Header("Content-Type") contentType: String,
         @Header("Accept") accept: String,
         @Body room: Room
@@ -30,7 +28,6 @@ interface RoomService {
 
     @PUT("rooms/{id}")
     suspend fun updateRoom(
-        @Header("Authorization") token: String,
         @Path("id") id: Int,
         @Header("Content-Type") contentType: String,
         @Header("Accept") accept: String,
@@ -39,7 +36,6 @@ interface RoomService {
 
     @DELETE("rooms/{id}")
     suspend fun deleteRoom(
-        @Header("Authorization") token: String,
         @Header("Accept") accept: String,
         @Path("id") id: Int,
     ): Response<BaseApiResponse>

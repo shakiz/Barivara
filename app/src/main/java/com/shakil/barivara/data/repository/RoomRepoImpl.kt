@@ -18,7 +18,6 @@ class RoomRepoImpl @Inject constructor(
     override suspend fun getAllRoom(token: String): Resource<List<Room>> {
         try {
             val task = tenantService.getAllRoom(
-                token = "Bearer $token",
                 accept = ACCEPT,
                 contentType = CONTENT_TYPE,
             )
@@ -54,7 +53,6 @@ class RoomRepoImpl @Inject constructor(
     override suspend fun addRoom(token: String, room: Room): Resource<BaseApiResponse> {
         try {
             val task = tenantService.addRoom(
-                token = "Bearer $token",
                 accept = ACCEPT,
                 contentType = CONTENT_TYPE,
                 room = room
@@ -94,7 +92,6 @@ class RoomRepoImpl @Inject constructor(
     ): Resource<BaseApiResponse> {
         try {
             val task = tenantService.updateRoom(
-                token = "Bearer $token",
                 id = room.id,
                 accept = ACCEPT,
                 contentType = CONTENT_TYPE,
@@ -132,7 +129,6 @@ class RoomRepoImpl @Inject constructor(
     override suspend fun deleteRoom(token: String, roomId: Int): Resource<BaseApiResponse> {
         try {
             val task = tenantService.deleteRoom(
-                token = "Bearer $token",
                 id = roomId,
                 accept = ACCEPT
             )

@@ -221,7 +221,7 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
                 getString(R.string.meter_name_validation)
             )
         )
-        validation.setSpinnerIsNotEmpty(arrayOf("tenantNameId"))
+        //validation.setSpinnerIsNotEmpty(arrayOf("tenantNameId"))
 
         activityAddNewRoomBinding.tenantNameId.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {

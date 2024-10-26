@@ -1,5 +1,6 @@
 package com.shakil.barivara.di
 
+import android.content.Context
 import com.shakil.barivara.data.remote.webservice.AuthInterceptor
 import com.shakil.barivara.data.remote.webservice.AuthService
 import com.shakil.barivara.data.remote.webservice.DashboardService
@@ -8,9 +9,11 @@ import com.shakil.barivara.data.remote.webservice.RoomService
 import com.shakil.barivara.data.remote.webservice.TenantService
 import com.shakil.barivara.data.remote.webservice.UserService
 import com.shakil.barivara.utils.ApiConstants
+import com.shakil.barivara.utils.PrefManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -27,6 +30,11 @@ import javax.net.ssl.X509TrustManager
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+    @Provides
+    @Singleton
+    fun providePrefManager(@ApplicationContext context: Context): PrefManager {
+        return PrefManager(context)
+    }
 
     @Provides
     @Singleton
@@ -36,15 +44,21 @@ object AppModule {
         }
     }
 
-    @Singleton
     @Provides
-    fun provideBasicAuth() = AuthInterceptor()
+    @Singleton
+    fun provideAuthInterceptor(
+        tokenManager: PrefManager
+    ): AuthInterceptor {
+        return AuthInterceptor(tokenManager)
+    }
 
     @Provides
     @Singleton
     fun provideOkHttp(
         loggingInterceptor: HttpLoggingInterceptor,
+        authInterceptor: AuthInterceptor
     ): okhttp3.Call.Factory {
+        val refreshTokenInterceptor = authInterceptor.create()
         // Create a trust manager that does not validate certificate chains
         val trustAllCertificates = object : X509TrustManager {
             override fun checkClientTrusted(chain: Array<X509Certificate>, authType: String) {}
@@ -62,6 +76,7 @@ object AppModule {
             .addInterceptor(loggingInterceptor.apply {
                 level = HttpLoggingInterceptor.Level.BODY
             })
+            .addInterceptor(refreshTokenInterceptor)
             .sslSocketFactory(sslSocketFactory, trustAllCertificates)
             .hostnameVerifier { _, _ -> true }
             .callTimeout(600, TimeUnit.SECONDS)

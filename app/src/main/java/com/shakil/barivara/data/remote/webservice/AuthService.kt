@@ -60,4 +60,9 @@ interface AuthService {
         @Header("Accept") accept: String,
         @Body changePasswordRequest: ChangePasswordRequest
     ): Response<BaseApiResponse>
+
+    @POST("refresh-token")
+    suspend fun refreshToken(
+        @Header("refresh-token") refreshToken: String,
+    ): Response<LoginBaseResponse>
 }
