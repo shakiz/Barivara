@@ -13,7 +13,6 @@ import com.shakil.barivara.data.model.tenant.Tenant
 import com.shakil.barivara.data.model.tenant.TenantType
 import com.shakil.barivara.databinding.ActivityTenantBinding
 import com.shakil.barivara.utils.ButtonActionConstants
-import com.shakil.barivara.utils.Constants.mAccessToken
 import com.shakil.barivara.utils.DatePickerManager
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.ScreenNameConstants
@@ -254,10 +253,10 @@ class TenantActivity : BaseActivity<ActivityTenantBinding>() {
             }
         if (command == "add") {
             buttonAction(ButtonActionConstants.actionAddNewTenant)
-            viewModel.addTenant(prefManager.getString(mAccessToken), tenant)
+            viewModel.addTenant(tenant)
         } else {
             buttonAction(ButtonActionConstants.actionTenantUpdate)
-            viewModel.updateTenant(prefManager.getString(mAccessToken), tenant)
+            viewModel.updateTenant(tenant)
         }
     }
 }

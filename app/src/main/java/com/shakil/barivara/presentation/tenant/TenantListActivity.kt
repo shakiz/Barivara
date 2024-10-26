@@ -26,7 +26,6 @@ import com.shakil.barivara.presentation.adapter.RecyclerAdapterTenantList.Tenant
 import com.shakil.barivara.presentation.onboard.HomeActivity
 import com.shakil.barivara.utils.ButtonActionConstants
 import com.shakil.barivara.utils.Constants
-import com.shakil.barivara.utils.Constants.mAccessToken
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.ScreenNameConstants
 import com.shakil.barivara.utils.Tools
@@ -81,7 +80,7 @@ class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCall
         setRecyclerAdapter()
         initListeners()
         initObservers()
-        viewModel.getAllTenants(prefManager.getString(mAccessToken))
+        viewModel.getAllTenants()
     }
 
     private fun initListeners() {
@@ -165,7 +164,7 @@ class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCall
             activityTenantListBinding.searchLayout.SearchName.setText("")
             activityTenantListBinding.noDataLayout.root.visibility = View.GONE
             Tools.hideKeyboard(this@TenantListActivity)
-            viewModel.getAllTenants(prefManager.getString(mAccessToken))
+            viewModel.getAllTenants()
             Toast.makeText(
                 this@TenantListActivity,
                 getString(R.string.list_refreshed),
@@ -194,7 +193,7 @@ class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCall
 
         viewModel.getUpdateTenantResponse().observe(this) { updateResponse ->
             if (updateResponse.statusCode == 200) {
-                viewModel.getAllTenants(prefManager.getString(mAccessToken))
+                viewModel.getAllTenants()
             } else {
                 Toasty.warning(this, updateResponse.message, Toast.LENGTH_SHORT).show()
             }
@@ -202,7 +201,7 @@ class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCall
 
         viewModel.getDeleteTenantResponse().observe(this) { deleteResponse ->
             if (deleteResponse.statusCode == 200) {
-                viewModel.getAllTenants(prefManager.getString(mAccessToken))
+                viewModel.getAllTenants()
             } else {
                 Toasty.warning(this, deleteResponse.message, Toast.LENGTH_SHORT).show()
             }
@@ -236,7 +235,7 @@ class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCall
         delete = dialog.findViewById(R.id.deleteButton)
         cancel.setOnClickListener { dialog.dismiss() }
         delete.setOnClickListener {
-            viewModel.deleteTenant(prefManager.getString(mAccessToken), tenant.id)
+            viewModel.deleteTenant(tenant.id)
             dialog.dismiss()
         }
         dialog.setCanceledOnTouchOutside(false)

@@ -13,11 +13,11 @@ import java.net.SocketTimeoutException
 import javax.inject.Inject
 
 class RoomRepoImpl @Inject constructor(
-    private val tenantService: RoomService
+    private val roomService: RoomService
 ) : RoomRepo {
-    override suspend fun getAllRoom(token: String): Resource<List<Room>> {
+    override suspend fun getAllRoom(): Resource<List<Room>> {
         try {
-            val task = tenantService.getAllRoom(
+            val task = roomService.getAllRoom(
                 accept = ACCEPT,
                 contentType = CONTENT_TYPE,
             )
@@ -50,9 +50,9 @@ class RoomRepoImpl @Inject constructor(
         }
     }
 
-    override suspend fun addRoom(token: String, room: Room): Resource<BaseApiResponse> {
+    override suspend fun addRoom(room: Room): Resource<BaseApiResponse> {
         try {
-            val task = tenantService.addRoom(
+            val task = roomService.addRoom(
                 accept = ACCEPT,
                 contentType = CONTENT_TYPE,
                 room = room
@@ -87,11 +87,10 @@ class RoomRepoImpl @Inject constructor(
     }
 
     override suspend fun updateRoom(
-        token: String,
         room: Room
     ): Resource<BaseApiResponse> {
         try {
-            val task = tenantService.updateRoom(
+            val task = roomService.updateRoom(
                 id = room.id,
                 accept = ACCEPT,
                 contentType = CONTENT_TYPE,
@@ -126,9 +125,9 @@ class RoomRepoImpl @Inject constructor(
         }
     }
 
-    override suspend fun deleteRoom(token: String, roomId: Int): Resource<BaseApiResponse> {
+    override suspend fun deleteRoom(roomId: Int): Resource<BaseApiResponse> {
         try {
-            val task = tenantService.deleteRoom(
+            val task = roomService.deleteRoom(
                 id = roomId,
                 accept = ACCEPT
             )

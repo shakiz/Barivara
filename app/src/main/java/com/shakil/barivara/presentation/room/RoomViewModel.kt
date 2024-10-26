@@ -74,11 +74,11 @@ class RoomViewModel @Inject constructor(
         return tenants
     }
 
-    fun getAllRooms(token: String) {
+    fun getAllRooms() {
         viewModelScope.launch {
             isLoading.postValue(true)
             try {
-                val data = roomRepoImpl.getAllRoom(token = token)
+                val data = roomRepoImpl.getAllRoom()
                 if (data.response != null) {
                     rooms.postValue(data.response)
                 } else {
@@ -102,11 +102,11 @@ class RoomViewModel @Inject constructor(
         }
     }
 
-    fun addRoom(token: String, room: Room) {
+    fun addRoom(room: Room) {
         viewModelScope.launch {
             isLoading.postValue(true)
             try {
-                val data = roomRepoImpl.addRoom(token, room = room)
+                val data = roomRepoImpl.addRoom(room = room)
                 if (data.response != null) {
                     addRoomResponse.postValue(data.response)
                 } else {
@@ -130,11 +130,11 @@ class RoomViewModel @Inject constructor(
         }
     }
 
-    fun updateRoom(token: String, room: Room) {
+    fun updateRoom(room: Room) {
         viewModelScope.launch {
             isLoading.postValue(true)
             try {
-                val data = roomRepoImpl.updateRoom(token, room = room)
+                val data = roomRepoImpl.updateRoom(room = room)
                 if (data.response != null) {
                     updateRoomResponse.postValue(data.response)
                 } else {
@@ -158,11 +158,11 @@ class RoomViewModel @Inject constructor(
         }
     }
 
-    fun getAllTenants(token: String) {
+    fun getAllTenants() {
         viewModelScope.launch {
             isLoading.postValue(true)
             try {
-                val data = tenantRepoImpl.getAllTenant(token = token)
+                val data = tenantRepoImpl.getAllTenant()
                 if (data.response != null) {
                     tenants.postValue(data.response)
                 } else {
@@ -186,11 +186,11 @@ class RoomViewModel @Inject constructor(
         }
     }
 
-    fun deleteRoom(token: String, roomId: Int) {
+    fun deleteRoom(roomId: Int) {
         viewModelScope.launch {
             isLoading.postValue(true)
             try {
-                val data = roomRepoImpl.deleteRoom(token, roomId = roomId)
+                val data = roomRepoImpl.deleteRoom(roomId = roomId)
                 if (data.response != null) {
                     deleteRoomResponse.postValue(data.response)
                 } else {

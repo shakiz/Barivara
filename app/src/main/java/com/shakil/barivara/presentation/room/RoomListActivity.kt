@@ -20,8 +20,6 @@ import com.shakil.barivara.presentation.adapter.RecyclerRoomListAdapter
 import com.shakil.barivara.presentation.adapter.RecyclerRoomListAdapter.RoomCallBacks
 import com.shakil.barivara.presentation.onboard.HomeActivity
 import com.shakil.barivara.utils.ButtonActionConstants
-import com.shakil.barivara.utils.Constants.mAccessToken
-import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.ScreenNameConstants
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
@@ -40,7 +38,6 @@ class RoomListActivity : BaseActivity<ActivityRoomListBinding>(), RoomCallBacks 
     private lateinit var activityRoomListBinding: ActivityRoomListBinding
     private lateinit var ux: UX
     private var tools = Tools(this)
-    private lateinit var prefManager: PrefManager
     private val viewModel by viewModels<RoomViewModel>()
     private lateinit var recyclerRoomListAdapter: RecyclerRoomListAdapter
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
@@ -75,12 +72,11 @@ class RoomListActivity : BaseActivity<ActivityRoomListBinding>(), RoomCallBacks 
         initListeners()
         initObservers()
         setRecyclerAdapter()
-        viewModel.getAllRooms(prefManager.getString(mAccessToken))
+        viewModel.getAllRooms()
     }
 
     private fun init() {
         ux = UX(this)
-        prefManager = PrefManager(this)
         setupDebouncedSearch()
     }
 
@@ -116,7 +112,7 @@ class RoomListActivity : BaseActivity<ActivityRoomListBinding>(), RoomCallBacks 
                 activityRoomListBinding.searchLayout.SearchName.setText("")
                 activityRoomListBinding.noDataLayout.root.visibility = View.GONE
                 Tools.hideKeyboard(this@RoomListActivity)
-                viewModel.getAllRooms(prefManager.getString(mAccessToken))
+                viewModel.getAllRooms()
                 Toast.makeText(
                     this@RoomListActivity,
                     getString(R.string.list_refreshed),
@@ -183,7 +179,7 @@ class RoomListActivity : BaseActivity<ActivityRoomListBinding>(), RoomCallBacks 
 
         viewModel.getDeleteRoomResponse().observe(this) { deleteResponse ->
             if (deleteResponse.statusCode == 200) {
-                viewModel.getAllRooms(prefManager.getString(mAccessToken))
+                viewModel.getAllRooms()
             } else {
                 Toasty.warning(this, deleteResponse.message, Toast.LENGTH_SHORT).show()
             }
@@ -215,7 +211,7 @@ class RoomListActivity : BaseActivity<ActivityRoomListBinding>(), RoomCallBacks 
         val delete: Button = dialog.findViewById(R.id.deleteButton)
         cancel.setOnClickListener { dialog.dismiss() }
         delete.setOnClickListener {
-            viewModel.deleteRoom(prefManager.getString(mAccessToken), room.id)
+            viewModel.deleteRoom(room.id)
             dialog.dismiss()
         }
         dialog.setCanceledOnTouchOutside(false)

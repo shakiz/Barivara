@@ -36,7 +36,6 @@ import com.shakil.barivara.presentation.tenant.TenantListActivity
 import com.shakil.barivara.presentation.tutorial.TutorialActivity
 import com.shakil.barivara.utils.ButtonActionConstants
 import com.shakil.barivara.utils.Constants
-import com.shakil.barivara.utils.Constants.mAccessToken
 import com.shakil.barivara.utils.Constants.mUserMobile
 import com.shakil.barivara.utils.CustomAdManager
 import com.shakil.barivara.utils.LanguageManager
@@ -131,8 +130,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
         bindUIWithComponents()
         initListeners()
         initObservers()
-        viewModel.getAllTenants(prefManager.getString(mAccessToken))
-        viewModel.getAllRooms(prefManager.getString(mAccessToken))
+        viewModel.getAllTenants()
+        viewModel.getAllRooms()
     }
 
     private fun init() {
@@ -282,9 +281,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
                     },
                     onSecondaryAction = {
                         viewModel.logout(
-                            prefManager.getString(mUserMobile), prefManager.getString(
-                                mAccessToken
-                            )
+                            prefManager.getString(mUserMobile)
                         )
                         tools.clearPrefForLogout(LoginSelectionActivity::class.java, prefManager)
                     }
@@ -341,9 +338,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
                     },
                     onSecondaryAction = {
                         viewModel.logout(
-                            prefManager.getString(mUserMobile), prefManager.getString(
-                                mAccessToken
-                            )
+                            prefManager.getString(mUserMobile)
                         )
                         tools.clearPrefForLogout(LoginSelectionActivity::class.java, prefManager)
                     }

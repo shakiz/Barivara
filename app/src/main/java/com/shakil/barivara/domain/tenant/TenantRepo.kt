@@ -5,8 +5,8 @@ import com.shakil.barivara.data.model.tenant.Tenant
 import com.shakil.barivara.utils.Resource
 
 interface TenantRepo {
-    suspend fun getAllTenant(token: String): Resource<List<Tenant>>
-    suspend fun addTenant(token: String, tenant: Tenant): Resource<BaseApiResponse>
-    suspend fun deleteTenant(token: String, tenantId: Int): Resource<BaseApiResponse>
-    suspend fun updateTenant(token: String, tenant: Tenant): Resource<BaseApiResponse>
+    suspend fun getAllTenant(): Resource<List<Tenant>>
+    suspend fun addTenant(tenant: Tenant): Resource<BaseApiResponse>
+    suspend fun deleteTenant(tenantId: Int): Resource<BaseApiResponse>
+    suspend fun updateTenant(tenant: Tenant): Resource<BaseApiResponse>
 }

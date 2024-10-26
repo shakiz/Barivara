@@ -12,8 +12,6 @@ import com.shakil.barivara.data.model.room.Room
 import com.shakil.barivara.data.model.room.RoomStatus
 import com.shakil.barivara.databinding.ActivityAddNewRoomBinding
 import com.shakil.barivara.utils.ButtonActionConstants
-import com.shakil.barivara.utils.Constants.mAccessToken
-import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.SpinnerAdapter
 import com.shakil.barivara.utils.SpinnerData
 import com.shakil.barivara.utils.Tools
@@ -37,7 +35,6 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
     private var tools = Tools(this)
     private val hashMap: Map<String?, Array<String>?> = HashMap()
     private var validation = Validation(this, hashMap)
-    private lateinit var prefManager: PrefManager
     private lateinit var ux: UX
     private val viewModel by viewModels<RoomViewModel>()
     override val layoutResourceId: Int
@@ -60,11 +57,10 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
         loadData()
         initListeners()
         initObservers()
-        viewModel.getAllTenants(prefManager.getString(mAccessToken))
+        viewModel.getAllTenants()
     }
 
     private fun init() {
-        prefManager = PrefManager(this)
         ux = UX(this)
         spinnerData = SpinnerData(this)
     }
@@ -267,10 +263,10 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
         room.electricityMeterNo = activityAddNewRoomBinding.electricityMeterNo.text.toString()
         if (command == "add") {
             buttonAction(ButtonActionConstants.actionAddNewRoom)
-            viewModel.addRoom(prefManager.getString(mAccessToken), room)
+            viewModel.addRoom(room)
         } else {
             buttonAction(ButtonActionConstants.actionRoomUpdate)
-            viewModel.updateRoom(prefManager.getString(mAccessToken), room)
+            viewModel.updateRoom(room)
         }
     }
 }

@@ -15,10 +15,9 @@ import javax.inject.Inject
 class TenantRepoImpl @Inject constructor(
     private val tenantService: TenantService
 ) : TenantRepo {
-    override suspend fun getAllTenant(token: String): Resource<List<Tenant>> {
+    override suspend fun getAllTenant(): Resource<List<Tenant>> {
         try {
             val task = tenantService.getAllTenant(
-                token = "Bearer $token",
                 accept = ACCEPT,
                 contentType = CONTENT_TYPE,
             )
@@ -51,10 +50,9 @@ class TenantRepoImpl @Inject constructor(
         }
     }
 
-    override suspend fun addTenant(token: String, tenant: Tenant): Resource<BaseApiResponse> {
+    override suspend fun addTenant(tenant: Tenant): Resource<BaseApiResponse> {
         try {
             val task = tenantService.addTenant(
-                token = "Bearer $token",
                 accept = ACCEPT,
                 contentType = CONTENT_TYPE,
                 tenant = tenant
@@ -88,10 +86,9 @@ class TenantRepoImpl @Inject constructor(
         }
     }
 
-    override suspend fun deleteTenant(token: String, tenantId: Int): Resource<BaseApiResponse> {
+    override suspend fun deleteTenant(tenantId: Int): Resource<BaseApiResponse> {
         try {
             val task = tenantService.deleteTenant(
-                token = "Bearer $token",
                 accept = ACCEPT,
                 tenantId = tenantId
             )
@@ -124,10 +121,9 @@ class TenantRepoImpl @Inject constructor(
         }
     }
 
-    override suspend fun updateTenant(token: String, tenant: Tenant): Resource<BaseApiResponse> {
+    override suspend fun updateTenant(tenant: Tenant): Resource<BaseApiResponse> {
         try {
             val task = tenantService.updateTenant(
-                token = "Bearer $token",
                 contentType = CONTENT_TYPE,
                 accept = ACCEPT,
                 tenant = tenant,

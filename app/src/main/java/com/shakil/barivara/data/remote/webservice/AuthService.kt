@@ -31,7 +31,6 @@ interface AuthService {
 
     @POST("logout")
     suspend fun logout(
-        @Header("Authorization") token: String,
         @Header("Content-Type") contentType: String,
         @Header("Accept") accept: String,
         @Body logoutRequest: LogoutRequest

@@ -39,10 +39,10 @@ class HomeViewModel @Inject constructor(
         return rooms
     }
 
-    fun getAllTenants(token: String) {
+    fun getAllTenants() {
         viewModelScope.launch {
             try {
-                val data = tenantRepoImpl.getAllTenant(token = token)
+                val data = tenantRepoImpl.getAllTenant()
                 if (data.response != null) {
                     tenants.postValue(data.response)
                 } else {
@@ -64,10 +64,10 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun getAllRooms(token: String) {
+    fun getAllRooms() {
         viewModelScope.launch {
             try {
-                val data = roomRepoImpl.getAllRoom(token = token)
+                val data = roomRepoImpl.getAllRoom()
                 if (data.response != null) {
                     rooms.postValue(data.response)
                 } else {
@@ -89,10 +89,10 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun logout(mobile: String, token: String) {
+    fun logout(mobile: String) {
         val logoutRequest = LogoutRequest(phone = mobile)
         viewModelScope.launch {
-            authRepoImpl.logout(logoutRequest, token)
+            authRepoImpl.logout(logoutRequest)
         }
     }
 

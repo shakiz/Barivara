@@ -14,7 +14,7 @@ import com.shakil.barivara.utils.Resource
 interface AuthRepo {
     suspend fun sendOtp(sendOtpRequest: SendOtpRequest): Resource<SendOtpBaseResponse>
     suspend fun verifyOtp(verifyOtpRequest: VerifyOtpRequest): Resource<LoginBaseResponse>
-    suspend fun logout(logoutRequest: LogoutRequest, token: String): Resource<BaseApiResponse>
+    suspend fun logout(logoutRequest: LogoutRequest): Resource<BaseApiResponse>
     suspend fun setPassword(
         passwordSetupRequest: PasswordSetupRequest,
         token: String

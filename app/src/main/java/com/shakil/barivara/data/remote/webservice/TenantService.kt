@@ -15,14 +15,12 @@ import retrofit2.http.Path
 interface TenantService {
     @GET("tenants")
     suspend fun getAllTenant(
-        @Header("Authorization") token: String,
         @Header("Content-Type") contentType: String,
         @Header("Accept") accept: String,
     ): Response<BaseTenantResponse>
 
     @POST("tenants")
     suspend fun addTenant(
-        @Header("Authorization") token: String,
         @Header("Content-Type") contentType: String,
         @Header("Accept") accept: String,
         @Body tenant: Tenant
@@ -30,7 +28,6 @@ interface TenantService {
 
     @PUT("tenants/{id}")
     suspend fun updateTenant(
-        @Header("Authorization") token: String,
         @Header("Content-Type") contentType: String,
         @Header("Accept") accept: String,
         @Path("id") tenantId: Int,
@@ -39,7 +36,6 @@ interface TenantService {
 
     @DELETE("tenants/{id}")
     suspend fun deleteTenant(
-        @Header("Authorization") token: String,
         @Header("Accept") accept: String,
         @Path("id") tenantId: Int
     ): Response<BaseApiResponse>

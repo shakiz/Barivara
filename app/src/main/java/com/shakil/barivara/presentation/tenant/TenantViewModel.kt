@@ -61,11 +61,11 @@ class TenantViewModel @Inject constructor(private val tenantRepoImpl: TenantRepo
         return deleteTenantErrorResponse
     }
 
-    fun getAllTenants(token: String) {
+    fun getAllTenants() {
         viewModelScope.launch {
             isLoading.postValue(true)
             try {
-                val data = tenantRepoImpl.getAllTenant(token = token)
+                val data = tenantRepoImpl.getAllTenant()
                 if (data.response != null) {
                     tenants.postValue(data.response)
                 } else {
@@ -89,11 +89,11 @@ class TenantViewModel @Inject constructor(private val tenantRepoImpl: TenantRepo
         }
     }
 
-    fun addTenant(token: String, tenant: Tenant) {
+    fun addTenant(tenant: Tenant) {
         viewModelScope.launch {
             isLoading.postValue(true)
             try {
-                val data = tenantRepoImpl.addTenant(token, tenant)
+                val data = tenantRepoImpl.addTenant(tenant)
                 if (data.response != null) {
                     addTenantResponse.postValue(data.response?.message)
                 } else {
@@ -117,11 +117,11 @@ class TenantViewModel @Inject constructor(private val tenantRepoImpl: TenantRepo
         }
     }
 
-    fun updateTenant(token: String, tenant: Tenant) {
+    fun updateTenant(tenant: Tenant) {
         viewModelScope.launch {
             isLoading.postValue(true)
             try {
-                val data = tenantRepoImpl.updateTenant(token, tenant)
+                val data = tenantRepoImpl.updateTenant(tenant)
                 if (data.response != null) {
                     updateTenantResponse.postValue(data.response)
                 } else {
@@ -145,11 +145,11 @@ class TenantViewModel @Inject constructor(private val tenantRepoImpl: TenantRepo
         }
     }
 
-    fun deleteTenant(token: String, tenantId: Int) {
+    fun deleteTenant(tenantId: Int) {
         viewModelScope.launch {
             isLoading.postValue(true)
             try {
-                val data = tenantRepoImpl.deleteTenant(token, tenantId)
+                val data = tenantRepoImpl.deleteTenant(tenantId)
                 if (data.response != null) {
                     deleteTenantResponse.postValue(data.response)
                 } else {
