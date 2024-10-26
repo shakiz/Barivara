@@ -107,7 +107,12 @@ class TenantActivity : BaseActivity<ActivityTenantBinding>() {
             activityAddNewTenantBinding.mobileNo.setText(tenant.phone)
 
             if ((tenant.advancedAmount ?: 0) > 0) {
-                activityAddNewTenantBinding.advanceAmount.setText(tenant.advancedAmount ?: 0)
+                activityAddNewTenantBinding.advanceAmount.setText(
+                    getString(
+                        R.string.x_s,
+                        (tenant.advancedAmount ?: 0).toString()
+                    )
+                )
                 activityAddNewTenantBinding.headingAdvanceAmount.visibility = View.VISIBLE
                 activityAddNewTenantBinding.advanceAmount.visibility = View.VISIBLE
                 activityAddNewTenantBinding.advanceCheckBox.isChecked = true
@@ -139,7 +144,12 @@ class TenantActivity : BaseActivity<ActivityTenantBinding>() {
             if (visibilityValue) {
                 activityAddNewTenantBinding.headingAdvanceAmount.visibility = View.VISIBLE
                 activityAddNewTenantBinding.advanceAmount.visibility = View.VISIBLE
-                activityAddNewTenantBinding.advanceAmount.setText("")
+                activityAddNewTenantBinding.advanceAmount.setText(
+                    getString(
+                        R.string.x_s,
+                        (tenant.advancedAmount ?: 0).toString()
+                    )
+                )
             } else {
                 activityAddNewTenantBinding.headingAdvanceAmount.visibility = View.GONE
                 activityAddNewTenantBinding.advanceAmount.visibility = View.GONE
