@@ -15,6 +15,7 @@ import com.shakil.barivara.utils.ButtonActionConstants
 import com.shakil.barivara.utils.Constants.mAccessToken
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.SpinnerAdapter
+import com.shakil.barivara.utils.SpinnerData
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
 import com.shakil.barivara.utils.Validation
@@ -25,6 +26,7 @@ import es.dmoral.toasty.Toasty
 class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
     private lateinit var activityAddNewRoomBinding: ActivityAddNewRoomBinding
     private var spinnerAdapter = SpinnerAdapter()
+    private lateinit var spinnerData: SpinnerData
     private var tenantId: Int = 0
     private var noOfRoom: Int = 0
     private var noOfBathroom: Int = 0
@@ -47,8 +49,7 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        prefManager = PrefManager(this)
-        ux = UX(this)
+        init()
         getIntentData()
         setSupportActionBar(activityAddNewRoomBinding.toolBar)
         activityAddNewRoomBinding.toolBar.setNavigationOnClickListener {
@@ -60,6 +61,12 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
         initListeners()
         initObservers()
         viewModel.getAllTenants(prefManager.getString(mAccessToken))
+    }
+
+    private fun init() {
+        prefManager = PrefManager(this)
+        ux = UX(this)
+        spinnerData = SpinnerData(this)
     }
 
     private fun initListeners() {
@@ -161,13 +168,21 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
         }
 
         viewModel.getTenants().observe(this) { tenants ->
-            spinnerAdapter.setSpinnerAdapter(
-                activityAddNewRoomBinding.tenantNameId,
-                this,
-                ArrayList(tenants.map { it.name })
-            )
-            if (tenantId > 0) {
-                activityAddNewRoomBinding.tenantNameId.setSelection(tenants.indexOfFirst { it.id == tenantId })
+            if (tenants.isEmpty()) {
+                spinnerAdapter.setSpinnerAdapter(
+                    activityAddNewRoomBinding.tenantNameId,
+                    this,
+                    spinnerData.setSpinnerNoData()
+                )
+            } else {
+                spinnerAdapter.setSpinnerAdapter(
+                    activityAddNewRoomBinding.tenantNameId,
+                    this,
+                    ArrayList(tenants.map { it.name })
+                )
+                if (tenantId > 0) {
+                    activityAddNewRoomBinding.tenantNameId.setSelection(tenants.indexOfFirst { it.id == tenantId })
+                }
             }
         }
     }
@@ -221,7 +236,7 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
                 getString(R.string.meter_name_validation)
             )
         )
-        //validation.setSpinnerIsNotEmpty(arrayOf("tenantNameId"))
+        validation.setSpinnerIsNotEmpty(arrayOf("tenantNameId"))
 
         activityAddNewRoomBinding.tenantNameId.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
@@ -231,8 +246,10 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
                     position: Int,
                     id: Long
                 ) {
-                    viewModel.getTenants().value?.let {
-                        tenantId = it[position].id
+                    if (!viewModel.getTenants().value.isNullOrEmpty()) {
+                        viewModel.getTenants().value?.let {
+                            tenantId = it[position].id
+                        }
                     }
                 }
 
