@@ -34,7 +34,6 @@ import com.shakil.barivara.presentation.adapter.RecyclerBillInfoAdapter
 import com.shakil.barivara.utils.ButtonActionConstants
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.Constants.mAccessToken
-import com.shakil.barivara.utils.CustomAdManager
 import com.shakil.barivara.utils.DroidFileManager
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.ScreenNameConstants
@@ -61,7 +60,6 @@ class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>(),
     private var spinnerAdapter = SpinnerAdapter()
     private lateinit var utilsForAll: UtilsForAll
     private lateinit var dialogBill: Dialog
-    private var customAdManager = CustomAdManager(this)
     private lateinit var ux: UX
     private lateinit var prefManager: PrefManager
     private lateinit var recyclerBillInfoAdapter: RecyclerBillInfoAdapter
@@ -125,7 +123,6 @@ class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>(),
     }
 
     private fun binUIWithComponents() {
-        customAdManager.generateAd(activityBinding.adView)
         if ((ContextCompat.checkSelfPermission(
                 this@GenerateBillActivity,
                 Manifest.permission.READ_EXTERNAL_STORAGE

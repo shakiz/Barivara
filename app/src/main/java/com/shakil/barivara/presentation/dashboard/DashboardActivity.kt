@@ -10,7 +10,6 @@ import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
 import com.shakil.barivara.databinding.ActivityDashboardBinding
 import com.shakil.barivara.utils.Constants
-import com.shakil.barivara.utils.CustomAdManager
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.SpinnerAdapter
 import com.shakil.barivara.utils.SpinnerData
@@ -22,7 +21,6 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>() {
     private lateinit var prefManager: PrefManager
     private var spinnerAdapter = SpinnerAdapter()
     private var spinnerData = SpinnerData(this)
-    private var customAdManager = CustomAdManager(this)
     private val viewModel by viewModels<DashboardViewModel>()
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {

@@ -37,7 +37,6 @@ import com.shakil.barivara.presentation.tutorial.TutorialActivity
 import com.shakil.barivara.utils.ButtonActionConstants
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.Constants.mUserMobile
-import com.shakil.barivara.utils.CustomAdManager
 import com.shakil.barivara.utils.LanguageManager
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.ScreenNameConstants
@@ -52,7 +51,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
     private lateinit var activityMainBinding: ActivityHomeBinding
     private lateinit var prefManager: PrefManager
     private var tools = Tools(this)
-    private var customAdManager = CustomAdManager(this)
     private lateinit var ux: UX
     private val viewModel by viewModels<HomeViewModel>()
 
@@ -251,7 +249,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
 
     private fun bindUIWithComponents() {
         activityMainBinding.navigationView.setNavigationItemSelectedListener(this)
-        customAdManager.generateAd(activityMainBinding.adView)
         if (prefManager.getInt(Constants.mAppViewCount) > 0) {
             prefManager[Constants.mAppViewCount] =
                 prefManager.getInt(Constants.mAppViewCount) + 1

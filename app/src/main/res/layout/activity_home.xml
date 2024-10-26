@@ -48,14 +48,6 @@
                     android:orientation="vertical"
                     android:id="@+id/mainLayout">
 
-                    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
-                        android:id="@+id/adView"
-                        android:layout_width="match_parent"
-                        android:layout_height="42dp"
-                        ads:layout_constraintBottom_toBottomOf="parent"
-                        ads:adSize="BANNER"
-                        ads:adUnitId="ca-app-pub-3017517613101119/5605971007" />
-
                     <androidx.cardview.widget.CardView
                         android:id="@+id/cardImage"
                         android:layout_width="match_parent"

@@ -10,7 +10,6 @@ import com.shakil.barivara.databinding.ActivitySettingsBinding
 import com.shakil.barivara.presentation.auth.login.LoginSelectionActivity
 import com.shakil.barivara.presentation.onboard.HomeActivity
 import com.shakil.barivara.utils.Constants
-import com.shakil.barivara.utils.CustomAdManager
 import com.shakil.barivara.utils.LanguageManager
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Tools
@@ -21,7 +20,6 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding>() {
     private lateinit var languageManager: LanguageManager
     private lateinit var prefManager: PrefManager
     private var tools = Tools(this)
-    private var customAdManager = CustomAdManager(this)
     override val layoutResourceId: Int
         get() = R.layout.activity_settings
 
@@ -47,7 +45,6 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding>() {
     }
 
     private fun bindUiWithComponents() {
-        customAdManager.generateAd(activitySettingsBinding.adView)
         if (!TextUtils.isEmpty(prefManager.getString(Constants.mUserFullName))) {
             activitySettingsBinding.UserFullName.text =
                 getString(R.string.username) + ":" + prefManager.getString(

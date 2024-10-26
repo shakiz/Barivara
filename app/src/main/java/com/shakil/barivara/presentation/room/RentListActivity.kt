@@ -20,8 +20,6 @@ import com.shakil.barivara.presentation.adapter.RecyclerRentListAdapter
 import com.shakil.barivara.presentation.adapter.RecyclerRentListAdapter.RentCallBacks
 import com.shakil.barivara.presentation.onboard.HomeActivity
 import com.shakil.barivara.utils.Constants.mUserId
-import com.shakil.barivara.utils.CustomAdManager
-import com.shakil.barivara.utils.FilterManager
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
@@ -32,8 +30,6 @@ class RentListActivity : BaseActivity<ActivityRentListBinding>(), RentCallBacks 
     private var firebaseCrudHelper = FirebaseCrudHelper(this)
     private var ux: UX? = null
     private var tools = Tools(this)
-    private var filterManager = FilterManager()
-    private var customAdManager = CustomAdManager(this)
     private lateinit var prefManager: PrefManager
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
@@ -75,7 +71,6 @@ class RentListActivity : BaseActivity<ActivityRentListBinding>(), RentCallBacks 
 
     private fun bindUIWithComponents() {
         activityRentListBinding.searchLayout.SearchName.hint = getString(R.string.search_month_name)
-        customAdManager.generateAd(activityRentListBinding.adView)
         if (tools.hasConnection()) {
             setData()
         } else {

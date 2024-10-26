@@ -62,9 +62,6 @@ dependencies {
     // Import the BoM for the Firebase platform
     implementation platform('com.google.firebase:firebase-bom:31.2.2')
 
-    //google admob
-    implementation 'com.google.android.gms:play-services-ads:22.2.0'
-
     //for reCaptcha verification browser
     implementation "androidx.browser:browser:1.2.0"
 
