@@ -30,7 +30,6 @@ class TenantActivity : BaseActivity<ActivityTenantBinding>() {
     private lateinit var activityAddNewTenantBinding: ActivityTenantBinding
     private var spinnerAdapter = SpinnerAdapter()
     private var spinnerData = SpinnerData(this)
-    private var tenantNameStr: String = ""
     private var tenantType: TenantType = TenantType.OTHERS
     private var tenant = Tenant()
     private var command = "add"
@@ -248,8 +247,7 @@ class TenantActivity : BaseActivity<ActivityTenantBinding>() {
     }
 
     private fun saveOrUpdateData() {
-        tenantNameStr = activityAddNewTenantBinding.tenantName.text.toString()
-        tenant.name = tenantNameStr
+        tenant.name = activityAddNewTenantBinding.tenantName.text.toString()
         tenant.type = tenantType.value
         tenant.nidNumber = activityAddNewTenantBinding.nid.text.toString()
         tenant.phone = activityAddNewTenantBinding.mobileNo.text.toString()
