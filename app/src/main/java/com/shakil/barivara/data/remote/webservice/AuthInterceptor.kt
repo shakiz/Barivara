@@ -26,7 +26,7 @@ class AuthInterceptor(
             .create(AuthService::class.java) // Retrofit creates an implementation of AuthService
     }
 
-    val authService = createAuthService()
+    private val authService = createAuthService()
 
     fun create(): AuthInterceptor {
         return AuthInterceptor(tokenManager)
@@ -45,9 +45,9 @@ class AuthInterceptor(
 
         // If unauthorized, refresh token and retry request
         if (response.code == 401) {
-            response.close() // Close the previous response
 
             synchronized(this) {
+                response.close()
                 // Try refreshing the token synchronously
                 val newAccessToken =
                     refreshToken() ?: return response // Return original response if refresh fails

@@ -73,10 +73,8 @@ object AppModule {
         // Create an SSL socket factory with our all-trusting manager
         val sslSocketFactory = sslContext.socketFactory
         return OkHttpClient.Builder()
-            .addInterceptor(loggingInterceptor.apply {
-                level = HttpLoggingInterceptor.Level.BODY
-            })
             .addInterceptor(refreshTokenInterceptor)
+            .addInterceptor(loggingInterceptor)
             .sslSocketFactory(sslSocketFactory, trustAllCertificates)
             .hostnameVerifier { _, _ -> true }
             .callTimeout(600, TimeUnit.SECONDS)
