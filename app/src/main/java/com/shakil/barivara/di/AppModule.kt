@@ -5,6 +5,7 @@ import com.shakil.barivara.data.remote.webservice.AuthInterceptor
 import com.shakil.barivara.data.remote.webservice.AuthService
 import com.shakil.barivara.data.remote.webservice.DashboardService
 import com.shakil.barivara.data.remote.webservice.GenerateBillService
+import com.shakil.barivara.data.remote.webservice.RefreshTokenInterceptor
 import com.shakil.barivara.data.remote.webservice.RoomService
 import com.shakil.barivara.data.remote.webservice.TenantService
 import com.shakil.barivara.data.remote.webservice.UserService
@@ -38,14 +39,6 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideLoggingInterceptor(): HttpLoggingInterceptor {
-        return HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
-        }
-    }
-
-    @Provides
-    @Singleton
     fun provideAuthInterceptor(
         tokenManager: PrefManager
     ): AuthInterceptor {
@@ -54,11 +47,19 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun provideRefreshTokenInterceptor(
+        tokenManager: PrefManager
+    ): RefreshTokenInterceptor {
+        return RefreshTokenInterceptor(tokenManager)
+    }
+
+    @Provides
+    @Singleton
     fun provideOkHttp(
-        loggingInterceptor: HttpLoggingInterceptor,
-        authInterceptor: AuthInterceptor
+        authInterceptor: AuthInterceptor,
+        refreshTokenInterceptor: RefreshTokenInterceptor,
     ): okhttp3.Call.Factory {
-        val refreshTokenInterceptor = authInterceptor.create()
+        val refreshTokenInterceptorInstance = refreshTokenInterceptor.create()
         // Create a trust manager that does not validate certificate chains
         val trustAllCertificates = object : X509TrustManager {
             override fun checkClientTrusted(chain: Array<X509Certificate>, authType: String) {}
@@ -73,8 +74,11 @@ object AppModule {
         // Create an SSL socket factory with our all-trusting manager
         val sslSocketFactory = sslContext.socketFactory
         return OkHttpClient.Builder()
+            .addInterceptor(authInterceptor)
             .addInterceptor(refreshTokenInterceptor)
-            .addInterceptor(loggingInterceptor)
+            .addInterceptor(HttpLoggingInterceptor().apply {
+                level = HttpLoggingInterceptor.Level.BODY
+            })
             .sslSocketFactory(sslSocketFactory, trustAllCertificates)
             .hostnameVerifier { _, _ -> true }
             .callTimeout(600, TimeUnit.SECONDS)
