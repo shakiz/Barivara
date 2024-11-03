@@ -1,7 +1,6 @@
 package com.shakil.barivara.presentation.auth.forgotpassword
 
 import android.os.Bundle
-import android.view.WindowManager
 import androidx.activity.viewModels
 import com.google.firebase.auth.FirebaseAuth
 import com.shakil.barivara.BaseActivity
@@ -30,10 +29,6 @@ class ForgotPasswordActivity : BaseActivity<ActivityForgotPasswordBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-        )
         initUI()
         bindUiWithComponents()
         initListeners()

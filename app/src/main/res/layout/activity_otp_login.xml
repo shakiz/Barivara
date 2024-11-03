@@ -12,11 +12,17 @@
             android:id="@+id/mainLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_bubbles"
+            android:background="@color/md_white_1000"
             android:padding="16dp"
             android:layout_gravity="center"
-            android:gravity="bottom"
+            android:gravity="center"
             android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/login_header"
+                android:src="@drawable/user_login" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -94,7 +100,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="120dp"
                 android:text="@string/login_without_underline"
                 android:textAllCaps="false"
                 style="@style/BariVara.Button.Primary" />

@@ -13,8 +13,8 @@
             android:id="@+id/mainLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/bg_bubbles_light"
-            android:gravity="bottom"
+            android:background="@color/md_white_1000"
+            android:gravity="center"
             android:orientation="vertical">
 
             <ImageView
@@ -157,10 +157,7 @@
                 android:id="@+id/verify"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginBottom="120dp"
+                android:layout_margin="16dp"
                 android:text="@string/verify"
                 android:layout_gravity="center"
                 android:gravity="center"
