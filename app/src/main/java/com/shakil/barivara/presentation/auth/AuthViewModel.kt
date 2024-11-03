@@ -41,6 +41,8 @@ class AuthViewModel @Inject constructor(private val authRepoImpl: AuthRepoImpl) 
 
     var isLoading = MutableLiveData<Boolean>()
 
+    var isOtpResendable = MutableLiveData<Boolean>()
+
     //Password setup
     var otpUiState = MutableLiveData<OtpUIState>()
 

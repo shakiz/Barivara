@@ -480,4 +480,6 @@
     <string name="x_s">%s</string>
     <string name="login">Login</string>
     <string name="good_to_see_you_here">Good to see you here!</string>
+    <string name="resend_otp">Resend OTP</string>
+    <string name="did_not_receive_a_code_x">Didn\'t receive a code %s.</string>
 </resources>

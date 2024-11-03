@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView"
@@ -163,6 +164,32 @@
                 android:gravity="center"
                 android:textAllCaps="false"
                 style="@style/BariVara.Button.Primary" />
+
+            <TextView
+                android:id="@+id/didReceiveCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/did_not_receive_a_code_x"
+                android:layout_marginTop="4dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:textStyle="normal"
+                android:textColor="@color/md_grey_600"
+                android:focusable="true" />
+
+            <Button
+                android:id="@+id/resendOtp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="@string/resend_otp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textAllCaps="false"
+                android:visibility="gone"
+                style="@style/BariVara.Button.Secondary" />
+
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

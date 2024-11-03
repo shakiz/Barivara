@@ -25,6 +25,7 @@ object Constants {
     const val mUserFullName = "UserFullName"
     const val mUserEmail = "UserEmail"
     const val mUserMobile = "UserMobile"
+    const val mOtpResendTime = "OtpResendTime"
 
     @JvmField
     val VALID_EMAIL_ADDRESS_REGEX =

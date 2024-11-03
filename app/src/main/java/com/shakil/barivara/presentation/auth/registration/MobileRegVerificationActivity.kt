@@ -2,11 +2,10 @@ package com.shakil.barivara.presentation.auth.registration
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
+import android.os.CountDownTimer
 import android.text.TextUtils
-import android.text.TextWatcher
+import android.view.View
 import android.view.WindowManager
-import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
@@ -30,6 +29,7 @@ import es.dmoral.toasty.Toasty
 class MobileRegVerificationActivity : BaseActivity<ActivityMobileRegVerificationBinding>() {
     private lateinit var activityBinding: ActivityMobileRegVerificationBinding
     private lateinit var mobileNumber: String
+    private var otpResendTime: Long = 0
     private var tools = Tools(this)
     private lateinit var ux: UX
     private lateinit var prefManager: PrefManager
@@ -54,6 +54,7 @@ class MobileRegVerificationActivity : BaseActivity<ActivityMobileRegVerification
         getIntentData()
         bindUIWithComponents()
         initObservers()
+        startOtpTimer(otpResendTime)
     }
 
     private fun initUI() {
@@ -64,6 +65,7 @@ class MobileRegVerificationActivity : BaseActivity<ActivityMobileRegVerification
     private fun getIntentData() {
         if (intent.getStringExtra(Constants.mUserMobile) != null) {
             mobileNumber = intent.getStringExtra(Constants.mUserMobile) ?: ""
+            otpResendTime = intent.getLongExtra(Constants.mOtpResendTime, 0)
         }
     }
 
@@ -132,6 +134,17 @@ class MobileRegVerificationActivity : BaseActivity<ActivityMobileRegVerification
             Toasty.warning(this, verifyOtpErrorResponse.message).show()
         }
 
+        viewModel.getSendOtpResponse().observe(this) { sendOtpResponse ->
+            if ((sendOtpResponse.sendOtpResponse.otpValidationTime ?: 0) > 0) {
+                Toasty.success(this, sendOtpResponse.message).show()
+                startOtpTimer(sendOtpResponse.sendOtpResponse.otpValidationTime ?: 0)
+            }
+        }
+
+        viewModel.getSendOtpErrorResponse().observe(this) { sendOtpErrorResponse ->
+            Toasty.warning(this, sendOtpErrorResponse.message).show()
+        }
+
         viewModel.isLoading.observe(this) { isLoading ->
             if (isLoading) {
                 ux.getLoadingView()
@@ -139,6 +152,35 @@ class MobileRegVerificationActivity : BaseActivity<ActivityMobileRegVerification
                 ux.removeLoadingView()
             }
         }
+    }
+
+    private fun startOtpTimer(durationSeconds: Long) {
+        viewModel.isOtpResendable.postValue(false)
+        activityBinding.resendOtp.visibility = View.GONE
+        activityBinding.didReceiveCode.visibility = View.VISIBLE
+        val durationMs = durationSeconds * 1000
+
+        object : CountDownTimer(durationMs, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                val minutes = (millisUntilFinished / 1000) / 60
+                val seconds = (millisUntilFinished / 1000) % 60
+                activityBinding.didReceiveCode.text = getString(
+                    R.string.did_not_receive_a_code_x,
+                    String.format("%02d:%02d", minutes, seconds)
+                )
+            }
+
+            override fun onFinish() {
+                viewModel.isOtpResendable.postValue(true)
+                activityBinding.resendOtp.visibility = View.VISIBLE
+                activityBinding.didReceiveCode.visibility = View.GONE
+                activityBinding.resendOtp.setOnClickListener {
+                    if (viewModel.isOtpResendable.value == true) {
+                        viewModel.sendOtp(mobileNumber, OtpType.OTP.value)
+                    }
+                }
+            }
+        }.start()
     }
 
     private fun verifyVerificationCode() {
@@ -157,22 +199,5 @@ class MobileRegVerificationActivity : BaseActivity<ActivityMobileRegVerification
                 Snackbar.LENGTH_LONG
             ).show()
         }
-    }
-
-    // Helper function to move focus
-    private fun moveToNextEditText(
-        currentEditText: EditText,
-        nextEditText: EditText,
-    ) {
-        currentEditText.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                if (s?.length == 1) {
-                    nextEditText.requestFocus()
-                }
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-        })
     }
 }

@@ -12,6 +12,7 @@ import com.shakil.barivara.data.model.auth.OtpType
 import com.shakil.barivara.databinding.ActivityOtpLoginBinding
 import com.shakil.barivara.presentation.auth.AuthViewModel
 import com.shakil.barivara.presentation.auth.registration.MobileRegVerificationActivity
+import com.shakil.barivara.utils.Constants.mOtpResendTime
 import com.shakil.barivara.utils.Constants.mUserMobile
 import com.shakil.barivara.utils.UX
 import com.shakil.barivara.utils.UtilsForAll
@@ -61,12 +62,13 @@ class OTPLoginActivity : BaseActivity<ActivityOtpLoginBinding>() {
 
     private fun initObservers() {
         viewModel.getSendOtpResponse().observe(this) { sendOtpResponse ->
-            if (!sendOtpResponse.sendOtpResponse.otpValidationTime.isNullOrEmpty()) {
+            if ((sendOtpResponse.sendOtpResponse.otpValidationTime ?: 0) > 0) {
                 Toasty.success(this, sendOtpResponse.message).show()
                 val intent = Intent(
                     this, MobileRegVerificationActivity::class.java
                 )
                 intent.putExtra(mUserMobile, activityBinding.mobileNumber.text.toString())
+                intent.putExtra(mOtpResendTime, sendOtpResponse.sendOtpResponse.otpValidationTime)
                 startActivity(intent)
             }
         }
