@@ -12,26 +12,33 @@
             android:id="@+id/mainLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/md_white_1000"
+            android:background="@drawable/bg_bubbles"
             android:padding="16dp"
             android:layout_gravity="center"
-            android:gravity="center"
+            android:gravity="bottom"
             android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/login_header"
-                android:src="@drawable/user_login" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/welcome_back_login"
-                android:textSize="20sp"
+                android:text="@string/login"
+                android:textSize="24sp"
                 android:textStyle="bold"
-                android:textColor="@color/md_green_800"
+                android:layout_gravity="start"
+                android:textColor="@color/md_black_1000"
                 android:focusable="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/good_to_see_you_here"
+                android:textSize="16sp"
+                android:layout_gravity="start"
+                android:textColor="@color/md_grey_600"
+                android:layout_marginTop="4dp"
+                android:drawablePadding="4dp"
+                android:focusable="true"
+                app:drawableEndCompat="@drawable/ic_heart" />
 
             <LinearLayout
                 android:id="@+id/mainMobileRegistrationLayout"
@@ -87,6 +94,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="120dp"
                 android:text="@string/login_without_underline"
                 android:textAllCaps="false"
                 style="@style/BariVara.Button.Primary" />

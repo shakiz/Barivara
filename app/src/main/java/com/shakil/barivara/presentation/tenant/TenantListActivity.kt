@@ -72,6 +72,10 @@ class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCall
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        )
         screenViewed(ScreenNameConstants.appSreenTenantList)
         setSupportActionBar(activityTenantListBinding.toolBar)
         activityTenantListBinding.searchLayout.SearchName.hint =

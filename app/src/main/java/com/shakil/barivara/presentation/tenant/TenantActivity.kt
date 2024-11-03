@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
+import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -52,6 +53,10 @@ class TenantActivity : BaseActivity<ActivityTenantBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        )
         screenViewed(ScreenNameConstants.appSreenTenantDetails)
         prefManager = PrefManager(this)
         ux = UX(this)

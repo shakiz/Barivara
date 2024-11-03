@@ -98,7 +98,7 @@
                                 android:paddingTop="4dp"
                                 android:paddingBottom="4dp"
                                 android:text="@string/total_rooms"
-                                android:textColor="@color/md_amber_900"
+                                android:textColor="@color/md_black_1000"
                                 android:textSize="16sp" />
 
                             <ImageView
@@ -122,7 +122,7 @@
                                 android:layout_marginEnd="8dp"
                                 android:gravity="center"
                                 android:text="0"
-                                android:textColor="@color/md_amber_900"
+                                android:textColor="@color/md_black_1000"
                                 android:textSize="24sp"
                                 android:textStyle="bold"
                                 app:layout_constraintBottom_toBottomOf="@+id/ivTotalRooms"
@@ -168,7 +168,7 @@
                                 android:paddingTop="4dp"
                                 android:paddingBottom="4dp"
                                 android:text="@string/total_tenants_current"
-                                android:textColor="@color/md_green_800"
+                                android:textColor="@color/md_black_1000"
                                 android:textSize="16sp" />
 
                             <ImageView
@@ -192,7 +192,7 @@
                                 android:layout_marginEnd="8dp"
                                 android:gravity="center"
                                 android:text="0"
-                                android:textColor="@color/md_amber_900"
+                                android:textColor="@color/md_black_1000"
                                 android:textSize="24sp"
                                 android:textStyle="bold"
                                 app:layout_constraintBottom_toBottomOf="@+id/ivTotalTenant"

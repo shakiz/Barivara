@@ -64,6 +64,10 @@ class RoomListActivity : BaseActivity<ActivityRoomListBinding>(), RoomCallBacks 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        )
         screenViewed(ScreenNameConstants.appSreenRoomList)
         setSupportActionBar(activityRoomListBinding.toolBar)
         activityRoomListBinding.searchLayout.SearchName.hint = getString(R.string.search_room_name)

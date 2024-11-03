@@ -455,7 +455,7 @@
     <string name="re_enter_password_validation">Please Re-enter your password</string>
     <string name="send_otp">Send OTP</string>
     <string name="verify_otp">Verify OTP</string>
-    <string name="verify_with_your_mobile_number">Verify with you mobile no</string>
+    <string name="verify_with_your_mobile_number">Verify with your mobile no</string>
     <string name="setup_your_password">Setup your Password</string>
     <string name="otp_input_hint">-</string>
     <string name="create_bill_text">Create bill info</string>
@@ -479,4 +479,7 @@
     <string name="rent_has_been_paid_already">Rent has been paid already</string>
     <string name="added_successfully">Added successfully</string>
     <string name="x_s">%s</string>
+    <string name="login">Login</string>
+    <string name="good_to_see_you_here">Good to see you here!</string>
+    <string name="use_setup_password">User/Setup your password!</string>
 </resources>

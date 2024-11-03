@@ -3,6 +3,7 @@ package com.shakil.barivara.presentation.auth.login
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import com.shakil.barivara.BaseActivity
@@ -41,6 +42,10 @@ class PasswordSetupActivity : BaseActivity<ActivityPasswordSetupBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        )
         onBackPressedDispatcher.addCallback(onBackPressedCallback)
         initUI()
         initObservers()

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.view.WindowManager
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -43,6 +44,10 @@ class MobileRegVerificationActivity : BaseActivity<ActivityMobileRegVerification
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        )
         activityBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_mobile_reg_verification)
         initUI()

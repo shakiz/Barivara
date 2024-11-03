@@ -3,6 +3,7 @@ package com.shakil.barivara.presentation.dashboard
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import android.widget.AdapterView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
@@ -37,6 +38,10 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        )
         init()
         bindUiWithComponents()
         setSupportActionBar(activityDashboardBinding.toolBar)
