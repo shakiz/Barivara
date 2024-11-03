@@ -3,7 +3,6 @@ package com.shakil.barivara.presentation.room
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -47,10 +46,6 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-        )
         init()
         getIntentData()
         setSupportActionBar(activityAddNewRoomBinding.toolBar)

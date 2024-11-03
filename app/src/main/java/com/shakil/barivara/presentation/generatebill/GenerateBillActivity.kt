@@ -75,10 +75,6 @@ class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-        )
         screenViewed(ScreenNameConstants.appSreenGenerateBill)
         init()
         binUIWithComponents()

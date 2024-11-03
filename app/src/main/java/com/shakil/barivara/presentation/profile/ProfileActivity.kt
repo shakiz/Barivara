@@ -1,7 +1,6 @@
 package com.shakil.barivara.presentation.profile
 
 import android.os.Bundle
-import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import com.shakil.barivara.BaseActivity
@@ -36,10 +35,6 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-        )
         activityBinding = DataBindingUtil.setContentView(this, R.layout.activity_profile)
         initUI()
         bindUiWithComponents()
