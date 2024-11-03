@@ -14,6 +14,7 @@ import com.shakil.barivara.databinding.ActivityPasswordSetupBinding
 import com.shakil.barivara.presentation.auth.AuthViewModel
 import com.shakil.barivara.utils.UX
 import com.shakil.barivara.utils.UtilsForAll
+import com.shakil.barivara.utils.Validation
 import com.shakil.barivara.utils.moveToNextEditText
 import com.shakil.barivara.utils.moveToPreviousEditText
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,6 +25,8 @@ class PasswordSetupActivity : BaseActivity<ActivityPasswordSetupBinding>() {
     private lateinit var activityBinding: ActivityPasswordSetupBinding
     private lateinit var ux: UX
     private lateinit var utilsForAll: UtilsForAll
+    private val hashMap: Map<String?, Array<String>?> = HashMap()
+    private var validation = Validation(this, hashMap)
 
     private val viewModel by viewModels<AuthViewModel>()
 
@@ -50,6 +53,7 @@ class PasswordSetupActivity : BaseActivity<ActivityPasswordSetupBinding>() {
         initUI()
         initObservers()
         initListeners()
+        addValidation()
     }
 
     private fun initUI() {
@@ -127,6 +131,57 @@ class PasswordSetupActivity : BaseActivity<ActivityPasswordSetupBinding>() {
                 ux.getLoadingView()
             } else {
                 ux.removeLoadingView()
+            }
+        }
+    }
+
+    private fun addValidation() {
+        when (viewModel.otpUiState.value) {
+            OtpUIState.SEND_OTP -> {
+                validation = Validation(this, hashMap)
+                validation.setEditTextIsNotEmpty(
+                    arrayOf("mobileNumber"),
+                    arrayOf(getString(R.string.mobile_validation))
+                )
+            }
+
+            OtpUIState.VERIFY_OTP -> {
+                validation = Validation(this, hashMap)
+                validation.setEditTextIsNotEmpty(
+                    arrayOf(
+                        "verificationCode1",
+                        "verificationCode2",
+                        "verificationCode3",
+                        "verificationCode4",
+                        "verificationCode5",
+                        "verificationCode6"
+                    ), arrayOf(
+                        getString(R.string.mobile_validation),
+                        getString(R.string.otp_or_code_can_not_be_empty),
+                        getString(R.string.otp_or_code_can_not_be_empty),
+                        getString(R.string.otp_or_code_can_not_be_empty),
+                        getString(R.string.otp_or_code_can_not_be_empty),
+                        getString(R.string.otp_or_code_can_not_be_empty),
+                        getString(R.string.otp_or_code_can_not_be_empty)
+                    )
+                )
+            }
+
+            OtpUIState.SETUP_PASS -> {
+                validation = Validation(this, hashMap)
+                validation.setEditTextIsNotEmpty(
+                    arrayOf(
+                        "password",
+                        "reEnterPassword",
+                    ), arrayOf(
+                        getString(R.string.password_validation),
+                        getString(R.string.re_enter_password_validation),
+                    )
+                )
+            }
+
+            else -> {
+                //empty impl
             }
         }
     }
