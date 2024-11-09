@@ -9,7 +9,7 @@ data class Tenant(
     @SerializedName("name") var name: String = "",
     @SerializedName("nid_number") var nidNumber: String? = null,
     @SerializedName("phone") var phone: String? = null,
-    @SerializedName("type") var type: String? = null,
+    @SerializedName("type") var type: Int? = null,
     @SerializedName("start_date") var startDate: String? = null,
     @SerializedName("end_date") var endDate: String? = null,
     @SerializedName("advanced_amount") var advancedAmount: Int? = null
@@ -19,7 +19,7 @@ data class Tenant(
         parcel.readString() ?: "",
         parcel.readString(),
         parcel.readString(),
-        parcel.readString(),
+        parcel.readInt(),
         parcel.readString(),
         parcel.readString(),
         parcel.readInt()
@@ -30,7 +30,7 @@ data class Tenant(
         parcel.writeString(name)
         parcel.writeString(nidNumber)
         parcel.writeString(phone)
-        parcel.writeString(type)
+        parcel.writeInt(type ?: 0)
         parcel.writeString(startDate)
         parcel.writeString(endDate)
         parcel.writeInt(advancedAmount ?: 0)

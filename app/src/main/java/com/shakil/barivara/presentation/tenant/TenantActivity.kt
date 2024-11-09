@@ -104,6 +104,10 @@ class TenantActivity : BaseActivity<ActivityTenantBinding>() {
             activityAddNewTenantBinding.endMonthId.setText(tenant.endDate)
             activityAddNewTenantBinding.nid.setText(tenant.nidNumber)
             activityAddNewTenantBinding.mobileNo.setText(tenant.phone)
+            tenantType = TenantType.from(tenant.type ?: 0)
+            if ((tenant.type ?: 0) >= 0) {
+                activityAddNewTenantBinding.tenantTypeId.setSelection(tenant.type ?: 0)
+            }
 
             if ((tenant.advancedAmount ?: 0) > 0) {
                 activityAddNewTenantBinding.advanceAmount.setText(
@@ -248,7 +252,7 @@ class TenantActivity : BaseActivity<ActivityTenantBinding>() {
 
     private fun saveOrUpdateData() {
         tenant.name = activityAddNewTenantBinding.tenantName.text.toString()
-        tenant.type = tenantType.value
+        tenant.type = tenantType.toType(tenantType)
         tenant.nidNumber = activityAddNewTenantBinding.nid.text.toString()
         tenant.phone = activityAddNewTenantBinding.mobileNo.text.toString()
         tenant.startDate = activityAddNewTenantBinding.startingMonthId.text.toString()
