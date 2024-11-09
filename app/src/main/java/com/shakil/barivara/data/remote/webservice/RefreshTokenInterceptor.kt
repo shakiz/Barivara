@@ -1,5 +1,6 @@
 package com.shakil.barivara.data.remote.webservice
 
+import com.shakil.barivara.data.repository.AuthRepoImpl
 import com.shakil.barivara.utils.ApiConstants
 import com.shakil.barivara.utils.Constants.mAccessToken
 import com.shakil.barivara.utils.Constants.mRefreshToken
@@ -15,7 +16,8 @@ class RefreshTokenInterceptor(
     private val tokenManager: PrefManager
 ) : Interceptor {
     @Volatile
-    private var isRefreshing = false // Flag to avoid multiple refresh attempts
+    private var isRefreshing = false
+    private lateinit var authRepoImpl: AuthRepoImpl
 
     private fun createAuthService(): AuthService {
         val okHttpClient =
@@ -34,25 +36,23 @@ class RefreshTokenInterceptor(
         return RefreshTokenInterceptor(tokenManager)
     }
 
+
     override fun intercept(chain: Interceptor.Chain): Response {
+        authRepoImpl = AuthRepoImpl(authService)
         var request = chain.request()
 
-        // Add the access token to the request header
-        val refreshToken = tokenManager.getString(mRefreshToken)
+        val accessToken = tokenManager.getString(mAccessToken)
         request = request.newBuilder()
-            .header("refresh-token", refreshToken)
+            .header("Authorization", "Bearer $accessToken")
             .build()
 
         val response = chain.proceed(request)
 
         // If unauthorized, refresh token and retry request
         if (response.code == 401) {
-
             synchronized(this) {
                 response.close()
-                // Check if another thread has already refreshed the token
-                val latestAccessToken = tokenManager.getString(mAccessToken)
-                if (!isRefreshing && latestAccessToken == refreshToken) {
+                if (!isRefreshing) {
                     isRefreshing = true
                     val newAccessToken = refreshToken()
                     isRefreshing = false
@@ -71,18 +71,17 @@ class RefreshTokenInterceptor(
         return response
     }
 
-
     private fun refreshToken(): String? {
         val refreshToken = tokenManager.getString(mRefreshToken)
 
         return runBlocking {
             try {
                 // Make the refresh token call synchronously
-                val response = authService.refreshToken(refreshToken)
+                val response = authRepoImpl.refreshToken(refreshToken)
 
-                if (response.isSuccessful) {
-                    val newAccessToken = response.body()?.loginResponse?.accessToken
-                    val newRefreshToken = response.body()?.loginResponse?.refreshToken
+                if (response.response?.statusCode == 200) {
+                    val newAccessToken = response.response?.loginResponse?.accessToken
+                    val newRefreshToken = response.response?.loginResponse?.refreshToken
 
                     if (newAccessToken != null && newRefreshToken != null) {
                         tokenManager[mAccessToken] = newAccessToken

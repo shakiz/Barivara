@@ -1,11 +1,11 @@
 package com.shakil.barivara.di
 
+import com.shakil.barivara.data.remote.webservice.RefreshTokenInterceptor
 import android.content.Context
 import com.shakil.barivara.data.remote.webservice.AuthInterceptor
 import com.shakil.barivara.data.remote.webservice.AuthService
 import com.shakil.barivara.data.remote.webservice.DashboardService
 import com.shakil.barivara.data.remote.webservice.GenerateBillService
-import com.shakil.barivara.data.remote.webservice.RefreshTokenInterceptor
 import com.shakil.barivara.data.remote.webservice.RoomService
 import com.shakil.barivara.data.remote.webservice.TenantService
 import com.shakil.barivara.data.remote.webservice.UserService
@@ -75,7 +75,7 @@ object AppModule {
         val sslSocketFactory = sslContext.socketFactory
         return OkHttpClient.Builder()
             .addInterceptor(authInterceptor)
-            .addInterceptor(refreshTokenInterceptor)
+            .addInterceptor(refreshTokenInterceptorInstance)
             .addInterceptor(HttpLoggingInterceptor().apply {
                 level = HttpLoggingInterceptor.Level.BODY
             })
