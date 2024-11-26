@@ -135,9 +135,9 @@ class MobileRegVerificationActivity : BaseActivity<ActivityMobileRegVerification
         }
 
         viewModel.getSendOtpResponse().observe(this) { sendOtpResponse ->
-            if ((sendOtpResponse.sendOtpResponse.otpValidationTime ?: 0) > 0) {
+            if (sendOtpResponse.sendOtpResponse.otpValidationTime > 0) {
                 Toasty.success(this, sendOtpResponse.message).show()
-                startOtpTimer(sendOtpResponse.sendOtpResponse.otpValidationTime ?: 0)
+                startOtpTimer(sendOtpResponse.sendOtpResponse.otpValidationTime)
             }
         }
 

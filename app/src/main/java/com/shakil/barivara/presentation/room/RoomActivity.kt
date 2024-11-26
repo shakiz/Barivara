@@ -226,10 +226,11 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
 
     private fun bindUIWithComponents() {
         validation.setEditTextIsNotEmpty(
-            arrayOf("roomName", "electricityMeterNo"),
+            arrayOf("roomName", "electricityMeterNo", "rentAmount"),
             arrayOf(
                 getString(R.string.room_name_validation),
-                getString(R.string.meter_name_validation)
+                getString(R.string.meter_name_validation),
+                getString(R.string.rent_amount_hint)
             )
         )
         validation.setSpinnerIsNotEmpty(arrayOf("tenantNameId"))
@@ -259,6 +260,7 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
         room.noOfRoom = noOfRoom
         room.noOfBathroom = noOfBathroom
         room.noOfBalcony = noOfBalcony
+        room.rent = activityAddNewRoomBinding.rentAmount.text.toString().toInt()
         room.status = selectedRoomStatus.statusToString()
         room.electricityMeterNo = activityAddNewRoomBinding.electricityMeterNo.text.toString()
         if (command == "add") {

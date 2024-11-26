@@ -16,7 +16,6 @@ import com.shakil.barivara.utils.Constants.mOtpResendTime
 import com.shakil.barivara.utils.Constants.mUserMobile
 import com.shakil.barivara.utils.UX
 import com.shakil.barivara.utils.UtilsForAll
-import com.shakil.barivara.utils.Validation
 import dagger.hilt.android.AndroidEntryPoint
 import es.dmoral.toasty.Toasty
 
@@ -25,9 +24,6 @@ class OTPLoginActivity : BaseActivity<ActivityOtpLoginBinding>() {
     private lateinit var activityBinding: ActivityOtpLoginBinding
     private lateinit var ux: UX
     private lateinit var utilsForAll: UtilsForAll
-    private val hashMap: Map<String?, Array<String>?> = HashMap()
-    private var validation = Validation(this, hashMap)
-
     private val viewModel by viewModels<AuthViewModel>()
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
@@ -62,7 +58,7 @@ class OTPLoginActivity : BaseActivity<ActivityOtpLoginBinding>() {
 
     private fun initObservers() {
         viewModel.getSendOtpResponse().observe(this) { sendOtpResponse ->
-            if ((sendOtpResponse.sendOtpResponse.otpValidationTime ?: 0) > 0) {
+            if (sendOtpResponse.sendOtpResponse.otpValidationTime > 0) {
                 Toasty.success(this, sendOtpResponse.message).show()
                 val intent = Intent(
                     this, MobileRegVerificationActivity::class.java
@@ -87,7 +83,6 @@ class OTPLoginActivity : BaseActivity<ActivityOtpLoginBinding>() {
     }
 
     private fun bindUiWithComponents() {
-        validation(arrayOf("mobileNumber"), arrayOf(getString(R.string.mobile_validation)))
         activityBinding.login.setOnClickListener {
             if (!activityBinding.mobileNumber.text.isNullOrEmpty() && activityBinding.mobileNumber.text.length == 11) {
                 utilsForAll.hideSoftKeyboard(this)
@@ -104,9 +99,5 @@ class OTPLoginActivity : BaseActivity<ActivityOtpLoginBinding>() {
                 ).show()
             }
         }
-    }
-
-    private fun validation(resNames: Array<String>, validationMessages: Array<String>) {
-        validation.setEditTextIsNotEmpty(resNames, validationMessages)
     }
 }

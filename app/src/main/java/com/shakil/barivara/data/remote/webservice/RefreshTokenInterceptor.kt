@@ -17,6 +17,7 @@ class RefreshTokenInterceptor(
 ) : Interceptor {
     @Volatile
     private var isRefreshing = false
+    private val lock = Any()
     private lateinit var authRepoImpl: AuthRepoImpl
 
     private fun createAuthService(): AuthService {
@@ -41,30 +42,41 @@ class RefreshTokenInterceptor(
         authRepoImpl = AuthRepoImpl(authService)
         var request = chain.request()
 
+        // Attach the current access token
         val accessToken = tokenManager.getString(mAccessToken)
         request = request.newBuilder()
             .header("Authorization", "Bearer $accessToken")
             .build()
 
-        val response = chain.proceed(request)
+        var response = chain.proceed(request)
 
-        // If unauthorized, refresh token and retry request
+        // If unauthorized, attempt token refresh
         if (response.code == 401) {
-            synchronized(this) {
-                response.close()
+            response.close()
+            synchronized(lock) {
                 if (!isRefreshing) {
                     isRefreshing = true
-                    val newAccessToken = refreshToken()
-                    isRefreshing = false
-
-                    if (newAccessToken != null) {
-                        // Retry the request with the new access token
-                        val newRequest = request.newBuilder()
-                            .header("Authorization", "Bearer $newAccessToken")
-                            .build()
-                        return chain.proceed(newRequest)
+                    try {
+                        val newAccessToken = refreshToken()
+                        if (newAccessToken != null) {
+                            // Update the token and retry the request
+                            tokenManager[mAccessToken] = newAccessToken
+                        }
+                    } catch (e: Exception) {
+                        println("Token refresh failed: ${e.message}")
+                    } finally {
+                        isRefreshing = false
                     }
                 }
+            }
+
+            // Retry the original request with the new token
+            val updatedAccessToken = tokenManager.getString(mAccessToken)
+            if (updatedAccessToken != null) {
+                val newRequest = request.newBuilder()
+                    .header("Authorization", "Bearer $updatedAccessToken")
+                    .build()
+                response = chain.proceed(newRequest)
             }
         }
 
@@ -76,9 +88,7 @@ class RefreshTokenInterceptor(
 
         return runBlocking {
             try {
-                // Make the refresh token call synchronously
                 val response = authRepoImpl.refreshToken(refreshToken)
-
                 if (response.response?.statusCode == 200) {
                     val newAccessToken = response.response?.loginResponse?.accessToken
                     val newRefreshToken = response.response?.loginResponse?.refreshToken
@@ -91,7 +101,7 @@ class RefreshTokenInterceptor(
                 }
                 null
             } catch (e: Exception) {
-                println("refreshToken error: ${e.printStackTrace()}")
+                println("Error refreshing token: ${e.message}")
                 null
             }
         }

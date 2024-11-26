@@ -7,5 +7,5 @@ class SendOtpBaseResponse(@SerializedName("data") val sendOtpResponse: SendOtpRe
     BaseApiResponse()
 
 data class SendOtpResponse(
-    @SerializedName("otp_validation") var otpValidationTime: Long? = null
+    @SerializedName("otp_validation") var otpValidationTime: Long = 0
 )

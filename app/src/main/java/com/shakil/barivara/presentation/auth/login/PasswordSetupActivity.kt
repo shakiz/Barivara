@@ -90,7 +90,7 @@ class PasswordSetupActivity : BaseActivity<ActivityPasswordSetupBinding>() {
         }
 
         viewModel.getSendOtpResponse().observe(this) { sendOtpResponse ->
-            if ((sendOtpResponse.sendOtpResponse.otpValidationTime ?: 0) > 0) {
+            if (sendOtpResponse.sendOtpResponse.otpValidationTime > 0) {
                 viewModel.otpUiState.postValue(OtpUIState.VERIFY_OTP)
                 Toasty.success(this, sendOtpResponse.message).show()
                 activityBinding.layoutVerifyOtp.sentCodeHintText.text = getString(
