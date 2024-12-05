@@ -211,6 +211,7 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
             activityAddNewRoomBinding.noOfBalcony.text = "$noOfBalcony"
             activityAddNewRoomBinding.noOfBathroom.text = "$noOfBathroom"
             activityAddNewRoomBinding.electricityMeterNo.setText(room.electricityMeterNo ?: "")
+            activityAddNewRoomBinding.rentAmount.setText(getString(R.string.x_s, "${room.rent}"))
             activityAddNewRoomBinding.radioGroupStatus.isSelected = true
         }
     }

@@ -483,5 +483,6 @@
     <string name="resend_otp">Resend OTP</string>
     <string name="did_not_receive_a_code_x">Didn\'t receive a code %s.</string>
     <string name="large_family">Large Family</string>
-    <string name="rent_amount_hint">Enter Romm/Flat Amount</string>
+    <string name="rent_amount_hint">Enter Room/Flat Amount</string>
+    <string name="profile_updated_successfully">Profile Updated Successfully</string>
 </resources>

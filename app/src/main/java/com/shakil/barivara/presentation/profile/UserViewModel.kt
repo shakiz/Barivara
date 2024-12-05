@@ -26,6 +26,10 @@ class UserViewModel @Inject constructor(private val userRepoImpl: UserRepoImpl) 
         return userInfo
     }
 
+    fun getUpdateProfileResponse(): LiveData<BaseApiResponse> {
+        return updateProfileResponse
+    }
+
     fun getProfile(token: String) {
         viewModelScope.launch(Dispatchers.IO) {
             isLoading.postValue(true)

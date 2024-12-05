@@ -52,4 +52,7 @@ object ButtonActionConstants {
     //Generate Bill Actions
     const val actionGenerateBillNotifyUser = "action_generate_bill_notify_user"
     const val actionGenerateBillMarkAsPaid = "action_generate_bill_mark_as_paid"
+
+    //Tutorial Actions
+    const val actionTutorialClose = "action_tutorial_close"
 }

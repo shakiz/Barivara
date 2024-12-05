@@ -16,6 +16,7 @@ import com.shakil.barivara.utils.Tools.Companion.hideKeyboard
 import com.shakil.barivara.utils.UX
 import com.shakil.barivara.utils.Validation
 import dagger.hilt.android.AndroidEntryPoint
+import es.dmoral.toasty.Toasty
 
 @AndroidEntryPoint
 class ProfileActivity : BaseActivity<ActivityProfileBinding>() {
@@ -61,6 +62,16 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>() {
                 activityBinding.email.setText(
                     userInfo.email
                 )
+            }
+        }
+
+        viewModel.getUpdateProfileResponse().observe(this) { response ->
+            if (response.statusCode == 200) {
+                Toasty.success(
+                    this,
+                    getString(R.string.profile_updated_successfully),
+                    Toasty.LENGTH_SHORT
+                ).show()
             }
         }
 

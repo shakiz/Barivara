@@ -236,8 +236,8 @@
     <string name="small_family">Small Family</string>
     <string name="female_only">Female Only</string>
     <string name="male_only">Male Only</string>
-    <string name="no_of_bathrooms">No Of Bathrooms</string>
-    <string name="no_of_balcony">No Of Balcony</string>
+    <string name="no_of_bathrooms">No of Bathrooms</string>
+    <string name="no_of_balcony">No of Balcony</string>
     <string name="calling">Calling..</string>
     <string name="email_or_mobile_hint">Enter email or mobile no</string>
     <string name="email_or_mobile_no">Email or Mobile No</string>
@@ -485,5 +485,6 @@
     <string name="resend_otp">Resend OTP</string>
     <string name="did_not_receive_a_code_x">Didn\'t receive a code %s.</string>
     <string name="large_family">Large Family</string>
-    <string name="rent_amount_hint">Enter Romm/Flat Amount</string>
+    <string name="rent_amount_hint">Enter Room/Flat Amount</string>
+    <string name="profile_updated_successfully">Profile Updated Successfully</string>
 </resources>

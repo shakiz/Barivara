@@ -5,11 +5,13 @@ import android.os.Bundle
 import android.text.Html
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
 import com.shakil.barivara.databinding.ActivityTutorialBinding
 import com.shakil.barivara.presentation.onboard.HomeActivity
+import com.shakil.barivara.utils.ButtonActionConstants
 import com.shakil.barivara.utils.MyViewPagerAdapter
 
 class TutorialActivity : BaseActivity<ActivityTutorialBinding>() {
@@ -27,6 +29,20 @@ class TutorialActivity : BaseActivity<ActivityTutorialBinding>() {
 
     override fun setVariables(dataBinding: ActivityTutorialBinding) {
         activityTutorialBinding = dataBinding
+    }
+
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            buttonAction(
+                ButtonActionConstants.actionTutorialClose
+            )
+            startActivity(
+                Intent(
+                    this@TutorialActivity,
+                    HomeActivity::class.java
+                )
+            )
+        }
     }
 
     public override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +63,19 @@ class TutorialActivity : BaseActivity<ActivityTutorialBinding>() {
                 ).show()
                 startActivity(Intent(this@TutorialActivity, HomeActivity::class.java))
             }
+        }
+        onBackPressedDispatcher.addCallback(onBackPressedCallback)
+
+        activityTutorialBinding.toolBar.setNavigationOnClickListener {
+            buttonAction(
+                ButtonActionConstants.actionTutorialClose
+            )
+            startActivity(
+                Intent(
+                    this@TutorialActivity,
+                    HomeActivity::class.java
+                )
+            )
         }
     }
 
