@@ -99,7 +99,7 @@
                         android:hint="@string/rent_amount_hint"
                         android:inputType="numberSigned"
                         android:maxLines="1"
-                        android:maxLength="200000"
+                        android:maxLength="6"
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
                         android:scrollHorizontally="true"

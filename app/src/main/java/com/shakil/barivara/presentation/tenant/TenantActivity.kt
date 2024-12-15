@@ -121,10 +121,12 @@ class TenantActivity : BaseActivity<ActivityTenantBinding>() {
                 activityAddNewTenantBinding.advanceCheckBox.isChecked = true
             }
 
-            if (!tenant.endDate.isNullOrEmpty()) {
+            if (tenant.endDate.isNullOrEmpty()) {
+                activityAddNewTenantBinding.stillHasRoomCb.isChecked = true
+            } else {
+                activityAddNewTenantBinding.stillHasRoomCb.isChecked = false
                 activityAddNewTenantBinding.tvEndDate.visibility = View.VISIBLE
                 activityAddNewTenantBinding.endMonthId.visibility = View.VISIBLE
-                activityAddNewTenantBinding.stillHasRoomCb.isChecked = true
             }
         }
     }
@@ -256,7 +258,11 @@ class TenantActivity : BaseActivity<ActivityTenantBinding>() {
         tenant.nidNumber = activityAddNewTenantBinding.nid.text.toString()
         tenant.phone = activityAddNewTenantBinding.mobileNo.text.toString()
         tenant.startDate = activityAddNewTenantBinding.startingMonthId.text.toString()
-        tenant.endDate = activityAddNewTenantBinding.endMonthId.text.toString()
+        tenant.endDate = if (!activityAddNewTenantBinding.stillHasRoomCb.isChecked) {
+            activityAddNewTenantBinding.endMonthId.text.toString()
+        } else {
+            ""
+        }
         tenant.advancedAmount =
             if (activityAddNewTenantBinding.advanceAmount.text.isNullOrEmpty()) {
                 0
