@@ -383,6 +383,7 @@
                         android:hint="@string/advance_hint2"
                         android:inputType="number"
                         android:maxLines="1"
+                        android:maxLength="200000"
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
                         android:scrollHorizontally="true"
