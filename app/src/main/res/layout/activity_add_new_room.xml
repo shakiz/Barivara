@@ -51,11 +51,12 @@
                     android:padding="12dp">
 
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:text="@string/room_name"
                         android:textColor="@color/md_grey_900"
+                        app:drawableEndCompat="@drawable/ic_mandatory"
                         android:textSize="16sp" />
 
                     <EditText
@@ -78,10 +79,11 @@
                         android:textSize="14sp" />
 
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:text="@string/rent_amount"
+                        app:drawableEndCompat="@drawable/ic_mandatory"
                         android:textColor="@color/md_grey_900"
                         android:textSize="16sp" />
 
@@ -283,8 +285,9 @@
                     </LinearLayout>
 
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        app:drawableEndCompat="@drawable/ic_mandatory"
                         android:layout_marginTop="5dp"
                         android:text="@string/room_status"
                         android:textColor="@color/md_grey_900"
@@ -326,10 +329,11 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:text="@string/tenant_name"
+                            app:drawableEndCompat="@drawable/ic_mandatory"
                             android:textColor="@color/md_grey_900"
                             android:textSize="16sp" />
 
@@ -343,11 +347,12 @@
                             android:tag="@string/tenant_name" />
 
                         <TextView
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:text="@string/meter_no"
                             android:textColor="@color/md_grey_900"
+                            app:drawableEndCompat="@drawable/ic_mandatory"
                             android:textSize="16sp" />
 
                         <EditText
