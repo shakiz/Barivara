@@ -485,4 +485,8 @@
     <string name="large_family">Large Family</string>
     <string name="rent_amount_hint">Enter Room/Flat Amount</string>
     <string name="profile_updated_successfully">Profile Updated Successfully</string>
+    <string name="due_amount">Due Amount</string>
+    <string name="x_taka">%d Taka</string>
+    <string name="total_collected_rent_amount">Total Collected Rent Amount</string>
+    <string name="all_earnings">All Earnings</string>
 </resources>

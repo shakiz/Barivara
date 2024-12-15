@@ -232,7 +232,7 @@
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            android:text="@string/all_spend_earnings"
+                            android:text="@string/all_earnings"
                             android:textColor="@color/md_grey_800"
                             android:textStyle="bold"
                             android:typeface="serif" />
@@ -250,19 +250,19 @@
 
                         <TextView
                             android:id="@+id/tvRentAmountHeading"
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center|left"
                             android:layout_marginStart="8dp"
-                            android:text="@string/rent_amount"
-                            android:textColor="@color/md_orange_600"
+                            android:text="@string/total_collected_rent_amount"
+                            android:textColor="@color/md_grey_800"
                             android:textSize="16sp"
                             app:layout_constraintStart_toEndOf="@id/ivTaka"
                             app:layout_constraintTop_toTopOf="@id/ivTaka" />
 
                         <TextView
                             android:id="@+id/TotalRentAmount"
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:layout_marginTop="2dp"
@@ -273,52 +273,9 @@
                             android:textColor="@color/md_grey_800"
                             android:textSize="16sp"
                             android:textStyle="bold"
-                            app:layout_constraintEnd_toStartOf="@id/ivElectricityBill"
                             app:layout_constraintBottom_toBottomOf="@id/ivTaka"
                             app:layout_constraintStart_toEndOf="@id/ivTaka"
                             app:layout_constraintTop_toBottomOf="@id/tvRentAmountHeading" />
-
-                        <ImageView
-                            android:id="@+id/ivElectricityBill"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginStart="12dp"
-                            android:background="@drawable/ic_electricity_bill"
-                            app:layout_constraintTop_toBottomOf="@id/tvSpendAndEarningHeading"
-                            app:layout_constraintStart_toEndOf="@id/tvRentAmountHeading"
-                            tools:layout_editor_absoluteY="8dp" />
-
-                        <TextView
-                            android:id="@+id/tvElectricityBillHeading"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:gravity="center|left"
-                            android:text="@string/electricity_bill"
-                            android:textColor="@color/md_cyan_800"
-                            android:textSize="16sp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@id/ivElectricityBill"
-                            app:layout_constraintTop_toTopOf="@id/ivElectricityBill" />
-
-                        <TextView
-                            android:id="@+id/TotalElectricityBill"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="2dp"
-                            android:ellipsize="end"
-                            android:gravity="center|left"
-                            android:maxLines="2"
-                            android:text="@string/zero_taka"
-                            android:textColor="@color/md_grey_800"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintBottom_toBottomOf="@id/ivElectricityBill"
-                            app:layout_constraintStart_toEndOf="@id/ivElectricityBill"
-                            app:layout_constraintTop_toBottomOf="@id/tvElectricityBillHeading" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -344,7 +301,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingBottom="4dp"
-                            android:text="@string/filter_rent_yearly"
+                            android:text="@string/select_year"
                             android:textColor="@color/md_grey_800"
                             android:textStyle="bold"
                             android:typeface="serif" />
@@ -360,67 +317,13 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="12dp"
-                            android:layout_marginBottom="8dp"
-                            android:gravity="center|left"
-                            android:orientation="horizontal">
-
-                            <ImageView
-                                android:layout_width="42dp"
-                                android:layout_height="42dp"
-                                android:background="@drawable/ic_taka"
-                                android:padding="8dp"
-                                android:scaleType="centerInside" />
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="8dp"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center|left"
-                                    android:text="@string/yearly_rent_amount"
-                                    android:textColor="@color/md_orange_800"
-                                    android:textSize="16sp" />
-
-                                <TextView
-                                    android:id="@+id/TotalRentAmountYearly"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginRight="2dp"
-                                    android:ellipsize="end"
-                                    android:gravity="center|left"
-                                    android:maxLines="2"
-                                    android:text="@string/zero_taka"
-                                    android:textColor="@color/md_grey_800"
-                                    android:textSize="16sp"
-                                    android:textStyle="bold" />
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginTop="4dp"
-                            android:layout_marginBottom="4dp"
-                            android:background="@color/md_green_500" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:orientation="vertical">
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/filter_rent_monthly"
+                                android:text="@string/select_month_2"
                                 android:textColor="@color/md_grey_800"
                                 android:textStyle="bold"
                                 android:typeface="serif" />
@@ -460,12 +363,12 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:gravity="center|left"
-                                    android:text="@string/monthly_rent_amount"
-                                    android:textColor="@color/md_orange_800"
+                                    android:text="@string/rent_amount"
+                                    android:textColor="@color/md_grey_800"
                                     android:textSize="16sp" />
 
                                 <TextView
-                                    android:id="@+id/TotalRentAmountMonthly"
+                                    android:id="@+id/TotalRentAmountByYearAndMonth"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginRight="2dp"
@@ -474,6 +377,52 @@
                                     android:maxLines="2"
                                     android:text="@string/zero_taka"
                                     android:textColor="@color/md_grey_800"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="12dp"
+                            android:gravity="center|left"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="42dp"
+                                android:layout_height="42dp"
+                                android:background="@drawable/ic_taka"
+                                android:padding="8dp"
+                                android:scaleType="centerInside" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="8dp"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center|left"
+                                    android:text="@string/due_amount"
+                                    android:textColor="@color/md_grey_800"
+                                    android:textSize="16sp" />
+
+                                <TextView
+                                    android:id="@+id/TotalDueAmountByYearAndMonth"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="2dp"
+                                    android:ellipsize="end"
+                                    android:gravity="center|left"
+                                    android:maxLines="2"
+                                    android:text="@string/zero_taka"
+                                    android:textColor="@color/colorRed"
                                     android:textSize="16sp"
                                     android:textStyle="bold" />
 

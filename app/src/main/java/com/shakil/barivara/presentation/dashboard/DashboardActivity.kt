@@ -10,17 +10,25 @@ import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
 import com.shakil.barivara.databinding.ActivityDashboardBinding
 import com.shakil.barivara.utils.Constants
+import com.shakil.barivara.utils.Constants.mAccessToken
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.SpinnerAdapter
 import com.shakil.barivara.utils.SpinnerData
+import com.shakil.barivara.utils.UX
+import com.shakil.barivara.utils.UtilsForAll
+import com.shakil.barivara.utils.orZero
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class DashboardActivity : BaseActivity<ActivityDashboardBinding>() {
     private lateinit var activityDashboardBinding: ActivityDashboardBinding
     private lateinit var prefManager: PrefManager
+    private lateinit var utilsForAll: UtilsForAll
+    private lateinit var ux: UX
     private var spinnerAdapter = SpinnerAdapter()
     private var spinnerData = SpinnerData(this)
+    private var year: Int = 0
+    private var month: Int = 0
     private val viewModel by viewModels<DashboardViewModel>()
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
@@ -42,11 +50,13 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>() {
         setSupportActionBar(activityDashboardBinding.toolBar)
         initListeners()
         initObservers()
-        viewModel.getDashboardInfo(prefManager.getString(Constants.mAccessToken))
+        viewModel.getDashboardInfo(prefManager.getString(mAccessToken))
     }
 
     private fun init() {
         prefManager = PrefManager(this)
+        utilsForAll = UtilsForAll(this)
+        ux = UX(this)
     }
 
     private fun initListeners() {
@@ -55,9 +65,27 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>() {
     }
 
     private fun initObservers() {
+        viewModel.isLoading.observe(this) { isLoading ->
+            if (isLoading) {
+                ux.getLoadingView()
+            } else {
+                ux.removeLoadingView()
+            }
+        }
+
         viewModel.getDashboardInfo().observe(this) { dashboardInfo ->
             activityDashboardBinding.TotalRooms.text = "${dashboardInfo.totalActiveRoom}"
             activityDashboardBinding.TotalTenantsCurrent.text = "${dashboardInfo.totalActiveTenant}"
+            activityDashboardBinding.TotalRentAmount.text = "${dashboardInfo.totalCollectedRent}"
+        }
+
+        viewModel.getRentDataByYearAndMonth().observe(this) { dashboardInfo ->
+            dashboardInfo?.let {
+                activityDashboardBinding.TotalRentAmountByYearAndMonth.text =
+                    getString(R.string.x_taka, dashboardInfo.totalPaid.orZero())
+                activityDashboardBinding.TotalDueAmountByYearAndMonth.text =
+                    getString(R.string.x_taka, dashboardInfo.totalDue.orZero())
+            }
         }
     }
 
@@ -81,7 +109,11 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>() {
                     position: Int,
                     id: Long
                 ) {
-                    //TODO add filter api here
+                    if (parent.getItemAtPosition(position)
+                            .toString() != getString(R.string.select_data)
+                    ) {
+                        year = parent.getItemAtPosition(position).toString().toInt()
+                    }
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -96,7 +128,18 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>() {
                     position: Int,
                     id: Long
                 ) {
-                    //TODO add filter api here
+                    if (parent.getItemAtPosition(position)
+                            .toString() != getString(R.string.select_data)
+                    ) {
+                        month = utilsForAll.getMonthFromMonthName(
+                            parent.getItemAtPosition(position).toString()
+                        )
+                        viewModel.getRentDataByYearAndMonth(
+                            prefManager.getString(mAccessToken),
+                            year,
+                            month
+                        )
+                    }
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
