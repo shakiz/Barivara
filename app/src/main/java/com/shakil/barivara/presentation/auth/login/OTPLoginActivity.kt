@@ -92,19 +92,21 @@ class OTPLoginActivity : BaseActivity<ActivityOtpLoginBinding>() {
 
     private fun bindUiWithComponents() {
         activityBinding.login.setOnClickListener {
-            if (activityBinding.mobileNumber.text.length == 11) {
-                utilsForAll.hideSoftKeyboard(this)
-                viewModel.sendOtp(
-                    activityBinding.mobileNumber.text.toString(),
-                    OtpType.OTP.value
-                )
-            } else {
-                Toasty.warning(
-                    this@OTPLoginActivity,
-                    getString(R.string.validation_mobile_number_length),
-                    Toast.LENGTH_LONG,
-                    true
-                ).show()
+            if (validation.isValid) {
+                if (activityBinding.mobileNumber.text.length == 11) {
+                    utilsForAll.hideSoftKeyboard(this)
+                    viewModel.sendOtp(
+                        activityBinding.mobileNumber.text.toString(),
+                        OtpType.OTP.value
+                    )
+                } else {
+                    Toasty.warning(
+                        this@OTPLoginActivity,
+                        getString(R.string.validation_mobile_number_length),
+                        Toast.LENGTH_LONG,
+                        true
+                    ).show()
+                }
             }
         }
     }

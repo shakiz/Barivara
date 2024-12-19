@@ -146,7 +146,6 @@ class Tools(private val context: Context) {
         prefManager[mUserFullName] = ""
         prefManager[mUserEmail] = ""
         prefManager[mUserMobile] = ""
-        prefManager.clear()
         context.startActivity(Intent(context, to))
         Toast.makeText(
             context,
