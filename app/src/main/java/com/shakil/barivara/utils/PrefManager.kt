@@ -34,9 +34,4 @@ class PrefManager @Inject constructor(context: Context) {
     fun getInt(key: String?): Int {
         return pref.getInt(key, 0)
     }
-
-    fun clear() {
-        editor.clear()
-        editor.commit()
-    }
 }

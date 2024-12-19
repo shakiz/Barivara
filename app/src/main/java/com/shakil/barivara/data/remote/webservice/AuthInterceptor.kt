@@ -1,5 +1,6 @@
 package com.shakil.barivara.data.remote.webservice
 
+import com.shakil.barivara.utils.ApiConstants.BASE_URL
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.PrefManager
 import okhttp3.Interceptor
@@ -12,9 +13,11 @@ class AuthInterceptor(
     override fun intercept(chain: Interceptor.Chain): Response {
         val requestBuilder = chain.request().newBuilder()
         if (chain.request().header("Authorization").isNullOrBlank()) {
-            val accessToken = tokenManager.getString(Constants.mAccessToken)
-            if (accessToken.isNotEmpty()) {
-                requestBuilder.header("Authorization", "Bearer $accessToken")
+            if (chain.request().url.toString() != (BASE_URL + "logout")) {
+                val accessToken = tokenManager.getString(Constants.mAccessToken)
+                if (accessToken.isNotEmpty()) {
+                    requestBuilder.header("Authorization", "Bearer $accessToken")
+                }
             }
         }
         return chain.proceed(requestBuilder.build())

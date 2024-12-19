@@ -1,7 +1,7 @@
 package com.shakil.barivara.data.remote.webservice
 
 import com.shakil.barivara.data.repository.AuthRepoImpl
-import com.shakil.barivara.utils.ApiConstants
+import com.shakil.barivara.utils.ApiConstants.BASE_URL
 import com.shakil.barivara.utils.Constants.mAccessToken
 import com.shakil.barivara.utils.Constants.mRefreshToken
 import com.shakil.barivara.utils.PrefManager
@@ -24,7 +24,7 @@ class RefreshTokenInterceptor(
         val okHttpClient =
             OkHttpClient.Builder().build()
         return Retrofit.Builder()
-            .baseUrl(ApiConstants.BASE_URL)
+            .baseUrl(BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -42,11 +42,13 @@ class RefreshTokenInterceptor(
         authRepoImpl = AuthRepoImpl(authService)
         var request = chain.request()
 
-        // Attach the current access token
-        val accessToken = tokenManager.getString(mAccessToken)
-        request = request.newBuilder()
-            .header("Authorization", "Bearer $accessToken")
-            .build()
+        if (chain.request().url.toString() != (BASE_URL + "logout")) {
+            // Attach the current access token
+            val accessToken = tokenManager.getString(mAccessToken)
+            request = request.newBuilder()
+                .header("Authorization", "Bearer $accessToken")
+                .build()
+        }
 
         var response = chain.proceed(request)
 

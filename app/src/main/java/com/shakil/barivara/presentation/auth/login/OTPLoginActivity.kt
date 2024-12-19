@@ -16,6 +16,7 @@ import com.shakil.barivara.utils.Constants.mOtpResendTime
 import com.shakil.barivara.utils.Constants.mUserMobile
 import com.shakil.barivara.utils.UX
 import com.shakil.barivara.utils.UtilsForAll
+import com.shakil.barivara.utils.Validation
 import dagger.hilt.android.AndroidEntryPoint
 import es.dmoral.toasty.Toasty
 
@@ -25,6 +26,8 @@ class OTPLoginActivity : BaseActivity<ActivityOtpLoginBinding>() {
     private lateinit var ux: UX
     private lateinit var utilsForAll: UtilsForAll
     private val viewModel by viewModels<AuthViewModel>()
+    private val hashMap: Map<String?, Array<String>?> = HashMap()
+    private var validation = Validation(this, hashMap)
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
@@ -46,6 +49,11 @@ class OTPLoginActivity : BaseActivity<ActivityOtpLoginBinding>() {
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
         onBackPressedDispatcher.addCallback(onBackPressedCallback)
+        validation.setEditTextIsNotEmpty(
+            arrayOf("mobileNumber"), arrayOf(
+                getString(R.string.mobile_validation)
+            )
+        )
         initUI()
         bindUiWithComponents()
         initObservers()
@@ -84,7 +92,7 @@ class OTPLoginActivity : BaseActivity<ActivityOtpLoginBinding>() {
 
     private fun bindUiWithComponents() {
         activityBinding.login.setOnClickListener {
-            if (!activityBinding.mobileNumber.text.isNullOrEmpty() && activityBinding.mobileNumber.text.length == 11) {
+            if (activityBinding.mobileNumber.text.length == 11) {
                 utilsForAll.hideSoftKeyboard(this)
                 viewModel.sendOtp(
                     activityBinding.mobileNumber.text.toString(),
@@ -93,7 +101,7 @@ class OTPLoginActivity : BaseActivity<ActivityOtpLoginBinding>() {
             } else {
                 Toasty.warning(
                     this@OTPLoginActivity,
-                    getString(R.string.mobile_validation),
+                    getString(R.string.validation_mobile_number_length),
                     Toast.LENGTH_LONG,
                     true
                 ).show()

@@ -220,7 +220,7 @@
     <string name="no_update_version">You are using version</string>
     <string name="has_been_released_small">has been released</string>
     <string name="please_update_detail_text">Please update and get the latest features, improvements and bug fixes.</string>
-    <string name="validation_mobile_number_length">Mobile number length is not valid</string>
+    <string name="validation_mobile_number_length">Mobile number length should be 11.</string>
     <string name="rooms">Rooms</string>
     <string name="meters">Meters</string>
     <string name="tenant_information">Tenant Information</string>
