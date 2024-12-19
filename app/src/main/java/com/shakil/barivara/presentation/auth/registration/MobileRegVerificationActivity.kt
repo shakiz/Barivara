@@ -24,6 +24,7 @@ import com.shakil.barivara.utils.moveToNextEditText
 import com.shakil.barivara.utils.moveToPreviousEditText
 import dagger.hilt.android.AndroidEntryPoint
 import es.dmoral.toasty.Toasty
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MobileRegVerificationActivity : BaseActivity<ActivityMobileRegVerificationBinding>() {
@@ -32,7 +33,9 @@ class MobileRegVerificationActivity : BaseActivity<ActivityMobileRegVerification
     private var otpResendTime: Long = 0
     private var tools = Tools(this)
     private lateinit var ux: UX
-    private lateinit var prefManager: PrefManager
+
+    @Inject
+    lateinit var prefManager: PrefManager
     private val viewModel by viewModels<AuthViewModel>()
 
     override val layoutResourceId: Int
@@ -59,7 +62,6 @@ class MobileRegVerificationActivity : BaseActivity<ActivityMobileRegVerification
 
     private fun initUI() {
         ux = UX(this)
-        prefManager = PrefManager(this)
     }
 
     private fun getIntentData() {

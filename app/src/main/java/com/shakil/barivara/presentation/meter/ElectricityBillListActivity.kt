@@ -20,11 +20,13 @@ import com.shakil.barivara.presentation.adapter.RecyclerElectricityBillListAdapt
 import com.shakil.barivara.presentation.adapter.RecyclerElectricityBillListAdapter.ElectricityBillBacks
 import com.shakil.barivara.presentation.onboard.HomeActivity
 import com.shakil.barivara.utils.Constants.mUserId
-import com.shakil.barivara.utils.FilterManager
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class ElectricityBillListActivity : BaseActivity<ActivityElectricityBillListBinding>(),
     ElectricityBillBacks {
     private lateinit var activityMeterCostListBinding: ActivityElectricityBillListBinding
@@ -32,8 +34,9 @@ class ElectricityBillListActivity : BaseActivity<ActivityElectricityBillListBind
     private var firebaseCrudHelper = FirebaseCrudHelper(this)
     private var ux: UX? = null
     private var tools = Tools(this)
-    private var filterManager = FilterManager()
-    private lateinit var prefManager: PrefManager
+
+    @Inject
+    lateinit var prefManager: PrefManager
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
@@ -69,7 +72,6 @@ class ElectricityBillListActivity : BaseActivity<ActivityElectricityBillListBind
 
     private fun init() {
         ux = UX(this)
-        prefManager = PrefManager(this)
     }
 
     private fun bindUIWithComponents() {

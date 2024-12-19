@@ -18,8 +18,11 @@ import com.shakil.barivara.utils.SpinnerAdapter
 import com.shakil.barivara.utils.SpinnerData
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.Validation
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.UUID
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class RentDetailsActivity : BaseActivity<ActivityNewRentDetailsBinding>() {
     private lateinit var activityNewRentDetailsBinding: ActivityNewRentDetailsBinding
     private var spinnerData = SpinnerData(this)
@@ -35,7 +38,9 @@ class RentDetailsActivity : BaseActivity<ActivityNewRentDetailsBinding>() {
     private var firebaseCrudHelper = FirebaseCrudHelper(this)
     private var roomNames: ArrayList<String> = arrayListOf()
     private var tools = Tools(this)
-    private lateinit var prefManager: PrefManager
+
+    @Inject
+    lateinit var prefManager: PrefManager
     private val hashMap: Map<String?, Array<String>?> = HashMap()
     private var validation = Validation(this, hashMap)
     override val layoutResourceId: Int
@@ -47,7 +52,6 @@ class RentDetailsActivity : BaseActivity<ActivityNewRentDetailsBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        prefManager = PrefManager(this)
         getIntentData()
         setSupportActionBar(activityNewRentDetailsBinding.toolBar)
         activityNewRentDetailsBinding.toolBar.setNavigationOnClickListener { finish() }

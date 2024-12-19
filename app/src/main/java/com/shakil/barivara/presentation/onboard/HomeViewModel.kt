@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shakil.barivara.R
+import com.shakil.barivara.data.model.BaseApiResponse
 import com.shakil.barivara.data.model.SliderItem
 import com.shakil.barivara.data.model.auth.LogoutRequest
 import com.shakil.barivara.data.model.room.Room
@@ -30,6 +31,8 @@ class HomeViewModel @Inject constructor(
 
     private var rooms = MutableLiveData<List<Room>>()
     private var getRoomListErrorResponse = MutableLiveData<Resource.Error<ErrorType>>()
+
+    private var logoutResponse = MutableLiveData<BaseApiResponse>()
 
     fun getTenants(): LiveData<List<Tenant>> {
         return tenants
@@ -89,10 +92,30 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun getLogoutResponse(): LiveData<BaseApiResponse> {
+        return logoutResponse
+    }
+
     fun logout(mobile: String) {
         val logoutRequest = LogoutRequest(phone = mobile)
         viewModelScope.launch {
-            authRepoImpl.logout(logoutRequest)
+            isLoading.postValue(true)
+            try {
+                val data = authRepoImpl.logout(logoutRequest)
+                if (data.response != null) {
+                    logoutResponse.postValue(data.response)
+                } else {
+                    getRoomListErrorResponse.postValue(
+                        Resource.Error(
+                            message = data.message,
+                            errorType = data.errorType
+                        )
+                    )
+                    isLoading.postValue(false)
+                }
+            } catch (e: Exception) {
+                isLoading.postValue(false)
+            }
         }
     }
 

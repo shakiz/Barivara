@@ -17,13 +17,16 @@ import com.shakil.barivara.utils.UX
 import com.shakil.barivara.utils.Validation
 import dagger.hilt.android.AndroidEntryPoint
 import es.dmoral.toasty.Toasty
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ProfileActivity : BaseActivity<ActivityProfileBinding>() {
     private lateinit var activityBinding: ActivityProfileBinding
     private val hashMap: Map<String?, Array<String>?> = HashMap()
     private var validation = Validation(this, hashMap)
-    private lateinit var prefManager: PrefManager
+
+    @Inject
+    lateinit var prefManager: PrefManager
     private lateinit var ux: UX
     private lateinit var tools: Tools
     private val viewModel by viewModels<UserViewModel>()
@@ -45,7 +48,6 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>() {
 
     private fun initUI() {
         validation = Validation(this, hashMap)
-        prefManager = PrefManager(this)
         ux = UX(this)
         tools = Tools(this)
     }

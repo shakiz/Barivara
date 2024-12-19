@@ -46,13 +46,17 @@ import com.shakil.barivara.utils.ScreenNameConstants
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
 import dagger.hilt.android.AndroidEntryPoint
+import es.dmoral.toasty.Toasty
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class HomeActivity : BaseActivity<ActivityHomeBinding>(),
     NavigationView.OnNavigationItemSelectedListener {
     private lateinit var activityMainBinding: ActivityHomeBinding
-    private lateinit var prefManager: PrefManager
+
+    @Inject
+    lateinit var prefManager: PrefManager
     private var tools = Tools(this)
     private lateinit var ux: UX
     private val viewModel by viewModels<HomeViewModel>()
@@ -80,7 +84,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
         setUpSlider()
         setupDrawerToggle()
         setupNotification()
-        LanguageManager(this).configLanguage()
+        LanguageManager(this, prefManager).configLanguage()
         bindUIWithComponents()
         initListeners()
         initObservers()
@@ -89,7 +93,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
     }
 
     private fun init() {
-        prefManager = PrefManager(this)
         ux = UX(this)
     }
 
@@ -286,6 +289,18 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
             activityMainBinding.totalRooms.text = "${rooms.size}"
         }
 
+        viewModel.getLogoutResponse().observe(this) { logoutResponse ->
+            if (logoutResponse.statusCode == 200) {
+                tools.clearPrefForLogout(LoginSelectionActivity::class.java, prefManager)
+            } else {
+                Toasty.warning(
+                    this,
+                    getString(R.string.please_try_again_something_went_wrong),
+                    Toasty.LENGTH_SHORT
+                ).show()
+            }
+        }
+
         viewModel.isLoading.observe(this) { isLoading ->
             if (isLoading) {
                 ux.getLoadingView()
@@ -353,7 +368,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
                         viewModel.logout(
                             prefManager.getString(mUserMobile)
                         )
-                        tools.clearPrefForLogout(LoginSelectionActivity::class.java, prefManager)
                     }
                 )
                 bottomSheet.show()
@@ -410,7 +424,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
                         viewModel.logout(
                             prefManager.getString(mUserMobile)
                         )
-                        tools.clearPrefForLogout(LoginSelectionActivity::class.java, prefManager)
                     }
                 )
                 bottomSheet.show()

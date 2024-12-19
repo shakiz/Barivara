@@ -14,7 +14,6 @@ import com.shakil.barivara.data.model.tenant.TenantType
 import com.shakil.barivara.databinding.ActivityTenantBinding
 import com.shakil.barivara.utils.ButtonActionConstants
 import com.shakil.barivara.utils.DatePickerManager
-import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.ScreenNameConstants
 import com.shakil.barivara.utils.SpinnerAdapter
 import com.shakil.barivara.utils.SpinnerData
@@ -38,7 +37,6 @@ class TenantActivity : BaseActivity<ActivityTenantBinding>() {
     private var advancedAmountInt: Int = 0
     private var utilsForAll = UtilsForAll(this)
     private var tools = Tools(this)
-    private lateinit var prefManager: PrefManager
     private lateinit var ux: UX
 
     private val viewModel by viewModels<TenantViewModel>()
@@ -53,7 +51,6 @@ class TenantActivity : BaseActivity<ActivityTenantBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         screenViewed(ScreenNameConstants.appSreenTenantDetails)
-        prefManager = PrefManager(this)
         ux = UX(this)
         intentData()
         setSupportActionBar(activityAddNewTenantBinding.toolBar)

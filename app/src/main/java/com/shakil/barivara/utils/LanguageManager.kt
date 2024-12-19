@@ -16,8 +16,7 @@ import com.shakil.barivara.utils.Constants.mLanguage
 import com.shakil.barivara.utils.Constants.mLanguageSetup
 import java.util.Locale
 
-class LanguageManager(private val context: Context) {
-    private var prefManager: PrefManager = PrefManager(context)
+class LanguageManager(private val context: Context, private val prefManager: PrefManager) {
 
     fun setLanguage(to: Class<*>?) {
         doPopUpForLanguage(to)

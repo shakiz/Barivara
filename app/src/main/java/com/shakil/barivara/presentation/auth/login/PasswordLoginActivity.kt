@@ -19,13 +19,16 @@ import com.shakil.barivara.utils.UtilsForAll
 import com.shakil.barivara.utils.Validation
 import dagger.hilt.android.AndroidEntryPoint
 import es.dmoral.toasty.Toasty
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class PasswordLoginActivity : BaseActivity<ActivityPasswordLoginBinding>() {
     private lateinit var activityBinding: ActivityPasswordLoginBinding
     private lateinit var ux: UX
     private lateinit var utilsForAll: UtilsForAll
-    private lateinit var prefManager: PrefManager
+
+    @Inject
+    lateinit var prefManager: PrefManager
     private lateinit var tools: Tools
     private val hashMap: Map<String?, Array<String>?> = HashMap()
     private var validation = Validation(this, hashMap)
@@ -60,7 +63,6 @@ class PasswordLoginActivity : BaseActivity<ActivityPasswordLoginBinding>() {
     private fun initUI() {
         ux = UX(this)
         utilsForAll = UtilsForAll(this)
-        prefManager = PrefManager(this)
         tools = Tools(this)
 
         validation.setEditTextIsNotEmpty(

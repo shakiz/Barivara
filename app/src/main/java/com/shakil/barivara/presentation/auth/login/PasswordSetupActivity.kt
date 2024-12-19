@@ -12,6 +12,8 @@ import com.shakil.barivara.data.model.auth.OtpType
 import com.shakil.barivara.data.model.auth.OtpUIState
 import com.shakil.barivara.databinding.ActivityPasswordSetupBinding
 import com.shakil.barivara.presentation.auth.AuthViewModel
+import com.shakil.barivara.utils.Constants.mAccessToken
+import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.UX
 import com.shakil.barivara.utils.UtilsForAll
 import com.shakil.barivara.utils.Validation
@@ -19,12 +21,16 @@ import com.shakil.barivara.utils.moveToNextEditText
 import com.shakil.barivara.utils.moveToPreviousEditText
 import dagger.hilt.android.AndroidEntryPoint
 import es.dmoral.toasty.Toasty
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class PasswordSetupActivity : BaseActivity<ActivityPasswordSetupBinding>() {
     private lateinit var activityBinding: ActivityPasswordSetupBinding
     private lateinit var ux: UX
     private lateinit var utilsForAll: UtilsForAll
+
+    @Inject
+    lateinit var prefManager: PrefManager
     private val hashMap: Map<String?, Array<String>?> = HashMap()
     private var validation = Validation(this, hashMap)
 
@@ -106,6 +112,7 @@ class PasswordSetupActivity : BaseActivity<ActivityPasswordSetupBinding>() {
 
         viewModel.getVerifyOtpResponse().observe(this) { loginBaseResponse ->
             if (loginBaseResponse.accessToken != null) {
+                prefManager[mAccessToken] = loginBaseResponse.accessToken
                 viewModel.otpUiState.postValue(OtpUIState.SETUP_PASS)
                 Toasty.success(this, getString(R.string.otp_verified)).show()
             }

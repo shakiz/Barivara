@@ -26,7 +26,6 @@ import com.shakil.barivara.presentation.adapter.RecyclerAdapterTenantList.Tenant
 import com.shakil.barivara.presentation.onboard.HomeActivity
 import com.shakil.barivara.utils.ButtonActionConstants
 import com.shakil.barivara.utils.Constants
-import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.ScreenNameConstants
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
@@ -45,7 +44,6 @@ class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCall
     private lateinit var activityTenantListBinding: ActivityTenantListBinding
     private lateinit var ux: UX
     private var tools = Tools(this)
-    private lateinit var prefManager: PrefManager
     private lateinit var recyclerAdapterTenantList: RecyclerAdapterTenantList
     private val viewModel by viewModels<TenantViewModel>()
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
@@ -116,7 +114,6 @@ class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCall
 
     private fun init() {
         ux = UX(this)
-        prefManager = PrefManager(this)
         setupDebouncedSearch()
     }
 

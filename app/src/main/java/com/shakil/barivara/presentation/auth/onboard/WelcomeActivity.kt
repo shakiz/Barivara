@@ -15,11 +15,16 @@ import com.shakil.barivara.presentation.auth.login.LoginSelectionActivity
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.MyViewPagerAdapter
 import com.shakil.barivara.utils.PrefManager
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class WelcomeActivity : BaseActivity<ActivityWelcomeBinding>() {
     private lateinit var activityWelcomeBinding: ActivityWelcomeBinding
     private var myViewPagerAdapter: MyViewPagerAdapter? = null
-    private lateinit var prefManager: PrefManager
+
+    @Inject
+    lateinit var prefManager: PrefManager
     private lateinit var dots: Array<TextView?>
     private var layouts = intArrayOf(
         R.layout.welcome_about_app,
@@ -38,7 +43,6 @@ class WelcomeActivity : BaseActivity<ActivityWelcomeBinding>() {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityWelcomeBinding = DataBindingUtil.setContentView(this, R.layout.activity_welcome)
-        init()
         layouts = intArrayOf(
             R.layout.welcome_about_app,
             R.layout.welcome_add_tenant_first,
@@ -59,10 +63,6 @@ class WelcomeActivity : BaseActivity<ActivityWelcomeBinding>() {
                 goLogin()
             }
         }
-    }
-
-    private fun init() {
-        prefManager = PrefManager(this)
     }
 
     private fun goLogin() {

@@ -18,11 +18,14 @@ import com.shakil.barivara.utils.UX
 import com.shakil.barivara.utils.UtilsForAll
 import com.shakil.barivara.utils.orZero
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class DashboardActivity : BaseActivity<ActivityDashboardBinding>() {
     private lateinit var activityDashboardBinding: ActivityDashboardBinding
-    private lateinit var prefManager: PrefManager
+
+    @Inject
+    lateinit var prefManager: PrefManager
     private lateinit var utilsForAll: UtilsForAll
     private lateinit var ux: UX
     private var spinnerAdapter = SpinnerAdapter()
@@ -54,7 +57,6 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>() {
     }
 
     private fun init() {
-        prefManager = PrefManager(this)
         utilsForAll = UtilsForAll(this)
         ux = UX(this)
     }

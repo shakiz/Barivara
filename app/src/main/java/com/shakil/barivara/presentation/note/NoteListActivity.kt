@@ -18,7 +18,10 @@ import com.shakil.barivara.utils.Constants.mUserId
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class NoteListActivity : BaseActivity<ActivityNoteListBinding>() {
     private lateinit var activityNoteListBinding: ActivityNoteListBinding
     private var noteList: ArrayList<Note> = arrayListOf()
@@ -26,7 +29,9 @@ class NoteListActivity : BaseActivity<ActivityNoteListBinding>() {
     private lateinit var ux: UX
     private var appAnalytics = AppAnalytics(this)
     private var tools = Tools(this)
-    private lateinit var prefManager: PrefManager
+
+    @Inject
+    lateinit var prefManager: PrefManager
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
@@ -64,7 +69,6 @@ class NoteListActivity : BaseActivity<ActivityNoteListBinding>() {
 
     private fun init() {
         ux = UX(this)
-        prefManager = PrefManager(this)
     }
 
     private fun bindUiWithComponents() {

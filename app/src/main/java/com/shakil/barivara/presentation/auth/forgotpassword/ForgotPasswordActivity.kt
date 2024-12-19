@@ -13,6 +13,7 @@ import com.shakil.barivara.utils.UX
 import com.shakil.barivara.utils.Validation
 import dagger.hilt.android.AndroidEntryPoint
 import es.dmoral.toasty.Toasty
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ForgotPasswordActivity : BaseActivity<ActivityForgotPasswordBinding>() {
@@ -21,7 +22,9 @@ class ForgotPasswordActivity : BaseActivity<ActivityForgotPasswordBinding>() {
     private var validation = Validation(this, hashMap)
     private var firebaseAuth: FirebaseAuth? = null
     private lateinit var ux: UX
-    private lateinit var prefManager: PrefManager
+
+    @Inject
+    lateinit var prefManager: PrefManager
     private val viewModel by viewModels<AuthViewModel>()
 
     override val layoutResourceId: Int
@@ -41,7 +44,6 @@ class ForgotPasswordActivity : BaseActivity<ActivityForgotPasswordBinding>() {
 
     private fun initUI() {
         ux = UX(this)
-        prefManager = PrefManager(this)
         firebaseAuth = FirebaseAuth.getInstance()
     }
 

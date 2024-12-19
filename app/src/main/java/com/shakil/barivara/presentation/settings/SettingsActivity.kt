@@ -13,12 +13,17 @@ import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.LanguageManager
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Tools
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class SettingsActivity : BaseActivity<ActivitySettingsBinding>() {
     private lateinit var activitySettingsBinding: ActivitySettingsBinding
     private var languageMap = HashMap<String, String>()
     private lateinit var languageManager: LanguageManager
-    private lateinit var prefManager: PrefManager
+
+    @Inject
+    lateinit var prefManager: PrefManager
     private var tools = Tools(this)
     override val layoutResourceId: Int
         get() = R.layout.activity_settings
@@ -29,9 +34,7 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        languageManager = LanguageManager(this)
-        prefManager = PrefManager(this)
-
+        languageManager = LanguageManager(this, prefManager)
         setSupportActionBar(activitySettingsBinding.toolBar)
         activitySettingsBinding.toolBar.setNavigationOnClickListener { finish() }
         setupLanguage()

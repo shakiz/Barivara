@@ -47,6 +47,7 @@ import es.dmoral.toasty.Toasty
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>(),
@@ -61,7 +62,9 @@ class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>(),
     private lateinit var utilsForAll: UtilsForAll
     private lateinit var dialogBill: Dialog
     private lateinit var ux: UX
-    private lateinit var prefManager: PrefManager
+
+    @Inject
+    lateinit var prefManager: PrefManager
     private lateinit var recyclerBillInfoAdapter: RecyclerBillInfoAdapter
 
     private val viewModel by viewModels<GenerateBillViewModel>()
@@ -84,7 +87,6 @@ class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>(),
 
     private fun init() {
         ux = UX(this)
-        prefManager = PrefManager(this)
         utilsForAll = UtilsForAll(this)
     }
 

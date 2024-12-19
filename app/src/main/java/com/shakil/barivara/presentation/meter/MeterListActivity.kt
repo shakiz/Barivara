@@ -20,19 +20,22 @@ import com.shakil.barivara.presentation.adapter.RecyclerMeterListAdapter
 import com.shakil.barivara.presentation.adapter.RecyclerMeterListAdapter.MeterCallBacks
 import com.shakil.barivara.presentation.onboard.HomeActivity
 import com.shakil.barivara.utils.Constants.mUserId
-import com.shakil.barivara.utils.FilterManager
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MeterListActivity : BaseActivity<ActivityMeterListBinding>(), MeterCallBacks {
     private lateinit var activityMeterListBinding: ActivityMeterListBinding
     private var meterList: ArrayList<Meter> = arrayListOf()
     private var firebaseCrudHelper = FirebaseCrudHelper(this)
     private var ux: UX? = null
     private var tools = Tools(this)
-    private var filterManager = FilterManager()
-    private lateinit var prefManager: PrefManager
+
+    @Inject
+    lateinit var prefManager: PrefManager
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
@@ -70,9 +73,7 @@ class MeterListActivity : BaseActivity<ActivityMeterListBinding>(), MeterCallBac
     private fun init() {
         meterList = ArrayList()
         ux = UX(this)
-        prefManager = PrefManager(this)
     }
-
 
     private fun binUiWIthComponents() {
         activityMeterListBinding.searchLayout.SearchName.hint =
