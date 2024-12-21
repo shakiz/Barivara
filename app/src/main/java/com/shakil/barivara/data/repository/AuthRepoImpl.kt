@@ -135,11 +135,9 @@ class AuthRepoImpl @Inject constructor(
 
     override suspend fun setPassword(
         passwordSetupRequest: PasswordSetupRequest,
-        token: String
     ): Resource<BaseApiResponse> {
         try {
             val task = authService.setPassword(
-                token = "Bearer $token",
                 accept = Constants.ACCEPT,
                 contentType = Constants.CONTENT_TYPE,
                 passwordSetupRequest = passwordSetupRequest

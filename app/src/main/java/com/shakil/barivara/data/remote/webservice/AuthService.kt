@@ -38,7 +38,6 @@ interface AuthService {
 
     @POST("set-password")
     suspend fun setPassword(
-        @Header("Authorization") token: String,
         @Header("Content-Type") contentType: String,
         @Header("Accept") accept: String,
         @Body passwordSetupRequest: PasswordSetupRequest

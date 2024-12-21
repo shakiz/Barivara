@@ -213,7 +213,6 @@ class PasswordSetupActivity : BaseActivity<ActivityPasswordSetupBinding>() {
 
                 else -> {
                     viewModel.setupPassword(
-                        viewModel.getVerifyOtpResponse().value?.accessToken ?: "",
                         activityBinding.layoutSetupPassword.password.text.toString(),
                         activityBinding.layoutSetupPassword.reEnterPassword.text.toString(),
                     )

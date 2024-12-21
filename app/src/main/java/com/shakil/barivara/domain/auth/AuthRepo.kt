@@ -17,7 +17,6 @@ interface AuthRepo {
     suspend fun logout(logoutRequest: LogoutRequest): Resource<BaseApiResponse>
     suspend fun setPassword(
         passwordSetupRequest: PasswordSetupRequest,
-        token: String
     ): Resource<BaseApiResponse>
     suspend fun passwordLogin(
         passwordLoginRequest: PasswordLoginRequest,

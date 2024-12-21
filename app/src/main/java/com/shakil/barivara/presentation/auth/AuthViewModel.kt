@@ -165,7 +165,7 @@ class AuthViewModel @Inject constructor(private val authRepoImpl: AuthRepoImpl) 
         }
     }
 
-    fun setupPassword(token: String, password: String, reEnterPassword: String) {
+    fun setupPassword(password: String, reEnterPassword: String) {
         val passwordSetupRequest = PasswordSetupRequest(
             password = password,
             passwordConfirmation = reEnterPassword
@@ -173,7 +173,7 @@ class AuthViewModel @Inject constructor(private val authRepoImpl: AuthRepoImpl) 
         viewModelScope.launch(Dispatchers.IO) {
             isLoading.postValue(true)
             try {
-                val data = authRepoImpl.setPassword(passwordSetupRequest, token)
+                val data = authRepoImpl.setPassword(passwordSetupRequest)
                 if (data.response != null) {
                     passwordSetupResponse.postValue(data.response)
                 } else {
