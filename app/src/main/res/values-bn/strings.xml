@@ -489,4 +489,5 @@
     <string name="x_taka">%d Taka</string>
     <string name="total_collected_rent_amount">Total Collected Rent Amount</string>
     <string name="all_earnings">All Earnings</string>
+    <string name="validation_mobile_number">Please type correct mobile number.</string>
 </resources>

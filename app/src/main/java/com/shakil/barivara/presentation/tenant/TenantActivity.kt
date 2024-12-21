@@ -206,7 +206,7 @@ class TenantActivity : BaseActivity<ActivityTenantBinding>() {
                     } else {
                         Toast.makeText(
                             this@TenantActivity,
-                            getString(R.string.validation_mobile_number_length),
+                            getString(R.string.validation_mobile_number),
                             Toast.LENGTH_SHORT
                         ).show()
                     }

@@ -42,4 +42,6 @@ object Constants {
     const val MY_CONTACT_NO = "01688499299"
     const val CONTENT_TYPE = "application/json"
     const val ACCEPT = "application/json"
+
+    const val MOBILE_NUMBER_PREFIX = "+88"
 }
