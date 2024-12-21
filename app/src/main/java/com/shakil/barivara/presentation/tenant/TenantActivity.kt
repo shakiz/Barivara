@@ -261,10 +261,10 @@ class TenantActivity : BaseActivity<ActivityTenantBinding>() {
             ""
         }
         tenant.advancedAmount =
-            if (activityAddNewTenantBinding.advanceAmount.text.isNullOrEmpty()) {
-                0
-            } else {
+            if (activityAddNewTenantBinding.advanceCheckBox.isChecked) {
                 activityAddNewTenantBinding.advanceAmount.text.toString().toInt()
+            } else {
+                0
             }
         if (command == "add") {
             buttonAction(ButtonActionConstants.actionAddNewTenant)
