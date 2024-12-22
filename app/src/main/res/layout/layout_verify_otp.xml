@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:id="@+id/changePasswordLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@color/md_white_1000"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="288dp"
+            android:src="@drawable/forgot_password" />
+
+        <TextView
+            android:id="@+id/sentCodeHintText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:focusable="true"
+            android:gravity="center"
+            android:text="@string/sent_you_code_on_your_number"
+            android:textColor="@color/md_green_800"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:weightSum="6">
+
+            <EditText
+                android:id="@+id/verificationCode1"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="42dp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/profile_text_bg"
+                android:gravity="center"
+                android:hint="@string/otp_input_hint"
+                android:inputType="numberSigned"
+                android:maxLength="1"
+                android:padding="4dp"
+                android:textColor="@color/md_grey_700"
+                android:textColorHighlight="@color/md_grey_700"
+                android:textColorHint="@color/md_grey_700"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/verificationCode2"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="42dp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/profile_text_bg"
+                android:layout_marginStart="16dp"
+                android:gravity="center"
+                android:hint="@string/otp_input_hint"
+                android:inputType="numberSigned"
+                android:maxLength="1"
+                android:padding="4dp"
+                android:textColor="@color/md_grey_700"
+                android:textColorHighlight="@color/md_grey_700"
+                android:textColorHint="@color/md_grey_700"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/verificationCode3"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="42dp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/profile_text_bg"
+                android:layout_marginStart="16dp"
+                android:gravity="center"
+                android:hint="@string/otp_input_hint"
+                android:inputType="numberSigned"
+                android:maxLength="1"
+                android:padding="4dp"
+                android:textColor="@color/md_grey_700"
+                android:textColorHighlight="@color/md_grey_700"
+                android:textColorHint="@color/md_grey_700"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/verificationCode4"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="42dp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/profile_text_bg"
+                android:layout_marginStart="16dp"
+                android:gravity="center"
+                android:hint="@string/otp_input_hint"
+                android:inputType="numberSigned"
+                android:maxLength="1"
+                android:padding="4dp"
+                android:textColor="@color/md_grey_700"
+                android:textColorHighlight="@color/md_grey_700"
+                android:textColorHint="@color/md_grey_700"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/verificationCode5"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="42dp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/profile_text_bg"
+                android:layout_marginStart="16dp"
+                android:gravity="center"
+                android:hint="@string/otp_input_hint"
+                android:inputType="numberSigned"
+                android:maxLength="1"
+                android:padding="4dp"
+                android:textColor="@color/md_grey_700"
+                android:textColorHighlight="@color/md_grey_700"
+                android:textColorHint="@color/md_grey_700"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/verificationCode6"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="42dp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/profile_text_bg"
+                android:layout_marginStart="16dp"
+                android:gravity="center"
+                android:hint="@string/otp_input_hint"
+                android:inputType="numberSigned"
+                android:maxLength="1"
+                android:padding="4dp"
+                android:textColor="@color/md_grey_700"
+                android:textColorHighlight="@color/md_grey_700"
+                android:textColorHint="@color/md_grey_700"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

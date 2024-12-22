@@ -3,7 +3,6 @@ package com.shakil.barivara.presentation.room
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
@@ -19,30 +18,31 @@ import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.databinding.ActivityRentListBinding
 import com.shakil.barivara.presentation.adapter.RecyclerRentListAdapter
 import com.shakil.barivara.presentation.adapter.RecyclerRentListAdapter.RentCallBacks
-import com.shakil.barivara.presentation.onboard.MainActivity
+import com.shakil.barivara.presentation.onboard.HomeActivity
 import com.shakil.barivara.utils.Constants.mUserId
-import com.shakil.barivara.utils.CustomAdManager
-import com.shakil.barivara.utils.FilterManager
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class RentListActivity : BaseActivity<ActivityRentListBinding>(), RentCallBacks {
     private lateinit var activityRentListBinding: ActivityRentListBinding
     private var rentList: ArrayList<Rent> = arrayListOf()
     private var firebaseCrudHelper = FirebaseCrudHelper(this)
     private var ux: UX? = null
     private var tools = Tools(this)
-    private var filterManager = FilterManager()
-    private var customAdManager = CustomAdManager(this)
-    private lateinit var prefManager: PrefManager
+
+    @Inject
+    lateinit var prefManager: PrefManager
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
             startActivity(
                 Intent(
                     this@RentListActivity,
-                    MainActivity::class.java
+                    HomeActivity::class.java
                 )
             )
         }
@@ -61,7 +61,7 @@ class RentListActivity : BaseActivity<ActivityRentListBinding>(), RentCallBacks 
             startActivity(
                 Intent(
                     this@RentListActivity,
-                    MainActivity::class.java
+                    HomeActivity::class.java
                 )
             )
         }
@@ -71,12 +71,10 @@ class RentListActivity : BaseActivity<ActivityRentListBinding>(), RentCallBacks 
 
     private fun init() {
         ux = UX(this)
-        prefManager = PrefManager(this)
     }
 
     private fun bindUIWithComponents() {
         activityRentListBinding.searchLayout.SearchName.hint = getString(R.string.search_month_name)
-        customAdManager.generateAd(activityRentListBinding.adView)
         if (tools.hasConnection()) {
             setData()
         } else {
@@ -89,53 +87,6 @@ class RentListActivity : BaseActivity<ActivityRentListBinding>(), RentCallBacks 
                     RentDetailsActivity::class.java
                 )
             )
-        }
-        activityRentListBinding.searchLayout.searchButton.setOnClickListener {
-            if (tools.hasConnection()) {
-                if (!TextUtils.isEmpty(activityRentListBinding.searchLayout.SearchName.text.toString())) {
-                    filterManager.onFilterClick(
-                        activityRentListBinding.searchLayout.SearchName.text.toString(),
-                        rentList,
-                        object : FilterManager.onRentFilterClick {
-                            override fun onClick(objects: ArrayList<Rent>) {
-                                if (objects.size > 0) {
-                                    rentList = objects
-                                    setRecyclerAdapter()
-                                    Tools.hideKeyboard(this@RentListActivity)
-                                    Toast.makeText(
-                                        this@RentListActivity,
-                                        getString(R.string.filterd),
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                } else {
-                                    Tools.hideKeyboard(this@RentListActivity)
-                                    activityRentListBinding.mNoDataMessage.visibility = View.VISIBLE
-                                    activityRentListBinding.mNoDataMessage.setText(R.string.no_data_message)
-                                    activityRentListBinding.mRecylerView.visibility = View.GONE
-                                    Toast.makeText(
-                                        this@RentListActivity,
-                                        getString(R.string.no_data_message),
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                            }
-
-                        }
-                    )
-                } else {
-                    Toast.makeText(
-                        this@RentListActivity,
-                        getString(R.string.enter_data_validation),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            } else {
-                Toast.makeText(
-                    this@RentListActivity,
-                    getString(R.string.no_internet_title),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
         }
         activityRentListBinding.searchLayout.refreshButton.setOnClickListener {
             if (tools.hasConnection()) {

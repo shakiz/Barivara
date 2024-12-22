@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:id="@+id/mainLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/md_white_1000"
+            android:padding="16dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/login_header"
+                android:src="@drawable/user_login" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/login"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_gravity="start"
+                android:textColor="@color/md_black_1000"
+                android:focusable="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/good_to_see_you_here"
+                android:textSize="16sp"
+                android:layout_gravity="start"
+                android:textColor="@color/md_grey_600"
+                android:layout_marginTop="4dp"
+                android:drawablePadding="4dp"
+                android:focusable="true"
+                app:drawableEndCompat="@drawable/ic_heart" />
+
+            <LinearLayout
+                android:id="@+id/mainMobileRegistrationLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight=".2"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:scrollbarSize="16sp"
+                    android:focusable="false"
+                    android:gravity="center"
+                    android:text="@string/bd_mobile_code"
+                    android:padding="4dp"
+                    android:inputType="none"
+                    android:background="@drawable/profile_text_bg"
+                    android:textColor="@color/md_grey_700"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/mobileNumber"
+                    android:layout_width="0dp"
+                    android:layout_weight=".8"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/profile_text_bg"
+                    android:hint="@string/mobile_number_with_digit_hint"
+                    android:inputType="numberSigned"
+                    android:padding="8dp"
+                    android:maxLength="11"
+                    android:textColor="@color/md_grey_700"
+                    android:textColorHighlight="@color/md_grey_700"
+                    android:textColorHint="@color/md_grey_700"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/login_without_underline"
+                android:textAllCaps="false"
+                style="@style/BariVara.Button.Primary" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</layout>

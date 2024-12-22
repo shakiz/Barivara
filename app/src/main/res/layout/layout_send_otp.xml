@@ -1,0 +1,77 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/md_white_1000"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/login_header"
+            android:src="@drawable/user_login" />
+
+        <TextView
+            android:id="@+id/tvHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:text="@string/verify_with_your_mobile_number"
+            android:textColor="@color/md_green_800"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/otpLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:layout_weight=".2"
+                android:background="@drawable/profile_text_bg"
+                android:focusable="false"
+                android:gravity="center"
+                android:inputType="none"
+                android:padding="4dp"
+                android:scrollbarSize="16sp"
+                android:text="@string/bd_mobile_code"
+                android:textColor="@color/md_grey_700"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/mobileNumber"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:layout_weight=".8"
+                android:background="@drawable/profile_text_bg"
+                android:gravity="center_vertical"
+                android:hint="@string/mobile_number_with_digit_hint"
+                android:inputType="numberSigned"
+                android:maxLength="11"
+                android:padding="8dp"
+                android:textColor="@color/md_grey_700"
+                android:textColorHighlight="@color/md_grey_700"
+                android:textColorHint="@color/md_grey_700"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

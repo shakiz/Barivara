@@ -3,7 +3,6 @@ package com.shakil.barivara.presentation.meter
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
@@ -19,13 +18,15 @@ import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.databinding.ActivityElectricityBillListBinding
 import com.shakil.barivara.presentation.adapter.RecyclerElectricityBillListAdapter
 import com.shakil.barivara.presentation.adapter.RecyclerElectricityBillListAdapter.ElectricityBillBacks
-import com.shakil.barivara.presentation.onboard.MainActivity
+import com.shakil.barivara.presentation.onboard.HomeActivity
 import com.shakil.barivara.utils.Constants.mUserId
-import com.shakil.barivara.utils.FilterManager
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class ElectricityBillListActivity : BaseActivity<ActivityElectricityBillListBinding>(),
     ElectricityBillBacks {
     private lateinit var activityMeterCostListBinding: ActivityElectricityBillListBinding
@@ -33,15 +34,16 @@ class ElectricityBillListActivity : BaseActivity<ActivityElectricityBillListBind
     private var firebaseCrudHelper = FirebaseCrudHelper(this)
     private var ux: UX? = null
     private var tools = Tools(this)
-    private var filterManager = FilterManager()
-    private lateinit var prefManager: PrefManager
+
+    @Inject
+    lateinit var prefManager: PrefManager
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
             startActivity(
                 Intent(
                     this@ElectricityBillListActivity,
-                    MainActivity::class.java
+                    HomeActivity::class.java
                 )
             )
         }
@@ -60,7 +62,7 @@ class ElectricityBillListActivity : BaseActivity<ActivityElectricityBillListBind
             startActivity(
                 Intent(
                     this@ElectricityBillListActivity,
-                    MainActivity::class.java
+                    HomeActivity::class.java
                 )
             )
         }
@@ -70,7 +72,6 @@ class ElectricityBillListActivity : BaseActivity<ActivityElectricityBillListBind
 
     private fun init() {
         ux = UX(this)
-        prefManager = PrefManager(this)
     }
 
     private fun bindUIWithComponents() {
@@ -88,54 +89,6 @@ class ElectricityBillListActivity : BaseActivity<ActivityElectricityBillListBind
                     ElectricityBillDetailsActivity::class.java
                 )
             )
-        }
-        activityMeterCostListBinding.searchLayout.searchButton.setOnClickListener {
-            if (tools.hasConnection()) {
-                if (!TextUtils.isEmpty(activityMeterCostListBinding.searchLayout.SearchName.text.toString())) {
-                    filterManager.onFilterClick(
-                        activityMeterCostListBinding.searchLayout.SearchName.text.toString(),
-                        electricityBills,
-                        object : FilterManager.onBillFilterClick {
-                            override fun onClick(objects: ArrayList<ElectricityBill>) {
-                                if (objects.size > 0) {
-                                    electricityBills = objects
-                                    setRecyclerAdapter()
-                                    Tools.hideKeyboard(this@ElectricityBillListActivity)
-                                    Toast.makeText(
-                                        this@ElectricityBillListActivity,
-                                        getString(R.string.filterd),
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                } else {
-                                    Tools.hideKeyboard(this@ElectricityBillListActivity)
-                                    activityMeterCostListBinding.mNoDataMessage.visibility =
-                                        View.VISIBLE
-                                    activityMeterCostListBinding.mNoDataMessage.setText(R.string.no_data_message)
-                                    activityMeterCostListBinding.mRecylerView.visibility = View.GONE
-                                    Toast.makeText(
-                                        this@ElectricityBillListActivity,
-                                        getString(R.string.no_data_message),
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                            }
-
-                        }
-                    )
-                } else {
-                    Toast.makeText(
-                        this@ElectricityBillListActivity,
-                        getString(R.string.enter_data_validation),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            } else {
-                Toast.makeText(
-                    this@ElectricityBillListActivity,
-                    getString(R.string.no_internet_title),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
         }
         activityMeterCostListBinding.searchLayout.refreshButton.setOnClickListener {
             if (tools.hasConnection()) {

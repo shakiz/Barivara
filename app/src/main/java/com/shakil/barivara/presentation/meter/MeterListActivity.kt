@@ -3,7 +3,6 @@ package com.shakil.barivara.presentation.meter
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
@@ -19,28 +18,31 @@ import com.shakil.barivara.data.remote.firebasedb.FirebaseCrudHelper
 import com.shakil.barivara.databinding.ActivityMeterListBinding
 import com.shakil.barivara.presentation.adapter.RecyclerMeterListAdapter
 import com.shakil.barivara.presentation.adapter.RecyclerMeterListAdapter.MeterCallBacks
-import com.shakil.barivara.presentation.onboard.MainActivity
+import com.shakil.barivara.presentation.onboard.HomeActivity
 import com.shakil.barivara.utils.Constants.mUserId
-import com.shakil.barivara.utils.FilterManager
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MeterListActivity : BaseActivity<ActivityMeterListBinding>(), MeterCallBacks {
     private lateinit var activityMeterListBinding: ActivityMeterListBinding
     private var meterList: ArrayList<Meter> = arrayListOf()
     private var firebaseCrudHelper = FirebaseCrudHelper(this)
     private var ux: UX? = null
     private var tools = Tools(this)
-    private var filterManager = FilterManager()
-    private lateinit var prefManager: PrefManager
+
+    @Inject
+    lateinit var prefManager: PrefManager
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
             startActivity(
                 Intent(
                     this@MeterListActivity,
-                    MainActivity::class.java
+                    HomeActivity::class.java
                 )
             )
         }
@@ -61,7 +63,7 @@ class MeterListActivity : BaseActivity<ActivityMeterListBinding>(), MeterCallBac
             startActivity(
                 Intent(
                     this@MeterListActivity,
-                    MainActivity::class.java
+                    HomeActivity::class.java
                 )
             )
         }
@@ -71,9 +73,7 @@ class MeterListActivity : BaseActivity<ActivityMeterListBinding>(), MeterCallBac
     private fun init() {
         meterList = ArrayList()
         ux = UX(this)
-        prefManager = PrefManager(this)
     }
-
 
     private fun binUiWIthComponents() {
         activityMeterListBinding.searchLayout.SearchName.hint =
@@ -90,54 +90,6 @@ class MeterListActivity : BaseActivity<ActivityMeterListBinding>(), MeterCallBac
                     NewMeterActivity::class.java
                 )
             )
-        }
-        activityMeterListBinding.searchLayout.searchButton.setOnClickListener {
-            if (tools.hasConnection()) {
-                if (!TextUtils.isEmpty(activityMeterListBinding.searchLayout.SearchName.text.toString())) {
-                    filterManager.onFilterClick(
-                        activityMeterListBinding.searchLayout.SearchName.text.toString(),
-                        meterList,
-                        object : FilterManager.onMeterFilterClick {
-                            override fun onClick(objects: ArrayList<Meter>) {
-                                if (objects.size > 0) {
-                                    meterList = objects
-                                    setRecyclerAdapter()
-                                    Tools.hideKeyboard(this@MeterListActivity)
-                                    Toast.makeText(
-                                        this@MeterListActivity,
-                                        getString(R.string.filterd),
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                } else {
-                                    Tools.hideKeyboard(this@MeterListActivity)
-                                    activityMeterListBinding.mNoDataMessage.visibility =
-                                        View.VISIBLE
-                                    activityMeterListBinding.mNoDataMessage.setText(R.string.no_data_message)
-                                    activityMeterListBinding.mRecylerView.visibility = View.GONE
-                                    Toast.makeText(
-                                        this@MeterListActivity,
-                                        getString(R.string.no_data_message),
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                            }
-
-                        }
-                    )
-                } else {
-                    Toast.makeText(
-                        this@MeterListActivity,
-                        getString(R.string.enter_data_validation),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            } else {
-                Toast.makeText(
-                    this@MeterListActivity,
-                    getString(R.string.no_internet_title),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
         }
         activityMeterListBinding.searchLayout.refreshButton.setOnClickListener {
             if (tools.hasConnection()) {

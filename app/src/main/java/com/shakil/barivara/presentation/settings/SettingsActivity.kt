@@ -7,21 +7,24 @@ import android.widget.Toast
 import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
 import com.shakil.barivara.databinding.ActivitySettingsBinding
-import com.shakil.barivara.presentation.auth.login.LoginActivity
-import com.shakil.barivara.presentation.onboard.MainActivity
+import com.shakil.barivara.presentation.auth.login.LoginSelectionActivity
+import com.shakil.barivara.presentation.onboard.HomeActivity
 import com.shakil.barivara.utils.Constants
-import com.shakil.barivara.utils.CustomAdManager
 import com.shakil.barivara.utils.LanguageManager
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Tools
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class SettingsActivity : BaseActivity<ActivitySettingsBinding>() {
     private lateinit var activitySettingsBinding: ActivitySettingsBinding
     private var languageMap = HashMap<String, String>()
     private lateinit var languageManager: LanguageManager
-    private lateinit var prefManager: PrefManager
+
+    @Inject
+    lateinit var prefManager: PrefManager
     private var tools = Tools(this)
-    private var customAdManager = CustomAdManager(this)
     override val layoutResourceId: Int
         get() = R.layout.activity_settings
 
@@ -31,9 +34,7 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        languageManager = LanguageManager(this)
-        prefManager = PrefManager(this)
-
+        languageManager = LanguageManager(this, prefManager)
         setSupportActionBar(activitySettingsBinding.toolBar)
         activitySettingsBinding.toolBar.setNavigationOnClickListener { finish() }
         setupLanguage()
@@ -47,7 +48,6 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding>() {
     }
 
     private fun bindUiWithComponents() {
-        customAdManager.generateAd(activitySettingsBinding.adView)
         if (!TextUtils.isEmpty(prefManager.getString(Constants.mUserFullName))) {
             activitySettingsBinding.UserFullName.text =
                 getString(R.string.username) + ":" + prefManager.getString(
@@ -84,13 +84,13 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding>() {
         }
         activitySettingsBinding.logoutButton.setOnClickListener {
             tools.doPopUpForLogout(
-                LoginActivity::class.java,
+                LoginSelectionActivity::class.java,
                 prefManager
             )
         }
         activitySettingsBinding.language.setOnClickListener {
             languageManager.setLanguage(
-                MainActivity::class.java
+                HomeActivity::class.java
             )
         }
         activitySettingsBinding.googleLoginLayout.setOnClickListener {
@@ -103,7 +103,7 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding>() {
                 activitySettingsBinding.googleLoginLayout.isClickable = false
                 activitySettingsBinding.googleLoginLayout.isActivated = false
             } else {
-                startActivity(Intent(this@SettingsActivity, LoginActivity::class.java))
+                startActivity(Intent(this@SettingsActivity, LoginSelectionActivity::class.java))
             }
         }
     }

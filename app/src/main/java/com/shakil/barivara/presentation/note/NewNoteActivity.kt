@@ -20,9 +20,12 @@ import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UtilsForAll
 import com.shakil.barivara.utils.Validation
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
 import java.util.UUID
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class NewNoteActivity : BaseActivity<ActivityNewNoteBinding>() {
     private lateinit var activityNewNoteBinding: ActivityNewNoteBinding
     private lateinit var textToSpeech: TextToSpeech
@@ -35,7 +38,9 @@ class NewNoteActivity : BaseActivity<ActivityNewNoteBinding>() {
     private var validation = Validation(this, hashMap)
     private var appAnalytics = AppAnalytics(this)
     private var utilsForAll = UtilsForAll(this)
-    private lateinit var prefManager: PrefManager
+
+    @Inject
+    lateinit var prefManager: PrefManager
     override val layoutResourceId: Int
         get() = R.layout.activity_new_note
 
@@ -45,7 +50,6 @@ class NewNoteActivity : BaseActivity<ActivityNewNoteBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        prefManager = PrefManager(this)
         intentData()
         setSupportActionBar(activityNewNoteBinding.toolBar)
         activityNewNoteBinding.toolBar.setNavigationOnClickListener { finish() }
@@ -104,7 +108,7 @@ class NewNoteActivity : BaseActivity<ActivityNewNoteBinding>() {
             if (tools.hasConnection()) {
                 note.title = activityNewNoteBinding.Title.text.toString()
                 note.description = activityNewNoteBinding.Description.text.toString()
-                note.date = utilsForAll.dateTimeWithPM
+                note.date = utilsForAll.dateTimeWithPM()
                 if (command == "add") {
                     note.noteId = UUID.randomUUID().toString()
                     firebaseCrudHelper.add(note, "note", prefManager.getString(mUserId))

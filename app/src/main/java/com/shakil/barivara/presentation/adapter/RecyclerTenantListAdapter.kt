@@ -1,20 +1,28 @@
 package com.shakil.barivara.presentation.adapter
 
-import android.text.TextUtils
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.shakil.barivara.R
-import com.shakil.barivara.presentation.adapter.RecyclerTenantListAdapter.TenantItemViewHolder
-import com.shakil.barivara.databinding.AdapterLayoutTenantListBinding
 import com.shakil.barivara.data.model.tenant.Tenant
+import com.shakil.barivara.databinding.AdapterLayoutTenantListBinding
+import com.shakil.barivara.presentation.adapter.RecyclerAdapterTenantList.TenantItemViewHolder
+import com.shakil.barivara.utils.boldAfterColon
+import com.shakil.barivara.utils.formatDateTimeToAppText
 
-class RecyclerTenantListAdapter(private val arrayList: ArrayList<Tenant>) :
+class RecyclerAdapterTenantList :
     RecyclerView.Adapter<TenantItemViewHolder>() {
     private var tenantCallback: TenantCallBacks? = null
+    private var list: List<Tenant> = mutableListOf()
 
     fun setOnTenantCallback(tenantCallback: TenantCallBacks?) {
         this.tenantCallback = tenantCallback
+    }
+
+    fun setItems(list: List<Tenant>) {
+        this.list = list
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TenantItemViewHolder {
@@ -27,12 +35,12 @@ class RecyclerTenantListAdapter(private val arrayList: ArrayList<Tenant>) :
     }
 
     override fun onBindViewHolder(holder: TenantItemViewHolder, position: Int) {
-        val tenant = arrayList[position]
+        val tenant = list[position]
         holder.bind(tenant)
     }
 
     override fun getItemCount(): Int {
-        return arrayList.size
+        return list.size
     }
 
     class TenantItemViewHolder(
@@ -42,36 +50,23 @@ class RecyclerTenantListAdapter(private val arrayList: ArrayList<Tenant>) :
         binding.root
     ) {
         fun bind(tenant: Tenant) {
-            binding.TenantName.text = tenant.tenantName
-            binding.StartingMonth.text = tenant.startingMonth
-            binding.AssociateRoom.text = tenant.associateRoom
-            binding.TenantTypeStr.text = tenant.tenantTypeStr
+            val context: Context = binding.root.context
+            binding.TenantName.text =
+                context.getString(R.string.tenant_name_x, tenant.name).boldAfterColon()
+            binding.MobileNo.text =
+                context.getString(R.string.phone_no_x, tenant.phone?.toInt()).boldAfterColon()
+            binding.StartDate.text =
+                context.getString(R.string.start_date_x, formatDateTimeToAppText(tenant.startDate))
+                    .boldAfterColon()
+
             binding.itemCardView.setOnClickListener {
                 tenantCallBack?.onItemClick(tenant)
             }
             binding.callIcon.setOnClickListener {
-                tenantCallBack?.onCallClicked(tenant.mobileNo ?: "", tenant.tenantName ?: "")
+                tenantCallBack?.onCallClicked(tenant.phone ?: "", tenant.name ?: "")
             }
             binding.messageIcon.setOnClickListener {
-                tenantCallBack?.onMessageClicked(tenant.mobileNo ?: "")
-            }
-            if (tenant.isActiveValue != null && !TextUtils.isEmpty(tenant.isActiveValue)) {
-                if (tenant.isActiveValue == binding.root.context.getString(R.string.yes)) {
-                    binding.activeColorIndicator.setBackgroundColor(
-                        binding.root.context.resources.getColor(
-                            R.color.md_green_400
-                        )
-                    )
-                } else {
-                    binding.activeColorIndicator.setBackgroundColor(
-                        binding.root.context.resources.getColor(
-                            R.color.md_red_400
-                        )
-                    )
-                }
-            }
-            binding.editIcon.setOnClickListener {
-                tenantCallBack?.onEdit(tenant)
+                tenantCallBack?.onMessageClicked(tenant.phone ?: "")
             }
             binding.deleteIcon.setOnClickListener {
                 tenantCallBack?.onDelete(tenant)

@@ -51,10 +51,11 @@ class SpinnerData(private val context: Context) {
         val tenantTypeArray = arrayOf(
             context.getString(R.string.select_data_1),
             context.getString(R.string.bachelor),
-            context.getString(R.string.family),
+            context.getString(R.string.large_family),
             context.getString(R.string.small_family),
             context.getString(R.string.female_only),
-            context.getString(R.string.male_only)
+            context.getString(R.string.male_only),
+            context.getString(R.string.others)
         )
         Collections.addAll(spinnerValues, *tenantTypeArray)
         return spinnerValues

@@ -7,12 +7,11 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import com.google.firebase.analytics.FirebaseAnalytics
+import com.shakil.barivara.utils.AnalyticsManager
 import kotlin.properties.Delegates
 
 abstract class BaseActivity<DataBinding : ViewDataBinding> : AppCompatActivity() {
-
-    private lateinit var firebaseAnalytics: FirebaseAnalytics
+    private lateinit var analyticsManager: AnalyticsManager
     var dataBinding: DataBinding by Delegates.notNull()
 
     @get:LayoutRes
@@ -20,18 +19,19 @@ abstract class BaseActivity<DataBinding : ViewDataBinding> : AppCompatActivity()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        MyApplication.firebaseAnalytics.let {
-            firebaseAnalytics = it
-        }
+        analyticsManager = AnalyticsManager(context = applicationContext)
 
         dataBinding = DataBindingUtil.setContentView(this, layoutResourceId)
         dataBinding.lifecycleOwner = this
         setVariables(dataBinding)
     }
 
-    fun registerEvent(eventName: String, eventData: Bundle?) {
-        firebaseAnalytics.logEvent(eventName, eventData)
+    fun screenViewed(screenName: String) {
+        analyticsManager.logScreenView(screenName)
+    }
+
+    fun buttonAction(actionName: String, eventData: Map<String, String>? = null) {
+        analyticsManager.logButtonAction(actionName, eventData)
     }
 
     fun setData(key1: String?, data1: String?): Bundle {
