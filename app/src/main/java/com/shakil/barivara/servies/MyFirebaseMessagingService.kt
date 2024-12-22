@@ -27,7 +27,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             val notification = Notification(
                 UUID.randomUUID().toString(),
                 remoteMessage.notification?.title, remoteMessage.notification?.body,
-                utilsForAll.dateTimeWithPM, 0
+                utilsForAll.dateTimeWithPM(), 0
             )
             firebaseCrudHelper.addNotification(notification, "notification")
             Log.i(TAG, "Notification data saved")

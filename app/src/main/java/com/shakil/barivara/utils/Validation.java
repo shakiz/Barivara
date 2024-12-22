@@ -33,7 +33,7 @@ public class Validation {
             validationMap.put("EditText", controls);
             _msg = msgs;
         } else
-            Toast.makeText(context,"Validation messages and mapping controls are not equal", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Validation messages and mapping controls are not equal", Toast.LENGTH_SHORT).show();
     }
 
     public void setSpinnerIsNotEmpty(String[] controls) {
@@ -54,7 +54,7 @@ public class Validation {
                 for (String controlName : entry.getValue()) {
                     int resID = context.getResources().getIdentifier(controlName, "id", context.getPackageName());
                     EditText et = ((android.app.Activity) context).findViewById(resID);
-                    if(et!=null){
+                    if (et != null) {
                         if (et.getText().toString().isEmpty()) {
                             et.requestFocus();
                             InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -62,11 +62,11 @@ public class Validation {
                             if (_msg != null)
                                 et.setError(_msg[iMsg]);
                             else et.setError("This value is important.");
-                            if(et.getTag() != null){
+                            if (et.getTag() != null) {
                                 Toast.makeText(context,
-                                        context.getString(R.string.missing_data) + "  " + et.getTag().toString(),
-                                        Toast.LENGTH_SHORT)
-                                .show();
+                                                context.getString(R.string.missing_data) + "  " + et.getTag().toString(),
+                                                Toast.LENGTH_SHORT)
+                                        .show();
                             }
                             isValid = false;
                             break;
@@ -104,13 +104,13 @@ public class Validation {
                     int resID = context.getResources().getIdentifier(viewName, "id", context.getPackageName());
 
                     Spinner sp = ((android.app.Activity) context).findViewById(resID);
-                    if(sp!=null){
+                    if (sp != null) {
                         String spinnerValue = (String) sp.getSelectedItem();
                         if (spinnerValue.equals(context.getString(R.string.select_data))) {
                             sp.requestFocus();
                             TextView errorText = (TextView) sp.getSelectedView();
                             errorText.setError("");
-                            if(sp.getTag() != null){
+                            if (sp.getTag() != null) {
                                 Toast.makeText(context, context.getString(R.string.missing_data) + "  " + sp.getTag().toString(),
                                         Toast.LENGTH_SHORT).show();
                             }

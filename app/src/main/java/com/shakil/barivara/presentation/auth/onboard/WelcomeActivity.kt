@@ -4,22 +4,27 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
-import android.view.View
 import android.view.WindowManager
 import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
 import com.shakil.barivara.databinding.ActivityWelcomeBinding
-import com.shakil.barivara.presentation.auth.login.LoginActivity
+import com.shakil.barivara.presentation.auth.login.LoginSelectionActivity
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.MyViewPagerAdapter
 import com.shakil.barivara.utils.PrefManager
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class WelcomeActivity : BaseActivity<ActivityWelcomeBinding>() {
     private lateinit var activityWelcomeBinding: ActivityWelcomeBinding
     private var myViewPagerAdapter: MyViewPagerAdapter? = null
-    private var prefManager = PrefManager(this)
+
+    @Inject
+    lateinit var prefManager: PrefManager
     private lateinit var dots: Array<TextView?>
     private var layouts = intArrayOf(
         R.layout.welcome_about_app,
@@ -37,11 +42,7 @@ class WelcomeActivity : BaseActivity<ActivityWelcomeBinding>() {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (Build.VERSION.SDK_INT >= 21) {
-            window.decorView.systemUiVisibility =
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-        }
-        init()
+        activityWelcomeBinding = DataBindingUtil.setContentView(this, R.layout.activity_welcome)
         layouts = intArrayOf(
             R.layout.welcome_about_app,
             R.layout.welcome_add_tenant_first,
@@ -64,13 +65,9 @@ class WelcomeActivity : BaseActivity<ActivityWelcomeBinding>() {
         }
     }
 
-    private fun init() {
-        prefManager = PrefManager(this)
-    }
-
     private fun goLogin() {
         prefManager[Constants.mOldUser] = true
-        startActivity(Intent(this@WelcomeActivity, LoginActivity::class.java))
+        startActivity(Intent(this@WelcomeActivity, LoginSelectionActivity::class.java))
     }
 
     private fun addBottomDots(currentPage: Int) {

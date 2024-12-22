@@ -31,20 +31,22 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
-import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.AuthResult
 import com.shakil.barivara.R
-import com.shakil.barivara.presentation.auth.login.LoginActivity
-import com.shakil.barivara.presentation.onboard.MainActivity
-import com.shakil.barivara.presentation.onboard.SplashActivity
+import com.shakil.barivara.data.model.auth.LoginResponse
+import com.shakil.barivara.presentation.auth.login.LoginSelectionActivity
 import com.shakil.barivara.presentation.auth.onboard.WelcomeActivity
+import com.shakil.barivara.presentation.onboard.HomeActivity
+import com.shakil.barivara.presentation.onboard.SplashActivity
 import com.shakil.barivara.utils.Constants.REQUEST_CALL_CODE
 import com.shakil.barivara.utils.Constants.TAG
 import com.shakil.barivara.utils.Constants.VALID_EMAIL_ADDRESS_REGEX
+import com.shakil.barivara.utils.Constants.mAccessToken
 import com.shakil.barivara.utils.Constants.mAppViewCount
 import com.shakil.barivara.utils.Constants.mIsLoggedIn
 import com.shakil.barivara.utils.Constants.mLanguage
 import com.shakil.barivara.utils.Constants.mOldUser
+import com.shakil.barivara.utils.Constants.mRefreshToken
+import com.shakil.barivara.utils.Constants.mRefreshTokenValidity
 import com.shakil.barivara.utils.Constants.mUserEmail
 import com.shakil.barivara.utils.Constants.mUserFullName
 import com.shakil.barivara.utils.Constants.mUserId
@@ -132,9 +134,13 @@ class Tools(private val context: Context) {
         dialog.show()
     }
 
-    private fun clearPrefForLogout(to: Class<*>, prefManager: PrefManager) {
+    fun clearPrefForLogout(to: Class<*>, prefManager: PrefManager) {
         prefManager[mAppViewCount] = 0
         prefManager[mIsLoggedIn] = false
+        prefManager[mUserId] = ""
+        prefManager[mAccessToken] = ""
+        prefManager[mRefreshToken] = ""
+        prefManager[mRefreshTokenValidity] = 0
         prefManager[mUserId] = ""
         prefManager[mLanguage] = "en"
         prefManager[mUserFullName] = ""
@@ -216,9 +222,9 @@ class Tools(private val context: Context) {
             var intent: Intent? = null
             intent = if (prefManager.getBoolean(mOldUser)) {
                 if (prefManager.getBoolean(mIsLoggedIn)) {
-                    Intent(context, MainActivity::class.java)
+                    Intent(context, HomeActivity::class.java)
                 } else {
-                    Intent(context, LoginActivity::class.java)
+                    Intent(context, LoginSelectionActivity::class.java)
                 }
             } else {
                 Intent(context, WelcomeActivity::class.java)
@@ -259,14 +265,19 @@ class Tools(private val context: Context) {
         }
     }
 
-    fun setLoginPrefs(task: Task<AuthResult?>, prefManager: PrefManager) {
+    fun setLoginPrefs(
+        mobileNumber: String,
+        loginResponse: LoginResponse,
+        prefManager: PrefManager
+    ) {
         prefManager[mIsLoggedIn] = true
-        if (task.result != null) {
-            prefManager[mUserId] = task.result!!.user!!.uid
-            prefManager[mUserFullName] = task.result!!.user!!.displayName
-            prefManager[mUserEmail] = task.result!!.user!!.email
-            prefManager[mUserMobile] = task.result!!.user!!.phoneNumber
-        }
+        prefManager[mAccessToken] = loginResponse.accessToken
+        prefManager[mRefreshToken] = loginResponse.refreshToken
+        prefManager[mRefreshTokenValidity] = loginResponse.refreshTokenExpiresAt ?: 0
+        prefManager[mUserId] = loginResponse.userInfo.userId
+        prefManager[mUserMobile] = mobileNumber
+        prefManager[mUserEmail] = loginResponse.userInfo.email
+        prefManager[mUserFullName] = loginResponse.userInfo.name
     }
 
     fun launchAppByPackageName(appPackageName: String) {

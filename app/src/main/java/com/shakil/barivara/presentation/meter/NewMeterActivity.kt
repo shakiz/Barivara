@@ -18,8 +18,11 @@ import com.shakil.barivara.utils.SpinnerAdapter
 import com.shakil.barivara.utils.SpinnerData
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.Validation
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.UUID
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class NewMeterActivity : BaseActivity<ActivityNewMeterBinding>() {
     private lateinit var activityNewMeterBinding: ActivityNewMeterBinding
     private var spinnerAdapter = SpinnerAdapter()
@@ -34,7 +37,9 @@ class NewMeterActivity : BaseActivity<ActivityNewMeterBinding>() {
     private var firebaseCrudHelper = FirebaseCrudHelper(this)
     private var roomNames = arrayListOf<String>()
     private var tools = Tools(this)
-    private lateinit var prefManager: PrefManager
+
+    @Inject
+    lateinit var prefManager: PrefManager
     private val hashMap: Map<String?, Array<String>?> = HashMap()
     private var validation = Validation(this, hashMap)
     override val layoutResourceId: Int
@@ -46,7 +51,6 @@ class NewMeterActivity : BaseActivity<ActivityNewMeterBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        prefManager = PrefManager(this)
         getIntentData()
         setSupportActionBar(activityNewMeterBinding.toolBar)
         activityNewMeterBinding.toolBar.setNavigationOnClickListener { finish() }

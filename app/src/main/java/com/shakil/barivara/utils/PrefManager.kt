@@ -2,8 +2,9 @@ package com.shakil.barivara.utils
 
 import android.content.Context
 import com.shakil.barivara.utils.Constants.PREF_NAME
+import javax.inject.Inject
 
-class PrefManager(context: Context) {
+class PrefManager @Inject constructor(context: Context) {
     private val PRIVATE_MODE = 0
     private val pref = context.getSharedPreferences(PREF_NAME, PRIVATE_MODE)
     private val editor = context.getSharedPreferences(PREF_NAME, PRIVATE_MODE).edit()
@@ -32,10 +33,5 @@ class PrefManager(context: Context) {
 
     fun getInt(key: String?): Int {
         return pref.getInt(key, 0)
-    }
-
-    fun clear() {
-        editor.clear()
-        editor.commit()
     }
 }

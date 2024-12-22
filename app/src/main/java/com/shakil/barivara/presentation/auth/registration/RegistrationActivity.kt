@@ -4,13 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import com.google.firebase.auth.FirebaseAuth
 import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
 import com.shakil.barivara.databinding.ActivityRegistrationBinding
-import com.shakil.barivara.presentation.auth.login.LoginActivity
+import com.shakil.barivara.presentation.auth.login.LoginSelectionActivity
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
@@ -50,7 +48,7 @@ class RegistrationActivity : BaseActivity<ActivityRegistrationBinding>() {
             startActivity(
                 Intent(
                     this@RegistrationActivity,
-                    LoginActivity::class.java
+                    LoginSelectionActivity::class.java
                 )
             )
         }
@@ -102,7 +100,7 @@ class RegistrationActivity : BaseActivity<ActivityRegistrationBinding>() {
                     Toast.LENGTH_LONG,
                     true
                 ).show()
-                startActivity(Intent(this@RegistrationActivity, LoginActivity::class.java))
+                startActivity(Intent(this@RegistrationActivity, LoginSelectionActivity::class.java))
             } else {
                 if (task.exception?.message == getString(R.string.firebase_user_exists_exception)) {
                     Toasty.error(

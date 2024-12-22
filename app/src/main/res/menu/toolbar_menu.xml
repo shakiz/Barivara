@@ -3,13 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/menu_notification"
-        android:title="@string/notifications"
-        android:icon="@drawable/ic_notifications_black_24dp"
-        app:showAsAction="always">
-    </item>
-
-    <item
         android:id="@+id/menu_logout"
         android:title="@string/logout"
         android:icon="@drawable/ic_logout_black_24dp"

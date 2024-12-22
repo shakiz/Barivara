@@ -22,8 +22,11 @@ import com.shakil.barivara.utils.SpinnerData
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UtilsForAll
 import com.shakil.barivara.utils.Validation
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.UUID
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class ElectricityBillDetailsActivity : BaseActivity<ActivityElectricityBillDetailsBinding>() {
     private lateinit var activityMeterCostDetailsBinding: ActivityElectricityBillDetailsBinding
     private var meterNameStr: String = ""
@@ -42,7 +45,9 @@ class ElectricityBillDetailsActivity : BaseActivity<ActivityElectricityBillDetai
     private var roomNames: ArrayList<String> = arrayListOf()
     private var meterNames: ArrayList<String> = arrayListOf()
     private var tools = Tools(this)
-    private lateinit var prefManager: PrefManager
+
+    @Inject
+    lateinit var prefManager: PrefManager
     private var spinnerData = SpinnerData(this)
     private val hashMap: Map<String?, Array<String>?> = HashMap()
     private var validation = Validation(this, hashMap)
@@ -55,7 +60,6 @@ class ElectricityBillDetailsActivity : BaseActivity<ActivityElectricityBillDetai
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        prefManager = PrefManager(this)
         getIntentData()
         setSupportActionBar(activityMeterCostDetailsBinding.toolBar)
         activityMeterCostDetailsBinding.toolBar.setNavigationOnClickListener { finish() }

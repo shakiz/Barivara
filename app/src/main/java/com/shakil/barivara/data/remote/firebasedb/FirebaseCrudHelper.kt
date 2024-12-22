@@ -9,7 +9,6 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.getValue
 import com.shakil.barivara.R
-import com.shakil.barivara.data.model.User
 import com.shakil.barivara.data.model.meter.ElectricityBill
 import com.shakil.barivara.data.model.meter.Meter
 import com.shakil.barivara.data.model.note.Note
@@ -41,7 +40,6 @@ class FirebaseCrudHelper(private val context: Context) {
         when (path) {
             "tenant" -> {
                 val tenant = data as Tenant
-                postValues = tenant.toMap()
             }
 
             "meter" -> {
@@ -54,11 +52,6 @@ class FirebaseCrudHelper(private val context: Context) {
                 postValues = rent.toMap()
             }
 
-            "room" -> {
-                val room = data as Room
-                postValues = room.toMap()
-            }
-
             "note" -> {
                 val note = data as Note
                 postValues = note.toMap()
@@ -67,11 +60,6 @@ class FirebaseCrudHelper(private val context: Context) {
             "electricityBill" -> {
                 val electricityBill = data as ElectricityBill
                 postValues = electricityBill.toMap()
-            }
-
-            "user" -> {
-                val user = data as User
-                postValues = user.toMap()
             }
 
             else ->                 //empty implementation
@@ -86,32 +74,6 @@ class FirebaseCrudHelper(private val context: Context) {
         databaseReference?.removeValue()
     }
 
-    fun fetchProfile(path: String, userId: String, onProfileFetch: onProfileFetch) {
-        val objects = ArrayList<User?>()
-        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId)
-        Log.i(Constants.TAG, "" + databaseReference!!.parent)
-        databaseReference?.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                for (dataSnapshot in snapshot.children) {
-                    val user = dataSnapshot.getValue(
-                        User::class.java
-                    )
-                    user?.firebaseKey = dataSnapshot.key ?: ""
-                    objects.add(user)
-                    Log.i(Constants.TAG + ":fetchProfile", "" + user?.firebaseKey)
-                }
-                if (objects.size > 0) {
-                    onProfileFetch.onFetch(objects[0])
-                } else {
-                    onProfileFetch.onFetch(null)
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.i(Constants.TAG, "" + error.message)
-            }
-        })
-    }
 
     fun fetchAllMeter(path: String, userId: String, onDataFetch: onDataFetch) {
         val objects = ArrayList<Meter?>()
@@ -126,26 +88,6 @@ class FirebaseCrudHelper(private val context: Context) {
                     Log.i(Constants.TAG + ":fetchMeter", "" + meter?.meterName)
                 }
                 onDataFetch.onFetch(objects)
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.i(Constants.TAG, "" + error.message)
-            }
-        })
-    }
-
-    fun fetchAllRoom(path: String, userId: String, onRoomDataFetch: onRoomDataFetch) {
-        val objects = ArrayList<Room?>()
-        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId)
-        databaseReference?.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                for (dataSnapshot in snapshot.children) {
-                    val room = dataSnapshot.getValue(Room::class.java)
-                    room?.fireBaseKey = dataSnapshot.key ?: ""
-                    Log.i(Constants.TAG + ":fetchRoom", "" + room?.roomName)
-                    objects.add(room)
-                }
-                onRoomDataFetch.onFetch(objects)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -205,12 +147,6 @@ class FirebaseCrudHelper(private val context: Context) {
         databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId)
         databaseReference!!.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                for (dataSnapshot in snapshot.children) {
-                    val tenant = dataSnapshot.getValue(Tenant::class.java)
-                    tenant?.fireBaseKey = dataSnapshot.key ?: ""
-                    Log.i(Constants.TAG + ":fetchTenant", "" + tenant?.tenantName)
-                    objects.add(tenant)
-                }
                 onTenantDataFetch.onFetch(objects)
             }
 
@@ -398,10 +334,6 @@ class FirebaseCrudHelper(private val context: Context) {
                 Log.i(Constants.TAG, "getDataByQuery: Yearly :" + error.message)
             }
         })
-    }
-
-    interface onProfileFetch {
-        fun onFetch(user: User?)
     }
 
     interface onDataFetch {
