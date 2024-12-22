@@ -2,7 +2,6 @@ package com.shakil.barivara.presentation.auth.login
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.WindowManager
 import androidx.activity.OnBackPressedCallback
 import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
@@ -32,10 +31,6 @@ class LoginSelectionActivity : BaseActivity<ActivityLoginSelectionBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-        )
         onBackPressedDispatcher.addCallback(onBackPressedCallback)
         initUI()
         initListeners()
