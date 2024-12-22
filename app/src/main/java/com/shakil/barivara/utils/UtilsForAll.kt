@@ -32,36 +32,30 @@ class UtilsForAll(private val context: Context) {
     }
 
     fun setGreetings(): String {
-        var greetings = ""
         val calendar = Calendar.getInstance()
         val timeOfTheDay = calendar[Calendar.HOUR_OF_DAY]
-        greetings = if (timeOfTheDay >= 0 && timeOfTheDay < 12) {
+        return if (timeOfTheDay in 0..11) {
             context.getString(R.string.good_morning)
-        } else if (timeOfTheDay >= 12 && timeOfTheDay < 16) {
+        } else if (timeOfTheDay in 12..15) {
             context.getString(R.string.good_noon)
-        } else if (timeOfTheDay >= 16 && timeOfTheDay < 18) {
+        } else if (timeOfTheDay in 16..17) {
             context.getString(R.string.good_afternoon)
-        } else if (timeOfTheDay >= 18 && timeOfTheDay < 20) {
+        } else if (timeOfTheDay in 18..19) {
             context.getString(R.string.good_evening)
         } else {
             context.getString(R.string.good_night)
         }
-        return greetings
     }
 
-    val dateTime: String
-        get() {
-            val df: DateFormat = SimpleDateFormat("MMM d, yyyy")
-            return df.format(Date())
-        }
-    val dateTimeWithPM: String
-        get() = DateFormat.getDateTimeInstance()
+    fun dateTimeWithPM(): String {
+        return DateFormat.getDateTimeInstance()
             .format(Date())
-    val dayOfTheMonth: String
-        get() {
-            val dateFormat: DateFormat = SimpleDateFormat("EEE")
-            return dateFormat.format(Date())
-        }
+    }
+
+    fun dayOfTheMonth(): String {
+        val dateFormat: DateFormat = SimpleDateFormat("EEE")
+        return dateFormat.format(Date())
+    }
 
     fun isValidMobileNo(mobileNo: String): Boolean {
         return mobileNo.length == 11 && !mobileNo.startsWith(Constants.MOBILE_NUMBER_PREFIX)
@@ -90,5 +84,23 @@ class UtilsForAll(private val context: Context) {
             context.getString(R.string.december) -> 12
             else -> 0
         }
+    }
+
+    fun getDateTime(): String {
+        val df: DateFormat = SimpleDateFormat("MMM d, yyyy")
+        val dateTimeText = df.format(Date())
+        return dateTimeText
+    }
+
+    fun getDateTimeWithPM(): String {
+        val currentDateTimeString = DateFormat.getDateTimeInstance()
+            .format(Date())
+        return currentDateTimeString
+    }
+
+    fun getDayOfTheMonth(): String {
+        val dateFormat: DateFormat = SimpleDateFormat("EEE")
+        val day = dateFormat.format(Date())
+        return day
     }
 }

@@ -108,7 +108,7 @@ class NewNoteActivity : BaseActivity<ActivityNewNoteBinding>() {
             if (tools.hasConnection()) {
                 note.title = activityNewNoteBinding.Title.text.toString()
                 note.description = activityNewNoteBinding.Description.text.toString()
-                note.date = utilsForAll.dateTimeWithPM
+                note.date = utilsForAll.dateTimeWithPM()
                 if (command == "add") {
                     note.noteId = UUID.randomUUID().toString()
                     firebaseCrudHelper.add(note, "note", prefManager.getString(mUserId))

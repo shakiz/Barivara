@@ -5,22 +5,17 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
-import android.widget.ImageView
-import android.widget.LinearLayout
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
-import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
@@ -28,7 +23,6 @@ import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
 import com.shakil.barivara.databinding.ActivityHomeBinding
 import com.shakil.barivara.presentation.GenericDialog
-import com.shakil.barivara.presentation.adapter.ImageSliderAdapter
 import com.shakil.barivara.presentation.auth.forgotpassword.ForgotPasswordActivity
 import com.shakil.barivara.presentation.auth.login.LoginSelectionActivity
 import com.shakil.barivara.presentation.dashboard.DashboardActivity
@@ -45,6 +39,7 @@ import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.ScreenNameConstants
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
+import com.shakil.barivara.utils.UtilsForAll
 import dagger.hilt.android.AndroidEntryPoint
 import es.dmoral.toasty.Toasty
 import javax.inject.Inject
@@ -57,12 +52,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
 
     @Inject
     lateinit var prefManager: PrefManager
+    private lateinit var utilsForAll: UtilsForAll
     private var tools = Tools(this)
     private lateinit var ux: UX
     private val viewModel by viewModels<HomeViewModel>()
-    private var currentPage = 0
-    private val slideDelay: Long = 3000
-    private val handler = Handler(Looper.getMainLooper())
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
@@ -81,7 +74,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
         super.onCreate(savedInstanceState)
         screenViewed(ScreenNameConstants.appSreenHome)
         init()
-        setUpSlider()
         setupDrawerToggle()
         setupNotification()
         LanguageManager(this, prefManager).configLanguage()
@@ -94,79 +86,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
 
     private fun init() {
         ux = UX(this)
-    }
-
-    private fun setUpSlider() {
-        // Set up the adapter
-        val adapter = ImageSliderAdapter(this, viewModel.getSliderData())
-        val loopingImageList = viewModel.getSliderData() + viewModel.getSliderData()[0]
-        activityMainBinding.viewPager.adapter = adapter
-        // Create indicators
-        setupIndicators(viewModel.getSliderData().size)
-        setCurrentIndicator(0)
-
-        // Change indicator on page change
-        activityMainBinding.viewPager.registerOnPageChangeCallback(object :
-            ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                if (position == loopingImageList.size - 1) {
-                    // If at the fake last position, reset to the real first position without animation
-                    handler.postDelayed({
-                        activityMainBinding.viewPager.setCurrentItem(
-                            0,
-                            false
-                        ) // false disables animation
-                    }, 300) // Short delay to allow smooth transition
-                } else {
-                    setCurrentIndicator(position % viewModel.getSliderData().size)
-                    currentPage = position
-                }
-            }
-        })
-
-        // Start auto-slide
-        startAutoSlide()
-    }
-
-    private fun setupIndicators(count: Int) {
-        val indicators = Array(count) { ImageView(this) }
-        val params = LinearLayout.LayoutParams(
-            24,
-            24
-        ).apply {
-            setMargins(8, 0, 8, 0)
-        }
-
-        for (i in indicators.indices) {
-            indicators[i] = ImageView(this).apply {
-                setImageResource(R.drawable.ic_circle)
-                layoutParams = params
-            }
-            activityMainBinding.indicatorLayout.addView(indicators[i])
-        }
-    }
-
-    private fun setCurrentIndicator(index: Int) {
-        val childCount = activityMainBinding.indicatorLayout.childCount
-        for (i in 0 until childCount) {
-            val imageView = activityMainBinding.indicatorLayout.getChildAt(i) as ImageView
-            imageView.setImageResource(
-                if (i == index) R.drawable.ic_circle else R.drawable.ic_circle_inactive
-            )
-        }
-    }
-
-    private fun startAutoSlide() {
-        handler.postDelayed(object : Runnable {
-            override fun run() {
-                if (currentPage == viewModel.getSliderData().size) {
-                    currentPage = 0
-                }
-                activityMainBinding.viewPager.setCurrentItem(currentPage++, true)
-                handler.postDelayed(this, slideDelay)
-            }
-        }, slideDelay)
+        utilsForAll = UtilsForAll(this)
     }
 
     private fun setupNotification() {
@@ -312,6 +232,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
 
     private fun bindUIWithComponents() {
         activityMainBinding.navigationView.setNavigationItemSelectedListener(this)
+        activityMainBinding.greetingsText.text = utilsForAll.setGreetings()
+        activityMainBinding.dateTimeText.text = utilsForAll.getDateTime()
+        activityMainBinding.dayText.text = utilsForAll.getDayOfTheMonth()
 
         if (Build.VERSION.SDK_INT > 32) {
             if (ContextCompat.checkSelfPermission(

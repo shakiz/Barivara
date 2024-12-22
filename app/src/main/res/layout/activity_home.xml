@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -8,8 +7,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/window_background"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
         tools:context=".presentation.onboard.HomeActivity">
 
         <com.google.android.material.appbar.AppBarLayout
@@ -21,21 +18,21 @@
             app:elevation="0dp">
 
             <androidx.appcompat.widget.Toolbar
+                android:id="@+id/tool_bar"
+                style="@style/TextAppearance.Widget.Event.Toolbar.Title"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:id="@+id/tool_bar"
                 app:navigationIcon="?attr/homeAsUpIndicator"
-                style="@style/TextAppearance.Widget.Event.Toolbar.Title"
                 app:title="@string/app_name"
-                app:titleTextColor="@color/md_grey_800"/>
+                app:titleTextColor="@color/md_grey_800" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.drawerlayout.widget.DrawerLayout
             android:id="@+id/my_drawer_layout"
-            android:layout_below="@id/app_bar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_below="@id/app_bar">
 
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
@@ -43,201 +40,238 @@
                 android:fillViewport="true">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/mainLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:id="@+id/mainLayout">
+                    android:orientation="vertical">
 
-                    <androidx.viewpager2.widget.ViewPager2
-                        android:id="@+id/viewPager"
+                    <RelativeLayout
+                        android:id="@+id/bannerLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        tools:layout_height="222dp"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintDimensionRatio="16:9"
-                        android:layout_margin="16dp" />
-
-                    <!-- Indicator container -->
-                    <LinearLayout
-                        android:id="@+id/indicatorLayout"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@id/viewPager"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:layout_marginTop="4dp"
-                        android:orientation="horizontal" />
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/topLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@id/indicatorLayout"
-                        android:layout_marginTop="16dp"
                         android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp">
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/rectangle_border_darker_green"
+                        android:orientation="vertical"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        app:layout_constraintTop_toTopOf="parent">
 
-                        <androidx.cardview.widget.CardView
-                            android:id="@+id/totalRoomFlatLayout"
-                            android:layout_width="0dp"
+                        <TextView
+                            android:id="@+id/greetingsText"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="8dp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@id/totalTenantLayout"
-                            app:cardCornerRadius="8dp"
-                            app:cardElevation="0dp">
+                            android:layout_alignParentStart="true"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginRight="16dp"
+                            android:includeFontPadding="false"
+                            android:text="@string/good_morning"
+                            android:textColor="@color/md_black_1000"
+                            android:textSize="20sp" />
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:background="@drawable/gradient_color"
-                                android:gravity="center"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_marginTop="4dp"
-                                    android:ellipsize="end"
-                                    android:gravity="center"
-                                    android:maxLines="1"
-                                    android:padding="2dp"
-                                    android:text="@string/total_rooms"
-                                    android:textColor="@color/md_grey_800"
-                                    android:textSize="14sp" />
-
-                                <TextView
-                                    android:id="@+id/totalRooms"
-                                    android:layout_width="42dp"
-                                    android:layout_height="40dp"
-                                    android:layout_gravity="center"
-                                    android:layout_marginTop="4dp"
-                                    android:layout_marginBottom="8dp"
-                                    android:background="@drawable/white_circle_border"
-                                    android:ellipsize="end"
-                                    android:gravity="center"
-                                    android:maxLines="1"
-                                    android:padding="2dp"
-                                    android:paddingBottom="8dp"
-                                    android:text="@string/zero"
-                                    android:textColor="@color/md_grey_800"
-                                    android:textSize="18sp"
-                                    android:textStyle="bold" />
-
-                            </LinearLayout>
-
-                        </androidx.cardview.widget.CardView>
-
-                        <androidx.cardview.widget.CardView
-                            android:id="@+id/totalTenantLayout"
-                            android:layout_width="0dp"
+                        <TextView
+                            android:id="@+id/dateTimeText"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_below="@+id/greetingsText"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginRight="16dp"
+                            android:includeFontPadding="false"
+                            android:text="@string/demo_month"
+                            android:textColor="@color/md_black_1000"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/dayText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/dateTimeText"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginRight="16dp"
+                            android:includeFontPadding="false"
+                            android:text="@string/demo_day"
+                            android:textColor="@color/md_black_1000"
+                            android:textSize="16sp" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/topLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/dayText"
                             android:layout_marginStart="8dp"
-                            app:layout_constraintStart_toEndOf="@id/totalRoomFlatLayout"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:cardCornerRadius="8dp"
-                            app:cardElevation="0dp">
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp">
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/totalRoomFlatLayout"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:background="@drawable/gradient_color"
-                                android:gravity="center"
-                                android:orientation="vertical">
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginRight="8dp"
+                                android:layout_marginBottom="8dp"
+                                app:cardCornerRadius="8dp"
+                                app:cardElevation="0dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@id/totalTenantLayout"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
 
-                                <TextView
+                                <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:layout_marginTop="4dp"
-                                    android:ellipsize="end"
+                                    android:background="@drawable/gradient_color"
                                     android:gravity="center"
-                                    android:maxLines="1"
-                                    android:padding="2dp"
-                                    android:text="@string/total_tenants"
-                                    android:textColor="@color/md_grey_800"
-                                    android:textSize="14sp" />
+                                    android:orientation="vertical">
 
-                                <TextView
-                                    android:id="@+id/totalTenants"
-                                    android:layout_width="42dp"
-                                    android:layout_height="40dp"
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_marginTop="4dp"
+                                        android:ellipsize="end"
+                                        android:gravity="center"
+                                        android:maxLines="1"
+                                        android:padding="2dp"
+                                        android:text="@string/total_rooms"
+                                        android:textColor="@color/md_grey_800"
+                                        android:textSize="14sp" />
+
+                                    <TextView
+                                        android:id="@+id/totalRooms"
+                                        android:layout_width="42dp"
+                                        android:layout_height="40dp"
+                                        android:layout_gravity="center"
+                                        android:layout_marginTop="4dp"
+                                        android:layout_marginBottom="8dp"
+                                        android:background="@drawable/white_circle_border"
+                                        android:ellipsize="end"
+                                        android:gravity="center"
+                                        android:maxLines="1"
+                                        android:padding="2dp"
+                                        android:paddingBottom="8dp"
+                                        android:text="@string/zero"
+                                        android:textColor="@color/md_grey_800"
+                                        android:textSize="18sp"
+                                        android:textStyle="bold" />
+
+                                </LinearLayout>
+
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/totalTenantLayout"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginRight="8dp"
+                                android:layout_marginBottom="8dp"
+                                app:cardCornerRadius="8dp"
+                                app:cardElevation="0dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/totalRoomFlatLayout"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:layout_marginTop="4dp"
-                                    android:layout_marginBottom="8dp"
-                                    android:background="@drawable/white_circle_border"
-                                    android:ellipsize="end"
+                                    android:background="@drawable/gradient_color"
                                     android:gravity="center"
-                                    android:maxLines="1"
-                                    android:padding="2dp"
-                                    android:text="@string/zero"
-                                    android:textColor="@color/md_grey_800"
-                                    android:textSize="18sp"
-                                    android:textStyle="bold" />
+                                    android:orientation="vertical">
 
-                            </LinearLayout>
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_marginTop="4dp"
+                                        android:ellipsize="end"
+                                        android:gravity="center"
+                                        android:maxLines="1"
+                                        android:padding="2dp"
+                                        android:text="@string/total_tenants"
+                                        android:textColor="@color/md_grey_800"
+                                        android:textSize="14sp" />
 
-                        </androidx.cardview.widget.CardView>
+                                    <TextView
+                                        android:id="@+id/totalTenants"
+                                        android:layout_width="42dp"
+                                        android:layout_height="40dp"
+                                        android:layout_gravity="center"
+                                        android:layout_marginTop="4dp"
+                                        android:layout_marginBottom="8dp"
+                                        android:background="@drawable/white_circle_border"
+                                        android:ellipsize="end"
+                                        android:gravity="center"
+                                        android:maxLines="1"
+                                        android:padding="2dp"
+                                        android:text="@string/zero"
+                                        android:textColor="@color/md_grey_800"
+                                        android:textSize="18sp"
+                                        android:textStyle="bold" />
 
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                                </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/moreDetails"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/topLayout"
-                        app:layout_constraintTop_toBottomOf="@id/topLayout"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:layout_marginEnd="12dp"
-                        android:layout_marginTop="8dp"
-                        android:clickable="true"
-                        android:drawablePadding="4dp"
-                        android:ellipsize="end"
-                        android:focusable="true"
-                        android:gravity="center|end"
-                        android:maxLines="1"
-                        android:text="@string/details_here"
-                        android:textColor="@color/md_black_1000"
-                        android:textSize="16sp"
-                        app:drawableEndCompat="@drawable/ic_arrow_right"
-                        app:drawableLeftCompat="@drawable/ic_chart"
-                        app:drawableRightCompat="@drawable/ic_arrow_right"
-                        app:drawableStartCompat="@drawable/ic_chart" />
+                            </androidx.cardview.widget.CardView>
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <TextView
+                            android:id="@+id/moreDetails"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/topLayout"
+                            android:layout_alignParentEnd="true"
+                            android:layout_gravity="center|end"
+                            android:layout_marginEnd="16dp"
+                            android:clickable="true"
+                            android:drawablePadding="4dp"
+                            android:ellipsize="end"
+                            android:focusable="true"
+                            android:gravity="center|end"
+                            android:maxLines="1"
+                            android:text="@string/details_here"
+                            android:textColor="@color/md_black_1000"
+                            android:textSize="16sp"
+                            app:drawableEndCompat="@drawable/ic_arrow_right"
+                            app:drawableLeftCompat="@drawable/ic_chart"
+                            app:drawableRightCompat="@drawable/ic_arrow_right"
+                            app:drawableStartCompat="@drawable/ic_chart" />
+
+                    </RelativeLayout>
 
                     <TextView
                         android:id="@+id/tvTenantHeading"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@id/moreDetails"
                         android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
                         android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:text="@string/tenant_information"
                         android:textColor="@color/md_green_900"
-                        android:textStyle="bold"
                         android:textSize="20sp"
-                        android:text="@string/tenant_information" />
+                        android:textStyle="bold"
+                        app:layout_constraintTop_toBottomOf="@id/bannerLayout" />
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/tenant_list"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@id/tvTenantHeading"
-                        android:layout_marginTop="4dp"
                         android:layout_marginStart="16dp"
+                        android:layout_marginTop="4dp"
                         android:layout_marginEnd="16dp"
-                        app:cardElevation="0dp"
                         android:clickable="true"
+                        android:focusable="true"
                         android:foreground="?android:attr/selectableItemBackground"
                         app:cardCornerRadius="10dp"
+                        app:cardElevation="0dp"
                         app:cardUseCompatPadding="false"
-                        android:focusable="true">
+                        app:layout_constraintTop_toBottomOf="@id/tvTenantHeading">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
@@ -247,12 +281,12 @@
                                 android:id="@+id/ivTenant"
                                 android:layout_width="48dp"
                                 android:layout_height="48dp"
+                                android:layout_marginStart="16dp"
                                 android:layout_marginTop="16dp"
                                 android:layout_marginBottom="16dp"
-                                android:layout_marginStart="16dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintBottom_toBottomOf="parent"
                                 app:lottie_autoPlay="true"
                                 app:lottie_loop="true"
                                 app:lottie_rawRes="@raw/create_tenant" />
@@ -261,9 +295,6 @@
                                 android:id="@+id/tvTenantListHeading"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                app:layout_constraintStart_toEndOf="@id/ivTenant"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="@id/ivTenant"
                                 android:layout_marginStart="8dp"
                                 android:layout_marginEnd="8dp"
                                 android:ellipsize="end"
@@ -272,7 +303,10 @@
                                 android:text="@string/tenant_list"
                                 android:textColor="@color/md_grey_800"
                                 android:textSize="16sp"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/ivTenant"
+                                app:layout_constraintTop_toTopOf="@id/ivTenant" />
 
                             <TextView
                                 android:id="@+id/tvAllTenantHeading"
@@ -299,28 +333,28 @@
                         android:id="@+id/roomListHeading"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@id/tenant_list"
                         android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginEnd="16dp"
+                        android:text="@string/room_information"
                         android:textColor="@color/md_green_900"
-                        android:textStyle="bold"
                         android:textSize="20sp"
-                        android:text="@string/room_information" />
+                        android:textStyle="bold"
+                        app:layout_constraintTop_toBottomOf="@id/tenant_list" />
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/room_list"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@id/roomListHeading"
-                        android:layout_marginTop="4dp"
                         android:layout_marginStart="16dp"
+                        android:layout_marginTop="4dp"
                         android:layout_marginEnd="16dp"
                         android:clickable="true"
-                        app:cardElevation="0dp"
+                        android:focusable="true"
                         app:cardCornerRadius="10dp"
+                        app:cardElevation="0dp"
                         app:cardUseCompatPadding="false"
-                        android:focusable="true">
+                        app:layout_constraintTop_toBottomOf="@id/roomListHeading">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
@@ -331,12 +365,12 @@
                                 android:layout_width="48dp"
                                 android:layout_height="48dp"
                                 android:layout_gravity="center"
+                                android:layout_marginStart="16dp"
                                 android:layout_marginTop="16dp"
                                 android:layout_marginBottom="16dp"
-                                android:layout_marginStart="16dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintBottom_toBottomOf="parent"
                                 app:lottie_autoPlay="true"
                                 app:lottie_loop="true"
                                 app:lottie_rawRes="@raw/create_room" />
@@ -345,38 +379,38 @@
                                 android:id="@+id/tvRoomListHeading"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:ellipsize="end"
-                                android:maxLines="2"
-                                android:scrollHorizontally="true"
                                 android:layout_marginStart="8dp"
                                 android:layout_marginEnd="8dp"
-                                app:layout_constraintTop_toTopOf="@id/ivRoom"
-                                app:layout_constraintStart_toEndOf="@id/ivRoom"
-                                app:layout_constraintEnd_toEndOf="parent"
+                                android:ellipsize="end"
                                 android:gravity="center|start"
+                                android:maxLines="2"
+                                android:scrollHorizontally="true"
                                 android:text="@string/room_list"
                                 android:textColor="@color/md_grey_800"
                                 android:textSize="16sp"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/ivRoom"
+                                app:layout_constraintTop_toTopOf="@id/ivRoom" />
 
                             <TextView
                                 android:id="@+id/tvAllRoomHeading"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="8dp"
-                                android:layout_marginEnd="8dp"
-                                app:layout_constraintBottom_toBottomOf="@id/ivRoom"
-                                app:layout_constraintTop_toBottomOf="@id/tvRoomListHeading"
-                                app:layout_constraintStart_toEndOf="@id/ivRoom"
-                                app:layout_constraintEnd_toEndOf="parent"
                                 android:layout_marginTop="4dp"
-                                android:gravity="center|start"
+                                android:layout_marginEnd="8dp"
                                 android:ellipsize="end"
+                                android:gravity="center|start"
                                 android:maxLines="1"
                                 android:paddingBottom="2dp"
                                 android:text="@string/all_rooms"
                                 android:textColor="@color/md_grey_800"
-                                android:textSize="14sp" />
+                                android:textSize="14sp"
+                                app:layout_constraintBottom_toBottomOf="@id/ivRoom"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/ivRoom"
+                                app:layout_constraintTop_toBottomOf="@id/tvRoomListHeading" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -386,28 +420,28 @@
                         android:id="@+id/tvHeadingGenerateBill"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@id/room_list"
                         android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
                         android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:text="@string/generate_bill"
                         android:textColor="@color/md_green_900"
-                        android:textStyle="bold"
                         android:textSize="20sp"
-                        android:text="@string/generate_bill" />
+                        android:textStyle="bold"
+                        app:layout_constraintTop_toBottomOf="@id/room_list" />
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/generate_bill"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@id/tvHeadingGenerateBill"
-                        android:layout_marginTop="4dp"
                         android:layout_marginStart="16dp"
+                        android:layout_marginTop="4dp"
                         android:layout_marginEnd="16dp"
-                        app:cardElevation="0dp"
                         android:clickable="true"
+                        android:focusable="true"
                         app:cardCornerRadius="10dp"
+                        app:cardElevation="0dp"
                         app:cardUseCompatPadding="false"
-                        android:focusable="true">
+                        app:layout_constraintTop_toBottomOf="@id/tvHeadingGenerateBill">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
@@ -418,12 +452,12 @@
                                 android:layout_width="48dp"
                                 android:layout_height="48dp"
                                 android:layout_gravity="center"
+                                android:layout_marginStart="16dp"
                                 android:layout_marginTop="16dp"
                                 android:layout_marginBottom="16dp"
-                                android:layout_marginStart="16dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintBottom_toBottomOf="parent"
                                 app:lottie_autoPlay="true"
                                 app:lottie_loop="true"
                                 app:lottie_rawRes="@raw/create_bill" />
@@ -432,9 +466,6 @@
                                 android:id="@+id/tvGenerateBillHeading"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                app:layout_constraintStart_toEndOf="@id/ivGenerateBill"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="@id/ivGenerateBill"
                                 android:layout_marginStart="8dp"
                                 android:layout_marginEnd="8dp"
                                 android:ellipsize="end"
@@ -443,7 +474,10 @@
                                 android:text="@string/generate_bill"
                                 android:textColor="@color/md_grey_800"
                                 android:textSize="16sp"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/ivGenerateBill"
+                                app:layout_constraintTop_toTopOf="@id/ivGenerateBill" />
 
                             <TextView
                                 android:id="@+id/tvAllGenerateBillHeading"
