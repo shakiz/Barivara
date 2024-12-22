@@ -492,4 +492,6 @@
     <string name="total_collected_rent_amount">Total Collected Rent Amount</string>
     <string name="all_earnings">All Earnings</string>
     <string name="validation_mobile_number">Please type correct mobile number.</string>
+    <string name="password_doesnt_match">Password and Re-Enter Password Doesnt Match</string>
+    <string name="validation_password_length">Password must be 8 characters long.</string>
 </resources>
