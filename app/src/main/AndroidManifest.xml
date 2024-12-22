@@ -47,7 +47,7 @@
             android:exported="false"
             android:fitsSystemWindows="true"
             android:theme="@style/AppThemeNoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".presentation.settings.AboutUsActivity"
             android:exported="false"
@@ -59,13 +59,13 @@
             android:exported="false"
             android:fitsSystemWindows="true"
             android:theme="@style/AppThemeNoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".presentation.generatebill.GenerateBillActivity"
             android:exported="false"
             android:fitsSystemWindows="true"
             android:theme="@style/AppThemeNoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".presentation.auth.login.LoginSelectionActivity"
             android:exported="true"
@@ -95,13 +95,13 @@
             android:exported="false"
             android:fitsSystemWindows="true"
             android:theme="@style/AppThemeNoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".presentation.auth.forgotpassword.ForgotPasswordActivity"
             android:exported="false"
             android:fitsSystemWindows="true"
             android:theme="@style/AppThemeNoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".presentation.notification.NotificationActivity"
             android:exported="false"
@@ -143,13 +143,13 @@
             android:exported="false"
             android:fitsSystemWindows="true"
             android:theme="@style/AppThemeNoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".presentation.tenant.TenantListActivity"
             android:exported="false"
             android:fitsSystemWindows="true"
             android:theme="@style/AppThemeNoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".presentation.room.RentDetailsActivity"
             android:label="@string/new_rent_details"
@@ -170,7 +170,7 @@
             android:exported="false"
             android:fitsSystemWindows="true"
             android:theme="@style/AppThemeNoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".presentation.meter.MeterListActivity"
             android:label="@string/meter_list"
@@ -191,7 +191,7 @@
             android:exported="false"
             android:fitsSystemWindows="true"
             android:theme="@style/AppThemeNoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".presentation.auth.onboard.WelcomeActivity"
             android:exported="false"

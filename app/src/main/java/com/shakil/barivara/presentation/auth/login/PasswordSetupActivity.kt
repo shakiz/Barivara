@@ -207,6 +207,25 @@ class PasswordSetupActivity : BaseActivity<ActivityPasswordSetupBinding>() {
                 }
 
                 else -> {
+                    if (activityBinding.layoutSetupPassword.password.text.toString()
+                            .trim() != activityBinding.layoutSetupPassword.reEnterPassword.text.toString()
+                            .trim()
+                    ) {
+                        Toasty.warning(
+                            this,
+                            getString(R.string.password_doesnt_match),
+                            Toasty.LENGTH_SHORT
+                        ).show()
+                        return@setOnClickListener
+                    }
+                    if (activityBinding.layoutSetupPassword.reEnterPassword.text.length < 8) {
+                        Toasty.warning(
+                            this,
+                            getString(R.string.validation_password_length),
+                            Toasty.LENGTH_SHORT
+                        ).show()
+                        return@setOnClickListener
+                    }
                     viewModel.setupPassword(
                         activityBinding.layoutSetupPassword.password.text.toString(),
                         activityBinding.layoutSetupPassword.reEnterPassword.text.toString(),
