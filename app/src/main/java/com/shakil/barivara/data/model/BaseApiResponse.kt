@@ -12,3 +12,4 @@ open class BaseApiResponse {
     @SerializedName("message")
     var message: String = ""
 }
+
