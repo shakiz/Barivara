@@ -141,7 +141,6 @@ class Tools(private val context: Context) {
         prefManager[mAccessToken] = ""
         prefManager[mRefreshToken] = ""
         prefManager[mRefreshTokenValidity] = 0
-        prefManager[mUserId] = ""
         prefManager[mLanguage] = "en"
         prefManager[mUserFullName] = ""
         prefManager[mUserEmail] = ""
