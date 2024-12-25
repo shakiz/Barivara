@@ -112,7 +112,7 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>() {
                     id: Long
                 ) {
                     if (parent.getItemAtPosition(position)
-                            .toString() != getString(R.string.select_data)
+                            .toString() != getString(R.string.select_data_1)
                     ) {
                         year = parent.getItemAtPosition(position).toString().toInt()
                     }
@@ -131,7 +131,7 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>() {
                     id: Long
                 ) {
                     if (parent.getItemAtPosition(position)
-                            .toString() != getString(R.string.select_data)
+                            .toString() != getString(R.string.select_data_1)
                     ) {
                         month = utilsForAll.getMonthFromMonthName(
                             parent.getItemAtPosition(position).toString()
