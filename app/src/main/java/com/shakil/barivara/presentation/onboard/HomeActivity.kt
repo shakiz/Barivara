@@ -164,7 +164,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
             )
         }
 
-        activityMainBinding.generateBill.setOnClickListener {
+        activityMainBinding.generateBillLayout.setOnClickListener {
             buttonAction(
                 ButtonActionConstants.actionHomeGenerateBill
             )
