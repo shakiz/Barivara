@@ -27,6 +27,7 @@ import com.shakil.barivara.presentation.auth.forgotpassword.ForgotPasswordActivi
 import com.shakil.barivara.presentation.auth.login.LoginSelectionActivity
 import com.shakil.barivara.presentation.dashboard.DashboardActivity
 import com.shakil.barivara.presentation.generatebill.GenerateBillActivity
+import com.shakil.barivara.presentation.generatebill.GeneratedBillHistoryActivity
 import com.shakil.barivara.presentation.profile.ProfileActivity
 import com.shakil.barivara.presentation.room.RoomListActivity
 import com.shakil.barivara.presentation.tenant.TenantListActivity
@@ -172,6 +173,18 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
                 Intent(
                     this@HomeActivity,
                     GenerateBillActivity::class.java
+                )
+            )
+        }
+
+        activityMainBinding.generatedBillHistoryLayout.setOnClickListener {
+            buttonAction(
+                ButtonActionConstants.actionHomeGeneratedBillHistory
+            )
+            startActivity(
+                Intent(
+                    this@HomeActivity,
+                    GeneratedBillHistoryActivity::class.java
                 )
             )
         }
