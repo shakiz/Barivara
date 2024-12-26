@@ -108,7 +108,6 @@ class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>(),
                     Toast.LENGTH_LONG
                 ).show()
                 viewModel.generateBill(
-                    prefManager.getString(mAccessToken),
                     year,
                     month
                 )
@@ -149,15 +148,12 @@ class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>(),
 
         validation.setSpinnerIsNotEmpty(arrayOf("YearId", "MonthId"))
         spinnerAdapter.setSpinnerAdapter(
-            activityBinding.MonthId,
-            this,
-            spinnerData.setMonthData()
-        )
-        spinnerAdapter.setSpinnerAdapter(
             activityBinding.YearId,
             this,
             spinnerData.setYearData()
         )
+        setMonthSpinnerAdapter()
+
         activityBinding.YearId.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
@@ -170,6 +166,14 @@ class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>(),
                             .toString() != getString(R.string.select_data)
                     ) {
                         year = parent.getItemAtPosition(position).toString().toInt()
+                        setMonthSpinnerAdapter()
+                        activityBinding.MonthId.setSelection(month, true)
+                        if (month != 0){
+                            viewModel.generateBill(
+                                year,
+                                month
+                            )
+                        }
                     }
                 }
 
@@ -190,7 +194,6 @@ class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>(),
                             parent.getItemAtPosition(position).toString()
                         )
                         viewModel.generateBill(
-                            prefManager.getString(mAccessToken),
                             year,
                             month
                         )
@@ -206,6 +209,14 @@ class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>(),
         activityBinding.mRecyclerView.layoutManager = LinearLayoutManager(this)
         activityBinding.mRecyclerView.adapter = recyclerBillInfoAdapter
         recyclerBillInfoAdapter.setGenerateBillCallBacks(this)
+    }
+
+    private fun setMonthSpinnerAdapter(){
+        spinnerAdapter.setSpinnerAdapter(
+            activityBinding.MonthId,
+            this,
+            spinnerData.setMonthData(year)
+        )
     }
 
     private fun generatePdf(generateBill: GenerateBill) {

@@ -97,11 +97,7 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>() {
             this,
             spinnerData.setYearData()
         )
-        spinnerAdapter.setSpinnerAdapter(
-            activityDashboardBinding.FilterMonth,
-            this,
-            spinnerData.setMonthData()
-        )
+        setMonthSpinnerAdapter()
 
         activityDashboardBinding.FilterYear.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
@@ -115,6 +111,14 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>() {
                             .toString() != getString(R.string.select_data_1)
                     ) {
                         year = parent.getItemAtPosition(position).toString().toInt()
+                        setMonthSpinnerAdapter()
+                        activityDashboardBinding.FilterMonth.setSelection(month, true)
+                        if (month != 0){
+                            viewModel.getRentDataByYearAndMonth(
+                                year,
+                                month
+                            )
+                        }
                     }
                 }
 
@@ -137,7 +141,6 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>() {
                             parent.getItemAtPosition(position).toString()
                         )
                         viewModel.getRentDataByYearAndMonth(
-                            prefManager.getString(mAccessToken),
                             year,
                             month
                         )
@@ -148,5 +151,13 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>() {
                     Log.i(Constants.TAG, "FilterMonth Spinner : onNothingSelected")
                 }
             }
+    }
+
+    private fun setMonthSpinnerAdapter(){
+        spinnerAdapter.setSpinnerAdapter(
+            activityDashboardBinding.FilterMonth,
+            this,
+            spinnerData.setMonthData(year)
+        )
     }
 }
