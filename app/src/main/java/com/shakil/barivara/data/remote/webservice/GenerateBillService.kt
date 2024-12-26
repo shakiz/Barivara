@@ -12,7 +12,6 @@ import retrofit2.http.Query
 interface GenerateBillService {
     @GET("generated-rent")
     suspend fun generateBill(
-        @Header("Authorization") token: String,
         @Header("Accept") accept: String,
         @Query("year") year: Int,
         @Query("month") month: Int
@@ -20,7 +19,6 @@ interface GenerateBillService {
 
     @PUT("rent-status-update/{billId}")
     suspend fun updateBillStatus(
-        @Header("Authorization") token: String,
         @Header("Accept") accept: String,
         @Path("billId") billId: Int,
     ): Response<BaseApiResponse>
