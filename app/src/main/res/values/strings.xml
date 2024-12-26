@@ -494,4 +494,6 @@
     <string name="validation_mobile_number">Please type correct mobile number.</string>
     <string name="password_doesnt_match">Password and Re-Enter Password Doesnt Match</string>
     <string name="validation_password_length">Password must be 8 characters long.</string>
+    <string name="bill_history">Bill History</string>
+    <string name="bill_history_sub_title">Your Generated Bills</string>
 </resources>
