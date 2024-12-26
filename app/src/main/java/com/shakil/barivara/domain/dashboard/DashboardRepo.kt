@@ -7,7 +7,6 @@ import com.shakil.barivara.utils.Resource
 interface DashboardRepo {
     suspend fun getDashboardInfo(token: String): Resource<BaseDashboardResponse>
     suspend fun getRentByYearAndMonth(
-        token: String,
         year: Int,
         month: Int
     ): Resource<DashboardByYearAndMonthBaseResponse>

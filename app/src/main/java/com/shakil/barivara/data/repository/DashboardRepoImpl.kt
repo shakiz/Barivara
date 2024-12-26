@@ -51,7 +51,6 @@ class DashboardRepoImpl @Inject constructor(
     }
 
     override suspend fun getRentByYearAndMonth(
-        token: String,
         year: Int,
         month: Int
     ): Resource<DashboardByYearAndMonthBaseResponse> {
@@ -59,7 +58,6 @@ class DashboardRepoImpl @Inject constructor(
             val task = dashboardService.getRentDataByYearAndMonth(
                 year = year,
                 month = month,
-                token = "Bearer $token",
                 accept = ACCEPT,
             )
             if (task.isSuccessful) {

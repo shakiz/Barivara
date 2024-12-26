@@ -18,7 +18,6 @@ interface DashboardService {
     suspend fun getRentDataByYearAndMonth(
         @Query("year") year: Int,
         @Query("month") month: Int,
-        @Header("Authorization") token: String,
         @Header("Accept") accept: String,
     ): Response<DashboardByYearAndMonthBaseResponse>
 }
