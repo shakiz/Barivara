@@ -137,11 +137,10 @@ class Tools(private val context: Context) {
     fun clearPrefForLogout(to: Class<*>, prefManager: PrefManager) {
         prefManager[mAppViewCount] = 0
         prefManager[mIsLoggedIn] = false
-        prefManager[mUserId] = ""
+        prefManager[mUserId] = 0
         prefManager[mAccessToken] = ""
         prefManager[mRefreshToken] = ""
         prefManager[mRefreshTokenValidity] = 0
-        prefManager[mUserId] = ""
         prefManager[mLanguage] = "en"
         prefManager[mUserFullName] = ""
         prefManager[mUserEmail] = ""
