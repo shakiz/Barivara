@@ -46,12 +46,12 @@ class GenerateBillViewModel @Inject constructor(private val generalBillRepoImpl:
         return updateRentStatusErrorResponse
     }
 
-    fun generateBill(token: String, year: Int, month: Int) {
+    fun generateBill(year: Int, month: Int) {
         viewModelScope.launch {
             isLoading.postValue(true)
             try {
                 val data =
-                    generalBillRepoImpl.generateBill(token = token, month = month, year = year)
+                    generalBillRepoImpl.generateBill(month = month, year = year)
                 if (data.response != null) {
                     bills.postValue(data.response?.billInfo)
                     generateBillResponse.postValue(data.response)
@@ -81,7 +81,7 @@ class GenerateBillViewModel @Inject constructor(private val generalBillRepoImpl:
             isLoading.postValue(true)
             try {
                 val data =
-                    generalBillRepoImpl.updateBillStatus(token = token, billId = billId)
+                    generalBillRepoImpl.updateBillStatus(billId = billId)
                 if (data.response != null) {
                     updateRentStatusResponse.postValue(data.response)
                 } else {

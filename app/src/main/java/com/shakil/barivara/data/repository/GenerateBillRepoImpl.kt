@@ -15,13 +15,11 @@ class GenerateBillRepoImpl @Inject constructor(
     private val generateBillService: GenerateBillService
 ) : GenerateBillRepo {
     override suspend fun generateBill(
-        token: String,
         month: Int,
         year: Int
     ): Resource<GenerateBillResponse> {
         try {
             val task = generateBillService.generateBill(
-                token = "Bearer $token",
                 accept = ACCEPT,
                 month = month,
                 year = year
@@ -56,12 +54,10 @@ class GenerateBillRepoImpl @Inject constructor(
     }
 
     override suspend fun updateBillStatus(
-        token: String,
         billId: Int
     ): Resource<BaseApiResponse> {
         try {
             val task = generateBillService.updateBillStatus(
-                token = "Bearer $token",
                 accept = ACCEPT,
                 billId = billId
             )
