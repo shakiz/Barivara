@@ -1,20 +1,17 @@
 package com.shakil.barivara.presentation.generatebill
 
-import android.Manifest
-import android.content.pm.PackageManager
+import android.app.Dialog
 import android.os.Bundle
-import android.view.View
-import android.widget.AdapterView
-import android.widget.Toast
+import android.view.LayoutInflater
+import android.view.WindowManager
+import android.widget.Button
+import android.widget.Spinner
 import androidx.activity.viewModels
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
 import com.shakil.barivara.databinding.ActivityGeneratedBillHistoryBinding
 import com.shakil.barivara.presentation.adapter.RecyclerBillInfoAdapter
-import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.ScreenNameConstants
 import com.shakil.barivara.utils.SpinnerAdapter
@@ -23,7 +20,6 @@ import com.shakil.barivara.utils.UX
 import com.shakil.barivara.utils.UtilsForAll
 import com.shakil.barivara.utils.Validation
 import dagger.hilt.android.AndroidEntryPoint
-import es.dmoral.toasty.Toasty
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -66,29 +62,6 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
     }
 
     private fun initObservers() {
-        viewModel.getBills().observe(this) { tenants ->
-            recyclerBillInfoAdapter.setItems(tenants)
-        }
-
-        viewModel.getGenerateBillResponse().observe(this) { generateBill ->
-            activityBinding.TotalDue.text = "${generateBill.totalDue}"
-            activityBinding.TotalPaid.text = "${generateBill.totalPaid}"
-        }
-
-        viewModel.getUpdateRentStatusResponse().observe(this) { rentStatusUpdate ->
-            if (rentStatusUpdate.statusCode == 200) {
-                Toasty.success(
-                    this,
-                    getString(R.string.rent_status_updated_successfully),
-                    Toast.LENGTH_LONG
-                ).show()
-                viewModel.generateBill(
-                    year,
-                    month
-                )
-            }
-        }
-
         viewModel.isLoading.observe(this) { isLoading ->
             if (isLoading) {
                 ux.getLoadingView()
@@ -99,84 +72,13 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
     }
 
     private fun binUIWithComponents() {
-        if ((ContextCompat.checkSelfPermission(
-                this@GeneratedBillHistoryActivity,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            )
-                    != PackageManager.PERMISSION_GRANTED)
-            || (ContextCompat.checkSelfPermission(
-                this@GeneratedBillHistoryActivity,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            )
-                    != PackageManager.PERMISSION_GRANTED)
-        ) {
-            ActivityCompat.requestPermissions(
-                this@GeneratedBillHistoryActivity,
-                arrayOf(
-                    Manifest.permission.READ_EXTERNAL_STORAGE,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-                ),
-                Constants.REQUEST_CALL_CODE
-            )
-        }
         activityBinding.toolBar.setNavigationOnClickListener { finish() }
 
-        validation.setSpinnerIsNotEmpty(arrayOf("YearId", "MonthId"))
-        spinnerAdapter.setSpinnerAdapter(
-            activityBinding.YearId,
-            this,
-            spinnerData.setYearData()
-        )
-        setMonthSpinnerAdapter()
+        activityBinding.searchLayout.refreshButton.setOnClickListener { }
 
-        activityBinding.YearId.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>,
-                    view: View,
-                    position: Int,
-                    id: Long
-                ) {
-                    if (parent.getItemAtPosition(position)
-                            .toString() != getString(R.string.select_data)
-                    ) {
-                        year = parent.getItemAtPosition(position).toString().toInt()
-                        setMonthSpinnerAdapter()
-                        activityBinding.MonthId.setSelection(month, true)
-                        if (month != 0){
-                            viewModel.generateBill(
-                                year,
-                                month
-                            )
-                        }
-                    }
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {}
-            }
-        activityBinding.MonthId.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>,
-                    view: View,
-                    position: Int,
-                    id: Long
-                ) {
-                    if (parent.getItemAtPosition(position)
-                            .toString() != getString(R.string.select_data)
-                    ) {
-                        month = utilsForAll.getMonthFromMonthName(
-                            parent.getItemAtPosition(position).toString()
-                        )
-                        viewModel.generateBill(
-                            year,
-                            month
-                        )
-                    }
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {}
-            }
+        activityBinding.searchLayout.filterButton.setOnClickListener {
+            showExtendedSearchLayout()
+        }
     }
 
     private fun setRecyclerAdapter() {
@@ -186,11 +88,42 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
         //recyclerBillInfoAdapter.setGenerateBillCallBacks(this)
     }
 
-    private fun setMonthSpinnerAdapter(){
+    private fun showExtendedSearchLayout() {
+        val view = LayoutInflater.from(this)
+            .inflate(R.layout.extended_search_panel_with_filter_items, null)
+        val primaryButton = view.findViewById<Button>(R.id.primaryAction)
+        val secondaryAction = view.findViewById<Button>(R.id.secondaryAction)
+        val yearSpinner = view.findViewById<Spinner>(R.id.YearId)
+        val monthSpinner = view.findViewById<Spinner>(R.id.MonthId)
+
+        val dialog = Dialog(this, R.style.CustomDialogTheme).apply {
+            setCancelable(true)
+            setCanceledOnTouchOutside(true)
+            window?.setDimAmount(0.5f)
+            window?.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+        }
+        dialog.setContentView(view)
+
+        primaryButton.setOnClickListener {
+            if (validation.isValid) {
+                // TODO - Filter with Year and Month
+            }
+        }
+        secondaryAction.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        validation.setSpinnerIsNotEmpty(arrayOf("YearId", "MonthId"))
         spinnerAdapter.setSpinnerAdapter(
-            activityBinding.MonthId,
+            yearSpinner,
+            this,
+            spinnerData.setYearData()
+        )
+        spinnerAdapter.setSpinnerAdapter(
+            monthSpinner,
             this,
             spinnerData.setMonthData(year)
         )
+        dialog.show()
     }
 }

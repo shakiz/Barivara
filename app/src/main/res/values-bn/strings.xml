@@ -494,4 +494,8 @@
     <string name="validation_password_length">Password must be 8 characters long.</string>
     <string name="bill_history">Bill History</string>
     <string name="bill_history_sub_title">Your Generated Bills</string>
+    <string name="tenant_name_search">Search with Tenant Name</string>
+    <string name="collected_amount">Collected Amount</string>
+    <string name="advance_filter">Advance Filter</string>
+    <string name="filter">Filter</string>
 </resources>
