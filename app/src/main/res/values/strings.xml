@@ -500,4 +500,5 @@
     <string name="collected_amount">Collected Amount</string>
     <string name="advance_filter">Advance Filter</string>
     <string name="filter">Filter</string>
+    <string name="no_bill_generated_yet_for_this_month">You haven\'t generated any bill for this month.</string>
 </resources>

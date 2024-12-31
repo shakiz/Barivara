@@ -39,7 +39,7 @@
                 android:layout_height="match_parent"
                 android:fillViewport="true">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <LinearLayout
                     android:id="@+id/mainLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -55,8 +55,7 @@
                         android:background="@drawable/rectangle_border_darker_green"
                         android:orientation="vertical"
                         android:paddingTop="8dp"
-                        android:paddingBottom="8dp"
-                        app:layout_constraintTop_toTopOf="parent">
+                        android:paddingBottom="8dp">
 
                         <TextView
                             android:id="@+id/greetingsText"
@@ -229,24 +228,31 @@
 
                     </RelativeLayout>
 
+                    <include
+                        android:id="@+id/no_bill_history_layout"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        layout="@layout/layout_no_bill_history_for_this_month"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
                     <TextView
                         android:id="@+id/tvTenantHeading"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="10dp"
                         android:layout_marginEnd="16dp"
                         android:text="@string/tenant_information"
                         android:textColor="@color/md_green_900"
                         android:textSize="20sp"
-                        android:textStyle="bold"
-                        app:layout_constraintTop_toBottomOf="@id/bannerLayout" />
+                        android:textStyle="bold" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/tenant_list"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@id/tvTenantHeading"
                         android:background="@drawable/rectangle_white"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="4dp"
@@ -312,8 +318,7 @@
                         android:text="@string/room_information"
                         android:textColor="@color/md_green_900"
                         android:textSize="20sp"
-                        android:textStyle="bold"
-                        app:layout_constraintTop_toBottomOf="@id/tenant_list" />
+                        android:textStyle="bold"/>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/room_list"
@@ -322,8 +327,7 @@
                         android:background="@drawable/rectangle_white"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="4dp"
-                        android:layout_marginEnd="16dp"
-                        app:layout_constraintTop_toBottomOf="@id/roomListHeading">
+                        android:layout_marginEnd="16dp">
 
                         <com.airbnb.lottie.LottieAnimationView
                             android:id="@+id/ivRoom"
@@ -389,16 +393,14 @@
                         android:text="@string/generate_bill"
                         android:textColor="@color/md_green_900"
                         android:textSize="20sp"
-                        android:textStyle="bold"
-                        app:layout_constraintTop_toBottomOf="@id/room_list" />
+                        android:textStyle="bold" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="4dp"
-                        android:layout_marginEnd="16dp"
-                        app:layout_constraintTop_toBottomOf="@id/tvHeadingGenerateBill">
+                        android:layout_marginEnd="16dp">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/generateBillLayout"
@@ -526,7 +528,7 @@
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
 
             </androidx.core.widget.NestedScrollView>
 
