@@ -24,8 +24,8 @@ import javax.inject.Inject
 class PasswordLoginActivity : BaseActivity<ActivityPasswordLoginBinding>() {
     private lateinit var activityBinding: ActivityPasswordLoginBinding
     private lateinit var ux: UX
-    private lateinit var utilsForAll: UtilsForAll
-
+    @Inject
+    lateinit var utilsForAll: UtilsForAll
     @Inject
     lateinit var prefManager: PrefManager
     private lateinit var tools: Tools
@@ -57,7 +57,6 @@ class PasswordLoginActivity : BaseActivity<ActivityPasswordLoginBinding>() {
 
     private fun initUI() {
         ux = UX(this)
-        utilsForAll = UtilsForAll(this)
         tools = Tools(this)
 
         validation.setEditTextIsNotEmpty(

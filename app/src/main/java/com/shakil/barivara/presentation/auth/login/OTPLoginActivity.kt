@@ -18,12 +18,14 @@ import com.shakil.barivara.utils.UtilsForAll
 import com.shakil.barivara.utils.Validation
 import dagger.hilt.android.AndroidEntryPoint
 import es.dmoral.toasty.Toasty
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class OTPLoginActivity : BaseActivity<ActivityOtpLoginBinding>() {
     private lateinit var activityBinding: ActivityOtpLoginBinding
     private lateinit var ux: UX
-    private lateinit var utilsForAll: UtilsForAll
+    @Inject
+    lateinit var utilsForAll: UtilsForAll
     private val viewModel by viewModels<AuthViewModel>()
     private val hashMap: Map<String?, Array<String>?> = HashMap()
     private var validation = Validation(this, hashMap)
@@ -56,7 +58,6 @@ class OTPLoginActivity : BaseActivity<ActivityOtpLoginBinding>() {
 
     private fun initUI() {
         ux = UX(this)
-        utilsForAll = UtilsForAll(this)
     }
 
     private fun initObservers() {

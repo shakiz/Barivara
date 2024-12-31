@@ -12,8 +12,9 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
+import javax.inject.Inject
 
-class UtilsForAll(private val context: Context) {
+class UtilsForAll @Inject constructor(private val context: Context) {
     fun exitApp() {
         val exitIntent = Intent(Intent.ACTION_MAIN)
         exitIntent.addCategory(Intent.CATEGORY_HOME)

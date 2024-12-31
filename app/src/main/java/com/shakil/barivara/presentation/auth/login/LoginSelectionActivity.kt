@@ -9,12 +9,15 @@ import com.shakil.barivara.databinding.ActivityLoginSelectionBinding
 import com.shakil.barivara.utils.UX
 import com.shakil.barivara.utils.UtilsForAll
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class LoginSelectionActivity : BaseActivity<ActivityLoginSelectionBinding>() {
     private lateinit var activityBinding: ActivityLoginSelectionBinding
     private lateinit var ux: UX
-    private lateinit var utilsForAll: UtilsForAll
+
+    @Inject
+    lateinit var utilsForAll: UtilsForAll
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
@@ -38,7 +41,6 @@ class LoginSelectionActivity : BaseActivity<ActivityLoginSelectionBinding>() {
 
     private fun initUI() {
         ux = UX(this)
-        utilsForAll = UtilsForAll(this)
     }
 
     private fun initListeners() {

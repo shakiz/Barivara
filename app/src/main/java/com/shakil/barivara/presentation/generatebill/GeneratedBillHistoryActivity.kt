@@ -31,7 +31,8 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
     private var validation = Validation(this, hashMap)
     private var spinnerData = SpinnerData(this)
     private var spinnerAdapter = SpinnerAdapter()
-    private lateinit var utilsForAll: UtilsForAll
+    @Inject
+    lateinit var utilsForAll: UtilsForAll
     private lateinit var ux: UX
 
     @Inject
@@ -58,7 +59,6 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
 
     private fun init() {
         ux = UX(this)
-        utilsForAll = UtilsForAll(this)
     }
 
     private fun initObservers() {

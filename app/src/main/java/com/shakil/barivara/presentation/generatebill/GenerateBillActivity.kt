@@ -43,7 +43,8 @@ class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>(),
     private var validation = Validation(this, hashMap)
     private var spinnerData = SpinnerData(this)
     private var spinnerAdapter = SpinnerAdapter()
-    private lateinit var utilsForAll: UtilsForAll
+    @Inject
+    lateinit var utilsForAll: UtilsForAll
     private lateinit var dialogBill: Dialog
     private lateinit var ux: UX
 
@@ -71,7 +72,6 @@ class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>(),
 
     private fun init() {
         ux = UX(this)
-        utilsForAll = UtilsForAll(this)
     }
 
     private fun initObservers() {
