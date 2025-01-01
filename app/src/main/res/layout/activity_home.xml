@@ -229,7 +229,16 @@
                     </RelativeLayout>
 
                     <include
-                        android:id="@+id/no_bill_history_layout"
+                        android:id="@+id/generated_bill_history_layout_this_month"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        layout="@layout/layout_generated_bill_this_month"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <include
+                        android:id="@+id/no_bill_history_layout_this_month"
                         android:layout_marginTop="16dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"

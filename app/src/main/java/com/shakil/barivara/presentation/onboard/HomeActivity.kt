@@ -165,7 +165,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
             )
         }
 
-        activityMainBinding.noBillHistoryLayout.btnGenerate.setOnClickListener {
+        activityMainBinding.noBillHistoryLayoutThisMonth.btnGenerate.setOnClickListener {
             buttonAction(
                 ButtonActionConstants.actionHomeGenerateBill
             )

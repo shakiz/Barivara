@@ -499,4 +499,9 @@
     <string name="advance_filter">Advance Filter</string>
     <string name="filter">Filter</string>
     <string name="no_bill_generated_yet_for_this_month">You haven\'t generated any bill for this month.</string>
+    <string name="bill_status_this_month">Bill Status(This Month Only)</string>
+    <string name="total_due_">Total Due</string>
+    <string name="collected">Collected</string>
+    <string name="total_due_with_semicolon">Total Due:</string>
+    <string name="collected_semicolon">Collected:</string>
 </resources>
