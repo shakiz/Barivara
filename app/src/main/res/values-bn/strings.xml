@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ভাড়া আদায়</string>
+    <string name="app_name">ভাড়া আদায় - Rent Collector</string>
 
     <!--Room start-->
     <string name="no_of_rooms">কক্ষ সংখ্যা</string>
