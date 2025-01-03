@@ -1,11 +1,6 @@
 package com.shakil.barivara.presentation.generatebill
 
-import android.app.Dialog
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.WindowManager
-import android.widget.Button
-import android.widget.Spinner
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shakil.barivara.BaseActivity
@@ -73,12 +68,6 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
 
     private fun binUIWithComponents() {
         activityBinding.toolBar.setNavigationOnClickListener { finish() }
-
-        activityBinding.searchLayout.refreshButton.setOnClickListener { }
-
-        activityBinding.searchLayout.filterButton.setOnClickListener {
-            showExtendedSearchLayout()
-        }
     }
 
     private fun setRecyclerAdapter() {
@@ -86,44 +75,5 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
         activityBinding.mRecyclerView.layoutManager = LinearLayoutManager(this)
         activityBinding.mRecyclerView.adapter = recyclerBillInfoAdapter
         //recyclerBillInfoAdapter.setGenerateBillCallBacks(this)
-    }
-
-    private fun showExtendedSearchLayout() {
-        val view = LayoutInflater.from(this)
-            .inflate(R.layout.extended_search_panel_with_filter_items, null)
-        val primaryButton = view.findViewById<Button>(R.id.primaryAction)
-        val secondaryAction = view.findViewById<Button>(R.id.secondaryAction)
-        val yearSpinner = view.findViewById<Spinner>(R.id.YearId)
-        val monthSpinner = view.findViewById<Spinner>(R.id.MonthId)
-
-        val dialog = Dialog(this, R.style.CustomDialogTheme).apply {
-            setCancelable(true)
-            setCanceledOnTouchOutside(true)
-            window?.setDimAmount(0.5f)
-            window?.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
-        }
-        dialog.setContentView(view)
-
-        primaryButton.setOnClickListener {
-            if (validation.isValid) {
-                // TODO - Filter with Year and Month
-            }
-        }
-        secondaryAction.setOnClickListener {
-            dialog.dismiss()
-        }
-
-        validation.setSpinnerIsNotEmpty(arrayOf("YearId", "MonthId"))
-        spinnerAdapter.setSpinnerAdapter(
-            yearSpinner,
-            this,
-            spinnerData.setYearData()
-        )
-        spinnerAdapter.setSpinnerAdapter(
-            monthSpinner,
-            this,
-            spinnerData.setMonthData(year)
-        )
-        dialog.show()
     }
 }

@@ -504,4 +504,5 @@
     <string name="collected">Collected</string>
     <string name="total_due_with_semicolon">Total Due:</string>
     <string name="collected_semicolon">Collected:</string>
+    <string name="apply_filter">Apply Filter</string>
 </resources>
