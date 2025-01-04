@@ -505,4 +505,6 @@
     <string name="total_due_with_semicolon">Total Due:</string>
     <string name="collected_semicolon">Collected:</string>
     <string name="apply_filter">Apply Filter</string>
+    <string name="collection_date">Collection Date</string>
+    <string name="collection_date_hint">Select Collection Date</string>
 </resources>
