@@ -211,7 +211,6 @@ class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>(),
         smsIntent.setData(Uri.parse("sms:$mobileNo"))
         startActivity(smsIntent)
         Toast.makeText(this, getString(R.string.please_wait), Toast.LENGTH_SHORT).show()
-        dialogBill.dismiss()
     }
 
     override fun onNotify(billInfo: BillInfo) {

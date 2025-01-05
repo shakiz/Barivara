@@ -42,6 +42,7 @@ import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
 import com.shakil.barivara.utils.UtilsForAll
 import com.shakil.barivara.utils.orFalse
+import com.shakil.barivara.utils.orZero
 import dagger.hilt.android.AndroidEntryPoint
 import es.dmoral.toasty.Toasty
 import java.util.Calendar
@@ -256,10 +257,16 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
             }
         }
 
-        viewModel.getRentDataByMonthAndYear().observe(this){ response ->
-            if (response.status.orFalse()){
-                activityMainBinding.generatedBillHistoryLayoutThisMonth.root.visibility = View.VISIBLE
+        viewModel.getRentDataByMonthAndYear().observe(this) { response ->
+            if (response.status.orFalse()) {
+                activityMainBinding.generatedBillHistoryLayoutThisMonth.root.visibility =
+                    View.VISIBLE
                 activityMainBinding.noBillHistoryLayoutThisMonth.root.visibility = View.GONE
+
+                activityMainBinding.generatedBillHistoryLayoutThisMonth.totalCollected.text =
+                    "${response.totalPaid.orZero()}"
+                activityMainBinding.generatedBillHistoryLayoutThisMonth.totalDue.text =
+                    "${response.totalDue.orZero()}"
             } else {
                 activityMainBinding.generatedBillHistoryLayoutThisMonth.root.visibility = View.GONE
                 activityMainBinding.noBillHistoryLayoutThisMonth.root.visibility = View.VISIBLE
