@@ -22,9 +22,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBinding>() {
     private lateinit var activityBinding: ActivityGeneratedBillHistoryBinding
-    private val hashMap: Map<String?, Array<String>?> = HashMap()
-    private var year: Int = 0
-    private var month: Int = 0
     private var tenantId: Int = 0
     private var spinnerData = SpinnerData(this)
     private var spinnerAdapter = SpinnerAdapter()

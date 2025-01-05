@@ -157,7 +157,7 @@ class GenerateBillViewModel @Inject constructor(
         viewModelScope.launch {
             isLoading.postValue(true)
             try {
-                val data = generalBillRepoImpl.billHistory()
+                val data = generalBillRepoImpl.getBillHistory()
                 if (data.response != null) {
                     billHistory.postValue(data.response?.data)
                 } else {

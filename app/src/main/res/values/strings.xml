@@ -509,4 +509,7 @@
     <string name="apply_filter">Apply Filter</string>
     <string name="collection_date">Collection Date</string>
     <string name="collection_date_hint">Select Collection Date</string>
+    <string name="room_name_semicolon">Room/Flat Name:</string>
+    <string name="tenant_name_semicolon">Tenant Name:</string>
+    <string name="collected_amount_semicolon">Collected Amount:</string>
 </resources>
