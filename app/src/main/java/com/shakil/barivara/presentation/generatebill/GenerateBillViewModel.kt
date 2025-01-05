@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shakil.barivara.data.model.BaseApiResponse
+import com.shakil.barivara.data.model.generatebill.BillHistory
 import com.shakil.barivara.data.model.generatebill.BillInfo
 import com.shakil.barivara.data.model.generatebill.GenerateBillResponse
 import com.shakil.barivara.data.model.tenant.Tenant
@@ -34,8 +35,15 @@ class GenerateBillViewModel @Inject constructor(
     private var tenants = MutableLiveData<List<Tenant>>()
     private var getTenantListErrorResponse = MutableLiveData<Resource.Error<ErrorType>>()
 
+    private var billHistory = MutableLiveData<List<BillHistory>>()
+    private var getBillHistoryErrorResponse = MutableLiveData<Resource.Error<ErrorType>>()
+
     fun getBills(): LiveData<List<BillInfo>> {
         return bills
+    }
+
+    fun getBillHistoryList(): LiveData<List<BillHistory>> {
+        return billHistory
     }
 
     fun getGenerateBillResponse(): LiveData<GenerateBillResponse> {
@@ -135,6 +143,34 @@ class GenerateBillViewModel @Inject constructor(
                 isLoading.postValue(false)
             } catch (e: Exception) {
                 getTenantListErrorResponse.postValue(
+                    Resource.Error(
+                        message = "Something went wrong, please try again",
+                        errorType = ErrorType.UNKNOWN
+                    )
+                )
+                isLoading.postValue(false)
+            }
+        }
+    }
+
+    fun getBillHistory() {
+        viewModelScope.launch {
+            isLoading.postValue(true)
+            try {
+                val data = generalBillRepoImpl.billHistory()
+                if (data.response != null) {
+                    billHistory.postValue(data.response?.data)
+                } else {
+                    getBillHistoryErrorResponse.postValue(
+                        Resource.Error(
+                            message = data.message,
+                            errorType = data.errorType
+                        )
+                    )
+                }
+                isLoading.postValue(false)
+            } catch (e: Exception) {
+                getBillHistoryErrorResponse.postValue(
                     Resource.Error(
                         message = "Something went wrong, please try again",
                         errorType = ErrorType.UNKNOWN

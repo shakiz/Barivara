@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
 import com.shakil.barivara.databinding.ActivityGeneratedBillHistoryBinding
-import com.shakil.barivara.presentation.adapter.RecyclerBillInfoAdapter
+import com.shakil.barivara.presentation.adapter.RecyclerBillHistoryAdapter
 import com.shakil.barivara.utils.DatePickerManager
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.ScreenNameConstants
@@ -36,7 +36,7 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
 
     @Inject
     lateinit var prefManager: PrefManager
-    private lateinit var recyclerBillInfoAdapter: RecyclerBillInfoAdapter
+    private lateinit var recyclerBillHistoryAdapter: RecyclerBillHistoryAdapter
 
     override val layoutResourceId: Int
         get() = R.layout.activity_generated_bill_history
@@ -54,6 +54,7 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
         initObservers()
         setRecyclerAdapter()
         viewModel.getAllTenants()
+        viewModel.getBillHistory()
     }
 
     private fun init() {
@@ -85,6 +86,14 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
                     this,
                     ArrayList(tenantList)
                 )
+            }
+        }
+
+        viewModel.getBillHistoryList().observe(this) { billHistory ->
+            if (!billHistory.isNullOrEmpty()) {
+                recyclerBillHistoryAdapter.setItems(billHistory)
+            } else {
+
             }
         }
     }
@@ -122,9 +131,8 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
     }
 
     private fun setRecyclerAdapter() {
-        recyclerBillInfoAdapter = RecyclerBillInfoAdapter()
+        recyclerBillHistoryAdapter = RecyclerBillHistoryAdapter()
         activityBinding.mRecyclerView.layoutManager = LinearLayoutManager(this)
-        activityBinding.mRecyclerView.adapter = recyclerBillInfoAdapter
-        //recyclerBillInfoAdapter.setGenerateBillCallBacks(this)
+        activityBinding.mRecyclerView.adapter = recyclerBillHistoryAdapter
     }
 }

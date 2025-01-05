@@ -45,7 +45,7 @@
 
                 <include
                     android:id="@+id/search_layout"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginRight="16dp"
                     android:layout_marginLeft="16dp"
                     layout="@layout/generated_bill_history_search_panel"
