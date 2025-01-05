@@ -30,41 +30,43 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.core.widget.NestedScrollView
+        <LinearLayout
+            android:id="@+id/mainLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/app_bar"
-            android:fillViewport="true">
+            android:background="@color/window_background"
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/mainLayout"
+            <include
+                android:id="@+id/search_layout"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginLeft="16dp"
+                layout="@layout/generated_bill_history_search_panel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <include
+                android:id="@+id/no_data_layout"
+                layout="@layout/no_data_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_gravity="center"
+                android:layout_margin="48dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/mRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/window_background"
-                android:orientation="vertical">
+                android:layout_marginBottom="16dp"
+                tools:itemCount="3"
+                app:reverseLayout="true"
+                app:stackFromEnd="true"
+                tools:listitem="@layout/adapter_layout_bill_history" />
 
-                <include
-                    android:id="@+id/search_layout"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginLeft="16dp"
-                    layout="@layout/generated_bill_history_search_panel"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/mRecyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="16dp"
-                    tools:itemCount="3"
-                    app:reverseLayout="true"
-                    app:stackFromEnd="true"
-                    tools:listitem="@layout/adapter_layout_bill_history" />
-
-            </LinearLayout>
-
-        </androidx.core.widget.NestedScrollView>
+        </LinearLayout>
 
     </RelativeLayout>
 

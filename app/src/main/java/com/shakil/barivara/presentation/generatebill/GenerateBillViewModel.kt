@@ -153,20 +153,29 @@ class GenerateBillViewModel @Inject constructor(
         }
     }
 
-    fun getBillHistory() {
+    fun getBillHistory(isForSearch: Boolean, tenantId: Int?, collectionDate: String?) {
         viewModelScope.launch {
             isLoading.postValue(true)
             try {
-                val data = generalBillRepoImpl.getBillHistory()
-                if (data.response != null) {
-                    billHistory.postValue(data.response?.data)
+                if (isForSearch) {
+                    val filteredList = billHistory.value?.filter { item ->
+                        val matchesId = tenantId?.let { item.tenantId == it } ?: true
+                        val matchesDate = collectionDate?.let { item.createdAt == it } ?: true
+                        matchesId && matchesDate
+                    }
+                    billHistory.postValue(filteredList)
                 } else {
-                    getBillHistoryErrorResponse.postValue(
-                        Resource.Error(
-                            message = data.message,
-                            errorType = data.errorType
+                    val data = generalBillRepoImpl.getBillHistory()
+                    if (data.response != null) {
+                        billHistory.postValue(data.response?.data)
+                    } else {
+                        getBillHistoryErrorResponse.postValue(
+                            Resource.Error(
+                                message = data.message,
+                                errorType = data.errorType
+                            )
                         )
-                    )
+                    }
                 }
                 isLoading.postValue(false)
             } catch (e: Exception) {

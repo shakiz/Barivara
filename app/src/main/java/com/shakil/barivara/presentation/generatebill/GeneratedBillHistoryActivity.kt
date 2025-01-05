@@ -51,7 +51,7 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
         initObservers()
         setRecyclerAdapter()
         viewModel.getAllTenants()
-        viewModel.getBillHistory()
+        viewModel.getBillHistory(isForSearch = false, tenantId = 0, collectionDate = null)
     }
 
     private fun init() {
@@ -88,9 +88,12 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
 
         viewModel.getBillHistoryList().observe(this) { billHistory ->
             if (!billHistory.isNullOrEmpty()) {
+                activityBinding.noDataLayout.root.visibility = View.GONE
+                activityBinding.mRecyclerView.visibility = View.VISIBLE
                 recyclerBillHistoryAdapter.setItems(billHistory)
             } else {
-
+                activityBinding.noDataLayout.root.visibility = View.VISIBLE
+                activityBinding.mRecyclerView.visibility = View.GONE
             }
         }
     }
@@ -118,13 +121,34 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
                 ) {
                     if (!viewModel.getTenants().value.isNullOrEmpty()) {
                         viewModel.getTenants().value?.let {
-                            tenantId = it[position].id
+                            //This is due to the first item is Select Data
+                            if (position > 0) {
+                                tenantId = it[position - 1].id
+                            }
                         }
                     }
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
+
+        activityBinding.searchLayout.btnApplyFilter.setOnClickListener {
+            viewModel.getBillHistory(
+                isForSearch = true,
+                tenantId = tenantId,
+                collectionDate = if (!activityBinding.searchLayout.startingMonthId.text.isNullOrEmpty()) {
+                    activityBinding.searchLayout.startingMonthId.text.toString()
+                } else {
+                    null
+                }
+            )
+        }
+
+        activityBinding.searchLayout.btnClearFilter.setOnClickListener {
+            viewModel.getBillHistory(isForSearch = false, tenantId = 0, collectionDate = null)
+            activityBinding.searchLayout.startingMonthId.text.clear()
+            activityBinding.searchLayout.tenantNameId.setSelection(0)
+        }
     }
 
     private fun setRecyclerAdapter() {

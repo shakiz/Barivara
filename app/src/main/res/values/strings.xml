@@ -512,4 +512,5 @@
     <string name="room_name_semicolon">Room/Flat Name:</string>
     <string name="tenant_name_semicolon">Tenant Name:</string>
     <string name="collected_amount_semicolon">Collected Amount:</string>
+    <string name="clear">Clear</string>
 </resources>
