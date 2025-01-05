@@ -86,7 +86,7 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
             }
         }
 
-        viewModel.getBillHistoryList().observe(this) { billHistory ->
+        viewModel.getBillHistoryFilteredList().observe(this) { billHistory ->
             if (!billHistory.isNullOrEmpty()) {
                 activityBinding.noDataLayout.root.visibility = View.GONE
                 activityBinding.mRecyclerView.visibility = View.VISIBLE
@@ -135,7 +135,7 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
         activityBinding.searchLayout.btnApplyFilter.setOnClickListener {
             viewModel.getBillHistory(
                 isForSearch = true,
-                tenantId = tenantId,
+                tenantId = if (tenantId > 0) tenantId else null,
                 collectionDate = if (!activityBinding.searchLayout.startingMonthId.text.isNullOrEmpty()) {
                     activityBinding.searchLayout.startingMonthId.text.toString()
                 } else {

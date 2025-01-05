@@ -9,7 +9,9 @@ object ApiConstants {
 
 object DateTimeConstants {
     const val API_DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss"
+    const val API_DATETIME_FORMAT_Z = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'"
     const val APP_DATETIME_FORMAT = "MMM dd, yyyy"
+    const val APP_DATETIME_FORMAT_HASH = "d-M-yyyy"
 }
 
 object Constants {

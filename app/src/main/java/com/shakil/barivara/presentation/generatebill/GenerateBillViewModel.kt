@@ -11,10 +11,14 @@ import com.shakil.barivara.data.model.generatebill.GenerateBillResponse
 import com.shakil.barivara.data.model.tenant.Tenant
 import com.shakil.barivara.data.repository.GenerateBillRepoImpl
 import com.shakil.barivara.data.repository.TenantRepoImpl
+import com.shakil.barivara.utils.DateTimeConstants
 import com.shakil.barivara.utils.ErrorType
 import com.shakil.barivara.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Locale
+import java.util.TimeZone
 import javax.inject.Inject
 
 @HiltViewModel
@@ -36,6 +40,7 @@ class GenerateBillViewModel @Inject constructor(
     private var getTenantListErrorResponse = MutableLiveData<Resource.Error<ErrorType>>()
 
     private var billHistory = MutableLiveData<List<BillHistory>>()
+    private var filteredBillHistory = MutableLiveData<List<BillHistory>>()
     private var getBillHistoryErrorResponse = MutableLiveData<Resource.Error<ErrorType>>()
 
     fun getBills(): LiveData<List<BillInfo>> {
@@ -44,6 +49,10 @@ class GenerateBillViewModel @Inject constructor(
 
     fun getBillHistoryList(): LiveData<List<BillHistory>> {
         return billHistory
+    }
+
+    fun getBillHistoryFilteredList(): LiveData<List<BillHistory>> {
+        return filteredBillHistory
     }
 
     fun getGenerateBillResponse(): LiveData<GenerateBillResponse> {
@@ -160,14 +169,32 @@ class GenerateBillViewModel @Inject constructor(
                 if (isForSearch) {
                     val filteredList = billHistory.value?.filter { item ->
                         val matchesId = tenantId?.let { item.tenantId == it } ?: true
-                        val matchesDate = collectionDate?.let { item.createdAt == it } ?: true
+
+                        val matchesDate = collectionDate?.let {
+                            val apiDateFormat = SimpleDateFormat(
+                                DateTimeConstants.API_DATETIME_FORMAT_Z,
+                                Locale.getDefault()
+                            ) // Parse the API date
+                            apiDateFormat.timeZone =
+                                TimeZone.getTimeZone("UTC") // Handle the Z (UTC)
+                            val targetDateFormat = SimpleDateFormat(
+                                DateTimeConstants.APP_DATETIME_FORMAT_HASH,
+                                Locale.getDefault()
+                            ) // Format to match the target date
+                            // Parse API date into a Date object
+                            val parsedApiDate = apiDateFormat.parse(item.createdAt)
+                            // Format the parsed Date into "d-M-yyyy"
+                            val reformattedApiDate = targetDateFormat.format(parsedApiDate)
+                            reformattedApiDate == it
+                        } ?: true
                         matchesId && matchesDate
                     }
-                    billHistory.postValue(filteredList)
+                    filteredBillHistory.postValue(filteredList)
                 } else {
                     val data = generalBillRepoImpl.getBillHistory()
                     if (data.response != null) {
                         billHistory.postValue(data.response?.data)
+                        filteredBillHistory.postValue(data.response?.data)
                     } else {
                         getBillHistoryErrorResponse.postValue(
                             Resource.Error(
