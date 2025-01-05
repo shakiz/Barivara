@@ -233,6 +233,7 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
+                        android:visibility="gone"
                         layout="@layout/layout_generated_bill_this_month"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
@@ -242,6 +243,7 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
+                        android:visibility="gone"
                         layout="@layout/layout_no_bill_history_for_this_month"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />

@@ -41,8 +41,10 @@ import com.shakil.barivara.utils.ScreenNameConstants
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
 import com.shakil.barivara.utils.UtilsForAll
+import com.shakil.barivara.utils.orFalse
 import dagger.hilt.android.AndroidEntryPoint
 import es.dmoral.toasty.Toasty
+import java.util.Calendar
 import javax.inject.Inject
 
 
@@ -83,6 +85,14 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
         initObservers()
         viewModel.getAllTenants()
         viewModel.getAllRooms()
+
+        val calendar = Calendar.getInstance()
+        val currentYear = calendar.get(Calendar.YEAR)
+        val currentMonth = calendar.get(Calendar.MONTH) + 1
+        viewModel.getRentDataByYearAndMonth(
+            year = currentYear,
+            month = currentMonth
+        )
     }
 
     private fun init() {
@@ -243,6 +253,16 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
                     getString(R.string.please_try_again_something_went_wrong),
                     Toasty.LENGTH_SHORT
                 ).show()
+            }
+        }
+
+        viewModel.getRentDataByMonthAndYear().observe(this){ response ->
+            if (response.status.orFalse()){
+                activityMainBinding.generatedBillHistoryLayoutThisMonth.root.visibility = View.VISIBLE
+                activityMainBinding.noBillHistoryLayoutThisMonth.root.visibility = View.GONE
+            } else {
+                activityMainBinding.generatedBillHistoryLayoutThisMonth.root.visibility = View.GONE
+                activityMainBinding.noBillHistoryLayoutThisMonth.root.visibility = View.VISIBLE
             }
         }
 

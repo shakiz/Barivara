@@ -8,9 +8,11 @@ import com.shakil.barivara.R
 import com.shakil.barivara.data.model.BaseApiResponse
 import com.shakil.barivara.data.model.SliderItem
 import com.shakil.barivara.data.model.auth.LogoutRequest
+import com.shakil.barivara.data.model.dashboard.DashboardData
 import com.shakil.barivara.data.model.room.Room
 import com.shakil.barivara.data.model.tenant.Tenant
 import com.shakil.barivara.data.repository.AuthRepoImpl
+import com.shakil.barivara.data.repository.DashboardRepoImpl
 import com.shakil.barivara.data.repository.RoomRepoImpl
 import com.shakil.barivara.data.repository.TenantRepoImpl
 import com.shakil.barivara.utils.ErrorType
@@ -23,7 +25,8 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val tenantRepoImpl: TenantRepoImpl,
     private val roomRepoImpl: RoomRepoImpl,
-    private val authRepoImpl: AuthRepoImpl
+    private val authRepoImpl: AuthRepoImpl,
+    private val dashboardRepoImpl: DashboardRepoImpl
 ) : ViewModel() {
     var isLoading = MutableLiveData<Boolean>()
     private var tenants = MutableLiveData<List<Tenant>>()
@@ -34,12 +37,19 @@ class HomeViewModel @Inject constructor(
 
     private var logoutResponse = MutableLiveData<BaseApiResponse>()
 
+    private var rentDataByMonthAndYear = MutableLiveData<DashboardData>()
+    private var rentDataByMonthAndYearErrorResponse = MutableLiveData<Resource.Error<ErrorType>>()
+
     fun getTenants(): LiveData<List<Tenant>> {
         return tenants
     }
 
     fun getRooms(): LiveData<List<Room>> {
         return rooms
+    }
+
+    fun getRentDataByMonthAndYear(): LiveData<DashboardData> {
+        return rentDataByMonthAndYear
     }
 
     fun getAllTenants() {
@@ -112,6 +122,29 @@ class HomeViewModel @Inject constructor(
                         )
                     )
                     isLoading.postValue(false)
+                }
+            } catch (e: Exception) {
+                isLoading.postValue(false)
+            }
+        }
+    }
+
+    fun getRentDataByYearAndMonth(year: Int, month: Int) {
+        viewModelScope.launch {
+            try {
+                val data = dashboardRepoImpl.getRentByYearAndMonth(
+                    year = year,
+                    month = month
+                )
+                if (data.response != null) {
+                    rentDataByMonthAndYear.postValue(data.response?.data)
+                } else {
+                    rentDataByMonthAndYearErrorResponse.postValue(
+                        Resource.Error(
+                            message = data.message,
+                            errorType = data.errorType
+                        )
+                    )
                 }
             } catch (e: Exception) {
                 isLoading.postValue(false)
