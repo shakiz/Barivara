@@ -9,7 +9,6 @@ import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
 import com.shakil.barivara.databinding.ActivityGeneratedBillHistoryBinding
 import com.shakil.barivara.presentation.adapter.RecyclerBillHistoryAdapter
-import com.shakil.barivara.utils.DatePickerManager
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.ScreenNameConstants
 import com.shakil.barivara.utils.SpinnerAdapter
@@ -25,6 +24,7 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
     private var tenantId: Int = 0
     private var spinnerData = SpinnerData(this)
     private var spinnerAdapter = SpinnerAdapter()
+    private var year: Int = 0
 
     @Inject
     lateinit var utilsForAll: UtilsForAll
@@ -51,7 +51,7 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
         initObservers()
         setRecyclerAdapter()
         viewModel.getAllTenants()
-        viewModel.getBillHistory(isForSearch = false, tenantId = 0, collectionDate = null)
+        viewModel.getBillHistory(isForSearch = false, tenantId = 0, year = 0)
     }
 
     private fun init() {
@@ -100,17 +100,15 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
 
     private fun binUIWithComponents() {
         activityBinding.toolBar.setNavigationOnClickListener { finish() }
+
+        spinnerAdapter.setSpinnerAdapter(
+            activityBinding.searchLayout.filterYearSpinner,
+            this,
+            spinnerData.setYearData()
+        )
     }
 
     private fun initListeners() {
-        activityBinding.searchLayout.startingMonthId.setOnClickListener {
-            DatePickerManager().showDatePicker(this, object : DatePickerManager.DatePickerCallback {
-                override fun onDateSelected(date: String) {
-                    activityBinding.searchLayout.startingMonthId.setText(date)
-                }
-            })
-        }
-
         activityBinding.searchLayout.tenantNameId.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
@@ -136,17 +134,31 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
             viewModel.getBillHistory(
                 isForSearch = true,
                 tenantId = if (tenantId > 0) tenantId else null,
-                collectionDate = if (!activityBinding.searchLayout.startingMonthId.text.isNullOrEmpty()) {
-                    activityBinding.searchLayout.startingMonthId.text.toString()
-                } else {
-                    null
-                }
+                year = year
             )
         }
 
+        activityBinding.searchLayout.filterYearSpinner.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View,
+                    position: Int,
+                    id: Long
+                ) {
+                    if (parent.getItemAtPosition(position)
+                            .toString() != getString(R.string.select_data)
+                    ) {
+                        year = parent.getItemAtPosition(position).toString().toInt()
+                    }
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
+
         activityBinding.searchLayout.btnClearFilter.setOnClickListener {
-            viewModel.getBillHistory(isForSearch = false, tenantId = 0, collectionDate = null)
-            activityBinding.searchLayout.startingMonthId.text.clear()
+            viewModel.getBillHistory(isForSearch = false, tenantId = 0, year = 0)
+            activityBinding.searchLayout.filterYearSpinner.setSelection(0)
             activityBinding.searchLayout.tenantNameId.setSelection(0)
         }
     }
