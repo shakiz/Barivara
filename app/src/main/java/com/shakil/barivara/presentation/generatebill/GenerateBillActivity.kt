@@ -45,7 +45,6 @@ class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>(),
     private var spinnerAdapter = SpinnerAdapter()
     @Inject
     lateinit var utilsForAll: UtilsForAll
-    private lateinit var dialogBill: Dialog
     private lateinit var ux: UX
 
     @Inject

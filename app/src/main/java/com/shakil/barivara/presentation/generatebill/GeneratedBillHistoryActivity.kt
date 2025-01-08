@@ -164,7 +164,7 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
     }
 
     private fun setRecyclerAdapter() {
-        recyclerBillHistoryAdapter = RecyclerBillHistoryAdapter()
+        recyclerBillHistoryAdapter = RecyclerBillHistoryAdapter(utilsForAll)
         activityBinding.mRecyclerView.layoutManager = LinearLayoutManager(this)
         activityBinding.mRecyclerView.adapter = recyclerBillHistoryAdapter
     }

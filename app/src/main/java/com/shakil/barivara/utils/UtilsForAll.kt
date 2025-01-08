@@ -87,6 +87,24 @@ class UtilsForAll @Inject constructor(private val context: Context) {
         }
     }
 
+    fun getMonthNameFromNumber(number: Int): String {
+        return when (number) {
+            1 -> context.getString(R.string.january)
+            2 -> context.getString(R.string.february)
+            3 -> context.getString(R.string.march)
+            4 -> context.getString(R.string.april)
+            5 -> context.getString(R.string.may)
+            6 -> context.getString(R.string.june)
+            7 -> context.getString(R.string.july)
+            8 -> context.getString(R.string.august)
+            9 -> context.getString(R.string.september)
+            10 -> context.getString(R.string.october)
+            11 -> context.getString(R.string.november)
+            12 -> context.getString(R.string.december)
+            else -> ""
+        }
+    }
+
     fun getDateTime(): String {
         val df: DateFormat = SimpleDateFormat("MMM d, yyyy")
         val dateTimeText = df.format(Date())
