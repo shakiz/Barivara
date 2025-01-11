@@ -518,4 +518,5 @@
     <string name="collection_date_colon">Collection Date:</string>
     <string name="x_comma_x">%s, %d</string>
     <string name="choose_room_status">Please select room status</string>
+    <string name="phone_no_x_s">Mobile No: %s</string>
 </resources>

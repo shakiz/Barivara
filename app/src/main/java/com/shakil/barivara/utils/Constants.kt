@@ -46,5 +46,5 @@ object Constants {
     const val CONTENT_TYPE = "application/json"
     const val ACCEPT = "application/json"
 
-    const val MOBILE_NUMBER_PREFIX = "+88"
+    const val MOBILE_NUMBER_PREFIX = "01"
 }

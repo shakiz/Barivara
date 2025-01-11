@@ -59,7 +59,7 @@ class UtilsForAll @Inject constructor(private val context: Context) {
     }
 
     fun isValidMobileNo(mobileNo: String): Boolean {
-        return mobileNo.length == 11 && !mobileNo.startsWith(Constants.MOBILE_NUMBER_PREFIX)
+        return mobileNo.length == 11 && mobileNo.startsWith(Constants.MOBILE_NUMBER_PREFIX)
     }
 
     fun hideSoftKeyboard(activity: Activity) {
