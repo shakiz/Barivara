@@ -37,7 +37,8 @@ class NewNoteActivity : BaseActivity<ActivityNewNoteBinding>() {
     private var tools = Tools(this)
     private var validation = Validation(this, hashMap)
     private var appAnalytics = AppAnalytics(this)
-    private var utilsForAll = UtilsForAll(this)
+    @Inject
+    lateinit var utilsForAll: UtilsForAll
 
     @Inject
     lateinit var prefManager: PrefManager

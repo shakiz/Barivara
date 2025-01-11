@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ভাড়া আদায়</string>
+    <string name="app_name">ভাড়া আদায় - Rent Collector</string>
 
     <!--Room start-->
     <string name="no_of_rooms">কক্ষ সংখ্যা</string>
@@ -492,4 +492,31 @@
     <string name="validation_mobile_number">Please type correct mobile number.</string>
     <string name="password_doesnt_match">Password and Re-Enter Password Doesnt Match</string>
     <string name="validation_password_length">Password must be 8 characters long.</string>
+    <string name="bill_history">Bill History</string>
+    <string name="bill_history_sub_title">Your Generated Bills</string>
+    <string name="tenant_name_search">Search with Tenant Name</string>
+    <string name="collected_amount">Collected Amount</string>
+    <string name="advance_filter">Advance Filter</string>
+    <string name="filter">Filter</string>
+    <string name="no_bill_generated_yet_for_this_month">You haven\'t generated any bill for this month.</string>
+    <string name="bill_status_this_month">Bill Status(This Month Only)</string>
+    <string name="total_due_">Total Due</string>
+    <string name="collected">Collected</string>
+    <string name="total_due_with_semicolon">Total Due:</string>
+    <string name="collected_semicolon">Collected:</string>
+    <string name="apply_filter">Apply Filter</string>
+    <string name="collection_date">Collection Date</string>
+    <string name="collection_date_hint">Select Collection Date</string>
+    <string name="room_name_semicolon">Room/Flat Name:</string>
+    <string name="tenant_name_semicolon">Tenant Name:</string>
+    <string name="collected_amount_semicolon">Collected Amount:</string>
+    <string name="clear">Clear</string>
+    <string name="month">Month</string>
+    <string name="bill_status">Bill Status</string>
+    <string name="month_colon">Month:</string>
+    <string name="bill_status_colon">Bill Status:</string>
+    <string name="collection_date_colon">Collection Date:</string>
+    <string name="x_comma_x">%s, %d</string>
+    <string name="choose_room_status">Please select room status</string>
+    <string name="phone_no_x_s">Mobile No: %s</string>
 </resources>

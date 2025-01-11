@@ -2,6 +2,7 @@ package com.shakil.barivara.data.remote.webservice
 
 import com.shakil.barivara.data.model.BaseApiResponse
 import com.shakil.barivara.data.model.generatebill.BaseGenerateBillResponse
+import com.shakil.barivara.data.model.generatebill.BillHistoryBaseResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -22,4 +23,9 @@ interface GenerateBillService {
         @Header("Accept") accept: String,
         @Path("billId") billId: Int,
     ): Response<BaseApiResponse>
+
+    @GET("bill-history")
+    suspend fun billHistory(
+        @Header("Accept") accept: String,
+    ): Response<BillHistoryBaseResponse>
 }

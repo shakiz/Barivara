@@ -23,10 +23,10 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class DashboardActivity : BaseActivity<ActivityDashboardBinding>() {
     private lateinit var activityDashboardBinding: ActivityDashboardBinding
-
     @Inject
     lateinit var prefManager: PrefManager
-    private lateinit var utilsForAll: UtilsForAll
+    @Inject
+    lateinit var utilsForAll: UtilsForAll
     private lateinit var ux: UX
     private var spinnerAdapter = SpinnerAdapter()
     private var spinnerData = SpinnerData(this)
@@ -57,7 +57,6 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>() {
     }
 
     private fun init() {
-        utilsForAll = UtilsForAll(this)
         ux = UX(this)
     }
 

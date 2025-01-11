@@ -26,8 +26,8 @@ import javax.inject.Inject
 class PasswordSetupActivity : BaseActivity<ActivityPasswordSetupBinding>() {
     private lateinit var activityBinding: ActivityPasswordSetupBinding
     private lateinit var ux: UX
-    private lateinit var utilsForAll: UtilsForAll
-
+    @Inject
+    lateinit var utilsForAll: UtilsForAll
     @Inject
     lateinit var prefManager: PrefManager
     private val hashMap: Map<String?, Array<String>?> = HashMap()
@@ -59,7 +59,6 @@ class PasswordSetupActivity : BaseActivity<ActivityPasswordSetupBinding>() {
 
     private fun initUI() {
         ux = UX(this)
-        utilsForAll = UtilsForAll(this)
         //Default UI state
         viewModel.otpUiState.postValue(OtpUIState.SEND_OTP)
     }

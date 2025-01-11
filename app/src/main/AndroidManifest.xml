@@ -67,6 +67,12 @@
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
+            android:name=".presentation.generatebill.GeneratedBillHistoryActivity"
+            android:exported="false"
+            android:fitsSystemWindows="true"
+            android:theme="@style/AppThemeNoActionBar"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
             android:name=".presentation.auth.login.LoginSelectionActivity"
             android:exported="true"
             android:fitsSystemWindows="true"

@@ -27,6 +27,7 @@ import com.shakil.barivara.presentation.auth.forgotpassword.ForgotPasswordActivi
 import com.shakil.barivara.presentation.auth.login.LoginSelectionActivity
 import com.shakil.barivara.presentation.dashboard.DashboardActivity
 import com.shakil.barivara.presentation.generatebill.GenerateBillActivity
+import com.shakil.barivara.presentation.generatebill.GeneratedBillHistoryActivity
 import com.shakil.barivara.presentation.profile.ProfileActivity
 import com.shakil.barivara.presentation.room.RoomListActivity
 import com.shakil.barivara.presentation.tenant.TenantListActivity
@@ -40,8 +41,11 @@ import com.shakil.barivara.utils.ScreenNameConstants
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
 import com.shakil.barivara.utils.UtilsForAll
+import com.shakil.barivara.utils.orFalse
+import com.shakil.barivara.utils.orZero
 import dagger.hilt.android.AndroidEntryPoint
 import es.dmoral.toasty.Toasty
+import java.util.Calendar
 import javax.inject.Inject
 
 
@@ -82,6 +86,14 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
         initObservers()
         viewModel.getAllTenants()
         viewModel.getAllRooms()
+
+        val calendar = Calendar.getInstance()
+        val currentYear = calendar.get(Calendar.YEAR)
+        val currentMonth = calendar.get(Calendar.MONTH) + 1
+        viewModel.getRentDataByYearAndMonth(
+            year = currentYear,
+            month = currentMonth
+        )
     }
 
     private fun init() {
@@ -164,7 +176,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
             )
         }
 
-        activityMainBinding.generateBill.setOnClickListener {
+        activityMainBinding.noBillHistoryLayoutThisMonth.btnGenerate.setOnClickListener {
             buttonAction(
                 ButtonActionConstants.actionHomeGenerateBill
             )
@@ -172,6 +184,30 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
                 Intent(
                     this@HomeActivity,
                     GenerateBillActivity::class.java
+                )
+            )
+        }
+
+        activityMainBinding.generateBillLayout.setOnClickListener {
+            buttonAction(
+                ButtonActionConstants.actionHomeGenerateBill
+            )
+            startActivity(
+                Intent(
+                    this@HomeActivity,
+                    GenerateBillActivity::class.java
+                )
+            )
+        }
+
+        activityMainBinding.generatedBillHistoryLayout.setOnClickListener {
+            buttonAction(
+                ButtonActionConstants.actionHomeGeneratedBillHistory
+            )
+            startActivity(
+                Intent(
+                    this@HomeActivity,
+                    GeneratedBillHistoryActivity::class.java
                 )
             )
         }
@@ -218,6 +254,22 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
                     getString(R.string.please_try_again_something_went_wrong),
                     Toasty.LENGTH_SHORT
                 ).show()
+            }
+        }
+
+        viewModel.getRentDataByMonthAndYear().observe(this) { response ->
+            if (response.status.orFalse()) {
+                activityMainBinding.generatedBillHistoryLayoutThisMonth.root.visibility =
+                    View.VISIBLE
+                activityMainBinding.noBillHistoryLayoutThisMonth.root.visibility = View.GONE
+
+                activityMainBinding.generatedBillHistoryLayoutThisMonth.totalCollected.text =
+                    "${response.totalPaid.orZero()}"
+                activityMainBinding.generatedBillHistoryLayoutThisMonth.totalDue.text =
+                    "${response.totalDue.orZero()}"
+            } else {
+                activityMainBinding.generatedBillHistoryLayoutThisMonth.root.visibility = View.GONE
+                activityMainBinding.noBillHistoryLayoutThisMonth.root.visibility = View.VISIBLE
             }
         }
 
