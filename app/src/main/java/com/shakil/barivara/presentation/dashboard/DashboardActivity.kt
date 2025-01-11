@@ -111,7 +111,6 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>() {
                     ) {
                         year = parent.getItemAtPosition(position).toString().toInt()
                         setMonthSpinnerAdapter()
-                        activityDashboardBinding.FilterMonth.setSelection(month, true)
                         if (month != 0){
                             viewModel.getRentDataByYearAndMonth(
                                 year,
