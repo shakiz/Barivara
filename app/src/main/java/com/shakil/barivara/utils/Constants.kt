@@ -35,6 +35,7 @@ object Constants {
         Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE)
     const val REQUEST_CALL_CODE = 1111
     const val FILE_REQUEST_CODE = 335
+    const val APP_UPDATE_REQUEST_CODE = 336
     const val mLanguageSetup = "LanguageSetup"
     const val mOldUser = "OldUser"
     const val mJobName = "JobName"
