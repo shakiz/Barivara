@@ -32,8 +32,7 @@ import com.shakil.barivara.presentation.profile.ProfileActivity
 import com.shakil.barivara.presentation.room.RoomListActivity
 import com.shakil.barivara.presentation.tenant.TenantListActivity
 import com.shakil.barivara.presentation.tutorial.TutorialActivity
-import com.shakil.barivara.utils.AppUpdate
-import com.shakil.barivara.utils.AppUpdate.OnGetUpdate
+import com.shakil.barivara.utils.AppUpdateHelper
 import com.shakil.barivara.utils.ButtonActionConstants
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.Constants.mUserMobile
@@ -59,7 +58,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
     @Inject
     lateinit var prefManager: PrefManager
     private lateinit var utilsForAll: UtilsForAll
-    private lateinit var appUpdate: AppUpdate
+    private lateinit var appUpdate: AppUpdateHelper
     private var tools = Tools(this)
     private lateinit var ux: UX
     private val viewModel by viewModels<HomeViewModel>()
@@ -102,7 +101,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
     private fun init() {
         ux = UX(this)
         utilsForAll = UtilsForAll(this)
-        appUpdate = AppUpdate(this)
+        appUpdate = AppUpdateHelper(this)
     }
 
     private fun setupNotification() {
@@ -293,13 +292,26 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
         activityMainBinding.dayText.text = utilsForAll.getDayOfTheMonth()
 
         if (tools.hasConnection()) {
-            appUpdate.getUpdate(object : OnGetUpdate {
-                override fun onResult(updated: Boolean) {
-                    if (!updated) {
-                        appUpdate.checkUpdate(showUpdated = false, cancelable = false, prefManager)
-                    }
+            appUpdate.checkForUpdate(
+                onUpdateAvailable = {
+                    // Start the update process
+                    appUpdate.startImmediateUpdate(this)
+                },
+                onUpdateNotAvailable = {
+                    Toasty.normal(
+                        this,
+                        getString(R.string.no_update_available),
+                        Toasty.LENGTH_SHORT
+                    ).show()
+                },
+                onError = { error ->
+                    Toasty.warning(
+                        this,
+                        "Error checking for update: ${error.message}",
+                        Toasty.LENGTH_LONG
+                    ).show()
                 }
-            }, prefManager)
+            )
         }
 
         if (Build.VERSION.SDK_INT > 32) {
@@ -330,6 +342,22 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
                 )
             }
         }
+    }
+
+    // Handle the result of the update flow
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == AppUpdateHelper.IMMEDIATE_UPDATE_REQUEST_CODE) {
+            if (resultCode != RESULT_OK) {
+                Toasty.warning(this, getString(R.string.update_failed), Toasty.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // If the update is downloaded but not installed, prompt the user to complete it
+        appUpdate.completeUpdate()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
