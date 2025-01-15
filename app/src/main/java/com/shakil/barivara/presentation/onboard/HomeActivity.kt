@@ -294,7 +294,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
         if (tools.hasConnection()) {
             appUpdate.checkForUpdate(
                 onUpdateAvailable = {
-                    // Start the update process
                     appUpdate.startImmediateUpdate(this)
                 },
                 onUpdateNotAvailable = {
@@ -305,11 +304,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
                     ).show()
                 },
                 onError = { error ->
-                    Toasty.warning(
-                        this,
-                        "Error checking for update: ${error.message}",
-                        Toasty.LENGTH_LONG
-                    ).show()
+                    //empty implementation
                 }
             )
         }

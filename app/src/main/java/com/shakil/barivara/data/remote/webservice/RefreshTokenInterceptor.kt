@@ -4,6 +4,7 @@ import com.shakil.barivara.data.repository.AuthRepoImpl
 import com.shakil.barivara.utils.ApiConstants.BASE_URL
 import com.shakil.barivara.utils.Constants.mAccessToken
 import com.shakil.barivara.utils.Constants.mRefreshToken
+import com.shakil.barivara.utils.Constants.mUserMobile
 import com.shakil.barivara.utils.PrefManager
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
@@ -45,8 +46,10 @@ class RefreshTokenInterceptor(
         if (chain.request().url.toString() != (BASE_URL + "logout")) {
             // Attach the current access token
             val accessToken = tokenManager.getString(mAccessToken)
+            val mobileNo = tokenManager.getString(mUserMobile)
             request = request.newBuilder()
                 .header("Authorization", "Bearer $accessToken")
+                .header("phone", mobileNo)
                 .build()
         }
 
