@@ -5,16 +5,14 @@ import android.app.Dialog
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.text.TextUtils
-import android.view.View
 import android.view.Window
 import android.view.WindowManager
+import android.widget.Button
+import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import com.github.javiersantos.appupdater.AppUpdaterUtils
 import com.github.javiersantos.appupdater.AppUpdaterUtils.UpdateListener
 import com.github.javiersantos.appupdater.enums.AppUpdaterError
@@ -25,11 +23,11 @@ import com.shakil.barivara.R
 class AppUpdate(private val context: Context) {
     private val tools = Tools(context)
 
-    interface onGetUpdate {
+    interface OnGetUpdate {
         fun onResult(updated: Boolean)
     }
 
-    fun getUpdate(listener: onGetUpdate?, prefManager: PrefManager) {
+    fun getUpdate(listener: OnGetUpdate?, prefManager: PrefManager) {
         val appUpdater = AppUpdaterUtils(context)
             .setUpdateFrom(UpdateFrom.GOOGLE_PLAY)
             .withListener(object : UpdateListener {
@@ -72,62 +70,49 @@ class AppUpdate(private val context: Context) {
                     isUpdated = false
                 }
                 if (shouldDisplay) {
-                    val view = View.inflate(context, R.layout.dialog_popup_app_update, null)
-                    val builder = AlertDialog.Builder(
-                        context
-                    )
-                    builder.setTitle("")
-                        .setView(view)
-                        .setCancelable(cancelable)
-                    val mPopupDialogNoTitle: Dialog = builder.create()
-                    mPopupDialogNoTitle.requestWindowFeature(Window.FEATURE_NO_TITLE)
-                    mPopupDialogNoTitle.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                    mPopupDialogNoTitle.show()
-                    mPopupDialogNoTitle.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
-                    val btnCancel = view.findViewById<TextView>(R.id.btnCancel)
-                    val btnOk = view.findViewById<TextView>(R.id.btnOk)
-                    btnCancel.text = context.getString(R.string.cancel)
-                    btnOk.text = context.getString(R.string.update)
-                    val title = view.findViewById<TextView>(R.id.title)
-                    val version = view.findViewById<TextView>(R.id.version)
-                    val message = view.findViewById<TextView>(R.id.message)
-                    btnCancel.setOnClickListener {
-                        mPopupDialogNoTitle.dismiss()
-                        val tools = Tools(context)
-                        tools.checkLogin(prefManager)
-                    }
-                    btnOk.setOnClickListener { goToPlayStore(mPopupDialogNoTitle) }
-                    if (latestVersion == currentVersion) {
-                        btnOk.visibility = View.GONE
-                        btnCancel.visibility = View.VISIBLE
-                        title.text = context.getString(R.string.no_update_available)
-                        version.text =
-                            context.getString(R.string.no_update_version) + " " + currentVersion
-                        message.text = ""
-                    } else {
-                        btnOk.visibility = View.VISIBLE
-                        if (cancelable) {
-                            btnCancel.visibility = View.VISIBLE
-                        } else {
-                            btnCancel.visibility = View.GONE
-                        }
-                        title.text = context.getString(R.string.update_available)
-                        version.text =
-                            context.getString(R.string.version) + " " + latestVersion + " " + context.getString(
-                                R.string.has_been_released_small
-                            )
-                        message.text = context.getString(R.string.please_update_detail_text)
-                    }
+                    showAppUpdateDialog(cancelable, latestVersion)
                 }
             }
         }
         return isUpdated
     }
 
-    private fun goToPlayStore(mPopupDialogNoTitle: Dialog) {
+    private fun showAppUpdateDialog(isCancelable: Boolean, latestVersion: String) {
+        val primaryAction: Button
+        val secondaryAction: Button
+        val version: TextView
+        val dialog = Dialog(context, android.R.style.Theme_Dialog)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_popup_app_update)
+        dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.setCanceledOnTouchOutside(isCancelable)
+
+        primaryAction = dialog.findViewById(R.id.primaryAction)
+        secondaryAction = dialog.findViewById(R.id.secondaryAction)
+        version = dialog.findViewById(R.id.version)
+
+        version.text = context.getString(R.string.version_x_s_has_been_released, latestVersion)
+
+        primaryAction.setOnClickListener {
+            dialog.dismiss()
+            goToPlayStore()
+        }
+        secondaryAction.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
+        dialog.window!!.setLayout(
+            RelativeLayout.LayoutParams.MATCH_PARENT,
+            RelativeLayout.LayoutParams.WRAP_CONTENT
+        )
+        dialog.show()
+    }
+
+    private fun goToPlayStore() {
         val appPackageName = context.packageName
         if (tools.hasConnection()) {
-            mPopupDialogNoTitle.dismiss()
             try {
                 (context as Activity).finish()
                 context.startActivity(

@@ -32,6 +32,8 @@ import com.shakil.barivara.presentation.profile.ProfileActivity
 import com.shakil.barivara.presentation.room.RoomListActivity
 import com.shakil.barivara.presentation.tenant.TenantListActivity
 import com.shakil.barivara.presentation.tutorial.TutorialActivity
+import com.shakil.barivara.utils.AppUpdate
+import com.shakil.barivara.utils.AppUpdate.OnGetUpdate
 import com.shakil.barivara.utils.ButtonActionConstants
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.Constants.mUserMobile
@@ -57,6 +59,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
     @Inject
     lateinit var prefManager: PrefManager
     private lateinit var utilsForAll: UtilsForAll
+    private lateinit var appUpdate: AppUpdate
     private var tools = Tools(this)
     private lateinit var ux: UX
     private val viewModel by viewModels<HomeViewModel>()
@@ -99,6 +102,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
     private fun init() {
         ux = UX(this)
         utilsForAll = UtilsForAll(this)
+        appUpdate = AppUpdate(this)
     }
 
     private fun setupNotification() {
@@ -287,6 +291,16 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
         activityMainBinding.greetingsText.text = utilsForAll.setGreetings()
         activityMainBinding.dateTimeText.text = utilsForAll.getDateTime()
         activityMainBinding.dayText.text = utilsForAll.getDayOfTheMonth()
+
+        if (tools.hasConnection()) {
+            appUpdate.getUpdate(object : OnGetUpdate {
+                override fun onResult(updated: Boolean) {
+                    if (!updated) {
+                        appUpdate.checkUpdate(showUpdated = false, cancelable = false, prefManager)
+                    }
+                }
+            }, prefManager)
+        }
 
         if (Build.VERSION.SDK_INT > 32) {
             if (ContextCompat.checkSelfPermission(
