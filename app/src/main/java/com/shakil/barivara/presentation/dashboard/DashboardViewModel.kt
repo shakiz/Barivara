@@ -58,12 +58,11 @@ class DashboardViewModel @Inject constructor(
         }
     }
 
-    fun getRentDataByYearAndMonth(token: String, year: Int, month: Int) {
+    fun getRentDataByYearAndMonth(year: Int, month: Int) {
         viewModelScope.launch {
             isLoading.postValue(true)
             try {
                 val data = dashboardRepoImpl.getRentByYearAndMonth(
-                    token = token,
                     year = year,
                     month = month
                 )

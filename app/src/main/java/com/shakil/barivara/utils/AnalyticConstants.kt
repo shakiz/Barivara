@@ -25,6 +25,7 @@ object ButtonActionConstants {
     const val actionHomeTenant = "action_home_tenant"
     const val actionHomeRoom = "action_home_room"
     const val actionHomeGenerateBill = "action_home_generate_bill"
+    const val actionHomeGeneratedBillHistory = "action_home_generated_bill_history"
     const val actionHomeDashboard = "action_home_dashboard"
     const val actionHomeMenuItemMyProfile = "action_home_menu_item_profile"
     const val actionHomeMenuItemTutorial = "action_home_menu_item_tutorial"

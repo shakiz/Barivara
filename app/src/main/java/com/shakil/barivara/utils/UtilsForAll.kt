@@ -12,8 +12,9 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
+import javax.inject.Inject
 
-class UtilsForAll(private val context: Context) {
+class UtilsForAll @Inject constructor(private val context: Context) {
     fun exitApp() {
         val exitIntent = Intent(Intent.ACTION_MAIN)
         exitIntent.addCategory(Intent.CATEGORY_HOME)
@@ -58,7 +59,7 @@ class UtilsForAll(private val context: Context) {
     }
 
     fun isValidMobileNo(mobileNo: String): Boolean {
-        return mobileNo.length == 11 && !mobileNo.startsWith(Constants.MOBILE_NUMBER_PREFIX)
+        return mobileNo.length == 11 && mobileNo.startsWith(Constants.MOBILE_NUMBER_PREFIX)
     }
 
     fun hideSoftKeyboard(activity: Activity) {
@@ -83,6 +84,24 @@ class UtilsForAll(private val context: Context) {
             context.getString(R.string.november) -> 11
             context.getString(R.string.december) -> 12
             else -> 0
+        }
+    }
+
+    fun getMonthNameFromNumber(number: Int): String {
+        return when (number) {
+            1 -> context.getString(R.string.january)
+            2 -> context.getString(R.string.february)
+            3 -> context.getString(R.string.march)
+            4 -> context.getString(R.string.april)
+            5 -> context.getString(R.string.may)
+            6 -> context.getString(R.string.june)
+            7 -> context.getString(R.string.july)
+            8 -> context.getString(R.string.august)
+            9 -> context.getString(R.string.september)
+            10 -> context.getString(R.string.october)
+            11 -> context.getString(R.string.november)
+            12 -> context.getString(R.string.december)
+            else -> ""
         }
     }
 

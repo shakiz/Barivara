@@ -22,7 +22,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:background="@color/md_white_1000"
-            android:hint="@string/name_search"
+            android:hint="@string/tenant_name_search"
             android:imeOptions="actionDone"
             android:inputType="text"
             android:maxLength="150"
@@ -38,6 +38,21 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
+            android:id="@+id/filterButton"
+            android:layout_width="42dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="4dp"
+            android:background="@color/transparent"
+            android:padding="8dp"
+            android:src="@drawable/ic_filter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/refreshButton"
+            app:layout_constraintStart_toEndOf="@id/SearchName"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/md_grey_800" />
+
+        <ImageButton
             android:id="@+id/refreshButton"
             android:layout_width="42dp"
             android:layout_height="wrap_content"
@@ -48,7 +63,7 @@
             android:src="@drawable/ic_refresh_black_24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/SearchName"
+            app:layout_constraintStart_toEndOf="@id/filterButton"
             app:layout_constraintTop_toTopOf="parent"
             app:tint="@color/md_grey_800" />
 

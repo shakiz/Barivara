@@ -11,6 +11,7 @@ import com.shakil.barivara.data.remote.webservice.TenantService
 import com.shakil.barivara.data.remote.webservice.UserService
 import com.shakil.barivara.utils.ApiConstants
 import com.shakil.barivara.utils.PrefManager
+import com.shakil.barivara.utils.UtilsForAll
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -35,6 +36,12 @@ object AppModule {
     @Singleton
     fun providePrefManager(@ApplicationContext context: Context): PrefManager {
         return PrefManager(context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUtils(@ApplicationContext context: Context): UtilsForAll {
+        return UtilsForAll(context)
     }
 
     @Provides

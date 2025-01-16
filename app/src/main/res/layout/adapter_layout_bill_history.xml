@@ -1,0 +1,211 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginTop="16dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:padding="12dp"
+    android:background="@drawable/rectangle_white">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|start"
+        android:background="@drawable/rectangle_border_light_green"
+        android:gravity="center|start"
+        android:orientation="horizontal"
+        android:paddingLeft="8dp"
+        android:paddingTop="4dp"
+        android:paddingRight="8dp"
+        android:paddingBottom="4dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:ellipsize="end"
+            android:gravity="center|start"
+            android:scrollHorizontally="true"
+            android:text="@string/room_name_semicolon"
+            android:textColor="@color/md_grey_800"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/RoomId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:ellipsize="end"
+            android:gravity="center|start"
+            android:scrollHorizontally="true"
+            android:layout_marginStart="4dp"
+            android:text="@string/demo_room_name"
+            android:textColor="@color/md_orange_800"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|start"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/rectangle_border_light_green"
+        android:gravity="center|start"
+        android:orientation="horizontal"
+        android:paddingLeft="8dp"
+        android:paddingTop="4dp"
+        android:paddingRight="8dp"
+        android:paddingBottom="4dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:ellipsize="end"
+            android:gravity="center|start"
+            android:scrollHorizontally="true"
+            android:text="@string/tenant_name_semicolon"
+            android:textColor="@color/md_grey_800"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/TenantId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:ellipsize="end"
+            android:gravity="center|start"
+            android:scrollHorizontally="true"
+            android:layout_marginStart="4dp"
+            android:text="@string/demo_tenant_name"
+            android:textColor="@color/md_orange_800"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|start"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/rectangle_border_light_green"
+        android:gravity="center|start"
+        android:orientation="horizontal"
+        android:paddingLeft="8dp"
+        android:paddingTop="4dp"
+        android:paddingRight="8dp"
+        android:paddingBottom="4dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:ellipsize="end"
+            android:gravity="center|start"
+            android:scrollHorizontally="true"
+            android:text="@string/collected_amount_semicolon"
+            android:textColor="@color/md_grey_800"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/TotalBill"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:ellipsize="end"
+            android:gravity="center|start"
+            android:scrollHorizontally="true"
+            android:layout_marginStart="4dp"
+            android:textColor="@color/md_orange_800"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            tools:text="0" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|start"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/rectangle_border_light_green"
+        android:gravity="center|start"
+        android:orientation="horizontal"
+        android:paddingLeft="8dp"
+        android:paddingTop="4dp"
+        android:paddingRight="8dp"
+        android:paddingBottom="4dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:ellipsize="end"
+            android:gravity="center|start"
+            android:scrollHorizontally="true"
+            android:text="@string/collection_date_colon"
+            android:textColor="@color/md_grey_800"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/monthAndYear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:ellipsize="end"
+            android:gravity="center|start"
+            android:scrollHorizontally="true"
+            android:layout_marginStart="4dp"
+            android:textColor="@color/md_orange_800"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            tools:text="January" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|start"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/rectangle_border_light_green"
+        android:gravity="center|start"
+        android:orientation="horizontal"
+        android:paddingLeft="8dp"
+        android:paddingTop="4dp"
+        android:paddingRight="8dp"
+        android:paddingBottom="4dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:ellipsize="end"
+            android:gravity="center|start"
+            android:scrollHorizontally="true"
+            android:text="@string/bill_status_colon"
+            android:textColor="@color/md_grey_800"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/billStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:ellipsize="end"
+            android:gravity="center|start"
+            android:scrollHorizontally="true"
+            android:layout_marginStart="4dp"
+            android:textColor="@color/md_orange_800"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            tools:text="Paid" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -54,7 +54,7 @@ class RecyclerAdapterTenantList :
             binding.TenantName.text =
                 context.getString(R.string.tenant_name_x, tenant.name).boldAfterColon()
             binding.MobileNo.text =
-                context.getString(R.string.phone_no_x, tenant.phone?.toInt()).boldAfterColon()
+                context.getString(R.string.phone_no_x_s, tenant.phone.orEmpty()).boldAfterColon()
             binding.StartDate.text =
                 context.getString(R.string.start_date_x, formatDateTimeToAppText(tenant.startDate))
                     .boldAfterColon()

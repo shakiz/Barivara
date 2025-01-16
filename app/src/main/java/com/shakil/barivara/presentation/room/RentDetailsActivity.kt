@@ -86,7 +86,7 @@ class RentDetailsActivity : BaseActivity<ActivityNewRentDetailsBinding>() {
         spinnerAdapter.setSpinnerAdapter(
             activityNewRentDetailsBinding.MonthId,
             this,
-            spinnerData.setMonthData()
+            spinnerData.setMonthData(YearId)
         )
         spinnerAdapter.setSpinnerAdapter(
             activityNewRentDetailsBinding.YearId,

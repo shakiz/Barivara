@@ -27,10 +27,12 @@ import com.shakil.barivara.presentation.auth.forgotpassword.ForgotPasswordActivi
 import com.shakil.barivara.presentation.auth.login.LoginSelectionActivity
 import com.shakil.barivara.presentation.dashboard.DashboardActivity
 import com.shakil.barivara.presentation.generatebill.GenerateBillActivity
+import com.shakil.barivara.presentation.generatebill.GeneratedBillHistoryActivity
 import com.shakil.barivara.presentation.profile.ProfileActivity
 import com.shakil.barivara.presentation.room.RoomListActivity
 import com.shakil.barivara.presentation.tenant.TenantListActivity
 import com.shakil.barivara.presentation.tutorial.TutorialActivity
+import com.shakil.barivara.utils.AppUpdateHelper
 import com.shakil.barivara.utils.ButtonActionConstants
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.Constants.mUserMobile
@@ -40,8 +42,11 @@ import com.shakil.barivara.utils.ScreenNameConstants
 import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
 import com.shakil.barivara.utils.UtilsForAll
+import com.shakil.barivara.utils.orFalse
+import com.shakil.barivara.utils.orZero
 import dagger.hilt.android.AndroidEntryPoint
 import es.dmoral.toasty.Toasty
+import java.util.Calendar
 import javax.inject.Inject
 
 
@@ -53,6 +58,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
     @Inject
     lateinit var prefManager: PrefManager
     private lateinit var utilsForAll: UtilsForAll
+    private lateinit var appUpdate: AppUpdateHelper
     private var tools = Tools(this)
     private lateinit var ux: UX
     private val viewModel by viewModels<HomeViewModel>()
@@ -82,11 +88,20 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
         initObservers()
         viewModel.getAllTenants()
         viewModel.getAllRooms()
+
+        val calendar = Calendar.getInstance()
+        val currentYear = calendar.get(Calendar.YEAR)
+        val currentMonth = calendar.get(Calendar.MONTH) + 1
+        viewModel.getRentDataByYearAndMonth(
+            year = currentYear,
+            month = currentMonth
+        )
     }
 
     private fun init() {
         ux = UX(this)
         utilsForAll = UtilsForAll(this)
+        appUpdate = AppUpdateHelper(this)
     }
 
     private fun setupNotification() {
@@ -164,7 +179,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
             )
         }
 
-        activityMainBinding.generateBill.setOnClickListener {
+        activityMainBinding.noBillHistoryLayoutThisMonth.btnGenerate.setOnClickListener {
             buttonAction(
                 ButtonActionConstants.actionHomeGenerateBill
             )
@@ -172,6 +187,30 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
                 Intent(
                     this@HomeActivity,
                     GenerateBillActivity::class.java
+                )
+            )
+        }
+
+        activityMainBinding.generateBillLayout.setOnClickListener {
+            buttonAction(
+                ButtonActionConstants.actionHomeGenerateBill
+            )
+            startActivity(
+                Intent(
+                    this@HomeActivity,
+                    GenerateBillActivity::class.java
+                )
+            )
+        }
+
+        activityMainBinding.generatedBillHistoryLayout.setOnClickListener {
+            buttonAction(
+                ButtonActionConstants.actionHomeGeneratedBillHistory
+            )
+            startActivity(
+                Intent(
+                    this@HomeActivity,
+                    GeneratedBillHistoryActivity::class.java
                 )
             )
         }
@@ -221,6 +260,22 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
             }
         }
 
+        viewModel.getRentDataByMonthAndYear().observe(this) { response ->
+            if (response.status.orFalse()) {
+                activityMainBinding.generatedBillHistoryLayoutThisMonth.root.visibility =
+                    View.VISIBLE
+                activityMainBinding.noBillHistoryLayoutThisMonth.root.visibility = View.GONE
+
+                activityMainBinding.generatedBillHistoryLayoutThisMonth.totalCollected.text =
+                    "${response.totalPaid.orZero()}"
+                activityMainBinding.generatedBillHistoryLayoutThisMonth.totalDue.text =
+                    "${response.totalDue.orZero()}"
+            } else {
+                activityMainBinding.generatedBillHistoryLayoutThisMonth.root.visibility = View.GONE
+                activityMainBinding.noBillHistoryLayoutThisMonth.root.visibility = View.VISIBLE
+            }
+        }
+
         viewModel.isLoading.observe(this) { isLoading ->
             if (isLoading) {
                 ux.getLoadingView()
@@ -235,6 +290,24 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
         activityMainBinding.greetingsText.text = utilsForAll.setGreetings()
         activityMainBinding.dateTimeText.text = utilsForAll.getDateTime()
         activityMainBinding.dayText.text = utilsForAll.getDayOfTheMonth()
+
+        if (tools.hasConnection()) {
+            appUpdate.checkForUpdate(
+                onUpdateAvailable = {
+                    appUpdate.startImmediateUpdate(this)
+                },
+                onUpdateNotAvailable = {
+                    Toasty.normal(
+                        this,
+                        getString(R.string.no_update_available),
+                        Toasty.LENGTH_SHORT
+                    ).show()
+                },
+                onError = { error ->
+                    //empty implementation
+                }
+            )
+        }
 
         if (Build.VERSION.SDK_INT > 32) {
             if (ContextCompat.checkSelfPermission(
@@ -264,6 +337,22 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
                 )
             }
         }
+    }
+
+    // Handle the result of the update flow
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == AppUpdateHelper.IMMEDIATE_UPDATE_REQUEST_CODE) {
+            if (resultCode != RESULT_OK) {
+                Toasty.warning(this, getString(R.string.update_failed), Toasty.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // If the update is downloaded but not installed, prompt the user to complete it
+        appUpdate.completeUpdate()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

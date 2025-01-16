@@ -98,6 +98,10 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
         }
         activityAddNewRoomBinding.mSaveRoomMaster.setOnClickListener {
             if (validation.isValid) {
+                if (activityAddNewRoomBinding.radioGroupStatus.checkedRadioButtonId == -1){
+                    Toasty.warning(this, getString(R.string.choose_room_status), Toasty.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
                 if (tools.hasConnection()) {
                     saveOrUpdateData()
                 } else {

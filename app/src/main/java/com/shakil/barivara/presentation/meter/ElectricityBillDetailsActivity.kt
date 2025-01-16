@@ -36,7 +36,8 @@ class ElectricityBillDetailsActivity : BaseActivity<ActivityElectricityBillDetai
     private var presentMonthUnitInt = 0
     private var unitPriceInt = 0
     private var totalElectricityBillInt = 0
-    private var utilsForAll = UtilsForAll(this)
+    @Inject
+    lateinit var utilsForAll: UtilsForAll
     private var electricityBill: ElectricityBill = ElectricityBill()
     private var command = "add"
     private var AssociateMeterId = 0

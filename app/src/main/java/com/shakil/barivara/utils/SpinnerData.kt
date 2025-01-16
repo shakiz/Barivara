@@ -2,48 +2,60 @@ package com.shakil.barivara.utils
 
 import android.content.Context
 import com.shakil.barivara.R
+import java.util.Calendar
 import java.util.Collections
 
 class SpinnerData(private val context: Context) {
     fun setYearData(): ArrayList<String> {
         val spinnerValues = ArrayList<String>()
-        val yearArray = arrayOf(
-            context.getString(R.string.select_data_1), context.getString(R.string.twenty_fiften),
-            context.getString(R.string.twenty_sixteen),
-            context.getString(R.string.twenty_seventeen),
-            context.getString(R.string.twenty_eightteen),
-            context.getString(R.string.twenty_nineteen),
-            context.getString(R.string.twenty_twenty_one),
-            context.getString(R.string.twenty_twenty_two),
-            context.getString(R.string.twenty_twenty_three),
-            context.getString(R.string.twenty_twenty_four),
-            context.getString(R.string.twenty_twenty_five),
-            context.getString(R.string.twenty_twenty_six),
-            context.getString(R.string.twenty_twenty_seven)
-        )
-        Collections.addAll(spinnerValues, *yearArray)
+        // Current year
+        val currentYear = Calendar.getInstance().get(Calendar.YEAR)
+        spinnerValues.add(context.getString(R.string.select_data_1))
+        // Add years dynamically up to the current year
+        for (year in 2015..currentYear) {
+            spinnerValues.add(year.toString())
+        }
         return spinnerValues
     }
 
-    fun setMonthData(): ArrayList<String> {
+    fun setMonthData(selectedYear: Int): ArrayList<String> {
         val spinnerValues = ArrayList<String>()
-        val monthArray = arrayOf(
-            context.getString(R.string.select_data_1),
-            context.getString(R.string.january),
-            context.getString(R.string.february),
-            context.getString(R.string.march),
-            context.getString(R.string.april),
-            context.getString(R.string.may),
-            context.getString(R.string.june),
-            context.getString(R.string.july),
-            context.getString(R.string.august),
-            context.getString(R.string.september),
-            context.getString(R.string.october),
-            context.getString(R.string.november),
-            context.getString(R.string.december)
-        )
-        Collections.addAll(spinnerValues, *monthArray)
+        // Current year and month
+        val calendar = Calendar.getInstance()
+        val currentYear = calendar.get(Calendar.YEAR)
+        val currentMonth = calendar.get(Calendar.MONTH) + 1 // Month is 0-indexed
+
+        spinnerValues.add(context.getString(R.string.select_data_1))
+
+        // Add months dynamically
+        for (month in 1..12) {
+            // If the selected year is the current year, limit the months to the current month
+            if (selectedYear == currentYear && month > currentMonth) {
+                break
+            }
+            // Convert month index to localized month name
+            spinnerValues.add(getMonthName(month))
+        }
+
         return spinnerValues
+    }
+
+    private fun getMonthName(month: Int): String {
+        return when (month) {
+            1 -> context.getString(R.string.january)
+            2 -> context.getString(R.string.february)
+            3 -> context.getString(R.string.march)
+            4 -> context.getString(R.string.april)
+            5 -> context.getString(R.string.may)
+            6 -> context.getString(R.string.june)
+            7 -> context.getString(R.string.july)
+            8 -> context.getString(R.string.august)
+            9 -> context.getString(R.string.september)
+            10 -> context.getString(R.string.october)
+            11 -> context.getString(R.string.november)
+            12 -> context.getString(R.string.december)
+            else -> ""
+        }
     }
 
     fun setTenantTypeData(): ArrayList<String> {

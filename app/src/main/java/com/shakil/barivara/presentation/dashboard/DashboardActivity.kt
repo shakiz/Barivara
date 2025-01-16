@@ -23,10 +23,10 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class DashboardActivity : BaseActivity<ActivityDashboardBinding>() {
     private lateinit var activityDashboardBinding: ActivityDashboardBinding
-
     @Inject
     lateinit var prefManager: PrefManager
-    private lateinit var utilsForAll: UtilsForAll
+    @Inject
+    lateinit var utilsForAll: UtilsForAll
     private lateinit var ux: UX
     private var spinnerAdapter = SpinnerAdapter()
     private var spinnerData = SpinnerData(this)
@@ -57,7 +57,6 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>() {
     }
 
     private fun init() {
-        utilsForAll = UtilsForAll(this)
         ux = UX(this)
     }
 
@@ -97,11 +96,7 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>() {
             this,
             spinnerData.setYearData()
         )
-        spinnerAdapter.setSpinnerAdapter(
-            activityDashboardBinding.FilterMonth,
-            this,
-            spinnerData.setMonthData()
-        )
+        setMonthSpinnerAdapter()
 
         activityDashboardBinding.FilterYear.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
@@ -115,6 +110,13 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>() {
                             .toString() != getString(R.string.select_data_1)
                     ) {
                         year = parent.getItemAtPosition(position).toString().toInt()
+                        setMonthSpinnerAdapter()
+                        if (month != 0){
+                            viewModel.getRentDataByYearAndMonth(
+                                year,
+                                month
+                            )
+                        }
                     }
                 }
 
@@ -137,7 +139,6 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>() {
                             parent.getItemAtPosition(position).toString()
                         )
                         viewModel.getRentDataByYearAndMonth(
-                            prefManager.getString(mAccessToken),
                             year,
                             month
                         )
@@ -148,5 +149,13 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>() {
                     Log.i(Constants.TAG, "FilterMonth Spinner : onNothingSelected")
                 }
             }
+    }
+
+    private fun setMonthSpinnerAdapter(){
+        spinnerAdapter.setSpinnerAdapter(
+            activityDashboardBinding.FilterMonth,
+            this,
+            spinnerData.setMonthData(year)
+        )
     }
 }
