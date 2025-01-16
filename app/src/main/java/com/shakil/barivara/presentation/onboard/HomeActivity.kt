@@ -297,11 +297,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
                     appUpdate.startImmediateUpdate(this)
                 },
                 onUpdateNotAvailable = {
-                    Toasty.normal(
-                        this,
-                        getString(R.string.no_update_available),
-                        Toasty.LENGTH_SHORT
-                    ).show()
+                    // empty implementation
                 },
                 onError = { error ->
                     //empty implementation
