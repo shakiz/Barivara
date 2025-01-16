@@ -32,6 +32,7 @@ import com.shakil.barivara.presentation.profile.ProfileActivity
 import com.shakil.barivara.presentation.room.RoomListActivity
 import com.shakil.barivara.presentation.tenant.TenantListActivity
 import com.shakil.barivara.presentation.tutorial.TutorialActivity
+import com.shakil.barivara.utils.AppUpdateHelper
 import com.shakil.barivara.utils.ButtonActionConstants
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.Constants.mUserMobile
@@ -57,6 +58,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
     @Inject
     lateinit var prefManager: PrefManager
     private lateinit var utilsForAll: UtilsForAll
+    private lateinit var appUpdate: AppUpdateHelper
     private var tools = Tools(this)
     private lateinit var ux: UX
     private val viewModel by viewModels<HomeViewModel>()
@@ -99,6 +101,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
     private fun init() {
         ux = UX(this)
         utilsForAll = UtilsForAll(this)
+        appUpdate = AppUpdateHelper(this)
     }
 
     private fun setupNotification() {
@@ -288,6 +291,24 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
         activityMainBinding.dateTimeText.text = utilsForAll.getDateTime()
         activityMainBinding.dayText.text = utilsForAll.getDayOfTheMonth()
 
+        if (tools.hasConnection()) {
+            appUpdate.checkForUpdate(
+                onUpdateAvailable = {
+                    appUpdate.startImmediateUpdate(this)
+                },
+                onUpdateNotAvailable = {
+                    Toasty.normal(
+                        this,
+                        getString(R.string.no_update_available),
+                        Toasty.LENGTH_SHORT
+                    ).show()
+                },
+                onError = { error ->
+                    //empty implementation
+                }
+            )
+        }
+
         if (Build.VERSION.SDK_INT > 32) {
             if (ContextCompat.checkSelfPermission(
                     this@HomeActivity,
@@ -316,6 +337,22 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
                 )
             }
         }
+    }
+
+    // Handle the result of the update flow
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == AppUpdateHelper.IMMEDIATE_UPDATE_REQUEST_CODE) {
+            if (resultCode != RESULT_OK) {
+                Toasty.warning(this, getString(R.string.update_failed), Toasty.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // If the update is downloaded but not installed, prompt the user to complete it
+        appUpdate.completeUpdate()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

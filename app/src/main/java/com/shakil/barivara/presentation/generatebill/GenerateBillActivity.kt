@@ -150,7 +150,6 @@ class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>(),
                     ) {
                         year = parent.getItemAtPosition(position).toString().toInt()
                         setMonthSpinnerAdapter()
-                        activityBinding.MonthId.setSelection(month, true)
                         if (month != 0){
                             viewModel.generateBill(
                                 year,

@@ -519,4 +519,9 @@
     <string name="x_comma_x">%s, %d</string>
     <string name="choose_room_status">Please select room status</string>
     <string name="phone_no_x_s">Mobile No: %s</string>
+    <string name="app_update_description">App Update failed, please try again on the next app launch.</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="new_update_available">New update available!</string>
+    <string name="version_x_s_has_been_released">Version %s has been released.</string>
+    <string name="update_failed">Update failed! Please try again.</string>
 </resources>
