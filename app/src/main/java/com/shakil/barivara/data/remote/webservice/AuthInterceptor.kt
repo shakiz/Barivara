@@ -15,8 +15,10 @@ class AuthInterceptor(
         if (chain.request().header("Authorization").isNullOrBlank()) {
             if (chain.request().url.toString() != (BASE_URL + "logout")) {
                 val accessToken = tokenManager.getString(Constants.mAccessToken)
+                val phone = tokenManager.getString(Constants.mUserMobile)
                 if (accessToken.isNotEmpty()) {
                     requestBuilder.header("Authorization", "Bearer $accessToken")
+                    requestBuilder.header("phone", phone)
                 }
             }
         }
