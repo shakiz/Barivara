@@ -5,9 +5,16 @@ import android.content.Context
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
 
-class AppUpdateHelper(private val context: Context) {
+interface OnUpdateInstalledListener {
+    fun onUpdateInstalled()
+}
+
+class AppUpdateHelper(
+    context: Context, private val onUpdateInstalledListener: OnUpdateInstalledListener
+) {
 
     private val appUpdateManager: AppUpdateManager = AppUpdateManagerFactory.create(context)
 
@@ -24,9 +31,10 @@ class AppUpdateHelper(private val context: Context) {
         appUpdateManager.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
             when {
                 appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE &&
-                        appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE) -> {
+                        appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE) -> {
                     onUpdateAvailable()
                 }
+
                 else -> {
                     onUpdateNotAvailable()
                 }
@@ -40,11 +48,11 @@ class AppUpdateHelper(private val context: Context) {
     fun startImmediateUpdate(activity: Activity) {
         appUpdateManager.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
             if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE &&
-                appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)
+                appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)
             ) {
                 appUpdateManager.startUpdateFlowForResult(
                     appUpdateInfo,
-                    AppUpdateType.IMMEDIATE,
+                    AppUpdateType.FLEXIBLE,
                     activity,
                     IMMEDIATE_UPDATE_REQUEST_CODE
                 )
@@ -55,8 +63,9 @@ class AppUpdateHelper(private val context: Context) {
     // Handle update completion
     fun completeUpdate() {
         appUpdateManager.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
-            if (appUpdateInfo.installStatus() == com.google.android.play.core.install.model.InstallStatus.DOWNLOADED) {
+            if (appUpdateInfo.installStatus() == InstallStatus.DOWNLOADED) {
                 appUpdateManager.completeUpdate()
+                onUpdateInstalledListener.onUpdateInstalled()
             }
         }
     }
