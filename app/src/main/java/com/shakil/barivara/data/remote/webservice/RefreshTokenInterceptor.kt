@@ -77,9 +77,11 @@ class RefreshTokenInterceptor(
 
             // Retry the original request with the new token
             val updatedAccessToken = tokenManager.getString(mAccessToken)
+            val mobileNo = tokenManager.getString(mUserMobile)
             if (updatedAccessToken != null) {
                 val newRequest = request.newBuilder()
                     .header("Authorization", "Bearer $updatedAccessToken")
+                    .header("phone", mobileNo)
                     .build()
                 response = chain.proceed(newRequest)
             }
