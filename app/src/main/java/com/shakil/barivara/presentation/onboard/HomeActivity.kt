@@ -37,6 +37,7 @@ import com.shakil.barivara.utils.ButtonActionConstants
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.Constants.mUserMobile
 import com.shakil.barivara.utils.LanguageManager
+import com.shakil.barivara.utils.OnUpdateInstalledListener
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.ScreenNameConstants
 import com.shakil.barivara.utils.Tools
@@ -52,7 +53,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeActivity : BaseActivity<ActivityHomeBinding>(),
-    NavigationView.OnNavigationItemSelectedListener {
+    NavigationView.OnNavigationItemSelectedListener, OnUpdateInstalledListener {
     private lateinit var activityMainBinding: ActivityHomeBinding
 
     @Inject
@@ -101,7 +102,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
     private fun init() {
         ux = UX(this)
         utilsForAll = UtilsForAll(this)
-        appUpdate = AppUpdateHelper(this)
+        appUpdate = AppUpdateHelper(this, onUpdateInstalledListener = this)
     }
 
     private fun setupNotification() {
@@ -439,6 +440,15 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
         }
         activityMainBinding.myDrawerLayout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    override fun onUpdateInstalled() {
+        //Restart the app automatically
+        val intent = packageManager.getLaunchIntentForPackage(packageName)
+        intent?.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+        finish()
+        Runtime.getRuntime().exit(0)
     }
 
 }
