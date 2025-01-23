@@ -62,5 +62,6 @@ interface AuthService {
     @POST("refresh-token")
     suspend fun refreshToken(
         @Header("refresh-token") refreshToken: String,
+        @Header("phone") mobileNo: String,
     ): Response<LoginBaseResponse>
 }

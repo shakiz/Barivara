@@ -92,10 +92,11 @@ class RefreshTokenInterceptor(
 
     private fun refreshToken(): String? {
         val refreshToken = tokenManager.getString(mRefreshToken)
+        val mobile = tokenManager.getString(mUserMobile)
 
         return runBlocking {
             try {
-                val response = authRepoImpl.refreshToken(refreshToken)
+                val response = authRepoImpl.refreshToken(refreshToken, mobile)
                 if (response.response?.statusCode == 200) {
                     val newAccessToken = response.response?.loginResponse?.accessToken
                     val newRefreshToken = response.response?.loginResponse?.refreshToken
