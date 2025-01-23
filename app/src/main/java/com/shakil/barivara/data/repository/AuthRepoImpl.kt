@@ -251,10 +251,11 @@ class AuthRepoImpl @Inject constructor(
         }
     }
 
-    override suspend fun refreshToken(refreshToken: String): Resource<LoginBaseResponse> {
+    override suspend fun refreshToken(refreshToken: String, mobileNo: String): Resource<LoginBaseResponse> {
         try {
             val task = authService.refreshToken(
-                refreshToken = refreshToken
+                refreshToken = refreshToken,
+                mobileNo = mobileNo
             )
             if (task.isSuccessful) {
                 task.body()?.let {
