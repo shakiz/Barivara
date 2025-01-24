@@ -101,6 +101,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
     private fun init() {
         ux = UX(this)
         utilsForAll = UtilsForAll(this)
+        appUpdate = AppUpdateHelper(this)
     }
 
     private fun setupNotification() {
