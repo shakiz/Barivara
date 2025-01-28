@@ -147,7 +147,7 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
                     id: Long
                 ) {
                     if (parent.getItemAtPosition(position)
-                            .toString() != getString(R.string.select_data)
+                            .toString() != getString(R.string.select_data_1)
                     ) {
                         year = parent.getItemAtPosition(position).toString().toInt()
                     }
