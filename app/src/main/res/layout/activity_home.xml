@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/window_background"
-        tools:context=".presentation.onboard.HomeActivity">
+        android:background="@color/window_background">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/app_bar"
@@ -43,28 +41,9 @@
                     android:id="@+id/mainLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingTop="16dp"
+                    android:paddingTop="12dp"
                     android:paddingBottom="16dp"
                     android:orientation="vertical">
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:cardUseCompatPadding="false"
-                        app:cardCornerRadius="16dp"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginEnd="12dp"
-                        android:layout_marginBottom="4dp"
-                        app:cardElevation="0dp">
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/sliderRecycler"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            tools:listitem="@layout/adaptter_layout_slider" />
-
-                    </androidx.cardview.widget.CardView>
 
                     <RelativeLayout
                         android:id="@+id/bannerLayout"
@@ -72,59 +51,15 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
-                        android:layout_marginTop="12dp"
                         android:background="@drawable/rectangle_border_darker_green"
                         android:orientation="vertical"
                         android:paddingTop="8dp"
                         android:paddingBottom="8dp">
 
-                        <TextView
-                            android:id="@+id/greetingsText"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
-                            android:layout_marginLeft="16dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginRight="16dp"
-                            android:includeFontPadding="false"
-                            android:visibility="gone"
-                            android:text="@string/good_morning"
-                            android:textColor="@color/md_black_1000"
-                            android:textSize="20sp" />
-
-                        <TextView
-                            android:id="@+id/dateTimeText"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/greetingsText"
-                            android:layout_alignParentStart="true"
-                            android:layout_marginLeft="16dp"
-                            android:layout_marginRight="16dp"
-                            android:includeFontPadding="false"
-                            android:visibility="gone"
-                            android:text="@string/demo_month"
-                            android:textColor="@color/md_black_1000"
-                            android:textSize="20sp" />
-
-                        <TextView
-                            android:id="@+id/dayText"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/dateTimeText"
-                            android:layout_alignParentStart="true"
-                            android:layout_marginLeft="16dp"
-                            android:layout_marginRight="16dp"
-                            android:includeFontPadding="false"
-                            android:visibility="gone"
-                            android:text="@string/demo_day"
-                            android:textColor="@color/md_black_1000"
-                            android:textSize="16sp" />
-
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/topLayout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/dayText"
                             android:layout_marginStart="8dp"
                             android:layout_marginTop="8dp"
                             android:layout_marginEnd="8dp">
@@ -139,32 +74,30 @@
                                 android:layout_gravity="center"
                                 android:background="@drawable/rectangle_white"
                                 android:gravity="center"
-                                android:orientation="vertical"
+                                android:orientation="horizontal"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toStartOf="@id/totalTenantLayout"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent">
 
                                 <TextView
-                                    android:layout_width="match_parent"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:layout_marginTop="4dp"
                                     android:ellipsize="end"
                                     android:gravity="center"
                                     android:maxLines="1"
                                     android:padding="2dp"
-                                    android:text="@string/total_rooms"
+                                    android:text="@string/rooms"
                                     android:textColor="@color/md_grey_800"
                                     android:textSize="14sp" />
 
                                 <TextView
                                     android:id="@+id/totalRooms"
                                     android:layout_width="42dp"
-                                    android:layout_height="40dp"
+                                    android:layout_height="42dp"
                                     android:layout_gravity="center"
-                                    android:layout_marginTop="4dp"
-                                    android:layout_marginBottom="8dp"
+                                    android:layout_margin="4dp"
                                     android:background="@drawable/white_circle_border"
                                     android:ellipsize="end"
                                     android:gravity="center"
@@ -192,28 +125,26 @@
                                 app:layout_constraintStart_toEndOf="@id/totalRoomFlatLayout"
                                 app:layout_constraintTop_toTopOf="parent"
                                 android:gravity="center"
-                                android:orientation="vertical">
+                                android:orientation="horizontal">
 
                                 <TextView
-                                    android:layout_width="match_parent"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:layout_marginTop="4dp"
                                     android:ellipsize="end"
                                     android:gravity="center"
                                     android:maxLines="1"
                                     android:padding="2dp"
-                                    android:text="@string/total_tenants"
+                                    android:text="@string/tenants"
                                     android:textColor="@color/md_grey_800"
                                     android:textSize="14sp" />
 
                                 <TextView
                                     android:id="@+id/totalTenants"
                                     android:layout_width="42dp"
-                                    android:layout_height="40dp"
+                                    android:layout_height="42dp"
                                     android:layout_gravity="center"
-                                    android:layout_marginTop="4dp"
-                                    android:layout_marginBottom="8dp"
+                                    android:layout_margin="4dp"
                                     android:background="@drawable/white_circle_border"
                                     android:ellipsize="end"
                                     android:gravity="center"
@@ -254,7 +185,7 @@
 
                     <include
                         android:id="@+id/generated_bill_history_layout_this_month"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="12dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
                         android:visibility="gone"
@@ -264,7 +195,7 @@
 
                     <include
                         android:id="@+id/no_bill_history_layout_this_month"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="12dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
                         android:visibility="gone"
@@ -277,7 +208,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="12dp"
                         android:layout_marginEnd="16dp"
                         android:text="@string/tenant_information"
                         android:textColor="@color/md_green_900"
@@ -348,7 +279,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="12dp"
                         android:layout_marginEnd="16dp"
                         android:text="@string/room_information"
                         android:textColor="@color/md_green_900"
@@ -423,7 +354,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="12dp"
                         android:layout_marginEnd="16dp"
                         android:text="@string/generate_bill"
                         android:textColor="@color/md_green_900"
@@ -560,6 +491,60 @@
                                 app:layout_constraintTop_toBottomOf="@id/tvGenerateBillHistoryHeading" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/rectangle_white"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:id="@+id/ivBanner"
+                            android:contentDescription="@string/banner_description"
+                            android:layout_width="200dp"
+                            android:layout_height="0dp"
+                            android:src="@drawable/feedback"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintDimensionRatio="2:1"
+                            android:scaleType="fitCenter" />
+
+                        <TextView
+                            android:id="@+id/tvHeadingComplain"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintStart_toEndOf="@id/ivBanner"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toTopOf="@id/submitComplainBtn"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginEnd="8dp"
+                            android:textColor="@color/md_black_1000"
+                            android:maxLines="4"
+                            android:ellipsize="end"
+                            android:text="@string/complain_banner_detail_text"/>
+
+                        <Button
+                            android:id="@+id/submitComplainBtn"
+                            android:layout_width="0dp"
+                            android:layout_height="46dp"
+                            style="@style/BariVara.Button.Secondary"
+                            app:layout_constraintStart_toEndOf="@id/ivBanner"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tvHeadingComplain"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginEnd="12dp"
+                            android:textAllCaps="false"
+                            android:ellipsize="end"
+                            android:maxLines="2"
+                            android:textSize="14sp"
+                            android:text="@string/submit_feedback"/>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
