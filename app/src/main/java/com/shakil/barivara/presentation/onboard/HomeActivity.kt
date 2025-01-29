@@ -16,6 +16,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
@@ -23,6 +24,7 @@ import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
 import com.shakil.barivara.databinding.ActivityHomeBinding
 import com.shakil.barivara.presentation.GenericDialog
+import com.shakil.barivara.presentation.adapter.ImageSliderAdapter
 import com.shakil.barivara.presentation.auth.forgotpassword.ForgotPasswordActivity
 import com.shakil.barivara.presentation.auth.login.LoginSelectionActivity
 import com.shakil.barivara.presentation.dashboard.DashboardActivity
@@ -334,6 +336,14 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
                 )
             }
         }
+
+        setupSliderData()
+    }
+
+    private fun setupSliderData(){
+        val sliderRecyclerAdapter = ImageSliderAdapter(this, viewModel.getSliderData())
+        activityMainBinding.sliderRecycler.layoutManager = LinearLayoutManager(this)
+        activityMainBinding.sliderRecycler.adapter = sliderRecyclerAdapter
     }
 
     // Handle the result of the update flow

@@ -154,8 +154,7 @@ class HomeViewModel @Inject constructor(
 
     fun getSliderData(): List<SliderItem> {
         return listOf(
-            SliderItem(imageDrawable = R.drawable.about_us),
-            SliderItem(imageDrawable = R.drawable.assign_room_image),
+            SliderItem(imageDrawable = R.drawable.submit_complain),
         )
     }
 }

@@ -17,7 +17,7 @@ class ImageSliderAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SliderViewHolder {
         val view =
-            LayoutInflater.from(context).inflate(R.layout.adaptter_layout_slider, parent, false)
+            LayoutInflater.from(context).inflate(R.layout.adapter_layout_slider, parent, false)
         return SliderViewHolder(view)
     }
 
@@ -28,10 +28,6 @@ class ImageSliderAdapter(
 
     override fun getItemCount(): Int {
         return imageUrls.size
-    }
-
-    fun getSliders(): List<SliderItem> {
-        return imageUrls
     }
 
     class SliderViewHolder(view: View) : RecyclerView.ViewHolder(view) {

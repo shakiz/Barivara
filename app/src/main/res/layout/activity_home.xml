@@ -47,12 +47,32 @@
                     android:paddingBottom="16dp"
                     android:orientation="vertical">
 
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardUseCompatPadding="false"
+                        app:cardCornerRadius="16dp"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="12dp"
+                        android:layout_marginBottom="4dp"
+                        app:cardElevation="0dp">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/sliderRecycler"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            tools:listitem="@layout/adaptter_layout_slider" />
+
+                    </androidx.cardview.widget.CardView>
+
                     <RelativeLayout
                         android:id="@+id/bannerLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
+                        android:layout_marginTop="12dp"
                         android:background="@drawable/rectangle_border_darker_green"
                         android:orientation="vertical"
                         android:paddingTop="8dp"
@@ -67,6 +87,7 @@
                             android:layout_marginTop="8dp"
                             android:layout_marginRight="16dp"
                             android:includeFontPadding="false"
+                            android:visibility="gone"
                             android:text="@string/good_morning"
                             android:textColor="@color/md_black_1000"
                             android:textSize="20sp" />
@@ -80,6 +101,7 @@
                             android:layout_marginLeft="16dp"
                             android:layout_marginRight="16dp"
                             android:includeFontPadding="false"
+                            android:visibility="gone"
                             android:text="@string/demo_month"
                             android:textColor="@color/md_black_1000"
                             android:textSize="20sp" />
@@ -93,6 +115,7 @@
                             android:layout_marginLeft="16dp"
                             android:layout_marginRight="16dp"
                             android:includeFontPadding="false"
+                            android:visibility="gone"
                             android:text="@string/demo_day"
                             android:textColor="@color/md_black_1000"
                             android:textSize="16sp" />
