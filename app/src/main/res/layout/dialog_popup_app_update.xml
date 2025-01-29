@@ -36,21 +36,9 @@
                 android:layout_marginTop="16dp"
                 android:gravity="center"
                 android:text="@string/new_update_available"
-                android:textColor="@color/md_black_1000"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/version"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginBottom="4dp"
-                android:gravity="center"
-                android:text="@string/version_x_s_has_been_released"
-                android:textColor="@color/colorRed"
-                android:textSize="16sp" />
+                android:textColor="@color/md_green_800"
+                android:textStyle="bold"
+                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/message"
@@ -58,9 +46,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
+                android:layout_marginTop="4dp"
                 android:gravity="center"
                 android:text="@string/please_update_detail_text"
-                android:textColor="@color/md_grey_800"
+                android:textColor="@color/md_black_1000"
                 android:textSize="16sp" />
 
             <LinearLayout

@@ -91,6 +91,7 @@ dependencies {
     //Dependency Injection
     implementation "com.google.dagger:hilt-android:2.48"
     implementation 'com.google.android.play:app-update-ktx:2.1.0'
+    implementation 'com.google.firebase:firebase-config-ktx:21.5.0'
     kapt "com.google.dagger:hilt-compiler:2.48"
 
     testImplementation 'junit:junit:4.13.2'
