@@ -1,8 +1,10 @@
 package com.shakil.barivara.presentation.onboard
 
 import android.Manifest
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +12,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -36,6 +39,7 @@ import com.shakil.barivara.presentation.tenant.TenantListActivity
 import com.shakil.barivara.presentation.tutorial.TutorialActivity
 import com.shakil.barivara.utils.ButtonActionConstants
 import com.shakil.barivara.utils.Constants
+import com.shakil.barivara.utils.Constants.MY_CONTACT_NO
 import com.shakil.barivara.utils.Constants.mUserMobile
 import com.shakil.barivara.utils.LanguageManager
 import com.shakil.barivara.utils.PrefManager
@@ -143,6 +147,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
         )
 
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
+
+        activityMainBinding.submitComplainBtn.setOnClickListener {
+            openWhatsApp()
+        }
 
         activityMainBinding.totalRoomFlatLayout.setOnClickListener {
             buttonAction(
@@ -293,9 +301,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
 
     private fun bindUIWithComponents() {
         activityMainBinding.navigationView.setNavigationItemSelectedListener(this)
-        activityMainBinding.greetingsText.text = utilsForAll.setGreetings()
-        activityMainBinding.dateTimeText.text = utilsForAll.getDateTime()
-        activityMainBinding.dayText.text = utilsForAll.getDayOfTheMonth()
 
         if (Build.VERSION.SDK_INT > 32) {
             if (ContextCompat.checkSelfPermission(
@@ -415,6 +420,19 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
         }
         activityMainBinding.myDrawerLayout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    private fun openWhatsApp(){
+        val uri = Uri.parse("https://wa.me/${MY_CONTACT_NO.replace("+", "")}")
+
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        intent.setPackage("com.whatsapp")
+
+        try {
+            startActivity(intent)
+        } catch (e: ActivityNotFoundException) {
+            Toasty.warning(this, getString(R.string.whatsapp_not_installed), Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun showAppUpdateBottomSheet() {

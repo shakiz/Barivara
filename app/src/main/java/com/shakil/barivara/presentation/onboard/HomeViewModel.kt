@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.ktx.remoteConfig
-import com.shakil.barivara.R
 import com.shakil.barivara.data.model.BaseApiResponse
 import com.shakil.barivara.data.model.SliderItem
 import com.shakil.barivara.data.model.auth.LogoutRequest
@@ -176,9 +175,6 @@ class HomeViewModel @Inject constructor(
     }
 
     fun getSliderData(): List<SliderItem> {
-        return listOf(
-            SliderItem(imageDrawable = R.drawable.about_us),
-            SliderItem(imageDrawable = R.drawable.assign_room_image),
-        )
+        return listOf()
     }
 }
