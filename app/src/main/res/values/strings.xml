@@ -526,4 +526,9 @@
     <string name="new_update_available">New update available!</string>
     <string name="version_x_s_has_been_released">Version %s has been released.</string>
     <string name="update_failed">Update failed! Please try again.</string>
+    <string name="banner_description">Banner Description</string>
+    <string name="tenants">Tenants</string>
+    <string name="complain_banner_detail_text">Now you can directly contact with us with your queries via whatsapp.</string>
+    <string name="submit_feedback">Submit Feedback</string>
+    <string name="whatsapp_not_installed">WhatsApp is not installed</string>
 </resources>
