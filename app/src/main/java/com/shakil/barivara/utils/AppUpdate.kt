@@ -8,12 +8,8 @@ import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
 
-interface OnUpdateInstalledListener {
-    fun onUpdateInstalled()
-}
-
 class AppUpdateHelper(
-    context: Context, private val onUpdateInstalledListener: OnUpdateInstalledListener
+    context: Context
 ) {
 
     private val appUpdateManager: AppUpdateManager = AppUpdateManagerFactory.create(context)
@@ -65,7 +61,6 @@ class AppUpdateHelper(
         appUpdateManager.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
             if (appUpdateInfo.installStatus() == InstallStatus.DOWNLOADED) {
                 appUpdateManager.completeUpdate()
-                onUpdateInstalledListener.onUpdateInstalled()
             }
         }
     }
