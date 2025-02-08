@@ -22,6 +22,7 @@ import com.shakil.barivara.utils.SpinnerAdapter
 import com.shakil.barivara.utils.SpinnerData
 import com.shakil.barivara.utils.UX
 import com.shakil.barivara.utils.UtilsForAll
+import com.shakil.barivara.utils.orZero
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -219,8 +220,7 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
             onPrimaryAction = {
                 viewModel.updateBillStatus(
                     prefManager.getString(mAccessToken),
-                    //TODO add bill id here
-                    billId = 0
+                    billId = billHistory.id.orZero()
                 )
             },
             onSecondaryAction = {
