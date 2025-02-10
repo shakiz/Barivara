@@ -424,18 +424,15 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
     }
 
     private fun openWhatsApp() {
-        val url = "https://api.whatsapp.com/send?phone=$WHATS_APP_BUSINESS_ACCOUNT_NO"
+        val uri = Uri.parse("https://wa.me/${WHATS_APP_BUSINESS_ACCOUNT_NO.replace("+", "")}")
 
-        val intent = Intent(Intent.ACTION_VIEW).apply {
-            data = Uri.parse(url)
-            setPackage("com.whatsapp.w4b") // WhatsApp Business package name
-        }
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        intent.setPackage("com.whatsapp")
 
         try {
             startActivity(intent)
         } catch (e: ActivityNotFoundException) {
-            Toasty.warning(this, getString(R.string.whatsapp_not_installed), Toast.LENGTH_SHORT)
-                .show()
+            Toasty.warning(this, getString(R.string.whatsapp_not_installed), Toast.LENGTH_SHORT).show()
         }
     }
 
