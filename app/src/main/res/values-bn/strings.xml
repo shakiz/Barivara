@@ -529,4 +529,7 @@
     <string name="complain_banner_detail_text">Now you can directly contact with us with your queries via whatsapp.</string>
     <string name="submit_feedback">Submit Feedback</string>
     <string name="whatsapp_not_installed">WhatsApp is not installed</string>
+    <string name="status_x">Status: %s</string>
+    <string name="tenant_x">Tenant: %s</string>
+    <string name="collected_x">Collected: %d</string>
 </resources>

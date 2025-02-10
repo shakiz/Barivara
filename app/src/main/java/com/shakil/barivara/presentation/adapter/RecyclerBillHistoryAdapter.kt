@@ -1,7 +1,9 @@
 package com.shakil.barivara.presentation.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.shakil.barivara.R
 import com.shakil.barivara.data.model.generatebill.BillHistory
@@ -11,11 +13,16 @@ import com.shakil.barivara.utils.orZero
 
 class RecyclerBillHistoryAdapter(private val utilsForAll: UtilsForAll) :
     RecyclerView.Adapter<RecyclerBillHistoryAdapter.BillItemViewHolder>() {
+    private var generateDBillHistoryCallBacks: GenerateDBillHistoryCallBacks? = null
     private var list: List<BillHistory> = mutableListOf()
 
     fun setItems(list: List<BillHistory>) {
         this.list = list
         notifyDataSetChanged()
+    }
+
+    fun setGenerateBillCallBacks(generateDBillHistoryCallBacks: GenerateDBillHistoryCallBacks?) {
+        this.generateDBillHistoryCallBacks = generateDBillHistoryCallBacks
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BillItemViewHolder {
@@ -25,7 +32,7 @@ class RecyclerBillHistoryAdapter(private val utilsForAll: UtilsForAll) :
                 parent,
                 false
             )
-        return BillItemViewHolder(binding)
+        return BillItemViewHolder(binding, generateDBillHistoryCallBacks)
     }
 
     override fun onBindViewHolder(holder: BillItemViewHolder, position: Int) {
@@ -39,19 +46,53 @@ class RecyclerBillHistoryAdapter(private val utilsForAll: UtilsForAll) :
 
     class BillItemViewHolder(
         var binding: AdapterLayoutBillHistoryBinding,
+        private var generateDBillHistoryCallBacks: GenerateDBillHistoryCallBacks?
     ) : RecyclerView.ViewHolder(
         binding.root
     ) {
         fun bind(billInfo: BillHistory, utilsForAll: UtilsForAll) {
-            binding.RoomId.text = billInfo.room
-            binding.TenantId.text = billInfo.tenantName
-            binding.TotalBill.text = billInfo.rent.toString()
-            binding.monthAndYear.text = binding.root.context.getString(
+            val context = binding.root.context
+            binding.roomName.text = billInfo.room
+            binding.tenantName.text = context.getString(R.string.tenant_x, billInfo.tenantName)
+            binding.totalBill.text = context.getString(R.string.collected_x, billInfo.rent)
+            binding.monthAndYear.text = context.getString(
                 R.string.x_comma_x,
                 utilsForAll.getMonthNameFromNumber(billInfo.month.orZero()),
                 billInfo.year
             )
-            binding.billStatus.text = billInfo.status.toString().replaceFirstChar { it.uppercase() }
+            binding.billStatus.text = context.getString(
+                R.string.status_x,
+                billInfo.status.toString().replaceFirstChar { it.uppercase() })
+            if (billInfo.status.orEmpty() == "paid") {
+                binding.billStatus.setTextColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.md_green_800
+                    )
+                )
+                binding.actionButtonLayout.visibility = View.GONE
+            } else {
+                binding.billStatus.setTextColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.colorRed
+                    )
+                )
+                binding.actionButtonLayout.visibility = View.VISIBLE
+            }
+
+            binding.markAsPaid.setOnClickListener {
+                generateDBillHistoryCallBacks?.onMarkAsPaid(billInfo)
+            }
+
+            binding.notifyUser.setOnClickListener {
+                generateDBillHistoryCallBacks?.onNotify(billInfo)
+            }
         }
+    }
+
+    interface GenerateDBillHistoryCallBacks {
+        fun onNotify(billHistory: BillHistory)
+        fun onMarkAsPaid(billHistory: BillHistory)
     }
 }

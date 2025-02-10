@@ -1,6 +1,7 @@
 package com.shakil.barivara.domain.dashboard
 
 import com.shakil.barivara.data.model.dashboard.BaseDashboardResponse
+import com.shakil.barivara.data.model.dashboard.BaseYearlyRentResponse
 import com.shakil.barivara.data.model.dashboard.DashboardByYearAndMonthBaseResponse
 import com.shakil.barivara.utils.Resource
 
@@ -10,4 +11,8 @@ interface DashboardRepo {
         year: Int,
         month: Int
     ): Resource<DashboardByYearAndMonthBaseResponse>
+
+    suspend fun getRentByYear(
+        year: Int,
+    ): Resource<BaseYearlyRentResponse>
 }

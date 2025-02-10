@@ -1,25 +1,34 @@
 package com.shakil.barivara.presentation.generatebill
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
+import com.shakil.barivara.data.model.generatebill.BillHistory
 import com.shakil.barivara.databinding.ActivityGeneratedBillHistoryBinding
+import com.shakil.barivara.presentation.GenericBottomSheet
 import com.shakil.barivara.presentation.adapter.RecyclerBillHistoryAdapter
+import com.shakil.barivara.utils.ButtonActionConstants
+import com.shakil.barivara.utils.Constants.mAccessToken
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.ScreenNameConstants
 import com.shakil.barivara.utils.SpinnerAdapter
 import com.shakil.barivara.utils.SpinnerData
 import com.shakil.barivara.utils.UX
 import com.shakil.barivara.utils.UtilsForAll
+import com.shakil.barivara.utils.orZero
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBinding>() {
+class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBinding>(),
+    RecyclerBillHistoryAdapter.GenerateDBillHistoryCallBacks {
     private lateinit var activityBinding: ActivityGeneratedBillHistoryBinding
     private var tenantId: Int = 0
     private var spinnerData = SpinnerData(this)
@@ -167,5 +176,58 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
         recyclerBillHistoryAdapter = RecyclerBillHistoryAdapter(utilsForAll)
         activityBinding.mRecyclerView.layoutManager = LinearLayoutManager(this)
         activityBinding.mRecyclerView.adapter = recyclerBillHistoryAdapter
+        recyclerBillHistoryAdapter.setGenerateBillCallBacks(this)
+    }
+
+    override fun onNotify(billHistory: BillHistory) {
+        buttonAction(
+            ButtonActionConstants.actionGenerateBillNotifyUser, mapOf(
+                "user_mobile" to (billHistory.tenantPhone ?: ""),
+                "message" to (billHistory.remarks ?: ""),
+            )
+        )
+        sendMessage(billHistory.remarks ?: "", billHistory.tenantPhone ?: "")
+    }
+
+
+    private fun sendMessage(message: String, mobileNo: String) {
+        val smsIntent = Intent(Intent.ACTION_SENDTO)
+        smsIntent.addCategory(Intent.CATEGORY_DEFAULT)
+        smsIntent.setType("text/plain")
+        smsIntent.putExtra("sms_body", message)
+        smsIntent.setData(Uri.parse("sms:$mobileNo"))
+        startActivity(smsIntent)
+        Toast.makeText(this, getString(R.string.please_wait), Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onMarkAsPaid(billHistory: BillHistory) {
+        buttonAction(
+            ButtonActionConstants.actionGenerateBillMarkAsPaid, mapOf(
+                "user_mobile" to (billHistory.tenantPhone ?: ""),
+                "message" to (billHistory.remarks ?: ""),
+            )
+        )
+        showMarkAsPaidBottomSheet(billHistory)
+    }
+
+    private fun showMarkAsPaidBottomSheet(billHistory: BillHistory) {
+        val bottomSheet = GenericBottomSheet<View>(
+            context = this,
+            layoutResId = R.layout.dialog_layout_bill_mark_as_paid,
+            onClose = {
+
+            },
+            onPrimaryAction = {
+                viewModel.updateBillStatus(
+                    prefManager.getString(mAccessToken),
+                    billId = billHistory.id.orZero()
+                )
+            },
+            onSecondaryAction = {
+
+            }
+        )
+        screenViewed(ScreenNameConstants.appScreenGenerateBillMarkAsPaidBottomSheet)
+        bottomSheet.show()
     }
 }
