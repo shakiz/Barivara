@@ -44,6 +44,7 @@ object Constants {
     const val SAGORKONNA_PACKAGE_NAME = "com.shakil.tourdekuakata"
     const val VARA_ADAI_FB_PAGE_LINK = "https://www.facebook.com/varaadai"
     const val MY_CONTACT_NO = "+8801688499299"
+    const val WHATS_APP_BUSINESS_ACCOUNT_NO = "+8801791425401"
     const val CONTENT_TYPE = "application/json"
     const val ACCEPT = "application/json"
 
