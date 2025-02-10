@@ -40,6 +40,7 @@ import com.shakil.barivara.presentation.tutorial.TutorialActivity
 import com.shakil.barivara.utils.ButtonActionConstants
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.Constants.MY_CONTACT_NO
+import com.shakil.barivara.utils.Constants.WHATS_APP_BUSINESS_ACCOUNT_NO
 import com.shakil.barivara.utils.Constants.mUserMobile
 import com.shakil.barivara.utils.LanguageManager
 import com.shakil.barivara.utils.PrefManager
@@ -422,16 +423,19 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
         return true
     }
 
-    private fun openWhatsApp(){
-        val uri = Uri.parse("https://wa.me/${MY_CONTACT_NO.replace("+", "")}")
+    private fun openWhatsApp() {
+        val url = "https://api.whatsapp.com/send?phone=$WHATS_APP_BUSINESS_ACCOUNT_NO"
 
-        val intent = Intent(Intent.ACTION_VIEW, uri)
-        intent.setPackage("com.whatsapp")
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            data = Uri.parse(url)
+            setPackage("com.whatsapp.w4b") // WhatsApp Business package name
+        }
 
         try {
             startActivity(intent)
         } catch (e: ActivityNotFoundException) {
-            Toasty.warning(this, getString(R.string.whatsapp_not_installed), Toast.LENGTH_SHORT).show()
+            Toasty.warning(this, getString(R.string.whatsapp_not_installed), Toast.LENGTH_SHORT)
+                .show()
         }
     }
 
