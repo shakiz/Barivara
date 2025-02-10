@@ -40,7 +40,8 @@
                 android:textColor="@color/md_black_1000"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:drawableStartCompat="@drawable/ic_home"
+                android:drawablePadding="4dp"
+                app:drawableStartCompat="@drawable/ic_rent_sign"
                 app:drawableTint="@color/md_grey_600"
                 tools:text="Occupied" />
         </LinearLayout>
@@ -50,7 +51,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center|start"
-            android:paddingTop="4dp"
             android:textColor="@color/md_black_1000"
             android:textSize="16sp"
             app:drawableStartCompat="@drawable/ic_person"
@@ -61,7 +61,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingTop="4dp"
             android:weightSum="2">
 
             <TextView

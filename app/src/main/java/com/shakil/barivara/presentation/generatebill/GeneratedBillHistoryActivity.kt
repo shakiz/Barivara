@@ -24,6 +24,7 @@ import com.shakil.barivara.utils.UX
 import com.shakil.barivara.utils.UtilsForAll
 import com.shakil.barivara.utils.orZero
 import dagger.hilt.android.AndroidEntryPoint
+import es.dmoral.toasty.Toasty
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -103,6 +104,18 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
             } else {
                 activityBinding.noDataLayout.root.visibility = View.VISIBLE
                 activityBinding.mRecyclerView.visibility = View.GONE
+            }
+        }
+
+
+        viewModel.getUpdateRentStatusResponse().observe(this) { rentStatusUpdate ->
+            if (rentStatusUpdate.statusCode == 200) {
+                Toasty.success(
+                    this,
+                    getString(R.string.rent_status_updated_successfully),
+                    Toast.LENGTH_LONG
+                ).show()
+                viewModel.getBillHistory(isForSearch = false, tenantId = 0, year = 0)
             }
         }
     }
