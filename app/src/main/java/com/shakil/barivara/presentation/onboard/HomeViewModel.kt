@@ -1,10 +1,12 @@
 package com.shakil.barivara.presentation.onboard
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.shakil.barivara.R
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.remoteconfig.ktx.remoteConfig
 import com.shakil.barivara.data.model.BaseApiResponse
 import com.shakil.barivara.data.model.SliderItem
 import com.shakil.barivara.data.model.auth.LogoutRequest
@@ -39,6 +41,12 @@ class HomeViewModel @Inject constructor(
 
     private var rentDataByMonthAndYear = MutableLiveData<DashboardData>()
     private var rentDataByMonthAndYearErrorResponse = MutableLiveData<Resource.Error<ErrorType>>()
+
+    private var playStoreVersion = MutableLiveData<Long>()
+
+    fun getPlayStoreVersion(): LiveData<Long> {
+        return playStoreVersion
+    }
 
     fun getTenants(): LiveData<List<Tenant>> {
         return tenants
@@ -152,10 +160,21 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun fetchPlayStoreAppVersion() {
+        val remoteConfig = Firebase.remoteConfig
+
+        remoteConfig.fetchAndActivate()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val version = remoteConfig.getLong("play_store_version_code")
+                    playStoreVersion.postValue(version)
+                } else {
+                    Log.e("RemoteConfig", "Fetch failed for play_store_version_code")
+                }
+            }
+    }
+
     fun getSliderData(): List<SliderItem> {
-        return listOf(
-            SliderItem(imageDrawable = R.drawable.about_us),
-            SliderItem(imageDrawable = R.drawable.assign_room_image),
-        )
+        return listOf()
     }
 }

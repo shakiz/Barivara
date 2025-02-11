@@ -1,8 +1,10 @@
 package com.shakil.barivara.presentation.onboard
 
 import android.Manifest
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +12,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -20,8 +23,10 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
 import com.shakil.barivara.BaseActivity
+import com.shakil.barivara.BuildConfig
 import com.shakil.barivara.R
 import com.shakil.barivara.databinding.ActivityHomeBinding
+import com.shakil.barivara.presentation.GenericBottomSheet
 import com.shakil.barivara.presentation.GenericDialog
 import com.shakil.barivara.presentation.auth.forgotpassword.ForgotPasswordActivity
 import com.shakil.barivara.presentation.auth.login.LoginSelectionActivity
@@ -32,9 +37,10 @@ import com.shakil.barivara.presentation.profile.ProfileActivity
 import com.shakil.barivara.presentation.room.RoomListActivity
 import com.shakil.barivara.presentation.tenant.TenantListActivity
 import com.shakil.barivara.presentation.tutorial.TutorialActivity
-import com.shakil.barivara.utils.AppUpdateHelper
 import com.shakil.barivara.utils.ButtonActionConstants
 import com.shakil.barivara.utils.Constants
+import com.shakil.barivara.utils.Constants.MY_CONTACT_NO
+import com.shakil.barivara.utils.Constants.WHATS_APP_BUSINESS_ACCOUNT_NO
 import com.shakil.barivara.utils.Constants.mUserMobile
 import com.shakil.barivara.utils.LanguageManager
 import com.shakil.barivara.utils.PrefManager
@@ -58,7 +64,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
     @Inject
     lateinit var prefManager: PrefManager
     private lateinit var utilsForAll: UtilsForAll
-    private lateinit var appUpdate: AppUpdateHelper
     private var tools = Tools(this)
     private lateinit var ux: UX
     private val viewModel by viewModels<HomeViewModel>()
@@ -88,6 +93,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
         initObservers()
         viewModel.getAllTenants()
         viewModel.getAllRooms()
+        viewModel.fetchPlayStoreAppVersion()
 
         val calendar = Calendar.getInstance()
         val currentYear = calendar.get(Calendar.YEAR)
@@ -101,7 +107,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
     private fun init() {
         ux = UX(this)
         utilsForAll = UtilsForAll(this)
-        appUpdate = AppUpdateHelper(this)
     }
 
     private fun setupNotification() {
@@ -143,6 +148,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
         )
 
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
+
+        activityMainBinding.submitComplainBtn.setOnClickListener {
+            openWhatsApp()
+        }
 
         activityMainBinding.totalRoomFlatLayout.setOnClickListener {
             buttonAction(
@@ -240,6 +249,12 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
     }
 
     private fun initObservers() {
+        viewModel.getPlayStoreVersion().observe(this) { version ->
+            if (BuildConfig.VERSION_CODE < version) {
+                showAppUpdateBottomSheet()
+            }
+        }
+
         viewModel.getTenants().observe(this) { tenants ->
             activityMainBinding.totalTenants.text = "${tenants.size}"
         }
@@ -287,23 +302,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
 
     private fun bindUIWithComponents() {
         activityMainBinding.navigationView.setNavigationItemSelectedListener(this)
-        activityMainBinding.greetingsText.text = utilsForAll.setGreetings()
-        activityMainBinding.dateTimeText.text = utilsForAll.getDateTime()
-        activityMainBinding.dayText.text = utilsForAll.getDayOfTheMonth()
-
-        if (tools.hasConnection()) {
-            appUpdate.checkForUpdate(
-                onUpdateAvailable = {
-                    appUpdate.startImmediateUpdate(this)
-                },
-                onUpdateNotAvailable = {
-                    // empty implementation
-                },
-                onError = { error ->
-                    //empty implementation
-                }
-            )
-        }
 
         if (Build.VERSION.SDK_INT > 32) {
             if (ContextCompat.checkSelfPermission(
@@ -333,22 +331,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
                 )
             }
         }
-    }
-
-    // Handle the result of the update flow
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == AppUpdateHelper.IMMEDIATE_UPDATE_REQUEST_CODE) {
-            if (resultCode != RESULT_OK) {
-                Toasty.warning(this, getString(R.string.update_failed), Toasty.LENGTH_LONG).show()
-            }
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        // If the update is downloaded but not installed, prompt the user to complete it
-        appUpdate.completeUpdate()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -439,6 +421,37 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
         }
         activityMainBinding.myDrawerLayout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    private fun openWhatsApp() {
+        val uri = Uri.parse("https://wa.me/${WHATS_APP_BUSINESS_ACCOUNT_NO.replace("+", "")}")
+
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        intent.setPackage("com.whatsapp")
+
+        try {
+            startActivity(intent)
+        } catch (e: ActivityNotFoundException) {
+            Toasty.warning(this, getString(R.string.whatsapp_not_installed), Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun showAppUpdateBottomSheet() {
+        val bottomSheet = GenericBottomSheet<View>(
+            context = this,
+            layoutResId = R.layout.dialog_popup_app_update,
+            onClose = {
+
+            },
+            onPrimaryAction = {
+                tools.launchAppByPackageName(packageName)
+            },
+            onSecondaryAction = {
+
+            }
+        )
+        screenViewed(ScreenNameConstants.appScreenGenerateBillMarkAsPaidBottomSheet)
+        bottomSheet.show()
     }
 
 }

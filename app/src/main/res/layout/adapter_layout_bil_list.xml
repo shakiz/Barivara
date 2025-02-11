@@ -185,15 +185,15 @@
             android:id="@+id/actionButtonLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
             android:gravity="center|end"
             android:orientation="horizontal">
 
-            <Button
+            <TextView
                 android:id="@+id/notifyUser"
                 style="@style/BariVara.Button.Primary"
                 android:layout_width="wrap_content"
-                android:layout_height="42dp"
+                android:layout_height="40dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="4dp"
@@ -202,14 +202,13 @@
                 android:text="@string/notify_user"
                 android:textAllCaps="false" />
 
-            <Button
+            <TextView
                 android:id="@+id/markAsPaid"
                 style="@style/BariVara.Button.Secondary"
                 android:layout_width="wrap_content"
-                android:layout_height="42dp"
+                android:layout_height="40dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="4dp"
-                android:layout_marginEnd="16dp"
                 android:layout_marginBottom="4dp"
                 android:clickable="true"
                 android:focusable="true"
@@ -226,9 +225,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/rectangle_border_light_green"
-            android:padding="12dp"
+            android:padding="8dp"
             android:layout_gravity="center"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
             android:ellipsize="end"
             android:gravity="center"
             android:scrollHorizontally="true"
