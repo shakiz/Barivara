@@ -6,7 +6,7 @@
             <solid android:color = "@color/md_green_300" />
 
             <corners
-                android:radius="8dp"/>
+                android:radius="16dp"/>
         </shape>
     </item>
 </layer-list>

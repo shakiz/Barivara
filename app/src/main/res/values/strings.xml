@@ -481,7 +481,7 @@
     <string name="x_s">%s</string>
     <string name="login">Login</string>
     <string name="good_to_see_you_here">Good to see you here!</string>
-    <string name="use_setup_password">User/Setup your password!</string>
+    <string name="use_setup_password">Use/Setup your password!</string>
     <string name="resend_otp">Resend OTP</string>
     <string name="did_not_receive_a_code_x">Didn\'t receive a code %s.</string>
     <string name="large_family">Large Family</string>
@@ -534,4 +534,7 @@
     <string name="status_x">Status: %s</string>
     <string name="tenant_x">Tenant: %s</string>
     <string name="collected_x">Collected: %d</string>
+    <string name="default_text">Default</string>
+    <string name="monthly_rent_collection_x">Monthly Rent Collection for %d</string>
+    <string name="x_d">%d</string>
 </resources>

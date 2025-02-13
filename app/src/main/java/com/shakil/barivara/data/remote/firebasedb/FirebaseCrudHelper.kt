@@ -11,7 +11,6 @@ import com.google.firebase.database.getValue
 import com.shakil.barivara.R
 import com.shakil.barivara.data.model.meter.ElectricityBill
 import com.shakil.barivara.data.model.meter.Meter
-import com.shakil.barivara.data.model.note.Note
 import com.shakil.barivara.data.model.notification.Notification
 import com.shakil.barivara.data.model.room.Rent
 import com.shakil.barivara.data.model.room.Room
@@ -50,11 +49,6 @@ class FirebaseCrudHelper(private val context: Context) {
             "rent" -> {
                 val rent = data as Rent
                 postValues = rent.toMap()
-            }
-
-            "note" -> {
-                val note = data as Note
-                postValues = note.toMap()
             }
 
             "electricityBill" -> {
@@ -172,28 +166,6 @@ class FirebaseCrudHelper(private val context: Context) {
                     objects.add(notification)
                 }
                 onNotificationDataFetch.onFetch(objects)
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.i(Constants.TAG, "" + error.message)
-            }
-        })
-    }
-
-    fun fetchAllNote(path: String, userId: String, onNoteDataFetch: onNoteDataFetch) {
-        val objects = ArrayList<Note?>()
-        databaseReference = FirebaseDatabase.getInstance().getReference(path).child(userId)
-        databaseReference?.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                for (dataSnapshot in snapshot.children) {
-                    val note = dataSnapshot.getValue(
-                        Note::class.java
-                    )
-                    note!!.fireBaseKey = dataSnapshot.key ?: ""
-                    Log.i(Constants.TAG + ":fetchNote", "" + note.title)
-                    objects.add(note)
-                }
-                onNoteDataFetch.onFetch(objects)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -358,10 +330,6 @@ class FirebaseCrudHelper(private val context: Context) {
 
     interface onNotificationDataFetch {
         fun onFetch(objects: ArrayList<Notification?>?)
-    }
-
-    interface onNoteDataFetch {
-        fun onFetch(objects: ArrayList<Note?>?)
     }
 
     interface onNameFetch {

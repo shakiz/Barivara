@@ -8,9 +8,7 @@ import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
 import com.shakil.barivara.databinding.ActivitySettingsBinding
 import com.shakil.barivara.presentation.auth.login.LoginSelectionActivity
-import com.shakil.barivara.presentation.onboard.HomeActivity
 import com.shakil.barivara.utils.Constants
-import com.shakil.barivara.utils.LanguageManager
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.Tools
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,7 +18,6 @@ import javax.inject.Inject
 class SettingsActivity : BaseActivity<ActivitySettingsBinding>() {
     private lateinit var activitySettingsBinding: ActivitySettingsBinding
     private var languageMap = HashMap<String, String>()
-    private lateinit var languageManager: LanguageManager
 
     @Inject
     lateinit var prefManager: PrefManager
@@ -34,7 +31,6 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        languageManager = LanguageManager(this, prefManager)
         setSupportActionBar(activitySettingsBinding.toolBar)
         activitySettingsBinding.toolBar.setNavigationOnClickListener { finish() }
         setupLanguage()
@@ -86,11 +82,6 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding>() {
             tools.doPopUpForLogout(
                 LoginSelectionActivity::class.java,
                 prefManager
-            )
-        }
-        activitySettingsBinding.language.setOnClickListener {
-            languageManager.setLanguage(
-                HomeActivity::class.java
             )
         }
         activitySettingsBinding.googleLoginLayout.setOnClickListener {

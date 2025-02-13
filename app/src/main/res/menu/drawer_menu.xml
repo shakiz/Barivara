@@ -8,6 +8,11 @@
         android:icon="@drawable/ic_action_person"/>
 
     <item
+        android:id="@+id/menu_change_language"
+        android:title="@string/change_language"
+        android:icon="@drawable/ic_language_black_24dp"/>
+
+    <item
         android:id="@+id/menu_change_password"
         android:title="@string/change_password"
         android:icon="@drawable/ic_key"/>
