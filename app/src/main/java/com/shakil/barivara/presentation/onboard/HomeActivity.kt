@@ -2,6 +2,7 @@ package com.shakil.barivara.presentation.onboard
 
 import android.Manifest
 import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -41,7 +42,8 @@ import com.shakil.barivara.utils.ButtonActionConstants
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.Constants.WHATS_APP_BUSINESS_ACCOUNT_NO
 import com.shakil.barivara.utils.Constants.mUserMobile
-import com.shakil.barivara.utils.LanguageManager
+import com.shakil.barivara.utils.LanguageCallBack
+import com.shakil.barivara.utils.LocaleManager
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.ScreenNameConstants
 import com.shakil.barivara.utils.Tools
@@ -57,7 +59,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeActivity : BaseActivity<ActivityHomeBinding>(),
-    NavigationView.OnNavigationItemSelectedListener {
+    NavigationView.OnNavigationItemSelectedListener, LanguageCallBack {
     private lateinit var activityMainBinding: ActivityHomeBinding
 
     @Inject
@@ -67,7 +69,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
     private lateinit var ux: UX
     private val viewModel by viewModels<HomeViewModel>()
     private var languageMap = HashMap<String, String>()
-    private lateinit var languageManager: LanguageManager
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
@@ -82,13 +83,16 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
         activityMainBinding = dataBinding
     }
 
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(LocaleManager.applyLocale(newBase))
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         screenViewed(ScreenNameConstants.appSreenHome)
         init()
         setupDrawerToggle()
         setupNotification()
-        LanguageManager(this, prefManager).configLanguage()
         bindUIWithComponents()
         setupLanguage()
         initListeners()
@@ -109,7 +113,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
     private fun init() {
         ux = UX(this)
         utilsForAll = UtilsForAll(this)
-        languageManager = LanguageManager(this, prefManager)
     }
 
     private fun setupNotification() {
@@ -386,8 +389,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
             }
 
             R.id.menu_change_language -> {
-                languageManager.setLanguage(
-                    HomeActivity::class.java
+                LocaleManager.doPopUpForLanguage(
+                    this, this
                 )
             }
 
@@ -447,7 +450,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
         try {
             startActivity(intent)
         } catch (e: ActivityNotFoundException) {
-            Toasty.warning(this, getString(R.string.whatsapp_not_installed), Toast.LENGTH_SHORT).show()
+            Toasty.warning(this, getString(R.string.whatsapp_not_installed), Toast.LENGTH_SHORT)
+                .show()
         }
     }
 
@@ -467,6 +471,14 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
         )
         screenViewed(ScreenNameConstants.appScreenGenerateBillMarkAsPaidBottomSheet)
         bottomSheet.show()
+    }
+
+    override fun onLanguageChange(selectedLan: String) {
+        LocaleManager.setLocale(this, selectedLan)
+        val intent = Intent(this, HomeActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)
+        finishAffinity()
     }
 
 }
