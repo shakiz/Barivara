@@ -60,9 +60,16 @@ class HomeViewModel @Inject constructor(
         return rentDataByMonthAndYear
     }
 
+    fun pullToRefresh(year: Int, month: Int) {
+        getAllTenants()
+        getAllRooms()
+        getRentDataByYearAndMonth(year, month)
+    }
+
     fun getAllTenants() {
         viewModelScope.launch {
             try {
+                isLoading.postValue(true)
                 val data = tenantRepoImpl.getAllTenant()
                 if (data.response != null) {
                     tenants.postValue(data.response)
@@ -74,7 +81,9 @@ class HomeViewModel @Inject constructor(
                         )
                     )
                 }
+                isLoading.postValue(false)
             } catch (e: Exception) {
+                isLoading.postValue(false)
                 getTenantListErrorResponse.postValue(
                     Resource.Error(
                         message = "Something went wrong, please try again",

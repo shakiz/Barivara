@@ -108,6 +108,14 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
             year = currentYear,
             month = currentMonth
         )
+
+        activityMainBinding.swipeRefresh.setOnRefreshListener {
+            activityMainBinding.swipeRefresh.isRefreshing = true
+            viewModel.pullToRefresh(
+                year = currentYear,
+                month = currentMonth
+            )
+        }
     }
 
     private fun init() {
@@ -288,9 +296,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
                 activityMainBinding.noBillHistoryLayoutThisMonth.root.visibility = View.GONE
 
                 activityMainBinding.generatedBillHistoryLayoutThisMonth.totalCollected.text =
-                    "${response.totalPaid.orZero()}"
+                    getString(R.string.x_d, response.totalPaid.orZero())
                 activityMainBinding.generatedBillHistoryLayoutThisMonth.totalDue.text =
-                    "${response.totalDue.orZero()}"
+                    getString(R.string.x_d, response.totalDue.orZero())
             } else {
                 activityMainBinding.generatedBillHistoryLayoutThisMonth.root.visibility = View.GONE
                 activityMainBinding.noBillHistoryLayoutThisMonth.root.visibility = View.VISIBLE
@@ -301,6 +309,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
             if (isLoading) {
                 ux.getLoadingView()
             } else {
+                activityMainBinding.swipeRefresh.isRefreshing = false
                 ux.removeLoadingView()
             }
         }
