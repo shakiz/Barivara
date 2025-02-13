@@ -262,11 +262,11 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
         }
 
         viewModel.getTenants().observe(this) { tenants ->
-            activityMainBinding.totalTenants.text = "${tenants.size}"
+            activityMainBinding.totalTenants.text = getString(R.string.x_d, tenants.size)
         }
 
         viewModel.getRooms().observe(this) { rooms ->
-            activityMainBinding.totalRooms.text = "${rooms.size}"
+            activityMainBinding.totalRooms.text = getString(R.string.x_d, rooms.size)
         }
 
         viewModel.getLogoutResponse().observe(this) { logoutResponse ->

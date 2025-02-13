@@ -43,6 +43,7 @@ class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>(),
     private var validation = Validation(this, hashMap)
     private var spinnerData = SpinnerData(this)
     private var spinnerAdapter = SpinnerAdapter()
+
     @Inject
     lateinit var utilsForAll: UtilsForAll
     private lateinit var ux: UX
@@ -79,8 +80,8 @@ class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>(),
         }
 
         viewModel.getGenerateBillResponse().observe(this) { generateBill ->
-            activityBinding.TotalDue.text = "${generateBill.totalDue}"
-            activityBinding.TotalPaid.text = "${generateBill.totalPaid}"
+            activityBinding.TotalDue.text = getString(R.string.x_d, generateBill.totalDue)
+            activityBinding.TotalPaid.text = getString(R.string.x_d, generateBill.totalPaid)
         }
 
         viewModel.getUpdateRentStatusResponse().observe(this) { rentStatusUpdate ->
@@ -150,7 +151,7 @@ class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>(),
                     ) {
                         year = parent.getItemAtPosition(position).toString().toInt()
                         setMonthSpinnerAdapter()
-                        if (month != 0){
+                        if (month != 0) {
                             viewModel.generateBill(
                                 year,
                                 month
@@ -193,7 +194,7 @@ class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>(),
         recyclerBillInfoAdapter.setGenerateBillCallBacks(this)
     }
 
-    private fun setMonthSpinnerAdapter(){
+    private fun setMonthSpinnerAdapter() {
         spinnerAdapter.setSpinnerAdapter(
             activityBinding.MonthId,
             this,
