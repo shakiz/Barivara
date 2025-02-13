@@ -5,15 +5,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.text.TextUtils
-import android.view.Window
-import android.view.WindowManager
-import android.widget.Button
 import android.widget.LinearLayout
-import android.widget.RelativeLayout
 import android.widget.TextView
 import com.shakil.barivara.R
 import com.shakil.barivara.utils.Constants.mLanguage
-import com.shakil.barivara.utils.Constants.mLanguageSetup
 import java.util.Locale
 
 class LanguageManager(private val context: Context, private val prefManager: PrefManager) {
@@ -38,46 +33,42 @@ class LanguageManager(private val context: Context, private val prefManager: Pre
     }
 
     private fun doPopUpForLanguage(to: Class<*>?) {
-        val dialog = Dialog(context, android.R.style.Theme_Dialog)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        val dialog = Dialog(context, R.style.CustomDialogTheme)
         dialog.setContentView(R.layout.language_selector_layout)
         dialog.setCanceledOnTouchOutside(true)
         val defaultLan: LinearLayout = dialog.findViewById(R.id.byDefault)
         val bengaliLan: LinearLayout = dialog.findViewById(R.id.bengali)
         val englishLan: LinearLayout = dialog.findViewById(R.id.english)
-        val DefaultTXT: TextView = dialog.findViewById(R.id.DefaultLanguageTXT)
-        val BengaliTXT: TextView = dialog.findViewById(R.id.BengaliTXT)
-        val EnglishTXT: TextView = dialog.findViewById(R.id.EnglishTXT)
-        val ok: Button = dialog.findViewById(R.id.okButton)
+        val defaultTXT: TextView = dialog.findViewById(R.id.DefaultLanguageTXT)
+        val bengaliTXT: TextView = dialog.findViewById(R.id.BengaliTXT)
+        val englishTXT: TextView = dialog.findViewById(R.id.EnglishTXT)
+        val ok: TextView = dialog.findViewById(R.id.okButton)
         defaultLan.setOnClickListener {
             changeColor(
-                DefaultTXT,
+                defaultTXT,
                 defaultLan,
-                arrayOf(BengaliTXT, EnglishTXT),
+                arrayOf(bengaliTXT, englishTXT),
                 arrayOf(bengaliLan, englishLan)
             )
             prefManager[mLanguage] = "en"
-            prefManager[mLanguageSetup] = true
         }
         bengaliLan.setOnClickListener {
             changeColor(
-                BengaliTXT,
+                bengaliTXT,
                 bengaliLan,
-                arrayOf(DefaultTXT, EnglishTXT),
+                arrayOf(defaultTXT, englishTXT),
                 arrayOf(defaultLan, englishLan)
             )
             prefManager[mLanguage] = "bn"
-            prefManager[mLanguageSetup] = true
         }
         englishLan.setOnClickListener {
             changeColor(
-                EnglishTXT,
+                englishTXT,
                 englishLan,
-                arrayOf(DefaultTXT, BengaliTXT),
+                arrayOf(defaultTXT, bengaliTXT),
                 arrayOf(defaultLan, bengaliLan)
             )
             prefManager[mLanguage] = "en"
-            prefManager[mLanguageSetup] = true
         }
         ok.setOnClickListener {
             dialog.dismiss()
@@ -85,12 +76,6 @@ class LanguageManager(private val context: Context, private val prefManager: Pre
                 context.startActivity(Intent(context, to))
             }
         }
-        dialog.setCanceledOnTouchOutside(false)
-        dialog.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
-        dialog.window!!.setLayout(
-            RelativeLayout.LayoutParams.MATCH_PARENT,
-            RelativeLayout.LayoutParams.WRAP_CONTENT
-        )
         dialog.show()
     }
 

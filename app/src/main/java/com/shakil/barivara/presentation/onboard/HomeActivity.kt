@@ -39,7 +39,6 @@ import com.shakil.barivara.presentation.tenant.TenantListActivity
 import com.shakil.barivara.presentation.tutorial.TutorialActivity
 import com.shakil.barivara.utils.ButtonActionConstants
 import com.shakil.barivara.utils.Constants
-import com.shakil.barivara.utils.Constants.MY_CONTACT_NO
 import com.shakil.barivara.utils.Constants.WHATS_APP_BUSINESS_ACCOUNT_NO
 import com.shakil.barivara.utils.Constants.mUserMobile
 import com.shakil.barivara.utils.LanguageManager
@@ -67,6 +66,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
     private var tools = Tools(this)
     private lateinit var ux: UX
     private val viewModel by viewModels<HomeViewModel>()
+    private var languageMap = HashMap<String, String>()
+    private lateinit var languageManager: LanguageManager
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
@@ -89,6 +90,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
         setupNotification()
         LanguageManager(this, prefManager).configLanguage()
         bindUIWithComponents()
+        setupLanguage()
         initListeners()
         initObservers()
         viewModel.getAllTenants()
@@ -107,6 +109,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
     private fun init() {
         ux = UX(this)
         utilsForAll = UtilsForAll(this)
+        languageManager = LanguageManager(this, prefManager)
     }
 
     private fun setupNotification() {
@@ -333,6 +336,12 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
         }
     }
 
+    private fun setupLanguage() {
+        languageMap.clear()
+        languageMap["bn"] = getString(R.string.bengali)
+        languageMap["en"] = getString(R.string.english)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val menuInflater = menuInflater
         menuInflater.inflate(R.menu.toolbar_menu, menu)
@@ -374,6 +383,12 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
                     ButtonActionConstants.actionHomeMenuItemMyProfile
                 )
                 startActivity(Intent(this@HomeActivity, ProfileActivity::class.java))
+            }
+
+            R.id.menu_change_language -> {
+                languageManager.setLanguage(
+                    HomeActivity::class.java
+                )
             }
 
             R.id.menu_change_password -> {

@@ -534,4 +534,5 @@
     <string name="status_x">Status: %s</string>
     <string name="tenant_x">Tenant: %s</string>
     <string name="collected_x">Collected: %d</string>
+    <string name="default_text">Default</string>
 </resources>
