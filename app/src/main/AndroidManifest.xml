@@ -49,12 +49,6 @@
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".presentation.settings.AboutUsActivity"
-            android:exported="false"
-            android:fitsSystemWindows="true"
-            android:theme="@style/AppThemeNoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity
             android:name=".presentation.auth.registration.MobileRegVerificationActivity"
             android:exported="false"
             android:fitsSystemWindows="true"
