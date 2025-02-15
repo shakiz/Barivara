@@ -113,6 +113,9 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
 
         viewModel.getUpdateRentStatusResponse().observe(this) { rentStatusUpdate ->
             if (rentStatusUpdate.statusCode == 200) {
+                if (markAsPaidBottomSheet.isVisible){
+                    markAsPaidBottomSheet.dismiss()
+                }
                 Toasty.success(
                     this,
                     getString(R.string.rent_status_updated_successfully),
@@ -234,7 +237,8 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
 
     override fun onMarkAsPaidSubmitted(remarks: String, billId: Int) {
         viewModel.updateBillStatus(
-            billId = billId
+            billId = billId,
+            remarks = remarks
         )
     }
 }
