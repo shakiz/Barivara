@@ -14,6 +14,7 @@ import com.shakil.barivara.data.model.generatebill.BillHistory
 import com.shakil.barivara.databinding.ActivityGeneratedBillHistoryBinding
 import com.shakil.barivara.presentation.GenericBottomSheet
 import com.shakil.barivara.presentation.adapter.RecyclerBillHistoryAdapter
+import com.shakil.barivara.presentation.generatebill.bottomsheet.MarkAsPaidBottomSheet
 import com.shakil.barivara.utils.ButtonActionConstants
 import com.shakil.barivara.utils.Constants.mAccessToken
 import com.shakil.barivara.utils.PrefManager
@@ -29,7 +30,8 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBinding>(),
-    RecyclerBillHistoryAdapter.GenerateDBillHistoryCallBacks {
+    RecyclerBillHistoryAdapter.GenerateDBillHistoryCallBacks,
+    MarkAsPaidBottomSheet.MarkAsPaidListener {
     private lateinit var activityBinding: ActivityGeneratedBillHistoryBinding
     private var tenantId: Int = 0
     private var spinnerData = SpinnerData(this)
@@ -40,6 +42,7 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
     lateinit var utilsForAll: UtilsForAll
     private lateinit var ux: UX
     private val viewModel by viewModels<GenerateBillViewModel>()
+    private val markAsPaidBottomSheet = MarkAsPaidBottomSheet()
 
     @Inject
     lateinit var prefManager: PrefManager
@@ -224,23 +227,14 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
     }
 
     private fun showMarkAsPaidBottomSheet(billHistory: BillHistory) {
-        val bottomSheet = GenericBottomSheet<View>(
-            context = this,
-            layoutResId = R.layout.dialog_layout_bill_mark_as_paid,
-            onClose = {
-
-            },
-            onPrimaryAction = {
-                viewModel.updateBillStatus(
-                    prefManager.getString(mAccessToken),
-                    billId = billHistory.id.orZero()
-                )
-            },
-            onSecondaryAction = {
-
-            }
-        )
         screenViewed(ScreenNameConstants.appScreenGenerateBillMarkAsPaidBottomSheet)
-        bottomSheet.show()
+        markAsPaidBottomSheet.show(supportFragmentManager, "MarkAsPaidBottomSheet")
+        markAsPaidBottomSheet.setMarkAsPaidListener(billHistory.id.orZero(), this)
+    }
+
+    override fun onMarkAsPaidSubmitted(remarks: String, billId: Int) {
+        viewModel.updateBillStatus(
+            billId = billId
+        )
     }
 }

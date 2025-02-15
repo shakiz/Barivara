@@ -102,7 +102,7 @@ class GenerateBillViewModel @Inject constructor(
         }
     }
 
-    fun updateBillStatus(token: String, billId: Int) {
+    fun updateBillStatus(billId: Int) {
         viewModelScope.launch {
             isLoading.postValue(true)
             try {
