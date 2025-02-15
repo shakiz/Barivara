@@ -411,7 +411,7 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="12dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginBottom="16dp"
             android:contentDescription="@string/action_button"
             android:text="@string/save"
             android:textAllCaps="false" />
