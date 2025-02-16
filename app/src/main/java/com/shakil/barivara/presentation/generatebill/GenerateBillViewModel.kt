@@ -102,12 +102,12 @@ class GenerateBillViewModel @Inject constructor(
         }
     }
 
-    fun updateBillStatus(token: String, billId: Int) {
+    fun updateBillStatus(billId: Int, remarks: String) {
         viewModelScope.launch {
             isLoading.postValue(true)
             try {
                 val data =
-                    generalBillRepoImpl.updateBillStatus(billId = billId)
+                    generalBillRepoImpl.updateBillStatus(billId = billId, remarks = remarks)
                 if (data.response != null) {
                     updateRentStatusResponse.postValue(data.response)
                 } else {

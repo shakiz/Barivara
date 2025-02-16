@@ -4,6 +4,7 @@ import com.shakil.barivara.data.model.BaseApiResponse
 import com.shakil.barivara.data.model.generatebill.BaseGenerateBillResponse
 import com.shakil.barivara.data.model.generatebill.BillHistoryBaseResponse
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.PUT
@@ -22,6 +23,7 @@ interface GenerateBillService {
     suspend fun updateBillStatus(
         @Header("Accept") accept: String,
         @Path("billId") billId: Int,
+        @Body remarks: String
     ): Response<BaseApiResponse>
 
     @GET("bill-history")
