@@ -537,5 +537,6 @@
     <string name="default_text">Default</string>
     <string name="monthly_rent_collection_x">Monthly Rent Collection for %d</string>
     <string name="x_d">%d</string>
+    <string name="total_due_bill_semicolon">Due Bill:</string>
     <string name="rent_collector">Rent Collector</string>
 </resources>

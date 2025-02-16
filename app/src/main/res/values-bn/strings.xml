@@ -536,5 +536,6 @@
     <string name="default_text">ডিফল্ট</string>
     <string name="monthly_rent_collection_x">%d সালের জন্য মাসিক ভাড়া সংগ্রহ</string>
     <string name="x_d">%d</string>
+    <string name="total_due_bill_semicolon">বকেয়া বিল:</string>
     <string name="rent_collector">ভাড়া আদায়</string>
 </resources>
