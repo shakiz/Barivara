@@ -236,6 +236,8 @@
     <string name="small_family">ছোট পরিবার</string>
     <string name="female_only">শুধুমাত্র মহিলা</string>
     <string name="male_only">শুধুমাত্র পুরুষ</string>
+    <string name="large_family">বড় পরিবার</string>
+    <string name="others">অন্যান্য</string>
     <string name="no_of_bathrooms">বাথরুমের সংখ্যা</string>
     <string name="no_of_balcony">বারান্দার সংখ্যা</string>
     <string name="calling">কল করা হচ্ছে..</string>
@@ -441,7 +443,6 @@
     <string name="start_date">শুরুর তারিখ</string>
     <string name="end_date">শেষ তারিখ</string>
     <string name="name_hint">আপনার নাম টাইপ করুন</string>
-    <string name="others">অন্যান্য</string>
     <string name="login_with_otp">OTP দিয়ে লগইন করুন</string>
     <string name="login_with_password">পাসওয়ার্ড দিয়ে লগইন করুন</string>
     <string name="or">অথবা</string>
@@ -483,7 +484,6 @@
     <string name="use_setup_password">আপনার পাসওয়ার্ড ব্যবহার/সেটআপ করুন!</string>
     <string name="resend_otp">ওটিপি পুনরায় পাঠান</string>
     <string name="did_not_receive_a_code_x">কোড পাননি %s?</string>
-    <string name="large_family">বড় পরিবার</string>
     <string name="rent_amount_hint">রুম/ফ্ল্যাটের পরিমাণ লিখুন</string>
     <string name="profile_updated_successfully">প্রোফাইল সফলভাবে আপডেট করা হয়েছে</string>
     <string name="due_amount">বকেয়া পরিমাণ</string>

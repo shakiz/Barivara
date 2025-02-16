@@ -21,6 +21,7 @@ import com.shakil.barivara.utils.Tools
 import com.shakil.barivara.utils.UX
 import com.shakil.barivara.utils.UtilsForAll
 import com.shakil.barivara.utils.Validation
+import com.shakil.barivara.utils.orZero
 import dagger.hilt.android.AndroidEntryPoint
 import es.dmoral.toasty.Toasty
 
@@ -101,16 +102,18 @@ class TenantActivity : BaseActivity<ActivityTenantBinding>() {
             activityAddNewTenantBinding.endMonthId.setText(tenant.endDate)
             activityAddNewTenantBinding.nid.setText(tenant.nidNumber)
             activityAddNewTenantBinding.mobileNo.setText(tenant.phone)
-            tenantType = TenantType.from(tenant.type ?: 0)
-            if ((tenant.type ?: 0) >= 0) {
-                activityAddNewTenantBinding.tenantTypeId.setSelection(tenant.type ?: 0)
+            tenantType = TenantType.from(tenant.type.orZero())
+            if (tenant.type.orZero() > 0) {
+                val selectedPosition = spinnerData.setTenantTypeData()
+                    .indexOfFirst { it == TenantType.toStringType(this, tenantType) }
+                activityAddNewTenantBinding.tenantTypeId.setSelection(selectedPosition)
             }
 
-            if ((tenant.advancedAmount ?: 0) > 0) {
+            if (tenant.advancedAmount.orZero() > 0) {
                 activityAddNewTenantBinding.advanceAmount.setText(
                     getString(
-                        R.string.x_s,
-                        (tenant.advancedAmount ?: 0).toString()
+                        R.string.x_d,
+                        tenant.advancedAmount.orZero()
                     )
                 )
                 activityAddNewTenantBinding.headingAdvanceAmount.visibility = View.VISIBLE
@@ -148,8 +151,8 @@ class TenantActivity : BaseActivity<ActivityTenantBinding>() {
                 activityAddNewTenantBinding.advanceAmount.visibility = View.VISIBLE
                 activityAddNewTenantBinding.advanceAmount.setText(
                     getString(
-                        R.string.x_s,
-                        (tenant.advancedAmount ?: 0).toString()
+                        R.string.x_d,
+                        tenant.advancedAmount.orZero()
                     )
                 )
             } else {
@@ -174,9 +177,9 @@ class TenantActivity : BaseActivity<ActivityTenantBinding>() {
                     position: Int,
                     id: Long
                 ) {
+                    val value = parent.getItemAtPosition(position).toString().lowercase()
                     tenantType =
-                        TenantType.from(parent.getItemAtPosition(position).toString().lowercase())
-                            ?: TenantType.OTHERS
+                        TenantType.fromString(context = this@TenantActivity, value)
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
