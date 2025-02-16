@@ -21,7 +21,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 app:navigationIcon="?attr/homeAsUpIndicator"
-                app:title="@string/app_name"
+                app:title="@string/rent_collector"
                 app:titleTextColor="@color/md_grey_800" />
 
         </com.google.android.material.appbar.AppBarLayout>

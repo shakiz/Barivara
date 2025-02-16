@@ -384,6 +384,12 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
                 bottomSheet.show()
                 return true
             }
+
+            R.id.menu_language -> {
+                LocaleManager.doPopUpForLanguage(
+                    this, this
+                )
+            }
         }
         return super.onOptionsItemSelected(item)
     }
