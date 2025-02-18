@@ -45,20 +45,7 @@
                 android:ellipsize="end"
                 android:gravity="center|start"
                 android:scrollHorizontally="true"
-                android:text="@string/room_name"
-                android:textColor="@color/md_grey_800"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"
-                android:ellipsize="end"
-                android:gravity="center|start"
-                android:scrollHorizontally="true"
-                tools:text=":"
+                android:text="@string/room_name_semicolon"
                 android:textColor="@color/md_grey_800"
                 android:textSize="14sp" />
 
@@ -66,6 +53,8 @@
                 android:id="@+id/RoomId"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
                 android:layout_gravity="center"
                 android:ellipsize="end"
                 android:gravity="center|start"
@@ -97,27 +86,15 @@
                 android:ellipsize="end"
                 android:gravity="center|start"
                 android:scrollHorizontally="true"
-                android:text="@string/tenant_name"
+                android:text="@string/tenant_name_semicolon"
                 android:textColor="@color/md_grey_800"
                 android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"
-                android:ellipsize="end"
-                android:gravity="center|start"
-                android:scrollHorizontally="true"
-                tools:text=":"
-                android:textColor="@color/md_grey_800"
-                android:textSize="14sp" />
-
             <TextView
                 android:id="@+id/TenantId"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
                 android:layout_gravity="center"
                 android:ellipsize="end"
                 android:gravity="center|start"
@@ -149,20 +126,7 @@
                 android:ellipsize="end"
                 android:gravity="center|start"
                 android:scrollHorizontally="true"
-                android:text="@string/total_due_bill"
-                android:textColor="@color/md_grey_800"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"
-                android:ellipsize="end"
-                android:gravity="center|start"
-                android:scrollHorizontally="true"
-                tools:text=":"
+                android:text="@string/total_due_bill_semicolon"
                 android:textColor="@color/md_grey_800"
                 android:textSize="14sp" />
 
@@ -170,6 +134,8 @@
                 android:id="@+id/TotalBill"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
                 android:layout_gravity="center"
                 android:ellipsize="end"
                 android:gravity="center|start"
@@ -194,9 +160,7 @@
                 style="@style/BariVara.Button.Primary"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:layout_marginTop="4dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginBottom="4dp"
                 android:paddingStart="24dp"
                 android:paddingEnd="24dp"
                 android:text="@string/notify_user"
@@ -208,8 +172,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="4dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:padding="8dp"

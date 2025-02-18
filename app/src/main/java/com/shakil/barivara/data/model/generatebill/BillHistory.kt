@@ -14,5 +14,6 @@ data class BillHistory(
     @SerializedName("remarks") var remarks: String? = null,
     @SerializedName("month") var month: Int? = null,
     @SerializedName("year") var year: Int? = null,
-    @SerializedName("created_at") var createdAt: String? = null
+    @SerializedName("created_at") var createdAt: String? = null,
+    @SerializedName("payment_received") var paymentReceived: String? = null
 )

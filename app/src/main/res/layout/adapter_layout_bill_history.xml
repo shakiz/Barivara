@@ -28,7 +28,7 @@
                 android:textColor="@color/md_black_1000"
                 android:textSize="16sp"
                 app:drawableStartCompat="@drawable/ic_home"
-                app:drawableTint="@color/md_grey_600"
+                app:drawableTint="@color/md_grey_800"
                 tools:text="Room: A-101" />
 
             <TextView
@@ -42,7 +42,7 @@
                 android:textStyle="bold"
                 android:drawablePadding="4dp"
                 app:drawableStartCompat="@drawable/ic_rent_sign"
-                app:drawableTint="@color/md_grey_600"
+                app:drawableTint="@color/md_grey_800"
                 tools:text="Occupied" />
         </LinearLayout>
 
@@ -54,7 +54,7 @@
             android:textColor="@color/md_black_1000"
             android:textSize="16sp"
             app:drawableStartCompat="@drawable/ic_person"
-            app:drawableTint="@color/md_grey_600"
+            app:drawableTint="@color/md_grey_800"
             tools:text="Tenant: John Doe" />
 
         <LinearLayout
@@ -72,7 +72,7 @@
                 android:textColor="@color/md_black_1000"
                 android:textSize="16sp"
                 app:drawableStartCompat="@drawable/ic_currency_bdt"
-                app:drawableTint="@color/md_grey_600"
+                app:drawableTint="@color/md_grey_800"
                 tools:text="Rent: $1200" />
 
             <TextView
@@ -84,15 +84,28 @@
                 android:textColor="@color/md_black_1000"
                 android:textSize="16sp"
                 app:drawableStartCompat="@drawable/ic_date_range"
-                app:drawableTint="@color/md_grey_600"
+                app:drawableTint="@color/md_grey_800"
                 tools:text="10 Jan 2025" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/paymentReceivedDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:drawableStartCompat="@drawable/ic_done"
+            app:drawableTint="@color/md_grey_800"
+            android:textSize="16sp"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:textColor="@color/md_black_1000"
+            android:text="@string/payment_received_on_x"
+            android:textAllCaps="false" />
 
         <LinearLayout
             android:id="@+id/actionButtonLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:gravity="center|end"
             android:orientation="horizontal">
 
