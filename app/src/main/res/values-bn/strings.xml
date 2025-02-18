@@ -538,4 +538,5 @@
     <string name="x_d">%d</string>
     <string name="total_due_bill_semicolon">বকেয়া বিল:</string>
     <string name="rent_collector">ভাড়া আদায়</string>
+    <string name="payment_received_on_x">বিল পরিশোধের তারিখ: %s</string>
 </resources>

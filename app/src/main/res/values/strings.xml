@@ -539,4 +539,5 @@
     <string name="x_d">%d</string>
     <string name="total_due_bill_semicolon">Due Bill:</string>
     <string name="rent_collector">Rent Collector</string>
+    <string name="payment_received_on_x">Payment Received Date: %s</string>
 </resources>
