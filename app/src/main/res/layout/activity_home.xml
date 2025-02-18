@@ -21,7 +21,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 app:navigationIcon="?attr/homeAsUpIndicator"
-                app:title="@string/app_name"
+                app:title="@string/rent_collector"
                 app:titleTextColor="@color/md_grey_800" />
 
         </com.google.android.material.appbar.AppBarLayout>
@@ -534,10 +534,10 @@
                                 android:ellipsize="end"
                                 android:text="@string/complain_banner_detail_text"/>
 
-                            <Button
+                            <TextView
                                 android:id="@+id/submitComplainBtn"
                                 android:layout_width="0dp"
-                                android:layout_height="46dp"
+                                android:layout_height="42dp"
                                 style="@style/BariVara.Button.Secondary"
                                 app:layout_constraintStart_toEndOf="@id/ivBanner"
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -545,6 +545,8 @@
                                 android:layout_marginTop="4dp"
                                 android:layout_marginStart="4dp"
                                 android:layout_marginEnd="12dp"
+                                android:paddingTop="2dp"
+                                android:paddingBottom="2dp"
                                 android:textAllCaps="false"
                                 android:ellipsize="end"
                                 android:maxLines="2"

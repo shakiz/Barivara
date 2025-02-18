@@ -47,14 +47,14 @@
                 android:layout_height="wrap_content" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/mRecylerView"
+                android:id="@+id/mRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/search_layout"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="12dp"
-                android:layout_marginBottom="4dp"
+                android:layout_marginBottom="72dp"
                 android:visibility="visible"
                 app:reverseLayout="true"
                 app:stackFromEnd="true"
@@ -79,7 +79,7 @@
             android:clickable="true"
             android:layout_alignParentBottom="true"
             android:background="@drawable/button_shape_round_corner_gradient_light"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="16dp"
             android:gravity="center"
             android:orientation="horizontal"
             android:focusable="true"
@@ -90,6 +90,7 @@
                 android:layout_width="42dp"
                 android:layout_height="match_parent"
                 android:clickable="false"
+                android:contentDescription="@string/banner_description"
                 android:padding="8dp"
                 android:src="@drawable/ic_action_add"
                 android:layout_marginStart="8dp" />

@@ -122,14 +122,13 @@ class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCall
             .debounce(100)
             .onEach { query ->
                 val originalList = viewModel.getTenants().value ?: emptyList()
-                // Use the common filter function
                 val filteredList =
                     filterList(query.toString().lowercase(), originalList) { tenant, q ->
                         tenant.name.lowercase().contains(q, ignoreCase = true)
                     }
 
                 if (filteredList.isNotEmpty()) {
-                    activityTenantListBinding.mRecylerView.visibility = View.VISIBLE
+                    activityTenantListBinding.mRecyclerView.visibility = View.VISIBLE
                     activityTenantListBinding.noDataLayout.root.visibility =
                         View.GONE
                     recyclerAdapterTenantList.setItems(filteredList)
@@ -141,7 +140,7 @@ class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCall
                     ).show()
                 } else {
                     Tools.hideKeyboard(this@TenantListActivity)
-                    activityTenantListBinding.mRecylerView.visibility = View.GONE
+                    activityTenantListBinding.mRecyclerView.visibility = View.GONE
                     activityTenantListBinding.noDataLayout.root.visibility =
                         View.VISIBLE
                     Toast.makeText(
@@ -151,13 +150,13 @@ class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCall
                     ).show()
                 }
             }
-            .launchIn(coroutineScope) // Launch in the Coroutine scope
+            .launchIn(coroutineScope)
     }
 
 
     private fun refreshListData() {
         if (tools.hasConnection()) {
-            activityTenantListBinding.mRecylerView.visibility = View.VISIBLE
+            activityTenantListBinding.mRecyclerView.visibility = View.VISIBLE
             activityTenantListBinding.searchLayout.SearchName.setText("")
             activityTenantListBinding.noDataLayout.root.visibility = View.GONE
             Tools.hideKeyboard(this@TenantListActivity)
@@ -180,10 +179,10 @@ class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCall
         viewModel.getTenants().observe(this) { tenants ->
             if (tenants.isEmpty()) {
                 activityTenantListBinding.noDataLayout.root.visibility = View.VISIBLE
-                activityTenantListBinding.mRecylerView.visibility = View.GONE
+                activityTenantListBinding.mRecyclerView.visibility = View.GONE
             } else {
                 recyclerAdapterTenantList.setItems(tenants)
-                activityTenantListBinding.mRecylerView.visibility = View.VISIBLE
+                activityTenantListBinding.mRecyclerView.visibility = View.VISIBLE
                 activityTenantListBinding.noDataLayout.root.visibility = View.GONE
             }
         }
@@ -215,8 +214,8 @@ class TenantListActivity : BaseActivity<ActivityTenantListBinding>(), TenantCall
 
     private fun setRecyclerAdapter() {
         recyclerAdapterTenantList = RecyclerAdapterTenantList()
-        activityTenantListBinding.mRecylerView.layoutManager = LinearLayoutManager(this)
-        activityTenantListBinding.mRecylerView.adapter = recyclerAdapterTenantList
+        activityTenantListBinding.mRecyclerView.layoutManager = LinearLayoutManager(this)
+        activityTenantListBinding.mRecyclerView.adapter = recyclerAdapterTenantList
         recyclerAdapterTenantList.setOnTenantCallback(this)
     }
 

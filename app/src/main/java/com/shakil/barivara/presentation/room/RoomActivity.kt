@@ -121,6 +121,7 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
                 R.id.radioAbandoned -> RoomStatus.Abandoned
                 else -> RoomStatus.Unknown
             }
+            setTenantListVisibility()
         }
     }
 
@@ -209,6 +210,7 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
 
             selectedRoomStatus =
                 RoomStatus.from(room.status ?: RoomStatus.Unknown.value) ?: RoomStatus.Unknown
+            setTenantListVisibility()
             setRoomStatusRadioSelection()
 
             activityAddNewRoomBinding.noOfRoom.text = "$noOfRoom"
@@ -238,7 +240,6 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
                 getString(R.string.rent_amount_hint)
             )
         )
-        validation.setSpinnerIsNotEmpty(arrayOf("tenantNameId"))
 
         activityAddNewRoomBinding.tenantNameId.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
@@ -261,7 +262,11 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
 
     private fun saveOrUpdateData() {
         room.name = activityAddNewRoomBinding.roomName.text.toString()
-        room.tenantId = tenantId
+        room.tenantId = if (selectedRoomStatus == RoomStatus.Occupied) {
+            tenantId
+        } else {
+            0
+        }
         room.noOfRoom = noOfRoom
         room.noOfBathroom = noOfBathroom
         room.noOfBalcony = noOfBalcony
@@ -274,6 +279,18 @@ class RoomActivity : BaseActivity<ActivityAddNewRoomBinding>() {
         } else {
             buttonAction(ButtonActionConstants.actionRoomUpdate)
             viewModel.updateRoom(room)
+        }
+    }
+
+    private fun setTenantListVisibility(){
+        if (selectedRoomStatus == RoomStatus.Occupied) {
+            activityAddNewRoomBinding.tvHeaderTenantName.visibility = View.VISIBLE
+            activityAddNewRoomBinding.tenantNameId.visibility = View.VISIBLE
+            validation.setSpinnerIsNotEmpty(arrayOf("tenantNameId"))
+        } else {
+            activityAddNewRoomBinding.tvHeaderTenantName.visibility = View.GONE
+            activityAddNewRoomBinding.tenantNameId.visibility = View.GONE
+            validation.setSpinnerIsNotEmpty(arrayOf())
         }
     }
 }

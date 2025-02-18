@@ -108,7 +108,7 @@ class RoomListActivity : BaseActivity<ActivityRoomListBinding>(), RoomCallBacks 
 
         activityRoomListBinding.searchLayout.refreshButton.setOnClickListener {
             if (tools.hasConnection()) {
-                activityRoomListBinding.mRecylerView.visibility = View.VISIBLE
+                activityRoomListBinding.mRecyclerView.visibility = View.VISIBLE
                 activityRoomListBinding.searchLayout.SearchName.setText("")
                 activityRoomListBinding.noDataLayout.root.visibility = View.GONE
                 Tools.hideKeyboard(this@RoomListActivity)
@@ -133,14 +133,13 @@ class RoomListActivity : BaseActivity<ActivityRoomListBinding>(), RoomCallBacks 
             .debounce(100)
             .onEach { query ->
                 val originalList = viewModel.getRooms().value ?: emptyList()
-                // Use the common filter function
                 val filteredList =
                     filterList(query.toString().lowercase(), originalList) { room, q ->
                         room.name.lowercase().contains(q, ignoreCase = true)
                     }
 
                 if (filteredList.isNotEmpty()) {
-                    activityRoomListBinding.mRecylerView.visibility = View.VISIBLE
+                    activityRoomListBinding.mRecyclerView.visibility = View.VISIBLE
                     activityRoomListBinding.noDataLayout.root.visibility =
                         View.GONE
                     recyclerRoomListAdapter.setItems(filteredList)
@@ -152,7 +151,7 @@ class RoomListActivity : BaseActivity<ActivityRoomListBinding>(), RoomCallBacks 
                     ).show()
                 } else {
                     Tools.hideKeyboard(this@RoomListActivity)
-                    activityRoomListBinding.mRecylerView.visibility = View.GONE
+                    activityRoomListBinding.mRecyclerView.visibility = View.GONE
                     activityRoomListBinding.noDataLayout.root.visibility =
                         View.VISIBLE
                     Toast.makeText(
@@ -162,17 +161,17 @@ class RoomListActivity : BaseActivity<ActivityRoomListBinding>(), RoomCallBacks 
                     ).show()
                 }
             }
-            .launchIn(coroutineScope) // Launch in the Coroutine scope
+            .launchIn(coroutineScope)
     }
 
     private fun initObservers() {
         viewModel.getRooms().observe(this) { rooms ->
             if (rooms.isEmpty()) {
                 activityRoomListBinding.noDataLayout.root.visibility = View.VISIBLE
-                activityRoomListBinding.mRecylerView.visibility = View.GONE
+                activityRoomListBinding.mRecyclerView.visibility = View.GONE
             } else {
                 recyclerRoomListAdapter.setItems(rooms)
-                activityRoomListBinding.mRecylerView.visibility = View.VISIBLE
+                activityRoomListBinding.mRecyclerView.visibility = View.VISIBLE
                 activityRoomListBinding.noDataLayout.root.visibility = View.GONE
             }
         }
@@ -196,8 +195,8 @@ class RoomListActivity : BaseActivity<ActivityRoomListBinding>(), RoomCallBacks 
 
     private fun setRecyclerAdapter() {
         recyclerRoomListAdapter = RecyclerRoomListAdapter()
-        activityRoomListBinding.mRecylerView.layoutManager = LinearLayoutManager(this)
-        activityRoomListBinding.mRecylerView.adapter = recyclerRoomListAdapter
+        activityRoomListBinding.mRecyclerView.layoutManager = LinearLayoutManager(this)
+        activityRoomListBinding.mRecyclerView.adapter = recyclerRoomListAdapter
         recyclerRoomListAdapter.setRoomCallBack(this)
     }
 
