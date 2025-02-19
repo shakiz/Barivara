@@ -223,7 +223,7 @@
     <string name="validation_mobile_number_length">মোবাইল নাম্বার ১১ সংখ্যার হতে হবে</string>
     <string name="rooms">ঘর/ফ্ল্যাট</string>
     <string name="meters">Meters</string>
-    <string name="tenant_information">ভাড়াটে তথ্য</string>
+    <string name="tenant_information">ভাড়াটিয়ার তথ্য</string>
     <string name="room_information">ঘর/ফ্ল্যাট সম্পর্কিত তথ্য</string>
     <string name="meter_information">মিটারের তথ্য</string>
     <string name="demo_tenant_name">রহিম</string>

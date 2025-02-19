@@ -159,20 +159,23 @@ class GenerateBillViewModel @Inject constructor(
         }
     }
 
-    fun getBillHistory(isForSearch: Boolean, tenantId: Int?, year: Int?) {
+    fun getBillHistory(isForSearch: Boolean, year: Int?, month: Int?) {
         viewModelScope.launch {
             isLoading.postValue(true)
             try {
                 if (isForSearch) {
                     val filteredList = billHistory.value?.filter { item ->
-                        val matchesId = tenantId?.let { item.tenantId == it } ?: true
-
-                        val matchesDate = if (year.orZero() > 0) {
+                        val matchesYear = if (year.orZero() > 0) {
                             item.year == year
                         } else {
                             true
                         }
-                        matchesId && matchesDate
+                        val matchesMonth = if (month.orZero() > 0) {
+                            item.month == month
+                        } else {
+                            true
+                        }
+                        matchesYear && matchesMonth
                     }
                     filteredBillHistory.postValue(filteredList)
                 } else {

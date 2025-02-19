@@ -37,6 +37,7 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
     private var spinnerData = SpinnerData(this)
     private var spinnerAdapter = SpinnerAdapter()
     private var year: Int = 0
+    private var month: Int = 0
 
     @Inject
     lateinit var utilsForAll: UtilsForAll
@@ -64,7 +65,7 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
         initObservers()
         setRecyclerAdapter()
         viewModel.getAllTenants()
-        viewModel.getBillHistory(isForSearch = false, tenantId = 0, year = 0)
+        viewModel.getBillHistory(isForSearch = false, year = 0, month = 0)
     }
 
     private fun init() {
@@ -82,20 +83,9 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
 
         viewModel.getTenants().observe(this) { tenants ->
             if (tenants.isEmpty()) {
-                spinnerAdapter.setSpinnerAdapter(
-                    activityBinding.searchLayout.tenantNameId,
-                    this,
-                    spinnerData.setSpinnerNoData()
-                )
+
             } else {
-                val tenantList = mutableListOf<String>()
-                tenantList.add(0, getString(R.string.select_data_1))
-                tenantList.addAll(ArrayList(tenants.map { it.name }))
-                spinnerAdapter.setSpinnerAdapter(
-                    activityBinding.searchLayout.tenantNameId,
-                    this,
-                    ArrayList(tenantList)
-                )
+
             }
         }
 
@@ -121,7 +111,7 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
                     getString(R.string.rent_status_updated_successfully),
                     Toast.LENGTH_LONG
                 ).show()
-                viewModel.getBillHistory(isForSearch = false, tenantId = 0, year = 0)
+                viewModel.getBillHistory(isForSearch = false, year = 0, month = 0)
             }
         }
     }
@@ -134,35 +124,15 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
             this,
             spinnerData.setYearData()
         )
+        setMonthSpinnerAdapter()
     }
 
     private fun initListeners() {
-        activityBinding.searchLayout.tenantNameId.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>,
-                    view: View,
-                    position: Int,
-                    id: Long
-                ) {
-                    if (!viewModel.getTenants().value.isNullOrEmpty()) {
-                        viewModel.getTenants().value?.let {
-                            //This is due to the first item is Select Data
-                            if (position > 0) {
-                                tenantId = it[position - 1].id
-                            }
-                        }
-                    }
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {}
-            }
-
         activityBinding.searchLayout.btnApplyFilter.setOnClickListener {
             viewModel.getBillHistory(
                 isForSearch = true,
-                tenantId = if (tenantId > 0) tenantId else null,
-                year = year
+                year = year,
+                month = month
             )
         }
 
@@ -178,6 +148,27 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
                             .toString() != getString(R.string.select_data_1)
                     ) {
                         year = parent.getItemAtPosition(position).toString().toInt()
+                        setMonthSpinnerAdapter()
+                    }
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
+
+        activityBinding.searchLayout.monthId.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View,
+                    position: Int,
+                    id: Long
+                ) {
+                    if (parent.getItemAtPosition(position)
+                            .toString() != getString(R.string.select_data_1)
+                    ) {
+                        month = utilsForAll.getMonthFromMonthName(
+                            parent.getItemAtPosition(position).toString()
+                        )
                     }
                 }
 
@@ -185,9 +176,9 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
             }
 
         activityBinding.searchLayout.btnClearFilter.setOnClickListener {
-            viewModel.getBillHistory(isForSearch = false, tenantId = 0, year = 0)
+            viewModel.getBillHistory(isForSearch = false, year = 0, month = 0)
             activityBinding.searchLayout.filterYearSpinner.setSelection(0)
-            activityBinding.searchLayout.tenantNameId.setSelection(0)
+            activityBinding.searchLayout.monthId.setSelection(0)
         }
     }
 
@@ -196,6 +187,14 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
         activityBinding.mRecyclerView.layoutManager = LinearLayoutManager(this)
         activityBinding.mRecyclerView.adapter = recyclerBillHistoryAdapter
         recyclerBillHistoryAdapter.setGenerateBillCallBacks(this)
+    }
+
+    private fun setMonthSpinnerAdapter() {
+        spinnerAdapter.setSpinnerAdapter(
+            activityBinding.searchLayout.monthId,
+            this,
+            spinnerData.setMonthData(year)
+        )
     }
 
     override fun onNotify(billHistory: BillHistory) {

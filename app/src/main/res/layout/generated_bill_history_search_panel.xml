@@ -14,39 +14,14 @@
         android:padding="16dp">
 
         <TextView
-            android:id="@+id/tvTenantNameHeading"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp"
-            android:text="@string/tenant_name"
-            android:textColor="@color/md_grey_900"
-            app:layout_constraintEnd_toStartOf="@id/tvDateFilterHeading"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:textSize="16sp" />
-
-        <Spinner
-            android:id="@+id/tenantNameId"
-            style="@style/Base.TextAppearance.AppCompat.Medium"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/edit_text_back"
-            android:tag="@string/tenant_name"
-            app:layout_constraintEnd_toEndOf="@+id/tvTenantNameHeading"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvTenantNameHeading" />
-
-        <TextView
             android:id="@+id/tvDateFilterHeading"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/tvTenantNameHeading"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginStart="8dp"
+            app:layout_constraintEnd_toStartOf="@id/tvMonthHeading"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:text="@string/select_year"
             android:textColor="@color/md_grey_900"
             android:textSize="16sp" />
@@ -56,10 +31,35 @@
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_marginTop="5dp"
+            android:layout_marginEnd="12dp"
             android:background="@drawable/edit_text_back"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/tvDateFilterHeading"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/monthId"
             app:layout_constraintTop_toBottomOf="@id/tvDateFilterHeading" />
+
+        <TextView
+            android:id="@+id/tvMonthHeading"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/select_month_2"
+            android:textColor="@color/md_grey_900"
+            app:layout_constraintStart_toEndOf="@id/tvDateFilterHeading"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="16sp" />
+
+        <Spinner
+            android:id="@+id/monthId"
+            style="@style/Base.TextAppearance.AppCompat.Medium"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/edit_text_back"
+            android:tag="@string/select_month"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/filterYearSpinner"
+            app:layout_constraintTop_toBottomOf="@id/tvMonthHeading" />
 
         <Button
             android:id="@+id/btnClearFilter"
