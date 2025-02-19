@@ -85,13 +85,27 @@
             android:layout_marginTop="12dp"
             android:layout_marginBottom="4dp"
             android:layout_marginStart="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/filterYearSpinner"
             app:layout_constraintStart_toEndOf="@id/btnClearFilter"
+            app:layout_constraintEnd_toStartOf="@id/ivAdvanceFilter"
             android:paddingStart="12dp"
             android:paddingEnd="12dp"
             android:text="@string/apply_filter"
             android:textAllCaps="false" />
+
+        <ImageView
+            android:id="@+id/ivAdvanceFilter"
+            android:layout_width="64dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:contentDescription="@string/banner_description"
+            android:padding="8dp"
+            android:src="@drawable/ic_filter"
+            android:background="@drawable/rectangle_border_darker_green"
+            app:layout_constraintBottom_toBottomOf="@+id/btnApplyFilter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btnApplyFilter"
+            app:layout_constraintTop_toTopOf="@+id/btnApplyFilter" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

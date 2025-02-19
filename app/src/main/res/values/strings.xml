@@ -540,4 +540,8 @@
     <string name="total_due_bill_semicolon">Due Bill:</string>
     <string name="rent_collector">Rent Collector</string>
     <string name="payment_received_on_x">Payment Received Date: %s</string>
+    <string name="rent_status">Rent Status</string>
+    <string name="paid">Paid</string>
+    <string name="due">Due</string>
+    <string name="please_select_filter_item">Please select filter options</string>
 </resources>

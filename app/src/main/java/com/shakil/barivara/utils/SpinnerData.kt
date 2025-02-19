@@ -72,6 +72,16 @@ class SpinnerData(private val context: Context) {
         return spinnerValues
     }
 
+    fun setRentStatusSpinnerData(): ArrayList<String> {
+        val spinnerValues = ArrayList<String>()
+        val tenantTypeArray = arrayOf(
+            context.getString(R.string.paid),
+            context.getString(R.string.due),
+        )
+        spinnerValues.addAll(tenantTypeArray)
+        return spinnerValues
+    }
+
     fun setMeterTypeData(): ArrayList<String> {
         val spinnerValues = ArrayList<String>()
         val meterTypeArray = arrayOf("Select Data", "Main Meter", "Sub Meter")

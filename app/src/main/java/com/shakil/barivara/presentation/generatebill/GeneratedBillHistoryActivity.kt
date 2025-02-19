@@ -1,17 +1,24 @@
 package com.shakil.barivara.presentation.generatebill
 
+import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import android.widget.AdapterView
+import android.widget.Button
+import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
 import com.shakil.barivara.data.model.generatebill.BillHistory
+import com.shakil.barivara.data.model.tenant.Tenant
 import com.shakil.barivara.databinding.ActivityGeneratedBillHistoryBinding
+import com.shakil.barivara.databinding.AdvanceBillHistorySearchLayoutBinding
 import com.shakil.barivara.presentation.GenericBottomSheet
 import com.shakil.barivara.presentation.adapter.RecyclerBillHistoryAdapter
 import com.shakil.barivara.presentation.generatebill.bottomsheet.MarkAsPaidBottomSheet
@@ -23,6 +30,7 @@ import com.shakil.barivara.utils.SpinnerAdapter
 import com.shakil.barivara.utils.SpinnerData
 import com.shakil.barivara.utils.UX
 import com.shakil.barivara.utils.UtilsForAll
+import com.shakil.barivara.utils.orFalse
 import com.shakil.barivara.utils.orZero
 import dagger.hilt.android.AndroidEntryPoint
 import es.dmoral.toasty.Toasty
@@ -33,9 +41,10 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
     RecyclerBillHistoryAdapter.GenerateDBillHistoryCallBacks,
     MarkAsPaidBottomSheet.MarkAsPaidListener {
     private lateinit var activityBinding: ActivityGeneratedBillHistoryBinding
-    private var tenantId: Int = 0
     private var spinnerData = SpinnerData(this)
     private var spinnerAdapter = SpinnerAdapter()
+    private var tenantId: Int = 0
+    private var rentStatus: String = ""
     private var year: Int = 0
     private var month: Int = 0
 
@@ -65,7 +74,13 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
         initObservers()
         setRecyclerAdapter()
         viewModel.getAllTenants()
-        viewModel.getBillHistory(isForSearch = false, year = 0, month = 0)
+        viewModel.getBillHistory(
+            isForSearch = false,
+            year = 0,
+            month = 0,
+            tenantId = null,
+            rentStatus = null
+        )
     }
 
     private fun init() {
@@ -81,29 +96,21 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
             }
         }
 
-        viewModel.getTenants().observe(this) { tenants ->
-            if (tenants.isEmpty()) {
-
-            } else {
-
-            }
-        }
-
         viewModel.getBillHistoryFilteredList().observe(this) { billHistory ->
             if (!billHistory.isNullOrEmpty()) {
                 activityBinding.noDataLayout.root.visibility = View.GONE
                 activityBinding.mRecyclerView.visibility = View.VISIBLE
                 recyclerBillHistoryAdapter.setItems(billHistory)
+                activityBinding.mRecyclerView.scrollToPosition(0)
             } else {
                 activityBinding.noDataLayout.root.visibility = View.VISIBLE
                 activityBinding.mRecyclerView.visibility = View.GONE
             }
         }
 
-
         viewModel.getUpdateRentStatusResponse().observe(this) { rentStatusUpdate ->
             if (rentStatusUpdate.statusCode == 200) {
-                if (markAsPaidBottomSheet.isVisible){
+                if (markAsPaidBottomSheet.isVisible) {
                     markAsPaidBottomSheet.dismiss()
                 }
                 Toasty.success(
@@ -111,7 +118,13 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
                     getString(R.string.rent_status_updated_successfully),
                     Toast.LENGTH_LONG
                 ).show()
-                viewModel.getBillHistory(isForSearch = false, year = 0, month = 0)
+                viewModel.getBillHistory(
+                    isForSearch = false,
+                    year = 0,
+                    month = 0,
+                    tenantId = null,
+                    rentStatus = null
+                )
             }
         }
     }
@@ -129,10 +142,20 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
 
     private fun initListeners() {
         activityBinding.searchLayout.btnApplyFilter.setOnClickListener {
+            if (year == 0) {
+                Toasty.warning(
+                    this,
+                    getString(R.string.please_select_filter_item),
+                    Toasty.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }
             viewModel.getBillHistory(
                 isForSearch = true,
                 year = year,
-                month = month
+                month = month,
+                tenantId = null,
+                rentStatus = null
             )
         }
 
@@ -176,9 +199,19 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
             }
 
         activityBinding.searchLayout.btnClearFilter.setOnClickListener {
-            viewModel.getBillHistory(isForSearch = false, year = 0, month = 0)
+            viewModel.getBillHistory(
+                isForSearch = false,
+                year = 0,
+                month = 0,
+                tenantId = null,
+                rentStatus = null
+            )
             activityBinding.searchLayout.filterYearSpinner.setSelection(0)
             activityBinding.searchLayout.monthId.setSelection(0)
+        }
+
+        activityBinding.searchLayout.ivAdvanceFilter.setOnClickListener {
+            doPopupDialogForAdvanceFilter()
         }
     }
 
@@ -195,6 +228,87 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
             this,
             spinnerData.setMonthData(year)
         )
+    }
+
+    private fun doPopupDialogForAdvanceFilter() {
+        val dialog = Dialog(this@GeneratedBillHistoryActivity, android.R.style.Theme_Dialog).apply {
+            requestWindowFeature(Window.FEATURE_NO_TITLE)
+            setContentView(R.layout.advance_bill_history_search_layout)
+            window?.setBackgroundDrawableResource(android.R.color.transparent)
+            setCanceledOnTouchOutside(true)
+            window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
+            window?.setLayout(
+                RelativeLayout.LayoutParams.MATCH_PARENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT
+            )
+        }
+        val binding = AdvanceBillHistorySearchLayoutBinding.bind(dialog.findViewById(R.id.rootView))
+        if (viewModel.getTenants().value?.isEmpty().orFalse()) {
+            spinnerAdapter.setSpinnerAdapter(
+                binding.tenantNameId,
+                this,
+                spinnerData.setSpinnerNoData()
+            )
+        } else {
+            spinnerAdapter.setSpinnerAdapter(
+                binding.tenantNameId,
+                this,
+                ArrayList(viewModel.getTenants().value.orEmpty().map { it.name })
+            )
+        }
+        spinnerAdapter.setSpinnerAdapter(
+            binding.rentStatusSpinner,
+            this,
+            spinnerData.setRentStatusSpinnerData()
+        )
+
+        binding.tenantNameId.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View,
+                    position: Int,
+                    id: Long
+                ) {
+                    if (!viewModel.getTenants().value.isNullOrEmpty()) {
+                        viewModel.getTenants().value?.let {
+                            tenantId = it[position].id
+                        }
+                    }
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
+
+        binding.rentStatusSpinner.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View,
+                    position: Int,
+                    id: Long
+                ) {
+                    rentStatus = parent.getItemAtPosition(position).toString()
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
+
+        binding.btnApplyFilter.setOnClickListener {
+            viewModel.getBillHistory(
+                isForSearch = true,
+                year = year,
+                month = month,
+                tenantId = tenantId,
+                rentStatus = rentStatus
+            )
+            dialog.dismiss()
+        }
+
+        binding.btnCancelFilter.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
     }
 
     override fun onNotify(billHistory: BillHistory) {
