@@ -223,7 +223,7 @@
     <string name="validation_mobile_number_length">মোবাইল নাম্বার ১১ সংখ্যার হতে হবে</string>
     <string name="rooms">ঘর/ফ্ল্যাট</string>
     <string name="meters">Meters</string>
-    <string name="tenant_information">ভাড়াটে তথ্য</string>
+    <string name="tenant_information">ভাড়াটিয়ার তথ্য</string>
     <string name="room_information">ঘর/ফ্ল্যাট সম্পর্কিত তথ্য</string>
     <string name="meter_information">মিটারের তথ্য</string>
     <string name="demo_tenant_name">রহিম</string>
@@ -505,7 +505,7 @@
     <string name="collected">সংগৃহীত</string>
     <string name="total_due_with_semicolon">মোট বকেয়া:</string>
     <string name="collected_semicolon">সংগৃহীত:</string>
-    <string name="apply_filter">ফিল্টার প্রয়োগ করুন</string>
+    <string name="apply_filter">ফিল্টার করুন</string>
     <string name="collection_date">সংগ্রহের তারিখ</string>
     <string name="collection_date_hint">সংগ্রহের তারিখ নির্বাচন করুন</string>
     <string name="room_name_semicolon">রুম/ফ্ল্যাটের নাম:</string>
@@ -539,4 +539,8 @@
     <string name="total_due_bill_semicolon">বকেয়া বিল:</string>
     <string name="rent_collector">ভাড়া আদায়</string>
     <string name="payment_received_on_x">বিল পরিশোধের তারিখ: %s</string>
+    <string name="rent_status">ভাড়ার অবস্থা</string>
+    <string name="paid">পরিশোধ করা হয়েছে</string>
+    <string name="due">বাকি আছে</string>
+    <string name="please_select_filter_item">অনুগ্রহ করে ফিল্টার অপশন নির্বাচন করুন</string>
 </resources>
