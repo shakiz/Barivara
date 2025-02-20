@@ -288,7 +288,13 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
                     position: Int,
                     id: Long
                 ) {
-                    rentStatus = parent.getItemAtPosition(position).toString()
+                    rentStatus = if (parent.getItemAtPosition(position)
+                            .toString() == getString(R.string.paid)
+                    ) {
+                        "paid"
+                    } else {
+                        "due"
+                    }
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
