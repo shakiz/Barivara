@@ -29,6 +29,7 @@ object ButtonActionConstants {
     const val actionHomeDashboard = "action_home_dashboard"
     const val actionHomeMenuItemMyProfile = "action_home_menu_item_profile"
     const val actionHomeMenuItemTutorial = "action_home_menu_item_tutorial"
+    const val actionHomeMenuItemVideoTutorial = "action_home_menu_item_video_tutorial"
     const val actionHomeMenuItemChangePassword = "action_home_menu_item_change_password"
     const val actionHomeMenuItemRateUs = "action_home_menu_item_rate_us"
     const val actionHomeMenuItemLogout = "action_home_menu_item_logout"

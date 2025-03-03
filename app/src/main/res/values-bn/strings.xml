@@ -544,4 +544,5 @@
     <string name="due">বাকি আছে</string>
     <string name="please_select_filter_item">অনুগ্রহ করে ফিল্টার অপশন নির্বাচন করুন</string>
     <string name="rent">ভাড়া:</string>
+    <string name="video_tutorial">ভিডিও টিউটোরিয়াল</string>
 </resources>

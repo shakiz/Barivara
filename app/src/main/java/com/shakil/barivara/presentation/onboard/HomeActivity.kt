@@ -38,6 +38,7 @@ import com.shakil.barivara.presentation.profile.ProfileActivity
 import com.shakil.barivara.presentation.room.RoomListActivity
 import com.shakil.barivara.presentation.tenant.TenantListActivity
 import com.shakil.barivara.presentation.tutorial.TutorialActivity
+import com.shakil.barivara.presentation.tutorial.VideoTutorialActivity
 import com.shakil.barivara.utils.ButtonActionConstants
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.Constants.WHATS_APP_BUSINESS_ACCOUNT_NO
@@ -414,6 +415,13 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
                     ButtonActionConstants.actionHomeMenuItemChangePassword,
                 )
                 startActivity(Intent(this@HomeActivity, ForgotPasswordActivity::class.java))
+            }
+
+            R.id.menu_video_tutorial -> {
+                buttonAction(
+                    ButtonActionConstants.actionHomeMenuItemVideoTutorial,
+                )
+                startActivity(Intent(this@HomeActivity, VideoTutorialActivity::class.java))
             }
 
             R.id.menu_tutorial -> {

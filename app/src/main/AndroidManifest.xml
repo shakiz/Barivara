@@ -205,6 +205,13 @@
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
+        <activity
+            android:name=".presentation.tutorial.VideoTutorialActivity"
+            android:exported="false"
+            android:fitsSystemWindows="true"
+            android:theme="@style/AppThemeNoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
         <service
             android:name=".servies.MyFirebaseMessagingService"
             android:exported="false">

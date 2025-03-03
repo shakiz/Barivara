@@ -18,6 +18,11 @@
         android:icon="@drawable/ic_key"/>
 
     <item
+        android:id="@+id/menu_video_tutorial"
+        android:title="@string/video_tutorial"
+        android:icon="@drawable/ic_video"/>
+
+    <item
         android:id="@+id/menu_tutorial"
         android:title="@string/tutorial"
         android:icon="@drawable/ic_info_black_24dp"/>
