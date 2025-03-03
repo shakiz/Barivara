@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
+import com.shakil.barivara.data.model.generatebill.BillHistory
 import com.shakil.barivara.data.model.generatebill.BillInfo
 import com.shakil.barivara.databinding.ActivityGenerateBillBinding
 import com.shakil.barivara.presentation.GenericBottomSheet
@@ -48,7 +49,7 @@ class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>(),
     @Inject
     lateinit var utilsForAll: UtilsForAll
     private lateinit var ux: UX
-    private val markAsPaidBottomSheet = MarkAsPaidBottomSheet()
+    private var markAsPaidBottomSheet = MarkAsPaidBottomSheet()
 
     @Inject
     lateinit var prefManager: PrefManager
@@ -238,9 +239,16 @@ class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>(),
     }
 
     private fun showMarkAsPaidBottomSheet(billInfo: BillInfo) {
+        val billHistory = BillHistory(
+            id = billInfo.id,
+            tenantName = billInfo.tenant,
+            room = billInfo.room,
+            rent = billInfo.rent
+        )
         screenViewed(ScreenNameConstants.appScreenGenerateBillMarkAsPaidBottomSheet)
+        markAsPaidBottomSheet = MarkAsPaidBottomSheet.newInstance(billHistory)
         markAsPaidBottomSheet.show(supportFragmentManager, "MarkAsPaidBottomSheet")
-        markAsPaidBottomSheet.setMarkAsPaidListener(billInfo.id, this)
+        markAsPaidBottomSheet.setMarkAsPaidListener(this)
     }
 
     override fun onMarkAsPaidSubmitted(remarks: String, billId: Int) {

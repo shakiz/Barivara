@@ -55,7 +55,7 @@
             android:textSize="16sp"
             app:drawableStartCompat="@drawable/ic_person"
             app:drawableTint="@color/md_grey_800"
-            tools:text="Tenant: John Doe" />
+            tools:text="John Doe" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -73,7 +73,7 @@
                 android:textSize="16sp"
                 app:drawableStartCompat="@drawable/ic_currency_bdt"
                 app:drawableTint="@color/md_grey_800"
-                tools:text="Rent: $1200" />
+                tools:text="1200" />
 
             <TextView
                 android:id="@+id/monthAndYear"

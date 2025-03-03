@@ -56,7 +56,7 @@
     <string name="no_of_tenants">ভাড়াটিয়াদের সংখ্যা</string>
     <string name="this_month">চলতি মাস</string>
     <string name="new_tenent_this_month">ভাড়াটিয়া এই মাসে?</string>
-    <string name="tenant_list">ভাড়াটে তালিকা</string>
+    <string name="tenant_list">ভাড়াটিয়ার তালিকা</string>
     <string name="meter_type">মিটারের ধরণ</string>
     <string name="add_tenant">নতুন ভাড়াটিয়া</string>
 
@@ -100,7 +100,7 @@
     <string name="good_night">শুভ রাত্রি</string>
     <string name="new_room">নতুন ঘর</string>
     <string name="add_a_room">একটি নতুন ঘর/ফ্লাট যুক্ত করুন</string>
-    <string name="all_rooms">সব ঘর/ফ্লাট</string>
+    <string name="all_rooms">সব ঘর/ফ্ল্যাট</string>
     <string name="new_meter">নতুন মিটার</string>
     <string name="add_a_meter">একটি নতুন মিটার যুক্ত করুন</string>
     <string name="all_meters">সমস্ত মিটার</string>
@@ -129,12 +129,12 @@
     <string name="missing_data">অনুপস্থিত তথ্য</string>
     <string name="name_search">নাম লিখুন</string>
     <string name="enter_data_validation">দয়া করে ডেটা প্রবেশ করুন</string>
-    <string name="filterd">অনুসন্ধান শেষ হয়েছে</string>
-    <string name="search_room_name">ঘরের/ফ্ল্যাটের নাম অনুসন্ধান করুন</string>
+    <string name="filterd">সার্চ শেষ হয়েছে</string>
+    <string name="search_room_name">ঘরের/ফ্ল্যাটের নাম সার্চ করুন</string>
     <string name="list_refreshed">তালিকাটি রিফ্রেশ হয়েছে</string>
-    <string name="search_month_name">মাসের নাম সন্ধান করুন</string>
-    <string name="search_tenant_name">ভাড়াটিয়ার নাম অনুসন্ধান করুন</string>
-    <string name="search_meter_name">মিটারের নাম অনুসন্ধান করুন</string>
+    <string name="search_month_name">মাসের নাম সার্চ করুন</string>
+    <string name="search_tenant_name">ভাড়াটিয়ার নাম সার্চ করুন</string>
+    <string name="search_meter_name">মিটারের নাম সার্চ করুন</string>
     <string name="developed_by">Developed By</string>
     <string name="sakhawat_hossain">Sakhawat Hossain</string>
     <string name="demo_day">শনিবার</string>
@@ -230,7 +230,7 @@
     <string name="no_internet_title">দয়া করে ইন্টারনেট সংযোগ চালু করুন</string>
     <string name="default_notification_channel_id">fcm_default_channel</string>
     <string name="new_notification">You have a new notification</string>
-    <string name="tenant_type">ভাড়াটে ধরণ</string>
+    <string name="tenant_type">ভাড়াটিয়ার ধরণ</string>
     <string name="bachelor">ব্যাচেলর</string>
     <string name="family">পরিবার</string>
     <string name="small_family">ছোট পরিবার</string>
@@ -461,7 +461,7 @@
     <string name="create_bill_text">বিল তৈরি করুন</string>
     <string name="otp_verified">OTP সফলভাবে যাচাই করা হয়েছে</string>
     <string name="password_setup_completed">পাসওয়ার্ড সেটআপ সম্পন্ন হয়েছে</string>
-    <string name="still_has_room">ভাড়াটিয়া কি এখনও এই ঘরে থাকেন??</string>
+    <string name="still_has_room">ভাড়াটিয়া কি এখনও এই ঘরে থাকেন?</string>
     <string name="tenant_name_x">ভাড়াটিয়ার নাম: %s</string>
     <string name="phone_no_x">মোবাইল নম্বর: %d</string>
     <string name="start_date_x">শুরুর তারিখ: %s</string>
@@ -530,7 +530,7 @@
     <string name="complain_banner_detail_text">এখন আপনি আপনার সমস্যাগুলি হোয়াটসঅ্যাপের মাধ্যমে সরাসরি আমাদের সাথে যোগাযোগ করতে পারেন।</string>
     <string name="submit_feedback">মতামত জমা দিন</string>
     <string name="whatsapp_not_installed">হোয়াটসঅ্যাপ ইনস্টল করা নেই</string>
-    <string name="status_x">অবস্থা: %s</string>
+    <string name="status_x">স্ট্যাটাস: %s</string>
     <string name="tenant_x">ভাড়াটিয়া: %s</string>
     <string name="collected_x">সংগৃহীত: %d</string>
     <string name="default_text">ডিফল্ট</string>
@@ -543,4 +543,5 @@
     <string name="paid">পরিশোধ করা হয়েছে</string>
     <string name="due">বাকি আছে</string>
     <string name="please_select_filter_item">অনুগ্রহ করে ফিল্টার অপশন নির্বাচন করুন</string>
+    <string name="rent">ভাড়া:</string>
 </resources>

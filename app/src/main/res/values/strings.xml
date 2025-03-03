@@ -544,4 +544,5 @@
     <string name="paid">Paid</string>
     <string name="due">Due</string>
     <string name="please_select_filter_item">Please select filter options</string>
+    <string name="rent">Rent:</string>
 </resources>
