@@ -126,7 +126,7 @@
                 android:ellipsize="end"
                 android:gravity="center|start"
                 android:scrollHorizontally="true"
-                android:text="@string/total_due_bill_semicolon"
+                android:text="@string/rent"
                 android:textColor="@color/md_grey_800"
                 android:textSize="14sp" />
 

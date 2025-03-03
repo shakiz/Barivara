@@ -43,7 +43,7 @@
             android:paddingHorizontal="2dp"
             android:text="@string/tenant_name_x"
             android:textColor="@color/md_grey_800"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@+id/callIcon"
             app:layout_constraintEnd_toStartOf="@id/callIcon"
             app:layout_constraintStart_toEndOf="@id/ivIcon"

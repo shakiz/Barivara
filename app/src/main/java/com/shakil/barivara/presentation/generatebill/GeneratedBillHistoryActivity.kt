@@ -52,7 +52,7 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
     lateinit var utilsForAll: UtilsForAll
     private lateinit var ux: UX
     private val viewModel by viewModels<GenerateBillViewModel>()
-    private val markAsPaidBottomSheet = MarkAsPaidBottomSheet()
+    private var markAsPaidBottomSheet = MarkAsPaidBottomSheet()
 
     @Inject
     lateinit var prefManager: PrefManager
@@ -350,8 +350,9 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
 
     private fun showMarkAsPaidBottomSheet(billHistory: BillHistory) {
         screenViewed(ScreenNameConstants.appScreenGenerateBillMarkAsPaidBottomSheet)
+        markAsPaidBottomSheet = MarkAsPaidBottomSheet.newInstance(billHistory)
         markAsPaidBottomSheet.show(supportFragmentManager, "MarkAsPaidBottomSheet")
-        markAsPaidBottomSheet.setMarkAsPaidListener(billHistory.id.orZero(), this)
+        markAsPaidBottomSheet.setMarkAsPaidListener(this)
     }
 
     override fun onMarkAsPaidSubmitted(remarks: String, billId: Int) {

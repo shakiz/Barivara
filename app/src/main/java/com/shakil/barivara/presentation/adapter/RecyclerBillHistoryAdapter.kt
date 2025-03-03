@@ -55,13 +55,10 @@ class RecyclerBillHistoryAdapter(private val utilsForAll: UtilsForAll) :
         fun bind(billInfo: BillHistory, utilsForAll: UtilsForAll) {
             val context = binding.root.context
             binding.roomName.text = billInfo.room
-            binding.tenantName.text = context.getString(R.string.tenant_x, billInfo.tenantName)
-            binding.totalBill.text = context.getString(R.string.collected_x, billInfo.rent)
-            binding.monthAndYear.text = context.getString(
-                R.string.x_comma_x,
-                utilsForAll.getMonthNameFromNumber(billInfo.month.orZero()),
-                billInfo.year
-            )
+            binding.tenantName.text = context.getString(R.string.x_s, billInfo.tenantName)
+            binding.totalBill.text = context.getString(R.string.x_d, billInfo.rent)
+            val monthName = utilsForAll.getMonthNameFromNumber(billInfo.month.orZero())
+            binding.monthAndYear.text = "${monthName}, ${billInfo.year}"
             binding.billStatus.text = context.getString(
                 R.string.status_x,
                 billInfo.status.toString().replaceFirstChar { it.uppercase() })
