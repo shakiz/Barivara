@@ -6,7 +6,7 @@
     <string name="total_earnings">মোট আয়</string>
     <string name="no_of_meters">মিটার সংখ্যা</string>
     <string name="total_unit">মোট ইউনিট</string>
-    <string name="add_room">নতুন ঘর/ফ্লাট</string>
+    <string name="add_room">নতুন ঘর/ফ্ল্যাট</string>
     <string name="add_meter">নতুন মিটার</string>
     <string name="room_hint">ঘরের/ফ্ল্যাটের নাম লিখুন</string>
     <string name="room_name">ঘরের/ফ্ল্যাটের নাম</string>
@@ -23,7 +23,7 @@
     <!--Meter start-->
     <string name="meter_name">মিটারের নাম</string>
     <string name="meter_hint">মিটারের নাম প্রবেশ করান</string>
-    <string name="select_room">ঘর/ফ্লাট নির্বাচন করুন</string>
+    <string name="select_room">ঘর/ফ্ল্যাট নির্বাচন করুন</string>
     <string name="select_meter_type">মিটারের প্রকার নির্বাচন করুন</string>
     <!--Meter end-->
 
