@@ -46,9 +46,9 @@
                         android:id="@+id/mainLayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:orientation="vertical"
                         android:paddingTop="12dp"
-                        android:paddingBottom="16dp"
-                        android:orientation="vertical">
+                        android:paddingBottom="16dp">
 
                         <RelativeLayout
                             android:id="@+id/bannerLayout"
@@ -73,10 +73,10 @@
                                     android:id="@+id/totalRoomFlatLayout"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
                                     android:layout_marginLeft="8dp"
                                     android:layout_marginRight="8dp"
                                     android:layout_marginBottom="8dp"
-                                    android:layout_gravity="center"
                                     android:background="@drawable/rectangle_white"
                                     android:gravity="center"
                                     android:orientation="horizontal"
@@ -120,17 +120,17 @@
                                     android:id="@+id/totalTenantLayout"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
                                     android:layout_marginLeft="8dp"
                                     android:layout_marginRight="8dp"
                                     android:layout_marginBottom="8dp"
-                                    android:layout_gravity="center"
                                     android:background="@drawable/rectangle_white"
+                                    android:gravity="center"
+                                    android:orientation="horizontal"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toEndOf="@id/totalRoomFlatLayout"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    android:gravity="center"
-                                    android:orientation="horizontal">
+                                    app:layout_constraintTop_toTopOf="parent">
 
                                     <TextView
                                         android:layout_width="wrap_content"
@@ -190,23 +190,23 @@
 
                         <include
                             android:id="@+id/generated_bill_history_layout_this_month"
-                            android:layout_marginTop="12dp"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginEnd="16dp"
-                            android:visibility="gone"
                             layout="@layout/layout_generated_bill_this_month"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="12dp"
+                            android:layout_marginEnd="16dp"
+                            android:visibility="gone" />
 
                         <include
                             android:id="@+id/no_bill_history_layout_this_month"
-                            android:layout_marginTop="12dp"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginEnd="16dp"
-                            android:visibility="gone"
                             layout="@layout/layout_no_bill_history_for_this_month"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="12dp"
+                            android:layout_marginEnd="16dp"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/tvTenantHeading"
@@ -224,10 +224,10 @@
                             android:id="@+id/tenant_list"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/rectangle_white"
                             android:layout_marginStart="16dp"
                             android:layout_marginTop="4dp"
-                            android:layout_marginEnd="16dp">
+                            android:layout_marginEnd="16dp"
+                            android:background="@drawable/rectangle_white">
 
                             <com.airbnb.lottie.LottieAnimationView
                                 android:id="@+id/ivTenant"
@@ -289,16 +289,16 @@
                             android:text="@string/room_information"
                             android:textColor="@color/md_green_900"
                             android:textSize="20sp"
-                            android:textStyle="bold"/>
+                            android:textStyle="bold" />
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/room_list"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/rectangle_white"
                             android:layout_marginStart="16dp"
                             android:layout_marginTop="4dp"
-                            android:layout_marginEnd="16dp">
+                            android:layout_marginEnd="16dp"
+                            android:background="@drawable/rectangle_white">
 
                             <com.airbnb.lottie.LottieAnimationView
                                 android:id="@+id/ivRoom"
@@ -375,23 +375,21 @@
 
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:id="@+id/generateBillLayout"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="8dp"
+                                android:padding="12dp"
+                                android:background="@drawable/rectangle_white"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toStartOf="@id/generatedBillHistoryLayout"
-                                android:background="@drawable/rectangle_white"
-                                android:layout_marginEnd="8dp"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content">
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
 
                                 <com.airbnb.lottie.LottieAnimationView
                                     android:id="@+id/ivGenerateBill"
                                     android:layout_width="48dp"
                                     android:layout_height="48dp"
                                     android:layout_gravity="center"
-                                    android:layout_marginStart="16dp"
-                                    android:layout_marginTop="16dp"
-                                    android:layout_marginBottom="16dp"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent"
@@ -406,13 +404,13 @@
                                     android:layout_marginStart="8dp"
                                     android:layout_marginEnd="8dp"
                                     android:ellipsize="end"
-                                    android:maxLines="2"
-                                    android:scrollHorizontally="true"
+                                    android:maxLines="1"
                                     android:text="@string/generate_bill"
                                     android:textColor="@color/md_grey_800"
                                     android:textSize="16sp"
                                     android:textStyle="bold"
                                     app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintBottom_toTopOf="@id/tvAllGenerateBillHeading"
                                     app:layout_constraintStart_toEndOf="@id/ivGenerateBill"
                                     app:layout_constraintTop_toTopOf="@id/ivGenerateBill" />
 
@@ -421,8 +419,9 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="8dp"
-                                    android:layout_marginEnd="8dp"
                                     android:layout_marginTop="4dp"
+                                    android:layout_marginEnd="8dp"
+                                    android:layout_marginBottom="4dp"
                                     android:ellipsize="end"
                                     android:maxLines="2"
                                     android:text="@string/create_bill_text"
@@ -438,22 +437,20 @@
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:id="@+id/generatedBillHistoryLayout"
                                 android:layout_width="0dp"
-                                app:layout_constraintStart_toEndOf="@id/generateBillLayout"
+                                android:layout_height="wrap_content"
                                 android:layout_marginStart="8dp"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintBottom_toBottomOf="parent"
+                                android:padding="12dp"
                                 android:background="@drawable/rectangle_white"
-                                android:layout_height="wrap_content">
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/generateBillLayout"
+                                app:layout_constraintTop_toTopOf="parent">
 
                                 <com.airbnb.lottie.LottieAnimationView
                                     android:id="@+id/ivGenerateBillHistory"
                                     android:layout_width="48dp"
                                     android:layout_height="48dp"
                                     android:layout_gravity="center"
-                                    android:layout_marginStart="16dp"
-                                    android:layout_marginTop="16dp"
-                                    android:layout_marginBottom="16dp"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent"
@@ -468,13 +465,13 @@
                                     android:layout_marginStart="8dp"
                                     android:layout_marginEnd="8dp"
                                     android:ellipsize="end"
-                                    android:maxLines="2"
-                                    android:scrollHorizontally="true"
+                                    android:maxLines="1"
                                     android:text="@string/bill_history"
                                     android:textColor="@color/md_grey_800"
                                     android:textSize="16sp"
                                     android:textStyle="bold"
                                     app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintBottom_toTopOf="@id/tvAllGenerateBillHistoryHeading"
                                     app:layout_constraintStart_toEndOf="@id/ivGenerateBillHistory"
                                     app:layout_constraintTop_toTopOf="@id/ivGenerateBillHistory" />
 
@@ -483,8 +480,9 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="8dp"
-                                    android:layout_marginEnd="8dp"
                                     android:layout_marginTop="4dp"
+                                    android:layout_marginEnd="8dp"
+                                    android:layout_marginBottom="4dp"
                                     android:ellipsize="end"
                                     android:maxLines="2"
                                     android:text="@string/bill_history_sub_title"
@@ -503,55 +501,55 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
-                            android:layout_marginEnd="16dp"
                             android:layout_marginTop="12dp"
+                            android:layout_marginEnd="16dp"
                             android:background="@drawable/rectangle_white"
                             android:padding="16dp">
 
                             <ImageView
                                 android:id="@+id/ivBanner"
-                                android:contentDescription="@string/banner_description"
                                 android:layout_width="200dp"
                                 android:layout_height="0dp"
+                                android:contentDescription="@string/banner_description"
+                                android:scaleType="fitCenter"
                                 android:src="@drawable/feedback"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintDimensionRatio="2:1"
-                                android:scaleType="fitCenter" />
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
 
                             <TextView
                                 android:id="@+id/tvHeadingComplain"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                app:layout_constraintStart_toEndOf="@id/ivBanner"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintBottom_toTopOf="@id/submitComplainBtn"
                                 android:layout_marginStart="4dp"
                                 android:layout_marginEnd="8dp"
-                                android:textColor="@color/md_black_1000"
-                                android:maxLines="4"
                                 android:ellipsize="end"
-                                android:text="@string/complain_banner_detail_text"/>
+                                android:maxLines="4"
+                                android:text="@string/complain_banner_detail_text"
+                                android:textColor="@color/md_black_1000"
+                                app:layout_constraintBottom_toTopOf="@id/submitComplainBtn"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/ivBanner" />
 
                             <TextView
                                 android:id="@+id/submitComplainBtn"
+                                style="@style/BariVara.Button.Secondary"
                                 android:layout_width="0dp"
                                 android:layout_height="42dp"
-                                style="@style/BariVara.Button.Secondary"
-                                app:layout_constraintStart_toEndOf="@id/ivBanner"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/tvHeadingComplain"
-                                android:layout_marginTop="4dp"
                                 android:layout_marginStart="4dp"
+                                android:layout_marginTop="4dp"
                                 android:layout_marginEnd="12dp"
-                                android:paddingTop="2dp"
-                                android:paddingBottom="2dp"
-                                android:textAllCaps="false"
                                 android:ellipsize="end"
                                 android:maxLines="2"
+                                android:paddingTop="2dp"
+                                android:paddingBottom="2dp"
+                                android:text="@string/submit_feedback"
+                                android:textAllCaps="false"
                                 android:textSize="14sp"
-                                android:text="@string/submit_feedback"/>
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/ivBanner"
+                                app:layout_constraintTop_toBottomOf="@id/tvHeadingComplain" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 

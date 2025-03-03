@@ -458,7 +458,7 @@
     <string name="verify_with_your_mobile_number">আপনার মোবাইল নম্বর দিয়ে যাচাই করুন</string>
     <string name="setup_your_password">আপনার পাসওয়ার্ড সেটআপ করুন</string>
     <string name="otp_input_hint">-</string>
-    <string name="create_bill_text">বিল তৈরি করুন</string>
+    <string name="create_bill_text">ভাড়ার বিল তৈরি করুন</string>
     <string name="otp_verified">OTP সফলভাবে যাচাই করা হয়েছে</string>
     <string name="password_setup_completed">পাসওয়ার্ড সেটআপ সম্পন্ন হয়েছে</string>
     <string name="still_has_room">ভাড়াটিয়া কি এখনও এই ঘরে থাকেন?</string>
