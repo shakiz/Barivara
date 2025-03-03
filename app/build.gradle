@@ -106,6 +106,9 @@ dependencies {
 
     // Pull to refresh
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+
+    //Video playback
+    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:11.1.0'
 }
 
 // Allow references to generated code
