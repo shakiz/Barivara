@@ -416,6 +416,12 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
                 startActivity(Intent(this@HomeActivity, ForgotPasswordActivity::class.java))
             }
 
+            R.id.menu_video_tutorial -> {
+                buttonAction(
+                    ButtonActionConstants.actionHomeMenuItemVideoTutorial,
+                )
+            }
+
             R.id.menu_tutorial -> {
                 buttonAction(
                     ButtonActionConstants.actionHomeMenuItemTutorial,
