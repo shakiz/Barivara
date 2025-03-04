@@ -51,7 +51,7 @@ class VideoTutorialActivity : BaseActivity<ActivityVideoTutorialBinding>() {
         activityVideoTutorialBinding.youtubePlayerView.addYouTubePlayerListener(object :
             AbstractYouTubePlayerListener() {
             override fun onReady(youTubePlayer: YouTubePlayer) {
-                val videoId = "JpT6m7d8908"
+                val videoId = "mqxyehdTois"
                 youTubePlayer.loadVideo(videoId, 0f)
             }
         })
