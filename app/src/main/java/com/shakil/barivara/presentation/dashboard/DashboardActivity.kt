@@ -89,9 +89,12 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>() {
         }
 
         viewModel.getDashboardInfo().observe(this) { dashboardInfo ->
-            activityDashboardBinding.TotalRooms.text = "${dashboardInfo.totalActiveRoom}"
-            activityDashboardBinding.TotalTenantsCurrent.text = "${dashboardInfo.totalActiveTenant}"
-            activityDashboardBinding.TotalRentAmount.text = "${dashboardInfo.totalCollectedRent}"
+            activityDashboardBinding.TotalRooms.text =
+                getString(R.string.x_d, dashboardInfo.totalActiveRoom)
+            activityDashboardBinding.TotalTenantsCurrent.text =
+                getString(R.string.x_d, dashboardInfo.totalActiveTenant)
+            activityDashboardBinding.TotalRentAmount.text =
+                getString(R.string.x_d, dashboardInfo.totalCollectedRent)
         }
 
         viewModel.getRentDataByYearAndMonth().observe(this) { dashboardInfo ->
@@ -104,8 +107,10 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>() {
         }
 
         viewModel.getRentDataByYear().observe(this) { yearlyRentData ->
-            val monthNames = listOf("Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
+            val monthNames = listOf(
+                "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+            )
 
             val data: MutableList<DataEntry> = ArrayList()
             for (month in 1..12) {
@@ -134,7 +139,7 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>() {
             cartesian.xAxis(0).staggerMode(true)
             cartesian.xAxis(0).staggerMaxLines(2)
             cartesian.animation(true)
-            cartesian.title("Monthly Rent Collection for $selectedYearForYearly")
+            cartesian.title(getString(R.string.monthly_rent_collection_x, selectedYearForYearly))
             cartesian.yScale().minimum(0.0)
             cartesian.yAxis(0).labels().format("৳{%Value}{groupsSeparator: }")
             cartesian.tooltip().positionMode(TooltipPositionMode.POINT)
@@ -157,7 +162,7 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>() {
         )
         // FOr yearly rent data only, Check if the first element is "Select Data" and remove it
         val yearList = spinnerData.setYearData()
-        if (yearList.isNotEmpty() && yearList[0] == "Select Data") {
+        if (yearList.isNotEmpty() && yearList[0] == getString(R.string.select_data_1)) {
             yearList.removeAt(0)
         }
 
@@ -176,8 +181,13 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>() {
                     position: Int,
                     id: Long
                 ) {
-                    selectedYearForYearly = parent.getItemAtPosition(position).toString().toInt()
-                    viewModel.getRentDataByYear(selectedYearForYearly)
+                    if (parent.getItemAtPosition(position)
+                            .toString() != getString(R.string.select_data_1)
+                    ) {
+                        selectedYearForYearly =
+                            parent.getItemAtPosition(position).toString().toInt()
+                        viewModel.getRentDataByYear(selectedYearForYearly)
+                    }
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {

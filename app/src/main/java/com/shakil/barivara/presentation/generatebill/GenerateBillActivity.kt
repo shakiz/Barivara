@@ -15,10 +15,12 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
+import com.shakil.barivara.data.model.generatebill.BillHistory
 import com.shakil.barivara.data.model.generatebill.BillInfo
 import com.shakil.barivara.databinding.ActivityGenerateBillBinding
 import com.shakil.barivara.presentation.GenericBottomSheet
 import com.shakil.barivara.presentation.adapter.RecyclerBillInfoAdapter
+import com.shakil.barivara.presentation.generatebill.bottomsheet.MarkAsPaidBottomSheet
 import com.shakil.barivara.utils.ButtonActionConstants
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.Constants.mAccessToken
@@ -35,7 +37,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>(),
-    RecyclerBillInfoAdapter.GenerateBillCallBacks {
+    RecyclerBillInfoAdapter.GenerateBillCallBacks, MarkAsPaidBottomSheet.MarkAsPaidListener {
     private lateinit var activityBinding: ActivityGenerateBillBinding
     private val hashMap: Map<String?, Array<String>?> = HashMap()
     private var year: Int = 0
@@ -43,9 +45,11 @@ class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>(),
     private var validation = Validation(this, hashMap)
     private var spinnerData = SpinnerData(this)
     private var spinnerAdapter = SpinnerAdapter()
+
     @Inject
     lateinit var utilsForAll: UtilsForAll
     private lateinit var ux: UX
+    private var markAsPaidBottomSheet = MarkAsPaidBottomSheet()
 
     @Inject
     lateinit var prefManager: PrefManager
@@ -79,12 +83,15 @@ class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>(),
         }
 
         viewModel.getGenerateBillResponse().observe(this) { generateBill ->
-            activityBinding.TotalDue.text = "${generateBill.totalDue}"
-            activityBinding.TotalPaid.text = "${generateBill.totalPaid}"
+            activityBinding.TotalDue.text = getString(R.string.x_d, generateBill.totalDue)
+            activityBinding.TotalPaid.text = getString(R.string.x_d, generateBill.totalPaid)
         }
 
         viewModel.getUpdateRentStatusResponse().observe(this) { rentStatusUpdate ->
             if (rentStatusUpdate.statusCode == 200) {
+                if (markAsPaidBottomSheet.isVisible){
+                    markAsPaidBottomSheet.dismiss()
+                }
                 Toasty.success(
                     this,
                     getString(R.string.rent_status_updated_successfully),
@@ -150,7 +157,7 @@ class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>(),
                     ) {
                         year = parent.getItemAtPosition(position).toString().toInt()
                         setMonthSpinnerAdapter()
-                        if (month != 0){
+                        if (month != 0) {
                             viewModel.generateBill(
                                 year,
                                 month
@@ -193,7 +200,7 @@ class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>(),
         recyclerBillInfoAdapter.setGenerateBillCallBacks(this)
     }
 
-    private fun setMonthSpinnerAdapter(){
+    private fun setMonthSpinnerAdapter() {
         spinnerAdapter.setSpinnerAdapter(
             activityBinding.MonthId,
             this,
@@ -232,23 +239,22 @@ class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>(),
     }
 
     private fun showMarkAsPaidBottomSheet(billInfo: BillInfo) {
-        val bottomSheet = GenericBottomSheet<View>(
-            context = this,
-            layoutResId = R.layout.dialog_layout_bill_mark_as_paid,
-            onClose = {
-
-            },
-            onPrimaryAction = {
-                viewModel.updateBillStatus(
-                    prefManager.getString(mAccessToken),
-                    billId = billInfo.id
-                )
-            },
-            onSecondaryAction = {
-
-            }
+        val billHistory = BillHistory(
+            id = billInfo.id,
+            tenantName = billInfo.tenant,
+            room = billInfo.room,
+            rent = billInfo.rent
         )
         screenViewed(ScreenNameConstants.appScreenGenerateBillMarkAsPaidBottomSheet)
-        bottomSheet.show()
+        markAsPaidBottomSheet = MarkAsPaidBottomSheet.newInstance(billHistory)
+        markAsPaidBottomSheet.show(supportFragmentManager, "MarkAsPaidBottomSheet")
+        markAsPaidBottomSheet.setMarkAsPaidListener(this)
+    }
+
+    override fun onMarkAsPaidSubmitted(remarks: String, billId: Int) {
+        viewModel.updateBillStatus(
+            billId = billId,
+            remarks = remarks
+        )
     }
 }

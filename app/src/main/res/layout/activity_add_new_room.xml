@@ -329,6 +329,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/tvHeaderTenantName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
@@ -391,7 +392,7 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="12dp"
-            android:layout_marginBottom="48dp"
+            android:layout_marginBottom="16dp"
             android:contentDescription="@string/action_button"
             android:text="@string/save"
             android:textAllCaps="false" />

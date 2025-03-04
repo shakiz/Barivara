@@ -2,6 +2,7 @@ package com.shakil.barivara.presentation.onboard
 
 import android.Manifest
 import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -37,12 +38,13 @@ import com.shakil.barivara.presentation.profile.ProfileActivity
 import com.shakil.barivara.presentation.room.RoomListActivity
 import com.shakil.barivara.presentation.tenant.TenantListActivity
 import com.shakil.barivara.presentation.tutorial.TutorialActivity
+import com.shakil.barivara.presentation.tutorial.VideoTutorialActivity
 import com.shakil.barivara.utils.ButtonActionConstants
 import com.shakil.barivara.utils.Constants
-import com.shakil.barivara.utils.Constants.MY_CONTACT_NO
 import com.shakil.barivara.utils.Constants.WHATS_APP_BUSINESS_ACCOUNT_NO
 import com.shakil.barivara.utils.Constants.mUserMobile
-import com.shakil.barivara.utils.LanguageManager
+import com.shakil.barivara.utils.LanguageCallBack
+import com.shakil.barivara.utils.LocaleManager
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.ScreenNameConstants
 import com.shakil.barivara.utils.Tools
@@ -58,7 +60,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeActivity : BaseActivity<ActivityHomeBinding>(),
-    NavigationView.OnNavigationItemSelectedListener {
+    NavigationView.OnNavigationItemSelectedListener, LanguageCallBack {
     private lateinit var activityMainBinding: ActivityHomeBinding
 
     @Inject
@@ -67,6 +69,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
     private var tools = Tools(this)
     private lateinit var ux: UX
     private val viewModel by viewModels<HomeViewModel>()
+    private var languageMap = HashMap<String, String>()
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
@@ -81,14 +84,18 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
         activityMainBinding = dataBinding
     }
 
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(LocaleManager.applyLocale(newBase))
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         screenViewed(ScreenNameConstants.appSreenHome)
         init()
         setupDrawerToggle()
         setupNotification()
-        LanguageManager(this, prefManager).configLanguage()
         bindUIWithComponents()
+        setupLanguage()
         initListeners()
         initObservers()
         viewModel.getAllTenants()
@@ -102,6 +109,14 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
             year = currentYear,
             month = currentMonth
         )
+
+        activityMainBinding.swipeRefresh.setOnRefreshListener {
+            activityMainBinding.swipeRefresh.isRefreshing = true
+            viewModel.pullToRefresh(
+                year = currentYear,
+                month = currentMonth
+            )
+        }
     }
 
     private fun init() {
@@ -256,11 +271,11 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
         }
 
         viewModel.getTenants().observe(this) { tenants ->
-            activityMainBinding.totalTenants.text = "${tenants.size}"
+            activityMainBinding.totalTenants.text = getString(R.string.x_d, tenants.size)
         }
 
         viewModel.getRooms().observe(this) { rooms ->
-            activityMainBinding.totalRooms.text = "${rooms.size}"
+            activityMainBinding.totalRooms.text = getString(R.string.x_d, rooms.size)
         }
 
         viewModel.getLogoutResponse().observe(this) { logoutResponse ->
@@ -282,9 +297,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
                 activityMainBinding.noBillHistoryLayoutThisMonth.root.visibility = View.GONE
 
                 activityMainBinding.generatedBillHistoryLayoutThisMonth.totalCollected.text =
-                    "${response.totalPaid.orZero()}"
+                    getString(R.string.x_d, response.totalPaid.orZero())
                 activityMainBinding.generatedBillHistoryLayoutThisMonth.totalDue.text =
-                    "${response.totalDue.orZero()}"
+                    getString(R.string.x_d, response.totalDue.orZero())
             } else {
                 activityMainBinding.generatedBillHistoryLayoutThisMonth.root.visibility = View.GONE
                 activityMainBinding.noBillHistoryLayoutThisMonth.root.visibility = View.VISIBLE
@@ -295,6 +310,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
             if (isLoading) {
                 ux.getLoadingView()
             } else {
+                activityMainBinding.swipeRefresh.isRefreshing = false
                 ux.removeLoadingView()
             }
         }
@@ -333,6 +349,12 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
         }
     }
 
+    private fun setupLanguage() {
+        languageMap.clear()
+        languageMap["bn"] = getString(R.string.bengali)
+        languageMap["en"] = getString(R.string.english)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val menuInflater = menuInflater
         menuInflater.inflate(R.menu.toolbar_menu, menu)
@@ -363,6 +385,12 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
                 bottomSheet.show()
                 return true
             }
+
+            R.id.menu_language -> {
+                LocaleManager.doPopUpForLanguage(
+                    this, this
+                )
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -376,11 +404,24 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
                 startActivity(Intent(this@HomeActivity, ProfileActivity::class.java))
             }
 
+            R.id.menu_change_language -> {
+                LocaleManager.doPopUpForLanguage(
+                    this, this
+                )
+            }
+
             R.id.menu_change_password -> {
                 buttonAction(
                     ButtonActionConstants.actionHomeMenuItemChangePassword,
                 )
                 startActivity(Intent(this@HomeActivity, ForgotPasswordActivity::class.java))
+            }
+
+            R.id.menu_video_tutorial -> {
+                buttonAction(
+                    ButtonActionConstants.actionHomeMenuItemVideoTutorial,
+                )
+                startActivity(Intent(this@HomeActivity, VideoTutorialActivity::class.java))
             }
 
             R.id.menu_tutorial -> {
@@ -432,7 +473,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
         try {
             startActivity(intent)
         } catch (e: ActivityNotFoundException) {
-            Toasty.warning(this, getString(R.string.whatsapp_not_installed), Toast.LENGTH_SHORT).show()
+            Toasty.warning(this, getString(R.string.whatsapp_not_installed), Toast.LENGTH_SHORT)
+                .show()
         }
     }
 
@@ -452,6 +494,14 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(),
         )
         screenViewed(ScreenNameConstants.appScreenGenerateBillMarkAsPaidBottomSheet)
         bottomSheet.show()
+    }
+
+    override fun onLanguageChange(selectedLan: String) {
+        LocaleManager.setLocale(this, selectedLan)
+        val intent = Intent(this, HomeActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)
+        finishAffinity()
     }
 
 }

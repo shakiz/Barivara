@@ -8,9 +8,19 @@
         android:icon="@drawable/ic_action_person"/>
 
     <item
+        android:id="@+id/menu_change_language"
+        android:title="@string/change_language"
+        android:icon="@drawable/ic_language_black_24dp"/>
+
+    <item
         android:id="@+id/menu_change_password"
         android:title="@string/change_password"
         android:icon="@drawable/ic_key"/>
+
+    <item
+        android:id="@+id/menu_video_tutorial"
+        android:title="@string/video_tutorial"
+        android:icon="@drawable/ic_video"/>
 
     <item
         android:id="@+id/menu_tutorial"

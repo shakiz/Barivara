@@ -9,6 +9,8 @@ import com.shakil.barivara.R
 import com.shakil.barivara.data.model.generatebill.BillHistory
 import com.shakil.barivara.databinding.AdapterLayoutBillHistoryBinding
 import com.shakil.barivara.utils.UtilsForAll
+import com.shakil.barivara.utils.boldAfterColon
+import com.shakil.barivara.utils.formatDateIntoAppDate
 import com.shakil.barivara.utils.orZero
 
 class RecyclerBillHistoryAdapter(private val utilsForAll: UtilsForAll) :
@@ -53,17 +55,22 @@ class RecyclerBillHistoryAdapter(private val utilsForAll: UtilsForAll) :
         fun bind(billInfo: BillHistory, utilsForAll: UtilsForAll) {
             val context = binding.root.context
             binding.roomName.text = billInfo.room
-            binding.tenantName.text = context.getString(R.string.tenant_x, billInfo.tenantName)
-            binding.totalBill.text = context.getString(R.string.collected_x, billInfo.rent)
-            binding.monthAndYear.text = context.getString(
-                R.string.x_comma_x,
-                utilsForAll.getMonthNameFromNumber(billInfo.month.orZero()),
-                billInfo.year
-            )
+            binding.tenantName.text = context.getString(R.string.x_s, billInfo.tenantName)
+            binding.totalBill.text = context.getString(R.string.x_d, billInfo.rent)
+            val monthName = utilsForAll.getMonthNameFromNumber(billInfo.month.orZero())
+            binding.monthAndYear.text = "${monthName}, ${billInfo.year}"
             binding.billStatus.text = context.getString(
                 R.string.status_x,
                 billInfo.status.toString().replaceFirstChar { it.uppercase() })
+
             if (billInfo.status.orEmpty() == "paid") {
+                binding.paymentReceivedDate.visibility = View.VISIBLE
+                val formattedDate = billInfo.paymentReceived?.formatDateIntoAppDate()
+                binding.paymentReceivedDate.text = context.getString(
+                    R.string.payment_received_on_x,
+                    formattedDate
+                ).boldAfterColon()
+
                 binding.billStatus.setTextColor(
                     ContextCompat.getColor(
                         context,
@@ -78,6 +85,7 @@ class RecyclerBillHistoryAdapter(private val utilsForAll: UtilsForAll) :
                         R.color.colorRed
                     )
                 )
+                binding.paymentReceivedDate.visibility = View.GONE
                 binding.actionButtonLayout.visibility = View.VISIBLE
             }
 

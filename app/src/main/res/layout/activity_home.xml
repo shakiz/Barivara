@@ -21,7 +21,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 app:navigationIcon="?attr/homeAsUpIndicator"
-                app:title="@string/app_name"
+                app:title="@string/rent_collector"
                 app:titleTextColor="@color/md_grey_800" />
 
         </com.google.android.material.appbar.AppBarLayout>
@@ -32,525 +32,532 @@
             android:layout_height="match_parent"
             android:layout_below="@id/app_bar">
 
-            <androidx.core.widget.NestedScrollView
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/swipeRefresh"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fillViewport="true">
+                android:layout_height="match_parent">
 
-                <LinearLayout
-                    android:id="@+id/mainLayout"
+                <androidx.core.widget.NestedScrollView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingTop="12dp"
-                    android:paddingBottom="16dp"
-                    android:orientation="vertical">
+                    android:fillViewport="true">
 
-                    <RelativeLayout
-                        android:id="@+id/bannerLayout"
+                    <LinearLayout
+                        android:id="@+id/mainLayout"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:background="@drawable/rectangle_border_darker_green"
+                        android:layout_height="match_parent"
                         android:orientation="vertical"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp">
+                        android:paddingTop="12dp"
+                        android:paddingBottom="16dp">
 
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:id="@+id/topLayout"
+                        <RelativeLayout
+                            android:id="@+id/bannerLayout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginEnd="8dp">
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:background="@drawable/rectangle_border_darker_green"
+                            android:orientation="vertical"
+                            android:paddingTop="8dp"
+                            android:paddingBottom="8dp">
 
-                            <LinearLayout
-                                android:id="@+id/totalRoomFlatLayout"
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/topLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginEnd="8dp">
+
+                                <LinearLayout
+                                    android:id="@+id/totalRoomFlatLayout"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="8dp"
+                                    android:layout_marginRight="8dp"
+                                    android:layout_marginBottom="8dp"
+                                    android:background="@drawable/rectangle_white"
+                                    android:gravity="center"
+                                    android:orientation="horizontal"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toStartOf="@id/totalTenantLayout"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:ellipsize="end"
+                                        android:gravity="center"
+                                        android:maxLines="1"
+                                        android:padding="2dp"
+                                        android:text="@string/rooms"
+                                        android:textColor="@color/md_grey_800"
+                                        android:textSize="14sp" />
+
+                                    <TextView
+                                        android:id="@+id/totalRooms"
+                                        android:layout_width="42dp"
+                                        android:layout_height="42dp"
+                                        android:layout_gravity="center"
+                                        android:layout_margin="4dp"
+                                        android:background="@drawable/white_circle_border"
+                                        android:ellipsize="end"
+                                        android:gravity="center"
+                                        android:maxLines="1"
+                                        android:padding="2dp"
+                                        android:paddingBottom="8dp"
+                                        android:text="@string/zero"
+                                        android:textColor="@color/md_grey_800"
+                                        android:textSize="18sp"
+                                        android:textStyle="bold" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/totalTenantLayout"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="8dp"
+                                    android:layout_marginRight="8dp"
+                                    android:layout_marginBottom="8dp"
+                                    android:background="@drawable/rectangle_white"
+                                    android:gravity="center"
+                                    android:orientation="horizontal"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toEndOf="@id/totalRoomFlatLayout"
+                                    app:layout_constraintTop_toTopOf="parent">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:ellipsize="end"
+                                        android:gravity="center"
+                                        android:maxLines="1"
+                                        android:padding="2dp"
+                                        android:text="@string/tenants"
+                                        android:textColor="@color/md_grey_800"
+                                        android:textSize="14sp" />
+
+                                    <TextView
+                                        android:id="@+id/totalTenants"
+                                        android:layout_width="42dp"
+                                        android:layout_height="42dp"
+                                        android:layout_gravity="center"
+                                        android:layout_margin="4dp"
+                                        android:background="@drawable/white_circle_border"
+                                        android:ellipsize="end"
+                                        android:gravity="center"
+                                        android:maxLines="1"
+                                        android:padding="2dp"
+                                        android:text="@string/zero"
+                                        android:textColor="@color/md_grey_800"
+                                        android:textSize="18sp"
+                                        android:textStyle="bold" />
+
+                                </LinearLayout>
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                            <TextView
+                                android:id="@+id/moreDetails"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/topLayout"
+                                android:layout_alignParentEnd="true"
+                                android:layout_gravity="center|end"
+                                android:layout_marginEnd="16dp"
+                                android:clickable="true"
+                                android:drawablePadding="4dp"
+                                android:ellipsize="end"
+                                android:focusable="true"
+                                android:gravity="center|end"
+                                android:maxLines="1"
+                                android:text="@string/details_here"
+                                android:textColor="@color/md_black_1000"
+                                android:textSize="16sp"
+                                app:drawableEndCompat="@drawable/ic_arrow_right"
+                                app:drawableLeftCompat="@drawable/ic_chart"
+                                app:drawableRightCompat="@drawable/ic_arrow_right"
+                                app:drawableStartCompat="@drawable/ic_chart" />
+
+                        </RelativeLayout>
+
+                        <include
+                            android:id="@+id/generated_bill_history_layout_this_month"
+                            layout="@layout/layout_generated_bill_this_month"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="12dp"
+                            android:layout_marginEnd="16dp"
+                            android:visibility="gone" />
+
+                        <include
+                            android:id="@+id/no_bill_history_layout_this_month"
+                            layout="@layout/layout_no_bill_history_for_this_month"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="12dp"
+                            android:layout_marginEnd="16dp"
+                            android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/tvTenantHeading"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="12dp"
+                            android:layout_marginEnd="16dp"
+                            android:text="@string/tenant_information"
+                            android:textColor="@color/md_green_900"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/tenant_list"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginEnd="16dp"
+                            android:background="@drawable/rectangle_white">
+
+                            <com.airbnb.lottie.LottieAnimationView
+                                android:id="@+id/ivTenant"
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="16dp"
+                                android:layout_marginBottom="16dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:lottie_autoPlay="true"
+                                app:lottie_loop="true"
+                                app:lottie_rawRes="@raw/create_tenant" />
+
+                            <TextView
+                                android:id="@+id/tvTenantListHeading"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="8dp"
-                                android:layout_marginRight="8dp"
-                                android:layout_marginBottom="8dp"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginEnd="8dp"
+                                android:ellipsize="end"
+                                android:maxLines="2"
+                                android:scrollHorizontally="true"
+                                android:text="@string/tenant_list"
+                                android:textColor="@color/md_grey_800"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/ivTenant"
+                                app:layout_constraintTop_toTopOf="@id/ivTenant" />
+
+                            <TextView
+                                android:id="@+id/tvAllTenantHeading"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginEnd="8dp"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:paddingBottom="2dp"
+                                android:text="@string/all_tenants"
+                                android:textColor="@color/md_grey_800"
+                                android:textSize="14sp"
+                                app:layout_constraintBottom_toBottomOf="@+id/ivTenant"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/ivTenant"
+                                app:layout_constraintTop_toBottomOf="@id/tvTenantListHeading" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <TextView
+                            android:id="@+id/roomListHeading"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="12dp"
+                            android:layout_marginEnd="16dp"
+                            android:text="@string/room_information"
+                            android:textColor="@color/md_green_900"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/room_list"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginEnd="16dp"
+                            android:background="@drawable/rectangle_white">
+
+                            <com.airbnb.lottie.LottieAnimationView
+                                android:id="@+id/ivRoom"
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
                                 android:layout_gravity="center"
-                                android:background="@drawable/rectangle_white"
-                                android:gravity="center"
-                                android:orientation="horizontal"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="16dp"
+                                android:layout_marginBottom="16dp"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toStartOf="@id/totalTenantLayout"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:lottie_autoPlay="true"
+                                app:lottie_loop="true"
+                                app:lottie_rawRes="@raw/create_room" />
+
+                            <TextView
+                                android:id="@+id/tvRoomListHeading"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginEnd="8dp"
+                                android:ellipsize="end"
+                                android:gravity="center|start"
+                                android:maxLines="2"
+                                android:scrollHorizontally="true"
+                                android:text="@string/room_list"
+                                android:textColor="@color/md_grey_800"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/ivRoom"
+                                app:layout_constraintTop_toTopOf="@id/ivRoom" />
+
+                            <TextView
+                                android:id="@+id/tvAllRoomHeading"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="4dp"
+                                android:layout_marginEnd="8dp"
+                                android:ellipsize="end"
+                                android:gravity="center|start"
+                                android:maxLines="1"
+                                android:paddingBottom="2dp"
+                                android:text="@string/all_rooms"
+                                android:textColor="@color/md_grey_800"
+                                android:textSize="14sp"
+                                app:layout_constraintBottom_toBottomOf="@id/ivRoom"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/ivRoom"
+                                app:layout_constraintTop_toBottomOf="@id/tvRoomListHeading" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <TextView
+                            android:id="@+id/tvHeadingGenerateBill"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="12dp"
+                            android:layout_marginEnd="16dp"
+                            android:text="@string/generate_bill"
+                            android:textColor="@color/md_green_900"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginEnd="16dp">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/generateBillLayout"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="8dp"
+                                android:padding="12dp"
+                                android:background="@drawable/rectangle_white"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@id/generatedBillHistoryLayout"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent">
 
+                                <com.airbnb.lottie.LottieAnimationView
+                                    android:id="@+id/ivGenerateBill"
+                                    android:layout_width="48dp"
+                                    android:layout_height="48dp"
+                                    android:layout_gravity="center"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:lottie_autoPlay="true"
+                                    app:lottie_loop="true"
+                                    app:lottie_rawRes="@raw/create_bill" />
+
                                 <TextView
-                                    android:layout_width="wrap_content"
+                                    android:id="@+id/tvGenerateBillHeading"
+                                    android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginEnd="8dp"
                                     android:ellipsize="end"
-                                    android:gravity="center"
-                                    android:maxLines="1"
-                                    android:padding="2dp"
-                                    android:text="@string/rooms"
+                                    android:maxLines="2"
+                                    android:text="@string/generate_bill"
                                     android:textColor="@color/md_grey_800"
-                                    android:textSize="14sp" />
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintBottom_toTopOf="@id/tvAllGenerateBillHeading"
+                                    app:layout_constraintStart_toEndOf="@id/ivGenerateBill"
+                                    app:layout_constraintTop_toTopOf="@id/ivGenerateBill" />
 
                                 <TextView
-                                    android:id="@+id/totalRooms"
-                                    android:layout_width="42dp"
-                                    android:layout_height="42dp"
-                                    android:layout_gravity="center"
-                                    android:layout_margin="4dp"
-                                    android:background="@drawable/white_circle_border"
+                                    android:id="@+id/tvAllGenerateBillHeading"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginTop="4dp"
+                                    android:layout_marginEnd="8dp"
+                                    android:layout_marginBottom="4dp"
                                     android:ellipsize="end"
-                                    android:gravity="center"
                                     android:maxLines="1"
-                                    android:padding="2dp"
-                                    android:paddingBottom="8dp"
-                                    android:text="@string/zero"
+                                    android:text="@string/create_bill_text"
                                     android:textColor="@color/md_grey_800"
-                                    android:textSize="18sp"
-                                    android:textStyle="bold" />
+                                    android:textSize="14sp"
+                                    app:layout_constraintBottom_toBottomOf="@+id/ivGenerateBill"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toEndOf="@id/ivGenerateBill"
+                                    app:layout_constraintTop_toBottomOf="@id/tvGenerateBillHeading" />
 
-                            </LinearLayout>
+                            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                            <LinearLayout
-                                android:id="@+id/totalTenantLayout"
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/generatedBillHistoryLayout"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="8dp"
-                                android:layout_marginRight="8dp"
-                                android:layout_marginBottom="8dp"
-                                android:layout_gravity="center"
+                                android:layout_marginStart="8dp"
+                                android:padding="12dp"
                                 android:background="@drawable/rectangle_white"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toEndOf="@id/totalRoomFlatLayout"
-                                app:layout_constraintTop_toTopOf="parent"
-                                android:gravity="center"
-                                android:orientation="horizontal">
+                                app:layout_constraintStart_toEndOf="@id/generateBillLayout"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <com.airbnb.lottie.LottieAnimationView
+                                    android:id="@+id/ivGenerateBillHistory"
+                                    android:layout_width="48dp"
+                                    android:layout_height="48dp"
+                                    android:layout_gravity="center"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:lottie_autoPlay="true"
+                                    app:lottie_loop="true"
+                                    app:lottie_rawRes="@raw/generated_bills" />
 
                                 <TextView
-                                    android:layout_width="wrap_content"
+                                    android:id="@+id/tvGenerateBillHistoryHeading"
+                                    android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginEnd="8dp"
                                     android:ellipsize="end"
-                                    android:gravity="center"
-                                    android:maxLines="1"
-                                    android:padding="2dp"
-                                    android:text="@string/tenants"
+                                    android:maxLines="2"
+                                    android:text="@string/bill_history"
                                     android:textColor="@color/md_grey_800"
-                                    android:textSize="14sp" />
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintBottom_toTopOf="@id/tvAllGenerateBillHistoryHeading"
+                                    app:layout_constraintStart_toEndOf="@id/ivGenerateBillHistory"
+                                    app:layout_constraintTop_toTopOf="@id/ivGenerateBillHistory" />
 
                                 <TextView
-                                    android:id="@+id/totalTenants"
-                                    android:layout_width="42dp"
-                                    android:layout_height="42dp"
-                                    android:layout_gravity="center"
-                                    android:layout_margin="4dp"
-                                    android:background="@drawable/white_circle_border"
+                                    android:id="@+id/tvAllGenerateBillHistoryHeading"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginTop="4dp"
+                                    android:layout_marginEnd="8dp"
+                                    android:layout_marginBottom="4dp"
                                     android:ellipsize="end"
-                                    android:gravity="center"
                                     android:maxLines="1"
-                                    android:padding="2dp"
-                                    android:text="@string/zero"
+                                    android:text="@string/bill_history_sub_title"
                                     android:textColor="@color/md_grey_800"
-                                    android:textSize="18sp"
-                                    android:textStyle="bold" />
+                                    android:textSize="14sp"
+                                    app:layout_constraintBottom_toBottomOf="@+id/ivGenerateBillHistory"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toEndOf="@id/ivGenerateBillHistory"
+                                    app:layout_constraintTop_toBottomOf="@id/tvGenerateBillHistoryHeading" />
 
-                            </LinearLayout>
+                            </androidx.constraintlayout.widget.ConstraintLayout>
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
-                        <TextView
-                            android:id="@+id/moreDetails"
-                            android:layout_width="wrap_content"
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/topLayout"
-                            android:layout_alignParentEnd="true"
-                            android:layout_gravity="center|end"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="12dp"
                             android:layout_marginEnd="16dp"
-                            android:clickable="true"
-                            android:drawablePadding="4dp"
-                            android:ellipsize="end"
-                            android:focusable="true"
-                            android:gravity="center|end"
-                            android:maxLines="1"
-                            android:text="@string/details_here"
-                            android:textColor="@color/md_black_1000"
-                            android:textSize="16sp"
-                            app:drawableEndCompat="@drawable/ic_arrow_right"
-                            app:drawableLeftCompat="@drawable/ic_chart"
-                            app:drawableRightCompat="@drawable/ic_arrow_right"
-                            app:drawableStartCompat="@drawable/ic_chart" />
-
-                    </RelativeLayout>
-
-                    <include
-                        android:id="@+id/generated_bill_history_layout_this_month"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:visibility="gone"
-                        layout="@layout/layout_generated_bill_this_month"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-                    <include
-                        android:id="@+id/no_bill_history_layout_this_month"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:visibility="gone"
-                        layout="@layout/layout_no_bill_history_for_this_month"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-                    <TextView
-                        android:id="@+id/tvTenantHeading"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginEnd="16dp"
-                        android:text="@string/tenant_information"
-                        android:textColor="@color/md_green_900"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/tenant_list"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/rectangle_white"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginEnd="16dp">
-
-                        <com.airbnb.lottie.LottieAnimationView
-                            android:id="@+id/ivTenant"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginBottom="16dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:lottie_autoPlay="true"
-                            app:lottie_loop="true"
-                            app:lottie_rawRes="@raw/create_tenant" />
-
-                        <TextView
-                            android:id="@+id/tvTenantListHeading"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:ellipsize="end"
-                            android:maxLines="2"
-                            android:scrollHorizontally="true"
-                            android:text="@string/tenant_list"
-                            android:textColor="@color/md_grey_800"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@id/ivTenant"
-                            app:layout_constraintTop_toTopOf="@id/ivTenant" />
-
-                        <TextView
-                            android:id="@+id/tvAllTenantHeading"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:ellipsize="end"
-                            android:maxLines="1"
-                            android:paddingBottom="2dp"
-                            android:text="@string/all_tenants"
-                            android:textColor="@color/md_grey_800"
-                            android:textSize="14sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/ivTenant"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@id/ivTenant"
-                            app:layout_constraintTop_toBottomOf="@id/tvTenantListHeading" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <TextView
-                        android:id="@+id/roomListHeading"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginEnd="16dp"
-                        android:text="@string/room_information"
-                        android:textColor="@color/md_green_900"
-                        android:textSize="20sp"
-                        android:textStyle="bold"/>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/room_list"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/rectangle_white"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginEnd="16dp">
-
-                        <com.airbnb.lottie.LottieAnimationView
-                            android:id="@+id/ivRoom"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:layout_gravity="center"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginBottom="16dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:lottie_autoPlay="true"
-                            app:lottie_loop="true"
-                            app:lottie_rawRes="@raw/create_room" />
-
-                        <TextView
-                            android:id="@+id/tvRoomListHeading"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:ellipsize="end"
-                            android:gravity="center|start"
-                            android:maxLines="2"
-                            android:scrollHorizontally="true"
-                            android:text="@string/room_list"
-                            android:textColor="@color/md_grey_800"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@id/ivRoom"
-                            app:layout_constraintTop_toTopOf="@id/ivRoom" />
-
-                        <TextView
-                            android:id="@+id/tvAllRoomHeading"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="4dp"
-                            android:layout_marginEnd="8dp"
-                            android:ellipsize="end"
-                            android:gravity="center|start"
-                            android:maxLines="1"
-                            android:paddingBottom="2dp"
-                            android:text="@string/all_rooms"
-                            android:textColor="@color/md_grey_800"
-                            android:textSize="14sp"
-                            app:layout_constraintBottom_toBottomOf="@id/ivRoom"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@id/ivRoom"
-                            app:layout_constraintTop_toBottomOf="@id/tvRoomListHeading" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <TextView
-                        android:id="@+id/tvHeadingGenerateBill"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginEnd="16dp"
-                        android:text="@string/generate_bill"
-                        android:textColor="@color/md_green_900"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginEnd="16dp">
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:id="@+id/generateBillLayout"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@id/generatedBillHistoryLayout"
                             android:background="@drawable/rectangle_white"
-                            android:layout_marginEnd="8dp"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content">
+                            android:padding="16dp">
 
-                            <com.airbnb.lottie.LottieAnimationView
-                                android:id="@+id/ivGenerateBill"
-                                android:layout_width="48dp"
-                                android:layout_height="48dp"
-                                android:layout_gravity="center"
-                                android:layout_marginStart="16dp"
-                                android:layout_marginTop="16dp"
-                                android:layout_marginBottom="16dp"
+                            <ImageView
+                                android:id="@+id/ivBanner"
+                                android:layout_width="200dp"
+                                android:layout_height="0dp"
+                                android:contentDescription="@string/banner_description"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/feedback"
                                 app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintDimensionRatio="2:1"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:lottie_autoPlay="true"
-                                app:lottie_loop="true"
-                                app:lottie_rawRes="@raw/create_bill" />
+                                app:layout_constraintTop_toTopOf="parent" />
 
                             <TextView
-                                android:id="@+id/tvGenerateBillHeading"
+                                android:id="@+id/tvHeadingComplain"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp"
+                                android:layout_marginStart="4dp"
                                 android:layout_marginEnd="8dp"
+                                android:ellipsize="end"
+                                android:maxLines="4"
+                                android:text="@string/complain_banner_detail_text"
+                                android:textColor="@color/md_black_1000"
+                                app:layout_constraintBottom_toTopOf="@id/submitComplainBtn"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/ivBanner" />
+
+                            <TextView
+                                android:id="@+id/submitComplainBtn"
+                                style="@style/BariVara.Button.Secondary"
+                                android:layout_width="0dp"
+                                android:layout_height="42dp"
+                                android:layout_marginStart="4dp"
+                                android:layout_marginTop="4dp"
+                                android:layout_marginEnd="12dp"
                                 android:ellipsize="end"
                                 android:maxLines="2"
-                                android:scrollHorizontally="true"
-                                android:text="@string/generate_bill"
-                                android:textColor="@color/md_grey_800"
-                                android:textSize="16sp"
-                                android:textStyle="bold"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toEndOf="@id/ivGenerateBill"
-                                app:layout_constraintTop_toTopOf="@id/ivGenerateBill" />
-
-                            <TextView
-                                android:id="@+id/tvAllGenerateBillHeading"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp"
-                                android:layout_marginEnd="8dp"
-                                android:ellipsize="end"
-                                android:maxLines="1"
+                                android:paddingTop="2dp"
                                 android:paddingBottom="2dp"
-                                android:text="@string/create_bill_text"
-                                android:textColor="@color/md_grey_800"
+                                android:text="@string/submit_feedback"
+                                android:textAllCaps="false"
                                 android:textSize="14sp"
-                                app:layout_constraintBottom_toBottomOf="@+id/ivGenerateBill"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toEndOf="@id/ivGenerateBill"
-                                app:layout_constraintTop_toBottomOf="@id/tvGenerateBillHeading" />
+                                app:layout_constraintStart_toEndOf="@id/ivBanner"
+                                app:layout_constraintTop_toBottomOf="@id/tvHeadingComplain" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:id="@+id/generatedBillHistoryLayout"
-                            android:layout_width="0dp"
-                            app:layout_constraintStart_toEndOf="@id/generateBillLayout"
-                            android:layout_marginStart="8dp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            android:background="@drawable/rectangle_white"
-                            android:layout_height="wrap_content">
+                    </LinearLayout>
 
-                            <com.airbnb.lottie.LottieAnimationView
-                                android:id="@+id/ivGenerateBillHistory"
-                                android:layout_width="48dp"
-                                android:layout_height="48dp"
-                                android:layout_gravity="center"
-                                android:layout_marginStart="16dp"
-                                android:layout_marginTop="16dp"
-                                android:layout_marginBottom="16dp"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:lottie_autoPlay="true"
-                                app:lottie_loop="true"
-                                app:lottie_rawRes="@raw/generated_bills" />
+                </androidx.core.widget.NestedScrollView>
 
-                            <TextView
-                                android:id="@+id/tvGenerateBillHistoryHeading"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp"
-                                android:layout_marginEnd="8dp"
-                                android:ellipsize="end"
-                                android:maxLines="2"
-                                android:scrollHorizontally="true"
-                                android:text="@string/bill_history"
-                                android:textColor="@color/md_grey_800"
-                                android:textSize="16sp"
-                                android:textStyle="bold"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toEndOf="@id/ivGenerateBillHistory"
-                                app:layout_constraintTop_toTopOf="@id/ivGenerateBillHistory" />
-
-                            <TextView
-                                android:id="@+id/tvAllGenerateBillHistoryHeading"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp"
-                                android:layout_marginEnd="8dp"
-                                android:ellipsize="end"
-                                android:maxLines="1"
-                                android:paddingBottom="2dp"
-                                android:text="@string/bill_history_sub_title"
-                                android:textColor="@color/md_grey_800"
-                                android:textSize="14sp"
-                                app:layout_constraintBottom_toBottomOf="@+id/ivGenerateBillHistory"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toEndOf="@id/ivGenerateBillHistory"
-                                app:layout_constraintTop_toBottomOf="@id/tvGenerateBillHistoryHeading" />
-
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_marginTop="12dp"
-                        android:background="@drawable/rectangle_white"
-                        android:padding="16dp">
-
-                        <ImageView
-                            android:id="@+id/ivBanner"
-                            android:contentDescription="@string/banner_description"
-                            android:layout_width="200dp"
-                            android:layout_height="0dp"
-                            android:src="@drawable/feedback"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintDimensionRatio="2:1"
-                            android:scaleType="fitCenter" />
-
-                        <TextView
-                            android:id="@+id/tvHeadingComplain"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            app:layout_constraintStart_toEndOf="@id/ivBanner"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintBottom_toTopOf="@id/submitComplainBtn"
-                            android:layout_marginStart="4dp"
-                            android:layout_marginEnd="8dp"
-                            android:textColor="@color/md_black_1000"
-                            android:maxLines="4"
-                            android:ellipsize="end"
-                            android:text="@string/complain_banner_detail_text"/>
-
-                        <Button
-                            android:id="@+id/submitComplainBtn"
-                            android:layout_width="0dp"
-                            android:layout_height="46dp"
-                            style="@style/BariVara.Button.Secondary"
-                            app:layout_constraintStart_toEndOf="@id/ivBanner"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/tvHeadingComplain"
-                            android:layout_marginTop="4dp"
-                            android:layout_marginStart="4dp"
-                            android:layout_marginEnd="12dp"
-                            android:textAllCaps="false"
-                            android:ellipsize="end"
-                            android:maxLines="2"
-                            android:textSize="14sp"
-                            android:text="@string/submit_feedback"/>
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                </LinearLayout>
-
-            </androidx.core.widget.NestedScrollView>
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
             <com.google.android.material.navigation.NavigationView
                 android:id="@+id/navigation_view"

@@ -55,12 +55,13 @@ class GenerateBillRepoImpl @Inject constructor(
     }
 
     override suspend fun updateBillStatus(
-        billId: Int
+        billId: Int, remarks: String
     ): Resource<BaseApiResponse> {
         try {
             val task = generateBillService.updateBillStatus(
                 accept = ACCEPT,
-                billId = billId
+                billId = billId,
+                remarks = remarks
             )
             if (task.isSuccessful) {
                 task.body()?.let {

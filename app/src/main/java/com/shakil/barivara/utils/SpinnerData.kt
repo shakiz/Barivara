@@ -61,7 +61,6 @@ class SpinnerData(private val context: Context) {
     fun setTenantTypeData(): ArrayList<String> {
         val spinnerValues = ArrayList<String>()
         val tenantTypeArray = arrayOf(
-            context.getString(R.string.select_data_1),
             context.getString(R.string.bachelor),
             context.getString(R.string.large_family),
             context.getString(R.string.small_family),
@@ -69,7 +68,17 @@ class SpinnerData(private val context: Context) {
             context.getString(R.string.male_only),
             context.getString(R.string.others)
         )
-        Collections.addAll(spinnerValues, *tenantTypeArray)
+        spinnerValues.addAll(tenantTypeArray)
+        return spinnerValues
+    }
+
+    fun setRentStatusSpinnerData(): ArrayList<String> {
+        val spinnerValues = ArrayList<String>()
+        val tenantTypeArray = arrayOf(
+            context.getString(R.string.paid),
+            context.getString(R.string.due),
+        )
+        spinnerValues.addAll(tenantTypeArray)
         return spinnerValues
     }
 

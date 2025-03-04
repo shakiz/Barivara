@@ -11,7 +11,6 @@
     app:cardElevation="0dp"
     app:cardUseCompatPadding="true">
 
-    <!--   Recycler View Item Row   -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,10 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_toStartOf="@id/deleteButton"
-            android:orientation="vertical"
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp"
-            android:weightSum="8">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/roomName"
@@ -40,7 +36,7 @@
                 android:maxLines="1"
                 android:text="@string/room_name_x"
                 android:textColor="@color/md_grey_800"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/roomStatus"
@@ -53,7 +49,7 @@
                 android:scrollHorizontally="true"
                 android:text="@string/room_status_x"
                 android:textColor="@color/md_grey_800"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/roomRent"

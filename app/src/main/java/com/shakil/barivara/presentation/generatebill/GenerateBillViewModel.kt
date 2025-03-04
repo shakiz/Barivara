@@ -102,12 +102,12 @@ class GenerateBillViewModel @Inject constructor(
         }
     }
 
-    fun updateBillStatus(token: String, billId: Int) {
+    fun updateBillStatus(billId: Int, remarks: String) {
         viewModelScope.launch {
             isLoading.postValue(true)
             try {
                 val data =
-                    generalBillRepoImpl.updateBillStatus(billId = billId)
+                    generalBillRepoImpl.updateBillStatus(billId = billId, remarks = remarks)
                 if (data.response != null) {
                     updateRentStatusResponse.postValue(data.response)
                 } else {
@@ -159,20 +159,35 @@ class GenerateBillViewModel @Inject constructor(
         }
     }
 
-    fun getBillHistory(isForSearch: Boolean, tenantId: Int?, year: Int?) {
+    fun getBillHistory(
+        isForSearch: Boolean,
+        year: Int?,
+        month: Int?,
+        tenantId: Int?,
+        rentStatus: String?
+    ) {
         viewModelScope.launch {
             isLoading.postValue(true)
             try {
                 if (isForSearch) {
                     val filteredList = billHistory.value?.filter { item ->
-                        val matchesId = tenantId?.let { item.tenantId == it } ?: true
-
-                        val matchesDate = if (year.orZero() > 0) {
+                        val matchesYear = if (year.orZero() > 0) {
                             item.year == year
                         } else {
                             true
                         }
-                        matchesId && matchesDate
+                        val matchesMonth = if (month.orZero() > 0) {
+                            item.month == month
+                        } else {
+                            true
+                        }
+
+                        val matchedTenantId = tenantId?.let { item.tenantId == it } ?: true
+
+                        val matchedRentStatus =
+                            rentStatus?.let { item.status?.lowercase() == it.lowercase() } ?: true
+
+                        matchesYear && matchesMonth && matchedTenantId && matchedRentStatus
                     }
                     filteredBillHistory.postValue(filteredList)
                 } else {

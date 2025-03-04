@@ -458,7 +458,7 @@
     <string name="verify_with_your_mobile_number">Verify with your mobile no</string>
     <string name="setup_your_password">Setup your Password</string>
     <string name="otp_input_hint">-</string>
-    <string name="create_bill_text">Create bill info</string>
+    <string name="create_bill_text">Create your bill info</string>
     <string name="otp_verified">OTP verified successfully</string>
     <string name="password_setup_completed">Password setup completed</string>
     <string name="still_has_room">Still has room?</string>
@@ -481,7 +481,7 @@
     <string name="x_s">%s</string>
     <string name="login">Login</string>
     <string name="good_to_see_you_here">Good to see you here!</string>
-    <string name="use_setup_password">User/Setup your password!</string>
+    <string name="use_setup_password">Use/Setup your password!</string>
     <string name="resend_otp">Resend OTP</string>
     <string name="did_not_receive_a_code_x">Didn\'t receive a code %s.</string>
     <string name="large_family">Large Family</string>
@@ -534,4 +534,16 @@
     <string name="status_x">Status: %s</string>
     <string name="tenant_x">Tenant: %s</string>
     <string name="collected_x">Collected: %d</string>
+    <string name="default_text">Default</string>
+    <string name="monthly_rent_collection_x">Monthly Rent Collection for %d</string>
+    <string name="x_d">%d</string>
+    <string name="total_due_bill_semicolon">Due Bill:</string>
+    <string name="rent_collector">Rent Collector</string>
+    <string name="payment_received_on_x">Payment Received Date: %s</string>
+    <string name="rent_status">Rent Status</string>
+    <string name="paid">Paid</string>
+    <string name="due">Due</string>
+    <string name="please_select_filter_item">Please select filter options</string>
+    <string name="rent">Rent:</string>
+    <string name="video_tutorial">Video Tutorial</string>
 </resources>
