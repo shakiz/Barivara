@@ -24,7 +24,7 @@ class VideoTutorialActivity : BaseActivity<ActivityVideoTutorialBinding>() {
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
             buttonAction(
-                ButtonActionConstants.actionTutorialClose
+                ButtonActionConstants.actionVideoTutorialClose
             )
             startActivity(
                 Intent(
@@ -38,6 +38,7 @@ class VideoTutorialActivity : BaseActivity<ActivityVideoTutorialBinding>() {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         onBackPressedDispatcher.addCallback(onBackPressedCallback)
+        activityVideoTutorialBinding.toolBar.setNavigationOnClickListener { finish() }
         init()
         initListener()
     }

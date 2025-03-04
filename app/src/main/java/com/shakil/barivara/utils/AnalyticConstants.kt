@@ -57,4 +57,5 @@ object ButtonActionConstants {
 
     //Tutorial Actions
     const val actionTutorialClose = "action_tutorial_close"
+    const val actionVideoTutorialClose = "action_video_tutorial_close"
 }
