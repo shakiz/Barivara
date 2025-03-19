@@ -545,4 +545,7 @@
     <string name="please_select_filter_item">অনুগ্রহ করে ফিল্টার অপশন নির্বাচন করুন</string>
     <string name="rent">ভাড়া:</string>
     <string name="video_tutorial">ভিডিও টিউটোরিয়াল</string>
+    <string name="whatsapp">Whatsapp</string>
+    <string name="message_details">Message Details</string>
+    <string name="rent_month">Rent Month:</string>
 </resources>

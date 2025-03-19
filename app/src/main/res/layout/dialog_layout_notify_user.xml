@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="16dp"
+    app:cardBackgroundColor="@color/window_background"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="0dp"
+    app:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/heading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:text="@string/message_details"
+            android:textColor="@color/md_grey_800"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/billDetailsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/heading"
+            android:padding="8dp"
+            android:background="@drawable/rectangle_white">
+
+            <TextView
+                android:id="@+id/headingRoom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center|start"
+                android:text="@string/room_name_semicolon"
+                android:textColor="@color/md_grey_900"
+                android:textSize="14sp"
+                app:drawableStartCompat="@drawable/ic_home"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/RoomId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="4dp"
+                android:ellipsize="end"
+                android:gravity="center|start"
+                android:maxLines="1"
+                android:scrollHorizontally="true"
+                android:text="@string/demo_room_name"
+                android:textColor="@color/md_orange_800"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/headingRoom"
+                app:layout_constraintStart_toEndOf="@id/headingRoom"
+                app:layout_constraintTop_toTopOf="@+id/headingRoom" />
+
+            <TextView
+                android:id="@+id/headingTenant"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center|start"
+                android:layout_marginTop="8dp"
+                android:text="@string/tenant_name_semicolon"
+                android:textColor="@color/md_grey_900"
+                android:textSize="14sp"
+                app:drawableStartCompat="@drawable/ic_person"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/headingRoom" />
+
+            <TextView
+                android:id="@+id/TenantId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="4dp"
+                android:ellipsize="end"
+                android:gravity="center|start"
+                android:maxLines="1"
+                android:scrollHorizontally="true"
+                android:text="@string/demo_tenant_name"
+                android:textColor="@color/md_orange_800"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/headingTenant"
+                app:layout_constraintTop_toTopOf="@id/headingTenant"
+                app:layout_constraintBottom_toBottomOf="@id/headingTenant"/>
+
+            <TextView
+                android:id="@+id/headingDueBill"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center|start"
+                android:layout_marginTop="8dp"
+                android:text="@string/total_due_bill_semicolon"
+                android:textColor="@color/md_grey_900"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/headingTenant" />
+
+            <TextView
+                android:id="@+id/TotalBill"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ellipsize="end"
+                android:gravity="center|start"
+                android:layout_marginStart="4dp"
+                android:maxLines="1"
+                android:scrollHorizontally="true"
+                android:text="@string/zero"
+                android:textColor="@color/md_orange_800"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:drawableEndCompat="@drawable/ic_currency_bdt"
+                app:layout_constraintBottom_toBottomOf="@+id/headingDueBill"
+                app:layout_constraintStart_toEndOf="@id/headingDueBill"
+                app:layout_constraintTop_toTopOf="@+id/headingDueBill" />
+
+            <TextView
+                android:id="@+id/headingMonthAndYear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center|start"
+                android:layout_marginTop="8dp"
+                android:text="@string/rent_month"
+                android:textColor="@color/md_grey_900"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/headingDueBill" />
+
+            <TextView
+                android:id="@+id/monthAndYear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ellipsize="end"
+                android:gravity="center|start"
+                android:layout_marginStart="4dp"
+                android:maxLines="1"
+                android:scrollHorizontally="true"
+                tools:text="DD/MM/YYYY"
+                android:textColor="@color/md_orange_800"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/headingMonthAndYear"
+                app:layout_constraintStart_toEndOf="@id/headingMonthAndYear"
+                app:layout_constraintTop_toTopOf="@+id/headingMonthAndYear" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/billDetailsLayout"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp">
+
+            <Button
+                android:id="@+id/btnDirectMessage"
+                style="@style/BariVara.Button.Primary"
+                android:layout_width="0dp"
+                android:layout_height="42dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/btnViaWhatsApp"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="8dp"
+                android:text="@string/message"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/btnViaWhatsApp"
+                style="@style/BariVara.Button.Primary"
+                android:layout_width="0dp"
+                android:layout_height="42dp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/btnDirectMessage"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="8dp"
+                android:text="@string/whatsapp"
+                android:textAllCaps="false" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

@@ -21,6 +21,7 @@ import com.shakil.barivara.databinding.ActivityGenerateBillBinding
 import com.shakil.barivara.presentation.GenericBottomSheet
 import com.shakil.barivara.presentation.adapter.RecyclerBillInfoAdapter
 import com.shakil.barivara.presentation.generatebill.bottomsheet.MarkAsPaidBottomSheet
+import com.shakil.barivara.presentation.generatebill.bottomsheet.NotifyUserBottomSheet
 import com.shakil.barivara.utils.ButtonActionConstants
 import com.shakil.barivara.utils.Constants
 import com.shakil.barivara.utils.Constants.mAccessToken
@@ -37,7 +38,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>(),
-    RecyclerBillInfoAdapter.GenerateBillCallBacks, MarkAsPaidBottomSheet.MarkAsPaidListener {
+    RecyclerBillInfoAdapter.GenerateBillCallBacks, MarkAsPaidBottomSheet.MarkAsPaidListener, NotifyUserBottomSheet.NotifyUserListener {
     private lateinit var activityBinding: ActivityGenerateBillBinding
     private val hashMap: Map<String?, Array<String>?> = HashMap()
     private var year: Int = 0
@@ -50,6 +51,7 @@ class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>(),
     lateinit var utilsForAll: UtilsForAll
     private lateinit var ux: UX
     private var markAsPaidBottomSheet = MarkAsPaidBottomSheet()
+    private var notifyUserBottomSheet = NotifyUserBottomSheet()
 
     @Inject
     lateinit var prefManager: PrefManager
@@ -219,13 +221,7 @@ class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>(),
     }
 
     override fun onNotify(billInfo: BillInfo) {
-        buttonAction(
-            ButtonActionConstants.actionGenerateBillNotifyUser, mapOf(
-                "user_mobile" to (billInfo.tenantPhone ?: ""),
-                "message" to (billInfo.remarks ?: ""),
-            )
-        )
-        sendMessage(billInfo.remarks ?: "", billInfo.tenantPhone ?: "")
+        showNotifyUserBottomSheet(billInfo)
     }
 
     override fun onMarkAsPaid(billInfo: BillInfo) {
@@ -237,6 +233,20 @@ class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>(),
         )
         showMarkAsPaidBottomSheet(billInfo)
     }
+
+    private fun showNotifyUserBottomSheet(billInfo: BillInfo) {
+        val billHistory = BillHistory(
+            id = billInfo.id,
+            tenantName = billInfo.tenant,
+            room = billInfo.room,
+            rent = billInfo.rent
+        )
+        screenViewed(ScreenNameConstants.appScreenGenerateBillMarkAsPaidBottomSheet)
+        notifyUserBottomSheet = NotifyUserBottomSheet.newInstance(billHistory)
+        notifyUserBottomSheet.show(supportFragmentManager, "MarkAsPaidBottomSheet")
+        notifyUserBottomSheet.setNotifyUserListener(this)
+    }
+
 
     private fun showMarkAsPaidBottomSheet(billInfo: BillInfo) {
         val billHistory = BillHistory(
@@ -256,5 +266,19 @@ class GenerateBillActivity : BaseActivity<ActivityGenerateBillBinding>(),
             billId = billId,
             remarks = remarks
         )
+    }
+
+    override fun sentViaDirectMessage(billHistory: BillHistory?) {
+        buttonAction(
+            ButtonActionConstants.actionGenerateBillNotifyUser, mapOf(
+                "user_mobile" to (billHistory?.tenantPhone ?: ""),
+                "message" to (billHistory?.remarks ?: ""),
+            )
+        )
+        sendMessage(billHistory?.remarks ?: "", billHistory?.tenantPhone ?: "")
+    }
+
+    override fun sentViaWhatsapp(billHistory: BillHistory?) {
+
     }
 }
