@@ -47,9 +47,13 @@ class RefreshTokenInterceptor(
             // Attach the current access token
             val accessToken = tokenManager.getString(mAccessToken)
             val mobileNo = tokenManager.getString(mUserMobile)
+            val isTokenFound = accessToken.isNotEmpty()
+            val isRefreshTokenFound = tokenManager.getString(mRefreshToken).isNotEmpty()
             request = request.newBuilder()
                 .header("Authorization", "Bearer $accessToken")
                 .header("phone", mobileNo)
+                .header("IsTokenFound", isTokenFound.toString())
+                .header("IsRefreshTokenFound", isRefreshTokenFound.toString())
                 .build()
         }
 
@@ -78,10 +82,14 @@ class RefreshTokenInterceptor(
             // Retry the original request with the new token
             val updatedAccessToken = tokenManager.getString(mAccessToken)
             val mobileNo = tokenManager.getString(mUserMobile)
+            val isTokenFound = updatedAccessToken.isNotEmpty()
+            val isRefreshTokenFound = tokenManager.getString(mRefreshToken).isNotEmpty()
             if (updatedAccessToken != null) {
                 val newRequest = request.newBuilder()
                     .header("Authorization", "Bearer $updatedAccessToken")
                     .header("phone", mobileNo)
+                    .header("IsTokenFound", isTokenFound.toString())
+                    .header("IsRefreshTokenFound", isRefreshTokenFound.toString())
                     .build()
                 response = chain.proceed(newRequest)
             }
