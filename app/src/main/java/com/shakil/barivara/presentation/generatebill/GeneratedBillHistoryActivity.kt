@@ -1,6 +1,7 @@
 package com.shakil.barivara.presentation.generatebill
 
 import android.app.Dialog
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -8,7 +9,6 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.AdapterView
-import android.widget.Button
 import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -16,14 +16,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.shakil.barivara.BaseActivity
 import com.shakil.barivara.R
 import com.shakil.barivara.data.model.generatebill.BillHistory
-import com.shakil.barivara.data.model.tenant.Tenant
 import com.shakil.barivara.databinding.ActivityGeneratedBillHistoryBinding
 import com.shakil.barivara.databinding.AdvanceBillHistorySearchLayoutBinding
-import com.shakil.barivara.presentation.GenericBottomSheet
 import com.shakil.barivara.presentation.adapter.RecyclerBillHistoryAdapter
 import com.shakil.barivara.presentation.generatebill.bottomsheet.MarkAsPaidBottomSheet
+import com.shakil.barivara.presentation.generatebill.bottomsheet.NotifyUserBottomSheet
 import com.shakil.barivara.utils.ButtonActionConstants
-import com.shakil.barivara.utils.Constants.mAccessToken
 import com.shakil.barivara.utils.PrefManager
 import com.shakil.barivara.utils.ScreenNameConstants
 import com.shakil.barivara.utils.SpinnerAdapter
@@ -31,7 +29,6 @@ import com.shakil.barivara.utils.SpinnerData
 import com.shakil.barivara.utils.UX
 import com.shakil.barivara.utils.UtilsForAll
 import com.shakil.barivara.utils.orFalse
-import com.shakil.barivara.utils.orZero
 import dagger.hilt.android.AndroidEntryPoint
 import es.dmoral.toasty.Toasty
 import javax.inject.Inject
@@ -39,7 +36,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBinding>(),
     RecyclerBillHistoryAdapter.GenerateDBillHistoryCallBacks,
-    MarkAsPaidBottomSheet.MarkAsPaidListener {
+    MarkAsPaidBottomSheet.MarkAsPaidListener, NotifyUserBottomSheet.NotifyUserListener {
     private lateinit var activityBinding: ActivityGeneratedBillHistoryBinding
     private var spinnerData = SpinnerData(this)
     private var spinnerAdapter = SpinnerAdapter()
@@ -52,7 +49,9 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
     lateinit var utilsForAll: UtilsForAll
     private lateinit var ux: UX
     private val viewModel by viewModels<GenerateBillViewModel>()
+
     private var markAsPaidBottomSheet = MarkAsPaidBottomSheet()
+    private var notifyUserBottomSheet = NotifyUserBottomSheet()
 
     @Inject
     lateinit var prefManager: PrefManager
@@ -318,24 +317,7 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
     }
 
     override fun onNotify(billHistory: BillHistory) {
-        buttonAction(
-            ButtonActionConstants.actionGenerateBillNotifyUser, mapOf(
-                "user_mobile" to (billHistory.tenantPhone ?: ""),
-                "message" to (billHistory.remarks ?: ""),
-            )
-        )
-        sendMessage(billHistory.remarks ?: "", billHistory.tenantPhone ?: "")
-    }
-
-
-    private fun sendMessage(message: String, mobileNo: String) {
-        val smsIntent = Intent(Intent.ACTION_SENDTO)
-        smsIntent.addCategory(Intent.CATEGORY_DEFAULT)
-        smsIntent.setType("text/plain")
-        smsIntent.putExtra("sms_body", message)
-        smsIntent.setData(Uri.parse("sms:$mobileNo"))
-        startActivity(smsIntent)
-        Toast.makeText(this, getString(R.string.please_wait), Toast.LENGTH_SHORT).show()
+        showNotifyUserBottomSheet(billHistory)
     }
 
     override fun onMarkAsPaid(billHistory: BillHistory) {
@@ -346,6 +328,13 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
             )
         )
         showMarkAsPaidBottomSheet(billHistory)
+    }
+
+    private fun showNotifyUserBottomSheet(billHistory: BillHistory) {
+        screenViewed(ScreenNameConstants.appScreenGenerateBillMarkAsPaidBottomSheet)
+        notifyUserBottomSheet = NotifyUserBottomSheet.newInstance(billHistory)
+        notifyUserBottomSheet.show(supportFragmentManager, "MarkAsPaidBottomSheet")
+        notifyUserBottomSheet.setNotifyUserListener(this)
     }
 
     private fun showMarkAsPaidBottomSheet(billHistory: BillHistory) {
@@ -360,5 +349,67 @@ class GeneratedBillHistoryActivity : BaseActivity<ActivityGeneratedBillHistoryBi
             billId = billId,
             remarks = remarks
         )
+    }
+
+
+    override fun sentViaDirectMessage(billHistory: BillHistory?) {
+        buttonAction(
+            ButtonActionConstants.actionGenerateBillNotifyUser, mapOf(
+                "user_mobile" to (billHistory?.tenantPhone ?: ""),
+                "message" to (billHistory?.remarks ?: ""),
+            )
+        )
+        val message = "${getString(R.string.tenant_name)}: ${billHistory?.tenantName}\n" +
+                "${getString(R.string.room_name)}: ${billHistory?.room}\n" +
+                "${getString(R.string.total_due_bill)}: ${billHistory?.rent}\n" +
+                "${getString(R.string.rent_month)}: ${
+                    getString(
+                        R.string.d_comma_d,
+                        billHistory?.month,
+                        billHistory?.year
+                    )
+                }"
+        sendMessage(message, billHistory?.tenantPhone ?: "")
+    }
+
+    private fun sendMessage(message: String, mobileNo: String) {
+        val smsIntent = Intent(Intent.ACTION_SENDTO)
+        smsIntent.addCategory(Intent.CATEGORY_DEFAULT)
+        smsIntent.setType("text/plain")
+        smsIntent.putExtra("sms_body", message)
+        smsIntent.setData(Uri.parse("sms:$mobileNo"))
+        startActivity(smsIntent)
+        Toast.makeText(this, getString(R.string.please_wait), Toast.LENGTH_SHORT).show()
+    }
+
+    override fun sentViaWhatsapp(billHistory: BillHistory?) {
+        val message = "${getString(R.string.tenant_name)}: ${billHistory?.tenantName}\n" +
+                "${getString(R.string.room_name)}: ${billHistory?.room}\n" +
+                "${getString(R.string.total_due_bill)}: ${billHistory?.rent}\n" +
+                "${getString(R.string.rent_month)}: ${
+                    getString(
+                        R.string.d_comma_d,
+                        billHistory?.month,
+                        billHistory?.year
+                    )
+                }"
+        val uri = Uri.parse(
+            "https://wa.me/${
+                billHistory?.tenantPhone?.replace(
+                    "+",
+                    ""
+                )
+            }?text=${Uri.encode(message)}"
+        )
+
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        intent.setPackage("com.whatsapp")
+
+        try {
+            startActivity(intent)
+        } catch (e: ActivityNotFoundException) {
+            Toasty.warning(this, getString(R.string.whatsapp_not_installed), Toast.LENGTH_SHORT)
+                .show()
+        }
     }
 }

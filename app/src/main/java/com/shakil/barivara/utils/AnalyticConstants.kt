@@ -53,6 +53,8 @@ object ButtonActionConstants {
 
     //Generate Bill Actions
     const val actionGenerateBillNotifyUser = "action_generate_bill_notify_user"
+    const val actionGenerateBillNotifyUserViaMessage = "action_generate_bill_notify_user_via_message"
+    const val actionGenerateBillMarkAsPaidViaWhatsApp = "action_generate_bill_mark_as_paid_via_whatsapp"
     const val actionGenerateBillMarkAsPaid = "action_generate_bill_mark_as_paid"
 
     //Tutorial Actions
