@@ -12,6 +12,8 @@ data class BillInfo(
     @SerializedName("rent") var rent: Int? = null,
     @SerializedName("status") var status: String? = null,
     @SerializedName("is_notified") var isNotified: Int? = null,
+    @SerializedName("month") var month: Int? = null,
+    @SerializedName("year") var year: Int? = null,
     @SerializedName("remarks") var remarks: String? = null
 
 )

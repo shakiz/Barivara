@@ -57,9 +57,10 @@ class NotifyUserBottomSheet :
         super.onViewCreated(view, savedInstanceState)
         billHistory = arguments?.getParcelable(ARG_BILL_HISTORY_ITEM)
 
-        binding.RoomId.text = context?.getString(R.string.x_s, billHistory?.room)
-        binding.TenantId.text = context?.getString(R.string.x_s, billHistory?.tenantName)
-        binding.TotalBill.text = context?.getString(R.string.x_d, billHistory?.rent)
+        binding.RoomId.text = getString(R.string.x_s, billHistory?.room)
+        binding.TenantId.text = getString(R.string.x_s, billHistory?.tenantName)
+        binding.TotalBill.text = getString(R.string.x_d, billHistory?.rent)
+        binding.monthAndYear.text = getString(R.string.d_comma_d, billHistory?.month, billHistory?.year)
         binding.btnViaWhatsApp.setOnClickListener {
             notifyUserListener.sentViaWhatsapp(billHistory)
         }

@@ -549,4 +549,5 @@
     <string name="whatsapp">Whatsapp</string>
     <string name="message_details">Message Details</string>
     <string name="rent_month">Rent Month:</string>
+    <string name="d_comma_d">%d, %d</string>
 </resources>
