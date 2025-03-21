@@ -14,8 +14,8 @@ android {
         applicationId "com.shakil.barivara"
         minSdkVersion 19
         targetSdkVersion 34
-        versionCode 65
-        versionName "1.4.9"
+        versionCode 66
+        versionName "1.4.10"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
